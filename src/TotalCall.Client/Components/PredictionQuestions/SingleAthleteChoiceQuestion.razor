@@ -1,0 +1,51 @@
+<QuestionShell Question="Question" ValidationErrors="ValidationErrors">
+    <select class="control" value="@Answer?.Value.SelectedAthleteId" @onchange="SetAthlete">
+        <option value="">Select athlete</option>
+        @foreach (var athlete in GetEligibleAthletes())
+        {
+            <option value="@athlete.Id">@athlete.DisplayName</option>
+        }
+    </select>
+</QuestionShell>
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public string GroupId { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public PredictionQuestion Question { get; set; } = default!;
+
+    [Parameter]
+    public PredictionAnswer? Answer { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<PredictionValidationError> ValidationErrors { get; set; } = [];
+
+    [Parameter]
+    public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
+
+    private async Task SetAthlete(ChangeEventArgs eventArgs)
+    {
+        await AnswerChanged.InvokeAsync(new PredictionAnswer
+        {
+            GroupId = GroupId,
+            QuestionId = Question.Id,
+            QuestionType = Question.Type,
+            Value = new PredictionAnswerValue
+            {
+                SelectedAthleteId = eventArgs.Value?.ToString()
+            },
+            UpdatedAt = DateTimeOffset.UtcNow
+        });
+    }
+
+    private IReadOnlyList<Athlete> GetEligibleAthletes()
+    {
+        return Question.AthleteIds.Count == 0
+            ? Competition.Athletes
+            : Competition.Athletes.Where(athlete => Question.AthleteIds.Contains(athlete.Id)).ToArray();
+    }
+}

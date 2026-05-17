@@ -1,0 +1,75 @@
+<QuestionShell Question="Question" ValidationErrors="ValidationErrors">
+    <div class="choice-list">
+        @foreach (var athlete in GetEligibleAthletes())
+        {
+            <label class="choice-row">
+                <input type="checkbox" checked="@IsSelected(athlete.Id)" @onchange="eventArgs => ToggleAthlete(athlete.Id, eventArgs)" />
+                <span>@athlete.DisplayName</span>
+            </label>
+        }
+    </div>
+</QuestionShell>
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public string GroupId { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public PredictionQuestion Question { get; set; } = default!;
+
+    [Parameter]
+    public PredictionAnswer? Answer { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<PredictionValidationError> ValidationErrors { get; set; } = [];
+
+    [Parameter]
+    public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
+
+    private bool IsSelected(string athleteId)
+    {
+        return Answer?.Value.SelectedAthleteIds.Contains(athleteId) == true;
+    }
+
+    private async Task ToggleAthlete(string athleteId, ChangeEventArgs eventArgs)
+    {
+        var selectedAthleteIds = Answer?.Value.SelectedAthleteIds.ToList() ?? [];
+        var isSelected = eventArgs.Value is bool value && value;
+
+        if (isSelected && !selectedAthleteIds.Contains(athleteId))
+        {
+            selectedAthleteIds.Add(athleteId);
+        }
+        else if (!isSelected)
+        {
+            selectedAthleteIds.Remove(athleteId);
+        }
+
+        await AnswerChanged.InvokeAsync(CreateAnswer(new PredictionAnswerValue
+        {
+            SelectedAthleteIds = selectedAthleteIds
+        }));
+    }
+
+    private IReadOnlyList<Athlete> GetEligibleAthletes()
+    {
+        return Question.AthleteIds.Count == 0
+            ? Competition.Athletes
+            : Competition.Athletes.Where(athlete => Question.AthleteIds.Contains(athlete.Id)).ToArray();
+    }
+
+    private PredictionAnswer CreateAnswer(PredictionAnswerValue value)
+    {
+        return new PredictionAnswer
+        {
+            GroupId = GroupId,
+            QuestionId = Question.Id,
+            QuestionType = Question.Type,
+            Value = value,
+            UpdatedAt = DateTimeOffset.UtcNow
+        };
+    }
+}

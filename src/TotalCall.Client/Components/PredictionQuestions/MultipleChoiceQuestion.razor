@@ -1,0 +1,46 @@
+<QuestionShell Question="Question" ValidationErrors="ValidationErrors">
+    <select class="control" value="@Answer?.Value.SelectedOptionId" @onchange="SetOption">
+        <option value="">Select option</option>
+        @foreach (var option in Question.Options)
+        {
+            <option value="@option.Id">@option.Label</option>
+        }
+    </select>
+</QuestionShell>
+
+@code {
+    [Parameter, EditorRequired]
+    public string GroupId { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public PredictionQuestion Question { get; set; } = default!;
+
+    [Parameter]
+    public PredictionAnswer? Answer { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<PredictionValidationError> ValidationErrors { get; set; } = [];
+
+    [Parameter]
+    public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
+
+    private async Task SetOption(ChangeEventArgs eventArgs)
+    {
+        await AnswerChanged.InvokeAsync(CreateAnswer(new PredictionAnswerValue
+        {
+            SelectedOptionId = eventArgs.Value?.ToString()
+        }));
+    }
+
+    private PredictionAnswer CreateAnswer(PredictionAnswerValue value)
+    {
+        return new PredictionAnswer
+        {
+            GroupId = GroupId,
+            QuestionId = Question.Id,
+            QuestionType = Question.Type,
+            Value = value,
+            UpdatedAt = DateTimeOffset.UtcNow
+        };
+    }
+}

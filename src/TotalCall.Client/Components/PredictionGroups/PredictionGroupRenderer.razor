@@ -1,0 +1,52 @@
+<section class="prediction-group">
+    <div class="prediction-group__header">
+        <p class="prediction-group__mode">@Group.Mode</p>
+        <h2>@Group.Title</h2>
+        @if (!string.IsNullOrWhiteSpace(Group.Description))
+        {
+            <p>@Group.Description</p>
+        }
+    </div>
+
+    <div class="prediction-group__questions">
+        @foreach (var question in Group.Questions.OrderBy(question => question.Order))
+        {
+            <PredictionQuestionRenderer
+                Competition="Competition"
+                GroupId="@Group.Id"
+                Question="question"
+                Answer="GetAnswer(question.Id)"
+                ValidationErrors="GetErrors(question.Id)"
+                AnswerChanged="AnswerChanged" />
+        }
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public PredictionGroup Group { get; set; } = default!;
+
+    [Parameter]
+    public IReadOnlyList<PredictionAnswer> Answers { get; set; } = [];
+
+    [Parameter]
+    public IReadOnlyList<PredictionValidationError> ValidationErrors { get; set; } = [];
+
+    [Parameter]
+    public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
+
+    private PredictionAnswer? GetAnswer(string questionId)
+    {
+        return Answers.FirstOrDefault(answer => answer.QuestionId == questionId);
+    }
+
+    private IReadOnlyList<PredictionValidationError> GetErrors(string questionId)
+    {
+        return ValidationErrors
+            .Where(error => error.QuestionId == questionId)
+            .ToArray();
+    }
+}

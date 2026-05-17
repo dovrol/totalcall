@@ -1,0 +1,80 @@
+<QuestionShell Question="Question" ValidationErrors="ValidationErrors">
+    <div class="stack">
+        @foreach (var position in Enumerable.Range(1, PositionsCount))
+        {
+            <label class="field">
+                <span>#@position</span>
+                <select value="@GetAthleteAt(position)" @onchange="eventArgs => SetAthleteAt(position, eventArgs.Value?.ToString())">
+                    <option value="">Select athlete</option>
+                    @foreach (var athlete in GetEligibleAthletes())
+                    {
+                        <option value="@athlete.Id">@athlete.DisplayName</option>
+                    }
+                </select>
+            </label>
+        }
+    </div>
+</QuestionShell>
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public string GroupId { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public PredictionQuestion Question { get; set; } = default!;
+
+    [Parameter]
+    public PredictionAnswer? Answer { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<PredictionValidationError> ValidationErrors { get; set; } = [];
+
+    [Parameter]
+    public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
+
+    private int PositionsCount => Question.Constraints.ExactSelections ?? Question.Constraints.MaxSelections ?? 3;
+
+    private string? GetAthleteAt(int position)
+    {
+        return Answer?.Value.AthletePlacements.FirstOrDefault(placement => placement.Position == position)?.AthleteId;
+    }
+
+    private async Task SetAthleteAt(int position, string? athleteId)
+    {
+        var placements = Answer?.Value.AthletePlacements.ToList() ?? [];
+        placements.RemoveAll(placement => placement.Position == position);
+
+        if (!string.IsNullOrWhiteSpace(athleteId))
+        {
+            placements.RemoveAll(placement => placement.AthleteId == athleteId);
+            placements.Add(new AthletePlacementPick { Position = position, AthleteId = athleteId });
+        }
+
+        await AnswerChanged.InvokeAsync(CreateAnswer(new PredictionAnswerValue
+        {
+            AthletePlacements = placements.OrderBy(placement => placement.Position).ToArray()
+        }));
+    }
+
+    private IReadOnlyList<Athlete> GetEligibleAthletes()
+    {
+        return Question.AthleteIds.Count == 0
+            ? Competition.Athletes
+            : Competition.Athletes.Where(athlete => Question.AthleteIds.Contains(athlete.Id)).ToArray();
+    }
+
+    private PredictionAnswer CreateAnswer(PredictionAnswerValue value)
+    {
+        return new PredictionAnswer
+        {
+            GroupId = GroupId,
+            QuestionId = Question.Id,
+            QuestionType = Question.Type,
+            Value = value,
+            UpdatedAt = DateTimeOffset.UtcNow
+        };
+    }
+}

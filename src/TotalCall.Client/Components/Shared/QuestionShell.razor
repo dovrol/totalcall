@@ -1,0 +1,26 @@
+<div class="question-shell">
+    <div class="question-shell__text">
+        <h3>@Question.Title</h3>
+        @if (!string.IsNullOrWhiteSpace(Question.Description))
+        {
+            <p>@Question.Description</p>
+        }
+    </div>
+
+    <div class="question-shell__control">
+        @ChildContent
+    </div>
+
+    <QuestionValidationMessage Errors="ValidationErrors" />
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public PredictionQuestion Question { get; set; } = default!;
+
+    [Parameter]
+    public IReadOnlyList<PredictionValidationError> ValidationErrors { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; } = default!;
+}

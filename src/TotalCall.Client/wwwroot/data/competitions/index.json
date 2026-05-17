@@ -1,0 +1,22 @@
+[
+  {
+    "id": "sheffield-2026",
+    "slug": "sheffield-2026",
+    "name": "Sheffield 2026",
+    "description": "Overall-focused prediction game around top lifters, world record percentage and bonus questions.",
+    "startDate": "2026-01-31T09:00:00Z",
+    "predictionLockAt": "2026-01-31T08:00:00Z",
+    "status": "upcoming",
+    "configVersion": "2026.1"
+  },
+  {
+    "id": "worlds-2026",
+    "slug": "worlds-2026",
+    "name": "Worlds 2026",
+    "description": "Category-based prediction game with quick mode, podium picks, best lifter and bonus questions.",
+    "startDate": "2026-06-07T09:00:00Z",
+    "predictionLockAt": "2026-06-07T08:00:00Z",
+    "status": "upcoming",
+    "configVersion": "2026.1"
+  }
+]

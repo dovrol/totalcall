@@ -1,0 +1,205 @@
+{
+  "id": "worlds-2026",
+  "slug": "worlds-2026",
+  "name": "Worlds 2026",
+  "description": "Category-based prediction game with quick mode, podium picks, best lifter and bonus questions.",
+  "federation": "IPF",
+  "startDate": "2026-06-07T09:00:00Z",
+  "endDate": "2026-06-14T18:00:00Z",
+  "predictionOpenAt": "2026-05-01T09:00:00Z",
+  "predictionLockAt": "2026-06-07T08:00:00Z",
+  "status": "upcoming",
+  "configVersion": "2026.1",
+  "athletes": [
+    {
+      "id": "carla-73",
+      "displayName": "Carla Martins",
+      "sex": "female",
+      "countryCode": "BRA",
+      "countryName": "Brazil",
+      "weightCategoryId": "women-73",
+      "seedTotalKg": 535
+    },
+    {
+      "id": "emma-73",
+      "displayName": "Emma Nilsson",
+      "sex": "female",
+      "countryCode": "SWE",
+      "countryName": "Sweden",
+      "weightCategoryId": "women-73",
+      "seedTotalKg": 527.5
+    },
+    {
+      "id": "nora-73",
+      "displayName": "Nora Chen",
+      "sex": "female",
+      "countryCode": "TPE",
+      "countryName": "Chinese Taipei",
+      "weightCategoryId": "women-73",
+      "seedTotalKg": 522.5
+    },
+    {
+      "id": "mason-83",
+      "displayName": "Mason Reed",
+      "sex": "male",
+      "countryCode": "CAN",
+      "countryName": "Canada",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 840
+    },
+    {
+      "id": "leo-83",
+      "displayName": "Leo Garcia",
+      "sex": "male",
+      "countryCode": "ESP",
+      "countryName": "Spain",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 832.5
+    },
+    {
+      "id": "sam-83",
+      "displayName": "Sam Okafor",
+      "sex": "male",
+      "countryCode": "GBR",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 825
+    },
+    {
+      "id": "ida-84-plus",
+      "displayName": "Ida Hansen",
+      "sex": "female",
+      "countryCode": "DEN",
+      "countryName": "Denmark",
+      "weightCategoryId": "women-84-plus",
+      "seedTotalKg": 640
+    },
+    {
+      "id": "maya-84-plus",
+      "displayName": "Maya Johnson",
+      "sex": "female",
+      "countryCode": "USA",
+      "countryName": "United States",
+      "weightCategoryId": "women-84-plus",
+      "seedTotalKg": 632.5
+    }
+  ],
+  "categories": [
+    {
+      "id": "women-73",
+      "name": "Women 73 kg",
+      "sex": "female",
+      "weightLimitKg": 73,
+      "athleteIds": ["carla-73", "emma-73", "nora-73"]
+    },
+    {
+      "id": "men-83",
+      "name": "Men 83 kg",
+      "sex": "male",
+      "weightLimitKg": 83,
+      "athleteIds": ["mason-83", "leo-83", "sam-83"]
+    },
+    {
+      "id": "women-84-plus",
+      "name": "Women 84+ kg",
+      "sex": "female",
+      "athleteIds": ["ida-84-plus", "maya-84-plus"]
+    }
+  ],
+  "predictionGroups": [
+    {
+      "id": "quick-mode",
+      "title": "Quick mode",
+      "description": "A short set of picks for people who do not want to fill every category.",
+      "mode": "quick",
+      "order": 10,
+      "required": true,
+      "questions": [
+        {
+          "id": "best-lifter",
+          "type": "single-athlete-choice",
+          "title": "Best lifter",
+          "description": "Pick the overall best lifter of the meet.",
+          "order": 10,
+          "required": true
+        },
+        {
+          "id": "total-world-records",
+          "type": "numeric-question",
+          "title": "How many world records will fall?",
+          "order": 20,
+          "required": true,
+          "constraints": {
+            "minValue": 0,
+            "maxValue": 20,
+            "step": 1,
+            "unit": "records"
+          }
+        }
+      ]
+    },
+    {
+      "id": "category-picks",
+      "title": "Category podiums",
+      "description": "Pick podiums in selected categories.",
+      "mode": "full",
+      "order": 20,
+      "required": true,
+      "questions": [
+        {
+          "id": "women-73-podium",
+          "type": "category-podium",
+          "title": "Women 73 kg podium",
+          "order": 10,
+          "required": true,
+          "categoryId": "women-73",
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "men-83-podium",
+          "type": "category-podium",
+          "title": "Men 83 kg podium",
+          "order": 20,
+          "required": true,
+          "categoryId": "men-83",
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "bonus",
+      "title": "Bonus questions",
+      "mode": "bonus",
+      "order": 30,
+      "required": false,
+      "questions": [
+        {
+          "id": "most-medals-country",
+          "type": "multiple-choice",
+          "title": "Which country wins the most medals?",
+          "order": 10,
+          "required": true,
+          "options": [
+            { "id": "usa", "label": "United States" },
+            { "id": "can", "label": "Canada" },
+            { "id": "gbr", "label": "Great Britain" },
+            { "id": "other", "label": "Other" }
+          ]
+        },
+        {
+          "id": "any-perfect-day",
+          "type": "yes-no",
+          "title": "Will any lifter go 9/9 and win gold?",
+          "order": 20,
+          "required": true
+        }
+      ]
+    }
+  ]
+}

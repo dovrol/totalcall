@@ -1,0 +1,114 @@
+@page "/competitions/{Slug}"
+@inject CompetitionService CompetitionService
+
+<PageTitle>@(competition?.Name ?? "Competition")</PageTitle>
+
+@if (isLoading)
+{
+    <p class="muted">Loading competition...</p>
+}
+else if (competition is null)
+{
+    <div class="page-header">
+        <h1>Competition not found</h1>
+        <p>No JSON configuration exists for this competition.</p>
+    </div>
+}
+else
+{
+    <div class="page-header">
+        <p class="eyebrow">@competition.Status</p>
+        <h1>@competition.Name</h1>
+        @if (!string.IsNullOrWhiteSpace(competition.Description))
+        {
+            <p>@competition.Description</p>
+        }
+    </div>
+
+    <div class="details-grid">
+        <section class="panel">
+            <h2>Competition</h2>
+            <dl class="meta-list">
+                <div>
+                    <dt>Federation</dt>
+                    <dd>@(competition.Federation ?? "TBD")</dd>
+                </div>
+                <div>
+                    <dt>Starts</dt>
+                    <dd>@FormatDate(competition.StartDate)</dd>
+                </div>
+                <div>
+                    <dt>Prediction lock</dt>
+                    <dd>@FormatDate(competition.PredictionLockAt)</dd>
+                </div>
+                <div>
+                    <dt>Config version</dt>
+                    <dd>@competition.ConfigVersion</dd>
+                </div>
+            </dl>
+        </section>
+
+        <section class="panel">
+            <h2>Configured data</h2>
+            <dl class="meta-list">
+                <div>
+                    <dt>Athletes</dt>
+                    <dd>@competition.Athletes.Count</dd>
+                </div>
+                <div>
+                    <dt>Categories</dt>
+                    <dd>@competition.Categories.Count</dd>
+                </div>
+                <div>
+                    <dt>Prediction groups</dt>
+                    <dd>@competition.PredictionGroups.Count</dd>
+                </div>
+            </dl>
+        </section>
+    </div>
+
+    <section class="panel">
+        <h2>Prediction groups</h2>
+        <div class="group-list">
+            @foreach (var group in competition.PredictionGroups.OrderBy(group => group.Order))
+            {
+                <div class="group-list__item">
+                    <div>
+                        <p class="prediction-group__mode">@group.Mode</p>
+                        <h3>@group.Title</h3>
+                        @if (!string.IsNullOrWhiteSpace(group.Description))
+                        {
+                            <p>@group.Description</p>
+                        }
+                    </div>
+                    <span>@group.Questions.Count question(s)</span>
+                </div>
+            }
+        </div>
+    </section>
+
+    <div class="actions">
+        <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">Make predictions</a>
+        <a class="secondary-link" href="">Back to competitions</a>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Slug { get; set; } = string.Empty;
+
+    private Competition? competition;
+    private bool isLoading = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        isLoading = true;
+        competition = await CompetitionService.GetCompetitionAsync(Slug);
+        isLoading = false;
+    }
+
+    private static string FormatDate(DateTimeOffset? value)
+    {
+        return value?.ToLocalTime().ToString("dd MMM yyyy HH:mm") ?? "TBD";
+    }
+}

@@ -1,7 +1,62 @@
 ﻿@page "/"
+@inject CompetitionService CompetitionService
 
-<PageTitle>Home</PageTitle>
+<PageTitle>TotalCall</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="page-header">
+    <p class="eyebrow">Fantasy powerlifting predictions</p>
+    <h1>TotalCall</h1>
+    <p>Pick a competition and make predictions from its JSON-driven question set.</p>
+</div>
 
-Welcome to your new app.
+@if (competitions is null)
+{
+    <p class="muted">Loading competitions...</p>
+}
+else if (competitions.Count == 0)
+{
+    <p class="muted">No competitions are configured yet.</p>
+}
+else
+{
+    <div class="competition-grid">
+        @foreach (var competition in competitions)
+        {
+            <article class="competition-card">
+                <div>
+                    <p class="status-pill">@competition.Status</p>
+                    <h2>@competition.Name</h2>
+                    @if (!string.IsNullOrWhiteSpace(competition.Description))
+                    {
+                        <p>@competition.Description</p>
+                    }
+                </div>
+                <dl class="meta-list">
+                    <div>
+                        <dt>Starts</dt>
+                        <dd>@FormatDate(competition.StartDate)</dd>
+                    </div>
+                    <div>
+                        <dt>Locks</dt>
+                        <dd>@FormatDate(competition.PredictionLockAt)</dd>
+                    </div>
+                </dl>
+                <a class="primary-link" href="@($"competitions/{competition.Slug}")">Open competition</a>
+            </article>
+        }
+    </div>
+}
+
+@code {
+    private IReadOnlyList<CompetitionSummary>? competitions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        competitions = await CompetitionService.GetCompetitionsAsync();
+    }
+
+    private static string FormatDate(DateTimeOffset? value)
+    {
+        return value?.ToLocalTime().ToString("dd MMM yyyy HH:mm") ?? "TBD";
+    }
+}

@@ -1,0 +1,138 @@
+@page "/competitions/{Slug}/predictions"
+@inject CompetitionService CompetitionService
+@inject PredictionService PredictionService
+@inject PredictionValidationService PredictionValidationService
+
+<PageTitle>@(competition is null ? "Predictions" : $"{competition.Name} predictions")</PageTitle>
+
+@if (isLoading)
+{
+    <p class="muted">Loading prediction form...</p>
+}
+else if (competition is null || predictionSet is null)
+{
+    <div class="page-header">
+        <h1>Prediction form not found</h1>
+        <p>No JSON configuration exists for this competition.</p>
+    </div>
+}
+else
+{
+    <div class="page-header">
+        <p class="eyebrow">@competition.Name</p>
+        <h1>Predictions</h1>
+        <p>Your answers are saved locally in this browser.</p>
+    </div>
+
+    @if (!canEditPredictions)
+    {
+        <div class="notice notice--warning">
+            Prediction editing is locked for this competition.
+        </div>
+    }
+
+    <div class="prediction-layout">
+        <div class="prediction-layout__main">
+            @foreach (var group in competition.PredictionGroups.OrderBy(group => group.Order))
+            {
+                <PredictionGroupRenderer
+                    Competition="competition"
+                    Group="group"
+                    Answers="predictionSet.Answers"
+                    ValidationErrors="validationResult.Errors"
+                    AnswerChanged="OnAnswerChanged" />
+            }
+        </div>
+
+        <aside class="prediction-sidebar">
+            <h2>Status</h2>
+            <dl class="meta-list">
+                <div>
+                    <dt>Saved answers</dt>
+                    <dd>@predictionSet.Answers.Count</dd>
+                </div>
+                <div>
+                    <dt>Validation issues</dt>
+                    <dd>@validationResult.Errors.Count</dd>
+                </div>
+                <div>
+                    <dt>Last saved</dt>
+                    <dd>@FormatDate(predictionSet.SavedAt)</dd>
+                </div>
+            </dl>
+
+            <button type="button" class="primary-button" @onclick="SaveAsync" disabled="@isSaving">
+                @(isSaving ? "Saving..." : "Save now")
+            </button>
+
+            @if (!string.IsNullOrWhiteSpace(saveStatus))
+            {
+                <p class="save-status">@saveStatus</p>
+            }
+        </aside>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Slug { get; set; } = string.Empty;
+
+    private Competition? competition;
+    private PredictionSet? predictionSet;
+    private PredictionValidationResult validationResult = new([]);
+    private bool isLoading = true;
+    private bool isSaving;
+    private bool canEditPredictions;
+    private string? saveStatus;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        isLoading = true;
+        competition = await CompetitionService.GetCompetitionAsync(Slug);
+
+        if (competition is not null)
+        {
+            predictionSet = await PredictionService.GetOrCreatePredictionSetAsync(competition);
+            validationResult = PredictionValidationService.Validate(competition, predictionSet);
+            canEditPredictions = CompetitionService.CanEditPredictions(competition);
+        }
+
+        isLoading = false;
+    }
+
+    private async Task OnAnswerChanged(PredictionAnswer answer)
+    {
+        if (competition is null || predictionSet is null || !canEditPredictions)
+        {
+            return;
+        }
+
+        predictionSet = PredictionService.UpdateAnswer(predictionSet, answer);
+        validationResult = PredictionValidationService.Validate(competition, predictionSet);
+
+        await SaveAsync();
+    }
+
+    private async Task SaveAsync()
+    {
+        if (predictionSet is null || !canEditPredictions)
+        {
+            return;
+        }
+
+        isSaving = true;
+        saveStatus = null;
+
+        await PredictionService.SaveAsync(predictionSet);
+
+        isSaving = false;
+        saveStatus = validationResult.IsValid
+            ? "Saved locally."
+            : "Draft saved locally. Fix validation issues before final review.";
+    }
+
+    private static string FormatDate(DateTimeOffset value)
+    {
+        return value.ToLocalTime().ToString("dd MMM yyyy HH:mm:ss");
+    }
+}

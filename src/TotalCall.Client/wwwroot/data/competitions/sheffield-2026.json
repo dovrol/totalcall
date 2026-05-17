@@ -1,0 +1,178 @@
+{
+  "id": "sheffield-2026",
+  "slug": "sheffield-2026",
+  "name": "Sheffield 2026",
+  "description": "Overall-focused prediction game around top lifters, world record percentage and bonus questions.",
+  "federation": "IPF",
+  "startDate": "2026-01-31T09:00:00Z",
+  "endDate": "2026-01-31T18:00:00Z",
+  "predictionOpenAt": "2026-01-01T09:00:00Z",
+  "predictionLockAt": "2026-01-31T08:00:00Z",
+  "status": "upcoming",
+  "configVersion": "2026.1",
+  "athletes": [
+    {
+      "id": "austin-perkins",
+      "displayName": "Austin Perkins",
+      "sex": "male",
+      "countryCode": "USA",
+      "countryName": "United States",
+      "seedTotalKg": 835,
+      "personalBestTotalKg": 840,
+      "worldRecordReferenceKg": 860
+    },
+    {
+      "id": "jonathan-cayco",
+      "displayName": "Jonathan Cayco",
+      "sex": "male",
+      "countryCode": "USA",
+      "countryName": "United States",
+      "seedTotalKg": 812.5,
+      "personalBestTotalKg": 820,
+      "worldRecordReferenceKg": 835
+    },
+    {
+      "id": "taylor-atwood",
+      "displayName": "Taylor Atwood",
+      "sex": "male",
+      "countryCode": "USA",
+      "countryName": "United States",
+      "seedTotalKg": 790,
+      "personalBestTotalKg": 812.5,
+      "worldRecordReferenceKg": 830
+    },
+    {
+      "id": "jessica-buettner",
+      "displayName": "Jessica Buettner",
+      "sex": "female",
+      "countryCode": "CAN",
+      "countryName": "Canada",
+      "seedTotalKg": 535,
+      "personalBestTotalKg": 545,
+      "worldRecordReferenceKg": 560
+    },
+    {
+      "id": "amanda-lawrence",
+      "displayName": "Amanda Lawrence",
+      "sex": "female",
+      "countryCode": "USA",
+      "countryName": "United States",
+      "seedTotalKg": 640,
+      "personalBestTotalKg": 646.5,
+      "worldRecordReferenceKg": 660
+    },
+    {
+      "id": "meghan-scanlon",
+      "displayName": "Meghan Scanlon",
+      "sex": "female",
+      "countryCode": "USA",
+      "countryName": "United States",
+      "seedTotalKg": 510,
+      "personalBestTotalKg": 515,
+      "worldRecordReferenceKg": 535
+    }
+  ],
+  "categories": [],
+  "predictionGroups": [
+    {
+      "id": "overall",
+      "title": "Overall ranking",
+      "description": "Pick the top overall finishers.",
+      "mode": "full",
+      "order": 10,
+      "required": true,
+      "questions": [
+        {
+          "id": "top-overall",
+          "type": "athlete-ranking",
+          "title": "Top 5 overall",
+          "description": "Rank the top five overall lifters.",
+          "order": 10,
+          "required": true,
+          "constraints": {
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "records",
+      "title": "World record calls",
+      "description": "Predict how close lifters get to world record standards.",
+      "mode": "full",
+      "order": 20,
+      "required": true,
+      "questions": [
+        {
+          "id": "wr-percentage",
+          "type": "numeric-athlete-prediction",
+          "title": "Highest world record percentage",
+          "description": "Choose the lifter and predict their percentage of the relevant world record.",
+          "order": 10,
+          "required": true,
+          "constraints": {
+            "minValue": 90,
+            "maxValue": 110,
+            "step": 0.1,
+            "unit": "%"
+          }
+        },
+        {
+          "id": "record-breakers",
+          "type": "multi-athlete-choice",
+          "title": "Who breaks a world record?",
+          "description": "Select any lifters you expect to break a world record.",
+          "order": 20,
+          "required": false,
+          "constraints": {
+            "maxSelections": 4,
+            "disallowDuplicateAthletes": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "bonus",
+      "title": "Bonus questions",
+      "mode": "bonus",
+      "order": 30,
+      "required": false,
+      "questions": [
+        {
+          "id": "any-wr",
+          "type": "yes-no",
+          "title": "Will any world record be broken?",
+          "order": 10,
+          "required": true
+        },
+        {
+          "id": "highest-total",
+          "type": "numeric-question",
+          "title": "Highest total of the meet",
+          "description": "Predict the highest total in kilograms.",
+          "order": 20,
+          "required": true,
+          "constraints": {
+            "minValue": 450,
+            "maxValue": 1000,
+            "step": 0.5,
+            "unit": "kg"
+          }
+        },
+        {
+          "id": "most-hyped-lift",
+          "type": "multiple-choice",
+          "title": "Most talked-about lift",
+          "order": 30,
+          "required": true,
+          "options": [
+            { "id": "squat", "label": "Squat" },
+            { "id": "bench", "label": "Bench press" },
+            { "id": "deadlift", "label": "Deadlift" }
+          ]
+        }
+      ]
+    }
+  ]
+}
