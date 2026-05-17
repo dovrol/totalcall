@@ -1,0 +1,17 @@
+# Build output
+bin/
+obj/
+
+# .NET local tooling
+.config/dotnet-tools.json
+
+# IDE/editor files
+.vs/
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+
+# Logs
+*.log
