@@ -356,6 +356,43 @@ select {
     font-size: 0.9rem;
 }
 
+.sidebar-link {
+    width: 100%;
+    margin-top: 0.65rem;
+}
+
+.review-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.answer-list {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.answer-row {
+    display: grid;
+    gap: 0.55rem;
+    border-top: 1px solid #eef2f7;
+    padding-top: 0.85rem;
+}
+
+.answer-row:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.answer-row h3 {
+    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+}
+
+.answer-row p {
+    margin-bottom: 0;
+    color: #374151;
+}
+
 #blazor-error-ui {
     color-scheme: light only;
     background: #fef3c7;

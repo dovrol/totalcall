@@ -1,0 +1,118 @@
+@page "/competitions/{Slug}/review"
+@inject CompetitionService CompetitionService
+@inject PredictionService PredictionService
+@inject PredictionValidationService PredictionValidationService
+@inject PredictionAnswerDisplayService AnswerDisplayService
+
+<PageTitle>@(competition is null ? "Prediction review" : $"{competition.Name} review")</PageTitle>
+
+@if (isLoading)
+{
+    <p class="muted">Loading prediction review...</p>
+}
+else if (competition is null || predictionSet is null)
+{
+    <div class="page-header">
+        <h1>Prediction review not found</h1>
+        <p>No JSON configuration exists for this competition.</p>
+    </div>
+}
+else
+{
+    <div class="page-header">
+        <p class="eyebrow">@competition.Name</p>
+        <h1>Review predictions</h1>
+        <p>These answers are read from local browser storage.</p>
+    </div>
+
+    @if (predictionSet.Answers.Count == 0)
+    {
+        <section class="panel">
+            <h2>No saved answers</h2>
+            <p class="muted">Start the prediction form to create a local draft.</p>
+        </section>
+    }
+    else
+    {
+        @if (!validationResult.IsValid)
+        {
+            <div class="notice notice--warning">
+                This draft still has @validationResult.Errors.Count validation issue(s).
+            </div>
+        }
+
+        <div class="review-list">
+            @foreach (var group in competition.PredictionGroups.OrderBy(group => group.Order))
+            {
+                <section class="panel">
+                    <p class="prediction-group__mode">@group.Mode</p>
+                    <h2>@group.Title</h2>
+
+                    <div class="answer-list">
+                        @foreach (var question in group.Questions.OrderBy(question => question.Order))
+                        {
+                            var answer = GetAnswer(question.Id);
+
+                            <article class="answer-row">
+                                <div>
+                                    <h3>@question.Title</h3>
+                                    <p>@AnswerDisplayService.FormatAnswer(competition, question, answer)</p>
+                                </div>
+                                @if (HasValidationErrors(question.Id))
+                                {
+                                    <QuestionValidationMessage Errors="GetValidationErrors(question.Id)" />
+                                }
+                            </article>
+                        }
+                    </div>
+                </section>
+            }
+        </div>
+    }
+
+    <div class="actions">
+        <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">Edit predictions</a>
+        <a class="secondary-link" href="@($"competitions/{competition.Slug}")">Back to competition</a>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Slug { get; set; } = string.Empty;
+
+    private Competition? competition;
+    private PredictionSet? predictionSet;
+    private PredictionValidationResult validationResult = new([]);
+    private bool isLoading = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        isLoading = true;
+        competition = await CompetitionService.GetCompetitionAsync(Slug);
+
+        if (competition is not null)
+        {
+            predictionSet = await PredictionService.GetOrCreatePredictionSetAsync(competition);
+            validationResult = PredictionValidationService.Validate(competition, predictionSet);
+        }
+
+        isLoading = false;
+    }
+
+    private PredictionAnswer? GetAnswer(string questionId)
+    {
+        return predictionSet?.Answers.FirstOrDefault(answer => answer.QuestionId == questionId);
+    }
+
+    private bool HasValidationErrors(string questionId)
+    {
+        return GetValidationErrors(questionId).Count > 0;
+    }
+
+    private IReadOnlyList<PredictionValidationError> GetValidationErrors(string questionId)
+    {
+        return validationResult.Errors
+            .Where(error => error.QuestionId == questionId)
+            .ToArray();
+    }
+}

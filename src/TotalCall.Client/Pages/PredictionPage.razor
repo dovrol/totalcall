@@ -64,6 +64,7 @@ else
             <button type="button" class="primary-button" @onclick="SaveAsync" disabled="@isSaving">
                 @(isSaving ? "Saving..." : "Save now")
             </button>
+            <a class="secondary-link sidebar-link" href="@($"competitions/{competition.Slug}/review")">Review picks</a>
 
             @if (!string.IsNullOrWhiteSpace(saveStatus))
             {

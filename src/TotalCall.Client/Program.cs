@@ -19,6 +19,7 @@ builder.Services.AddScoped<BrowserLocalStorage>();
 builder.Services.AddScoped<IPredictionStore, LocalStoragePredictionStore>();
 builder.Services.AddScoped<PredictionService>();
 builder.Services.AddScoped<PredictionValidationService>();
+builder.Services.AddScoped<PredictionAnswerDisplayService>();
 builder.Services.AddScoped<IPredictionScoringService, PredictionScoringService>();
 
 await builder.Build().RunAsync();
