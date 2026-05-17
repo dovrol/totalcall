@@ -1,15 +1,16 @@
+using TotalCall.Client.Application.Localization;
 using TotalCall.Client.Domain.Competitions;
 using TotalCall.Client.Domain.Predictions;
 
 namespace TotalCall.Client.Application.Services;
 
-public sealed class PredictionAnswerDisplayService
+public sealed class PredictionAnswerDisplayService(LanguageService language)
 {
     public string FormatAnswer(Competition competition, PredictionQuestion question, PredictionAnswer? answer)
     {
         if (answer is null)
         {
-            return "Not answered";
+            return language.Text("Common.NotAnswered");
         }
 
         return question.Type switch
@@ -22,59 +23,59 @@ public sealed class PredictionAnswerDisplayService
             PredictionQuestionType.MultiAthleteChoice => FormatAthletes(competition, answer.Value.SelectedAthleteIds),
             PredictionQuestionType.AthleteRanking => FormatPlacements(competition, answer, useMedalLabels: false),
             PredictionQuestionType.CategoryPodium => FormatPlacements(competition, answer, useMedalLabels: true),
-            _ => "Unsupported answer"
+            _ => language.Text("Common.NotAnswered")
         };
     }
 
-    private static string FormatYesNo(PredictionAnswer answer)
+    private string FormatYesNo(PredictionAnswer answer)
     {
         return answer.Value.BooleanValue switch
         {
-            true => "Yes",
-            false => "No",
-            null => "Not answered"
+            true => language.Text("Common.Yes"),
+            false => language.Text("Common.No"),
+            null => language.Text("Common.NotAnswered")
         };
     }
 
-    private static string FormatNumeric(PredictionQuestion question, PredictionAnswer answer)
+    private string FormatNumeric(PredictionQuestion question, PredictionAnswer answer)
     {
         return answer.Value.NumericValue is null
-            ? "Not answered"
+            ? language.Text("Common.NotAnswered")
             : $"{answer.Value.NumericValue}{FormatUnit(question)}";
     }
 
-    private static string FormatNumericAthlete(
+    private string FormatNumericAthlete(
         Competition competition,
         PredictionQuestion question,
         PredictionAnswer answer)
     {
         var athlete = FormatAthlete(competition, answer.Value.SelectedAthleteId);
         var numericValue = answer.Value.NumericValue is null
-            ? "no value"
+            ? language.Text("Common.NoValue")
             : $"{answer.Value.NumericValue}{FormatUnit(question)}";
 
         return $"{athlete}, {numericValue}";
     }
 
-    private static string FormatMultipleChoice(PredictionQuestion question, PredictionAnswer answer)
+    private string FormatMultipleChoice(PredictionQuestion question, PredictionAnswer answer)
     {
         var option = question.Options.FirstOrDefault(option => option.Id == answer.Value.SelectedOptionId);
 
-        return option?.Label ?? "Not answered";
+        return option?.Label ?? language.Text("Common.NotAnswered");
     }
 
-    private static string FormatAthletes(Competition competition, IReadOnlyList<string> athleteIds)
+    private string FormatAthletes(Competition competition, IReadOnlyList<string> athleteIds)
     {
         return athleteIds.Count == 0
-            ? "Not answered"
+            ? language.Text("Common.NotAnswered")
             : string.Join(", ", athleteIds.Select(athleteId => FormatAthlete(competition, athleteId)));
     }
 
-    private static string FormatPlacements(Competition competition, PredictionAnswer answer, bool useMedalLabels)
+    private string FormatPlacements(Competition competition, PredictionAnswer answer, bool useMedalLabels)
     {
         if (answer.Value.AthletePlacements.Count == 0)
         {
-            return "Not answered";
+            return language.Text("Common.NotAnswered");
         }
 
         return string.Join(
@@ -84,17 +85,17 @@ public sealed class PredictionAnswerDisplayService
                 .Select(placement => $"{FormatPosition(placement.Position, useMedalLabels)} {FormatAthlete(competition, placement.AthleteId)}"));
     }
 
-    private static string FormatAthlete(Competition competition, string? athleteId)
+    private string FormatAthlete(Competition competition, string? athleteId)
     {
         if (string.IsNullOrWhiteSpace(athleteId))
         {
-            return "Not answered";
+            return language.Text("Common.NotAnswered");
         }
 
         return competition.Athletes.FirstOrDefault(athlete => athlete.Id == athleteId)?.DisplayName ?? athleteId;
     }
 
-    private static string FormatPosition(int position, bool useMedalLabels)
+    private string FormatPosition(int position, bool useMedalLabels)
     {
         if (!useMedalLabels)
         {
@@ -103,9 +104,9 @@ public sealed class PredictionAnswerDisplayService
 
         return position switch
         {
-            1 => "Gold:",
-            2 => "Silver:",
-            3 => "Bronze:",
+            1 => $"{language.Text("Common.Gold")}:",
+            2 => $"{language.Text("Common.Silver")}:",
+            3 => $"{language.Text("Common.Bronze")}:",
             _ => $"#{position}:"
         };
     }

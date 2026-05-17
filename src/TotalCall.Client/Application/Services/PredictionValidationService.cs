@@ -29,7 +29,7 @@ public sealed class PredictionValidationService
     {
         if (question.Required && !IsAnswered(question, answer))
         {
-            errors.Add(new PredictionValidationError(group.Id, question.Id, "This question is required."));
+            errors.Add(CreateError(group.Id, question.Id, "Validation.Required", "This question is required."));
             return;
         }
 
@@ -87,26 +87,32 @@ public sealed class PredictionValidationService
 
         if (question.Constraints.ExactSelections is not null && count != question.Constraints.ExactSelections)
         {
-            errors.Add(new PredictionValidationError(
+            errors.Add(CreateError(
                 group.Id,
                 question.Id,
-                $"Select exactly {question.Constraints.ExactSelections} item(s)."));
+                "Validation.ExactSelections",
+                $"Select exactly {question.Constraints.ExactSelections} item(s).",
+                ("count", question.Constraints.ExactSelections.Value.ToString())));
         }
 
         if (question.Constraints.MinSelections is not null && count < question.Constraints.MinSelections)
         {
-            errors.Add(new PredictionValidationError(
+            errors.Add(CreateError(
                 group.Id,
                 question.Id,
-                $"Select at least {question.Constraints.MinSelections} item(s)."));
+                "Validation.MinSelections",
+                $"Select at least {question.Constraints.MinSelections} item(s).",
+                ("count", question.Constraints.MinSelections.Value.ToString())));
         }
 
         if (question.Constraints.MaxSelections is not null && count > question.Constraints.MaxSelections)
         {
-            errors.Add(new PredictionValidationError(
+            errors.Add(CreateError(
                 group.Id,
                 question.Id,
-                $"Select no more than {question.Constraints.MaxSelections} item(s)."));
+                "Validation.MaxSelections",
+                $"Select no more than {question.Constraints.MaxSelections} item(s).",
+                ("count", question.Constraints.MaxSelections.Value.ToString())));
         }
     }
 
@@ -123,18 +129,22 @@ public sealed class PredictionValidationService
 
         if (question.Constraints.MinValue is not null && numericValue < question.Constraints.MinValue)
         {
-            errors.Add(new PredictionValidationError(
+            errors.Add(CreateError(
                 group.Id,
                 question.Id,
-                $"Value must be at least {question.Constraints.MinValue}."));
+                "Validation.MinValue",
+                $"Value must be at least {question.Constraints.MinValue}.",
+                ("value", question.Constraints.MinValue.Value.ToString())));
         }
 
         if (question.Constraints.MaxValue is not null && numericValue > question.Constraints.MaxValue)
         {
-            errors.Add(new PredictionValidationError(
+            errors.Add(CreateError(
                 group.Id,
                 question.Id,
-                $"Value must be no more than {question.Constraints.MaxValue}."));
+                "Validation.MaxValue",
+                $"Value must be no more than {question.Constraints.MaxValue}.",
+                ("value", question.Constraints.MaxValue.Value.ToString())));
         }
     }
 
@@ -159,7 +169,25 @@ public sealed class PredictionValidationService
 
         if (athleteIds.Count != athleteIds.Distinct(StringComparer.OrdinalIgnoreCase).Count())
         {
-            errors.Add(new PredictionValidationError(group.Id, question.Id, "The same athlete cannot be selected more than once."));
+            errors.Add(CreateError(
+                group.Id,
+                question.Id,
+                "Validation.DuplicateAthletes",
+                "The same athlete cannot be selected more than once."));
         }
+    }
+
+    private static PredictionValidationError CreateError(
+        string groupId,
+        string questionId,
+        string messageKey,
+        string defaultMessage,
+        params (string Key, string Value)[] parameters)
+    {
+        return new PredictionValidationError(groupId, questionId, defaultMessage)
+        {
+            MessageKey = messageKey,
+            Parameters = parameters.ToDictionary(parameter => parameter.Key, parameter => parameter.Value)
+        };
     }
 }

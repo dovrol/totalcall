@@ -1,96 +1,106 @@
 @page "/competitions/{Slug}"
 @inject CompetitionService CompetitionService
+@inject LanguageService Language
 
-<PageTitle>@(competition?.Name ?? "Competition")</PageTitle>
+<PageTitle>@(competition?.Name ?? Language.Text("Competition.Section"))</PageTitle>
 
 @if (isLoading)
 {
-    <p class="muted">Loading competition...</p>
+    <p class="muted">@Language.Text("Competition.Loading")</p>
 }
 else if (competition is null)
 {
     <div class="page-header">
-        <h1>Competition not found</h1>
-        <p>No JSON configuration exists for this competition.</p>
+        <h1>@Language.Text("Competition.NotFoundTitle")</h1>
+        <p>@Language.Text("Competition.NotFoundDescription")</p>
     </div>
 }
 else
 {
-    <div class="page-header">
-        <p class="eyebrow">@competition.Status</p>
-        <h1>@competition.Name</h1>
-        @if (!string.IsNullOrWhiteSpace(competition.Description))
-        {
-            <p>@competition.Description</p>
-        }
+    <div class="meet-header">
+        <div>
+            <p class="status-pill">@Language.Text($"Status.{competition.Status}")</p>
+            <h1>@competition.Name</h1>
+            @if (!string.IsNullOrWhiteSpace(competition.Description))
+            {
+                <p>@competition.Description</p>
+            }
+        </div>
+        <div class="meet-header__actions">
+            <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">@Language.Text("Competition.MakePredictions")</a>
+            <a class="secondary-link" href="@($"competitions/{competition.Slug}/review")">@Language.Text("Competition.ReviewSaved")</a>
+        </div>
     </div>
 
     <div class="details-grid">
         <section class="panel">
-            <h2>Competition</h2>
+            <h2>@Language.Text("Competition.Section")</h2>
             <dl class="meta-list">
                 <div>
-                    <dt>Federation</dt>
-                    <dd>@(competition.Federation ?? "TBD")</dd>
+                    <dt>@Language.Text("Competition.Federation")</dt>
+                    <dd>@(competition.Federation ?? Language.Text("Common.Tbd"))</dd>
                 </div>
                 <div>
-                    <dt>Starts</dt>
+                    <dt>@Language.Text("Common.Starts")</dt>
                     <dd>@FormatDate(competition.StartDate)</dd>
                 </div>
                 <div>
-                    <dt>Prediction lock</dt>
+                    <dt>@Language.Text("Common.Locks")</dt>
                     <dd>@FormatDate(competition.PredictionLockAt)</dd>
                 </div>
                 <div>
-                    <dt>Config version</dt>
+                    <dt>@Language.Text("Competition.ConfigVersion")</dt>
                     <dd>@competition.ConfigVersion</dd>
                 </div>
             </dl>
         </section>
 
         <section class="panel">
-            <h2>Configured data</h2>
-            <dl class="meta-list">
-                <div>
-                    <dt>Athletes</dt>
-                    <dd>@competition.Athletes.Count</dd>
+            <h2>@Language.Text("Competition.Data")</h2>
+            <div class="stat-grid">
+                <div class="stat-tile">
+                    <span>@competition.Athletes.Count</span>
+                    <small>@Language.Text("Competition.Athletes")</small>
                 </div>
-                <div>
-                    <dt>Categories</dt>
-                    <dd>@competition.Categories.Count</dd>
+                <div class="stat-tile">
+                    <span>@competition.Categories.Count</span>
+                    <small>@Language.Text("Competition.Categories")</small>
                 </div>
-                <div>
-                    <dt>Prediction groups</dt>
-                    <dd>@competition.PredictionGroups.Count</dd>
+                <div class="stat-tile">
+                    <span>@competition.PredictionGroups.Count</span>
+                    <small>@Language.Text("Competition.Groups")</small>
                 </div>
-            </dl>
+            </div>
         </section>
     </div>
 
     <section class="panel">
-        <h2>Prediction groups</h2>
+        <h2>@Language.Text("Competition.PredictionGroups")</h2>
         <div class="group-list">
             @foreach (var group in competition.PredictionGroups.OrderBy(group => group.Order))
             {
                 <div class="group-list__item">
                     <div>
-                        <p class="prediction-group__mode">@group.Mode</p>
+                        @if (!string.IsNullOrWhiteSpace(group.Mode))
+                        {
+                            <p class="prediction-group__mode">@group.Mode</p>
+                        }
                         <h3>@group.Title</h3>
                         @if (!string.IsNullOrWhiteSpace(group.Description))
                         {
                             <p>@group.Description</p>
                         }
                     </div>
-                    <span>@group.Questions.Count question(s)</span>
+                    <span>@Language.Format("Competition.QuestionsCount", group.Questions.Count)</span>
                 </div>
             }
         </div>
     </section>
 
     <div class="actions">
-        <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">Make predictions</a>
-        <a class="secondary-link" href="@($"competitions/{competition.Slug}/review")">Review saved picks</a>
-        <a class="secondary-link" href="">Back to competitions</a>
+        <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">@Language.Text("Competition.MakePredictions")</a>
+        <a class="secondary-link" href="@($"competitions/{competition.Slug}/review")">@Language.Text("Competition.ReviewSaved")</a>
+        <a class="secondary-link" href="">@Language.Text("Common.BackToCompetitions")</a>
     </div>
 }
 
@@ -108,8 +118,8 @@ else
         isLoading = false;
     }
 
-    private static string FormatDate(DateTimeOffset? value)
+    private string FormatDate(DateTimeOffset? value)
     {
-        return value?.ToLocalTime().ToString("dd MMM yyyy HH:mm") ?? "TBD";
+        return value?.ToLocalTime().ToString("dd MMM yyyy HH:mm") ?? Language.Text("Common.Tbd");
     }
 }

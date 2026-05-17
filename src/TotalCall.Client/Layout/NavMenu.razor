@@ -1,7 +1,18 @@
-﻿<div class="nav-header">
-    <a class="brand" href="">TotalCall</a>
+﻿@implements IDisposable
+@inject LanguageService Language
+
+<div class="nav-header">
+    <a class="brand" href="">
+        <span class="brand-mark" aria-hidden="true">
+            <span></span>
+        </span>
+        <span>
+            <strong>TotalCall</strong>
+            <small>@Language.Text("App.Tagline")</small>
+        </span>
+    </a>
     <button title="Navigation menu" class="nav-toggle" @onclick="ToggleNavMenu">
-        Menu
+        @Language.Text("Nav.Menu")
     </button>
 </div>
 
@@ -9,17 +20,17 @@
     <nav class="nav-list">
         <div class="nav-item">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                Competitions
+                @Language.Text("Nav.Competitions")
             </NavLink>
         </div>
         <div class="nav-item">
             <NavLink class="nav-link" href="competitions/sheffield-2026">
-                Sheffield 2026
+                @Language.Text("Nav.Sheffield")
             </NavLink>
         </div>
         <div class="nav-item">
             <NavLink class="nav-link" href="competitions/worlds-2026">
-                Worlds 2026
+                @Language.Text("Nav.Worlds")
             </NavLink>
         </div>
     </nav>
@@ -30,8 +41,23 @@
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
+    protected override void OnInitialized()
+    {
+        Language.LanguageChanged += OnLanguageChanged;
+    }
+
+    public void Dispose()
+    {
+        Language.LanguageChanged -= OnLanguageChanged;
+    }
+
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void OnLanguageChanged()
+    {
+        _ = InvokeAsync(StateHasChanged);
     }
 }

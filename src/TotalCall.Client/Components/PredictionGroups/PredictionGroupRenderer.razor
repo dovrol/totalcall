@@ -1,6 +1,9 @@
 <section class="prediction-group">
     <div class="prediction-group__header">
-        <p class="prediction-group__mode">@Group.Mode</p>
+        @if (!string.IsNullOrWhiteSpace(Group.Mode))
+        {
+            <p class="prediction-group__mode">@Group.Mode</p>
+        }
         <h2>@Group.Title</h2>
         @if (!string.IsNullOrWhiteSpace(Group.Description))
         {

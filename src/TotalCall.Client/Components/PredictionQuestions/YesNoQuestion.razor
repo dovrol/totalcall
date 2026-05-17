@@ -1,7 +1,9 @@
+@inject LanguageService Language
+
 <QuestionShell Question="Question" ValidationErrors="ValidationErrors">
     <div class="segmented">
-        <button type="button" class="@GetButtonClass(true)" @onclick="() => SetValue(true)">Yes</button>
-        <button type="button" class="@GetButtonClass(false)" @onclick="() => SetValue(false)">No</button>
+        <button type="button" class="@GetButtonClass(true)" @onclick="() => SetValue(true)">@Language.Text("Common.Yes")</button>
+        <button type="button" class="@GetButtonClass(false)" @onclick="() => SetValue(false)">@Language.Text("Common.No")</button>
     </div>
 </QuestionShell>
 

@@ -1,6 +1,13 @@
+@inject LanguageService Language
+
 <div class="question-shell">
     <div class="question-shell__text">
-        <h3>@Question.Title</h3>
+        <div class="question-shell__heading">
+            <h3>@Question.Title</h3>
+            <span class="question-badge">
+                @(Question.Required ? Language.Text("Common.Required") : Language.Text("Common.Optional"))
+            </span>
+        </div>
         @if (!string.IsNullOrWhiteSpace(Question.Description))
         {
             <p>@Question.Description</p>

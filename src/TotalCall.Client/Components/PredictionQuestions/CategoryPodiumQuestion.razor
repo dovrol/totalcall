@@ -1,3 +1,5 @@
+@inject LanguageService Language
+
 <QuestionShell Question="Question" ValidationErrors="ValidationErrors">
     <div class="stack">
         @foreach (var position in Enumerable.Range(1, 3))
@@ -5,7 +7,7 @@
             <label class="field">
                 <span>@PlaceLabel(position)</span>
                 <select value="@GetAthleteAt(position)" @onchange="eventArgs => SetAthleteAt(position, eventArgs.Value?.ToString())">
-                    <option value="">Select athlete</option>
+                    <option value="">@Language.Text("Common.SelectAthlete")</option>
                     @foreach (var athlete in GetEligibleAthletes())
                     {
                         <option value="@athlete.Id">@athlete.DisplayName</option>
@@ -71,13 +73,13 @@
             : Competition.Athletes.Where(athlete => category.AthleteIds.Contains(athlete.Id)).ToArray();
     }
 
-    private static string PlaceLabel(int position)
+    private string PlaceLabel(int position)
     {
         return position switch
         {
-            1 => "Gold",
-            2 => "Silver",
-            3 => "Bronze",
+            1 => Language.Text("Common.Gold"),
+            2 => Language.Text("Common.Silver"),
+            3 => Language.Text("Common.Bronze"),
             _ => $"#{position}"
         };
     }

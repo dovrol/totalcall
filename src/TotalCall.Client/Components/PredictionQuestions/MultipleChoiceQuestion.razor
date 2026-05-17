@@ -1,6 +1,8 @@
+@inject LanguageService Language
+
 <QuestionShell Question="Question" ValidationErrors="ValidationErrors">
     <select class="control" value="@Answer?.Value.SelectedOptionId" @onchange="SetOption">
-        <option value="">Select option</option>
+        <option value="">@Language.Text("Common.SelectOption")</option>
         @foreach (var option in Question.Options)
         {
             <option value="@option.Id">@option.Label</option>

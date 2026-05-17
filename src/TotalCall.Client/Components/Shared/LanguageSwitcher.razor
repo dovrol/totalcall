@@ -1,0 +1,27 @@
+@inject LanguageService Language
+
+<div class="language-switcher" aria-label="Language">
+    @foreach (var option in Language.SupportedLanguages)
+    {
+        <button
+            type="button"
+            class="@GetButtonClass(option.Language)"
+            @onclick="() => SetLanguage(option.Language)">
+            @option.Label
+        </button>
+    }
+</div>
+
+@code {
+    private async Task SetLanguage(AppLanguage language)
+    {
+        await Language.SetLanguageAsync(language);
+    }
+
+    private string GetButtonClass(AppLanguage language)
+    {
+        return Language.CurrentLanguage == language
+            ? "language-switcher__button language-switcher__button--active"
+            : "language-switcher__button";
+    }
+}

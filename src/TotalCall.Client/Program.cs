@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using TotalCall.Client;
+using TotalCall.Client.Application.Localization;
 using TotalCall.Client.Application.Providers;
 using TotalCall.Client.Application.Services;
 using TotalCall.Client.Infrastructure.Browser;
@@ -16,6 +17,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped<ICompetitionProvider, JsonCompetitionProvider>();
 builder.Services.AddScoped<CompetitionService>();
 builder.Services.AddScoped<BrowserLocalStorage>();
+builder.Services.AddScoped<LanguageService>();
 builder.Services.AddScoped<IPredictionStore, LocalStoragePredictionStore>();
 builder.Services.AddScoped<PredictionService>();
 builder.Services.AddScoped<PredictionValidationService>();

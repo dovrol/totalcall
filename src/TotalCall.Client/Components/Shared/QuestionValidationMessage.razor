@@ -1,9 +1,11 @@
+@inject LanguageService Language
+
 @if (Errors.Count > 0)
 {
     <ul class="validation-list">
         @foreach (var error in Errors)
         {
-            <li>@error.Message</li>
+            <li>@Language.Validation(error)</li>
         }
     </ul>
 }

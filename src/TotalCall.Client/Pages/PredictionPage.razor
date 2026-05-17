@@ -2,32 +2,42 @@
 @inject CompetitionService CompetitionService
 @inject PredictionService PredictionService
 @inject PredictionValidationService PredictionValidationService
+@inject LanguageService Language
 
-<PageTitle>@(competition is null ? "Predictions" : $"{competition.Name} predictions")</PageTitle>
+<PageTitle>@(competition is null ? Language.Text("Predictions.PageTitle") : $"{competition.Name} - {Language.Text("Predictions.PageTitle")}")</PageTitle>
 
 @if (isLoading)
 {
-    <p class="muted">Loading prediction form...</p>
+    <p class="muted">@Language.Text("Predictions.Loading")</p>
 }
 else if (competition is null || predictionSet is null)
 {
     <div class="page-header">
-        <h1>Prediction form not found</h1>
-        <p>No JSON configuration exists for this competition.</p>
+        <h1>@Language.Text("Predictions.NotFoundTitle")</h1>
+        <p>@Language.Text("Predictions.NotFoundDescription")</p>
     </div>
 }
 else
 {
-    <div class="page-header">
-        <p class="eyebrow">@competition.Name</p>
-        <h1>Predictions</h1>
-        <p>Your answers are saved locally in this browser.</p>
+    <div class="meet-header">
+        <div>
+            <p class="eyebrow">@competition.Name</p>
+            <h1>@Language.Text("Predictions.PageTitle")</h1>
+            <p>@Language.Text("Predictions.Description")</p>
+        </div>
+        <div class="completion-card">
+            <span>@CompletionPercent%</span>
+            <small>@Language.Text("Predictions.Progress")</small>
+            <div class="progress-track">
+                <span style="@($"width: {CompletionPercent}%")"></span>
+            </div>
+        </div>
     </div>
 
     @if (!canEditPredictions)
     {
         <div class="notice notice--warning">
-            Prediction editing is locked for this competition.
+            @Language.Text("Predictions.Locked")
         </div>
     }
 
@@ -45,26 +55,28 @@ else
         </div>
 
         <aside class="prediction-sidebar">
-            <h2>Status</h2>
+            <h2>@Language.Text("Predictions.Progress")</h2>
             <dl class="meta-list">
                 <div>
-                    <dt>Saved answers</dt>
-                    <dd>@predictionSet.Answers.Count</dd>
+                    <dt>@Language.Text("Predictions.SavedAnswers")</dt>
+                    <dd>@AnsweredQuestions / @TotalQuestions</dd>
                 </div>
                 <div>
-                    <dt>Validation issues</dt>
+                    <dt>@Language.Text("Predictions.ValidationIssues")</dt>
                     <dd>@validationResult.Errors.Count</dd>
                 </div>
                 <div>
-                    <dt>Last saved</dt>
+                    <dt>@Language.Text("Predictions.LastSaved")</dt>
                     <dd>@FormatDate(predictionSet.SavedAt)</dd>
                 </div>
             </dl>
 
+            <p class="local-note">@Language.Text("Predictions.LocalNotice")</p>
+
             <button type="button" class="primary-button" @onclick="SaveAsync" disabled="@isSaving">
-                @(isSaving ? "Saving..." : "Save now")
+                @(isSaving ? Language.Text("Predictions.Saving") : Language.Text("Predictions.SaveNow"))
             </button>
-            <a class="secondary-link sidebar-link" href="@($"competitions/{competition.Slug}/review")">Review picks</a>
+            <a class="secondary-link sidebar-link" href="@($"competitions/{competition.Slug}/review")">@Language.Text("Predictions.ReviewPicks")</a>
 
             @if (!string.IsNullOrWhiteSpace(saveStatus))
             {
@@ -85,6 +97,14 @@ else
     private bool isSaving;
     private bool canEditPredictions;
     private string? saveStatus;
+
+    private int TotalQuestions => competition?.PredictionGroups.Sum(group => group.Questions.Count) ?? 0;
+
+    private int AnsweredQuestions => predictionSet?.Answers.Count ?? 0;
+
+    private int CompletionPercent => TotalQuestions == 0
+        ? 0
+        : Math.Min(100, (int)Math.Round(AnsweredQuestions / (double)TotalQuestions * 100));
 
     protected override async Task OnParametersSetAsync()
     {
@@ -128,8 +148,8 @@ else
 
         isSaving = false;
         saveStatus = validationResult.IsValid
-            ? "Saved locally."
-            : "Draft saved locally. Fix validation issues before final review.";
+            ? Language.Text("Predictions.SavedLocally")
+            : Language.Text("Predictions.DraftSaved");
     }
 
     private static string FormatDate(DateTimeOffset value)

@@ -1,9 +1,11 @@
+@inject LanguageService Language
+
 <QuestionShell Question="Question" ValidationErrors="ValidationErrors">
     <div class="inline-fields">
         <label class="field">
-            <span>Athlete</span>
+            <span>@Language.Text("Common.Athlete")</span>
             <select value="@Answer?.Value.SelectedAthleteId" @onchange="SetAthlete">
-                <option value="">Select athlete</option>
+                <option value="">@Language.Text("Common.SelectAthlete")</option>
                 @foreach (var athlete in GetEligibleAthletes())
                 {
                     <option value="@athlete.Id">@athlete.DisplayName</option>
@@ -11,7 +13,7 @@
             </select>
         </label>
         <label class="field">
-            <span>@(Question.Constraints.Unit ?? "Value")</span>
+            <span>@(Question.Constraints.Unit ?? Language.Text("Common.Value"))</span>
             <input
                 type="number"
                 min="@Question.Constraints.MinValue"

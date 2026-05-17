@@ -1,4 +1,7 @@
 ﻿@inherits LayoutComponentBase
+@implements IDisposable
+@inject LanguageService Language
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -6,12 +9,35 @@
 
     <main>
         <div class="top-row">
-            <span>Static JSON MVP</span>
-            <span>Local browser storage</span>
+            <div class="top-row__meta">
+                <span>@Language.Text("App.DataSource")</span>
+                <span>@Language.Text("App.Storage")</span>
+            </div>
+            <LanguageSwitcher />
         </div>
 
         <article class="content">
-            @Body
+            <div @key="Language.CurrentLanguage">
+                @Body
+            </div>
         </article>
     </main>
 </div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        Language.LanguageChanged += OnLanguageChanged;
+        await Language.InitializeAsync();
+    }
+
+    public void Dispose()
+    {
+        Language.LanguageChanged -= OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged()
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+}

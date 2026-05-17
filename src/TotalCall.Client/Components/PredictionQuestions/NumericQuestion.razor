@@ -1,6 +1,8 @@
+@inject LanguageService Language
+
 <QuestionShell Question="Question" ValidationErrors="ValidationErrors">
     <label class="field">
-        <span>@(Question.Constraints.Unit ?? "Value")</span>
+        <span>@(Question.Constraints.Unit ?? Language.Text("Common.Value"))</span>
         <input
             type="number"
             min="@Question.Constraints.MinValue"
