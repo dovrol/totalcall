@@ -1,96 +1,64 @@
 ﻿@page "/"
 @inject CompetitionService CompetitionService
 @inject IStringLocalizer<SharedResource> Localizer
-@inject PredictionTextService Text
 
 <PageTitle>TotalCall</PageTitle>
 
-<section class="workspace-header">
-    <div>
-        <p class="eyebrow">@Localizer["Home.Eyebrow"]</p>
-        <h1>@Localizer["Home.Title"]</h1>
-        <p>@Localizer["Home.Description"]</p>
-    </div>
-    <div class="header-metrics" aria-label="Competition summary">
-        <div>
-            <strong>@(competitions?.Count ?? 0)</strong>
-            <span>@Localizer["Home.CompetitionsLabel"]</span>
-        </div>
-        <div>
-            <strong>JSON</strong>
-            <span>@Localizer["App.DataSource"]</span>
-        </div>
-        <div>
-            <strong>LS</strong>
-            <span>@Localizer["App.Storage"]</span>
-        </div>
-    </div>
-</section>
+<AppPageHeader
+    Eyebrow="@Localizer["Home.Eyebrow"]"
+    Title="@Localizer["Home.Title"]"
+    Description="@Localizer["Home.Description"]">
+    <Actions>
+        @if (PrimaryCompetition is not null)
+        {
+            <AppButton Href="@($"competitions/{PrimaryCompetition.Slug}/predictions")">
+                @Localizer["Competition.MakePredictions"]
+            </AppButton>
+        }
+        <AppButton Href="#competitions" Variant="Secondary">
+            @Localizer["Nav.Competitions"]
+        </AppButton>
+    </Actions>
+    <Aside>
+        <AppStatCard
+            Label="@Localizer["Home.CompetitionsLabel"]"
+            Value="@((competitions?.Count ?? 0).ToString())"
+            Description="@Localizer["Home.CompetitionsHint"]" />
+    </Aside>
+</AppPageHeader>
 
 @if (competitions is null)
 {
-    <section class="empty-state">
-        <p>@Localizer["Home.Loading"]</p>
-    </section>
+    <AppLoadingState Message="@Localizer["Home.Loading"]" />
 }
 else if (competitions.Count == 0)
 {
-    <section class="empty-state">
-        <p>@Localizer["Home.Empty"]</p>
-    </section>
+    <AppEmptyState Title="@Localizer["Home.Empty"]" />
 }
 else
 {
-    <section class="meet-board">
-        <div class="board-header">
-            <div>
-                <p class="eyebrow">@Localizer["Home.CompetitionsLabel"]</p>
-                <h2>@Localizer["Nav.Competitions"]</h2>
-            </div>
-            <p>@Localizer["Home.CompetitionsHint"]</p>
-        </div>
-
-        <div class="meet-list">
+    <AppSection
+        Id="competitions"
+        Eyebrow="@Localizer["Home.CompetitionsLabel"]"
+        Title="@Localizer["Nav.Competitions"]"
+        Description="@Localizer["Home.CompetitionsHint"]">
+        <div class="grid gap-4 md:grid-cols-2">
             @foreach (var competition in competitions)
             {
-                <article class="meet-row">
-                    <div class="meet-row__main">
-                        <span class="status-chip">@Localizer[$"Status.{competition.Status}"]</span>
-                        <h3>@competition.Name</h3>
-                        @if (!string.IsNullOrWhiteSpace(Text.CompetitionDescription(competition)))
-                        {
-                            <p>@Text.CompetitionDescription(competition)</p>
-                        }
-                    </div>
-                    <dl class="meet-row__meta">
-                        <div>
-                            <dt>@Localizer["Common.Starts"]</dt>
-                            <dd>@FormatDate(competition.StartDate)</dd>
-                        </div>
-                        <div>
-                            <dt>@Localizer["Common.Locks"]</dt>
-                            <dd>@FormatDate(competition.PredictionLockAt)</dd>
-                        </div>
-                    </dl>
-                    <a class="button button--primary" href="@($"competitions/{competition.Slug}")">
-                        @Localizer["Common.OpenCompetition"]
-                    </a>
-                </article>
+                <CompetitionCard Competition="competition" />
             }
         </div>
-    </section>
+    </AppSection>
 }
 
 @code {
     private IReadOnlyList<CompetitionSummary>? competitions;
 
+    private CompetitionSummary? PrimaryCompetition => competitions?
+        .FirstOrDefault(competition => competition.Status == CompetitionStatus.Upcoming);
+
     protected override async Task OnInitializedAsync()
     {
         competitions = await CompetitionService.GetCompetitionsAsync();
-    }
-
-    private string FormatDate(DateTimeOffset? value)
-    {
-        return value?.ToLocalTime().ToString("d MMM yyyy HH:mm") ?? Localizer["Common.Tbd"];
     }
 }

@@ -1,0 +1,25 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<dl class="grid gap-3">
+    <div class="flex justify-between gap-4 border-b border-brand-border pb-3">
+        <dt class="text-xs font-medium text-brand-muted">@Localizer["Common.Starts"]</dt>
+        <dd class="m-0 text-right text-sm font-semibold text-brand-ink">@FormatDate(StartDate)</dd>
+    </div>
+    <div class="flex justify-between gap-4">
+        <dt class="text-xs font-medium text-brand-muted">@Localizer["Common.Locks"]</dt>
+        <dd class="m-0 text-right text-sm font-semibold text-brand-ink">@FormatDate(PredictionLockAt)</dd>
+    </div>
+</dl>
+
+@code {
+    [Parameter]
+    public DateTimeOffset? StartDate { get; set; }
+
+    [Parameter]
+    public DateTimeOffset? PredictionLockAt { get; set; }
+
+    private string FormatDate(DateTimeOffset? value)
+    {
+        return value?.ToLocalTime().ToString("d MMM yyyy HH:mm") ?? Localizer["Common.Tbd"];
+    }
+}

@@ -1,0 +1,26 @@
+<section class="@CssClass">
+    @ChildContent
+</section>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Padding { get; set; } = "Md";
+
+    [Parameter]
+    public string? AdditionalClass { get; set; }
+
+    private string CssClass => string.Join(
+        " ",
+        "rounded-lg border border-brand-border bg-brand-surface shadow-card",
+        Padding switch
+        {
+            "None" => string.Empty,
+            "Sm" => "p-4",
+            "Lg" => "p-6",
+            _ => "p-5"
+        },
+        AdditionalClass);
+}

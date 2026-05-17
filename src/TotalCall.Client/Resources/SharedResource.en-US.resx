@@ -56,6 +56,7 @@
   <data name="Competition.QuestionsCount" xml:space="preserve"><value>{0} question(s)</value></data>
   <data name="Competition.MakePredictions" xml:space="preserve"><value>Make predictions</value></data>
   <data name="Competition.ReviewSaved" xml:space="preserve"><value>Review picks</value></data>
+  <data name="Competition.ViewResults" xml:space="preserve"><value>View results</value></data>
   <data name="Predictions.PageTitle" xml:space="preserve"><value>Predictions</value></data>
   <data name="Predictions.Loading" xml:space="preserve"><value>Loading prediction form...</value></data>
   <data name="Predictions.NotFoundTitle" xml:space="preserve"><value>Prediction form not found</value></data>

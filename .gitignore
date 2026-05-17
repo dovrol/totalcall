@@ -5,6 +5,9 @@ obj/
 # .NET local tooling
 .config/dotnet-tools.json
 
+# Node/Tailwind
+node_modules/
+
 # IDE/editor files
 .vs/
 .vscode/

@@ -1,0 +1,11 @@
+<AppCard>
+    <div class="flex items-center gap-3">
+        <span class="size-3 animate-pulse rounded-full bg-brand-accent" aria-hidden="true"></span>
+        <p class="text-sm font-medium text-brand-muted">@Message</p>
+    </div>
+</AppCard>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Message { get; set; } = string.Empty;
+}

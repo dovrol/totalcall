@@ -7,35 +7,37 @@
 
 @if (isLoading)
 {
-    <p class="muted">@Localizer["Competition.Loading"]</p>
+    <AppLoadingState Message="@Localizer["Competition.Loading"]" />
 }
 else if (competition is null)
 {
-    <div class="page-header">
-        <h1>@Localizer["Competition.NotFoundTitle"]</h1>
-        <p>@Localizer["Competition.NotFoundDescription"]</p>
-    </div>
+    <AppErrorState
+        Title="@Localizer["Competition.NotFoundTitle"]"
+        Description="@Localizer["Competition.NotFoundDescription"]" />
 }
 else
 {
-    <div class="meet-header">
-        <div>
-            <p class="status-pill">@Localizer[$"Status.{competition.Status}"]</p>
-            <h1>@competition.Name</h1>
-            @if (!string.IsNullOrWhiteSpace(Text.CompetitionDescription(competition)))
-            {
-                <p>@Text.CompetitionDescription(competition)</p>
-            }
-        </div>
-        <div class="meet-header__actions">
-            <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">@Localizer["Competition.MakePredictions"]</a>
-            <a class="secondary-link" href="@($"competitions/{competition.Slug}/review")">@Localizer["Competition.ReviewSaved"]</a>
-        </div>
-    </div>
+    <AppPageHeader
+        Eyebrow="@Localizer[$"Status.{competition.Status}"]"
+        Title="@competition.Name"
+        Description="@Text.CompetitionDescription(competition)">
+        <Actions>
+            <AppButton Href="@($"competitions/{competition.Slug}/predictions")">
+                @Localizer["Competition.MakePredictions"]
+            </AppButton>
+            <AppButton Href="@($"competitions/{competition.Slug}/review")" Variant="Secondary">
+                @Localizer["Competition.ReviewSaved"]
+            </AppButton>
+        </Actions>
+        <Aside>
+            <AppStatCard Label="@Localizer["Competition.Athletes"]" Value="@competition.Athletes.Count.ToString()" />
+            <AppStatCard Label="@Localizer["Competition.Categories"]" Value="@competition.Categories.Count.ToString()" />
+            <AppStatCard Label="@Localizer["Competition.Groups"]" Value="@competition.PredictionGroups.Count.ToString()" />
+        </Aside>
+    </AppPageHeader>
 
-    <div class="details-grid">
-        <section class="panel">
-            <h2>@Localizer["Competition.Section"]</h2>
+    <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        <AppSection Surface="true" Title="@Localizer["Competition.Section"]">
             <dl class="meta-list">
                 <div>
                     <dt>@Localizer["Competition.Federation"]</dt>
@@ -54,29 +56,18 @@ else
                     <dd>@competition.ConfigVersion</dd>
                 </div>
             </dl>
-        </section>
+        </AppSection>
 
-        <section class="panel">
-            <h2>@Localizer["Competition.Data"]</h2>
-            <div class="stat-grid">
-                <div class="stat-tile">
-                    <span>@competition.Athletes.Count</span>
-                    <small>@Localizer["Competition.Athletes"]</small>
-                </div>
-                <div class="stat-tile">
-                    <span>@competition.Categories.Count</span>
-                    <small>@Localizer["Competition.Categories"]</small>
-                </div>
-                <div class="stat-tile">
-                    <span>@competition.PredictionGroups.Count</span>
-                    <small>@Localizer["Competition.Groups"]</small>
-                </div>
+        <AppSection Title="@Localizer["Competition.Data"]">
+            <div class="grid gap-3">
+                <AppStatCard Label="@Localizer["Competition.Athletes"]" Value="@competition.Athletes.Count.ToString()" />
+                <AppStatCard Label="@Localizer["Competition.Categories"]" Value="@competition.Categories.Count.ToString()" />
+                <AppStatCard Label="@Localizer["Competition.Groups"]" Value="@competition.PredictionGroups.Count.ToString()" />
             </div>
-        </section>
+        </AppSection>
     </div>
 
-    <section class="panel">
-        <h2>@Localizer["Competition.PredictionGroups"]</h2>
+    <AppSection Surface="true" Title="@Localizer["Competition.PredictionGroups"]">
         <div class="group-list">
             @foreach (var group in competition.PredictionGroups.OrderBy(group => group.Order))
             {
@@ -96,12 +87,12 @@ else
                 </div>
             }
         </div>
-    </section>
+    </AppSection>
 
-    <div class="actions">
-        <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">@Localizer["Competition.MakePredictions"]</a>
-        <a class="secondary-link" href="@($"competitions/{competition.Slug}/review")">@Localizer["Competition.ReviewSaved"]</a>
-        <a class="secondary-link" href="">@Localizer["Common.BackToCompetitions"]</a>
+    <div class="flex flex-wrap gap-3">
+        <AppButton Href="@($"competitions/{competition.Slug}/predictions")">@Localizer["Competition.MakePredictions"]</AppButton>
+        <AppButton Href="@($"competitions/{competition.Slug}/review")" Variant="Secondary">@Localizer["Competition.ReviewSaved"]</AppButton>
+        <AppButton Href="" Variant="Ghost">@Localizer["Common.BackToCompetitions"]</AppButton>
     </div>
 }
 

@@ -1,0 +1,19 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<AppBadge Variant="@Variant">
+    @Localizer[$"Status.{Status}"]
+</AppBadge>
+
+@code {
+    [Parameter]
+    public CompetitionStatus Status { get; set; }
+
+    private string Variant => Status switch
+    {
+        CompetitionStatus.Upcoming => "Success",
+        CompetitionStatus.Locked => "Warning",
+        CompetitionStatus.Completed => "Accent",
+        CompetitionStatus.Archived => "Neutral",
+        _ => "Neutral"
+    };
+}

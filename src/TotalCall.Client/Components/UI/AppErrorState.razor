@@ -1,0 +1,17 @@
+<AppCard AdditionalClass="border-orange-200 bg-orange-50">
+    <div class="space-y-2">
+        <h2 class="text-lg font-semibold text-orange-950">@Title</h2>
+        @if (!string.IsNullOrWhiteSpace(Description))
+        {
+            <p class="text-sm leading-6 text-orange-900">@Description</p>
+        }
+    </div>
+</AppCard>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Description { get; set; }
+}

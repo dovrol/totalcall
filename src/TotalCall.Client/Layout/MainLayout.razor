@@ -1,34 +1,5 @@
 ﻿@inherits LayoutComponentBase
-@implements IDisposable
-@inject CultureService Culture
 
-<div class="app-shell">
-    <header class="app-topbar">
-        <NavMenu />
-        <LanguageSwitcher />
-    </header>
-
-    <main class="app-main">
-        <article class="app-content" @key="Culture.CurrentCultureName">
-            @Body
-        </article>
-    </main>
-</div>
-
-@code {
-    protected override async Task OnInitializedAsync()
-    {
-        Culture.CultureChanged += OnCultureChanged;
-        await Culture.InitializeAsync();
-    }
-
-    public void Dispose()
-    {
-        Culture.CultureChanged -= OnCultureChanged;
-    }
-
-    private void OnCultureChanged()
-    {
-        _ = InvokeAsync(StateHasChanged);
-    }
-}
+<AppShell>
+    @Body
+</AppShell>

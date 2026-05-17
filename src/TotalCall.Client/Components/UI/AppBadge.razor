@@ -1,0 +1,32 @@
+<span class="@CssClass">
+    @ChildContent
+</span>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Variant { get; set; } = "Neutral";
+
+    [Parameter]
+    public string? AdditionalClass { get; set; }
+
+    private string CssClass => string.Join(
+        " ",
+        "inline-flex min-h-6 w-fit items-center rounded-full border px-2.5 text-xs font-medium",
+        GetVariantClass(),
+        AdditionalClass);
+
+    private string GetVariantClass()
+    {
+        return Variant switch
+        {
+            "Success" => "border-emerald-200 bg-emerald-50 text-emerald-800",
+            "Warning" => "border-amber-200 bg-amber-50 text-amber-800",
+            "Danger" => "border-orange-200 bg-orange-50 text-orange-800",
+            "Accent" => "border-sky-200 bg-sky-50 text-sky-800",
+            _ => "border-brand-border bg-brand-surface-muted text-brand-muted"
+        };
+    }
+}

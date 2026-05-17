@@ -1,0 +1,34 @@
+@implements IDisposable
+@inject CultureService Culture
+
+<div class="app-shell-background min-h-screen">
+    <AppHeader />
+
+    <main>
+        <PageContainer>
+            <article class="grid gap-6" @key="Culture.CurrentCultureName">
+                @ChildContent
+            </article>
+        </PageContainer>
+    </main>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Culture.CultureChanged += OnCultureChanged;
+    }
+
+    public void Dispose()
+    {
+        Culture.CultureChanged -= OnCultureChanged;
+    }
+
+    private void OnCultureChanged()
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+}

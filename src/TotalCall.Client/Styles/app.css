@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+@source "../**/*.razor";
+@source "../wwwroot/index.html";
+
+@theme {
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --color-brand-ink: #17202a;
+  --color-brand-muted: #667085;
+  --color-brand-background: #f5f7fa;
+  --color-brand-surface: #ffffff;
+  --color-brand-surface-muted: #f0f3f7;
+  --color-brand-border: #d8dee7;
+  --color-brand-accent: #2f6f8f;
+  --color-brand-accent-strong: #255a75;
+  --color-brand-steel: #405264;
+  --color-brand-platform: #eff2ee;
+  --color-brand-success: #198754;
+  --color-brand-warning: #b7791f;
+  --color-brand-danger: #c2410c;
+
+  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.06);
+  --shadow-soft: 0 10px 24px rgb(16 24 40 / 0.06);
+}
+
+@layer base {
+  html {
+    @apply bg-brand-background text-brand-ink antialiased;
+  }
+
+  body {
+    @apply m-0 min-h-screen bg-brand-background font-sans;
+  }
+
+  button,
+  input,
+  select {
+    font: inherit;
+  }
+
+  h1:focus {
+    outline: none;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+@layer components {
+  .focus-ring {
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent;
+  }
+
+  .app-shell-background {
+    background:
+      linear-gradient(180deg, rgb(239 242 238 / 0.95), rgb(245 247 250 / 0) 22rem),
+      var(--color-brand-background);
+  }
+
+  .meta-list {
+    @apply grid gap-3;
+  }
+
+  .meta-list div {
+    @apply flex justify-between gap-4 border-b border-brand-border pb-3 last:border-b-0 last:pb-0;
+  }
+
+  .meta-list dt {
+    @apply text-xs font-medium text-brand-muted;
+  }
+
+  .meta-list dd {
+    @apply m-0 text-right text-sm font-semibold text-brand-ink;
+  }
+
+  .prediction-layout {
+    @apply grid gap-5 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start;
+  }
+
+  .prediction-layout__main,
+  .group-list,
+  .review-list,
+  .answer-list,
+  .stack,
+  .choice-list {
+    @apply grid gap-3;
+  }
+
+  .prediction-sidebar {
+    @apply h-fit rounded-lg border border-brand-border bg-brand-surface p-5 shadow-card lg:sticky lg:top-24;
+  }
+
+  .progress-track {
+    @apply mt-3 h-2 overflow-hidden rounded-full bg-brand-border;
+  }
+
+  .progress-track span {
+    @apply block h-full rounded-full bg-brand-accent;
+  }
+
+  .prediction-group {
+    @apply overflow-hidden rounded-lg border border-brand-border bg-brand-surface shadow-card;
+  }
+
+  .prediction-group__header {
+    @apply border-b border-brand-border bg-brand-surface-muted p-5;
+  }
+
+  .prediction-group__header h2 {
+    @apply my-2 text-lg font-semibold text-brand-ink;
+  }
+
+  .prediction-group__header p:last-child {
+    @apply mb-0 text-sm leading-6 text-brand-muted;
+  }
+
+  .prediction-group__questions {
+    @apply grid;
+  }
+
+  .prediction-question + .prediction-question {
+    @apply border-t border-brand-border;
+  }
+
+  .prediction-group__mode {
+    @apply inline-flex min-h-6 w-fit items-center rounded-full border border-sky-200 bg-sky-50 px-2.5 text-xs font-semibold uppercase text-sky-800;
+  }
+
+  .question-shell {
+    @apply grid gap-4 p-5;
+  }
+
+  .question-shell__heading {
+    @apply flex flex-wrap items-center gap-2;
+  }
+
+  .question-shell__heading h3 {
+    @apply mb-0 text-base font-semibold text-brand-ink;
+  }
+
+  .question-shell__text p {
+    @apply mt-2 mb-0 text-sm leading-6 text-brand-muted;
+  }
+
+  .question-badge {
+    @apply inline-flex min-h-6 items-center rounded-full border border-brand-border bg-brand-surface-muted px-2.5 text-xs font-medium text-brand-muted;
+  }
+
+  .inline-fields {
+    @apply grid gap-3 sm:grid-cols-2;
+  }
+
+  .field {
+    @apply grid gap-2 text-sm font-medium text-brand-steel;
+  }
+
+  .field input,
+  .field select,
+  .control {
+    @apply min-h-11 w-full rounded-lg border border-brand-border bg-brand-surface px-3 py-2 text-sm text-brand-ink focus:border-brand-accent focus:outline-2 focus:outline-offset-2 focus:outline-brand-accent;
+  }
+
+  .choice-row {
+    @apply flex min-h-11 items-center gap-3 rounded-lg border border-brand-border bg-brand-surface px-3 py-2 text-sm text-brand-ink hover:bg-brand-surface-muted;
+  }
+
+  .choice-row input {
+    @apply size-4 accent-brand-accent;
+  }
+
+  .segmented {
+    @apply inline-grid grid-cols-2 overflow-hidden rounded-lg border border-brand-border bg-brand-surface;
+  }
+
+  .segmented__button {
+    @apply min-h-11 border-0 bg-brand-surface px-4 py-2 text-sm font-semibold text-brand-steel focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent;
+  }
+
+  .segmented__button + .segmented__button {
+    @apply border-l border-brand-border;
+  }
+
+  .segmented__button--active {
+    @apply bg-brand-ink text-white;
+  }
+
+  .validation-list {
+    @apply m-0 border-l-4 border-brand-danger py-1 pl-3 text-sm text-brand-danger;
+  }
+
+  .notice {
+    @apply rounded-lg border p-4 text-sm font-medium;
+  }
+
+  .notice--warning {
+    @apply border-amber-300 bg-amber-50 text-amber-900;
+  }
+
+  .muted,
+  .local-note,
+  .save-status {
+    @apply text-sm text-brand-muted;
+  }
+
+  .answer-row,
+  .group-list__item {
+    @apply grid gap-3 rounded-lg border border-brand-border bg-brand-surface-muted p-4;
+  }
+
+  .answer-row h3,
+  .group-list__item h3 {
+    @apply mb-1 text-base font-semibold text-brand-ink;
+  }
+
+  .answer-row p,
+  .group-list__item p {
+    @apply mb-0 text-sm leading-6 text-brand-muted;
+  }
+
+  .loading-progress {
+    @apply relative mx-auto mb-4 mt-[20vh] block h-32 w-32;
+  }
+
+  .loading-progress circle {
+    fill: none;
+    stroke: var(--color-brand-border);
+    stroke-width: 0.6rem;
+    transform-origin: 50% 50%;
+    transform: rotate(-90deg);
+  }
+
+  .loading-progress circle:last-child {
+    stroke: var(--color-brand-accent);
+    stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+    transition: stroke-dasharray 0.05s ease-in-out;
+  }
+
+  .loading-progress-text {
+    @apply absolute inset-x-0 top-[calc(20vh+3.25rem)] text-center font-semibold;
+  }
+
+  .loading-progress-text::after {
+    content: var(--blazor-load-percentage-text, "Loading");
+  }
+
+  #blazor-error-ui {
+    @apply fixed inset-x-0 bottom-0 z-50 hidden bg-amber-100 px-5 py-3 text-sm text-amber-950 shadow;
+  }
+
+  #blazor-error-ui .dismiss {
+    @apply absolute right-3 top-2 cursor-pointer;
+  }
+}

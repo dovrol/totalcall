@@ -1,0 +1,33 @@
+@inject CultureService Culture
+
+<div class="inline-flex rounded-full border border-brand-border bg-brand-surface p-1" aria-label="Culture">
+    @foreach (var option in Culture.SupportedCultures)
+    {
+        <button
+            type="button"
+            class="@GetButtonClass(option.CultureName)"
+            aria-pressed="@IsCurrentCulture(option.CultureName)"
+            @onclick="() => SetCulture(option.CultureName)">
+            @option.Label
+        </button>
+    }
+</div>
+
+@code {
+    private async Task SetCulture(string cultureName)
+    {
+        await Culture.SetCultureAsync(cultureName);
+    }
+
+    private bool IsCurrentCulture(string cultureName)
+    {
+        return string.Equals(Culture.CurrentCultureName, cultureName, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private string GetButtonClass(string cultureName)
+    {
+        return IsCurrentCulture(cultureName)
+            ? "focus-ring inline-flex min-h-8 min-w-9 items-center justify-center rounded-full bg-brand-ink px-2 text-xs font-semibold text-white"
+            : "focus-ring inline-flex min-h-8 min-w-9 items-center justify-center rounded-full px-2 text-xs font-semibold text-brand-muted hover:bg-brand-surface-muted";
+    }
+}

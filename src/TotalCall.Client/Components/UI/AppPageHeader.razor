@@ -1,0 +1,44 @@
+<header class="grid gap-6 py-2 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+    <div class="max-w-3xl space-y-3">
+        @if (!string.IsNullOrWhiteSpace(Eyebrow))
+        {
+            <p class="text-sm font-semibold text-brand-accent">@Eyebrow</p>
+        }
+        <div class="space-y-2">
+            <h1 class="text-3xl font-semibold text-brand-ink sm:text-4xl">@Title</h1>
+            @if (!string.IsNullOrWhiteSpace(Description))
+            {
+                <p class="text-base leading-7 text-brand-muted">@Description</p>
+            }
+        </div>
+        @if (Actions is not null)
+        {
+            <div class="flex flex-wrap gap-3 pt-1">
+                @Actions
+            </div>
+        }
+    </div>
+    @if (Aside is not null)
+    {
+        <div class="grid min-w-0 gap-3 sm:grid-cols-3 md:min-w-80 md:grid-cols-1 lg:grid-cols-3">
+            @Aside
+        </div>
+    }
+</header>
+
+@code {
+    [Parameter]
+    public string? Eyebrow { get; set; }
+
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Description { get; set; }
+
+    [Parameter]
+    public RenderFragment? Actions { get; set; }
+
+    [Parameter]
+    public RenderFragment? Aside { get; set; }
+}

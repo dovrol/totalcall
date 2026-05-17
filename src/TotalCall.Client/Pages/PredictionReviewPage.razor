@@ -10,35 +10,30 @@
 
 @if (isLoading)
 {
-    <p class="muted">@Localizer["Review.Loading"]</p>
+    <AppLoadingState Message="@Localizer["Review.Loading"]" />
 }
 else if (competition is null || predictionSet is null)
 {
-    <div class="page-header">
-        <h1>@Localizer["Review.NotFoundTitle"]</h1>
-        <p>@Localizer["Review.NotFoundDescription"]</p>
-    </div>
+    <AppErrorState
+        Title="@Localizer["Review.NotFoundTitle"]"
+        Description="@Localizer["Review.NotFoundDescription"]" />
 }
 else
 {
-    <div class="meet-header">
-        <div>
-            <p class="eyebrow">@competition.Name</p>
-            <h1>@Localizer["Review.PageTitle"]</h1>
-            <p>@Localizer["Review.Description"]</p>
-        </div>
-        <div class="completion-card">
-            <span>@predictionSet.Answers.Count</span>
-            <small>@Localizer["Predictions.SavedAnswers"]</small>
-        </div>
-    </div>
+    <AppPageHeader
+        Eyebrow="@competition.Name"
+        Title="@Localizer["Review.PageTitle"]"
+        Description="@Localizer["Review.Description"]">
+        <Aside>
+            <AppStatCard Label="@Localizer["Predictions.SavedAnswers"]" Value="@predictionSet.Answers.Count.ToString()" />
+        </Aside>
+    </AppPageHeader>
 
     @if (predictionSet.Answers.Count == 0)
     {
-        <section class="panel">
-            <h2>@Localizer["Review.EmptyTitle"]</h2>
-            <p class="muted">@Localizer["Review.EmptyDescription"]</p>
-        </section>
+        <AppEmptyState
+            Title="@Localizer["Review.EmptyTitle"]"
+            Description="@Localizer["Review.EmptyDescription"]" />
     }
     else
     {
@@ -52,7 +47,7 @@ else
         <div class="review-list">
             @foreach (var group in competition.PredictionGroups.OrderBy(group => group.Order))
             {
-                <section class="panel">
+                <AppSection Surface="true">
                     @if (!string.IsNullOrWhiteSpace(group.Mode))
                     {
                         <p class="prediction-group__mode">@group.Mode</p>
@@ -76,14 +71,14 @@ else
                             </article>
                         }
                     </div>
-                </section>
+                </AppSection>
             }
         </div>
     }
 
-    <div class="actions">
-        <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">@Localizer["Review.EditPredictions"]</a>
-        <a class="secondary-link" href="@($"competitions/{competition.Slug}")">@Localizer["Common.BackToCompetition"]</a>
+    <div class="flex flex-wrap gap-3">
+        <AppButton Href="@($"competitions/{competition.Slug}/predictions")">@Localizer["Review.EditPredictions"]</AppButton>
+        <AppButton Href="@($"competitions/{competition.Slug}")" Variant="Secondary">@Localizer["Common.BackToCompetition"]</AppButton>
     </div>
 }
 
