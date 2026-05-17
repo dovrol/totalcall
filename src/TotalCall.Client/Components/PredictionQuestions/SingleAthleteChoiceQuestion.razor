@@ -1,8 +1,8 @@
-@inject LanguageService Language
+@inject IStringLocalizer<SharedResource> Localizer
 
-<QuestionShell Question="Question" ValidationErrors="ValidationErrors">
+<QuestionShell Competition="Competition" Question="Question" ValidationErrors="ValidationErrors">
     <select class="control" value="@Answer?.Value.SelectedAthleteId" @onchange="SetAthlete">
-        <option value="">@Language.Text("Common.SelectAthlete")</option>
+        <option value="">@Localizer["Common.SelectAthlete"]</option>
         @foreach (var athlete in GetEligibleAthletes())
         {
             <option value="@athlete.Id">@athlete.DisplayName</option>

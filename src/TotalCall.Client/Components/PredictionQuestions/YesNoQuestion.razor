@@ -1,13 +1,16 @@
-@inject LanguageService Language
+@inject IStringLocalizer<SharedResource> Localizer
 
-<QuestionShell Question="Question" ValidationErrors="ValidationErrors">
+<QuestionShell Competition="Competition" Question="Question" ValidationErrors="ValidationErrors">
     <div class="segmented">
-        <button type="button" class="@GetButtonClass(true)" @onclick="() => SetValue(true)">@Language.Text("Common.Yes")</button>
-        <button type="button" class="@GetButtonClass(false)" @onclick="() => SetValue(false)">@Language.Text("Common.No")</button>
+        <button type="button" class="@GetButtonClass(true)" @onclick="() => SetValue(true)">@Localizer["Common.Yes"]</button>
+        <button type="button" class="@GetButtonClass(false)" @onclick="() => SetValue(false)">@Localizer["Common.No"]</button>
     </div>
 </QuestionShell>
 
 @code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
     [Parameter, EditorRequired]
     public string GroupId { get; set; } = string.Empty;
 

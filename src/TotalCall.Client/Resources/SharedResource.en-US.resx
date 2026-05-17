@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="App.Tagline" xml:space="preserve"><value>Fantasy powerlifting</value></data>
+  <data name="App.DataSource" xml:space="preserve"><value>Static JSON data</value></data>
+  <data name="App.Storage" xml:space="preserve"><value>Local storage</value></data>
+  <data name="Nav.Competitions" xml:space="preserve"><value>Competitions</value></data>
+  <data name="Nav.Sheffield" xml:space="preserve"><value>Sheffield 2026</value></data>
+  <data name="Nav.Worlds" xml:space="preserve"><value>Worlds 2026</value></data>
+  <data name="Nav.Menu" xml:space="preserve"><value>Menu</value></data>
+  <data name="Home.Eyebrow" xml:space="preserve"><value>Predictions for powerlifting fans</value></data>
+  <data name="Home.Title" xml:space="preserve"><value>TotalCall</value></data>
+  <data name="Home.Description" xml:space="preserve"><value>Pick a meet, move through prediction modules and save your calls locally in the browser.</value></data>
+  <data name="Home.Loading" xml:space="preserve"><value>Loading competitions...</value></data>
+  <data name="Home.Empty" xml:space="preserve"><value>No competitions are configured yet.</value></data>
+  <data name="Home.CompetitionsLabel" xml:space="preserve"><value>Active configurations</value></data>
+  <data name="Home.CompetitionsHint" xml:space="preserve"><value>Each meet can define a different question set while using the same components.</value></data>
+  <data name="Common.Starts" xml:space="preserve"><value>Starts</value></data>
+  <data name="Common.Locks" xml:space="preserve"><value>Prediction lock</value></data>
+  <data name="Common.Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Common.OpenCompetition" xml:space="preserve"><value>Open competition</value></data>
+  <data name="Common.BackToCompetition" xml:space="preserve"><value>Back to competition</value></data>
+  <data name="Common.BackToCompetitions" xml:space="preserve"><value>Back to competitions</value></data>
+  <data name="Common.Tbd" xml:space="preserve"><value>TBD</value></data>
+  <data name="Common.Required" xml:space="preserve"><value>Required</value></data>
+  <data name="Common.Optional" xml:space="preserve"><value>Optional</value></data>
+  <data name="Common.NotAnswered" xml:space="preserve"><value>Not answered</value></data>
+  <data name="Common.Yes" xml:space="preserve"><value>Yes</value></data>
+  <data name="Common.No" xml:space="preserve"><value>No</value></data>
+  <data name="Common.Value" xml:space="preserve"><value>Value</value></data>
+  <data name="Common.Athlete" xml:space="preserve"><value>Athlete</value></data>
+  <data name="Common.SelectAthlete" xml:space="preserve"><value>Select athlete</value></data>
+  <data name="Common.SelectOption" xml:space="preserve"><value>Select option</value></data>
+  <data name="Common.NoValue" xml:space="preserve"><value>no value</value></data>
+  <data name="Common.Gold" xml:space="preserve"><value>Gold</value></data>
+  <data name="Common.Silver" xml:space="preserve"><value>Silver</value></data>
+  <data name="Common.Bronze" xml:space="preserve"><value>Bronze</value></data>
+  <data name="Status.Upcoming" xml:space="preserve"><value>Open</value></data>
+  <data name="Status.Locked" xml:space="preserve"><value>Locked</value></data>
+  <data name="Status.Completed" xml:space="preserve"><value>Completed</value></data>
+  <data name="Status.Archived" xml:space="preserve"><value>Archived</value></data>
+  <data name="Competition.Loading" xml:space="preserve"><value>Loading competition...</value></data>
+  <data name="Competition.NotFoundTitle" xml:space="preserve"><value>Competition not found</value></data>
+  <data name="Competition.NotFoundDescription" xml:space="preserve"><value>No JSON configuration exists for this competition.</value></data>
+  <data name="Competition.Section" xml:space="preserve"><value>Competition</value></data>
+  <data name="Competition.Federation" xml:space="preserve"><value>Federation</value></data>
+  <data name="Competition.ConfigVersion" xml:space="preserve"><value>Config version</value></data>
+  <data name="Competition.Data" xml:space="preserve"><value>Data</value></data>
+  <data name="Competition.Athletes" xml:space="preserve"><value>Athletes</value></data>
+  <data name="Competition.Categories" xml:space="preserve"><value>Categories</value></data>
+  <data name="Competition.Groups" xml:space="preserve"><value>Prediction groups</value></data>
+  <data name="Competition.PredictionGroups" xml:space="preserve"><value>Prediction modules</value></data>
+  <data name="Competition.QuestionsCount" xml:space="preserve"><value>{0} question(s)</value></data>
+  <data name="Competition.MakePredictions" xml:space="preserve"><value>Make predictions</value></data>
+  <data name="Competition.ReviewSaved" xml:space="preserve"><value>Review picks</value></data>
+  <data name="Predictions.PageTitle" xml:space="preserve"><value>Predictions</value></data>
+  <data name="Predictions.Loading" xml:space="preserve"><value>Loading prediction form...</value></data>
+  <data name="Predictions.NotFoundTitle" xml:space="preserve"><value>Prediction form not found</value></data>
+  <data name="Predictions.NotFoundDescription" xml:space="preserve"><value>No JSON configuration exists for this competition.</value></data>
+  <data name="Predictions.Description" xml:space="preserve"><value>Your answers are saved locally in this browser.</value></data>
+  <data name="Predictions.Locked" xml:space="preserve"><value>Prediction editing is locked for this competition.</value></data>
+  <data name="Predictions.Progress" xml:space="preserve"><value>Progress</value></data>
+  <data name="Predictions.SavedAnswers" xml:space="preserve"><value>Saved answers</value></data>
+  <data name="Predictions.ValidationIssues" xml:space="preserve"><value>Validation issues</value></data>
+  <data name="Predictions.LastSaved" xml:space="preserve"><value>Last saved</value></data>
+  <data name="Predictions.SaveNow" xml:space="preserve"><value>Save now</value></data>
+  <data name="Predictions.Saving" xml:space="preserve"><value>Saving...</value></data>
+  <data name="Predictions.ReviewPicks" xml:space="preserve"><value>Review picks</value></data>
+  <data name="Predictions.SavedLocally" xml:space="preserve"><value>Saved locally.</value></data>
+  <data name="Predictions.DraftSaved" xml:space="preserve"><value>Draft saved locally. Fix validation issues before final review.</value></data>
+  <data name="Predictions.LocalNotice" xml:space="preserve"><value>The MVP works without an account. Picks are available only in this browser.</value></data>
+  <data name="Review.PageTitle" xml:space="preserve"><value>Prediction review</value></data>
+  <data name="Review.Loading" xml:space="preserve"><value>Loading prediction review...</value></data>
+  <data name="Review.NotFoundTitle" xml:space="preserve"><value>Prediction review not found</value></data>
+  <data name="Review.NotFoundDescription" xml:space="preserve"><value>No JSON configuration exists for this competition.</value></data>
+  <data name="Review.Description" xml:space="preserve"><value>These answers are read from local browser storage.</value></data>
+  <data name="Review.EmptyTitle" xml:space="preserve"><value>No saved answers</value></data>
+  <data name="Review.EmptyDescription" xml:space="preserve"><value>Start the prediction form to create a local draft.</value></data>
+  <data name="Review.ValidationIssues" xml:space="preserve"><value>This draft still has {0} validation issue(s).</value></data>
+  <data name="Review.EditPredictions" xml:space="preserve"><value>Edit predictions</value></data>
+  <data name="Validation.Required" xml:space="preserve"><value>This question is required.</value></data>
+  <data name="Validation.ExactSelections" xml:space="preserve"><value>Select exactly {count}.</value></data>
+  <data name="Validation.MinSelections" xml:space="preserve"><value>Select at least {count}.</value></data>
+  <data name="Validation.MaxSelections" xml:space="preserve"><value>Select no more than {count}.</value></data>
+  <data name="Validation.MinValue" xml:space="preserve"><value>Value must be at least {value}.</value></data>
+  <data name="Validation.MaxValue" xml:space="preserve"><value>Value must be no more than {value}.</value></data>
+  <data name="Validation.DuplicateAthletes" xml:space="preserve"><value>The same athlete cannot be selected more than once.</value></data>
+  <data name="Data.Competition.sheffield-2026.Description" xml:space="preserve"><value>Overall-focused prediction game around top lifters, world record percentage and bonus questions.</value></data>
+  <data name="Data.Competition.worlds-2026.Description" xml:space="preserve"><value>Category-based prediction game with quick mode, podium picks, best lifter and bonus questions.</value></data>
+  <data name="Data.Group.sheffield-2026.overall.Title" xml:space="preserve"><value>Overall ranking</value></data>
+  <data name="Data.Group.sheffield-2026.overall.Description" xml:space="preserve"><value>Pick the top overall finishers.</value></data>
+  <data name="Data.Group.sheffield-2026.records.Title" xml:space="preserve"><value>World record calls</value></data>
+  <data name="Data.Group.sheffield-2026.records.Description" xml:space="preserve"><value>Predict how close lifters get to world record standards.</value></data>
+  <data name="Data.Group.sheffield-2026.bonus.Title" xml:space="preserve"><value>Bonus questions</value></data>
+  <data name="Data.Group.worlds-2026.quick-mode.Title" xml:space="preserve"><value>Quick mode</value></data>
+  <data name="Data.Group.worlds-2026.quick-mode.Description" xml:space="preserve"><value>A short set of picks for people who do not want to fill every category.</value></data>
+  <data name="Data.Group.worlds-2026.category-picks.Title" xml:space="preserve"><value>Category podiums</value></data>
+  <data name="Data.Group.worlds-2026.category-picks.Description" xml:space="preserve"><value>Pick podiums in selected categories.</value></data>
+  <data name="Data.Group.worlds-2026.bonus.Title" xml:space="preserve"><value>Bonus questions</value></data>
+  <data name="Data.Question.sheffield-2026.top-overall.Title" xml:space="preserve"><value>Top 5 overall</value></data>
+  <data name="Data.Question.sheffield-2026.top-overall.Description" xml:space="preserve"><value>Rank the top five overall lifters.</value></data>
+  <data name="Data.Question.sheffield-2026.wr-percentage.Title" xml:space="preserve"><value>Highest world record percentage</value></data>
+  <data name="Data.Question.sheffield-2026.wr-percentage.Description" xml:space="preserve"><value>Choose the lifter and predict their percentage of the relevant world record.</value></data>
+  <data name="Data.Question.sheffield-2026.record-breakers.Title" xml:space="preserve"><value>Who breaks a world record?</value></data>
+  <data name="Data.Question.sheffield-2026.record-breakers.Description" xml:space="preserve"><value>Select any lifters you expect to break a world record.</value></data>
+  <data name="Data.Question.sheffield-2026.any-wr.Title" xml:space="preserve"><value>Will any world record be broken?</value></data>
+  <data name="Data.Question.sheffield-2026.highest-total.Title" xml:space="preserve"><value>Highest total of the meet</value></data>
+  <data name="Data.Question.sheffield-2026.highest-total.Description" xml:space="preserve"><value>Predict the highest total in kilograms.</value></data>
+  <data name="Data.Question.sheffield-2026.most-hyped-lift.Title" xml:space="preserve"><value>Most talked-about lift</value></data>
+  <data name="Data.Option.sheffield-2026.most-hyped-lift.squat.Label" xml:space="preserve"><value>Squat</value></data>
+  <data name="Data.Option.sheffield-2026.most-hyped-lift.bench.Label" xml:space="preserve"><value>Bench press</value></data>
+  <data name="Data.Option.sheffield-2026.most-hyped-lift.deadlift.Label" xml:space="preserve"><value>Deadlift</value></data>
+  <data name="Data.Question.worlds-2026.best-lifter.Title" xml:space="preserve"><value>Best lifter</value></data>
+  <data name="Data.Question.worlds-2026.best-lifter.Description" xml:space="preserve"><value>Pick the overall best lifter of the meet.</value></data>
+  <data name="Data.Question.worlds-2026.total-world-records.Title" xml:space="preserve"><value>How many world records will fall?</value></data>
+  <data name="Data.Question.worlds-2026.women-73-podium.Title" xml:space="preserve"><value>Women 73 kg podium</value></data>
+  <data name="Data.Question.worlds-2026.men-83-podium.Title" xml:space="preserve"><value>Men 83 kg podium</value></data>
+  <data name="Data.Question.worlds-2026.most-medals-country.Title" xml:space="preserve"><value>Which country wins the most medals?</value></data>
+  <data name="Data.Option.worlds-2026.most-medals-country.usa.Label" xml:space="preserve"><value>United States</value></data>
+  <data name="Data.Option.worlds-2026.most-medals-country.can.Label" xml:space="preserve"><value>Canada</value></data>
+  <data name="Data.Option.worlds-2026.most-medals-country.gbr.Label" xml:space="preserve"><value>Great Britain</value></data>
+  <data name="Data.Option.worlds-2026.most-medals-country.other.Label" xml:space="preserve"><value>Other</value></data>
+  <data name="Data.Question.worlds-2026.any-perfect-day.Title" xml:space="preserve"><value>Will any lifter go 9/9 and win gold?</value></data>
+</root>

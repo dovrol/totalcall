@@ -1,8 +1,8 @@
-@inject LanguageService Language
+@inject IStringLocalizer<SharedResource> Localizer
 
-<QuestionShell Question="Question" ValidationErrors="ValidationErrors">
+<QuestionShell Competition="Competition" Question="Question" ValidationErrors="ValidationErrors">
     <label class="field">
-        <span>@(Question.Constraints.Unit ?? Language.Text("Common.Value"))</span>
+        <span>@(Question.Constraints.Unit ?? Localizer["Common.Value"])</span>
         <input
             type="number"
             min="@Question.Constraints.MinValue"
@@ -14,6 +14,9 @@
 </QuestionShell>
 
 @code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
     [Parameter, EditorRequired]
     public string GroupId { get; set; } = string.Empty;
 

@@ -1,81 +1,82 @@
 @page "/competitions/{Slug}"
 @inject CompetitionService CompetitionService
-@inject LanguageService Language
+@inject IStringLocalizer<SharedResource> Localizer
+@inject PredictionTextService Text
 
-<PageTitle>@(competition?.Name ?? Language.Text("Competition.Section"))</PageTitle>
+<PageTitle>@(competition?.Name ?? Localizer["Competition.Section"])</PageTitle>
 
 @if (isLoading)
 {
-    <p class="muted">@Language.Text("Competition.Loading")</p>
+    <p class="muted">@Localizer["Competition.Loading"]</p>
 }
 else if (competition is null)
 {
     <div class="page-header">
-        <h1>@Language.Text("Competition.NotFoundTitle")</h1>
-        <p>@Language.Text("Competition.NotFoundDescription")</p>
+        <h1>@Localizer["Competition.NotFoundTitle"]</h1>
+        <p>@Localizer["Competition.NotFoundDescription"]</p>
     </div>
 }
 else
 {
     <div class="meet-header">
         <div>
-            <p class="status-pill">@Language.Text($"Status.{competition.Status}")</p>
+            <p class="status-pill">@Localizer[$"Status.{competition.Status}"]</p>
             <h1>@competition.Name</h1>
-            @if (!string.IsNullOrWhiteSpace(competition.Description))
+            @if (!string.IsNullOrWhiteSpace(Text.CompetitionDescription(competition)))
             {
-                <p>@competition.Description</p>
+                <p>@Text.CompetitionDescription(competition)</p>
             }
         </div>
         <div class="meet-header__actions">
-            <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">@Language.Text("Competition.MakePredictions")</a>
-            <a class="secondary-link" href="@($"competitions/{competition.Slug}/review")">@Language.Text("Competition.ReviewSaved")</a>
+            <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">@Localizer["Competition.MakePredictions"]</a>
+            <a class="secondary-link" href="@($"competitions/{competition.Slug}/review")">@Localizer["Competition.ReviewSaved"]</a>
         </div>
     </div>
 
     <div class="details-grid">
         <section class="panel">
-            <h2>@Language.Text("Competition.Section")</h2>
+            <h2>@Localizer["Competition.Section"]</h2>
             <dl class="meta-list">
                 <div>
-                    <dt>@Language.Text("Competition.Federation")</dt>
-                    <dd>@(competition.Federation ?? Language.Text("Common.Tbd"))</dd>
+                    <dt>@Localizer["Competition.Federation"]</dt>
+                    <dd>@(competition.Federation ?? Localizer["Common.Tbd"])</dd>
                 </div>
                 <div>
-                    <dt>@Language.Text("Common.Starts")</dt>
+                    <dt>@Localizer["Common.Starts"]</dt>
                     <dd>@FormatDate(competition.StartDate)</dd>
                 </div>
                 <div>
-                    <dt>@Language.Text("Common.Locks")</dt>
+                    <dt>@Localizer["Common.Locks"]</dt>
                     <dd>@FormatDate(competition.PredictionLockAt)</dd>
                 </div>
                 <div>
-                    <dt>@Language.Text("Competition.ConfigVersion")</dt>
+                    <dt>@Localizer["Competition.ConfigVersion"]</dt>
                     <dd>@competition.ConfigVersion</dd>
                 </div>
             </dl>
         </section>
 
         <section class="panel">
-            <h2>@Language.Text("Competition.Data")</h2>
+            <h2>@Localizer["Competition.Data"]</h2>
             <div class="stat-grid">
                 <div class="stat-tile">
                     <span>@competition.Athletes.Count</span>
-                    <small>@Language.Text("Competition.Athletes")</small>
+                    <small>@Localizer["Competition.Athletes"]</small>
                 </div>
                 <div class="stat-tile">
                     <span>@competition.Categories.Count</span>
-                    <small>@Language.Text("Competition.Categories")</small>
+                    <small>@Localizer["Competition.Categories"]</small>
                 </div>
                 <div class="stat-tile">
                     <span>@competition.PredictionGroups.Count</span>
-                    <small>@Language.Text("Competition.Groups")</small>
+                    <small>@Localizer["Competition.Groups"]</small>
                 </div>
             </div>
         </section>
     </div>
 
     <section class="panel">
-        <h2>@Language.Text("Competition.PredictionGroups")</h2>
+        <h2>@Localizer["Competition.PredictionGroups"]</h2>
         <div class="group-list">
             @foreach (var group in competition.PredictionGroups.OrderBy(group => group.Order))
             {
@@ -85,22 +86,22 @@ else
                         {
                             <p class="prediction-group__mode">@group.Mode</p>
                         }
-                        <h3>@group.Title</h3>
-                        @if (!string.IsNullOrWhiteSpace(group.Description))
+                        <h3>@Text.GroupTitle(competition, group)</h3>
+                        @if (!string.IsNullOrWhiteSpace(Text.GroupDescription(competition, group)))
                         {
-                            <p>@group.Description</p>
+                            <p>@Text.GroupDescription(competition, group)</p>
                         }
                     </div>
-                    <span>@Language.Format("Competition.QuestionsCount", group.Questions.Count)</span>
+                    <span>@Localizer["Competition.QuestionsCount", group.Questions.Count]</span>
                 </div>
             }
         </div>
     </section>
 
     <div class="actions">
-        <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">@Language.Text("Competition.MakePredictions")</a>
-        <a class="secondary-link" href="@($"competitions/{competition.Slug}/review")">@Language.Text("Competition.ReviewSaved")</a>
-        <a class="secondary-link" href="">@Language.Text("Common.BackToCompetitions")</a>
+        <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">@Localizer["Competition.MakePredictions"]</a>
+        <a class="secondary-link" href="@($"competitions/{competition.Slug}/review")">@Localizer["Competition.ReviewSaved"]</a>
+        <a class="secondary-link" href="">@Localizer["Common.BackToCompetitions"]</a>
     </div>
 }
 
@@ -120,6 +121,6 @@ else
 
     private string FormatDate(DateTimeOffset? value)
     {
-        return value?.ToLocalTime().ToString("dd MMM yyyy HH:mm") ?? Language.Text("Common.Tbd");
+        return value?.ToLocalTime().ToString("d MMM yyyy HH:mm") ?? Localizer["Common.Tbd"];
     }
 }

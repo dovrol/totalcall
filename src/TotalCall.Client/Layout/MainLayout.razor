@@ -1,25 +1,16 @@
 ﻿@inherits LayoutComponentBase
 @implements IDisposable
-@inject LanguageService Language
+@inject CultureService Culture
 
-<div class="page">
-    <div class="sidebar">
+<div class="app-shell">
+    <header class="app-topbar">
         <NavMenu />
-    </div>
+        <LanguageSwitcher />
+    </header>
 
-    <main>
-        <div class="top-row">
-            <div class="top-row__meta">
-                <span>@Language.Text("App.DataSource")</span>
-                <span>@Language.Text("App.Storage")</span>
-            </div>
-            <LanguageSwitcher />
-        </div>
-
-        <article class="content">
-            <div @key="Language.CurrentLanguage">
-                @Body
-            </div>
+    <main class="app-main">
+        <article class="app-content" @key="Culture.CurrentCultureName">
+            @Body
         </article>
     </main>
 </div>
@@ -27,16 +18,16 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        Language.LanguageChanged += OnLanguageChanged;
-        await Language.InitializeAsync();
+        Culture.CultureChanged += OnCultureChanged;
+        await Culture.InitializeAsync();
     }
 
     public void Dispose()
     {
-        Language.LanguageChanged -= OnLanguageChanged;
+        Culture.CultureChanged -= OnCultureChanged;
     }
 
-    private void OnLanguageChanged()
+    private void OnCultureChanged()
     {
         _ = InvokeAsync(StateHasChanged);
     }

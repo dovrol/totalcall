@@ -1,67 +1,84 @@
 ﻿@page "/"
 @inject CompetitionService CompetitionService
-@inject LanguageService Language
+@inject IStringLocalizer<SharedResource> Localizer
+@inject PredictionTextService Text
 
 <PageTitle>TotalCall</PageTitle>
 
-<div class="dashboard-hero">
+<section class="workspace-header">
     <div>
-        <p class="eyebrow">@Language.Text("Home.Eyebrow")</p>
-        <h1>@Language.Text("Home.Title")</h1>
-        <p>@Language.Text("Home.Description")</p>
+        <p class="eyebrow">@Localizer["Home.Eyebrow"]</p>
+        <h1>@Localizer["Home.Title"]</h1>
+        <p>@Localizer["Home.Description"]</p>
     </div>
-    <div class="hero-plate" aria-hidden="true">
-        <span class="hero-plate__bar"></span>
-        <span class="hero-plate__disc hero-plate__disc--red"></span>
-        <span class="hero-plate__disc hero-plate__disc--blue"></span>
-        <span class="hero-plate__disc hero-plate__disc--yellow"></span>
+    <div class="header-metrics" aria-label="Competition summary">
+        <div>
+            <strong>@(competitions?.Count ?? 0)</strong>
+            <span>@Localizer["Home.CompetitionsLabel"]</span>
+        </div>
+        <div>
+            <strong>JSON</strong>
+            <span>@Localizer["App.DataSource"]</span>
+        </div>
+        <div>
+            <strong>LS</strong>
+            <span>@Localizer["App.Storage"]</span>
+        </div>
     </div>
-</div>
+</section>
 
 @if (competitions is null)
 {
-    <p class="muted">@Language.Text("Home.Loading")</p>
+    <section class="empty-state">
+        <p>@Localizer["Home.Loading"]</p>
+    </section>
 }
 else if (competitions.Count == 0)
 {
-    <p class="muted">@Language.Text("Home.Empty")</p>
+    <section class="empty-state">
+        <p>@Localizer["Home.Empty"]</p>
+    </section>
 }
 else
 {
-    <div class="section-heading">
-        <div>
-            <p class="eyebrow">@Language.Text("Home.CompetitionsLabel")</p>
-            <h2>@Language.Text("Nav.Competitions")</h2>
+    <section class="meet-board">
+        <div class="board-header">
+            <div>
+                <p class="eyebrow">@Localizer["Home.CompetitionsLabel"]</p>
+                <h2>@Localizer["Nav.Competitions"]</h2>
+            </div>
+            <p>@Localizer["Home.CompetitionsHint"]</p>
         </div>
-        <p>@Language.Text("Home.CompetitionsHint")</p>
-    </div>
 
-    <div class="competition-grid">
-        @foreach (var competition in competitions)
-        {
-            <article class="competition-card">
-                <div>
-                    <p class="status-pill">@Language.Text($"Status.{competition.Status}")</p>
-                    <h2>@competition.Name</h2>
-                    @if (!string.IsNullOrWhiteSpace(competition.Description))
-                    {
-                        <p>@competition.Description</p>
-                    }
-                </div>
-                <dl class="meta-list">
-                    <div>
-                        <dt>@Language.Text("Common.Starts")</dt>
-                        <dd>@FormatDate(competition.StartDate)</dd>
+        <div class="meet-list">
+            @foreach (var competition in competitions)
+            {
+                <article class="meet-row">
+                    <div class="meet-row__main">
+                        <span class="status-chip">@Localizer[$"Status.{competition.Status}"]</span>
+                        <h3>@competition.Name</h3>
+                        @if (!string.IsNullOrWhiteSpace(Text.CompetitionDescription(competition)))
+                        {
+                            <p>@Text.CompetitionDescription(competition)</p>
+                        }
                     </div>
-                    <div>
-                        <dt>@Language.Text("Common.Locks")</dt>
-                        <dd>@FormatDate(competition.PredictionLockAt)</dd>
-                    </div>
-                </dl>
-                <a class="primary-link" href="@($"competitions/{competition.Slug}")">@Language.Text("Common.OpenCompetition")</a>
-            </article>
-        }
-    </div>
+                    <dl class="meet-row__meta">
+                        <div>
+                            <dt>@Localizer["Common.Starts"]</dt>
+                            <dd>@FormatDate(competition.StartDate)</dd>
+                        </div>
+                        <div>
+                            <dt>@Localizer["Common.Locks"]</dt>
+                            <dd>@FormatDate(competition.PredictionLockAt)</dd>
+                        </div>
+                    </dl>
+                    <a class="button button--primary" href="@($"competitions/{competition.Slug}")">
+                        @Localizer["Common.OpenCompetition"]
+                    </a>
+                </article>
+            }
+        </div>
+    </section>
 }
 
 @code {
@@ -74,6 +91,6 @@ else
 
     private string FormatDate(DateTimeOffset? value)
     {
-        return value?.ToLocalTime().ToString("dd MMM yyyy HH:mm") ?? Language.Text("Common.Tbd");
+        return value?.ToLocalTime().ToString("d MMM yyyy HH:mm") ?? Localizer["Common.Tbd"];
     }
 }

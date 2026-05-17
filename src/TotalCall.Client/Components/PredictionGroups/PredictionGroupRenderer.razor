@@ -1,13 +1,15 @@
+@inject PredictionTextService Text
+
 <section class="prediction-group">
     <div class="prediction-group__header">
         @if (!string.IsNullOrWhiteSpace(Group.Mode))
         {
             <p class="prediction-group__mode">@Group.Mode</p>
         }
-        <h2>@Group.Title</h2>
-        @if (!string.IsNullOrWhiteSpace(Group.Description))
+        <h2>@Text.GroupTitle(Competition, Group)</h2>
+        @if (!string.IsNullOrWhiteSpace(Text.GroupDescription(Competition, Group)))
         {
-            <p>@Group.Description</p>
+            <p>@Text.GroupDescription(Competition, Group)</p>
         }
     </div>
 

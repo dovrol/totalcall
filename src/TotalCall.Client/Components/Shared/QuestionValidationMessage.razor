@@ -1,11 +1,11 @@
-@inject LanguageService Language
+@inject IStringLocalizer<SharedResource> Localizer
 
 @if (Errors.Count > 0)
 {
     <ul class="validation-list">
         @foreach (var error in Errors)
         {
-            <li>@Language.Validation(error)</li>
+            <li>@FormatError(error)</li>
         }
     </ul>
 }
@@ -13,4 +13,18 @@
 @code {
     [Parameter]
     public IReadOnlyList<PredictionValidationError> Errors { get; set; } = [];
+
+    private string FormatError(PredictionValidationError error)
+    {
+        var message = Localizer[error.MessageKey].Value;
+
+        foreach (var parameter in error.Parameters)
+        {
+            message = message.Replace($"{{{parameter.Key}}}", parameter.Value, StringComparison.Ordinal);
+        }
+
+        return message == error.MessageKey
+            ? error.Message
+            : message;
+    }
 }

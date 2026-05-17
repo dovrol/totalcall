@@ -1,54 +1,46 @@
 ﻿@implements IDisposable
-@inject LanguageService Language
+@inject CultureService Culture
+@inject IStringLocalizer<SharedResource> Localizer
 
-<div class="nav-header">
+<div class="topnav">
     <a class="brand" href="">
-        <span class="brand-mark" aria-hidden="true">
-            <span></span>
-        </span>
+        <span class="brand-mark" aria-hidden="true"></span>
         <span>
             <strong>TotalCall</strong>
-            <small>@Language.Text("App.Tagline")</small>
+            <small>@Localizer["App.Tagline"]</small>
         </span>
     </a>
-    <button title="Navigation menu" class="nav-toggle" @onclick="ToggleNavMenu">
-        @Language.Text("Nav.Menu")
-    </button>
-</div>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="nav-list">
-        <div class="nav-item">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                @Language.Text("Nav.Competitions")
-            </NavLink>
-        </div>
-        <div class="nav-item">
-            <NavLink class="nav-link" href="competitions/sheffield-2026">
-                @Language.Text("Nav.Sheffield")
-            </NavLink>
-        </div>
-        <div class="nav-item">
-            <NavLink class="nav-link" href="competitions/worlds-2026">
-                @Language.Text("Nav.Worlds")
-            </NavLink>
-        </div>
+    <button type="button" class="nav-toggle" @onclick="ToggleNavMenu">
+        @Localizer["Nav.Menu"]
+    </button>
+
+    <nav class="@NavMenuCssClass">
+        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            @Localizer["Nav.Competitions"]
+        </NavLink>
+        <NavLink class="nav-link" href="competitions/sheffield-2026">
+            @Localizer["Nav.Sheffield"]
+        </NavLink>
+        <NavLink class="nav-link" href="competitions/worlds-2026">
+            @Localizer["Nav.Worlds"]
+        </NavLink>
     </nav>
 </div>
 
 @code {
     private bool collapseNavMenu = true;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string NavMenuCssClass => collapseNavMenu ? "topnav__links topnav__links--collapsed" : "topnav__links";
 
     protected override void OnInitialized()
     {
-        Language.LanguageChanged += OnLanguageChanged;
+        Culture.CultureChanged += OnCultureChanged;
     }
 
     public void Dispose()
     {
-        Language.LanguageChanged -= OnLanguageChanged;
+        Culture.CultureChanged -= OnCultureChanged;
     }
 
     private void ToggleNavMenu()
@@ -56,7 +48,7 @@
         collapseNavMenu = !collapseNavMenu;
     }
 
-    private void OnLanguageChanged()
+    private void OnCultureChanged()
     {
         _ = InvokeAsync(StateHasChanged);
     }

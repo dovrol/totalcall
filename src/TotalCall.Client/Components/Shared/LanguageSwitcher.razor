@@ -1,26 +1,26 @@
-@inject LanguageService Language
+@inject CultureService Culture
 
-<div class="language-switcher" aria-label="Language">
-    @foreach (var option in Language.SupportedLanguages)
+<div class="language-switcher" aria-label="Culture">
+    @foreach (var option in Culture.SupportedCultures)
     {
         <button
             type="button"
-            class="@GetButtonClass(option.Language)"
-            @onclick="() => SetLanguage(option.Language)">
+            class="@GetButtonClass(option.CultureName)"
+            @onclick="() => SetCulture(option.CultureName)">
             @option.Label
         </button>
     }
 </div>
 
 @code {
-    private async Task SetLanguage(AppLanguage language)
+    private async Task SetCulture(string cultureName)
     {
-        await Language.SetLanguageAsync(language);
+        await Culture.SetCultureAsync(cultureName);
     }
 
-    private string GetButtonClass(AppLanguage language)
+    private string GetButtonClass(string cultureName)
     {
-        return Language.CurrentLanguage == language
+        return string.Equals(Culture.CurrentCultureName, cultureName, StringComparison.OrdinalIgnoreCase)
             ? "language-switcher__button language-switcher__button--active"
             : "language-switcher__button";
     }

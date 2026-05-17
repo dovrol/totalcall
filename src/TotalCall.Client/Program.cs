@@ -14,14 +14,18 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddScoped<ICompetitionProvider, JsonCompetitionProvider>();
 builder.Services.AddScoped<CompetitionService>();
 builder.Services.AddScoped<BrowserLocalStorage>();
-builder.Services.AddScoped<LanguageService>();
+builder.Services.AddScoped<CultureService>();
 builder.Services.AddScoped<IPredictionStore, LocalStoragePredictionStore>();
 builder.Services.AddScoped<PredictionService>();
 builder.Services.AddScoped<PredictionValidationService>();
 builder.Services.AddScoped<PredictionAnswerDisplayService>();
+builder.Services.AddScoped<PredictionTextService>();
 builder.Services.AddScoped<IPredictionScoringService, PredictionScoringService>();
 
-await builder.Build().RunAsync();
+var host = builder.Build();
+await host.Services.GetRequiredService<CultureService>().InitializeAsync();
+await host.RunAsync();

@@ -2,19 +2,19 @@
 @inject CompetitionService CompetitionService
 @inject PredictionService PredictionService
 @inject PredictionValidationService PredictionValidationService
-@inject LanguageService Language
+@inject IStringLocalizer<SharedResource> Localizer
 
-<PageTitle>@(competition is null ? Language.Text("Predictions.PageTitle") : $"{competition.Name} - {Language.Text("Predictions.PageTitle")}")</PageTitle>
+<PageTitle>@(competition is null ? Localizer["Predictions.PageTitle"] : $"{competition.Name} - {Localizer["Predictions.PageTitle"]}")</PageTitle>
 
 @if (isLoading)
 {
-    <p class="muted">@Language.Text("Predictions.Loading")</p>
+    <p class="muted">@Localizer["Predictions.Loading"]</p>
 }
 else if (competition is null || predictionSet is null)
 {
     <div class="page-header">
-        <h1>@Language.Text("Predictions.NotFoundTitle")</h1>
-        <p>@Language.Text("Predictions.NotFoundDescription")</p>
+        <h1>@Localizer["Predictions.NotFoundTitle"]</h1>
+        <p>@Localizer["Predictions.NotFoundDescription"]</p>
     </div>
 }
 else
@@ -22,12 +22,12 @@ else
     <div class="meet-header">
         <div>
             <p class="eyebrow">@competition.Name</p>
-            <h1>@Language.Text("Predictions.PageTitle")</h1>
-            <p>@Language.Text("Predictions.Description")</p>
+            <h1>@Localizer["Predictions.PageTitle"]</h1>
+            <p>@Localizer["Predictions.Description"]</p>
         </div>
         <div class="completion-card">
             <span>@CompletionPercent%</span>
-            <small>@Language.Text("Predictions.Progress")</small>
+            <small>@Localizer["Predictions.Progress"]</small>
             <div class="progress-track">
                 <span style="@($"width: {CompletionPercent}%")"></span>
             </div>
@@ -37,7 +37,7 @@ else
     @if (!canEditPredictions)
     {
         <div class="notice notice--warning">
-            @Language.Text("Predictions.Locked")
+            @Localizer["Predictions.Locked"]
         </div>
     }
 
@@ -55,28 +55,28 @@ else
         </div>
 
         <aside class="prediction-sidebar">
-            <h2>@Language.Text("Predictions.Progress")</h2>
+            <h2>@Localizer["Predictions.Progress"]</h2>
             <dl class="meta-list">
                 <div>
-                    <dt>@Language.Text("Predictions.SavedAnswers")</dt>
+                    <dt>@Localizer["Predictions.SavedAnswers"]</dt>
                     <dd>@AnsweredQuestions / @TotalQuestions</dd>
                 </div>
                 <div>
-                    <dt>@Language.Text("Predictions.ValidationIssues")</dt>
+                    <dt>@Localizer["Predictions.ValidationIssues"]</dt>
                     <dd>@validationResult.Errors.Count</dd>
                 </div>
                 <div>
-                    <dt>@Language.Text("Predictions.LastSaved")</dt>
+                    <dt>@Localizer["Predictions.LastSaved"]</dt>
                     <dd>@FormatDate(predictionSet.SavedAt)</dd>
                 </div>
             </dl>
 
-            <p class="local-note">@Language.Text("Predictions.LocalNotice")</p>
+            <p class="local-note">@Localizer["Predictions.LocalNotice"]</p>
 
             <button type="button" class="primary-button" @onclick="SaveAsync" disabled="@isSaving">
-                @(isSaving ? Language.Text("Predictions.Saving") : Language.Text("Predictions.SaveNow"))
+                @(isSaving ? Localizer["Predictions.Saving"] : Localizer["Predictions.SaveNow"])
             </button>
-            <a class="secondary-link sidebar-link" href="@($"competitions/{competition.Slug}/review")">@Language.Text("Predictions.ReviewPicks")</a>
+            <a class="secondary-link sidebar-link" href="@($"competitions/{competition.Slug}/review")">@Localizer["Predictions.ReviewPicks"]</a>
 
             @if (!string.IsNullOrWhiteSpace(saveStatus))
             {
@@ -148,12 +148,12 @@ else
 
         isSaving = false;
         saveStatus = validationResult.IsValid
-            ? Language.Text("Predictions.SavedLocally")
-            : Language.Text("Predictions.DraftSaved");
+            ? Localizer["Predictions.SavedLocally"]
+            : Localizer["Predictions.DraftSaved"];
     }
 
     private static string FormatDate(DateTimeOffset value)
     {
-        return value.ToLocalTime().ToString("dd MMM yyyy HH:mm:ss");
+        return value.ToLocalTime().ToString("d MMM yyyy HH:mm:ss");
     }
 }

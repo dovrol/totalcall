@@ -1,16 +1,17 @@
-@inject LanguageService Language
+@inject IStringLocalizer<SharedResource> Localizer
+@inject PredictionTextService Text
 
 <div class="question-shell">
     <div class="question-shell__text">
         <div class="question-shell__heading">
-            <h3>@Question.Title</h3>
+            <h3>@Text.QuestionTitle(Competition, Question)</h3>
             <span class="question-badge">
-                @(Question.Required ? Language.Text("Common.Required") : Language.Text("Common.Optional"))
+                @(Question.Required ? Localizer["Common.Required"] : Localizer["Common.Optional"])
             </span>
         </div>
-        @if (!string.IsNullOrWhiteSpace(Question.Description))
+        @if (!string.IsNullOrWhiteSpace(Text.QuestionDescription(Competition, Question)))
         {
-            <p>@Question.Description</p>
+            <p>@Text.QuestionDescription(Competition, Question)</p>
         }
     </div>
 
@@ -22,6 +23,9 @@
 </div>
 
 @code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
     [Parameter, EditorRequired]
     public PredictionQuestion Question { get; set; } = default!;
 

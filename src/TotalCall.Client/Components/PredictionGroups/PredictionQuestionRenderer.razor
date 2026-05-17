@@ -17,13 +17,13 @@
             <MultiAthleteChoiceQuestion Competition="Competition" GroupId="@GroupId" Question="Question" Answer="Answer" ValidationErrors="ValidationErrors" AnswerChanged="AnswerChanged" />
             break;
         case PredictionQuestionType.YesNo:
-            <YesNoQuestion GroupId="@GroupId" Question="Question" Answer="Answer" ValidationErrors="ValidationErrors" AnswerChanged="AnswerChanged" />
+            <YesNoQuestion Competition="Competition" GroupId="@GroupId" Question="Question" Answer="Answer" ValidationErrors="ValidationErrors" AnswerChanged="AnswerChanged" />
             break;
         case PredictionQuestionType.MultipleChoice:
-            <MultipleChoiceQuestion GroupId="@GroupId" Question="Question" Answer="Answer" ValidationErrors="ValidationErrors" AnswerChanged="AnswerChanged" />
+            <MultipleChoiceQuestion Competition="Competition" GroupId="@GroupId" Question="Question" Answer="Answer" ValidationErrors="ValidationErrors" AnswerChanged="AnswerChanged" />
             break;
         case PredictionQuestionType.NumericQuestion:
-            <NumericQuestion GroupId="@GroupId" Question="Question" Answer="Answer" ValidationErrors="ValidationErrors" AnswerChanged="AnswerChanged" />
+            <NumericQuestion Competition="Competition" GroupId="@GroupId" Question="Question" Answer="Answer" ValidationErrors="ValidationErrors" AnswerChanged="AnswerChanged" />
             break;
     }
 </div>

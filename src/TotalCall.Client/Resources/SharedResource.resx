@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="App.Tagline" xml:space="preserve"><value>Fantasy trójbojowe</value></data>
+  <data name="App.DataSource" xml:space="preserve"><value>Statyczne dane JSON</value></data>
+  <data name="App.Storage" xml:space="preserve"><value>Zapis lokalny</value></data>
+  <data name="Nav.Competitions" xml:space="preserve"><value>Zawody</value></data>
+  <data name="Nav.Sheffield" xml:space="preserve"><value>Sheffield 2026</value></data>
+  <data name="Nav.Worlds" xml:space="preserve"><value>Worlds 2026</value></data>
+  <data name="Nav.Menu" xml:space="preserve"><value>Menu</value></data>
+  <data name="Home.Eyebrow" xml:space="preserve"><value>Typowania dla fanów trójboju</value></data>
+  <data name="Home.Title" xml:space="preserve"><value>TotalCall</value></data>
+  <data name="Home.Description" xml:space="preserve"><value>Wybierz zawody, przejdź przez moduły typowań i zapisz swoje predykcje lokalnie w przeglądarce.</value></data>
+  <data name="Home.Loading" xml:space="preserve"><value>Ładowanie zawodów...</value></data>
+  <data name="Home.Empty" xml:space="preserve"><value>Nie skonfigurowano jeszcze żadnych zawodów.</value></data>
+  <data name="Home.CompetitionsLabel" xml:space="preserve"><value>Aktywne konfiguracje</value></data>
+  <data name="Home.CompetitionsHint" xml:space="preserve"><value>Każde zawody mogą mieć inny zestaw pytań, ale korzystają z tych samych komponentów.</value></data>
+  <data name="Common.Starts" xml:space="preserve"><value>Start</value></data>
+  <data name="Common.Locks" xml:space="preserve"><value>Blokada typów</value></data>
+  <data name="Common.Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Common.OpenCompetition" xml:space="preserve"><value>Otwórz zawody</value></data>
+  <data name="Common.BackToCompetition" xml:space="preserve"><value>Wróć do zawodów</value></data>
+  <data name="Common.BackToCompetitions" xml:space="preserve"><value>Wróć do zawodów</value></data>
+  <data name="Common.Tbd" xml:space="preserve"><value>Do ustalenia</value></data>
+  <data name="Common.Required" xml:space="preserve"><value>Wymagane</value></data>
+  <data name="Common.Optional" xml:space="preserve"><value>Opcjonalne</value></data>
+  <data name="Common.NotAnswered" xml:space="preserve"><value>Brak odpowiedzi</value></data>
+  <data name="Common.Yes" xml:space="preserve"><value>Tak</value></data>
+  <data name="Common.No" xml:space="preserve"><value>Nie</value></data>
+  <data name="Common.Value" xml:space="preserve"><value>Wartość</value></data>
+  <data name="Common.Athlete" xml:space="preserve"><value>Zawodnik</value></data>
+  <data name="Common.SelectAthlete" xml:space="preserve"><value>Wybierz zawodnika</value></data>
+  <data name="Common.SelectOption" xml:space="preserve"><value>Wybierz opcję</value></data>
+  <data name="Common.NoValue" xml:space="preserve"><value>brak wartości</value></data>
+  <data name="Common.Gold" xml:space="preserve"><value>Złoto</value></data>
+  <data name="Common.Silver" xml:space="preserve"><value>Srebro</value></data>
+  <data name="Common.Bronze" xml:space="preserve"><value>Brąz</value></data>
+  <data name="Status.Upcoming" xml:space="preserve"><value>Otwarte</value></data>
+  <data name="Status.Locked" xml:space="preserve"><value>Zablokowane</value></data>
+  <data name="Status.Completed" xml:space="preserve"><value>Zakończone</value></data>
+  <data name="Status.Archived" xml:space="preserve"><value>Archiwum</value></data>
+  <data name="Competition.Loading" xml:space="preserve"><value>Ładowanie zawodów...</value></data>
+  <data name="Competition.NotFoundTitle" xml:space="preserve"><value>Nie znaleziono zawodów</value></data>
+  <data name="Competition.NotFoundDescription" xml:space="preserve"><value>Brak konfiguracji JSON dla tych zawodów.</value></data>
+  <data name="Competition.Section" xml:space="preserve"><value>Informacje o zawodach</value></data>
+  <data name="Competition.Federation" xml:space="preserve"><value>Federacja</value></data>
+  <data name="Competition.ConfigVersion" xml:space="preserve"><value>Wersja konfiguracji</value></data>
+  <data name="Competition.Data" xml:space="preserve"><value>Dane</value></data>
+  <data name="Competition.Athletes" xml:space="preserve"><value>Zawodnicy</value></data>
+  <data name="Competition.Categories" xml:space="preserve"><value>Kategorie</value></data>
+  <data name="Competition.Groups" xml:space="preserve"><value>Grupy typowań</value></data>
+  <data name="Competition.PredictionGroups" xml:space="preserve"><value>Moduły typowań</value></data>
+  <data name="Competition.QuestionsCount" xml:space="preserve"><value>{0} pytań</value></data>
+  <data name="Competition.MakePredictions" xml:space="preserve"><value>Typuj wyniki</value></data>
+  <data name="Competition.ReviewSaved" xml:space="preserve"><value>Podgląd typów</value></data>
+  <data name="Predictions.PageTitle" xml:space="preserve"><value>Typowania</value></data>
+  <data name="Predictions.Loading" xml:space="preserve"><value>Ładowanie formularza...</value></data>
+  <data name="Predictions.NotFoundTitle" xml:space="preserve"><value>Nie znaleziono formularza</value></data>
+  <data name="Predictions.NotFoundDescription" xml:space="preserve"><value>Brak konfiguracji JSON dla tych zawodów.</value></data>
+  <data name="Predictions.Description" xml:space="preserve"><value>Odpowiedzi zapisują się lokalnie w tej przeglądarce.</value></data>
+  <data name="Predictions.Locked" xml:space="preserve"><value>Edycja typów jest zablokowana dla tych zawodów.</value></data>
+  <data name="Predictions.Progress" xml:space="preserve"><value>Postęp</value></data>
+  <data name="Predictions.SavedAnswers" xml:space="preserve"><value>Zapisane odpowiedzi</value></data>
+  <data name="Predictions.ValidationIssues" xml:space="preserve"><value>Błędy walidacji</value></data>
+  <data name="Predictions.LastSaved" xml:space="preserve"><value>Ostatni zapis</value></data>
+  <data name="Predictions.SaveNow" xml:space="preserve"><value>Zapisz teraz</value></data>
+  <data name="Predictions.Saving" xml:space="preserve"><value>Zapisywanie...</value></data>
+  <data name="Predictions.ReviewPicks" xml:space="preserve"><value>Sprawdź typy</value></data>
+  <data name="Predictions.SavedLocally" xml:space="preserve"><value>Zapisano lokalnie.</value></data>
+  <data name="Predictions.DraftSaved" xml:space="preserve"><value>Szkic zapisany lokalnie. Popraw błędy przed finalnym podglądem.</value></data>
+  <data name="Predictions.LocalNotice" xml:space="preserve"><value>MVP działa bez konta. Typy są dostępne tylko w tej przeglądarce.</value></data>
+  <data name="Review.PageTitle" xml:space="preserve"><value>Podgląd typów</value></data>
+  <data name="Review.Loading" xml:space="preserve"><value>Ładowanie podglądu...</value></data>
+  <data name="Review.NotFoundTitle" xml:space="preserve"><value>Nie znaleziono podglądu</value></data>
+  <data name="Review.NotFoundDescription" xml:space="preserve"><value>Brak konfiguracji JSON dla tych zawodów.</value></data>
+  <data name="Review.Description" xml:space="preserve"><value>Te odpowiedzi są odczytywane z lokalnego storage przeglądarki.</value></data>
+  <data name="Review.EmptyTitle" xml:space="preserve"><value>Brak zapisanych odpowiedzi</value></data>
+  <data name="Review.EmptyDescription" xml:space="preserve"><value>Przejdź do formularza typowań, żeby utworzyć lokalny szkic.</value></data>
+  <data name="Review.ValidationIssues" xml:space="preserve"><value>Ten szkic ma jeszcze {0} błędów walidacji.</value></data>
+  <data name="Review.EditPredictions" xml:space="preserve"><value>Edytuj typy</value></data>
+  <data name="Validation.Required" xml:space="preserve"><value>To pytanie jest wymagane.</value></data>
+  <data name="Validation.ExactSelections" xml:space="preserve"><value>Wybierz dokładnie {count}.</value></data>
+  <data name="Validation.MinSelections" xml:space="preserve"><value>Wybierz co najmniej {count}.</value></data>
+  <data name="Validation.MaxSelections" xml:space="preserve"><value>Wybierz maksymalnie {count}.</value></data>
+  <data name="Validation.MinValue" xml:space="preserve"><value>Wartość musi wynosić co najmniej {value}.</value></data>
+  <data name="Validation.MaxValue" xml:space="preserve"><value>Wartość nie może przekraczać {value}.</value></data>
+  <data name="Validation.DuplicateAthletes" xml:space="preserve"><value>Ten sam zawodnik nie może zostać wybrany więcej niż raz.</value></data>
+  <data name="Data.Competition.sheffield-2026.Description" xml:space="preserve"><value>Typowanie klasyfikacji overall, procentu rekordu świata, rekordów i pytań bonusowych.</value></data>
+  <data name="Data.Competition.worlds-2026.Description" xml:space="preserve"><value>Typowanie kategorii wagowych, podium, najlepszego zawodnika i pytań bonusowych.</value></data>
+  <data name="Data.Group.sheffield-2026.overall.Title" xml:space="preserve"><value>Klasyfikacja overall</value></data>
+  <data name="Data.Group.sheffield-2026.overall.Description" xml:space="preserve"><value>Wybierz najlepszych zawodników całych zawodów.</value></data>
+  <data name="Data.Group.sheffield-2026.records.Title" xml:space="preserve"><value>Rekordy świata</value></data>
+  <data name="Data.Group.sheffield-2026.records.Description" xml:space="preserve"><value>Oceń, kto zbliży się do standardów rekordu świata.</value></data>
+  <data name="Data.Group.sheffield-2026.bonus.Title" xml:space="preserve"><value>Pytania bonusowe</value></data>
+  <data name="Data.Group.worlds-2026.quick-mode.Title" xml:space="preserve"><value>Tryb szybki</value></data>
+  <data name="Data.Group.worlds-2026.quick-mode.Description" xml:space="preserve"><value>Krótki zestaw typów dla osób, które nie chcą wypełniać wszystkich kategorii.</value></data>
+  <data name="Data.Group.worlds-2026.category-picks.Title" xml:space="preserve"><value>Podia kategorii</value></data>
+  <data name="Data.Group.worlds-2026.category-picks.Description" xml:space="preserve"><value>Wytypuj podium w wybranych kategoriach wagowych.</value></data>
+  <data name="Data.Group.worlds-2026.bonus.Title" xml:space="preserve"><value>Pytania bonusowe</value></data>
+  <data name="Data.Question.sheffield-2026.top-overall.Title" xml:space="preserve"><value>Top 5 overall</value></data>
+  <data name="Data.Question.sheffield-2026.top-overall.Description" xml:space="preserve"><value>Ułóż pięciu najlepszych zawodników overall.</value></data>
+  <data name="Data.Question.sheffield-2026.wr-percentage.Title" xml:space="preserve"><value>Najwyższy procent rekordu świata</value></data>
+  <data name="Data.Question.sheffield-2026.wr-percentage.Description" xml:space="preserve"><value>Wybierz zawodnika i przewidź jego procent względem właściwego rekordu świata.</value></data>
+  <data name="Data.Question.sheffield-2026.record-breakers.Title" xml:space="preserve"><value>Kto pobije rekord świata?</value></data>
+  <data name="Data.Question.sheffield-2026.record-breakers.Description" xml:space="preserve"><value>Wybierz zawodników, którzy według Ciebie pobiją rekord świata.</value></data>
+  <data name="Data.Question.sheffield-2026.any-wr.Title" xml:space="preserve"><value>Czy padnie rekord świata?</value></data>
+  <data name="Data.Question.sheffield-2026.highest-total.Title" xml:space="preserve"><value>Najwyższy total zawodów</value></data>
+  <data name="Data.Question.sheffield-2026.highest-total.Description" xml:space="preserve"><value>Przewidź najwyższy total w kilogramach.</value></data>
+  <data name="Data.Question.sheffield-2026.most-hyped-lift.Title" xml:space="preserve"><value>Najgłośniejszy bój</value></data>
+  <data name="Data.Option.sheffield-2026.most-hyped-lift.squat.Label" xml:space="preserve"><value>Przysiad</value></data>
+  <data name="Data.Option.sheffield-2026.most-hyped-lift.bench.Label" xml:space="preserve"><value>Wyciskanie</value></data>
+  <data name="Data.Option.sheffield-2026.most-hyped-lift.deadlift.Label" xml:space="preserve"><value>Martwy ciąg</value></data>
+  <data name="Data.Question.worlds-2026.best-lifter.Title" xml:space="preserve"><value>Najlepszy zawodnik</value></data>
+  <data name="Data.Question.worlds-2026.best-lifter.Description" xml:space="preserve"><value>Wybierz najlepszego zawodnika całych mistrzostw.</value></data>
+  <data name="Data.Question.worlds-2026.total-world-records.Title" xml:space="preserve"><value>Ile rekordów świata padnie?</value></data>
+  <data name="Data.Question.worlds-2026.women-73-podium.Title" xml:space="preserve"><value>Podium kobiet 73 kg</value></data>
+  <data name="Data.Question.worlds-2026.men-83-podium.Title" xml:space="preserve"><value>Podium mężczyzn 83 kg</value></data>
+  <data name="Data.Question.worlds-2026.most-medals-country.Title" xml:space="preserve"><value>Który kraj zdobędzie najwięcej medali?</value></data>
+  <data name="Data.Option.worlds-2026.most-medals-country.usa.Label" xml:space="preserve"><value>Stany Zjednoczone</value></data>
+  <data name="Data.Option.worlds-2026.most-medals-country.can.Label" xml:space="preserve"><value>Kanada</value></data>
+  <data name="Data.Option.worlds-2026.most-medals-country.gbr.Label" xml:space="preserve"><value>Wielka Brytania</value></data>
+  <data name="Data.Option.worlds-2026.most-medals-country.other.Label" xml:space="preserve"><value>Inny kraj</value></data>
+  <data name="Data.Question.worlds-2026.any-perfect-day.Title" xml:space="preserve"><value>Czy ktoś zrobi 9/9 i wygra złoto?</value></data>
+</root>

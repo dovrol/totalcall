@@ -3,19 +3,20 @@
 @inject PredictionService PredictionService
 @inject PredictionValidationService PredictionValidationService
 @inject PredictionAnswerDisplayService AnswerDisplayService
-@inject LanguageService Language
+@inject IStringLocalizer<SharedResource> Localizer
+@inject PredictionTextService Text
 
-<PageTitle>@(competition is null ? Language.Text("Review.PageTitle") : $"{competition.Name} - {Language.Text("Review.PageTitle")}")</PageTitle>
+<PageTitle>@(competition is null ? Localizer["Review.PageTitle"] : $"{competition.Name} - {Localizer["Review.PageTitle"]}")</PageTitle>
 
 @if (isLoading)
 {
-    <p class="muted">@Language.Text("Review.Loading")</p>
+    <p class="muted">@Localizer["Review.Loading"]</p>
 }
 else if (competition is null || predictionSet is null)
 {
     <div class="page-header">
-        <h1>@Language.Text("Review.NotFoundTitle")</h1>
-        <p>@Language.Text("Review.NotFoundDescription")</p>
+        <h1>@Localizer["Review.NotFoundTitle"]</h1>
+        <p>@Localizer["Review.NotFoundDescription"]</p>
     </div>
 }
 else
@@ -23,20 +24,20 @@ else
     <div class="meet-header">
         <div>
             <p class="eyebrow">@competition.Name</p>
-            <h1>@Language.Text("Review.PageTitle")</h1>
-            <p>@Language.Text("Review.Description")</p>
+            <h1>@Localizer["Review.PageTitle"]</h1>
+            <p>@Localizer["Review.Description"]</p>
         </div>
         <div class="completion-card">
             <span>@predictionSet.Answers.Count</span>
-            <small>@Language.Text("Predictions.SavedAnswers")</small>
+            <small>@Localizer["Predictions.SavedAnswers"]</small>
         </div>
     </div>
 
     @if (predictionSet.Answers.Count == 0)
     {
         <section class="panel">
-            <h2>@Language.Text("Review.EmptyTitle")</h2>
-            <p class="muted">@Language.Text("Review.EmptyDescription")</p>
+            <h2>@Localizer["Review.EmptyTitle"]</h2>
+            <p class="muted">@Localizer["Review.EmptyDescription"]</p>
         </section>
     }
     else
@@ -44,7 +45,7 @@ else
         @if (!validationResult.IsValid)
         {
             <div class="notice notice--warning">
-                @Language.Format("Review.ValidationIssues", validationResult.Errors.Count)
+                @Localizer["Review.ValidationIssues", validationResult.Errors.Count]
             </div>
         }
 
@@ -56,7 +57,7 @@ else
                     {
                         <p class="prediction-group__mode">@group.Mode</p>
                     }
-                    <h2>@group.Title</h2>
+                    <h2>@Text.GroupTitle(competition, group)</h2>
 
                     <div class="answer-list">
                         @foreach (var question in group.Questions.OrderBy(question => question.Order))
@@ -65,7 +66,7 @@ else
 
                             <article class="answer-row">
                                 <div>
-                                    <h3>@question.Title</h3>
+                                    <h3>@Text.QuestionTitle(competition, question)</h3>
                                     <p>@AnswerDisplayService.FormatAnswer(competition, question, answer)</p>
                                 </div>
                                 @if (HasValidationErrors(question.Id))
@@ -81,8 +82,8 @@ else
     }
 
     <div class="actions">
-        <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">@Language.Text("Review.EditPredictions")</a>
-        <a class="secondary-link" href="@($"competitions/{competition.Slug}")">@Language.Text("Common.BackToCompetition")</a>
+        <a class="primary-link" href="@($"competitions/{competition.Slug}/predictions")">@Localizer["Review.EditPredictions"]</a>
+        <a class="secondary-link" href="@($"competitions/{competition.Slug}")">@Localizer["Common.BackToCompetition"]</a>
     </div>
 }
 

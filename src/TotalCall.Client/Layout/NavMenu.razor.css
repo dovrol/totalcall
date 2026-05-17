@@ -1,140 +1,122 @@
-.nav-header {
-    min-height: 4.25rem;
+.topnav {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 1rem 0 1.1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 1rem;
+    min-width: 0;
 }
 
 .brand {
-    color: #ffffff;
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.72rem;
+    color: #0f172a;
     text-decoration: none;
 }
 
 .brand strong {
     display: block;
     font-size: 1rem;
-    line-height: 1.1;
+    line-height: 1.05;
 }
 
 .brand small {
     display: block;
-    color: #94a3b8;
+    color: #64748b;
     font-size: 0.72rem;
-    font-weight: 700;
+    font-weight: 800;
     line-height: 1.2;
 }
 
 .brand-mark {
     position: relative;
-    display: grid;
-    place-items: center;
-    width: 2.35rem;
-    height: 2.35rem;
-    border-radius: 8px;
-    background: #ef4444;
-    box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.14);
-}
-
-.brand-mark::before,
-.brand-mark::after,
-.brand-mark span::before,
-.brand-mark span::after {
-    content: "";
-    position: absolute;
-    background: #ffffff;
+    display: inline-block;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.55rem;
+    background: #101820;
 }
 
 .brand-mark::before {
-    width: 1.7rem;
-    height: 0.18rem;
+    content: "";
+    position: absolute;
+    left: 0.42rem;
+    right: 0.42rem;
+    top: 1rem;
+    height: 0.2rem;
     border-radius: 999px;
-}
-
-.brand-mark::after,
-.brand-mark span::before,
-.brand-mark span::after {
-    width: 0.22rem;
-    height: 1rem;
-    border-radius: 999px;
+    background: #ffffff;
 }
 
 .brand-mark::after {
-    left: 0.44rem;
-}
-
-.brand-mark span::before {
-    right: 0.44rem;
-}
-
-.brand-mark span::after {
-    left: 1.06rem;
-    height: 0.62rem;
+    content: "";
+    position: absolute;
+    inset: 0.46rem;
+    border-left: 0.28rem solid #ef4444;
+    border-right: 0.28rem solid #2563eb;
 }
 
 .nav-toggle {
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.08);
-    color: #ffffff;
-    padding: 0.35rem 0.6rem;
+    display: none;
+    min-height: 2.35rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.55rem;
+    background: #ffffff;
+    color: #0f172a;
+    padding: 0 0.75rem;
+    font-weight: 850;
 }
 
-.nav-list {
-    display: grid;
-    gap: 0.3rem;
-    padding: 0.9rem;
-}
-
-.nav-item {
-    margin-bottom: 0.25rem;
-}
-
-.nav-item ::deep a {
+.topnav__links {
     display: flex;
     align-items: center;
-    min-height: 2.75rem;
-    color: #cbd5e1;
-    border-radius: 6px;
-    border: 1px solid transparent;
-    padding: 0.65rem 0.8rem;
+    gap: 0.35rem;
+}
+
+.topnav__links ::deep a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.35rem;
+    border-radius: 0.55rem;
+    color: #334155;
+    padding: 0 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 850;
     text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 750;
 }
 
-.nav-item ::deep a.active {
-    border-color: rgba(96, 165, 250, 0.4);
-    background-color: #1d4ed8;
-    color: white;
-    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+.topnav__links ::deep a.active {
+    background: #101820;
+    color: #ffffff;
 }
 
-.nav-item ::deep a:hover {
-    border-color: rgba(255, 255, 255, 0.12);
-    background-color: rgba(255, 255, 255, 0.07);
-    color: white;
+.topnav__links ::deep a:hover {
+    background: #e2e8f0;
+    color: #0f172a;
 }
 
-.collapse {
-    display: none;
-}
+@media (max-width: 760px) {
+    .topnav {
+        flex: 1 1 100%;
+        flex-wrap: wrap;
+    }
 
-@media (min-width: 641px) {
+    .brand {
+        margin-right: auto;
+    }
+
     .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .topnav__links {
+        flex: 1 1 100%;
+        flex-direction: column;
+        align-items: stretch;
+        padding-top: 0.5rem;
+    }
+
+    .topnav__links--collapsed {
         display: none;
-    }
-
-    .collapse {
-        display: block;
-    }
-
-    .nav-scrollable {
-        height: calc(100vh - 4.25rem);
-        overflow-y: auto;
     }
 }

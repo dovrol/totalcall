@@ -1,13 +1,13 @@
-@inject LanguageService Language
+@inject IStringLocalizer<SharedResource> Localizer
 
-<QuestionShell Question="Question" ValidationErrors="ValidationErrors">
+<QuestionShell Competition="Competition" Question="Question" ValidationErrors="ValidationErrors">
     <div class="stack">
         @foreach (var position in Enumerable.Range(1, PositionsCount))
         {
             <label class="field">
                 <span>#@position</span>
                 <select value="@GetAthleteAt(position)" @onchange="eventArgs => SetAthleteAt(position, eventArgs.Value?.ToString())">
-                    <option value="">@Language.Text("Common.SelectAthlete")</option>
+                    <option value="">@Localizer["Common.SelectAthlete"]</option>
                     @foreach (var athlete in GetEligibleAthletes())
                     {
                         <option value="@athlete.Id">@athlete.DisplayName</option>

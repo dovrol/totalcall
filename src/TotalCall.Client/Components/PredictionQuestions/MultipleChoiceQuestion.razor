@@ -1,16 +1,20 @@
-@inject LanguageService Language
+@inject IStringLocalizer<SharedResource> Localizer
+@inject PredictionTextService Text
 
-<QuestionShell Question="Question" ValidationErrors="ValidationErrors">
+<QuestionShell Competition="Competition" Question="Question" ValidationErrors="ValidationErrors">
     <select class="control" value="@Answer?.Value.SelectedOptionId" @onchange="SetOption">
-        <option value="">@Language.Text("Common.SelectOption")</option>
+        <option value="">@Localizer["Common.SelectOption"]</option>
         @foreach (var option in Question.Options)
         {
-            <option value="@option.Id">@option.Label</option>
+            <option value="@option.Id">@Text.OptionLabel(Competition, Question, option)</option>
         }
     </select>
 </QuestionShell>
 
 @code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
     [Parameter, EditorRequired]
     public string GroupId { get; set; } = string.Empty;
 
