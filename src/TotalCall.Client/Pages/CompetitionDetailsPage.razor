@@ -32,15 +32,30 @@ else
 
                 <dl class="competition-hero-card__meta">
                     <div>
-                        <dt>@Localizer["Competition.Federation"]</dt>
+                        <dt>
+                            <span class="competition-hero-card__meta-label">
+                                <AppIcon Name="AppIconName.Users" Size="16" />
+                                <span>@Localizer["Competition.Federation"]</span>
+                            </span>
+                        </dt>
                         <dd>@(competition.Federation ?? Localizer["Common.Tbd"])</dd>
                     </div>
                     <div>
-                        <dt>@Localizer["Common.Starts"]</dt>
+                        <dt>
+                            <span class="competition-hero-card__meta-label">
+                                <AppIcon Name="AppIconName.Calendar" Size="16" />
+                                <span>@Localizer["Common.Starts"]</span>
+                            </span>
+                        </dt>
                         <dd>@FormatDate(competition.StartDate)</dd>
                     </div>
                     <div>
-                        <dt>@Localizer["Common.Locks"]</dt>
+                        <dt>
+                            <span class="competition-hero-card__meta-label">
+                                <AppIcon Name="AppIconName.Lock" Size="16" />
+                                <span>@Localizer["Common.Locks"]</span>
+                            </span>
+                        </dt>
                         <dd>@FormatDate(competition.PredictionLockAt)</dd>
                     </div>
                 </dl>
@@ -58,14 +73,17 @@ else
 
         <AppCard Padding="Md" AdditionalClass="competition-side-panel">
             <div class="competition-side-panel__item">
+                <AppIcon Name="AppIconName.Lock" Size="16" Class="competition-side-panel__icon" />
                 <p>@Localizer["Common.Locks"]</p>
                 <strong>@FormatDate(competition.PredictionLockAt)</strong>
             </div>
             <div class="competition-side-panel__item">
+                <AppIcon Name="AppIconName.Users" Size="16" Class="competition-side-panel__icon" />
                 <p>@Localizer["Competition.Categories"]</p>
                 <strong>@competition.Categories.Count</strong>
             </div>
             <div class="competition-side-panel__item">
+                <AppIcon Name="AppIconName.Check" Size="16" Class="competition-side-panel__icon" />
                 <p>@Localizer["Predictions.SavedAnswers"]</p>
                 <strong>@SavedAnswersCount</strong>
             </div>
@@ -82,7 +100,10 @@ else
                     {
                         <p>@Text.GroupDescription(competition, group)</p>
                     }
-                    <span>@Localizer["Competition.QuestionsCount", group.Questions.Count]</span>
+                    <span class="competition-module-card__meta">
+                        <AppIcon Name="AppIconName.Target" Size="16" />
+                        <span>@Localizer["Competition.QuestionsCount", group.Questions.Count]</span>
+                    </span>
                 </article>
             }
         </div>

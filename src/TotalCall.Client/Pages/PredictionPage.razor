@@ -27,7 +27,10 @@ else
         </div>
 
         <AppCard Padding="Sm" AdditionalClass="prediction-header__status">
-            <p>@Localizer["Common.Locks"]</p>
+            <p>
+                <AppIcon Name="AppIconName.Lock" Size="16" />
+                <span>@Localizer["Common.Locks"]</span>
+            </p>
             <strong>@FormatDate(competition.PredictionLockAt)</strong>
             <span>@Localizer["Predictions.SavedLocally"]</span>
         </AppCard>
@@ -72,15 +75,24 @@ else
             <h2>@Localizer["Predictions.Progress"]</h2>
             <dl class="meta-list">
                 <div>
-                    <dt>@Localizer["Predictions.SavedAnswers"]</dt>
+                    <dt>
+                        <AppIcon Name="AppIconName.Check" Size="16" />
+                        <span>@Localizer["Predictions.SavedAnswers"]</span>
+                    </dt>
                     <dd>@AnsweredQuestions / @TotalQuestions</dd>
                 </div>
                 <div>
-                    <dt>@Localizer["Predictions.ValidationIssues"]</dt>
+                    <dt>
+                        <AppIcon Name="AppIconName.AlertCircle" Size="16" />
+                        <span>@Localizer["Predictions.ValidationIssues"]</span>
+                    </dt>
                     <dd>@validationResult.Errors.Count</dd>
                 </div>
                 <div>
-                    <dt>@Localizer["Predictions.LastSaved"]</dt>
+                    <dt>
+                        <AppIcon Name="AppIconName.Clock" Size="16" />
+                        <span>@Localizer["Predictions.LastSaved"]</span>
+                    </dt>
                     <dd>@FormatDate(predictionSet.SavedAt)</dd>
                 </div>
             </dl>

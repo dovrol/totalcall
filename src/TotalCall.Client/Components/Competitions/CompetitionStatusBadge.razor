@@ -1,7 +1,10 @@
 @inject IStringLocalizer<SharedResource> Localizer
 
 <AppBadge Variant="@Variant">
-    @Localizer[$"Status.{Status}"]
+    <span class="competition-status-badge__content">
+        <AppIcon Name="@Icon" Size="16" Class="competition-status-badge__icon" />
+        <span>@Localizer[$"Status.{Status}"]</span>
+    </span>
 </AppBadge>
 
 @code {
@@ -15,5 +18,14 @@
         CompetitionStatus.Completed => "Accent",
         CompetitionStatus.Archived => "Neutral",
         _ => "Neutral"
+    };
+
+    private AppIconName Icon => Status switch
+    {
+        CompetitionStatus.Upcoming => AppIconName.Unlock,
+        CompetitionStatus.Locked => AppIconName.Lock,
+        CompetitionStatus.Completed => AppIconName.Check,
+        CompetitionStatus.Archived => AppIconName.X,
+        _ => AppIconName.AlertCircle
     };
 }

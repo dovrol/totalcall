@@ -1,48 +1,93 @@
 @inject IStringLocalizer<SharedResource> Localizer
 
-<AppCard Padding="Lg" AdditionalClass="@CardClass">
-    <div class="competition-card__backdrop" aria-hidden="true"></div>
+<AppCard Padding="Lg" AdditionalClass="competition-card">
+    <div class="competition-card__media" style="@CardMediaStyle" aria-hidden="true"></div>
 
-    <div class="competition-card__top">
-        <CompetitionStatusBadge Status="Competition.Status" />
-        <h3 class="competition-card__title">@Competition.Name</h3>
-        @if (!string.IsNullOrWhiteSpace(Competition.Description))
-        {
-            <p class="competition-card__description">@Competition.Description</p>
-        }
-    </div>
-
-    <dl class="competition-card__meta">
-        <div>
-            <dt>@Localizer["Common.Starts"]</dt>
-            <dd>@FormatDate(Competition.StartDate)</dd>
+    <div class="competition-card__content">
+        <div class="competition-card__status">
+            <CompetitionStatusBadge Status="Competition.Status" />
         </div>
-        <div>
-            <dt>@Localizer["Common.Locks"]</dt>
-            <dd>@FormatDate(Competition.PredictionLockAt)</dd>
-        </div>
-    </dl>
 
-    <div class="competition-card__actions">
-        <AppButton Href="@PrimaryActionHref" Variant="@PrimaryActionVariant" FullWidth="true">
-            @PrimaryActionLabel
-        </AppButton>
+        <div class="competition-card__main">
+            <div class="competition-card__identity">
+                <span class="competition-card__logo">
+                    @if (HasLogoImage)
+                    {
+                        <img
+                            class="competition-card__logo-image"
+                            src="@Competition.CardLogoImageUrl"
+                            alt="@LogoAlt"
+                            loading="lazy" />
+                    }
+                    else
+                    {
+                        <AppIcon Name="AppIconName.Trophy" Size="30" Class="competition-card__logo-fallback" />
+                    }
+                </span>
+
+                <div class="competition-card__copy">
+                    <h3 class="competition-card__title">@Competition.Name</h3>
+                    @if (!string.IsNullOrWhiteSpace(Competition.Description))
+                    {
+                        <p class="competition-card__description">@Competition.Description</p>
+                    }
+                </div>
+            </div>
+
+            <dl class="competition-card__meta">
+                <div>
+                    <dt>
+                        <span class="competition-card__meta-label">
+                            <AppIcon Name="AppIconName.Calendar" Size="14" />
+                            <span>@Localizer["Common.Starts"]</span>
+                        </span>
+                    </dt>
+                    <dd>@FormatDate(Competition.StartDate)</dd>
+                </div>
+                <div>
+                    <dt>
+                        <span class="competition-card__meta-label">
+                            <AppIcon Name="AppIconName.Lock" Size="14" />
+                            <span>@Localizer["Common.Locks"]</span>
+                        </span>
+                    </dt>
+                    <dd>@FormatDate(Competition.PredictionLockAt)</dd>
+                </div>
+            </dl>
+        </div>
+
+        <div class="competition-card__actions">
+            <AppButton Href="@PrimaryActionHref" Variant="@PrimaryActionVariant" FullWidth="true">
+                <span class="competition-card__action-content">
+                    <span>@PrimaryActionLabel</span>
+                    <AppIcon Name="AppIconName.ChevronRight" Size="16" />
+                </span>
+            </AppButton>
+        </div>
     </div>
 </AppCard>
 
 @code {
+    private const string DefaultCardBackgroundImageUrl = "/assets/competitions/default-card-bg.webp";
+
+    private static readonly char[] DisallowedInlineStyleChars = ['\r', '\n', ';'];
+
     [Parameter, EditorRequired]
     public CompetitionSummary Competition { get; set; } = default!;
 
-    private string CardClass => string.Join(
-        " ",
-        "competition-card",
-        Competition.Slug switch
-        {
-            "worlds-2026" => "competition-card--worlds",
-            "sheffield-2026" => "competition-card--sheffield",
-            _ => "competition-card--default"
-        });
+    private string CardMediaStyle => $"--competition-card-bg-image: url('{BackgroundImageUrl}'); --competition-card-bg-position: {BackgroundPosition};";
+
+    private bool HasLogoImage => !string.IsNullOrWhiteSpace(Competition.CardLogoImageUrl);
+
+    private string LogoAlt => string.IsNullOrWhiteSpace(Competition.CardLogoAlt)
+        ? Competition.Name
+        : Competition.CardLogoAlt;
+
+    private string BackgroundImageUrl => string.IsNullOrWhiteSpace(Competition.CardBackgroundImageUrl)
+        ? DefaultCardBackgroundImageUrl
+        : Competition.CardBackgroundImageUrl;
+
+    private string BackgroundPosition => NormalizeBackgroundPosition(Competition.CardBackgroundPosition);
 
     private string PrimaryActionHref => Competition.Status switch
     {
@@ -65,5 +110,20 @@
     private string FormatDate(DateTimeOffset? value)
     {
         return value?.ToLocalTime().ToString("d MMM yyyy HH:mm") ?? Localizer["Common.Tbd"];
+    }
+
+    private static string NormalizeBackgroundPosition(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return "center";
+        }
+
+        if (value.IndexOfAny(DisallowedInlineStyleChars) >= 0)
+        {
+            return "center";
+        }
+
+        return value.Trim();
     }
 }

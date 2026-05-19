@@ -3,6 +3,8 @@
   "slug": "worlds-2026",
   "name": "Worlds 2026",
   "description": "Podium picks for every configured weight class.",
+  "cardBackgroundImageUrl": "/assets/competitions/worlds-2026-card-bg.webp",
+  "cardBackgroundPosition": "center",
   "federation": "IPF",
   "startDate": "2026-06-07T09:00:00Z",
   "endDate": "2026-06-14T18:00:00Z",

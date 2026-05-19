@@ -12,7 +12,9 @@
   <data name="Nav.Predictions" xml:space="preserve"><value>Typowania</value></data>
   <data name="Nav.Review" xml:space="preserve"><value>Podgląd</value></data>
   <data name="Nav.Sheffield" xml:space="preserve"><value>Sheffield 2026</value></data>
+  <data name="Nav.SheffieldShort" xml:space="preserve"><value>Sheffield</value></data>
   <data name="Nav.Worlds" xml:space="preserve"><value>Worlds 2026</value></data>
+  <data name="Nav.WorldsShort" xml:space="preserve"><value>Worlds</value></data>
   <data name="Nav.Menu" xml:space="preserve"><value>Menu</value></data>
   <data name="Theme.Toggle" xml:space="preserve"><value>Zmień motyw</value></data>
   <data name="Theme.Dark" xml:space="preserve"><value>Dark</value></data>

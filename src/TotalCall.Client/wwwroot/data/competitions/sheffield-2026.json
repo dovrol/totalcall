@@ -3,6 +3,7 @@
   "slug": "sheffield-2026",
   "name": "Sheffield 2026",
   "description": "Overall-focused prediction game around top lifters, world record percentage and bonus questions.",
+  "cardBackgroundPosition": "center",
   "federation": "IPF",
   "startDate": "2026-01-31T09:00:00Z",
   "endDate": "2026-01-31T18:00:00Z",

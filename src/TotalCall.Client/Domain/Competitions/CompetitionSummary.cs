@@ -14,6 +14,14 @@ public sealed record CompetitionSummary
 
     public DateTimeOffset? PredictionLockAt { get; init; }
 
+    public string? CardBackgroundImageUrl { get; init; }
+
+    public string? CardBackgroundPosition { get; init; }
+
+    public string? CardLogoImageUrl { get; init; }
+
+    public string? CardLogoAlt { get; init; }
+
     public CompetitionStatus Status { get; init; } = CompetitionStatus.Upcoming;
 
     public required string ConfigVersion { get; init; }

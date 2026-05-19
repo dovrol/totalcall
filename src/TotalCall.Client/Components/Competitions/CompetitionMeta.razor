@@ -2,11 +2,21 @@
 
 <dl class="competition-meta">
     <div>
-        <dt>@Localizer["Common.Starts"]</dt>
+        <dt>
+            <span class="competition-meta__label">
+                <AppIcon Name="AppIconName.Calendar" Size="16" />
+                <span>@Localizer["Common.Starts"]</span>
+            </span>
+        </dt>
         <dd>@FormatDate(StartDate)</dd>
     </div>
     <div>
-        <dt>@Localizer["Common.Locks"]</dt>
+        <dt>
+            <span class="competition-meta__label">
+                <AppIcon Name="AppIconName.Lock" Size="16" />
+                <span>@Localizer["Common.Locks"]</span>
+            </span>
+        </dt>
         <dd>@FormatDate(PredictionLockAt)</dd>
     </div>
 </dl>

@@ -1,7 +1,18 @@
 <AppCard Padding="Sm" AdditionalClass="@AdditionalClass">
     <div class="app-stat-card">
-        <p class="app-stat-card__label">@Label</p>
-        <p class="app-stat-card__value">@Value</p>
+        <div class="app-stat-card__head">
+            @if (Icon is not null)
+            {
+                <span class="app-stat-card__icon-wrap">
+                    <AppIcon Name="@Icon.Value" Size="20" Class="app-stat-card__icon" />
+                </span>
+            }
+            <div class="app-stat-card__main">
+                <p class="app-stat-card__value">@Value</p>
+                <p class="app-stat-card__label">@Label</p>
+            </div>
+        </div>
+
         @if (!string.IsNullOrWhiteSpace(Description))
         {
             <p class="app-stat-card__description">@Description</p>
@@ -18,6 +29,9 @@
 
     [Parameter]
     public string? Description { get; set; }
+
+    [Parameter]
+    public AppIconName? Icon { get; set; }
 
     [Parameter]
     public string? AdditionalClass { get; set; }

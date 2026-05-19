@@ -10,7 +10,9 @@
                 <li class="app-breadcrumbs__item">
                     @if (index > 0)
                     {
-                        <span class="app-breadcrumbs__divider" aria-hidden="true">/</span>
+                        <span class="app-breadcrumbs__divider" aria-hidden="true">
+                            <AppIcon Name="AppIconName.ChevronRight" Size="16" Class="app-breadcrumbs__divider-icon" />
+                        </span>
                     }
 
                     @if (isCurrent)
