@@ -11,16 +11,16 @@ TotalCall ma wygladac jak spokojny event companion dla fanow trojboju, nie jak b
 
 ## Hierarchia
 
-- Page title: `text-3xl sm:text-4xl`, `font-semibold`.
-- Section title: `text-xl`, `font-semibold`.
-- Card title: `text-lg` lub `text-xl`, `font-semibold`.
-- Body: `text-sm` lub `text-base`, spokojny line-height.
-- Metadata/caption: `text-xs` lub `text-sm`, `font-medium`.
-- Letter spacing zostaje neutralny. Nie uzywaj `tracking-tight`.
+- Page title: okolo `1.9rem - 2.5rem`, `font-weight: 700`.
+- Section title: okolo `1.25rem - 1.35rem`, `font-weight: 700`.
+- Card title: okolo `1rem - 1.1rem`, `font-weight: 700`.
+- Body: `0.9rem - 1rem` i spokojny line-height.
+- Metadata/caption: `0.75rem - 0.85rem`, srednia lub pogrubiona waga.
+- Letter spacing neutralny.
 
 ## Kolory
 
-Design tokens sa zdefiniowane w `src/TotalCall.Client/Styles/app.css` przez Tailwind 4 `@theme`.
+Design tokens sa zdefiniowane w `src/TotalCall.Client/wwwroot/css/app.css` jako CSS variables w `:root`.
 
 - `brand-background` dla tla aplikacji.
 - `brand-surface` dla kart i paneli.

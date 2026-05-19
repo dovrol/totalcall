@@ -2,7 +2,7 @@
   "id": "worlds-2026",
   "slug": "worlds-2026",
   "name": "Worlds 2026",
-  "description": "Category-based prediction game with quick mode, podium picks, best lifter and bonus questions.",
+  "description": "Podium picks for every configured weight class.",
   "federation": "IPF",
   "startDate": "2026-06-07T09:00:00Z",
   "endDate": "2026-06-14T18:00:00Z",
@@ -82,6 +82,15 @@
       "countryName": "United States",
       "weightCategoryId": "women-84-plus",
       "seedTotalKg": 632.5
+    },
+    {
+      "id": "sofia-84-plus",
+      "displayName": "Sofia Petrov",
+      "sex": "female",
+      "countryCode": "BUL",
+      "countryName": "Bulgaria",
+      "weightCategoryId": "women-84-plus",
+      "seedTotalKg": 625
     }
   ],
   "categories": [
@@ -103,47 +112,16 @@
       "id": "women-84-plus",
       "name": "Women 84+ kg",
       "sex": "female",
-      "athleteIds": ["ida-84-plus", "maya-84-plus"]
+      "athleteIds": ["ida-84-plus", "maya-84-plus", "sofia-84-plus"]
     }
   ],
   "predictionGroups": [
     {
-      "id": "quick-mode",
-      "title": "Quick mode",
-      "description": "A short set of picks for people who do not want to fill every category.",
-      "mode": "quick",
-      "order": 10,
-      "required": true,
-      "questions": [
-        {
-          "id": "best-lifter",
-          "type": "single-athlete-choice",
-          "title": "Best lifter",
-          "description": "Pick the overall best lifter of the meet.",
-          "order": 10,
-          "required": true
-        },
-        {
-          "id": "total-world-records",
-          "type": "numeric-question",
-          "title": "How many world records will fall?",
-          "order": 20,
-          "required": true,
-          "constraints": {
-            "minValue": 0,
-            "maxValue": 20,
-            "step": 1,
-            "unit": "records"
-          }
-        }
-      ]
-    },
-    {
       "id": "category-picks",
       "title": "Category podiums",
-      "description": "Pick podiums in selected categories.",
+      "description": "Pick the podium in every configured weight class.",
       "mode": "full",
-      "order": 20,
+      "order": 10,
       "required": true,
       "questions": [
         {
@@ -169,35 +147,18 @@
             "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
-        }
-      ]
-    },
-    {
-      "id": "bonus",
-      "title": "Bonus questions",
-      "mode": "bonus",
-      "order": 30,
-      "required": false,
-      "questions": [
-        {
-          "id": "most-medals-country",
-          "type": "multiple-choice",
-          "title": "Which country wins the most medals?",
-          "order": 10,
-          "required": true,
-          "options": [
-            { "id": "usa", "label": "United States" },
-            { "id": "can", "label": "Canada" },
-            { "id": "gbr", "label": "Great Britain" },
-            { "id": "other", "label": "Other" }
-          ]
         },
         {
-          "id": "any-perfect-day",
-          "type": "yes-no",
-          "title": "Will any lifter go 9/9 and win gold?",
-          "order": 20,
-          "required": true
+          "id": "women-84-plus-podium",
+          "type": "category-podium",
+          "title": "Women 84+ kg podium",
+          "order": 30,
+          "required": true,
+          "categoryId": "women-84-plus",
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
         }
       ]
     }

@@ -1,26 +1,28 @@
-<header class="grid gap-6 py-2 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
-    <div class="max-w-3xl space-y-3">
+<header class="app-page-header">
+    <div class="app-page-header__main">
+        <AppBreadcrumbs Items="Breadcrumbs" />
+
         @if (!string.IsNullOrWhiteSpace(Eyebrow))
         {
-            <p class="text-sm font-semibold text-brand-accent">@Eyebrow</p>
+            <p class="app-page-header__eyebrow">@Eyebrow</p>
         }
-        <div class="space-y-2">
-            <h1 class="text-3xl font-semibold text-brand-ink sm:text-4xl">@Title</h1>
+        <div class="app-page-header__content">
+            <h1 class="app-page-header__title">@Title</h1>
             @if (!string.IsNullOrWhiteSpace(Description))
             {
-                <p class="text-base leading-7 text-brand-muted">@Description</p>
+                <p class="app-page-header__description">@Description</p>
             }
         </div>
         @if (Actions is not null)
         {
-            <div class="flex flex-wrap gap-3 pt-1">
+            <div class="app-page-header__actions">
                 @Actions
             </div>
         }
     </div>
     @if (Aside is not null)
     {
-        <div class="grid min-w-0 gap-3 sm:grid-cols-3 md:min-w-80 md:grid-cols-1 lg:grid-cols-3">
+        <div class="app-page-header__aside">
             @Aside
         </div>
     }
@@ -41,4 +43,7 @@
 
     [Parameter]
     public RenderFragment? Aside { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<AppBreadcrumbItem> Breadcrumbs { get; set; } = [];
 }

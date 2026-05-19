@@ -1,0 +1,126 @@
+@inject PredictionTextService Text
+@inject IStringLocalizer<SharedResource> Localizer
+
+<section class="prediction-group">
+    <div class="prediction-group__header">
+        @if (!string.IsNullOrWhiteSpace(Group.Mode))
+        {
+            <p class="prediction-group__mode">@Group.Mode</p>
+        }
+        <h2>@Text.GroupTitle(Competition, Group)</h2>
+        @if (!string.IsNullOrWhiteSpace(Text.GroupDescription(Competition, Group)))
+        {
+            <p>@Text.GroupDescription(Competition, Group)</p>
+        }
+    </div>
+
+    <div class="category-podium-board">
+        <div class="category-podium-board__tabs-wrap">
+            <div class="category-podium-board__tabs">
+                @foreach (var question in OrderedQuestions)
+                {
+                    <button
+                        type="button"
+                        class="@GetTabClass(question.Id)"
+                        @onclick="() => SelectQuestion(question.Id)">
+                        <span class="category-podium-board__tab-title">@GetCategoryName(question)</span>
+                        <span class="category-podium-board__tab-state">@GetQuestionState(question)</span>
+                    </button>
+                }
+            </div>
+        </div>
+
+        <div class="category-podium-board__content">
+            @if (ActiveQuestion is not null)
+            {
+                <PredictionQuestionRenderer
+                    Competition="Competition"
+                    GroupId="@Group.Id"
+                    Question="ActiveQuestion"
+                    Answer="GetAnswer(ActiveQuestion.Id)"
+                    ValidationErrors="GetErrors(ActiveQuestion.Id)"
+                    AnswerChanged="AnswerChanged" />
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public PredictionGroup Group { get; set; } = default!;
+
+    [Parameter]
+    public IReadOnlyList<PredictionAnswer> Answers { get; set; } = [];
+
+    [Parameter]
+    public IReadOnlyList<PredictionValidationError> ValidationErrors { get; set; } = [];
+
+    [Parameter]
+    public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
+
+    private string? activeQuestionId;
+
+    private IReadOnlyList<PredictionQuestion> OrderedQuestions => Group.Questions
+        .OrderBy(question => question.Order)
+        .ToArray();
+
+    private PredictionQuestion? ActiveQuestion => OrderedQuestions
+        .FirstOrDefault(question => question.Id == activeQuestionId) ??
+        OrderedQuestions.FirstOrDefault();
+
+    protected override void OnParametersSet()
+    {
+        if (ActiveQuestion is null)
+        {
+            activeQuestionId = OrderedQuestions.FirstOrDefault()?.Id;
+        }
+    }
+
+    private void SelectQuestion(string questionId)
+    {
+        activeQuestionId = questionId;
+    }
+
+    private string GetTabClass(string questionId)
+    {
+        var isActive = ActiveQuestion?.Id == questionId;
+
+        return string.Join(
+            " ",
+            "category-podium-board__tab",
+            isActive
+                ? "category-podium-board__tab--active"
+                : null);
+    }
+
+    private string GetCategoryName(PredictionQuestion question)
+    {
+        var category = Competition.Categories.FirstOrDefault(category => category.Id == question.CategoryId);
+
+        return category?.Name ?? Text.QuestionTitle(Competition, question);
+    }
+
+    private string GetQuestionState(PredictionQuestion question)
+    {
+        var hasAnswer = GetAnswer(question.Id)?.Value.AthletePlacements.Count > 0;
+
+        return hasAnswer
+            ? Localizer["Predictions.Answered"]
+            : Localizer["Predictions.NotAnswered"];
+    }
+
+    private PredictionAnswer? GetAnswer(string questionId)
+    {
+        return Answers.FirstOrDefault(answer => answer.QuestionId == questionId);
+    }
+
+    private IReadOnlyList<PredictionValidationError> GetErrors(string questionId)
+    {
+        return ValidationErrors
+            .Where(error => error.QuestionId == questionId)
+            .ToArray();
+    }
+}

@@ -1,0 +1,33 @@
+@if (Items.Count > 0)
+{
+    <nav class="app-breadcrumbs" aria-label="Breadcrumb">
+        <ol class="app-breadcrumbs__list">
+            @for (var index = 0; index < Items.Count; index++)
+            {
+                var item = Items[index];
+                var isCurrent = index == Items.Count - 1 || string.IsNullOrWhiteSpace(item.Href);
+
+                <li class="app-breadcrumbs__item">
+                    @if (index > 0)
+                    {
+                        <span class="app-breadcrumbs__divider" aria-hidden="true">/</span>
+                    }
+
+                    @if (isCurrent)
+                    {
+                        <span class="app-breadcrumbs__current" aria-current="page">@item.Label</span>
+                    }
+                    else
+                    {
+                        <a class="app-breadcrumbs__link" href="@item.Href">@item.Label</a>
+                    }
+                </li>
+            }
+        </ol>
+    </nav>
+}
+
+@code {
+    [Parameter]
+    public IReadOnlyList<AppBreadcrumbItem> Items { get; set; } = [];
+}

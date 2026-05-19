@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 92" role="img" aria-label="TotalCall logo">
+  <title>TotalCall logo</title>
+  <g transform="translate(16 14)">
+    <path fill="#F4F6F8" d="M13 14h31l-5.4 8H8.2L13 14Z"/>
+    <path fill="#F4F6F8" d="M26.7 21.6h12L31.2 50H18.9l7.8-28.4Z"/>
+    <path fill="#F4F6F8" d="M35.8 37.4h18L49 45.4H31l4.8-8Z"/>
+    <path fill="#E64236" d="M45.6 14h13.2l-5.4 8H40.2l5.4-8Z"/>
+  </g>
+  <g font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-weight="800">
+    <text x="102" y="48" font-size="38" letter-spacing="0.5">
+      <tspan fill="#F4F6F8">Total</tspan><tspan fill="#E64236">Call</tspan>
+    </text>
+    <text x="105" y="70" font-size="11" font-weight="700" letter-spacing="3.8" fill="#A8B0BD">POWERLIFTING PREDICTIONS</text>
+  </g>
+</svg>

@@ -23,17 +23,19 @@ public sealed class CultureService(BrowserLocalStorage localStorage)
         SetCurrentCulture(NormalizeCultureName(storedCulture), notify: false);
     }
 
-    public async Task SetCultureAsync(string cultureName, CancellationToken cancellationToken = default)
+    public async Task<bool> SetCultureAsync(string cultureName, CancellationToken cancellationToken = default)
     {
         var normalizedCultureName = NormalizeCultureName(cultureName);
 
         if (string.Equals(CurrentCultureName, normalizedCultureName, StringComparison.OrdinalIgnoreCase))
         {
-            return;
+            return false;
         }
 
         SetCurrentCulture(normalizedCultureName, notify: true);
         await localStorage.SetItemAsync(LocalStorageKeys.CulturePreference, normalizedCultureName, cancellationToken);
+
+        return true;
     }
 
     private void SetCurrentCulture(string cultureName, bool notify)

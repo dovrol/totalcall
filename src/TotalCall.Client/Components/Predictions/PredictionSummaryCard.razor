@@ -1,8 +1,8 @@
 <AppCard Padding="Sm" AdditionalClass="@AdditionalClass">
-    <div class="space-y-2">
-        <div class="space-y-1">
-            <p class="text-xs font-medium text-brand-muted">@Label</p>
-            <p class="text-2xl font-semibold text-brand-ink">@Value</p>
+    <div class="prediction-summary-card">
+        <div class="prediction-summary-card__header">
+            <p class="prediction-summary-card__label">@Label</p>
+            <p class="prediction-summary-card__value">@Value</p>
         </div>
         @if (ProgressPercent is not null)
         {
@@ -12,7 +12,7 @@
         }
         @if (!string.IsNullOrWhiteSpace(Description))
         {
-            <p class="text-xs text-brand-muted">@Description</p>
+            <p class="prediction-summary-card__description">@Description</p>
         }
     </div>
 </AppCard>

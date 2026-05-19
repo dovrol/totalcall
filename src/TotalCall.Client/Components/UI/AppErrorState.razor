@@ -1,9 +1,9 @@
-<AppCard AdditionalClass="border-orange-200 bg-orange-50">
-    <div class="space-y-2">
-        <h2 class="text-lg font-semibold text-orange-950">@Title</h2>
+<AppCard AdditionalClass="app-error-state-card">
+    <div class="app-error-state">
+        <h2 class="app-error-state__title">@Title</h2>
         @if (!string.IsNullOrWhiteSpace(Description))
         {
-            <p class="text-sm leading-6 text-orange-900">@Description</p>
+            <p class="app-error-state__description">@Description</p>
         }
     </div>
 </AppCard>

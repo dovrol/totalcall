@@ -1,22 +1,20 @@
 @inject IStringLocalizer<SharedResource> Localizer
-@inject PredictionTextService Text
 
-<AppCard Padding="Lg" AdditionalClass="grid h-full gap-5">
-    <div class="grid gap-3">
+<AppCard Padding="Lg" AdditionalClass="competition-card">
+    <div class="competition-card__top">
         <CompetitionStatusBadge Status="Competition.Status" />
 
-        <div class="grid gap-2">
-            <h3 class="text-xl font-semibold text-brand-ink">@Competition.Name</h3>
-            @if (!string.IsNullOrWhiteSpace(Description))
-            {
-                <p class="text-sm leading-6 text-brand-muted">@Description</p>
-            }
-        </div>
+        <h3 class="competition-card__title">@Competition.Name</h3>
     </div>
 
-    <CompetitionMeta StartDate="Competition.StartDate" PredictionLockAt="Competition.PredictionLockAt" />
+    <dl class="competition-card__meta">
+        <div>
+            <dt>@Localizer["Common.Starts"]</dt>
+            <dd>@FormatDate(Competition.StartDate)</dd>
+        </div>
+    </dl>
 
-    <div class="mt-auto flex flex-wrap gap-3">
+    <div class="competition-card__actions">
         <AppButton Href="@PrimaryActionHref" Variant="@PrimaryActionVariant" FullWidth="true">
             @PrimaryActionLabel
         </AppButton>
@@ -26,8 +24,6 @@
 @code {
     [Parameter, EditorRequired]
     public CompetitionSummary Competition { get; set; } = default!;
-
-    private string Description => Text.CompetitionDescription(Competition);
 
     private string PrimaryActionHref => Competition.Status switch
     {
@@ -46,4 +42,9 @@
     private string PrimaryActionVariant => Competition.Status == CompetitionStatus.Upcoming
         ? "Primary"
         : "Secondary";
+
+    private string FormatDate(DateTimeOffset? value)
+    {
+        return value?.ToLocalTime().ToString("d MMM yyyy HH:mm") ?? Localizer["Common.Tbd"];
+    }
 }

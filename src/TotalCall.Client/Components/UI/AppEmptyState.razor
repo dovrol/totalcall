@@ -1,18 +1,18 @@
-<AppCard AdditionalClass="text-center">
-    <div class="mx-auto flex max-w-md flex-col items-center gap-3 py-4">
-        <div class="flex size-11 items-center justify-center rounded-full bg-brand-surface-muted text-brand-accent" aria-hidden="true">
-            <span class="text-lg font-semibold">TC</span>
+<AppCard AdditionalClass="app-empty-state-card">
+    <div class="app-empty-state">
+        <div class="app-empty-state__mark" aria-hidden="true">
+            <span>TC</span>
         </div>
-        <div class="space-y-1">
-            <h2 class="text-lg font-semibold text-brand-ink">@Title</h2>
+        <div class="app-empty-state__content">
+            <h2 class="app-empty-state__title">@Title</h2>
             @if (!string.IsNullOrWhiteSpace(Description))
             {
-                <p class="text-sm leading-6 text-brand-muted">@Description</p>
+                <p class="app-empty-state__description">@Description</p>
             }
         </div>
         @if (Action is not null)
         {
-            <div class="pt-1">
+            <div class="app-empty-state__action">
                 @Action
             </div>
         }

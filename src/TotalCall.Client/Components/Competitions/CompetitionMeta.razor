@@ -1,13 +1,13 @@
 @inject IStringLocalizer<SharedResource> Localizer
 
-<dl class="grid gap-3">
-    <div class="flex justify-between gap-4 border-b border-brand-border pb-3">
-        <dt class="text-xs font-medium text-brand-muted">@Localizer["Common.Starts"]</dt>
-        <dd class="m-0 text-right text-sm font-semibold text-brand-ink">@FormatDate(StartDate)</dd>
+<dl class="competition-meta">
+    <div>
+        <dt>@Localizer["Common.Starts"]</dt>
+        <dd>@FormatDate(StartDate)</dd>
     </div>
-    <div class="flex justify-between gap-4">
-        <dt class="text-xs font-medium text-brand-muted">@Localizer["Common.Locks"]</dt>
-        <dd class="m-0 text-right text-sm font-semibold text-brand-ink">@FormatDate(PredictionLockAt)</dd>
+    <div>
+        <dt>@Localizer["Common.Locks"]</dt>
+        <dd>@FormatDate(PredictionLockAt)</dd>
     </div>
 </dl>
 

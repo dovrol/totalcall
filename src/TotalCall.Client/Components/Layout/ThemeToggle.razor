@@ -1,0 +1,19 @@
+@inject ThemeService Theme
+@inject IStringLocalizer<SharedResource> Localizer
+
+<button
+    type="button"
+    class="theme-toggle"
+    aria-pressed="@Theme.IsDarkMode"
+    title="@Localizer["Theme.Toggle"]"
+    @onclick="ToggleTheme">
+    <span class="theme-toggle__dot" aria-hidden="true"></span>
+    <span class="theme-toggle__text">@(Theme.IsDarkMode ? Localizer["Theme.Dark"] : Localizer["Theme.Light"])</span>
+</button>
+
+@code {
+    private async Task ToggleTheme()
+    {
+        await Theme.ToggleThemeAsync();
+    }
+}

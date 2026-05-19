@@ -3,7 +3,7 @@
 ## Decyzje bazowe
 
 - Framework: Blazor WebAssembly na .NET 9.
-- Styling: Tailwind CSS.
+- Styling: czysty CSS oparty o komponentowe klasy (`wwwroot/css/app.css`).
 - Hosting: GitHub Pages.
 - Dane zawodow: statyczne pliki JSON w `wwwroot/data`.
 - Persistence MVP: `localStorage`.

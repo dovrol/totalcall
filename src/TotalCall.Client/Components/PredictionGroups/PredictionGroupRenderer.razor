@@ -1,31 +1,43 @@
 @inject PredictionTextService Text
 
-<section class="prediction-group">
-    <div class="prediction-group__header">
-        @if (!string.IsNullOrWhiteSpace(Group.Mode))
-        {
-            <p class="prediction-group__mode">@Group.Mode</p>
-        }
-        <h2>@Text.GroupTitle(Competition, Group)</h2>
-        @if (!string.IsNullOrWhiteSpace(Text.GroupDescription(Competition, Group)))
-        {
-            <p>@Text.GroupDescription(Competition, Group)</p>
-        }
-    </div>
+@if (UseCategoryPodiumBoard)
+{
+    <CategoryPodiumGroupRenderer
+        Competition="Competition"
+        Group="Group"
+        Answers="Answers"
+        ValidationErrors="ValidationErrors"
+        AnswerChanged="AnswerChanged" />
+}
+else
+{
+    <section class="prediction-group">
+        <div class="prediction-group__header">
+            @if (!string.IsNullOrWhiteSpace(Group.Mode))
+            {
+                <p class="prediction-group__mode">@Group.Mode</p>
+            }
+            <h2>@Text.GroupTitle(Competition, Group)</h2>
+            @if (!string.IsNullOrWhiteSpace(Text.GroupDescription(Competition, Group)))
+            {
+                <p>@Text.GroupDescription(Competition, Group)</p>
+            }
+        </div>
 
-    <div class="prediction-group__questions">
-        @foreach (var question in Group.Questions.OrderBy(question => question.Order))
-        {
-            <PredictionQuestionRenderer
-                Competition="Competition"
-                GroupId="@Group.Id"
-                Question="question"
-                Answer="GetAnswer(question.Id)"
-                ValidationErrors="GetErrors(question.Id)"
-                AnswerChanged="AnswerChanged" />
-        }
-    </div>
-</section>
+        <div class="prediction-group__questions">
+            @foreach (var question in Group.Questions.OrderBy(question => question.Order))
+            {
+                <PredictionQuestionRenderer
+                    Competition="Competition"
+                    GroupId="@Group.Id"
+                    Question="question"
+                    Answer="GetAnswer(question.Id)"
+                    ValidationErrors="GetErrors(question.Id)"
+                    AnswerChanged="AnswerChanged" />
+            }
+        </div>
+    </section>
+}
 
 @code {
     [Parameter, EditorRequired]
@@ -42,6 +54,9 @@
 
     [Parameter]
     public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
+
+    private bool UseCategoryPodiumBoard => Group.Questions.Count > 1 &&
+        Group.Questions.All(question => question.Type == PredictionQuestionType.CategoryPodium);
 
     private PredictionAnswer? GetAnswer(string questionId)
     {

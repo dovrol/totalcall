@@ -13,7 +13,7 @@ Pracuj nad TotalCall tak, jak nad produktem fantasy sports dla fanow trojboju. T
 
 ## UI
 
-- Uzywaj Tailwind CSS 4.
+- Uzywaj czystego CSS opartego o klasy komponentowe (bez Tailwinda).
 - Uzywaj istniejacych komponentow w `Components/UI`, `Components/Layout`, `Components/Competitions`, `Components/Predictions`.
 - Pages maja byc cienkie.
 - UI primitives nie moga znac domeny.
@@ -22,7 +22,6 @@ Pracuj nad TotalCall tak, jak nad produktem fantasy sports dla fanow trojboju. T
 
 ## Przed oddaniem zmian
 
-- Uruchom `npm run css:build`.
-- Uruchom `dotnet build TotalCall.sln`.
+- Uruchom `./scripts/build.sh`.
 - Uruchom testy, jesli zmiana dotyka logiki albo wspolnych kontraktow.
 - Sprawdz mobile i desktop przynajmniej przez uruchomiona aplikacje.

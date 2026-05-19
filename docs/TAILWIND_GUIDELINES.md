@@ -1,37 +1,33 @@
-# TotalCall Tailwind Guidelines
+# TotalCall CSS Guidelines
 
-Projekt uzywa Tailwind CSS 4 jako podstawowego sposobu stylowania.
+Projekt uzywa czystego CSS jako podstawowego sposobu stylowania. Tailwind zostal usuniety.
 
 ## Konfiguracja
 
-- Tailwind jest skonfigurowany w modelu CSS-first.
-- Wejsciowy plik to `src/TotalCall.Client/Styles/app.css`.
-- Wyjsciowy plik to `src/TotalCall.Client/wwwroot/css/app.css`.
-- Tokeny projektu sa w `@theme`.
-- Jawne zrodla klas sa dodane przez `@source`.
-- Nie przywracaj `tailwind.config.js`, dopoki nie ma technicznego powodu.
+- Jedyny plik styli to `src/TotalCall.Client/wwwroot/css/app.css`.
+- Nie ma osobnego kroku budowania CSS.
+- Nie dodawaj Tailwinda z powrotem bez decyzji architektonicznej.
 
 ## Komendy
 
 ```bash
-npm run css:build
-npm run css:watch
+./scripts/dev.sh
+./scripts/build.sh
+./scripts/test.sh
 ```
 
 ## Jak pisac klasy
 
-- Tailwind utility classes powinny byc skupione w komponentach bazowych i domenowych.
-- Pages moga miec proste klasy ukladu, np. `grid gap-4`, ale nie powinny zawierac duzych blokow losowych utility classes.
-- Preferuj tokeny `brand-*` zamiast przypadkowych kolorow.
+- Uzywaj klas semantycznych (`app-*`, `competition-*`, `prediction-*`) zamiast utility classes.
+- Strony skladaj z komponentow i nie duplikuj dlugich list styli.
+- Trzymaj tokeny kolorow i spacingu w jednym miejscu (`:root`).
 - CSS isolation jest wyjatkiem, nie standardem.
-- Globalne klasy w `@layer components` sa dopuszczalne dla wspolnych wzorcow formularzy i istniejacych komponentow typowan.
 
 ## Czego unikac
 
-- Nie duplikuj dlugich zestawow klas w wielu miejscach.
+- Nie duplikuj tych samych deklaracji w wielu komponentach.
 - Nie stosuj przypadkowych cieni, ramek i radiusow.
 - Karty trzymaj przy `rounded-lg` lub mniejszym radiusie.
-- Nie uzywaj `tracking-tight`.
 - Nie buduj osobnych layoutow dla Sheffield i Worlds.
 - Nie dodawaj duzej biblioteki UI bez decyzji architektonicznej.
 

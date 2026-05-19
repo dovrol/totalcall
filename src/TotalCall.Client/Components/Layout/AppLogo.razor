@@ -1,0 +1,42 @@
+<a href="" class="@LinkClass" aria-label="TotalCall">
+    @if (ShowText)
+    {
+        <span class="app-logo__full-wrap">
+            <img class="app-logo__full app-logo__full--dark" src="assets/logo/totalcall-logo-horizontal.svg" alt="TotalCall" />
+            <img class="app-logo__full app-logo__full--light" src="assets/logo/totalcall-logo-horizontal-light.svg" alt="TotalCall" />
+        </span>
+    }
+    else
+    {
+        <span class="@MarkWrapClass" aria-hidden="true">
+            <img class="app-logo__mark app-logo__mark--dark" src="assets/logo/totalcall-mark.svg" alt="" />
+            <img class="app-logo__mark app-logo__mark--light" src="assets/logo/totalcall-mark-light.svg" alt="" />
+        </span>
+    }
+</a>
+
+@code {
+    [Parameter]
+    public bool ShowText { get; set; } = true;
+
+    [Parameter]
+    public string Size { get; set; } = "Md";
+
+    [Parameter]
+    public string? AdditionalClass { get; set; }
+
+    private string LinkClass => string.Join(
+        " ",
+        "app-logo",
+        AdditionalClass);
+
+    private string MarkWrapClass => string.Join(
+        " ",
+        "app-logo__mark-wrap",
+        Size switch
+        {
+            "Lg" => "app-logo__mark-wrap--lg",
+            "Xl" => "app-logo__mark-wrap--xl",
+            _ => "app-logo__mark-wrap--md"
+        });
+}

@@ -14,13 +14,13 @@
 
     private string CssClass => string.Join(
         " ",
-        "rounded-lg border border-brand-border bg-brand-surface shadow-card",
+        "app-card",
         Padding switch
         {
-            "None" => string.Empty,
-            "Sm" => "p-4",
-            "Lg" => "p-6",
-            _ => "p-5"
+            "None" => "app-card--pad-none",
+            "Sm" => "app-card--pad-sm",
+            "Lg" => "app-card--pad-lg",
+            _ => "app-card--pad-md"
         },
         AdditionalClass);
 }

@@ -1,12 +1,12 @@
 @implements IDisposable
 @inject CultureService Culture
 
-<div class="app-shell-background min-h-screen">
-    <AppHeader />
+<div class="app-shell app-shell-background">
+    <AppSidebar />
 
-    <main>
-        <PageContainer>
-            <article class="grid gap-6" @key="Culture.CurrentCultureName">
+    <main class="app-shell__main">
+        <PageContainer AdditionalClass="app-shell__content">
+            <article class="app-shell__article" @key="Culture.CurrentCultureName">
                 @ChildContent
             </article>
         </PageContainer>

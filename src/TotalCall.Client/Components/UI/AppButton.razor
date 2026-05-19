@@ -44,20 +44,20 @@ else
 
     private string CssClass => string.Join(
         " ",
-        "focus-ring inline-flex items-center justify-center rounded-lg font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50",
+        "app-button",
         GetVariantClass(),
         GetSizeClass(),
-        FullWidth ? "w-full" : "w-fit",
+        FullWidth ? "app-button--full" : null,
         AdditionalClass);
 
     private string GetVariantClass()
     {
         return Variant switch
         {
-            "Secondary" => "border border-brand-border bg-brand-surface text-brand-ink hover:bg-brand-surface-muted",
-            "Ghost" => "text-brand-ink hover:bg-brand-surface-muted",
-            "Subtle" => "bg-brand-surface-muted text-brand-ink hover:bg-slate-200",
-            _ => "bg-brand-accent text-white hover:bg-[#255a75]"
+            "Secondary" => "app-button--secondary",
+            "Ghost" => "app-button--ghost",
+            "Subtle" => "app-button--subtle",
+            _ => "app-button--primary"
         };
     }
 
@@ -65,9 +65,9 @@ else
     {
         return Size switch
         {
-            "Sm" => "min-h-9 px-3 text-sm",
-            "Lg" => "min-h-12 px-5 text-base",
-            _ => "min-h-11 px-4 text-sm"
+            "Sm" => "app-button--sm",
+            "Lg" => "app-button--lg",
+            _ => "app-button--md"
         };
     }
 }

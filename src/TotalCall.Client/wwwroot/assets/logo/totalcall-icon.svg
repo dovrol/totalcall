@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="TotalCall app icon">
+  <title>TotalCall app icon</title>
+  <defs>
+    <linearGradient id="bg" x1="20" y1="8" x2="108" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#161C24"/>
+      <stop offset="1" stop-color="#080B0F"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="112" height="112" rx="28" fill="url(#bg)"/>
+  <rect x="8.5" y="8.5" width="111" height="111" rx="27.5" fill="none" stroke="#263140"/>
+  <g transform="translate(32 32) scale(1)" fill="none" fill-rule="evenodd">
+    <path fill="#F4F6F8" d="M13 14h31l-5.4 8H8.2L13 14Z"/>
+    <path fill="#F4F6F8" d="M26.7 21.6h12L31.2 50H18.9l7.8-28.4Z"/>
+    <path fill="#F4F6F8" d="M35.8 37.4h18L49 45.4H31l4.8-8Z"/>
+    <path fill="#E64236" d="M45.6 14h13.2l-5.4 8H40.2l5.4-8Z"/>
+  </g>
+</svg>

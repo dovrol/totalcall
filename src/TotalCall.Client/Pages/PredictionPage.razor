@@ -19,8 +19,9 @@ else if (competition is null || predictionSet is null)
 else
 {
     <AppPageHeader
-        Eyebrow="@competition.Name"
-        Title="@Localizer["Predictions.PageTitle"]"
+        Breadcrumbs="@Breadcrumbs"
+        Eyebrow="@Localizer["Predictions.PageTitle"]"
+        Title="@competition.Name"
         Description="@Localizer["Predictions.Description"]">
         <Aside>
             <PredictionSummaryCard
@@ -29,6 +30,8 @@ else
                 ProgressPercent="@CompletionPercent" />
         </Aside>
     </AppPageHeader>
+
+    <CompetitionPageNav Competition="competition" Active="Predictions" />
 
     @if (!canEditPredictions)
     {
@@ -72,7 +75,7 @@ else
             <AppButton OnClick="SaveAsync" Disabled="@isSaving" FullWidth="true">
                 @(isSaving ? Localizer["Predictions.Saving"] : Localizer["Predictions.SaveNow"])
             </AppButton>
-            <AppButton Href="@($"competitions/{competition.Slug}/review")" Variant="Secondary" FullWidth="true" AdditionalClass="mt-3">
+            <AppButton Href="@($"competitions/{competition.Slug}/review")" Variant="Secondary" FullWidth="true" AdditionalClass="prediction-sidebar__secondary-action">
                 @Localizer["Predictions.ReviewPicks"]
             </AppButton>
 
@@ -95,6 +98,14 @@ else
     private bool isSaving;
     private bool canEditPredictions;
     private string? saveStatus;
+
+    private IReadOnlyList<AppBreadcrumbItem> Breadcrumbs => competition is null
+        ? [new AppBreadcrumbItem(Localizer["Nav.Competitions"].Value, "")]
+        : [
+            new AppBreadcrumbItem(Localizer["Nav.Competitions"].Value, ""),
+            new AppBreadcrumbItem(competition.Name, $"competitions/{competition.Slug}"),
+            new AppBreadcrumbItem(Localizer["Predictions.PageTitle"].Value)
+        ];
 
     private int TotalQuestions => competition?.PredictionGroups.Sum(group => group.Questions.Count) ?? 0;
 

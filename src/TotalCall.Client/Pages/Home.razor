@@ -4,28 +4,26 @@
 
 <PageTitle>TotalCall</PageTitle>
 
-<AppPageHeader
-    Eyebrow="@Localizer["Home.Eyebrow"]"
-    Title="@Localizer["Home.Title"]"
-    Description="@Localizer["Home.Description"]">
-    <Actions>
-        @if (PrimaryCompetition is not null)
-        {
-            <AppButton Href="@($"competitions/{PrimaryCompetition.Slug}/predictions")">
-                @Localizer["Competition.MakePredictions"]
-            </AppButton>
-        }
-        <AppButton Href="#competitions" Variant="Secondary">
-            @Localizer["Nav.Competitions"]
-        </AppButton>
-    </Actions>
-    <Aside>
-        <AppStatCard
-            Label="@Localizer["Home.CompetitionsLabel"]"
-            Value="@((competitions?.Count ?? 0).ToString())"
-            Description="@Localizer["Home.CompetitionsHint"]" />
-    </Aside>
-</AppPageHeader>
+<section class="home-hero">
+    <div class="home-hero__content">
+        <p class="home-hero__eyebrow">@Localizer["Home.Eyebrow"]</p>
+        <h1 class="home-hero__title">
+            @Localizer["Home.Title"]
+        </h1>
+        <p class="home-hero__description">
+            @Localizer["Home.Description"]
+        </p>
+
+        <div class="home-hero__actions">
+            @if (PrimaryCompetition is not null)
+            {
+                <AppButton Href="@($"competitions/{PrimaryCompetition.Slug}/predictions")" Size="Lg">
+                    @Localizer["Home.PrimaryCta"]
+                </AppButton>
+            }
+        </div>
+    </div>
+</section>
 
 @if (competitions is null)
 {
@@ -39,10 +37,8 @@ else
 {
     <AppSection
         Id="competitions"
-        Eyebrow="@Localizer["Home.CompetitionsLabel"]"
-        Title="@Localizer["Nav.Competitions"]"
-        Description="@Localizer["Home.CompetitionsHint"]">
-        <div class="grid gap-4 md:grid-cols-2">
+        Title="@Localizer["Home.CompetitionsLabel"]">
+        <div class="competition-grid">
             @foreach (var competition in competitions)
             {
                 <CompetitionCard Competition="competition" />

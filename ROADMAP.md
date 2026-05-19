@@ -7,7 +7,7 @@ Roadmapa prowadzi do MVP w malych krokach. Priorytetem jest dzialajacy config-dr
 ## Faza 0: Decyzje i szkielety danych
 
 1. Utworzyc projekt Blazor WebAssembly na .NET 9.
-2. Dodac Tailwind CSS w minimalnej konfiguracji.
+2. Utrzymac spojnosc czystego CSS (bez dodatkowego frameworka UI/CSS).
 3. Przygotowac katalog `wwwroot/data`.
 4. Ustalic pierwszy stabilny format JSON dla zawodow.
 5. Przygotowac dwie reczne konfiguracje testowe:

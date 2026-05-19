@@ -1,24 +1,24 @@
 <section id="@Id" class="@CssClass">
     @if (!string.IsNullOrWhiteSpace(Title) || !string.IsNullOrWhiteSpace(Description) || Actions is not null)
     {
-        <div class="mb-4 grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-            <div class="space-y-1">
+        <div class="app-section__header">
+            <div class="app-section__intro">
                 @if (!string.IsNullOrWhiteSpace(Eyebrow))
                 {
-                    <p class="text-sm font-semibold text-brand-accent">@Eyebrow</p>
+                    <p class="app-section__eyebrow">@Eyebrow</p>
                 }
                 @if (!string.IsNullOrWhiteSpace(Title))
                 {
-                    <h2 class="text-xl font-semibold text-brand-ink">@Title</h2>
+                    <h2 class="app-section__title">@Title</h2>
                 }
                 @if (!string.IsNullOrWhiteSpace(Description))
                 {
-                    <p class="max-w-2xl text-sm leading-6 text-brand-muted">@Description</p>
+                    <p class="app-section__description">@Description</p>
                 }
             </div>
             @if (Actions is not null)
             {
-                <div class="flex flex-wrap gap-2">
+                <div class="app-section__actions">
                     @Actions
                 </div>
             }
@@ -55,6 +55,6 @@
 
     private string CssClass => string.Join(
         " ",
-        Surface ? "rounded-lg border border-brand-border bg-brand-surface p-5 shadow-card" : "space-y-4",
+        Surface ? "app-section app-section--surface" : "app-section",
         AdditionalClass);
 }

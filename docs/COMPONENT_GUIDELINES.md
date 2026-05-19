@@ -20,7 +20,7 @@ Komponenty maja utrzymywac spojnosc UI i chronic logike domenowa przed przypadko
 
 - Ten sam wzorzec UI pojawia sie trzeci raz.
 - Komponent Razor przekracza okolo 200-250 linii.
-- Strona zaczyna zawierac powtarzalne bloki Tailwinda.
+- Strona zaczyna zawierac powtarzalne bloki HTML i styli.
 - Wzorzec ma jasne API przez parametry i `EventCallback`.
 
 ## Granice odpowiedzialnosci

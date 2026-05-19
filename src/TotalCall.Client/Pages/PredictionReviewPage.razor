@@ -21,13 +21,16 @@ else if (competition is null || predictionSet is null)
 else
 {
     <AppPageHeader
-        Eyebrow="@competition.Name"
-        Title="@Localizer["Review.PageTitle"]"
+        Breadcrumbs="@Breadcrumbs"
+        Eyebrow="@Localizer["Review.PageTitle"]"
+        Title="@competition.Name"
         Description="@Localizer["Review.Description"]">
         <Aside>
             <AppStatCard Label="@Localizer["Predictions.SavedAnswers"]" Value="@predictionSet.Answers.Count.ToString()" />
         </Aside>
     </AppPageHeader>
+
+    <CompetitionPageNav Competition="competition" Active="Review" />
 
     @if (predictionSet.Answers.Count == 0)
     {
@@ -76,7 +79,7 @@ else
         </div>
     }
 
-    <div class="flex flex-wrap gap-3">
+    <div class="review-actions">
         <AppButton Href="@($"competitions/{competition.Slug}/predictions")">@Localizer["Review.EditPredictions"]</AppButton>
         <AppButton Href="@($"competitions/{competition.Slug}")" Variant="Secondary">@Localizer["Common.BackToCompetition"]</AppButton>
     </div>
@@ -90,6 +93,14 @@ else
     private PredictionSet? predictionSet;
     private PredictionValidationResult validationResult = new([]);
     private bool isLoading = true;
+
+    private IReadOnlyList<AppBreadcrumbItem> Breadcrumbs => competition is null
+        ? [new AppBreadcrumbItem(Localizer["Nav.Competitions"].Value, "")]
+        : [
+            new AppBreadcrumbItem(Localizer["Nav.Competitions"].Value, ""),
+            new AppBreadcrumbItem(competition.Name, $"competitions/{competition.Slug}"),
+            new AppBreadcrumbItem(Localizer["Review.PageTitle"].Value)
+        ];
 
     protected override async Task OnParametersSetAsync()
     {
