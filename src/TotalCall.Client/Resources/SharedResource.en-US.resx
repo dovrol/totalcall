@@ -20,13 +20,25 @@
   <data name="Competition.Navigation" xml:space="preserve"><value>Competition navigation</value></data>
   <data name="Home.Eyebrow" xml:space="preserve"><value>Fantasy for powerlifting fans</value></data>
   <data name="Home.Title" xml:space="preserve"><value>TotalCall</value></data>
+  <data name="Home.TitleLine1" xml:space="preserve"><value>Call the meet</value></data>
+  <data name="Home.TitleLine2" xml:space="preserve"><value>before it happens</value></data>
   <data name="Home.Description" xml:space="preserve"><value>Call powerlifting results without odds, slips or noise.</value></data>
   <data name="Home.PrimaryCta" xml:space="preserve"><value>Start predicting</value></data>
   <data name="Home.SecondaryCta" xml:space="preserve"><value>View competitions</value></data>
+  <data name="Home.PointNoOdds" xml:space="preserve"><value>No odds, ever</value></data>
+  <data name="Home.PointLocal" xml:space="preserve"><value>Local picks only</value></data>
+  <data name="Home.PointSkills" xml:space="preserve"><value>Powerlifting knowledge</value></data>
   <data name="Home.Loading" xml:space="preserve"><value>Loading competitions...</value></data>
   <data name="Home.Empty" xml:space="preserve"><value>No competitions are configured yet.</value></data>
   <data name="Home.CompetitionsLabel" xml:space="preserve"><value>Available competitions</value></data>
   <data name="Home.CompetitionsHint" xml:space="preserve"><value>Choose a meet and start predicting.</value></data>
+  <data name="Home.StatOpen" xml:space="preserve"><value>Active competitions</value></data>
+  <data name="Home.StatOpenHint" xml:space="preserve"><value>Ready for picks</value></data>
+  <data name="Home.StatStorage" xml:space="preserve"><value>Pick storage</value></data>
+  <data name="Home.StatStorageValue" xml:space="preserve"><value>Local browser</value></data>
+  <data name="Home.StatStorageHint" xml:space="preserve"><value>No account required</value></data>
+  <data name="Home.StatDeadline" xml:space="preserve"><value>Next lock</value></data>
+  <data name="Home.StatDeadlineNone" xml:space="preserve"><value>No active lock window</value></data>
   <data name="Common.Starts" xml:space="preserve"><value>Starts</value></data>
   <data name="Common.Locks" xml:space="preserve"><value>Prediction lock</value></data>
   <data name="Common.Status" xml:space="preserve"><value>Status</value></data>
@@ -62,7 +74,10 @@
   <data name="Competition.Categories" xml:space="preserve"><value>Categories</value></data>
   <data name="Competition.Groups" xml:space="preserve"><value>Prediction groups</value></data>
   <data name="Competition.PredictionGroups" xml:space="preserve"><value>Prediction modules</value></data>
+  <data name="Competition.ModulesHint" xml:space="preserve"><value>Choose the module you want to fill first.</value></data>
   <data name="Competition.QuestionsCount" xml:space="preserve"><value>{0} question(s)</value></data>
+  <data name="Competition.FeaturedAthletes" xml:space="preserve"><value>Featured athletes</value></data>
+  <data name="Competition.FeaturedAthletesHint" xml:space="preserve"><value>Selected athletes from current competition setup.</value></data>
   <data name="Competition.MakePredictions" xml:space="preserve"><value>Make predictions</value></data>
   <data name="Competition.ReviewSaved" xml:space="preserve"><value>Review picks</value></data>
   <data name="Competition.ViewResults" xml:space="preserve"><value>View results</value></data>

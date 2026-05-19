@@ -20,13 +20,25 @@
   <data name="Competition.Navigation" xml:space="preserve"><value>Nawigacja zawodów</value></data>
   <data name="Home.Eyebrow" xml:space="preserve"><value>Fantasy dla fanów trójboju</value></data>
   <data name="Home.Title" xml:space="preserve"><value>TotalCall</value></data>
+  <data name="Home.TitleLine1" xml:space="preserve"><value>Typuj zawody</value></data>
+  <data name="Home.TitleLine2" xml:space="preserve"><value>zanim się zaczną</value></data>
   <data name="Home.Description" xml:space="preserve"><value>Typuj wyniki zawodów siłowych bez kursów, kuponów i hałasu.</value></data>
   <data name="Home.PrimaryCta" xml:space="preserve"><value>Zacznij typować</value></data>
   <data name="Home.SecondaryCta" xml:space="preserve"><value>Zobacz zawody</value></data>
+  <data name="Home.PointNoOdds" xml:space="preserve"><value>Bez kursów</value></data>
+  <data name="Home.PointLocal" xml:space="preserve"><value>Tylko lokalny zapis</value></data>
+  <data name="Home.PointSkills" xml:space="preserve"><value>Liczy się wiedza</value></data>
   <data name="Home.Loading" xml:space="preserve"><value>Ładowanie zawodów...</value></data>
   <data name="Home.Empty" xml:space="preserve"><value>Nie skonfigurowano jeszcze żadnych zawodów.</value></data>
   <data name="Home.CompetitionsLabel" xml:space="preserve"><value>Dostępne zawody</value></data>
   <data name="Home.CompetitionsHint" xml:space="preserve"><value>Wybierz zawody i przejdź do typowania.</value></data>
+  <data name="Home.StatOpen" xml:space="preserve"><value>Aktywne zawody</value></data>
+  <data name="Home.StatOpenHint" xml:space="preserve"><value>Gotowe do typowania</value></data>
+  <data name="Home.StatStorage" xml:space="preserve"><value>Przechowywanie</value></data>
+  <data name="Home.StatStorageValue" xml:space="preserve"><value>Lokalna przeglądarka</value></data>
+  <data name="Home.StatStorageHint" xml:space="preserve"><value>Bez konta</value></data>
+  <data name="Home.StatDeadline" xml:space="preserve"><value>Najbliższa blokada</value></data>
+  <data name="Home.StatDeadlineNone" xml:space="preserve"><value>Brak aktywnej blokady</value></data>
   <data name="Common.Starts" xml:space="preserve"><value>Start</value></data>
   <data name="Common.Locks" xml:space="preserve"><value>Blokada typów</value></data>
   <data name="Common.Status" xml:space="preserve"><value>Status</value></data>
@@ -62,7 +74,10 @@
   <data name="Competition.Categories" xml:space="preserve"><value>Kategorie</value></data>
   <data name="Competition.Groups" xml:space="preserve"><value>Grupy typowań</value></data>
   <data name="Competition.PredictionGroups" xml:space="preserve"><value>Moduły typowań</value></data>
+  <data name="Competition.ModulesHint" xml:space="preserve"><value>Wybierz moduł, od którego chcesz zacząć typowanie.</value></data>
   <data name="Competition.QuestionsCount" xml:space="preserve"><value>{0} pytań</value></data>
+  <data name="Competition.FeaturedAthletes" xml:space="preserve"><value>Wyróżnieni zawodnicy</value></data>
+  <data name="Competition.FeaturedAthletesHint" xml:space="preserve"><value>Przykładowi zawodnicy z aktualnej konfiguracji.</value></data>
   <data name="Competition.MakePredictions" xml:space="preserve"><value>Typuj wyniki</value></data>
   <data name="Competition.ReviewSaved" xml:space="preserve"><value>Podgląd typów</value></data>
   <data name="Competition.ViewResults" xml:space="preserve"><value>Zobacz wyniki</value></data>

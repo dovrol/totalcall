@@ -2,6 +2,7 @@
 @inject CompetitionService CompetitionService
 @inject IStringLocalizer<SharedResource> Localizer
 @inject PredictionTextService Text
+@inject PredictionService PredictionService
 
 <PageTitle>@(competition?.Name ?? Localizer["Competition.Section"])</PageTitle>
 
@@ -17,77 +18,88 @@ else if (competition is null)
 }
 else
 {
-    <AppPageHeader
-        Breadcrumbs="@Breadcrumbs"
-        Eyebrow="@Localizer["Nav.Overview"]"
-        Title="@competition.Name"
-        Description="@Text.CompetitionDescription(competition)">
-        <Actions>
-            <AppButton Href="@($"competitions/{competition.Slug}/predictions")">
-                @Localizer["Competition.MakePredictions"]
-            </AppButton>
-            <AppButton Href="@($"competitions/{competition.Slug}/review")" Variant="Secondary">
-                @Localizer["Competition.ReviewSaved"]
-            </AppButton>
-        </Actions>
-        <Aside>
-            <AppStatCard Label="@Localizer["Competition.Athletes"]" Value="@competition.Athletes.Count.ToString()" />
-            <AppStatCard Label="@Localizer["Competition.Categories"]" Value="@competition.Categories.Count.ToString()" />
-            <AppStatCard Label="@Localizer["Competition.Groups"]" Value="@competition.PredictionGroups.Count.ToString()" />
-        </Aside>
-    </AppPageHeader>
+    <AppBreadcrumbs Items="Breadcrumbs" />
 
     <CompetitionPageNav Competition="competition" Active="Overview" />
 
-    <div class="competition-overview-grid">
-        <AppSection Surface="true" Title="@Localizer["Competition.Section"]">
-            <dl class="meta-list">
-                <div>
-                    <dt>@Localizer["Competition.Federation"]</dt>
-                    <dd>@(competition.Federation ?? Localizer["Common.Tbd"])</dd>
-                </div>
-                <div>
-                    <dt>@Localizer["Common.Starts"]</dt>
-                    <dd>@FormatDate(competition.StartDate)</dd>
-                </div>
-                <div>
-                    <dt>@Localizer["Common.Locks"]</dt>
-                    <dd>@FormatDate(competition.PredictionLockAt)</dd>
-                </div>
-                <div>
-                    <dt>@Localizer["Competition.ConfigVersion"]</dt>
-                    <dd>@competition.ConfigVersion</dd>
-                </div>
-            </dl>
-        </AppSection>
+    <section class="competition-hero-layout">
+        <AppCard Padding="Lg" AdditionalClass="@HeroCardClass">
+            <div class="competition-hero-card__backdrop" aria-hidden="true"></div>
+            <div class="competition-hero-card__content">
+                <CompetitionStatusBadge Status="competition.Status" />
+                <h1 class="competition-hero-card__title">@competition.Name</h1>
+                <p class="competition-hero-card__description">@Text.CompetitionDescription(competition)</p>
 
-        <AppSection Title="@Localizer["Competition.Data"]">
-            <div class="competition-data-stats">
-                <AppStatCard Label="@Localizer["Competition.Athletes"]" Value="@competition.Athletes.Count.ToString()" />
-                <AppStatCard Label="@Localizer["Competition.Categories"]" Value="@competition.Categories.Count.ToString()" />
-                <AppStatCard Label="@Localizer["Competition.Groups"]" Value="@competition.PredictionGroups.Count.ToString()" />
+                <dl class="competition-hero-card__meta">
+                    <div>
+                        <dt>@Localizer["Competition.Federation"]</dt>
+                        <dd>@(competition.Federation ?? Localizer["Common.Tbd"])</dd>
+                    </div>
+                    <div>
+                        <dt>@Localizer["Common.Starts"]</dt>
+                        <dd>@FormatDate(competition.StartDate)</dd>
+                    </div>
+                    <div>
+                        <dt>@Localizer["Common.Locks"]</dt>
+                        <dd>@FormatDate(competition.PredictionLockAt)</dd>
+                    </div>
+                </dl>
+
+                <div class="competition-hero-card__actions">
+                    <AppButton Href="@($"competitions/{competition.Slug}/predictions")">
+                        @Localizer["Competition.MakePredictions"]
+                    </AppButton>
+                    <AppButton Href="@($"competitions/{competition.Slug}/review")" Variant="Secondary">
+                        @Localizer["Competition.ReviewSaved"]
+                    </AppButton>
+                </div>
             </div>
-        </AppSection>
-    </div>
+        </AppCard>
 
-    <AppSection Surface="true" Title="@Localizer["Competition.PredictionGroups"]">
-        <div class="group-list">
+        <AppCard Padding="Md" AdditionalClass="competition-side-panel">
+            <div class="competition-side-panel__item">
+                <p>@Localizer["Common.Locks"]</p>
+                <strong>@FormatDate(competition.PredictionLockAt)</strong>
+            </div>
+            <div class="competition-side-panel__item">
+                <p>@Localizer["Competition.Categories"]</p>
+                <strong>@competition.Categories.Count</strong>
+            </div>
+            <div class="competition-side-panel__item">
+                <p>@Localizer["Predictions.SavedAnswers"]</p>
+                <strong>@SavedAnswersCount</strong>
+            </div>
+        </AppCard>
+    </section>
+
+    <AppSection Surface="true" Title="@Localizer["Competition.PredictionGroups"]" Description="@Localizer["Competition.ModulesHint"]">
+        <div class="competition-module-grid">
             @foreach (var group in competition.PredictionGroups.OrderBy(group => group.Order))
             {
-                <div class="group-list__item">
-                    <div>
-                        @if (!string.IsNullOrWhiteSpace(group.Mode))
-                        {
-                            <p class="prediction-group__mode">@group.Mode</p>
-                        }
-                        <h3>@Text.GroupTitle(competition, group)</h3>
-                        @if (!string.IsNullOrWhiteSpace(Text.GroupDescription(competition, group)))
-                        {
-                            <p>@Text.GroupDescription(competition, group)</p>
-                        }
-                    </div>
+                <article class="competition-module-card">
+                    <h3>@Text.GroupTitle(competition, group)</h3>
+                    @if (!string.IsNullOrWhiteSpace(Text.GroupDescription(competition, group)))
+                    {
+                        <p>@Text.GroupDescription(competition, group)</p>
+                    }
                     <span>@Localizer["Competition.QuestionsCount", group.Questions.Count]</span>
-                </div>
+                </article>
+            }
+        </div>
+    </AppSection>
+
+    <AppSection
+        Surface="true"
+        Title="@Localizer["Competition.FeaturedAthletes"]"
+        Description="@Localizer["Competition.FeaturedAthletesHint"]">
+        <div class="featured-athletes-grid">
+            @foreach (var athlete in FeaturedAthletes)
+            {
+                <article class="featured-athlete-card">
+                    <div class="featured-athlete-card__avatar" aria-hidden="true">@GetInitials(athlete.DisplayName)</div>
+                    <h3>@athlete.DisplayName</h3>
+                    <p>@GetAthleteCategory(athlete.Id)</p>
+                </article>
             }
         </div>
     </AppSection>
@@ -104,7 +116,24 @@ else
     public string Slug { get; set; } = string.Empty;
 
     private Competition? competition;
+    private PredictionSet? predictionSet;
     private bool isLoading = true;
+    private int SavedAnswersCount => predictionSet?.Answers.Count ?? 0;
+
+    private string HeroCardClass => string.Join(
+        " ",
+        "competition-hero-card",
+        competition?.Slug switch
+        {
+            "worlds-2026" => "competition-hero-card--worlds",
+            "sheffield-2026" => "competition-hero-card--sheffield",
+            _ => "competition-hero-card--default"
+        });
+
+    private IReadOnlyList<Athlete> FeaturedAthletes => competition?
+        .Athletes
+        .Take(6)
+        .ToArray() ?? [];
 
     private IReadOnlyList<AppBreadcrumbItem> Breadcrumbs => competition is null
         ? [new AppBreadcrumbItem(Localizer["Nav.Competitions"].Value, "")]
@@ -117,11 +146,46 @@ else
     {
         isLoading = true;
         competition = await CompetitionService.GetCompetitionAsync(Slug);
+
+        if (competition is not null)
+        {
+            predictionSet = await PredictionService.GetOrCreatePredictionSetAsync(competition);
+        }
+
         isLoading = false;
     }
 
     private string FormatDate(DateTimeOffset? value)
     {
         return value?.ToLocalTime().ToString("d MMM yyyy HH:mm") ?? Localizer["Common.Tbd"];
+    }
+
+    private string GetAthleteCategory(string athleteId)
+    {
+        var category = competition?
+            .Categories
+            .FirstOrDefault(item => item.AthleteIds.Contains(athleteId));
+
+        return category?.Name ?? Localizer["Common.Tbd"];
+    }
+
+    private static string GetInitials(string name)
+    {
+        var parts = name
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Take(2)
+            .ToArray();
+
+        if (parts.Length == 0)
+        {
+            return "TC";
+        }
+
+        if (parts.Length == 1)
+        {
+            return parts[0][0].ToString().ToUpperInvariant();
+        }
+
+        return $"{char.ToUpperInvariant(parts[0][0])}{char.ToUpperInvariant(parts[1][0])}";
     }
 }

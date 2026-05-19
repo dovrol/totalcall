@@ -1,16 +1,25 @@
 @inject IStringLocalizer<SharedResource> Localizer
 
-<AppCard Padding="Lg" AdditionalClass="competition-card">
+<AppCard Padding="Lg" AdditionalClass="@CardClass">
+    <div class="competition-card__backdrop" aria-hidden="true"></div>
+
     <div class="competition-card__top">
         <CompetitionStatusBadge Status="Competition.Status" />
-
         <h3 class="competition-card__title">@Competition.Name</h3>
+        @if (!string.IsNullOrWhiteSpace(Competition.Description))
+        {
+            <p class="competition-card__description">@Competition.Description</p>
+        }
     </div>
 
     <dl class="competition-card__meta">
         <div>
             <dt>@Localizer["Common.Starts"]</dt>
             <dd>@FormatDate(Competition.StartDate)</dd>
+        </div>
+        <div>
+            <dt>@Localizer["Common.Locks"]</dt>
+            <dd>@FormatDate(Competition.PredictionLockAt)</dd>
         </div>
     </dl>
 
@@ -24,6 +33,16 @@
 @code {
     [Parameter, EditorRequired]
     public CompetitionSummary Competition { get; set; } = default!;
+
+    private string CardClass => string.Join(
+        " ",
+        "competition-card",
+        Competition.Slug switch
+        {
+            "worlds-2026" => "competition-card--worlds",
+            "sheffield-2026" => "competition-card--sheffield",
+            _ => "competition-card--default"
+        });
 
     private string PrimaryActionHref => Competition.Status switch
     {

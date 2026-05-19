@@ -3,6 +3,7 @@
 @inject PredictionService PredictionService
 @inject PredictionValidationService PredictionValidationService
 @inject IStringLocalizer<SharedResource> Localizer
+@inject PredictionTextService Text
 
 <PageTitle>@(competition is null ? Localizer["Predictions.PageTitle"] : $"{competition.Name} - {Localizer["Predictions.PageTitle"]}")</PageTitle>
 
@@ -18,20 +19,34 @@ else if (competition is null || predictionSet is null)
 }
 else
 {
-    <AppPageHeader
-        Breadcrumbs="@Breadcrumbs"
-        Eyebrow="@Localizer["Predictions.PageTitle"]"
-        Title="@competition.Name"
-        Description="@Localizer["Predictions.Description"]">
-        <Aside>
-            <PredictionSummaryCard
-                Label="@Localizer["Predictions.Progress"]"
-                Value="@($"{CompletionPercent}%")"
-                ProgressPercent="@CompletionPercent" />
-        </Aside>
-    </AppPageHeader>
+    <section class="prediction-header">
+        <div class="prediction-header__main">
+            <AppBreadcrumbs Items="@Breadcrumbs" />
+            <h1>@competition.Name</h1>
+            <p>@Localizer["Predictions.Description"]</p>
+        </div>
+
+        <AppCard Padding="Sm" AdditionalClass="prediction-header__status">
+            <p>@Localizer["Common.Locks"]</p>
+            <strong>@FormatDate(competition.PredictionLockAt)</strong>
+            <span>@Localizer["Predictions.SavedLocally"]</span>
+        </AppCard>
+    </section>
 
     <CompetitionPageNav Competition="competition" Active="Predictions" />
+
+    <ol class="prediction-step-strip">
+        @foreach (var step in StepItems)
+        {
+            <li class="prediction-step-strip__item">
+                <span class="prediction-step-strip__number">@step.Order</span>
+                <div>
+                    <strong>@step.Title</strong>
+                    <small>@step.Subtitle</small>
+                </div>
+            </li>
+        }
+    </ol>
 
     @if (!canEditPredictions)
     {
@@ -99,6 +114,17 @@ else
     private bool canEditPredictions;
     private string? saveStatus;
 
+    private IReadOnlyList<PredictionStepItem> StepItems => competition?
+        .PredictionGroups
+        .OrderBy(group => group.Order)
+        .Select((group, index) => new PredictionStepItem(
+            index + 1,
+            Text.GroupTitle(competition!, group),
+            string.IsNullOrWhiteSpace(group.Mode)
+                ? Localizer["Competition.QuestionsCount", group.Questions.Count].Value
+                : group.Mode))
+        .ToArray() ?? [];
+
     private IReadOnlyList<AppBreadcrumbItem> Breadcrumbs => competition is null
         ? [new AppBreadcrumbItem(Localizer["Nav.Competitions"].Value, "")]
         : [
@@ -161,8 +187,10 @@ else
             : Localizer["Predictions.DraftSaved"];
     }
 
-    private static string FormatDate(DateTimeOffset value)
+    private string FormatDate(DateTimeOffset? value)
     {
-        return value.ToLocalTime().ToString("d MMM yyyy HH:mm:ss");
+        return value?.ToLocalTime().ToString("d MMM yyyy HH:mm:ss") ?? Localizer["Common.Tbd"];
     }
+
+    private sealed record PredictionStepItem(int Order, string Title, string Subtitle);
 }

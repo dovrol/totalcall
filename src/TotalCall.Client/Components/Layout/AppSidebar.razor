@@ -1,20 +1,24 @@
 @inject IStringLocalizer<SharedResource> Localizer
 
-<aside class="app-sidebar">
-    <div class="app-sidebar__top">
-        <AppLogo />
+<header class="app-topbar">
+    <div class="app-topbar__inner">
+        <AppLogo AdditionalClass="app-topbar__brand" />
 
-        <div class="app-sidebar__controls">
+        <nav class="app-topbar__nav" aria-label="Main navigation">
+            <NavLink class="topbar-nav-link" ActiveClass="active" href="" Match="NavLinkMatch.All">
+                @Localizer["Nav.Competitions"]
+            </NavLink>
+            <NavLink class="topbar-nav-link" ActiveClass="active" href="competitions/sheffield-2026">
+                @Localizer["Nav.Sheffield"]
+            </NavLink>
+            <NavLink class="topbar-nav-link" ActiveClass="active" href="competitions/worlds-2026">
+                @Localizer["Nav.Worlds"]
+            </NavLink>
+        </nav>
+
+        <div class="app-topbar__controls">
             <ThemeToggle />
             <LanguageSwitcher />
         </div>
     </div>
-
-    <div class="app-sidebar__nav-wrap">
-        <nav class="app-sidebar__nav" aria-label="Main navigation">
-            <NavLink class="sidebar-nav-link" ActiveClass="active" href="" Match="NavLinkMatch.All">
-                @Localizer["Nav.Competitions"]
-            </NavLink>
-        </nav>
-    </div>
-</aside>
+</header>

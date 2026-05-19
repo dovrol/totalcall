@@ -4,25 +4,32 @@
 
 <PageTitle>TotalCall</PageTitle>
 
-<section class="home-hero">
-    <div class="home-hero__content">
-        <p class="home-hero__eyebrow">@Localizer["Home.Eyebrow"]</p>
-        <h1 class="home-hero__title">
-            @Localizer["Home.Title"]
+<section class="home-hero-panel">
+    <div class="home-hero-panel__content">
+        <p class="home-hero-panel__eyebrow">@Localizer["Home.Eyebrow"]</p>
+        <h1 class="home-hero-panel__title">
+            @Localizer["Home.TitleLine1"]
+            <span>@Localizer["Home.TitleLine2"]</span>
         </h1>
-        <p class="home-hero__description">
+        <p class="home-hero-panel__description">
             @Localizer["Home.Description"]
         </p>
 
-        <div class="home-hero__actions">
-            @if (PrimaryCompetition is not null)
-            {
-                <AppButton Href="@($"competitions/{PrimaryCompetition.Slug}/predictions")" Size="Lg">
-                    @Localizer["Home.PrimaryCta"]
-                </AppButton>
-            }
+        @if (PrimaryCompetition is not null)
+        {
+            <AppButton Href="@($"competitions/{PrimaryCompetition.Slug}/predictions")" Size="Lg" AdditionalClass="home-hero-panel__cta">
+                @Localizer["Home.PrimaryCta"]
+            </AppButton>
+        }
+
+        <div class="home-hero-panel__points">
+            <span>@Localizer["Home.PointNoOdds"]</span>
+            <span>@Localizer["Home.PointLocal"]</span>
+            <span>@Localizer["Home.PointSkills"]</span>
         </div>
     </div>
+
+    <div class="home-hero-panel__media" aria-hidden="true"></div>
 </section>
 
 @if (competitions is null)
@@ -35,9 +42,16 @@ else if (competitions.Count == 0)
 }
 else
 {
+    <section class="home-stat-grid" aria-label="Home stats">
+        <AppStatCard Label="@Localizer["Home.StatOpen"]" Value="@OpenCompetitionsCount.ToString()" Description="@Localizer["Home.StatOpenHint"]" />
+        <AppStatCard Label="@Localizer["Home.StatStorage"]" Value="@Localizer["Home.StatStorageValue"]" Description="@Localizer["Home.StatStorageHint"]" />
+        <AppStatCard Label="@Localizer["Home.StatDeadline"]" Value="@NextDeadlineValue" Description="@NextDeadlineHint" />
+    </section>
+
     <AppSection
         Id="competitions"
-        Title="@Localizer["Home.CompetitionsLabel"]">
+        Title="@Localizer["Home.CompetitionsLabel"]"
+        Description="@Localizer["Home.CompetitionsHint"]">
         <div class="competition-grid">
             @foreach (var competition in competitions)
             {
@@ -53,8 +67,47 @@ else
     private CompetitionSummary? PrimaryCompetition => competitions?
         .FirstOrDefault(competition => competition.Status == CompetitionStatus.Upcoming);
 
+    private int OpenCompetitionsCount => competitions?.Count(competition => competition.Status == CompetitionStatus.Upcoming) ?? 0;
+
+    private DateTimeOffset? NextDeadlineAt => competitions?
+        .Where(competition => competition.PredictionLockAt is not null)
+        .Select(competition => competition.PredictionLockAt!.Value)
+        .OrderBy(value => value)
+        .FirstOrDefault();
+
+    private string NextDeadlineValue => NextDeadlineAt is null
+        ? Localizer["Common.Tbd"]
+        : FormatCountdown(NextDeadlineAt.Value);
+
+    private string NextDeadlineHint => NextDeadlineAt is null
+        ? Localizer["Home.StatDeadlineNone"]
+        : NextDeadlineAt.Value.ToLocalTime().ToString("d MMM yyyy, HH:mm");
+
     protected override async Task OnInitializedAsync()
     {
         competitions = await CompetitionService.GetCompetitionsAsync();
+    }
+
+    private string FormatCountdown(DateTimeOffset value)
+    {
+        var now = DateTimeOffset.Now;
+        var delta = value.ToLocalTime() - now;
+
+        if (delta <= TimeSpan.Zero)
+        {
+            return Localizer["Status.Locked"];
+        }
+
+        if (delta.TotalDays >= 1)
+        {
+            return $"{(int)delta.TotalDays}d {delta.Hours}h";
+        }
+
+        if (delta.TotalHours >= 1)
+        {
+            return $"{(int)delta.TotalHours}h {delta.Minutes}m";
+        }
+
+        return $"{Math.Max(1, delta.Minutes)}m";
     }
 }
