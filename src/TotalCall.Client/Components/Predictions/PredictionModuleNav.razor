@@ -1,0 +1,81 @@
+@inject IStringLocalizer<SharedResource> Localizer
+@inject PredictionTextService Text
+
+<nav class="prediction-module-nav" aria-label="@Localizer["Competition.PredictionGroups"]">
+    <h2>@Localizer["Competition.PredictionGroups"]</h2>
+
+    <ol class="prediction-module-nav__list">
+        @foreach (var group in Groups.OrderBy(group => group.Order))
+        {
+            var moduleValidation = GetValidation(group.Id);
+            var isActive = string.Equals(group.Id, ActiveGroupId, StringComparison.OrdinalIgnoreCase);
+
+            <li>
+                <button
+                    type="button"
+                    class="@GetButtonClass(isActive)"
+                    @onclick="() => GroupChanged.InvokeAsync(group.Id)">
+                    <div>
+                        <strong>@Text.GroupTitle(Competition, group)</strong>
+                        <small>@GetSummary(moduleValidation)</small>
+                    </div>
+                    <PredictionStatusBadge Status="@moduleValidation.Status" />
+                </button>
+            </li>
+        }
+    </ol>
+</nav>
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<PredictionGroup> Groups { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public string ActiveGroupId { get; set; } = string.Empty;
+
+    [Parameter]
+    public IReadOnlyDictionary<string, PredictionModuleValidationResult> ModuleValidationByGroupId { get; set; } =
+        new Dictionary<string, PredictionModuleValidationResult>(StringComparer.OrdinalIgnoreCase);
+
+    [Parameter]
+    public EventCallback<string> GroupChanged { get; set; }
+
+    private PredictionModuleValidationResult GetValidation(string groupId)
+    {
+        if (ModuleValidationByGroupId.TryGetValue(groupId, out var result))
+        {
+            return result;
+        }
+
+        return new PredictionModuleValidationResult(
+            groupId,
+            PredictionCompletionStatus.NotStarted,
+            0,
+            0,
+            0,
+            0,
+            [],
+            []);
+    }
+
+    private string GetButtonClass(bool isActive)
+    {
+        return string.Join(
+            " ",
+            "prediction-module-nav__button",
+            isActive ? "prediction-module-nav__button--active" : null);
+    }
+
+    private string GetSummary(PredictionModuleValidationResult validation)
+    {
+        if (validation.TotalItems == 0)
+        {
+            return Localizer["Predictions.Status.NotStarted"];
+        }
+
+        return Localizer["Predictions.CompletedOfTotal", validation.CompletedItems, validation.TotalItems];
+    }
+}

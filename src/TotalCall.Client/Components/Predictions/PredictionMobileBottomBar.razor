@@ -1,0 +1,43 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="prediction-mobile-bottom-bar">
+    @if (HasNext)
+    {
+        <AppButton FullWidth="true" Size="Lg" OnClick="OnNextClicked" Disabled="@(!CanEditPredictions)">
+            @Localizer["Predictions.SaveAndNext"]
+        </AppButton>
+    }
+    else
+    {
+        <AppButton FullWidth="true" Size="Lg" OnClick="OnReviewClicked" Disabled="@(!CanEditPredictions)">
+            @Localizer["Predictions.ReviewPicks"]
+        </AppButton>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public bool HasNext { get; set; }
+
+    [Parameter]
+    public bool CanEditPredictions { get; set; }
+
+    [Parameter, EditorRequired]
+    public PredictionModuleValidationResult ActiveModuleValidation { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback NextRequested { get; set; }
+
+    [Parameter]
+    public EventCallback ReviewRequested { get; set; }
+
+    private Task OnNextClicked(MouseEventArgs _)
+    {
+        return NextRequested.InvokeAsync();
+    }
+
+    private Task OnReviewClicked(MouseEventArgs _)
+    {
+        return ReviewRequested.InvokeAsync();
+    }
+}

@@ -104,6 +104,56 @@
   <data name="Predictions.SavedLocally" xml:space="preserve"><value>Saved locally.</value></data>
   <data name="Predictions.DraftSaved" xml:space="preserve"><value>Draft saved locally. Fix validation issues before final review.</value></data>
   <data name="Predictions.LocalNotice" xml:space="preserve"><value>The MVP works without an account. Picks are available only in this browser.</value></data>
+  <data name="Predictions.DropAthleteHere" xml:space="preserve"><value>Drop athlete here</value></data>
+  <data name="Predictions.DragFromShortlist" xml:space="preserve"><value>Drag from shortlist</value></data>
+  <data name="Predictions.RemoveAthlete" xml:space="preserve"><value>Remove athlete</value></data>
+  <data name="Predictions.Shortlist" xml:space="preserve"><value>Shortlist</value></data>
+  <data name="Predictions.ShortlistCount" xml:space="preserve"><value>{0} athletes</value></data>
+  <data name="Predictions.NoModulesTitle" xml:space="preserve"><value>No prediction modules</value></data>
+  <data name="Predictions.NoModulesDescription" xml:space="preserve"><value>This competition has no configured prediction modules.</value></data>
+  <data name="Predictions.ActiveModuleAria" xml:space="preserve"><value>Active prediction module</value></data>
+  <data name="Predictions.CompletedOfTotal" xml:space="preserve"><value>{0} / {1} completed</value></data>
+  <data name="Predictions.CompletedOfTotalItems" xml:space="preserve"><value>{0} / {1} {2} completed</value></data>
+  <data name="Predictions.Item.Categories" xml:space="preserve"><value>categories</value></data>
+  <data name="Predictions.Item.Predictions" xml:space="preserve"><value>predictions</value></data>
+  <data name="Predictions.Status.Complete" xml:space="preserve"><value>Complete</value></data>
+  <data name="Predictions.Status.InProgress" xml:space="preserve"><value>In progress</value></data>
+  <data name="Predictions.Status.NotStarted" xml:space="preserve"><value>Not started</value></data>
+  <data name="Predictions.RemainingItems" xml:space="preserve"><value>Remaining {0}</value></data>
+  <data name="Predictions.ModuleSummary" xml:space="preserve"><value>Module summary</value></data>
+  <data name="Predictions.ScoreOnlyComplete" xml:space="preserve"><value>Only completed predictions will score.</value></data>
+  <data name="Predictions.SaveAnyTime" xml:space="preserve"><value>You can save at any time. Only completed predictions will score.</value></data>
+  <data name="Predictions.SaveState" xml:space="preserve"><value>Save state</value></data>
+  <data name="Predictions.InProgressSummary" xml:space="preserve"><value>In progress: {0}/{1}</value></data>
+  <data name="Predictions.SaveAndNext" xml:space="preserve"><value>Save &amp; next</value></data>
+  <data name="Predictions.UnsupportedModuleTitle" xml:space="preserve"><value>Unsupported prediction module</value></data>
+  <data name="Predictions.UnsupportedModuleDescription" xml:space="preserve"><value>Module type "{0}" is not implemented yet.</value></data>
+  <data name="Predictions.ModuleNotImplemented" xml:space="preserve"><value>This prediction module is configured but not implemented yet.</value></data>
+  <data name="Predictions.NoCategoriesTitle" xml:space="preserve"><value>No categories configured</value></data>
+  <data name="Predictions.NoCategoriesDescription" xml:space="preserve"><value>This module does not have configured categories.</value></data>
+  <data name="Predictions.CategoryIndex" xml:space="preserve"><value>Category {0} of {1}</value></data>
+  <data name="Predictions.AutoFillByNominated" xml:space="preserve"><value>Auto-fill by nominated total</value></data>
+  <data name="Predictions.ClearCategory" xml:space="preserve"><value>Clear category</value></data>
+  <data name="Predictions.YourRankingTopN" xml:space="preserve"><value>Your ranking (Top {0})</value></data>
+  <data name="Predictions.AvailableAthletes" xml:space="preserve"><value>Available athletes</value></data>
+  <data name="Predictions.DragOrPickHint" xml:space="preserve"><value>Drag or pick from the list</value></data>
+  <data name="Predictions.MoveUp" xml:space="preserve"><value>Move up</value></data>
+  <data name="Predictions.MoveDown" xml:space="preserve"><value>Move down</value></data>
+  <data name="Predictions.Picked" xml:space="preserve"><value>Picked</value></data>
+  <data name="Predictions.SearchAthlete" xml:space="preserve"><value>Search athlete</value></data>
+  <data name="Predictions.SearchAthletePlaceholder" xml:space="preserve"><value>Search by name or country...</value></data>
+  <data name="Predictions.SortBy" xml:space="preserve"><value>Sort by</value></data>
+  <data name="Predictions.SortNominatedDesc" xml:space="preserve"><value>Nominated total (high to low)</value></data>
+  <data name="Predictions.SortNominatedAsc" xml:space="preserve"><value>Nominated total (low to high)</value></data>
+  <data name="Predictions.SortNameAsc" xml:space="preserve"><value>Name (A-Z)</value></data>
+  <data name="Predictions.NoAthletesTitle" xml:space="preserve"><value>No athletes found</value></data>
+  <data name="Predictions.NoAthletesDescription" xml:space="preserve"><value>Try a different search term.</value></data>
+  <data name="Predictions.SectionComplete" xml:space="preserve"><value>This section is complete.</value></data>
+  <data name="Predictions.SectionInProgress" xml:space="preserve"><value>In progress · {0}/{1} picks</value></data>
+  <data name="Predictions.SectionNotStarted" xml:space="preserve"><value>Not started yet.</value></data>
+  <data name="Predictions.CompleteSectionToScore" xml:space="preserve"><value>Complete this category to score points.</value></data>
+  <data name="Predictions.Category" xml:space="preserve"><value>Category</value></data>
+  <data name="Predictions.Pick" xml:space="preserve"><value>Pick</value></data>
   <data name="Review.PageTitle" xml:space="preserve"><value>Prediction review</value></data>
   <data name="Review.Loading" xml:space="preserve"><value>Loading prediction review...</value></data>
   <data name="Review.NotFoundTitle" xml:space="preserve"><value>Prediction review not found</value></data>

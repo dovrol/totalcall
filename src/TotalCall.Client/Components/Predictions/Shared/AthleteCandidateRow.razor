@@ -1,0 +1,70 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<article
+    class="@CssClass"
+    draggable="@(!IsSelected)"
+    @ondragstart="() => DragStartRequested.InvokeAsync(Athlete.Id)">
+    <div class="athlete-candidate-row__details">
+        <strong>@Athlete.DisplayName</strong>
+        @if (!string.IsNullOrWhiteSpace(Athlete.CountryName))
+        {
+            <small>@Athlete.CountryName</small>
+        }
+        @if (!string.IsNullOrWhiteSpace(WeightClassLabel))
+        {
+            <small>@WeightClassLabel</small>
+        }
+    </div>
+
+    <div class="athlete-candidate-row__meta">
+        @if (Athlete.SeedTotalKg is not null)
+        {
+            <span>@Athlete.SeedTotalKg.Value.ToString("0.#") kg</span>
+        }
+        else
+        {
+            <span>@Localizer["Common.Tbd"]</span>
+        }
+
+        @if (IsSelected)
+        {
+            <span class="athlete-candidate-row__picked">@Localizer["Predictions.Picked"]</span>
+        }
+        else
+        {
+            <AppButton Size="Sm" Variant="Secondary" OnClick="OnPickClicked">
+                @PickButtonLabel
+            </AppButton>
+        }
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired]
+    public Athlete Athlete { get; set; } = default!;
+
+    [Parameter]
+    public bool IsSelected { get; set; }
+
+    [Parameter]
+    public string? WeightClassLabel { get; set; }
+
+    [Parameter]
+    public string PickButtonLabel { get; set; } = "Pick";
+
+    [Parameter]
+    public EventCallback<string> PickRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<string> DragStartRequested { get; set; }
+
+    private string CssClass => string.Join(
+        " ",
+        "athlete-candidate-row",
+        IsSelected ? "athlete-candidate-row--selected" : null);
+
+    private Task OnPickClicked(MouseEventArgs _)
+    {
+        return PickRequested.InvokeAsync(Athlete.Id);
+    }
+}

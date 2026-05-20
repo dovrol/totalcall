@@ -1,0 +1,15 @@
+@using TotalCall.Client.Components.Predictions.Shared
+@inject IStringLocalizer<SharedResource> Localizer
+@inject PredictionTextService Text
+
+<PredictionEmptyState
+    Title="@Text.GroupTitle(Competition, Group)"
+    Description="@Localizer["Predictions.ModuleNotImplemented"]" />
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public PredictionGroup Group { get; set; } = default!;
+}

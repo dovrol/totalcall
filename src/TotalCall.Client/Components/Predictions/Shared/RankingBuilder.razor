@@ -1,0 +1,53 @@
+<section class="ranking-builder">
+    <h3>@Title</h3>
+
+    <div class="ranking-builder__slots">
+        @foreach (var position in Enumerable.Range(1, SlotsCount))
+        {
+            <RankingSlot
+                Position="position"
+                Athlete="GetAthlete(position)"
+                CanMoveUp="@(position > 1)"
+                CanMoveDown="@(position < SlotsCount)"
+                RemoveRequested="RemoveRequested"
+                MoveUpRequested="MoveUpRequested"
+                MoveDownRequested="MoveDownRequested"
+                DropRequested="DropToPositionRequested"
+                DragStartRequested="DragStartFromSlotRequested" />
+        }
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public int SlotsCount { get; set; } = 5;
+
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public IReadOnlyDictionary<int, Athlete> SelectedAthletesByPosition { get; set; } =
+        new Dictionary<int, Athlete>();
+
+    [Parameter]
+    public EventCallback<int> RemoveRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> MoveUpRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> MoveDownRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> DropToPositionRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> DragStartFromSlotRequested { get; set; }
+
+    private Athlete? GetAthlete(int position)
+    {
+        return SelectedAthletesByPosition.TryGetValue(position, out var athlete)
+            ? athlete
+            : null;
+    }
+}

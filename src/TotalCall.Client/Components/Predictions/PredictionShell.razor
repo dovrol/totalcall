@@ -1,0 +1,142 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<section class="prediction-shell">
+    <PredictionHeader
+        Competition="@Competition"
+        ActiveGroup="@ActiveGroup"
+        SaveStatus="@SaveStatus"
+        LastSavedAt="@LastSavedAt"
+        CanEditPredictions="@CanEditPredictions" />
+
+    <PredictionProgressSummary
+        Group="@ActiveGroup"
+        ModuleValidation="@ActiveModuleValidation" />
+
+    @if (!CanEditPredictions)
+    {
+        <div class="notice notice--warning">
+            @Localizer["Predictions.Locked"]
+        </div>
+    }
+
+    <div class="prediction-shell__layout">
+        <PredictionModuleNav
+            Competition="@Competition"
+            Groups="@Groups"
+            ActiveGroupId="@ActiveGroup.Id"
+            ModuleValidationByGroupId="@ModuleValidationByGroupId"
+            GroupChanged="@GroupChanged" />
+
+        <section class="prediction-shell__module" aria-label="@Localizer["Predictions.ActiveModuleAria"]">
+            <PredictionModuleRenderer
+                Competition="@Competition"
+                Group="@ActiveGroup"
+                Answers="@Answers.Where(answer => answer.GroupId == ActiveGroup.Id).ToArray()"
+                ModuleValidation="@ActiveModuleValidation"
+                CanEditPredictions="@CanEditPredictions"
+                AnswerChanged="@AnswerChanged" />
+        </section>
+
+        <PredictionSummaryPanel
+            Competition="@Competition"
+            Group="@ActiveGroup"
+            ModuleValidation="@ActiveModuleValidation"
+            SaveStatus="@SaveStatus"
+            LastSavedAt="@LastSavedAt" />
+    </div>
+
+    <PredictionNavigationBar
+        HasPrevious="@HasPreviousGroup"
+        HasNext="@HasNextGroup"
+        CanEditPredictions="@CanEditPredictions"
+        ActiveModuleValidation="@ActiveModuleValidation"
+        PreviousRequested="@GoPrevious"
+        NextRequested="@GoNextOrReview"
+        ReviewRequested="@ReviewRequested" />
+
+    <PredictionMobileBottomBar
+        HasNext="@HasNextGroup"
+        CanEditPredictions="@CanEditPredictions"
+        ActiveModuleValidation="@ActiveModuleValidation"
+        NextRequested="@GoNextOrReview"
+        ReviewRequested="@ReviewRequested" />
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<PredictionGroup> Groups { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public PredictionGroup ActiveGroup { get; set; } = default!;
+
+    [Parameter]
+    public IReadOnlyList<PredictionAnswer> Answers { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public PredictionModuleValidationResult ActiveModuleValidation { get; set; } = default!;
+
+    [Parameter]
+    public IReadOnlyDictionary<string, PredictionModuleValidationResult> ModuleValidationByGroupId { get; set; } =
+        new Dictionary<string, PredictionModuleValidationResult>(StringComparer.OrdinalIgnoreCase);
+
+    [Parameter]
+    public bool CanEditPredictions { get; set; }
+
+    [Parameter]
+    public string? SaveStatus { get; set; }
+
+    [Parameter]
+    public DateTimeOffset? LastSavedAt { get; set; }
+
+    [Parameter]
+    public EventCallback<string> GroupChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
+
+    [Parameter]
+    public EventCallback ReviewRequested { get; set; }
+
+    private int ActiveGroupIndex => GetGroupIndex(ActiveGroup.Id);
+
+    private bool HasPreviousGroup => ActiveGroupIndex > 0;
+
+    private bool HasNextGroup => ActiveGroupIndex >= 0 && ActiveGroupIndex < Groups.Count - 1;
+
+    private int GetGroupIndex(string groupId)
+    {
+        for (var index = 0; index < Groups.Count; index++)
+        {
+            if (Groups[index].Id == groupId)
+            {
+                return index;
+            }
+        }
+
+        return -1;
+    }
+
+    private async Task GoPrevious()
+    {
+        if (!HasPreviousGroup)
+        {
+            return;
+        }
+
+        await GroupChanged.InvokeAsync(Groups[ActiveGroupIndex - 1].Id);
+    }
+
+    private async Task GoNextOrReview()
+    {
+        if (HasNextGroup)
+        {
+            await GroupChanged.InvokeAsync(Groups[ActiveGroupIndex + 1].Id);
+            return;
+        }
+
+        await ReviewRequested.InvokeAsync();
+    }
+}

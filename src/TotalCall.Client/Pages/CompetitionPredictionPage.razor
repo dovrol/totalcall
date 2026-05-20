@@ -1,0 +1,170 @@
+@page "/competitions/{Slug}/predictions"
+@inject CompetitionService CompetitionService
+@inject PredictionService PredictionService
+@inject IPredictionValidationService PredictionValidationService
+@inject IStringLocalizer<SharedResource> Localizer
+@inject NavigationManager Navigation
+
+<PageTitle>@(competition is null ? Localizer["Predictions.PageTitle"] : $"{competition.Name} - {Localizer["Predictions.PageTitle"]}")</PageTitle>
+
+@if (isLoading)
+{
+    <AppLoadingState Message="@Localizer["Predictions.Loading"]" />
+}
+else if (competition is null || predictionSet is null)
+{
+    <AppErrorState
+        Title="@Localizer["Predictions.NotFoundTitle"]"
+        Description="@Localizer["Predictions.NotFoundDescription"]" />
+}
+else if (ActiveGroup is null)
+{
+    <PredictionEmptyState
+        Title="@Localizer["Predictions.NoModulesTitle"]"
+        Description="@Localizer["Predictions.NoModulesDescription"]" />
+}
+else
+{
+    <PredictionShell
+        Competition="@competition"
+        Groups="@OrderedGroups"
+        ActiveGroup="@ActiveGroup"
+        Answers="@predictionSet.Answers"
+        ActiveModuleValidation="@GetModuleValidation(ActiveGroup.Id)"
+        ModuleValidationByGroupId="@moduleValidationByGroupId"
+        CanEditPredictions="@canEditPredictions"
+        SaveStatus="@saveStatus"
+        LastSavedAt="@predictionSet.SavedAt"
+        GroupChanged="@SelectGroup"
+        AnswerChanged="@OnAnswerChanged"
+        ReviewRequested="@GoToReview" />
+}
+
+@code {
+    [Parameter]
+    public string Slug { get; set; } = string.Empty;
+
+    private Competition? competition;
+    private PredictionSet? predictionSet;
+    private PredictionValidationResult validationResult = new([]);
+    private IReadOnlyDictionary<string, PredictionModuleValidationResult> moduleValidationByGroupId =
+        new Dictionary<string, PredictionModuleValidationResult>(StringComparer.OrdinalIgnoreCase);
+    private bool isLoading = true;
+    private bool canEditPredictions;
+    private string? saveStatus;
+    private string? activeGroupId;
+
+    private IReadOnlyList<PredictionGroup> OrderedGroups => competition?
+        .PredictionGroups
+        .OrderBy(group => group.Order)
+        .ToArray() ?? [];
+
+    private PredictionGroup? ActiveGroup => OrderedGroups
+        .FirstOrDefault(group => group.Id == activeGroupId) ??
+        OrderedGroups.FirstOrDefault();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        isLoading = true;
+        competition = await CompetitionService.GetCompetitionAsync(Slug);
+
+        if (competition is not null)
+        {
+            predictionSet = await PredictionService.GetOrCreatePredictionSetAsync(competition);
+            canEditPredictions = CompetitionService.CanEditPredictions(competition);
+
+            RefreshValidation();
+
+            var firstGroup = OrderedGroups.FirstOrDefault();
+            if (firstGroup is not null && OrderedGroups.All(group => group.Id != activeGroupId))
+            {
+                activeGroupId = firstGroup.Id;
+            }
+        }
+
+        isLoading = false;
+    }
+
+    private void RefreshValidation()
+    {
+        if (competition is null || predictionSet is null)
+        {
+            validationResult = new PredictionValidationResult([]);
+            moduleValidationByGroupId = new Dictionary<string, PredictionModuleValidationResult>(StringComparer.OrdinalIgnoreCase);
+            return;
+        }
+
+        validationResult = PredictionValidationService.Validate(competition, predictionSet);
+
+        moduleValidationByGroupId = OrderedGroups.ToDictionary(
+            group => group.Id,
+            group => PredictionValidationService.ValidateModule(competition, group, predictionSet),
+            StringComparer.OrdinalIgnoreCase);
+    }
+
+    private PredictionModuleValidationResult GetModuleValidation(string groupId)
+    {
+        if (moduleValidationByGroupId.TryGetValue(groupId, out var result))
+        {
+            return result;
+        }
+
+        return new PredictionModuleValidationResult(
+            groupId,
+            PredictionCompletionStatus.NotStarted,
+            0,
+            0,
+            0,
+            0,
+            [],
+            []);
+    }
+
+    private async Task OnAnswerChanged(PredictionAnswer answer)
+    {
+        if (competition is null || predictionSet is null || !canEditPredictions)
+        {
+            return;
+        }
+
+        predictionSet = PredictionService.UpdateAnswer(predictionSet, answer);
+        RefreshValidation();
+
+        await SaveAsync();
+    }
+
+    private async Task SaveAsync()
+    {
+        if (predictionSet is null || !canEditPredictions)
+        {
+            return;
+        }
+
+        saveStatus = null;
+        await PredictionService.SaveAsync(predictionSet);
+
+        saveStatus = validationResult.IsValid
+            ? Localizer["Predictions.SavedLocally"]
+            : Localizer["Predictions.DraftSaved"];
+    }
+
+    private Task SelectGroup(string groupId)
+    {
+        if (OrderedGroups.Any(group => group.Id == groupId))
+        {
+            activeGroupId = groupId;
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task GoToReview()
+    {
+        if (competition is not null)
+        {
+            Navigation.NavigateTo($"competitions/{competition.Slug}/review");
+        }
+
+        return Task.CompletedTask;
+    }
+}

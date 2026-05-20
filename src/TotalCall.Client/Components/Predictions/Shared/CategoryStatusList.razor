@@ -1,0 +1,72 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<section class="category-status-list" aria-label="@Localizer["Competition.Categories"]">
+    <h3>@Localizer["Competition.Categories"]</h3>
+
+    <ol>
+        @foreach (var question in Questions.OrderBy(question => question.Order))
+        {
+            var status = GetStatus(question.Id);
+            var isActive = string.Equals(question.Id, ActiveQuestionId, StringComparison.OrdinalIgnoreCase);
+
+            <li>
+                <button
+                    type="button"
+                    class="@GetButtonClass(isActive)"
+                    @onclick="() => CategoryChanged.InvokeAsync(question.Id)">
+                    <div>
+                        <strong>@CategoryLabelSelector(question)</strong>
+                        <small>@GetStatusSummary(status)</small>
+                    </div>
+                    <PredictionStatusBadge Status="@status.Status" />
+                </button>
+            </li>
+        }
+    </ol>
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<PredictionQuestion> Questions { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public IReadOnlyDictionary<string, PredictionQuestionCompletionResult> StatusByQuestionId { get; set; } =
+        new Dictionary<string, PredictionQuestionCompletionResult>(StringComparer.OrdinalIgnoreCase);
+
+    [Parameter, EditorRequired]
+    public string ActiveQuestionId { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public Func<PredictionQuestion, string> CategoryLabelSelector { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<string> CategoryChanged { get; set; }
+
+    private PredictionQuestionCompletionResult GetStatus(string questionId)
+    {
+        if (StatusByQuestionId.TryGetValue(questionId, out var status))
+        {
+            return status;
+        }
+
+        return new PredictionQuestionCompletionResult(
+            questionId,
+            PredictionCompletionStatus.NotStarted,
+            0,
+            0);
+    }
+
+    private string GetButtonClass(bool isActive)
+    {
+        return string.Join(
+            " ",
+            "category-status-list__button",
+            isActive ? "category-status-list__button--active" : null);
+    }
+
+    private string GetStatusSummary(PredictionQuestionCompletionResult status)
+    {
+        var requiredCount = Math.Max(status.RequiredCount, 1);
+        return $"{status.SelectedCount}/{requiredCount}";
+    }
+}

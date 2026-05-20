@@ -12,4 +12,10 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 - Avoid betting/casino visual language.
 - Use `ICompetitionProvider` for competition loading and `IPredictionStore` for prediction persistence.
 - Keep scoring outside Razor components.
+- Use `PredictionModuleRenderer` to map `PredictionGroup.Type` to module components.
+- Do not hardcode events or module-specific pages (`WorldsTop5PredictionPage`, etc.).
+- Modules must emit changes via `EventCallback<PredictionAnswer>` and must not save directly.
+- Missing answers are allowed and must not be treated as global validation errors.
+- Do not force users to complete every module.
+- Keep prediction UX mobile-first with a non-drag fallback (`Pick`/`Wybierz`).
 - Run `./scripts/build.sh` (and tests when needed) after code changes.

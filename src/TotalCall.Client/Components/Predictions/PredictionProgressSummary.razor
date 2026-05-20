@@ -1,0 +1,58 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<section class="prediction-progress-summary" aria-label="@Localizer["Predictions.Progress"]">
+    <div class="prediction-progress-summary__head">
+        <h2>@Localizer["Predictions.Progress"]</h2>
+        <strong>@Localizer["Predictions.CompletedOfTotalItems", ModuleValidation.CompletedItems, ModuleValidation.TotalItems, ItemLabelPlural]</strong>
+    </div>
+
+    <div class="prediction-progress-summary__track" aria-hidden="true">
+        <span style="@($"width: {CompletionPercent}%")"></span>
+    </div>
+
+    <dl class="prediction-progress-summary__stats">
+        <div>
+            <dt>@Localizer["Predictions.Status.Complete"]</dt>
+            <dd>@ModuleValidation.CompletedItems</dd>
+        </div>
+        <div>
+            <dt>@Localizer["Predictions.Status.InProgress"]</dt>
+            <dd>@ModuleValidation.InProgressItems</dd>
+        </div>
+        <div>
+            <dt>@Localizer["Predictions.Status.NotStarted"]</dt>
+            <dd>@ModuleValidation.NotStartedItems</dd>
+        </div>
+        <div>
+            <dt>@Localizer["Predictions.RemainingItems", ItemLabelPlural]</dt>
+            <dd>@ModuleValidation.RemainingItems</dd>
+        </div>
+    </dl>
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public PredictionGroup Group { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public PredictionModuleValidationResult ModuleValidation { get; set; } = default!;
+
+    private int CompletionPercent => ModuleValidation.TotalItems == 0
+        ? 0
+        : (int)Math.Round((decimal)ModuleValidation.CompletedItems / ModuleValidation.TotalItems * 100m);
+
+    private string ItemLabelPlural => ResolveItemLabelPlural(Group);
+
+    private string ResolveItemLabelPlural(PredictionGroup group)
+    {
+        var normalizedType = PredictionModuleType.Normalize(group.Type);
+
+        if (normalizedType == PredictionModuleType.TopNByCategory ||
+            group.Questions.All(question => !string.IsNullOrWhiteSpace(question.CategoryId)))
+        {
+            return Localizer["Predictions.Item.Categories"];
+        }
+
+        return Localizer["Predictions.Item.Predictions"];
+    }
+}

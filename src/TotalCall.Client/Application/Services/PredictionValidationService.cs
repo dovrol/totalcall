@@ -3,7 +3,7 @@ using TotalCall.Client.Domain.Predictions;
 
 namespace TotalCall.Client.Application.Services;
 
-public sealed class PredictionValidationService
+public sealed class PredictionValidationService : IPredictionValidationService
 {
     public PredictionValidationResult Validate(Competition competition, PredictionSet predictionSet)
     {
@@ -11,59 +11,198 @@ public sealed class PredictionValidationService
 
         foreach (var group in competition.PredictionGroups)
         {
-            foreach (var question in group.Questions)
-            {
-                var answer = predictionSet.Answers.FirstOrDefault(candidate => candidate.QuestionId == question.Id);
-                ValidateQuestion(group, question, answer, errors);
-            }
+            var moduleResult = ValidateModule(competition, group, predictionSet);
+            errors.AddRange(moduleResult.ValidationErrors);
         }
 
         return new PredictionValidationResult(errors);
     }
 
-    private static void ValidateQuestion(
+    public PredictionModuleValidationResult ValidateModule(
+        Competition competition,
         PredictionGroup group,
-        PredictionQuestion question,
-        PredictionAnswer? answer,
-        List<PredictionValidationError> errors)
+        PredictionSet predictionSet)
     {
-        if (question.Required && !IsAnswered(question, answer))
+        _ = competition;
+
+        var orderedQuestions = group.Questions
+            .OrderBy(question => question.Order)
+            .ToArray();
+
+        var questionResults = new List<PredictionQuestionCompletionResult>(orderedQuestions.Length);
+        var validationErrors = new List<PredictionValidationError>();
+
+        foreach (var question in orderedQuestions)
         {
-            errors.Add(CreateError(group.Id, question.Id, "Validation.Required", "This question is required."));
-            return;
+            var answer = predictionSet.Answers.FirstOrDefault(candidate => candidate.QuestionId == question.Id);
+            var questionErrors = ValidateQuestion(group, question, answer);
+            validationErrors.AddRange(questionErrors);
+
+            var selectedCount = GetSelectedCount(question, answer);
+            var requiredCount = GetRequiredCount(question);
+            var status = ResolveQuestionStatus(question, answer, questionErrors, selectedCount);
+
+            questionResults.Add(new PredictionQuestionCompletionResult(
+                question.Id,
+                status,
+                selectedCount,
+                requiredCount));
         }
 
+        var totalItems = questionResults.Count;
+        var completedItems = questionResults.Count(result => result.Status == PredictionCompletionStatus.Complete);
+        var inProgressItems = questionResults.Count(result => result.Status == PredictionCompletionStatus.InProgress);
+        var notStartedItems = questionResults.Count(result => result.Status == PredictionCompletionStatus.NotStarted);
+
+        var moduleStatus = completedItems == totalItems && totalItems > 0
+            ? PredictionCompletionStatus.Complete
+            : completedItems > 0 || inProgressItems > 0
+                ? PredictionCompletionStatus.InProgress
+                : PredictionCompletionStatus.NotStarted;
+
+        return new PredictionModuleValidationResult(
+            group.Id,
+            moduleStatus,
+            totalItems,
+            completedItems,
+            inProgressItems,
+            notStartedItems,
+            questionResults,
+            validationErrors);
+    }
+
+    private static IReadOnlyList<PredictionValidationError> ValidateQuestion(
+        PredictionGroup group,
+        PredictionQuestion question,
+        PredictionAnswer? answer)
+    {
         if (answer is null)
         {
-            return;
+            return [];
         }
+
+        var errors = new List<PredictionValidationError>();
 
         ValidateSelectionCount(group, question, answer, errors);
         ValidateNumericRange(group, question, answer, errors);
         ValidateDuplicateAthletes(group, question, answer, errors);
+
+        return errors;
     }
 
-    private static bool IsAnswered(PredictionQuestion question, PredictionAnswer? answer)
+    private static PredictionCompletionStatus ResolveQuestionStatus(
+        PredictionQuestion question,
+        PredictionAnswer? answer,
+        IReadOnlyList<PredictionValidationError> questionErrors,
+        int selectedCount)
     {
         if (answer is null)
         {
-            return false;
+            return PredictionCompletionStatus.NotStarted;
+        }
+
+        var status = question.Type switch
+        {
+            PredictionQuestionType.YesNo => answer.Value.BooleanValue.HasValue
+                ? PredictionCompletionStatus.Complete
+                : PredictionCompletionStatus.NotStarted,
+            PredictionQuestionType.NumericQuestion => answer.Value.NumericValue.HasValue
+                ? PredictionCompletionStatus.Complete
+                : PredictionCompletionStatus.NotStarted,
+            PredictionQuestionType.NumericAthletePrediction => selectedCount switch
+            {
+                0 => PredictionCompletionStatus.NotStarted,
+                2 => PredictionCompletionStatus.Complete,
+                _ => PredictionCompletionStatus.InProgress
+            },
+            PredictionQuestionType.SingleAthleteChoice or PredictionQuestionType.MultipleChoice => selectedCount > 0
+                ? PredictionCompletionStatus.Complete
+                : PredictionCompletionStatus.NotStarted,
+            PredictionQuestionType.MultiAthleteChoice or PredictionQuestionType.AthleteRanking or PredictionQuestionType.CategoryPodium
+                => ResolveSelectionQuestionStatus(question, selectedCount),
+            _ => PredictionCompletionStatus.NotStarted
+        };
+
+        if (status == PredictionCompletionStatus.Complete && questionErrors.Count > 0)
+        {
+            return PredictionCompletionStatus.InProgress;
+        }
+
+        return status;
+    }
+
+    private static PredictionCompletionStatus ResolveSelectionQuestionStatus(
+        PredictionQuestion question,
+        int selectedCount)
+    {
+        if (selectedCount == 0)
+        {
+            return PredictionCompletionStatus.NotStarted;
+        }
+
+        if (question.Constraints.ExactSelections is { } exactSelections)
+        {
+            return selectedCount == exactSelections
+                ? PredictionCompletionStatus.Complete
+                : PredictionCompletionStatus.InProgress;
+        }
+
+        if (question.Constraints.MinSelections is { } minSelections && selectedCount < minSelections)
+        {
+            return PredictionCompletionStatus.InProgress;
+        }
+
+        if (question.Constraints.MaxSelections is { } maxSelections && selectedCount > maxSelections)
+        {
+            return PredictionCompletionStatus.InProgress;
+        }
+
+        return PredictionCompletionStatus.Complete;
+    }
+
+    private static int GetSelectedCount(PredictionQuestion question, PredictionAnswer? answer)
+    {
+        if (answer is null)
+        {
+            return 0;
         }
 
         return question.Type switch
         {
-            PredictionQuestionType.YesNo => answer.Value.BooleanValue.HasValue,
-            PredictionQuestionType.NumericQuestion => answer.Value.NumericValue.HasValue,
+            PredictionQuestionType.YesNo => answer.Value.BooleanValue.HasValue ? 1 : 0,
+            PredictionQuestionType.NumericQuestion => answer.Value.NumericValue.HasValue ? 1 : 0,
             PredictionQuestionType.NumericAthletePrediction =>
-                !string.IsNullOrWhiteSpace(answer.Value.SelectedAthleteId) &&
-                answer.Value.NumericValue.HasValue,
-            PredictionQuestionType.SingleAthleteChoice => !string.IsNullOrWhiteSpace(answer.Value.SelectedAthleteId),
-            PredictionQuestionType.MultiAthleteChoice => answer.Value.SelectedAthleteIds.Count > 0,
-            PredictionQuestionType.MultipleChoice => !string.IsNullOrWhiteSpace(answer.Value.SelectedOptionId),
+                (string.IsNullOrWhiteSpace(answer.Value.SelectedAthleteId) ? 0 : 1) +
+                (answer.Value.NumericValue.HasValue ? 1 : 0),
+            PredictionQuestionType.SingleAthleteChoice => string.IsNullOrWhiteSpace(answer.Value.SelectedAthleteId) ? 0 : 1,
+            PredictionQuestionType.MultiAthleteChoice => answer.Value.SelectedAthleteIds.Count,
+            PredictionQuestionType.MultipleChoice => string.IsNullOrWhiteSpace(answer.Value.SelectedOptionId) ? 0 : 1,
             PredictionQuestionType.AthleteRanking or PredictionQuestionType.CategoryPodium =>
-                answer.Value.AthletePlacements.Count > 0 &&
-                answer.Value.AthletePlacements.All(placement => !string.IsNullOrWhiteSpace(placement.AthleteId)),
-            _ => false
+                answer.Value.AthletePlacements.Count(placement => !string.IsNullOrWhiteSpace(placement.AthleteId)),
+            _ => 0
+        };
+    }
+
+    private static int GetRequiredCount(PredictionQuestion question)
+    {
+        if (question.Constraints.ExactSelections is { } exactSelections)
+        {
+            return exactSelections;
+        }
+
+        if (question.Constraints.MinSelections is { } minSelections)
+        {
+            return minSelections;
+        }
+
+        return question.Type switch
+        {
+            PredictionQuestionType.NumericAthletePrediction => 2,
+            PredictionQuestionType.YesNo or
+            PredictionQuestionType.NumericQuestion or
+            PredictionQuestionType.SingleAthleteChoice or
+            PredictionQuestionType.MultipleChoice => 1,
+            _ => 1
         };
     }
 
@@ -76,7 +215,8 @@ public sealed class PredictionValidationService
         var count = question.Type switch
         {
             PredictionQuestionType.MultiAthleteChoice => answer.Value.SelectedAthleteIds.Count,
-            PredictionQuestionType.AthleteRanking or PredictionQuestionType.CategoryPodium => answer.Value.AthletePlacements.Count,
+            PredictionQuestionType.AthleteRanking or PredictionQuestionType.CategoryPodium =>
+                answer.Value.AthletePlacements.Count(placement => !string.IsNullOrWhiteSpace(placement.AthleteId)),
             _ => (int?)null
         };
 
@@ -163,7 +303,10 @@ public sealed class PredictionValidationService
         {
             PredictionQuestionType.MultiAthleteChoice => answer.Value.SelectedAthleteIds,
             PredictionQuestionType.AthleteRanking or PredictionQuestionType.CategoryPodium =>
-                answer.Value.AthletePlacements.Select(placement => placement.AthleteId).ToArray(),
+                answer.Value.AthletePlacements
+                    .Select(placement => placement.AthleteId)
+                    .Where(athleteId => !string.IsNullOrWhiteSpace(athleteId))
+                    .ToArray(),
             _ => []
         };
 

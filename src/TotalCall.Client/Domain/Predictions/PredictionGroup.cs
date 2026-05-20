@@ -4,6 +4,8 @@ public sealed record PredictionGroup
 {
     public required string Id { get; init; }
 
+    public string? Type { get; init; }
+
     public required string Title { get; init; }
 
     public string? Description { get; init; }

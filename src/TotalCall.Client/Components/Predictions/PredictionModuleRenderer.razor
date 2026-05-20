@@ -1,0 +1,105 @@
+@using TotalCall.Client.Components.Predictions.Modules
+@inject IStringLocalizer<SharedResource> Localizer
+
+@switch (ResolvedModuleType)
+{
+    case PredictionModuleType.TopNByCategory:
+        <TopNByCategoryPrediction
+            Competition="Competition"
+            Group="Group"
+            Answers="Answers"
+            ModuleValidation="ModuleValidation"
+            CanEditPredictions="CanEditPredictions"
+            AnswerChanged="AnswerChanged" />
+        break;
+    case PredictionModuleType.AthleteRanking:
+        <AthleteRankingPrediction Competition="Competition" Group="Group" />
+        break;
+    case PredictionModuleType.CategoryPodium:
+        <CategoryPodiumPrediction Competition="Competition" Group="Group" />
+        break;
+    case PredictionModuleType.NumericAthletePrediction:
+        <NumericAthletePrediction Competition="Competition" Group="Group" />
+        break;
+    case PredictionModuleType.MultiAthleteChoice:
+        <MultiAthleteChoicePrediction Competition="Competition" Group="Group" />
+        break;
+    case PredictionModuleType.SingleAthleteChoice:
+        <SingleAthleteChoicePrediction Competition="Competition" Group="Group" />
+        break;
+    case PredictionModuleType.YesNo:
+        <YesNoPrediction Competition="Competition" Group="Group" />
+        break;
+    case PredictionModuleType.MultipleChoice:
+        <MultipleChoicePrediction Competition="Competition" Group="Group" />
+        break;
+    case PredictionModuleType.NumericQuestion:
+        <NumericQuestionPrediction Competition="Competition" Group="Group" />
+        break;
+    default:
+        <PredictionEmptyState
+            Title="@Localizer["Predictions.UnsupportedModuleTitle"]"
+            Description="@Localizer["Predictions.UnsupportedModuleDescription", Group.Type ?? Localizer["Common.Tbd"].Value]" />
+        break;
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public PredictionGroup Group { get; set; } = default!;
+
+    [Parameter]
+    public IReadOnlyList<PredictionAnswer> Answers { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public PredictionModuleValidationResult ModuleValidation { get; set; } = default!;
+
+    [Parameter]
+    public bool CanEditPredictions { get; set; }
+
+    [Parameter]
+    public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
+
+    private string ResolvedModuleType => ResolveModuleType(Group);
+
+    private static string ResolveModuleType(PredictionGroup group)
+    {
+        var normalizedType = PredictionModuleType.Normalize(group.Type);
+        if (!string.IsNullOrWhiteSpace(normalizedType))
+        {
+            return normalizedType;
+        }
+
+        var questionTypes = group.Questions
+            .Select(question => question.Type)
+            .Distinct()
+            .ToArray();
+
+        if (questionTypes.Length == 1)
+        {
+            if (questionTypes[0] == PredictionQuestionType.AthleteRanking &&
+                group.Questions.Count > 1 &&
+                group.Questions.All(question => !string.IsNullOrWhiteSpace(question.CategoryId)))
+            {
+                return PredictionModuleType.TopNByCategory;
+            }
+
+            return questionTypes[0] switch
+            {
+                PredictionQuestionType.AthleteRanking => PredictionModuleType.AthleteRanking,
+                PredictionQuestionType.CategoryPodium => PredictionModuleType.CategoryPodium,
+                PredictionQuestionType.NumericAthletePrediction => PredictionModuleType.NumericAthletePrediction,
+                PredictionQuestionType.SingleAthleteChoice => PredictionModuleType.SingleAthleteChoice,
+                PredictionQuestionType.MultiAthleteChoice => PredictionModuleType.MultiAthleteChoice,
+                PredictionQuestionType.YesNo => PredictionModuleType.YesNo,
+                PredictionQuestionType.MultipleChoice => PredictionModuleType.MultipleChoice,
+                PredictionQuestionType.NumericQuestion => PredictionModuleType.NumericQuestion,
+                _ => string.Empty
+            };
+        }
+
+        return string.Empty;
+    }
+}

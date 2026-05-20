@@ -1,0 +1,38 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<label class="category-picker">
+    <span>@Localizer["Predictions.Category"]</span>
+    <select class="control" value="@ActiveQuestionId" @onchange="OnChanged">
+        @foreach (var question in Questions.OrderBy(question => question.Order))
+        {
+            <option value="@question.Id">@GetLabel(question)</option>
+        }
+    </select>
+</label>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<PredictionQuestion> Questions { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public string ActiveQuestionId { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public Func<PredictionQuestion, string> CategoryLabelSelector { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<string> CategoryChanged { get; set; }
+
+    private async Task OnChanged(ChangeEventArgs eventArgs)
+    {
+        if (eventArgs.Value is string questionId)
+        {
+            await CategoryChanged.InvokeAsync(questionId);
+        }
+    }
+
+    private string GetLabel(PredictionQuestion question)
+    {
+        return CategoryLabelSelector(question);
+    }
+}

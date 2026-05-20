@@ -1,0 +1,93 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div
+    class="@CssClass"
+    @ondrop:preventDefault="true"
+    @ondragover:preventDefault="true"
+    @ondrop="() => DropRequested.InvokeAsync(Position)">
+    <span class="ranking-slot__position">@Position</span>
+
+    @if (Athlete is null)
+    {
+        <div class="ranking-slot__empty">
+            <strong>@Localizer["Predictions.DropAthleteHere"]</strong>
+            <small>@Localizer["Predictions.DragOrPickHint"]</small>
+        </div>
+    }
+    else
+    {
+        <div
+            class="ranking-slot__athlete"
+            draggable="true"
+            @ondragstart="() => DragStartRequested.InvokeAsync(Position)">
+            <div class="ranking-slot__details">
+                <strong>@Athlete.DisplayName</strong>
+                <small>@Athlete.CountryName</small>
+                @if (Athlete.SeedTotalKg is not null)
+                {
+                    <span>@Athlete.SeedTotalKg.Value.ToString("0.#") kg</span>
+                }
+            </div>
+
+            <div class="ranking-slot__actions">
+                <button
+                    type="button"
+                    class="ranking-slot__action"
+                    @onclick="() => MoveUpRequested.InvokeAsync(Position)"
+                    disabled="@(!CanMoveUp)"
+                    aria-label="@Localizer["Predictions.MoveUp"]">
+                    Up
+                </button>
+                <button
+                    type="button"
+                    class="ranking-slot__action"
+                    @onclick="() => MoveDownRequested.InvokeAsync(Position)"
+                    disabled="@(!CanMoveDown)"
+                    aria-label="@Localizer["Predictions.MoveDown"]">
+                    Down
+                </button>
+                <button
+                    type="button"
+                    class="ranking-slot__action"
+                    @onclick="() => RemoveRequested.InvokeAsync(Position)"
+                    aria-label="@Localizer["Predictions.RemoveAthlete"]">
+                    <AppIcon Name="AppIconName.X" Size="14" />
+                </button>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public int Position { get; set; }
+
+    [Parameter]
+    public Athlete? Athlete { get; set; }
+
+    [Parameter]
+    public bool CanMoveUp { get; set; }
+
+    [Parameter]
+    public bool CanMoveDown { get; set; }
+
+    [Parameter]
+    public EventCallback<int> RemoveRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> MoveUpRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> MoveDownRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> DropRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> DragStartRequested { get; set; }
+
+    private string CssClass => string.Join(
+        " ",
+        "ranking-slot",
+        Athlete is null ? "ranking-slot--empty" : "ranking-slot--filled");
+}

@@ -1,0 +1,124 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<section class="athlete-candidate-list">
+    <div class="athlete-candidate-list__head">
+        <h3>@Title</h3>
+        <small>@Localizer["Predictions.ShortlistCount", FilteredAthletes.Count]</small>
+    </div>
+
+    <div class="athlete-candidate-list__controls">
+        <label class="field">
+            <span>@Localizer["Predictions.SearchAthlete"]</span>
+            <input
+                class="control"
+                type="search"
+                @bind="searchTerm"
+                @bind:event="oninput"
+                placeholder="@Localizer["Predictions.SearchAthletePlaceholder"]" />
+        </label>
+
+        <label class="field">
+            <span>@Localizer["Predictions.SortBy"]</span>
+            <select class="control" @bind="sortMode">
+                <option value="nominated-desc">@Localizer["Predictions.SortNominatedDesc"]</option>
+                <option value="nominated-asc">@Localizer["Predictions.SortNominatedAsc"]</option>
+                <option value="name-asc">@Localizer["Predictions.SortNameAsc"]</option>
+            </select>
+        </label>
+    </div>
+
+    <div class="athlete-candidate-list__rows">
+        @if (FilteredAthletes.Count == 0)
+        {
+            <PredictionEmptyState
+                Title="@Localizer["Predictions.NoAthletesTitle"]"
+                Description="@Localizer["Predictions.NoAthletesDescription"]" />
+        }
+        else
+        {
+            @foreach (var athlete in FilteredAthletes)
+            {
+                <AthleteCandidateRow
+                    Athlete="athlete"
+                    IsSelected="SelectedAthleteIds.Contains(athlete.Id)"
+                    WeightClassLabel="@GetWeightClassLabel(athlete)"
+                    PickButtonLabel="@Localizer["Predictions.Pick"].Value"
+                    PickRequested="PickRequested"
+                    DragStartRequested="DragStartRequested" />
+            }
+        }
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public IReadOnlyList<Athlete> Athletes { get; set; } = [];
+
+    [Parameter]
+    public IReadOnlySet<string> SelectedAthleteIds { get; set; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+    [Parameter]
+    public IReadOnlyDictionary<string, string> WeightClassNamesById { get; set; } =
+        new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+    [Parameter]
+    public EventCallback<string> PickRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<string> DragStartRequested { get; set; }
+
+    private string searchTerm = string.Empty;
+    private string sortMode = "nominated-desc";
+
+    private IReadOnlyList<Athlete> FilteredAthletes
+    {
+        get
+        {
+            var filtered = Athletes
+                .Where(MatchesSearch)
+                .ToArray();
+
+            return sortMode switch
+            {
+                "nominated-asc" => filtered
+                    .OrderBy(athlete => athlete.SeedTotalKg ?? decimal.MaxValue)
+                    .ThenBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
+                    .ToArray(),
+                "name-asc" => filtered
+                    .OrderBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
+                    .ToArray(),
+                _ => filtered
+                    .OrderByDescending(athlete => athlete.SeedTotalKg ?? 0m)
+                    .ThenBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
+                    .ToArray()
+            };
+        }
+    }
+
+    private bool MatchesSearch(Athlete athlete)
+    {
+        if (string.IsNullOrWhiteSpace(searchTerm))
+        {
+            return true;
+        }
+
+        return athlete.DisplayName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+               (!string.IsNullOrWhiteSpace(athlete.CountryName) &&
+                athlete.CountryName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private string? GetWeightClassLabel(Athlete athlete)
+    {
+        if (string.IsNullOrWhiteSpace(athlete.WeightCategoryId))
+        {
+            return null;
+        }
+
+        return WeightClassNamesById.TryGetValue(athlete.WeightCategoryId, out var label)
+            ? label
+            : athlete.WeightCategoryId;
+    }
+}

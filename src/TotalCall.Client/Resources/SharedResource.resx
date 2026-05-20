@@ -104,6 +104,56 @@
   <data name="Predictions.SavedLocally" xml:space="preserve"><value>Zapisano lokalnie.</value></data>
   <data name="Predictions.DraftSaved" xml:space="preserve"><value>Szkic zapisany lokalnie. Popraw błędy przed finalnym podglądem.</value></data>
   <data name="Predictions.LocalNotice" xml:space="preserve"><value>MVP działa bez konta. Typy są dostępne tylko w tej przeglądarce.</value></data>
+  <data name="Predictions.DropAthleteHere" xml:space="preserve"><value>Upuść zawodnika tutaj</value></data>
+  <data name="Predictions.DragFromShortlist" xml:space="preserve"><value>Przeciągnij z listy po prawej</value></data>
+  <data name="Predictions.RemoveAthlete" xml:space="preserve"><value>Usuń zawodnika</value></data>
+  <data name="Predictions.Shortlist" xml:space="preserve"><value>Lista zawodników</value></data>
+  <data name="Predictions.ShortlistCount" xml:space="preserve"><value>{0} zawodników</value></data>
+  <data name="Predictions.NoModulesTitle" xml:space="preserve"><value>Brak modułów predykcji</value></data>
+  <data name="Predictions.NoModulesDescription" xml:space="preserve"><value>Dla tych zawodów nie skonfigurowano żadnych modułów predykcji.</value></data>
+  <data name="Predictions.ActiveModuleAria" xml:space="preserve"><value>Aktywny moduł predykcji</value></data>
+  <data name="Predictions.CompletedOfTotal" xml:space="preserve"><value>{0} / {1} ukończone</value></data>
+  <data name="Predictions.CompletedOfTotalItems" xml:space="preserve"><value>{0} / {1} {2} ukończone</value></data>
+  <data name="Predictions.Item.Categories" xml:space="preserve"><value>kategorii</value></data>
+  <data name="Predictions.Item.Predictions" xml:space="preserve"><value>predykcji</value></data>
+  <data name="Predictions.Status.Complete" xml:space="preserve"><value>Ukończone</value></data>
+  <data name="Predictions.Status.InProgress" xml:space="preserve"><value>W trakcie</value></data>
+  <data name="Predictions.Status.NotStarted" xml:space="preserve"><value>Nie rozpoczęto</value></data>
+  <data name="Predictions.RemainingItems" xml:space="preserve"><value>Pozostałe {0}</value></data>
+  <data name="Predictions.ModuleSummary" xml:space="preserve"><value>Podsumowanie modułu</value></data>
+  <data name="Predictions.ScoreOnlyComplete" xml:space="preserve"><value>Punkty dostajesz tylko za kompletne predykcje.</value></data>
+  <data name="Predictions.SaveAnyTime" xml:space="preserve"><value>Możesz zapisać typ w dowolnym momencie. Punkty dostaniesz tylko za kompletne predykcje.</value></data>
+  <data name="Predictions.SaveState" xml:space="preserve"><value>Status zapisu</value></data>
+  <data name="Predictions.InProgressSummary" xml:space="preserve"><value>W trakcie: {0}/{1}</value></data>
+  <data name="Predictions.SaveAndNext" xml:space="preserve"><value>Zapisz i przejdź dalej</value></data>
+  <data name="Predictions.UnsupportedModuleTitle" xml:space="preserve"><value>Nieobsługiwany moduł predykcji</value></data>
+  <data name="Predictions.UnsupportedModuleDescription" xml:space="preserve"><value>Typ modułu "{0}" nie jest jeszcze zaimplementowany.</value></data>
+  <data name="Predictions.ModuleNotImplemented" xml:space="preserve"><value>Ten moduł jest skonfigurowany, ale nie został jeszcze zaimplementowany.</value></data>
+  <data name="Predictions.NoCategoriesTitle" xml:space="preserve"><value>Brak skonfigurowanych kategorii</value></data>
+  <data name="Predictions.NoCategoriesDescription" xml:space="preserve"><value>Ten moduł nie ma jeszcze listy kategorii.</value></data>
+  <data name="Predictions.CategoryIndex" xml:space="preserve"><value>Kategoria {0} z {1}</value></data>
+  <data name="Predictions.AutoFillByNominated" xml:space="preserve"><value>Auto-fill wg nominated total</value></data>
+  <data name="Predictions.ClearCategory" xml:space="preserve"><value>Wyczyść kategorię</value></data>
+  <data name="Predictions.YourRankingTopN" xml:space="preserve"><value>Twój ranking (Top {0})</value></data>
+  <data name="Predictions.AvailableAthletes" xml:space="preserve"><value>Dostępni zawodnicy</value></data>
+  <data name="Predictions.DragOrPickHint" xml:space="preserve"><value>Przeciągnij albo wybierz z listy</value></data>
+  <data name="Predictions.MoveUp" xml:space="preserve"><value>Przesuń wyżej</value></data>
+  <data name="Predictions.MoveDown" xml:space="preserve"><value>Przesuń niżej</value></data>
+  <data name="Predictions.Picked" xml:space="preserve"><value>Wybrano</value></data>
+  <data name="Predictions.SearchAthlete" xml:space="preserve"><value>Szukaj zawodnika</value></data>
+  <data name="Predictions.SearchAthletePlaceholder" xml:space="preserve"><value>Szukaj po nazwisku lub kraju...</value></data>
+  <data name="Predictions.SortBy" xml:space="preserve"><value>Sortuj</value></data>
+  <data name="Predictions.SortNominatedDesc" xml:space="preserve"><value>Nominated total (malejąco)</value></data>
+  <data name="Predictions.SortNominatedAsc" xml:space="preserve"><value>Nominated total (rosnąco)</value></data>
+  <data name="Predictions.SortNameAsc" xml:space="preserve"><value>Nazwisko (A-Z)</value></data>
+  <data name="Predictions.NoAthletesTitle" xml:space="preserve"><value>Nie znaleziono zawodników</value></data>
+  <data name="Predictions.NoAthletesDescription" xml:space="preserve"><value>Zmień frazę wyszukiwania.</value></data>
+  <data name="Predictions.SectionComplete" xml:space="preserve"><value>Ta sekcja jest ukończona.</value></data>
+  <data name="Predictions.SectionInProgress" xml:space="preserve"><value>W trakcie · {0}/{1} wyborów</value></data>
+  <data name="Predictions.SectionNotStarted" xml:space="preserve"><value>Jeszcze nie rozpoczęto.</value></data>
+  <data name="Predictions.CompleteSectionToScore" xml:space="preserve"><value>Uzupełnij tę kategorię, aby zdobyć punkty.</value></data>
+  <data name="Predictions.Category" xml:space="preserve"><value>Kategoria</value></data>
+  <data name="Predictions.Pick" xml:space="preserve"><value>Wybierz</value></data>
   <data name="Review.PageTitle" xml:space="preserve"><value>Podgląd typów</value></data>
   <data name="Review.Loading" xml:space="preserve"><value>Ładowanie podglądu...</value></data>
   <data name="Review.NotFoundTitle" xml:space="preserve"><value>Nie znaleziono podglądu</value></data>

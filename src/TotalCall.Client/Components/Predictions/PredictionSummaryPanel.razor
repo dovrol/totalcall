@@ -1,0 +1,66 @@
+@inject IStringLocalizer<SharedResource> Localizer
+@inject PredictionTextService Text
+
+<aside class="prediction-summary-panel" aria-label="@Localizer["Predictions.ModuleSummary"]">
+    <h2>@Localizer["Predictions.ModuleSummary"]</h2>
+    <div class="prediction-summary-panel__group">
+        <strong>@Text.GroupTitle(Competition, Group)</strong>
+        <PredictionStatusBadge Status="ModuleValidation.Status" />
+    </div>
+
+    <dl class="prediction-summary-panel__stats">
+        <div>
+            <dt>@Localizer["Predictions.Status.Complete"]</dt>
+            <dd>@ModuleValidation.CompletedItems</dd>
+        </div>
+        <div>
+            <dt>@Localizer["Predictions.Status.InProgress"]</dt>
+            <dd>@ModuleValidation.InProgressItems</dd>
+        </div>
+        <div>
+            <dt>@Localizer["Predictions.Status.NotStarted"]</dt>
+            <dd>@ModuleValidation.NotStartedItems</dd>
+        </div>
+    </dl>
+
+    <p class="prediction-summary-panel__note">
+        @Localizer["Predictions.SaveAnyTime"]
+    </p>
+
+    <dl class="prediction-summary-panel__meta">
+        <div>
+            <dt>@Localizer["Common.Locks"]</dt>
+            <dd>@FormatDate(Competition.PredictionLockAt)</dd>
+        </div>
+        <div>
+            <dt>@Localizer["Predictions.LastSaved"]</dt>
+            <dd>@FormatDate(LastSavedAt)</dd>
+        </div>
+        <div>
+            <dt>@Localizer["Predictions.SaveState"]</dt>
+            <dd>@(string.IsNullOrWhiteSpace(SaveStatus) ? Localizer["Predictions.Saving"] : SaveStatus)</dd>
+        </div>
+    </dl>
+</aside>
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public PredictionGroup Group { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public PredictionModuleValidationResult ModuleValidation { get; set; } = default!;
+
+    [Parameter]
+    public string? SaveStatus { get; set; }
+
+    [Parameter]
+    public DateTimeOffset? LastSavedAt { get; set; }
+
+    private string FormatDate(DateTimeOffset? value)
+    {
+        return value?.ToLocalTime().ToString("d MMM yyyy, HH:mm") ?? Localizer["Common.Tbd"];
+    }
+}

@@ -18,6 +18,12 @@ Pracuj nad TotalCall tak, jak nad produktem fantasy sports dla fanow trojboju. T
 - Pages maja byc cienkie.
 - UI primitives nie moga znac domeny.
 - Nie hardcoduj UI pod Sheffield albo Worlds, jesli ten sam wzorzec da sie obsluzyc konfiguracja.
+- Nie hardcoduj eventow ani stron pod konkretne zawody.
+- Uzywaj `PredictionModuleRenderer` i komponentow z `Components/Predictions/Modules`.
+- Moduly predykcji musza emitowac odpowiedzi przez `EventCallback` i nie moga same zapisywac danych.
+- Brakujace odpowiedzi nie sa globalnym bledem walidacji.
+- Nie wymuszaj uzupelnienia wszystkich modulow.
+- Zachowuj mobile-first UX i fallback dla drag and drop (`Pick`/`Wybierz`).
 - Unikaj wygladu betting app: kursow, kuponow, agresywnych czerwieni/zieleni i kasynowej estetyki.
 
 ## Przed oddaniem zmian

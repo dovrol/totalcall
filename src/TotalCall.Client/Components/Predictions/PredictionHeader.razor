@@ -1,0 +1,71 @@
+@inject IStringLocalizer<SharedResource> Localizer
+@inject PredictionTextService Text
+
+<header class="prediction-shell-header">
+    <a class="prediction-back-link" href="@($"competitions/{Competition.Slug}")">
+        <AppIcon Name="AppIconName.ChevronRight" Size="15" Class="prediction-back-link__icon" />
+        <span>@Localizer["Common.BackToCompetition"]</span>
+    </a>
+
+    <div class="prediction-shell-header__main">
+        <div class="prediction-shell-header__identity">
+            <div class="prediction-shell-header__mark" aria-hidden="true">
+                @if (!string.IsNullOrWhiteSpace(Competition.CardLogoImageUrl))
+                {
+                    <img src="@Competition.CardLogoImageUrl" alt="" loading="lazy" />
+                }
+                else
+                {
+                    <AppIcon Name="AppIconName.Trophy" Size="18" />
+                }
+            </div>
+
+            <div class="prediction-shell-header__text">
+                <h1>@Competition.Name</h1>
+                <p>@Text.GroupTitle(Competition, ActiveGroup)</p>
+                @if (!string.IsNullOrWhiteSpace(SaveStatus))
+                {
+                    <small class="prediction-shell-header__save">@SaveStatus</small>
+                }
+            </div>
+        </div>
+
+        <div class="prediction-shell-header__meta">
+            <div>
+                <span>@Localizer["Common.Locks"]</span>
+                <strong>@FormatDate(Competition.PredictionLockAt)</strong>
+            </div>
+            <div>
+                <span>@Localizer["Predictions.LastSaved"]</span>
+                <strong>@FormatDate(LastSavedAt)</strong>
+            </div>
+            <div>
+                <span>@Localizer["Common.Status"]</span>
+                <PredictionStatusBadge Status="(CanEditPredictions ? PredictionCompletionStatus.InProgress : PredictionCompletionStatus.NotStarted)"
+                                      CustomLabel="@(CanEditPredictions ? Localizer["Status.Upcoming"].Value : Localizer["Status.Locked"].Value)" />
+            </div>
+        </div>
+    </div>
+</header>
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public PredictionGroup ActiveGroup { get; set; } = default!;
+
+    [Parameter]
+    public string? SaveStatus { get; set; }
+
+    [Parameter]
+    public DateTimeOffset? LastSavedAt { get; set; }
+
+    [Parameter]
+    public bool CanEditPredictions { get; set; }
+
+    private string FormatDate(DateTimeOffset? value)
+    {
+        return value?.ToLocalTime().ToString("d MMM yyyy, HH:mm") ?? Localizer["Common.Tbd"];
+    }
+}

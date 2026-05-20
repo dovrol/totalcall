@@ -1,0 +1,32 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<span class="@CssClass">
+    @Label
+</span>
+
+@code {
+    [Parameter, EditorRequired]
+    public PredictionCompletionStatus Status { get; set; }
+
+    [Parameter]
+    public string? CustomLabel { get; set; }
+
+    private string Label => !string.IsNullOrWhiteSpace(CustomLabel)
+        ? CustomLabel
+        : Status switch
+        {
+            PredictionCompletionStatus.Complete => Localizer["Predictions.Status.Complete"],
+            PredictionCompletionStatus.InProgress => Localizer["Predictions.Status.InProgress"],
+            _ => Localizer["Predictions.Status.NotStarted"]
+        };
+
+    private string CssClass => string.Join(
+        " ",
+        "prediction-status-badge",
+        Status switch
+        {
+            PredictionCompletionStatus.Complete => "prediction-status-badge--complete",
+            PredictionCompletionStatus.InProgress => "prediction-status-badge--in-progress",
+            _ => "prediction-status-badge--not-started"
+        });
+}

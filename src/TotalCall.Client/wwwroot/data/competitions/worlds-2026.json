@@ -3585,6 +3585,7 @@
   "predictionGroups": [
     {
       "id": "category-top5",
+      "type": "top-n-by-category",
       "title": "Top 5 by category",
       "description": "Pick Top 5 lifters in every weight class.",
       "mode": "full",

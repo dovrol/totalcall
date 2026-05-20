@@ -1,0 +1,55 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<section class="module-validation-summary">
+    @if (Status is not null)
+    {
+        @if (Status.Status == PredictionCompletionStatus.Complete)
+        {
+            <p class="module-validation-summary__success">
+                @Localizer["Predictions.SectionComplete"]
+            </p>
+        }
+        else if (Status.Status == PredictionCompletionStatus.InProgress)
+        {
+            <p>@Localizer["Predictions.SectionInProgress", Status.SelectedCount, Status.RequiredCount]</p>
+            <p class="module-validation-summary__hint">@Localizer["Predictions.ScoreOnlyComplete"]</p>
+        }
+        else
+        {
+            <p>@Localizer["Predictions.SectionNotStarted"]</p>
+            <p class="module-validation-summary__hint">@Localizer["Predictions.CompleteSectionToScore"]</p>
+        }
+    }
+
+    @if (Errors.Count > 0)
+    {
+        <ul class="validation-list">
+            @foreach (var error in Errors)
+            {
+                <li>@FormatError(error)</li>
+            }
+        </ul>
+    }
+</section>
+
+@code {
+    [Parameter]
+    public PredictionQuestionCompletionResult? Status { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<PredictionValidationError> Errors { get; set; } = [];
+
+    private string FormatError(PredictionValidationError error)
+    {
+        var message = Localizer[error.MessageKey].Value;
+
+        foreach (var parameter in error.Parameters)
+        {
+            message = message.Replace($"{{{parameter.Key}}}", parameter.Value, StringComparison.Ordinal);
+        }
+
+        return message == error.MessageKey
+            ? error.Message
+            : message;
+    }
+}

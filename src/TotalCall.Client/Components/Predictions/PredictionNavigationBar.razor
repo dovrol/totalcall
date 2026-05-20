@@ -1,0 +1,68 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<footer class="prediction-navigation-bar">
+    <AppButton Variant="Secondary" OnClick="OnPreviousClicked" Disabled="@(!CanEditPredictions || !HasPrevious)">
+        @Localizer["Common.Back"]
+    </AppButton>
+
+    <div class="prediction-navigation-bar__status">
+        <PredictionStatusBadge Status="ActiveModuleValidation.Status" />
+        @if (ActiveModuleValidation.Status == PredictionCompletionStatus.InProgress)
+        {
+            <small>
+                @Localizer["Predictions.InProgressSummary", ActiveModuleValidation.CompletedItems, ActiveModuleValidation.TotalItems]
+            </small>
+        }
+    </div>
+
+    @if (HasNext)
+    {
+        <AppButton OnClick="OnNextClicked" Disabled="@(!CanEditPredictions)">
+            @Localizer["Predictions.SaveAndNext"]
+        </AppButton>
+    }
+    else
+    {
+        <AppButton OnClick="OnReviewClicked" Disabled="@(!CanEditPredictions)">
+            @Localizer["Predictions.ReviewPicks"]
+        </AppButton>
+    }
+</footer>
+
+@code {
+    [Parameter]
+    public bool HasPrevious { get; set; }
+
+    [Parameter]
+    public bool HasNext { get; set; }
+
+    [Parameter]
+    public bool CanEditPredictions { get; set; }
+
+    [Parameter, EditorRequired]
+    public PredictionModuleValidationResult ActiveModuleValidation { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback PreviousRequested { get; set; }
+
+    [Parameter]
+    public EventCallback NextRequested { get; set; }
+
+    [Parameter]
+    public EventCallback ReviewRequested { get; set; }
+
+    private Task OnPreviousClicked(MouseEventArgs _)
+    {
+        return PreviousRequested.InvokeAsync();
+    }
+
+    private Task OnNextClicked(MouseEventArgs _)
+    {
+        return NextRequested.InvokeAsync();
+    }
+
+    private Task OnReviewClicked(MouseEventArgs _)
+    {
+        return ReviewRequested.InvokeAsync();
+    }
+}

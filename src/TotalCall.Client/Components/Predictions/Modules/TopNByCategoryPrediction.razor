@@ -1,0 +1,490 @@
+@using TotalCall.Client.Components.Predictions.Shared
+@inject IStringLocalizer<SharedResource> Localizer
+@inject PredictionTextService Text
+
+@if (OrderedQuestions.Count == 0 || ActiveQuestion is null)
+{
+    <PredictionEmptyState
+        Title="@Localizer["Predictions.NoCategoriesTitle"]"
+        Description="@Localizer["Predictions.NoCategoriesDescription"]" />
+}
+else
+{
+    <section class="topn-module">
+        <div class="topn-module__header">
+            <div>
+                <h2>@GetCategoryName(ActiveQuestion)</h2>
+                <p>
+                    @Localizer["Predictions.CategoryIndex", ActiveQuestionIndex + 1, OrderedQuestions.Count]
+                    <span aria-hidden="true">.</span>
+                    @GetCategoryStatusLine(ActiveQuestion.Id)
+                </p>
+            </div>
+
+            <div class="topn-module__actions">
+                <AppButton Variant="Secondary" Size="Sm" OnClick="OnAutoFillClicked" Disabled="@(!CanEditPredictions)">
+                    @Localizer["Predictions.AutoFillByNominated"]
+                </AppButton>
+                <AppButton Variant="Ghost" Size="Sm" OnClick="OnClearClicked" Disabled="@(!CanEditPredictions)">
+                    @Localizer["Predictions.ClearCategory"]
+                </AppButton>
+            </div>
+        </div>
+
+        <div class="topn-module__mobile-picker">
+            <CategoryPicker
+                Questions="OrderedQuestions"
+                ActiveQuestionId="@ActiveQuestion.Id"
+                CategoryLabelSelector="GetCategoryName"
+                CategoryChanged="OnCategoryChanged" />
+        </div>
+
+        <div class="topn-module__layout">
+            <aside class="topn-module__categories">
+                <CategoryStatusList
+                    Questions="OrderedQuestions"
+                    StatusByQuestionId="StatusByQuestionId"
+                    ActiveQuestionId="@ActiveQuestion.Id"
+                    CategoryLabelSelector="GetCategoryName"
+                    CategoryChanged="OnCategoryChanged" />
+            </aside>
+
+            <div class="topn-module__workspace">
+                <RankingBuilder
+                    Title="@Localizer["Predictions.YourRankingTopN", SlotsCount]"
+                    SlotsCount="SlotsCount"
+                    SelectedAthletesByPosition="SelectedAthletesByPosition"
+                    RemoveRequested="RemoveFromPosition"
+                    MoveUpRequested="MoveSlotUp"
+                    MoveDownRequested="MoveSlotDown"
+                    DropToPositionRequested="DropToPosition"
+                    DragStartFromSlotRequested="DragFromSlot" />
+
+                <ModuleValidationSummary
+                    Status="ActiveQuestionStatus"
+                    Errors="ActiveQuestionErrors" />
+            </div>
+
+            <aside class="topn-module__candidates">
+                <AthleteCandidateList
+                    Title="@Localizer["Predictions.AvailableAthletes"]"
+                    Athletes="EligibleAthletes"
+                    SelectedAthleteIds="SelectedAthleteIds"
+                    WeightClassNamesById="WeightClassNamesById"
+                    PickRequested="PickAthlete"
+                    DragStartRequested="DragFromCandidate" />
+            </aside>
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public PredictionGroup Group { get; set; } = default!;
+
+    [Parameter]
+    public IReadOnlyList<PredictionAnswer> Answers { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public PredictionModuleValidationResult ModuleValidation { get; set; } = default!;
+
+    [Parameter]
+    public bool CanEditPredictions { get; set; }
+
+    [Parameter]
+    public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
+
+    private string? activeQuestionId;
+    private string? draggedAthleteId;
+    private int? draggedFromPosition;
+
+    private IReadOnlyList<PredictionQuestion> OrderedQuestions => Group.Questions
+        .OrderBy(question => question.Order)
+        .ToArray();
+
+    private PredictionQuestion? ActiveQuestion => OrderedQuestions
+        .FirstOrDefault(question => question.Id == activeQuestionId) ??
+        OrderedQuestions.FirstOrDefault();
+
+    private int ActiveQuestionIndex
+    {
+        get
+        {
+            if (ActiveQuestion is null)
+            {
+                return -1;
+            }
+
+            for (var index = 0; index < OrderedQuestions.Count; index++)
+            {
+                if (OrderedQuestions[index].Id == ActiveQuestion.Id)
+                {
+                    return index;
+                }
+            }
+
+            return -1;
+        }
+    }
+
+    private int SlotsCount => ActiveQuestion is null
+        ? 5
+        : ActiveQuestion.Constraints.ExactSelections ??
+          ActiveQuestion.Constraints.MaxSelections ??
+          5;
+
+    private IReadOnlyDictionary<string, PredictionQuestionCompletionResult> StatusByQuestionId => ModuleValidation.Questions
+        .ToDictionary(result => result.QuestionId, StringComparer.OrdinalIgnoreCase);
+
+    private PredictionQuestionCompletionResult? ActiveQuestionStatus
+    {
+        get
+        {
+            if (ActiveQuestion is null)
+            {
+                return null;
+            }
+
+            return StatusByQuestionId.TryGetValue(ActiveQuestion.Id, out var status)
+                ? status
+                : null;
+        }
+    }
+
+    private IReadOnlyList<PredictionValidationError> ActiveQuestionErrors => ActiveQuestion is null
+        ? []
+        : ModuleValidation.ValidationErrors
+            .Where(error => error.QuestionId == ActiveQuestion.Id)
+            .ToArray();
+
+    private IReadOnlyDictionary<string, string> WeightClassNamesById => Competition.Categories
+        .ToDictionary(category => category.Id, category => category.Name, StringComparer.OrdinalIgnoreCase);
+
+    private IReadOnlyList<Athlete> EligibleAthletes
+    {
+        get
+        {
+            if (ActiveQuestion is null)
+            {
+                return [];
+            }
+
+            var athletes = ActiveQuestion.AthleteIds.Count == 0
+                ? Competition.Athletes
+                : Competition.Athletes
+                    .Where(athlete => ActiveQuestion.AthleteIds.Contains(athlete.Id))
+                    .ToArray();
+
+            return athletes
+                .OrderByDescending(athlete => athlete.SeedTotalKg ?? 0m)
+                .ThenBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+        }
+    }
+
+    private IReadOnlyDictionary<int, Athlete> SelectedAthletesByPosition
+    {
+        get
+        {
+            if (ActiveQuestion is null)
+            {
+                return new Dictionary<int, Athlete>();
+            }
+
+            return GetPlacements(ActiveQuestion.Id)
+                .Select(placement => new
+                {
+                    placement.Position,
+                    Athlete = Competition.Athletes.FirstOrDefault(athlete => athlete.Id == placement.AthleteId)
+                })
+                .Where(item => item.Athlete is not null)
+                .ToDictionary(item => item.Position, item => item.Athlete!, EqualityComparer<int>.Default);
+        }
+    }
+
+    private IReadOnlySet<string> SelectedAthleteIds => SelectedAthletesByPosition.Values
+        .Select(athlete => athlete.Id)
+        .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+    protected override void OnParametersSet()
+    {
+        if (ActiveQuestion is null)
+        {
+            activeQuestionId = OrderedQuestions.FirstOrDefault()?.Id;
+        }
+    }
+
+    private Task OnCategoryChanged(string questionId)
+    {
+        activeQuestionId = questionId;
+        return Task.CompletedTask;
+    }
+
+    private Task OnAutoFillClicked(MouseEventArgs _)
+    {
+        return AutoFillByNominatedTotal();
+    }
+
+    private Task OnClearClicked(MouseEventArgs _)
+    {
+        return ClearCategory();
+    }
+
+    private Task DragFromCandidate(string athleteId)
+    {
+        if (!CanEditPredictions)
+        {
+            return Task.CompletedTask;
+        }
+
+        draggedAthleteId = athleteId;
+        draggedFromPosition = null;
+        return Task.CompletedTask;
+    }
+
+    private Task DragFromSlot(int position)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var athlete = GetSelectedAthlete(position);
+        if (athlete is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        draggedAthleteId = athlete.Id;
+        draggedFromPosition = position;
+        return Task.CompletedTask;
+    }
+
+    private async Task DropToPosition(int targetPosition)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null || string.IsNullOrWhiteSpace(draggedAthleteId))
+        {
+            return;
+        }
+
+        await SetAthleteAtPosition(targetPosition, draggedAthleteId, draggedFromPosition);
+        draggedAthleteId = null;
+        draggedFromPosition = null;
+    }
+
+    private Task PickAthlete(string athleteId)
+    {
+        return AssignFirstEmptySlot(athleteId);
+    }
+
+    private Task MoveSlotUp(int position)
+    {
+        return MoveSlot(position, position - 1);
+    }
+
+    private Task MoveSlotDown(int position)
+    {
+        return MoveSlot(position, position + 1);
+    }
+
+    private Task RemoveFromPosition(int position)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var placements = GetPlacements(ActiveQuestion.Id)
+            .Where(placement => placement.Position != position)
+            .ToArray();
+
+        return EmitAnswer(placements);
+    }
+
+    private Task ClearCategory()
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        return EmitAnswer([]);
+    }
+
+    private Task AutoFillByNominatedTotal()
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var placements = EligibleAthletes
+            .Take(SlotsCount)
+            .Select((athlete, index) => new AthletePlacementPick
+            {
+                Position = index + 1,
+                AthleteId = athlete.Id
+            })
+            .ToArray();
+
+        return EmitAnswer(placements);
+    }
+
+    private Task MoveSlot(int fromPosition, int toPosition)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null || toPosition < 1 || toPosition > SlotsCount)
+        {
+            return Task.CompletedTask;
+        }
+
+        var sourceAthlete = GetSelectedAthlete(fromPosition);
+        if (sourceAthlete is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        return SetAthleteAtPosition(toPosition, sourceAthlete.Id, fromPosition);
+    }
+
+    private async Task AssignFirstEmptySlot(string athleteId)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return;
+        }
+
+        for (var position = 1; position <= SlotsCount; position++)
+        {
+            if (GetSelectedAthlete(position) is null)
+            {
+                await SetAthleteAtPosition(position, athleteId);
+                return;
+            }
+        }
+    }
+
+    private Task SetAthleteAtPosition(int targetPosition, string athleteId, int? sourcePosition = null)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null || targetPosition < 1 || targetPosition > SlotsCount)
+        {
+            return Task.CompletedTask;
+        }
+
+        if (sourcePosition.HasValue && sourcePosition.Value == targetPosition)
+        {
+            return Task.CompletedTask;
+        }
+
+        var placements = GetPlacements(ActiveQuestion.Id).ToList();
+        var targetAthleteId = placements.FirstOrDefault(placement => placement.Position == targetPosition)?.AthleteId;
+
+        placements.RemoveAll(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase));
+        placements.RemoveAll(placement => placement.Position == targetPosition);
+
+        if (sourcePosition is not null)
+        {
+            placements.RemoveAll(placement => placement.Position == sourcePosition.Value);
+        }
+
+        placements.Add(new AthletePlacementPick
+        {
+            Position = targetPosition,
+            AthleteId = athleteId
+        });
+
+        if (sourcePosition is not null &&
+            !string.IsNullOrWhiteSpace(targetAthleteId) &&
+            !string.Equals(targetAthleteId, athleteId, StringComparison.OrdinalIgnoreCase))
+        {
+            placements.Add(new AthletePlacementPick
+            {
+                Position = sourcePosition.Value,
+                AthleteId = targetAthleteId
+            });
+        }
+
+        return EmitAnswer(placements);
+    }
+
+    private Task EmitAnswer(IEnumerable<AthletePlacementPick> placements)
+    {
+        if (ActiveQuestion is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var sanitizedPlacements = placements
+            .Where(placement =>
+                placement.Position >= 1 &&
+                placement.Position <= SlotsCount &&
+                !string.IsNullOrWhiteSpace(placement.AthleteId))
+            .GroupBy(placement => placement.Position)
+            .Select(grouping => grouping.First())
+            .OrderBy(placement => placement.Position)
+            .ToArray();
+
+        return AnswerChanged.InvokeAsync(new PredictionAnswer
+        {
+            GroupId = Group.Id,
+            QuestionId = ActiveQuestion.Id,
+            QuestionType = ActiveQuestion.Type,
+            Value = new PredictionAnswerValue
+            {
+                AthletePlacements = sanitizedPlacements
+            },
+            UpdatedAt = DateTimeOffset.UtcNow
+        });
+    }
+
+    private IReadOnlyList<AthletePlacementPick> GetPlacements(string questionId)
+    {
+        return GetAnswer(questionId)?.Value.AthletePlacements
+            .Where(placement => !string.IsNullOrWhiteSpace(placement.AthleteId))
+            .OrderBy(placement => placement.Position)
+            .ToArray() ?? [];
+    }
+
+    private PredictionAnswer? GetAnswer(string questionId)
+    {
+        return Answers.FirstOrDefault(answer => answer.QuestionId == questionId);
+    }
+
+    private Athlete? GetSelectedAthlete(int position)
+    {
+        if (ActiveQuestion is null)
+        {
+            return null;
+        }
+
+        var athleteId = GetPlacements(ActiveQuestion.Id)
+            .FirstOrDefault(placement => placement.Position == position)?
+            .AthleteId;
+
+        if (string.IsNullOrWhiteSpace(athleteId))
+        {
+            return null;
+        }
+
+        return Competition.Athletes.FirstOrDefault(athlete => athlete.Id == athleteId);
+    }
+
+    private string GetCategoryName(PredictionQuestion question)
+    {
+        var category = Competition.Categories.FirstOrDefault(item => item.Id == question.CategoryId);
+        return category?.Name ?? Text.QuestionTitle(Competition, question);
+    }
+
+    private string GetCategoryStatusLine(string questionId)
+    {
+        if (!StatusByQuestionId.TryGetValue(questionId, out var status))
+        {
+            return "0/0";
+        }
+
+        var requiredCount = Math.Max(1, status.RequiredCount);
+        return $"{status.SelectedCount}/{requiredCount}";
+    }
+}

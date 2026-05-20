@@ -23,7 +23,7 @@ builder.Services.AddScoped<CultureService>();
 builder.Services.AddScoped<ThemeService>();
 builder.Services.AddScoped<IPredictionStore, LocalStoragePredictionStore>();
 builder.Services.AddScoped<PredictionService>();
-builder.Services.AddScoped<PredictionValidationService>();
+builder.Services.AddScoped<IPredictionValidationService, PredictionValidationService>();
 builder.Services.AddScoped<PredictionAnswerDisplayService>();
 builder.Services.AddScoped<PredictionTextService>();
 builder.Services.AddScoped<IPredictionScoringService, PredictionScoringService>();
