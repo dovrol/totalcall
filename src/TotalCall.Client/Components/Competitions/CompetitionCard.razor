@@ -34,6 +34,8 @@
                 </div>
             </div>
 
+            <div class="competition-card__divider" aria-hidden="true"></div>
+
             <dl class="competition-card__meta">
                 <div>
                     <dt>
@@ -91,14 +93,12 @@
 
     private string PrimaryActionHref => Competition.Status switch
     {
-        CompetitionStatus.Upcoming => $"competitions/{Competition.Slug}/predictions",
         CompetitionStatus.Completed => $"competitions/{Competition.Slug}",
         _ => $"competitions/{Competition.Slug}"
     };
 
     private string PrimaryActionLabel => Competition.Status switch
     {
-        CompetitionStatus.Upcoming => Localizer["Competition.MakePredictions"],
         CompetitionStatus.Completed => Localizer["Competition.ViewResults"],
         _ => Localizer["Common.OpenCompetition"]
     };

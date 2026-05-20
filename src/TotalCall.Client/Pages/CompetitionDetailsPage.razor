@@ -22,139 +22,147 @@ else
 
     <CompetitionPageNav Competition="competition" Active="Overview" />
 
-    <section class="competition-hero-layout">
-        <AppCard Padding="Lg" AdditionalClass="@HeroCardClass">
-            <div class="competition-hero-card__backdrop" aria-hidden="true"></div>
-            <div class="competition-hero-card__content">
-                <CompetitionStatusBadge Status="competition.Status" />
-                <h1 class="competition-hero-card__title">@competition.Name</h1>
-                <p class="competition-hero-card__description">@Text.CompetitionDescription(competition)</p>
+    <section class="competition-overview-layout">
+        <AppCard Padding="Lg" AdditionalClass="competition-overview-hero">
+            <div class="competition-overview-hero__media" style="@HeroMediaStyle" aria-hidden="true"></div>
 
-                <dl class="competition-hero-card__meta">
+            <div class="competition-overview-hero__content">
+                <CompetitionStatusBadge Status="competition.Status" />
+
+                <h1 class="competition-overview-hero__title">@competition.Name</h1>
+
+                <p class="competition-overview-hero__description">@Text.CompetitionDescription(competition)</p>
+
+                <dl class="competition-overview-hero__meta">
                     <div>
                         <dt>
-                            <span class="competition-hero-card__meta-label">
-                                <AppIcon Name="AppIconName.Users" Size="16" />
-                                <span>@Localizer["Competition.Federation"]</span>
-                            </span>
+                            <AppIcon Name="AppIconName.Users" Size="16" />
+                            <span>@Localizer["Competition.Federation"]</span>
                         </dt>
                         <dd>@(competition.Federation ?? Localizer["Common.Tbd"])</dd>
                     </div>
                     <div>
                         <dt>
-                            <span class="competition-hero-card__meta-label">
-                                <AppIcon Name="AppIconName.Calendar" Size="16" />
-                                <span>@Localizer["Common.Starts"]</span>
-                            </span>
+                            <AppIcon Name="AppIconName.Calendar" Size="16" />
+                            <span>@Localizer["Common.Starts"]</span>
                         </dt>
                         <dd>@FormatDate(competition.StartDate)</dd>
                     </div>
                     <div>
                         <dt>
-                            <span class="competition-hero-card__meta-label">
-                                <AppIcon Name="AppIconName.Lock" Size="16" />
-                                <span>@Localizer["Common.Locks"]</span>
-                            </span>
+                            <AppIcon Name="AppIconName.Lock" Size="16" />
+                            <span>@Localizer["Common.Locks"]</span>
                         </dt>
                         <dd>@FormatDate(competition.PredictionLockAt)</dd>
                     </div>
                 </dl>
 
-                <div class="competition-hero-card__actions">
-                    <AppButton Href="@($"competitions/{competition.Slug}/predictions")">
-                        @Localizer["Competition.MakePredictions"]
+                <div class="competition-overview-hero__actions">
+                    <AppButton Href="@($"competitions/{competition.Slug}/predictions")" Size="Lg">
+                        <span class="competition-overview-hero__action-content">
+                            <span>@Localizer["Competition.MakePredictions"]</span>
+                            <AppIcon Name="AppIconName.ChevronRight" Size="17" />
+                        </span>
                     </AppButton>
                     <AppButton Href="@($"competitions/{competition.Slug}/review")" Variant="Secondary">
                         @Localizer["Competition.ReviewSaved"]
                     </AppButton>
                 </div>
             </div>
+
+            <div class="competition-overview-hero__badge" aria-hidden="true">
+                @if (HasLogoImage)
+                {
+                    <img src="@competition!.CardLogoImageUrl" alt="" loading="lazy" />
+                }
+                else
+                {
+                    <AppIcon Name="AppIconName.Trophy" Size="30" />
+                }
+            </div>
         </AppCard>
 
-        <AppCard Padding="Md" AdditionalClass="competition-side-panel">
-            <div class="competition-side-panel__item">
-                <AppIcon Name="AppIconName.Lock" Size="16" Class="competition-side-panel__icon" />
-                <p>@Localizer["Common.Locks"]</p>
-                <strong>@FormatDate(competition.PredictionLockAt)</strong>
+        <AppCard Padding="Md" AdditionalClass="competition-overview-side">
+            <div class="competition-overview-side__item">
+                <div class="competition-overview-side__icon">
+                    <AppIcon Name="AppIconName.Clock" Size="18" />
+                </div>
+                <div>
+                    <p>@Localizer["Common.Locks"]</p>
+                    <strong>@FormatDate(competition.PredictionLockAt)</strong>
+                </div>
             </div>
-            <div class="competition-side-panel__item">
-                <AppIcon Name="AppIconName.Users" Size="16" Class="competition-side-panel__icon" />
-                <p>@Localizer["Competition.Categories"]</p>
-                <strong>@competition.Categories.Count</strong>
+
+            <div class="competition-overview-side__item">
+                <div class="competition-overview-side__icon">
+                    <AppIcon Name="AppIconName.Trophy" Size="18" />
+                </div>
+                <div>
+                    <p>@Localizer["Competition.Categories"]</p>
+                    <strong>@competition.Categories.Count</strong>
+                </div>
             </div>
-            <div class="competition-side-panel__item">
-                <AppIcon Name="AppIconName.Check" Size="16" Class="competition-side-panel__icon" />
-                <p>@Localizer["Predictions.SavedAnswers"]</p>
-                <strong>@SavedAnswersCount</strong>
+
+            <div class="competition-overview-side__item">
+                <div class="competition-overview-side__icon">
+                    <AppIcon Name="AppIconName.Check" Size="18" />
+                </div>
+                <div>
+                    <p>@Localizer["Predictions.SavedAnswers"]</p>
+                    <strong>@SavedAnswersCount</strong>
+                </div>
             </div>
         </AppCard>
     </section>
 
     <AppSection Surface="true" Title="@Localizer["Competition.PredictionGroups"]" Description="@Localizer["Competition.ModulesHint"]">
-        <div class="competition-module-grid">
+        <div class="competition-overview-modules__grid">
             @foreach (var group in competition.PredictionGroups.OrderBy(group => group.Order))
             {
-                <article class="competition-module-card">
-                    <h3>@Text.GroupTitle(competition, group)</h3>
-                    @if (!string.IsNullOrWhiteSpace(Text.GroupDescription(competition, group)))
-                    {
-                        <p>@Text.GroupDescription(competition, group)</p>
-                    }
-                    <span class="competition-module-card__meta">
-                        <AppIcon Name="AppIconName.Target" Size="16" />
-                        <span>@Localizer["Competition.QuestionsCount", group.Questions.Count]</span>
+                <article class="competition-overview-module">
+                    <span class="competition-overview-module__icon" aria-hidden="true">
+                        <AppIcon Name="AppIconName.Medal" Size="28" />
                     </span>
+                    <div class="competition-overview-module__content">
+                        <h3>@Text.GroupTitle(competition, group)</h3>
+                        @if (!string.IsNullOrWhiteSpace(Text.GroupDescription(competition, group)))
+                        {
+                            <p>@Text.GroupDescription(competition, group)</p>
+                        }
+                        <small>@Localizer["Competition.PicksCount", GetTotalPicks(group)]</small>
+                    </div>
+                    <AppButton Href="@($"competitions/{competition.Slug}/predictions")" Variant="Secondary" Size="Sm">
+                        @Localizer["Competition.MakePredictions"]
+                    </AppButton>
                 </article>
             }
         </div>
     </AppSection>
-
-    <AppSection
-        Surface="true"
-        Title="@Localizer["Competition.FeaturedAthletes"]"
-        Description="@Localizer["Competition.FeaturedAthletesHint"]">
-        <div class="featured-athletes-grid">
-            @foreach (var athlete in FeaturedAthletes)
-            {
-                <article class="featured-athlete-card">
-                    <div class="featured-athlete-card__avatar" aria-hidden="true">@GetInitials(athlete.DisplayName)</div>
-                    <h3>@athlete.DisplayName</h3>
-                    <p>@GetAthleteCategory(athlete.Id)</p>
-                </article>
-            }
-        </div>
-    </AppSection>
-
-    <div class="competition-detail-actions">
-        <AppButton Href="@($"competitions/{competition.Slug}/predictions")">@Localizer["Competition.MakePredictions"]</AppButton>
-        <AppButton Href="@($"competitions/{competition.Slug}/review")" Variant="Secondary">@Localizer["Competition.ReviewSaved"]</AppButton>
-        <AppButton Href="" Variant="Ghost">@Localizer["Common.BackToCompetitions"]</AppButton>
-    </div>
 }
 
 @code {
     [Parameter]
     public string Slug { get; set; } = string.Empty;
 
+    private const string DefaultCardBackgroundImageUrl = "/assets/competitions/default-card-bg.webp";
+    private static readonly char[] DisallowedInlineStyleChars = ['\r', '\n', ';'];
+
     private Competition? competition;
     private PredictionSet? predictionSet;
     private bool isLoading = true;
+
     private int SavedAnswersCount => predictionSet?.Answers.Count ?? 0;
 
-    private string HeroCardClass => string.Join(
-        " ",
-        "competition-hero-card",
-        competition?.Slug switch
-        {
-            "worlds-2026" => "competition-hero-card--worlds",
-            "sheffield-2026" => "competition-hero-card--sheffield",
-            _ => "competition-hero-card--default"
-        });
+    private bool HasLogoImage => !string.IsNullOrWhiteSpace(competition?.CardLogoImageUrl);
 
-    private IReadOnlyList<Athlete> FeaturedAthletes => competition?
-        .Athletes
-        .Take(6)
-        .ToArray() ?? [];
+    private string HeroBackgroundImageUrl => string.IsNullOrWhiteSpace(competition?.CardBackgroundImageUrl)
+        ? DefaultCardBackgroundImageUrl
+        : competition.CardBackgroundImageUrl;
+
+    private string HeroBackgroundPosition => NormalizeBackgroundPosition(competition?.CardBackgroundPosition);
+
+    private string HeroMediaStyle =>
+        $"--competition-overview-bg-image: url('{HeroBackgroundImageUrl}'); --competition-overview-bg-position: {HeroBackgroundPosition};";
 
     private IReadOnlyList<AppBreadcrumbItem> Breadcrumbs => competition is null
         ? [new AppBreadcrumbItem(Localizer["Nav.Competitions"].Value, "")]
@@ -176,37 +184,28 @@ else
         isLoading = false;
     }
 
+    private int GetTotalPicks(PredictionGroup group)
+    {
+        return group.Questions.Sum(question => question.Constraints.ExactSelections ?? question.Constraints.MaxSelections ?? 1);
+    }
+
     private string FormatDate(DateTimeOffset? value)
     {
         return value?.ToLocalTime().ToString("d MMM yyyy HH:mm") ?? Localizer["Common.Tbd"];
     }
 
-    private string GetAthleteCategory(string athleteId)
+    private static string NormalizeBackgroundPosition(string? value)
     {
-        var category = competition?
-            .Categories
-            .FirstOrDefault(item => item.AthleteIds.Contains(athleteId));
-
-        return category?.Name ?? Localizer["Common.Tbd"];
-    }
-
-    private static string GetInitials(string name)
-    {
-        var parts = name
-            .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-            .Take(2)
-            .ToArray();
-
-        if (parts.Length == 0)
+        if (string.IsNullOrWhiteSpace(value))
         {
-            return "TC";
+            return "center";
         }
 
-        if (parts.Length == 1)
+        if (value.IndexOfAny(DisallowedInlineStyleChars) >= 0)
         {
-            return parts[0][0].ToString().ToUpperInvariant();
+            return "center";
         }
 
-        return $"{char.ToUpperInvariant(parts[0][0])}{char.ToUpperInvariant(parts[1][0])}";
+        return value.Trim();
     }
 }

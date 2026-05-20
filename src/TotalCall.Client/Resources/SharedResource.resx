@@ -47,6 +47,8 @@
   <data name="Common.OpenCompetition" xml:space="preserve"><value>Otwórz zawody</value></data>
   <data name="Common.BackToCompetition" xml:space="preserve"><value>Wróć do zawodów</value></data>
   <data name="Common.BackToCompetitions" xml:space="preserve"><value>Wróć do zawodów</value></data>
+  <data name="Common.Back" xml:space="preserve"><value>Wstecz</value></data>
+  <data name="Common.Continue" xml:space="preserve"><value>Dalej</value></data>
   <data name="Common.Tbd" xml:space="preserve"><value>Do ustalenia</value></data>
   <data name="Common.Required" xml:space="preserve"><value>Wymagane</value></data>
   <data name="Common.Optional" xml:space="preserve"><value>Opcjonalne</value></data>
@@ -78,6 +80,7 @@
   <data name="Competition.PredictionGroups" xml:space="preserve"><value>Moduły typowań</value></data>
   <data name="Competition.ModulesHint" xml:space="preserve"><value>Wybierz moduł, od którego chcesz zacząć typowanie.</value></data>
   <data name="Competition.QuestionsCount" xml:space="preserve"><value>{0} pytań</value></data>
+  <data name="Competition.PicksCount" xml:space="preserve"><value>{0} typów</value></data>
   <data name="Competition.FeaturedAthletes" xml:space="preserve"><value>Wyróżnieni zawodnicy</value></data>
   <data name="Competition.FeaturedAthletesHint" xml:space="preserve"><value>Przykładowi zawodnicy z aktualnej konfiguracji.</value></data>
   <data name="Competition.MakePredictions" xml:space="preserve"><value>Typuj wyniki</value></data>

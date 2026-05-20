@@ -47,6 +47,8 @@
   <data name="Common.OpenCompetition" xml:space="preserve"><value>Open competition</value></data>
   <data name="Common.BackToCompetition" xml:space="preserve"><value>Back to competition</value></data>
   <data name="Common.BackToCompetitions" xml:space="preserve"><value>Back to competitions</value></data>
+  <data name="Common.Back" xml:space="preserve"><value>Back</value></data>
+  <data name="Common.Continue" xml:space="preserve"><value>Continue</value></data>
   <data name="Common.Tbd" xml:space="preserve"><value>TBD</value></data>
   <data name="Common.Required" xml:space="preserve"><value>Required</value></data>
   <data name="Common.Optional" xml:space="preserve"><value>Optional</value></data>
@@ -78,6 +80,7 @@
   <data name="Competition.PredictionGroups" xml:space="preserve"><value>Prediction modules</value></data>
   <data name="Competition.ModulesHint" xml:space="preserve"><value>Choose the module you want to fill first.</value></data>
   <data name="Competition.QuestionsCount" xml:space="preserve"><value>{0} question(s)</value></data>
+  <data name="Competition.PicksCount" xml:space="preserve"><value>{0} picks</value></data>
   <data name="Competition.FeaturedAthletes" xml:space="preserve"><value>Featured athletes</value></data>
   <data name="Competition.FeaturedAthletesHint" xml:space="preserve"><value>Selected athletes from current competition setup.</value></data>
   <data name="Competition.MakePredictions" xml:space="preserve"><value>Make predictions</value></data>

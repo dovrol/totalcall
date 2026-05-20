@@ -2,163 +2,4214 @@
   "id": "worlds-2026",
   "slug": "worlds-2026",
   "name": "Worlds 2026",
-  "description": "Podium picks for every configured weight class.",
+  "description": "The biggest stage in powerlifting. Crown the world's strongest.",
+  "federation": "IPF",
   "cardBackgroundImageUrl": "/assets/competitions/worlds-2026-card-bg.webp",
   "cardBackgroundPosition": "center",
-  "federation": "IPF",
   "startDate": "2026-06-07T09:00:00Z",
   "endDate": "2026-06-14T18:00:00Z",
   "predictionOpenAt": "2026-05-01T09:00:00Z",
   "predictionLockAt": "2026-06-07T08:00:00Z",
   "status": "upcoming",
-  "configVersion": "2026.1",
+  "configVersion": "2026.2",
   "athletes": [
     {
-      "id": "carla-73",
-      "displayName": "Carla Martins",
+      "id": "women-47-chapon-tiffany",
+      "displayName": "Chapon Tiffany",
       "sex": "female",
-      "countryCode": "BRA",
-      "countryName": "Brazil",
-      "weightCategoryId": "women-73",
-      "seedTotalKg": 535
+      "countryName": "France",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 451.5
     },
     {
-      "id": "emma-73",
-      "displayName": "Emma Nilsson",
+      "id": "women-47-le-leanne",
+      "displayName": "Le Leanne",
       "sex": "female",
-      "countryCode": "SWE",
+      "countryName": "United States",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 440.5
+    },
+    {
+      "id": "women-47-picher-plante-amelie",
+      "displayName": "Picher-Plante Amelie",
+      "sex": "female",
+      "countryName": "Canada",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 436.5
+    },
+    {
+      "id": "women-47-motta-annalisa",
+      "displayName": "Motta Annalisa",
+      "sex": "female",
+      "countryName": "Italy",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 408.0
+    },
+    {
+      "id": "women-47-kijumnuayporn-vicky",
+      "displayName": "Kijumnuayporn Vicky",
+      "sex": "female",
+      "countryName": "Australia",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 400.0
+    },
+    {
+      "id": "women-47-duno-frankmary",
+      "displayName": "Duno Frankmary",
+      "sex": "female",
+      "countryName": "Puerto Rico",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 400.0
+    },
+    {
+      "id": "women-47-mikova-anezka",
+      "displayName": "Mikova Anezka",
+      "sex": "female",
+      "countryName": "Czechia",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 390.0
+    },
+    {
+      "id": "women-47-jones-ainsley",
+      "displayName": "Jones Ainsley",
+      "sex": "female",
+      "countryName": "Australia",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 386.0
+    },
+    {
+      "id": "women-47-altamimi-alhanouf",
+      "displayName": "Altamimi Alhanouf",
+      "sex": "female",
+      "countryName": "Kuwait",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 377.5
+    },
+    {
+      "id": "women-47-santos-mediavilla-paula",
+      "displayName": "Santos Mediavilla Paula",
+      "sex": "female",
+      "countryName": "Spain",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 351.0
+    },
+    {
+      "id": "women-47-al-jundi-nour",
+      "displayName": "Al Jundi Nour",
+      "sex": "female",
+      "countryName": "Thailand",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 340.0
+    },
+    {
+      "id": "women-47-wedlock-sze-yee-venezia",
+      "displayName": "Wedlock Sze Yee Venezia",
+      "sex": "female",
+      "countryName": "Singapore",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 325.0
+    },
+    {
+      "id": "women-47-clarke-joanne",
+      "displayName": "Clarke Joanne",
+      "sex": "female",
+      "countryName": "Ireland",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 325.0
+    },
+    {
+      "id": "women-47-mai-on-kotchaphan",
+      "displayName": "Mai-On Kotchaphan",
+      "sex": "female",
+      "countryName": "Ireland",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 317.5
+    },
+    {
+      "id": "women-47-beglarashvili-mari",
+      "displayName": "Beglarashvili Mari",
+      "sex": "female",
+      "countryName": "Georgia",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 317.5
+    },
+    {
+      "id": "women-47-idczak-karolina",
+      "displayName": "Idczak Karolina",
+      "sex": "female",
+      "countryName": "Poland",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 285.0
+    },
+    {
+      "id": "women-52-smith-megan-li",
+      "displayName": "Smith Megan-Li",
+      "sex": "female",
+      "countryName": "New Zealand",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 482.5
+    },
+    {
+      "id": "women-52-dekkers-pleun",
+      "displayName": "Dekkers Pleun",
+      "sex": "female",
+      "countryName": "Netherlands",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 464.5
+    },
+    {
+      "id": "women-52-gagne-catherine",
+      "displayName": "Gagne Catherine",
+      "sex": "female",
+      "countryName": "Canada",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 455.0
+    },
+    {
+      "id": "women-52-lucas-lea",
+      "displayName": "Lucas Lea",
+      "sex": "female",
+      "countryName": "France",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 437.5
+    },
+    {
+      "id": "women-52-farid-farhanna",
+      "displayName": "Farid Farhanna",
+      "sex": "female",
+      "countryName": "Singapore",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 434.5
+    },
+    {
+      "id": "women-52-pineda-vanessa",
+      "displayName": "Pineda Vanessa",
+      "sex": "female",
+      "countryName": "United States",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 432.5
+    },
+    {
+      "id": "women-52-lehoczkyne-fawal-margit",
+      "displayName": "Lehoczkyne Fawal Margit",
+      "sex": "female",
+      "countryName": "Hungary",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 427.5
+    },
+    {
+      "id": "women-52-gerlach-eliza",
+      "displayName": "Gerlach Eliza",
+      "sex": "female",
+      "countryName": "Poland",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 422.5
+    },
+    {
+      "id": "women-52-craven-elizabeth",
+      "displayName": "Craven Elizabeth",
+      "sex": "female",
+      "countryName": "Australia",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 420.5
+    },
+    {
+      "id": "women-52-barwari-delal",
+      "displayName": "Barwari Delal",
+      "sex": "female",
       "countryName": "Sweden",
-      "weightCategoryId": "women-73",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 407.5
+    },
+    {
+      "id": "women-52-la-bella-daiana",
+      "displayName": "La Bella Daiana",
+      "sex": "female",
+      "countryName": "Argentina",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 403.0
+    },
+    {
+      "id": "women-52-chorianopoulou-aikaterini",
+      "displayName": "Chorianopoulou Aikaterini",
+      "sex": "female",
+      "countryName": "Australia",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 402.5
+    },
+    {
+      "id": "women-52-varol-fatma",
+      "displayName": "Varol Fatma",
+      "sex": "female",
+      "countryName": "Turkiye",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 401.5
+    },
+    {
+      "id": "women-52-carvalho-giulia",
+      "displayName": "Carvalho Giulia",
+      "sex": "female",
+      "countryName": "Brazil",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 401.0
+    },
+    {
+      "id": "women-52-sim-cristy",
+      "displayName": "Sim Cristy",
+      "sex": "female",
+      "countryName": "Mexico",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 395.0
+    },
+    {
+      "id": "women-52-saana-grassham",
+      "displayName": "Saana Grassham",
+      "sex": "female",
+      "countryName": "Japan",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 390.0
+    },
+    {
+      "id": "women-52-sveinsdottir-kristrun",
+      "displayName": "Sveinsdottir Kristrun",
+      "sex": "female",
+      "countryName": "Iceland",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 375.0
+    },
+    {
+      "id": "women-52-caldona-jackielyn",
+      "displayName": "Caldona Jackielyn",
+      "sex": "female",
+      "countryName": "Philippines",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 366.0
+    },
+    {
+      "id": "women-52-bobileva-arina",
+      "displayName": "Bobileva Arina",
+      "sex": "female",
+      "countryName": "Latvia",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 362.5
+    },
+    {
+      "id": "women-52-koskipaasi-jaana",
+      "displayName": "Koskipaasi Jaana",
+      "sex": "female",
+      "countryName": "Finland",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 360.0
+    },
+    {
+      "id": "women-52-verhulst-stefanie",
+      "displayName": "Verhulst Stefanie",
+      "sex": "female",
+      "countryName": "Belgium",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 357.5
+    },
+    {
+      "id": "women-52-tsetskhladze-mariam",
+      "displayName": "Tsetskhladze Mariam",
+      "sex": "female",
+      "countryName": "Georgia",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 307.5
+    },
+    {
+      "id": "women-57-naldi-sara",
+      "displayName": "Naldi Sara",
+      "sex": "female",
+      "countryName": "Italy",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 530.5
+    },
+    {
+      "id": "women-57-nnamani-joy",
+      "displayName": "Nnamani Joy",
+      "sex": "female",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 520.5
+    },
+    {
+      "id": "women-57-pal-sovannphaktra",
+      "displayName": "Pal Sovannphaktra",
+      "sex": "female",
+      "countryName": "France",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 502.5
+    },
+    {
+      "id": "women-57-butters-bobbie",
+      "displayName": "Butters Bobbie",
+      "sex": "female",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 492.5
+    },
+    {
+      "id": "women-57-corrigan-evie",
+      "displayName": "Corrigan Evie",
+      "sex": "female",
+      "countryName": "New Zealand",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 490.0
+    },
+    {
+      "id": "women-57-olin-emelie",
+      "displayName": "Olin Emelie",
+      "sex": "female",
+      "countryName": "Sweden",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 458.5
+    },
+    {
+      "id": "women-57-aguila-padilla-ana",
+      "displayName": "Aguila Padilla Ana",
+      "sex": "female",
+      "countryName": "Spain",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 455.0
+    },
+    {
+      "id": "women-57-amri-miriam",
+      "displayName": "Amri Miriam",
+      "sex": "female",
+      "countryName": "Netherlands",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 452.5
+    },
+    {
+      "id": "women-57-henry-marthe",
+      "displayName": "Henry Marthe",
+      "sex": "female",
+      "countryName": "Canada",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 452.5
+    },
+    {
+      "id": "women-57-de-la-torre-monica",
+      "displayName": "de La Torre Monica",
+      "sex": "female",
+      "countryName": "Mexico",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 448.5
+    },
+    {
+      "id": "women-57-kratz-samantha",
+      "displayName": "Kratz Samantha",
+      "sex": "female",
+      "countryName": "Australia",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 437.5
+    },
+    {
+      "id": "women-57-babic-katja",
+      "displayName": "Babic Katja",
+      "sex": "female",
+      "countryName": "Slovenia",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 427.5
+    },
+    {
+      "id": "women-57-oestergaard-mathilde",
+      "displayName": "Oestergaard Mathilde",
+      "sex": "female",
+      "countryName": "Denmark",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 423.0
+    },
+    {
+      "id": "women-57-keenan-lauren",
+      "displayName": "Keenan Lauren",
+      "sex": "female",
+      "countryName": "Qatar",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 417.5
+    },
+    {
+      "id": "women-57-huang-zhiyin",
+      "displayName": "Huang Zhiyin",
+      "sex": "female",
+      "countryName": "China",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 415.0
+    },
+    {
+      "id": "women-57-rummens-elise",
+      "displayName": "Rummens Elise",
+      "sex": "female",
+      "countryName": "Belgium",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 405.0
+    },
+    {
+      "id": "women-57-wandeler-anouk",
+      "displayName": "Wandeler Anouk",
+      "sex": "female",
+      "countryName": "Switzerland",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 403.0
+    },
+    {
+      "id": "women-57-boukalova-anna",
+      "displayName": "Boukalova Anna",
+      "sex": "female",
+      "countryName": "Czechia",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 390.0
+    },
+    {
+      "id": "women-57-lee-michelle",
+      "displayName": "Lee Michelle",
+      "sex": "female",
+      "countryName": "Singapore",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 375.0
+    },
+    {
+      "id": "women-57-bondy-florence",
+      "displayName": "Bondy Florence",
+      "sex": "female",
+      "countryName": "Thailand",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 342.5
+    },
+    {
+      "id": "women-57-viktoria-flavia-dr",
+      "displayName": "Viktoria Flavia Dr.",
+      "sex": "female",
+      "countryName": "Hungary",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 75.0
+    },
+    {
+      "id": "women-63-bostrom-alba",
+      "displayName": "Bostrom Alba",
+      "sex": "female",
+      "countryName": "Sweden",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 582.5
+    },
+    {
+      "id": "women-63-bernardi-chiara",
+      "displayName": "Bernardi Chiara",
+      "sex": "female",
+      "countryName": "Italy",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 542.5
+    },
+    {
+      "id": "women-63-aborah-betty",
+      "displayName": "Aborah Betty",
+      "sex": "female",
+      "countryName": "Netherlands",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 518.5
+    },
+    {
+      "id": "women-63-vidal-makeda",
+      "displayName": "Vidal Makeda",
+      "sex": "female",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 501.0
+    },
+    {
+      "id": "women-63-van-vianen-romy",
+      "displayName": "van Vianen Romy",
+      "sex": "female",
+      "countryName": "Netherlands",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 500.0
+    },
+    {
+      "id": "women-63-haeberer-clara-isabelle",
+      "displayName": "Haeberer Clara Isabelle",
+      "sex": "female",
+      "countryName": "Germany",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 500.0
+    },
+    {
+      "id": "women-63-mamane-leah",
+      "displayName": "Mamane Leah",
+      "sex": "female",
+      "countryName": "Canada",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 494.0
+    },
+    {
+      "id": "women-63-maguregi-rodriguez-jone",
+      "displayName": "Maguregi Rodriguez Jone",
+      "sex": "female",
+      "countryName": "Spain",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 490.0
+    },
+    {
+      "id": "women-63-kvantchiani-sopiko",
+      "displayName": "Kvantchiani Sopiko",
+      "sex": "female",
+      "countryName": "Georgia",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 487.5
+    },
+    {
+      "id": "women-63-lalime-sahyuri",
+      "displayName": "Lalime Sahyuri",
+      "sex": "female",
+      "countryName": "Belgium",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 485.0
+    },
+    {
+      "id": "women-63-wolf-jana",
+      "displayName": "Wolf Jana",
+      "sex": "female",
+      "countryName": "Switzerland",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 480.0
+    },
+    {
+      "id": "women-63-zurinskaite-deimante",
+      "displayName": "Zurinskaite Deimante",
+      "sex": "female",
+      "countryName": "Lithuania",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 472.5
+    },
+    {
+      "id": "women-63-stevens-jody",
+      "displayName": "Stevens Jody",
+      "sex": "female",
+      "countryName": "Ireland",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 470.0
+    },
+    {
+      "id": "women-63-visan-ana-maria",
+      "displayName": "Visan Ana-Maria",
+      "sex": "female",
+      "countryName": "New Zealand",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 455.0
+    },
+    {
+      "id": "women-63-tiong-natalie",
+      "displayName": "Tiong Natalie",
+      "sex": "female",
+      "countryName": "Singapore",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 442.5
+    },
+    {
+      "id": "women-63-torres-judith",
+      "displayName": "Torres Judith",
+      "sex": "female",
+      "countryName": "Mexico",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 442.5
+    },
+    {
+      "id": "women-63-jansova-dominika",
+      "displayName": "Jansova Dominika",
+      "sex": "female",
+      "countryName": "Czechia",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 430.0
+    },
+    {
+      "id": "women-63-kalinowska-ewelina",
+      "displayName": "Kalinowska Ewelina",
+      "sex": "female",
+      "countryName": "Poland",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 422.5
+    },
+    {
+      "id": "women-63-duus-cecilie",
+      "displayName": "Duus Cecilie",
+      "sex": "female",
+      "countryName": "Denmark",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 422.5
+    },
+    {
+      "id": "women-63-zunic-lea",
+      "displayName": "Zunic Lea",
+      "sex": "female",
+      "countryName": "Croatia",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 405.0
+    },
+    {
+      "id": "women-63-vackova-kristyna",
+      "displayName": "Vackova Kristyna",
+      "sex": "female",
+      "countryName": "Czechia",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 392.5
+    },
+    {
+      "id": "women-63-dunning-mary",
+      "displayName": "Dunning Mary",
+      "sex": "female",
+      "countryName": "Thailand",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 390.0
+    },
+    {
+      "id": "women-63-wenn-cara",
+      "displayName": "Wenn Cara",
+      "sex": "female",
+      "countryName": "South Africa",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 385.0
+    },
+    {
+      "id": "women-63-ong-yi",
+      "displayName": "Ong Yi",
+      "sex": "female",
+      "countryName": "Singapore",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 372.5
+    },
+    {
+      "id": "women-63-chatzigianni-andria",
+      "displayName": "Chatzigianni Andria",
+      "sex": "female",
+      "countryName": "Cyprus",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 367.5
+    },
+    {
+      "id": "women-63-zhou-yiqian",
+      "displayName": "Zhou Yiqian",
+      "sex": "female",
+      "countryName": "China",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 360.0
+    },
+    {
+      "id": "women-63-gerute-lina",
+      "displayName": "Gerute Lina",
+      "sex": "female",
+      "countryName": "Lithuania",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 357.5
+    },
+    {
+      "id": "women-63-meshveliani-natela",
+      "displayName": "Meshveliani Natela",
+      "sex": "female",
+      "countryName": "Georgia",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 335.0
+    },
+    {
+      "id": "women-63-liang-yim-chee",
+      "displayName": "Liang Yim Chee",
+      "sex": "female",
+      "countryName": "Hong Kong, China",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 325.0
+    },
+    {
+      "id": "women-69-garra-carola",
+      "displayName": "Garra Carola",
+      "sex": "female",
+      "countryName": "Italy",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 588.5
+    },
+    {
+      "id": "women-69-babb-chandler",
+      "displayName": "Babb Chandler",
+      "sex": "female",
+      "countryName": "US Virgin Islands",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 570.0
+    },
+    {
+      "id": "women-69-kovacs-janee",
+      "displayName": "Kovacs Janee",
+      "sex": "female",
+      "countryName": "United States",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 570.0
+    },
+    {
+      "id": "women-69-scanlon-meghan",
+      "displayName": "Scanlon Meghan",
+      "sex": "female",
+      "countryName": "United States",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 563.5
+    },
+    {
+      "id": "women-69-van-daal-marie-jose",
+      "displayName": "van Daal Marie-Jose",
+      "sex": "female",
+      "countryName": "Netherlands",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 552.5
+    },
+    {
+      "id": "women-69-nelson-annie",
+      "displayName": "Nelson Annie",
+      "sex": "female",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 550.0
+    },
+    {
+      "id": "women-69-kjenner-marte",
+      "displayName": "Kjenner Marte",
+      "sex": "female",
+      "countryName": "Norway",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 550.0
+    },
+    {
+      "id": "women-69-bright-jordan",
+      "displayName": "Bright Jordan",
+      "sex": "female",
+      "countryName": "Ireland",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 545.0
+    },
+    {
+      "id": "women-69-bouchoux-andorina",
+      "displayName": "Bouchoux Andorina",
+      "sex": "female",
+      "countryName": "France",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 540.0
+    },
+    {
+      "id": "women-69-huff-shannon",
+      "displayName": "Huff Shannon",
+      "sex": "female",
+      "countryName": "Canada",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 533.0
+    },
+    {
+      "id": "women-69-belden-pavlovic-signe",
+      "displayName": "Belden Pavlovic Signe",
+      "sex": "female",
+      "countryName": "Norway",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 518.0
+    },
+    {
+      "id": "women-69-tavares-cicera",
+      "displayName": "Tavares Cicera",
+      "sex": "female",
+      "countryName": "Brazil",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 494.0
+    },
+    {
+      "id": "women-69-mabidikama-acima",
+      "displayName": "Mabidikama Acima",
+      "sex": "female",
+      "countryName": "New Zealand",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 494.0
+    },
+    {
+      "id": "women-69-goossens-kaya",
+      "displayName": "Goossens Kaya",
+      "sex": "female",
+      "countryName": "Belgium",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 494.0
+    },
+    {
+      "id": "women-69-altman-hannah",
+      "displayName": "Altman Hannah",
+      "sex": "female",
+      "countryName": "Australia",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 486.0
+    },
+    {
+      "id": "women-69-materek-sabina",
+      "displayName": "Materek Sabina",
+      "sex": "female",
+      "countryName": "Poland",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 480.0
+    },
+    {
+      "id": "women-69-haulot-clara",
+      "displayName": "Haulot Clara",
+      "sex": "female",
+      "countryName": "Belgium",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 472.5
+    },
+    {
+      "id": "women-69-skovlind-caroline",
+      "displayName": "Skovlind Caroline",
+      "sex": "female",
+      "countryName": "Denmark",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 470.0
+    },
+    {
+      "id": "women-69-denise-guenther",
+      "displayName": "Denise Guenther",
+      "sex": "female",
+      "countryName": "Switzerland",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 461.5
+    },
+    {
+      "id": "women-69-seow-amanda",
+      "displayName": "Seow Amanda",
+      "sex": "female",
+      "countryName": "Singapore",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 446.0
+    },
+    {
+      "id": "women-69-jones-jayne",
+      "displayName": "Jones Jayne",
+      "sex": "female",
+      "countryName": "Ireland",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 442.5
+    },
+    {
+      "id": "women-69-khwang-hayley",
+      "displayName": "Khwang Hayley",
+      "sex": "female",
+      "countryName": "Singapore",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 420.0
+    },
+    {
+      "id": "women-69-kairaityte-dainora",
+      "displayName": "Kairaityte Dainora",
+      "sex": "female",
+      "countryName": "Lithuania",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 420.0
+    },
+    {
+      "id": "women-69-larrimore-deshawn",
+      "displayName": "Larrimore Deshawn",
+      "sex": "female",
+      "countryName": "US Virgin Islands",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 415.0
+    },
+    {
+      "id": "women-69-marina-sanja",
+      "displayName": "Marina Sanja",
+      "sex": "female",
+      "countryName": "Croatia",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 410.0
+    },
+    {
+      "id": "women-69-pacce-catalina",
+      "displayName": "Pacce Catalina",
+      "sex": "female",
+      "countryName": "Uruguay",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 400.0
+    },
+    {
+      "id": "women-69-janulcikaite-ausrine",
+      "displayName": "Janulcikaite Ausrine",
+      "sex": "female",
+      "countryName": "Lithuania",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 360.0
+    },
+    {
+      "id": "women-76-worford-cranon",
+      "displayName": "Worford Cranon",
+      "sex": "female",
+      "countryName": "United States",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 629.0
+    },
+    {
+      "id": "women-76-mazur-zuzanna",
+      "displayName": "Mazur Zuzanna",
+      "sex": "female",
+      "countryName": "Poland",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 586.5
+    },
+    {
+      "id": "women-76-bisol-bruna",
+      "displayName": "Bisol Bruna",
+      "sex": "female",
+      "countryName": "Brazil",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 568.5
+    },
+    {
+      "id": "women-76-peyraud-clara",
+      "displayName": "Peyraud Clara",
+      "sex": "female",
+      "countryName": "France",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 567.5
+    },
+    {
+      "id": "women-76-hames-mara",
+      "displayName": "Hames Mara",
+      "sex": "female",
+      "countryName": "Germany",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 565.5
+    },
+    {
+      "id": "women-76-hanlon-bettina",
+      "displayName": "Hanlon Bettina",
+      "sex": "female",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 565.0
+    },
+    {
+      "id": "women-76-ezeh-chisom",
+      "displayName": "Ezeh Chisom",
+      "sex": "female",
+      "countryName": "Canada",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 545.0
+    },
+    {
+      "id": "women-76-hunte-kezia",
+      "displayName": "Hunte Kezia",
+      "sex": "female",
+      "countryName": "Trinidad and Tobago",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 535.0
+    },
+    {
+      "id": "women-76-gronlund-ellen",
+      "displayName": "Gronlund Ellen",
+      "sex": "female",
+      "countryName": "Finland",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 535.0
+    },
+    {
+      "id": "women-76-tchrikishvili-nino",
+      "displayName": "Tchrikishvili Nino",
+      "sex": "female",
+      "countryName": "Georgia",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 532.5
+    },
+    {
+      "id": "women-76-ophoff-tessa",
+      "displayName": "Ophoff Tessa",
+      "sex": "female",
+      "countryName": "Netherlands",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 532.5
+    },
+    {
+      "id": "women-76-govind-hema",
+      "displayName": "Govind Hema",
+      "sex": "female",
+      "countryName": "New Zealand",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 517.5
+    },
+    {
+      "id": "women-76-szarek-justyna",
+      "displayName": "Szarek Justyna",
+      "sex": "female",
+      "countryName": "Poland",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 517.5
+    },
+    {
+      "id": "women-76-varillas-modesta",
+      "displayName": "Varillas Modesta",
+      "sex": "female",
+      "countryName": "Mexico",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 513.0
+    },
+    {
+      "id": "women-76-swart-chanel",
+      "displayName": "Swart Chanel",
+      "sex": "female",
+      "countryName": "New Zealand",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 503.0
+    },
+    {
+      "id": "women-76-martens-mariska",
+      "displayName": "Martens Mariska",
+      "sex": "female",
+      "countryName": "Belgium",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 502.5
+    },
+    {
+      "id": "women-76-reis-rafaela",
+      "displayName": "Reis Rafaela",
+      "sex": "female",
+      "countryName": "Portugal",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 490.0
+    },
+    {
+      "id": "women-76-muller-gaby",
+      "displayName": "Muller Gaby",
+      "sex": "female",
+      "countryName": "Belgium",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 470.0
+    },
+    {
+      "id": "women-76-schvandtnerova-denisa",
+      "displayName": "Schvandtnerova Denisa",
+      "sex": "female",
+      "countryName": "Czechia",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 465.0
+    },
+    {
+      "id": "women-76-waldeck-danielle",
+      "displayName": "Waldeck Danielle",
+      "sex": "female",
+      "countryName": "South Africa",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 452.5
+    },
+    {
+      "id": "women-76-wells-selina",
+      "displayName": "Wells Selina",
+      "sex": "female",
+      "countryName": "Thailand",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 440.0
+    },
+    {
+      "id": "women-76-khurtsilava-khatia",
+      "displayName": "Khurtsilava Khatia",
+      "sex": "female",
+      "countryName": "Georgia",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 432.5
+    },
+    {
+      "id": "women-76-xie-thuy",
+      "displayName": "Xie Thuy",
+      "sex": "female",
+      "countryName": "Singapore",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 432.5
+    },
+    {
+      "id": "women-76-marangoni-pia",
+      "displayName": "Marangoni Pia",
+      "sex": "female",
+      "countryName": "South Africa",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 410.0
+    },
+    {
+      "id": "women-84-lawrence-amanda",
+      "displayName": "Lawrence Amanda",
+      "sex": "female",
+      "countryName": "United States",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 648.0
+    },
+    {
+      "id": "women-84-tongotea-karlina",
+      "displayName": "Tongotea Karlina",
+      "sex": "female",
+      "countryName": "New Zealand",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 628.5
+    },
+    {
+      "id": "women-84-azariah-ziana",
+      "displayName": "Azariah Ziana",
+      "sex": "female",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 607.0
+    },
+    {
+      "id": "women-84-zeigler-nicolette",
+      "displayName": "Zeigler Nicolette",
+      "sex": "female",
+      "countryName": "United States",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 600.0
+    },
+    {
+      "id": "women-84-thorhallsdottir-kristin",
+      "displayName": "Thorhallsdottir Kristin",
+      "sex": "female",
+      "countryName": "Iceland",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 570.5
+    },
+    {
+      "id": "women-84-almeida-marina",
+      "displayName": "Almeida Marina",
+      "sex": "female",
+      "countryName": "Brazil",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 565.5
+    },
+    {
+      "id": "women-84-ieronimos-anna",
+      "displayName": "Ieronimos Anna",
+      "sex": "female",
+      "countryName": "Germany",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 565.0
+    },
+    {
+      "id": "women-84-buettner-jessica",
+      "displayName": "Buettner Jessica",
+      "sex": "female",
+      "countryName": "Canada",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 561.0
+    },
+    {
+      "id": "women-84-mouchet-emilie",
+      "displayName": "Mouchet Emilie",
+      "sex": "female",
+      "countryName": "France",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 555.0
+    },
+    {
+      "id": "women-84-rudin-agnes",
+      "displayName": "Rudin Agnes",
+      "sex": "female",
+      "countryName": "Sweden",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 552.5
+    },
+    {
+      "id": "women-84-coopoosamy-nicole",
+      "displayName": "Coopoosamy Nicole",
+      "sex": "female",
+      "countryName": "South Africa",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 550.0
+    },
+    {
+      "id": "women-84-lahtinen-mira",
+      "displayName": "Lahtinen Mira",
+      "sex": "female",
+      "countryName": "Finland",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 549.0
+    },
+    {
+      "id": "women-84-letting-regitze",
+      "displayName": "Letting Regitze",
+      "sex": "female",
+      "countryName": "Denmark",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 547.5
+    },
+    {
+      "id": "women-84-bychok-liudmyla",
+      "displayName": "Bychok Liudmyla",
+      "sex": "female",
+      "countryName": "Ukraine",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 547.5
+    },
+    {
+      "id": "women-84-zhao-yan-fei",
+      "displayName": "Zhao Yan-Fei",
+      "sex": "female",
+      "countryName": "Australia",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 547.0
+    },
+    {
+      "id": "women-84-sanchez-jorge-carla",
+      "displayName": "Sanchez Jorge Carla",
+      "sex": "female",
+      "countryName": "Spain",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 542.5
+    },
+    {
+      "id": "women-84-joergensen-katja",
+      "displayName": "Joergensen Katja",
+      "sex": "female",
+      "countryName": "Denmark",
+      "weightCategoryId": "women-84",
       "seedTotalKg": 527.5
     },
     {
-      "id": "nora-73",
-      "displayName": "Nora Chen",
+      "id": "women-84-alleyne-deresay",
+      "displayName": "Alleyne Deresay",
       "sex": "female",
-      "countryCode": "TPE",
-      "countryName": "Chinese Taipei",
-      "weightCategoryId": "women-73",
+      "countryName": "Trinidad and Tobago",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 525.5
+    },
+    {
+      "id": "women-84-erimo-sabadell-rosa",
+      "displayName": "Erimo Sabadell Rosa",
+      "sex": "female",
+      "countryName": "Spain",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 525.0
+    },
+    {
+      "id": "women-84-matsuda-miyu",
+      "displayName": "Matsuda Miyu",
+      "sex": "female",
+      "countryName": "Japan",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 523.0
+    },
+    {
+      "id": "women-84-laitinen-jenna",
+      "displayName": "Laitinen Jenna",
+      "sex": "female",
+      "countryName": "Finland",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 519.5
+    },
+    {
+      "id": "women-84-abouassi-nour",
+      "displayName": "Abouassi Nour",
+      "sex": "female",
+      "countryName": "Qatar",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 490.0
+    },
+    {
+      "id": "women-84-adedokun-comfort",
+      "displayName": "Adedokun Comfort",
+      "sex": "female",
+      "countryName": "Ireland",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 488.0
+    },
+    {
+      "id": "women-84-suitauloa-shaniele",
+      "displayName": "Suitauloa Shaniele",
+      "sex": "female",
+      "countryName": "New Zealand",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 487.5
+    },
+    {
+      "id": "women-84-rodrigues-ana",
+      "displayName": "Rodrigues Ana",
+      "sex": "female",
+      "countryName": "Lithuania",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 457.2
+    },
+    {
+      "id": "women-84-szymkowiak-magdalena",
+      "displayName": "Szymkowiak Magdalena",
+      "sex": "female",
+      "countryName": "Poland",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 420.0
+    },
+    {
+      "id": "women-84plus-muluh-sonita",
+      "displayName": "Muluh Sonita",
+      "sex": "female",
+      "countryName": "Belgium",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 751.0
+    },
+    {
+      "id": "women-84plus-schlater-brittany",
+      "displayName": "Schlater Brittany",
+      "sex": "female",
+      "countryName": "Canada",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 732.5
+    },
+    {
+      "id": "women-84plus-onuoha-aquinn",
+      "displayName": "Onuoha Aquinn",
+      "sex": "female",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 671.5
+    },
+    {
+      "id": "women-84plus-omotoso-toyosi",
+      "displayName": "Omotoso Toyosi",
+      "sex": "female",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 662.5
+    },
+    {
+      "id": "women-84plus-brown-bonica",
+      "displayName": "Brown Bonica",
+      "sex": "female",
+      "countryName": "United States",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 662.5
+    },
+    {
+      "id": "women-84plus-mierger-amelie",
+      "displayName": "Mierger Amelie",
+      "sex": "female",
+      "countryName": "France",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 632.5
+    },
+    {
+      "id": "women-84plus-padia-zahra",
+      "displayName": "Padia Zahra",
+      "sex": "female",
+      "countryName": "Trinidad and Tobago",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 608.0
+    },
+    {
+      "id": "women-84plus-o-reilly-alison",
+      "displayName": "o'Reilly Alison",
+      "sex": "female",
+      "countryName": "Ireland",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 550.0
+    },
+    {
+      "id": "women-84plus-sigurjonsdottir-hanna",
+      "displayName": "Sigurjonsdottir Hanna",
+      "sex": "female",
+      "countryName": "Iceland",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 525.0
+    },
+    {
+      "id": "women-84plus-matthiasdottir-thorbjorg",
+      "displayName": "Matthiasdottir Thorbjorg",
+      "sex": "female",
+      "countryName": "Iceland",
+      "weightCategoryId": "women-84plus",
       "seedTotalKg": 522.5
     },
     {
-      "id": "mason-83",
-      "displayName": "Mason Reed",
-      "sex": "male",
-      "countryCode": "CAN",
-      "countryName": "Canada",
-      "weightCategoryId": "men-83",
-      "seedTotalKg": 840
+      "id": "women-84plus-kamoto-emi",
+      "displayName": "Kamoto Emi",
+      "sex": "female",
+      "countryName": "Japan",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 486.0
     },
     {
-      "id": "leo-83",
-      "displayName": "Leo Garcia",
+      "id": "women-84plus-de-la-barra-zelaya-marcela",
+      "displayName": "de La Barra Zelaya Marcela",
+      "sex": "female",
+      "countryName": "Chile",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 471.5
+    },
+    {
+      "id": "women-84plus-malojlo-marta",
+      "displayName": "Malojlo Marta",
+      "sex": "female",
+      "countryName": "Latvia",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 467.5
+    },
+    {
+      "id": "men-59-slabic-michael",
+      "displayName": "Slabic Michael",
       "sex": "male",
-      "countryCode": "ESP",
+      "countryName": "United States",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 651.0
+    },
+    {
+      "id": "men-59-campano-diaz-ivan",
+      "displayName": "Campano Diaz Ivan",
+      "sex": "male",
       "countryName": "Spain",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 642.5
+    },
+    {
+      "id": "men-59-garcia-antoine",
+      "displayName": "Garcia Antoine",
+      "sex": "male",
+      "countryName": "France",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 628.0
+    },
+    {
+      "id": "men-59-takiyama-yasutaka",
+      "displayName": "Takiyama Yasutaka",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 625.0
+    },
+    {
+      "id": "men-59-elhamali-mohamed",
+      "displayName": "Elhamali Mohamed",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 615.0
+    },
+    {
+      "id": "men-59-nyarko-kwaku",
+      "displayName": "Nyarko Kwaku",
+      "sex": "male",
+      "countryName": "Ghana",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 602.5
+    },
+    {
+      "id": "men-59-leon-franklin",
+      "displayName": "Leon Franklin",
+      "sex": "male",
+      "countryName": "Ecuador",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 602.5
+    },
+    {
+      "id": "men-59-ho-david",
+      "displayName": "Ho David",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 600.0
+    },
+    {
+      "id": "men-59-huang-wei-chen",
+      "displayName": "Huang Wei-Chen",
+      "sex": "male",
+      "countryName": "Chinese Taipei",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 577.5
+    },
+    {
+      "id": "men-59-you-yao-wei",
+      "displayName": "You Yao-Wei",
+      "sex": "male",
+      "countryName": "Chinese Taipei",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 570.0
+    },
+    {
+      "id": "men-59-cruz-angel",
+      "displayName": "Cruz Angel",
+      "sex": "male",
+      "countryName": "Mexico",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 570.0
+    },
+    {
+      "id": "men-59-gelashvili-giorgi",
+      "displayName": "Gelashvili Giorgi",
+      "sex": "male",
+      "countryName": "Georgia",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 562.0
+    },
+    {
+      "id": "men-59-madera-joenas",
+      "displayName": "Madera Joenas",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 558.0
+    },
+    {
+      "id": "men-59-imamura-ryo",
+      "displayName": "Imamura Ryo",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 557.5
+    },
+    {
+      "id": "men-59-santangelo-jacopo",
+      "displayName": "Santangelo Jacopo",
+      "sex": "male",
+      "countryName": "Italy",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 557.5
+    },
+    {
+      "id": "men-59-ergin-kemal",
+      "displayName": "Ergin Kemal",
+      "sex": "male",
+      "countryName": "Netherlands",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 535.0
+    },
+    {
+      "id": "men-59-cancel-ivan",
+      "displayName": "Cancel Ivan",
+      "sex": "male",
+      "countryName": "Puerto Rico",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 514.0
+    },
+    {
+      "id": "men-59-flores-jose",
+      "displayName": "Flores Jose",
+      "sex": "male",
+      "countryName": "New Zealand",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 500.0
+    },
+    {
+      "id": "men-66-bakkelund-kjell",
+      "displayName": "Bakkelund Kjell",
+      "sex": "male",
+      "countryName": "Norway",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 782.0
+    },
+    {
+      "id": "men-66-jordan-joseph",
+      "displayName": "Jordan Joseph",
+      "sex": "male",
+      "countryName": "US Virgin Islands",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 720.0
+    },
+    {
+      "id": "men-66-ushiyama-kyota",
+      "displayName": "Ushiyama Kyota",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 717.5
+    },
+    {
+      "id": "men-66-nikolai-austin",
+      "displayName": "Nikolai Austin",
+      "sex": "male",
+      "countryName": "United States",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 710.0
+    },
+    {
+      "id": "men-66-jimenez-santos",
+      "displayName": "Jimenez Santos",
+      "sex": "male",
+      "countryName": "Mexico",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 685.0
+    },
+    {
+      "id": "men-66-satake-yusuke",
+      "displayName": "Satake Yusuke",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 685.0
+    },
+    {
+      "id": "men-66-castillo-carlos",
+      "displayName": "Castillo Carlos",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 667.5
+    },
+    {
+      "id": "men-66-ong-wei",
+      "displayName": "Ong Wei",
+      "sex": "male",
+      "countryName": "Singapore",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 662.5
+    },
+    {
+      "id": "men-66-simonelli-mirko",
+      "displayName": "Simonelli Mirko",
+      "sex": "male",
+      "countryName": "Italy",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 660.5
+    },
+    {
+      "id": "men-66-catena-joel",
+      "displayName": "Catena Joel",
+      "sex": "male",
+      "countryName": "Austria",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 660.0
+    },
+    {
+      "id": "men-66-liatsis-marios",
+      "displayName": "Liatsis Marios",
+      "sex": "male",
+      "countryName": "Greece",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 653.0
+    },
+    {
+      "id": "men-66-sgro-julian",
+      "displayName": "Sgro Julian",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 627.5
+    },
+    {
+      "id": "men-66-luu-joshua",
+      "displayName": "Luu Joshua",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 625.0
+    },
+    {
+      "id": "men-66-zeng-wei-xiang",
+      "displayName": "Zeng Wei-Xiang",
+      "sex": "male",
+      "countryName": "Chinese Taipei",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 610.0
+    },
+    {
+      "id": "men-66-ghizoni-gabriel",
+      "displayName": "Ghizoni Gabriel",
+      "sex": "male",
+      "countryName": "Brazil",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 600.0
+    },
+    {
+      "id": "men-66-naoussi-ezelgbo-darling-williams",
+      "displayName": "Naoussi Ezelgbo Darling Williams",
+      "sex": "male",
+      "countryName": "Cameroon",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 600.0
+    },
+    {
+      "id": "men-66-lin-ching-lun",
+      "displayName": "Lin Ching-Lun",
+      "sex": "male",
+      "countryName": "Chinese Taipei",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 600.0
+    },
+    {
+      "id": "men-74-perkins-austin",
+      "displayName": "Perkins Austin",
+      "sex": "male",
+      "countryName": "United States",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 891.5
+    },
+    {
+      "id": "men-74-bertrand-balthazar",
+      "displayName": "Bertrand Balthazar",
+      "sex": "male",
+      "countryName": "France",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 800.5
+    },
+    {
+      "id": "men-74-fan-chun-chia",
+      "displayName": "Fan Chun-Chia",
+      "sex": "male",
+      "countryName": "Chinese Taipei",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 767.5
+    },
+    {
+      "id": "men-74-lee-clinton",
+      "displayName": "Lee Clinton",
+      "sex": "male",
+      "countryName": "Singapore",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 766.0
+    },
+    {
+      "id": "men-74-lavoie-jacob",
+      "displayName": "Lavoie Jacob",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 763.0
+    },
+    {
+      "id": "men-74-homer-luke",
+      "displayName": "Homer Luke",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 763.0
+    },
+    {
+      "id": "men-74-babaei-somaghi-keyan",
+      "displayName": "Babaei-Somaghi Keyan",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 750.5
+    },
+    {
+      "id": "men-74-al-lanqawi-adel",
+      "displayName": "Al Lanqawi Adel",
+      "sex": "male",
+      "countryName": "Switzerland",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 737.5
+    },
+    {
+      "id": "men-74-gimorri-giacomo",
+      "displayName": "Gimorri Giacomo",
+      "sex": "male",
+      "countryName": "Italy",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 735.0
+    },
+    {
+      "id": "men-74-konstantinou-christos",
+      "displayName": "Konstantinou Christos",
+      "sex": "male",
+      "countryName": "Cyprus",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 726.5
+    },
+    {
+      "id": "men-74-cheong-cheng",
+      "displayName": "Cheong Cheng",
+      "sex": "male",
+      "countryName": "Singapore",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 720.0
+    },
+    {
+      "id": "men-74-herraiz-frances-alberto",
+      "displayName": "Herraiz Frances Alberto",
+      "sex": "male",
+      "countryName": "Spain",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 717.5
+    },
+    {
+      "id": "men-74-cheng-yu-jui",
+      "displayName": "Cheng Yu-Jui",
+      "sex": "male",
+      "countryName": "Chinese Taipei",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 702.5
+    },
+    {
+      "id": "men-74-medjahed-yacine",
+      "displayName": "Medjahed Yacine",
+      "sex": "male",
+      "countryName": "Algeria",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 700.0
+    },
+    {
+      "id": "men-74-ola-joshua",
+      "displayName": "Ola Joshua",
+      "sex": "male",
+      "countryName": "Ireland",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 695.0
+    },
+    {
+      "id": "men-74-rada-karel",
+      "displayName": "Rada Karel",
+      "sex": "male",
+      "countryName": "Czechia",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 685.0
+    },
+    {
+      "id": "men-74-saed-awnullah",
+      "displayName": "Saed Awnullah",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 685.0
+    },
+    {
+      "id": "men-74-strachan-john",
+      "displayName": "Strachan John",
+      "sex": "male",
+      "countryName": "New Zealand",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 650.0
+    },
+    {
+      "id": "men-74-richards-lachlan",
+      "displayName": "Richards Lachlan",
+      "sex": "male",
+      "countryName": "New Zealand",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 642.5
+    },
+    {
+      "id": "men-74-damlamajans-marats",
+      "displayName": "Damlamajans Marats",
+      "sex": "male",
+      "countryName": "Latvia",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 625.0
+    },
+    {
+      "id": "men-74-marecki-mateusz",
+      "displayName": "Marecki Mateusz",
+      "sex": "male",
+      "countryName": "Poland",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 620.0
+    },
+    {
+      "id": "men-74-pacerinskis-marius",
+      "displayName": "Pacerinskis Marius",
+      "sex": "male",
+      "countryName": "Lithuania",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 617.5
+    },
+    {
+      "id": "men-74-bledis-gintaras",
+      "displayName": "Bledis Gintaras",
+      "sex": "male",
+      "countryName": "Lithuania",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 601.0
+    },
+    {
+      "id": "men-74-cruz-leonardo",
+      "displayName": "Cruz Leonardo",
+      "sex": "male",
+      "countryName": "Portugal",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 592.5
+    },
+    {
+      "id": "men-74-maisuradze-giorgi",
+      "displayName": "Maisuradze Giorgi",
+      "sex": "male",
+      "countryName": "Georgia",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 590.0
+    },
+    {
+      "id": "men-83-borenstein-joseph",
+      "displayName": "Borenstein Joseph",
+      "sex": "male",
+      "countryName": "United States",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 892.5
+    },
+    {
+      "id": "men-83-kengamu-jurins",
+      "displayName": "Kengamu Jurins",
+      "sex": "male",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 872.5
+    },
+    {
+      "id": "men-83-omisakin-ade",
+      "displayName": "Omisakin Ade",
+      "sex": "male",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 842.5
+    },
+    {
+      "id": "men-83-asein-enahoro",
+      "displayName": "Asein Enahoro",
+      "sex": "male",
+      "countryName": "Hungary",
       "weightCategoryId": "men-83",
       "seedTotalKg": 832.5
     },
     {
-      "id": "sam-83",
-      "displayName": "Sam Okafor",
+      "id": "men-83-ducret-mathis",
+      "displayName": "Ducret Mathis",
       "sex": "male",
-      "countryCode": "GBR",
-      "countryName": "Great Britain",
+      "countryName": "France",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 825
+      "seedTotalKg": 822.5
     },
     {
-      "id": "ida-84-plus",
-      "displayName": "Ida Hansen",
-      "sex": "female",
-      "countryCode": "DEN",
+      "id": "men-83-hotsonyame-kafui",
+      "displayName": "Hotsonyame Kafui",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 815.0
+    },
+    {
+      "id": "men-83-fernandez-arevalo-andres",
+      "displayName": "Fernandez Arevalo Andres",
+      "sex": "male",
+      "countryName": "Spain",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 797.5
+    },
+    {
+      "id": "men-83-fornstam-kevin",
+      "displayName": "Fornstam Kevin",
+      "sex": "male",
+      "countryName": "Sweden",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 785.0
+    },
+    {
+      "id": "men-83-rinaldo-marciano-saverio",
+      "displayName": "Rinaldo Marciano Saverio",
+      "sex": "male",
+      "countryName": "Italy",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 780.0
+    },
+    {
+      "id": "men-83-ampofo-zachariah",
+      "displayName": "Ampofo Zachariah",
+      "sex": "male",
+      "countryName": "Germany",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 777.5
+    },
+    {
+      "id": "men-83-figueroa-contreras-jose",
+      "displayName": "Figueroa Contreras Jose",
+      "sex": "male",
+      "countryName": "Chile",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 775.5
+    },
+    {
+      "id": "men-83-kuerzi-patrick",
+      "displayName": "Kuerzi Patrick",
+      "sex": "male",
+      "countryName": "Switzerland",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 772.5
+    },
+    {
+      "id": "men-83-castillo-jose",
+      "displayName": "Castillo Jose",
+      "sex": "male",
+      "countryName": "Ecuador",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 770.0
+    },
+    {
+      "id": "men-83-el-moukallif-naim",
+      "displayName": "El Moukallif Naim",
+      "sex": "male",
+      "countryName": "Spain",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 760.0
+    },
+    {
+      "id": "men-83-verstrepen-tuur",
+      "displayName": "Verstrepen Tuur",
+      "sex": "male",
+      "countryName": "Belgium",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 752.5
+    },
+    {
+      "id": "men-83-techap-fongang",
+      "displayName": "Techap Fongang",
+      "sex": "male",
+      "countryName": "Cameroon",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 752.5
+    },
+    {
+      "id": "men-83-ishikawa-aoi",
+      "displayName": "Ishikawa Aoi",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 752.5
+    },
+    {
+      "id": "men-83-nagem-mohamed",
+      "displayName": "Nagem Mohamed",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 750.0
+    },
+    {
+      "id": "men-83-hoffmann-daniel",
+      "displayName": "Hoffmann Daniel",
+      "sex": "male",
+      "countryName": "Czechia",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 745.5
+    },
+    {
+      "id": "men-83-kloch-mathias",
+      "displayName": "Kloch Mathias",
+      "sex": "male",
       "countryName": "Denmark",
-      "weightCategoryId": "women-84-plus",
-      "seedTotalKg": 640
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 740.0
     },
     {
-      "id": "maya-84-plus",
-      "displayName": "Maya Johnson",
-      "sex": "female",
-      "countryCode": "USA",
+      "id": "men-83-kraujutowicz-grzegorz",
+      "displayName": "Kraujutowicz Grzegorz",
+      "sex": "male",
+      "countryName": "Poland",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 735.0
+    },
+    {
+      "id": "men-83-santos-matheus",
+      "displayName": "Santos Matheus",
+      "sex": "male",
+      "countryName": "Brazil",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 734.0
+    },
+    {
+      "id": "men-83-alaradi-ali",
+      "displayName": "Alaradi Ali",
+      "sex": "male",
+      "countryName": "Kuwait",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 734.0
+    },
+    {
+      "id": "men-83-menezes-guilherme",
+      "displayName": "Menezes Guilherme",
+      "sex": "male",
+      "countryName": "Brazil",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 732.5
+    },
+    {
+      "id": "men-83-chong-kenzo",
+      "displayName": "Chong Kenzo",
+      "sex": "male",
+      "countryName": "Singapore",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 730.0
+    },
+    {
+      "id": "men-83-boulos-christophe",
+      "displayName": "Boulos Christophe",
+      "sex": "male",
+      "countryName": "Qatar",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 722.5
+    },
+    {
+      "id": "men-83-petcu-andrei",
+      "displayName": "Petcu Andrei",
+      "sex": "male",
+      "countryName": "Romania",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 720.0
+    },
+    {
+      "id": "men-83-cheng-wee-herng-donovan",
+      "displayName": "Cheng Wee Herng Donovan",
+      "sex": "male",
+      "countryName": "Singapore",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 712.5
+    },
+    {
+      "id": "men-83-xiao-tianyu",
+      "displayName": "Xiao Tianyu",
+      "sex": "male",
+      "countryName": "China",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 710.0
+    },
+    {
+      "id": "men-83-hlynsson-fridbjorn",
+      "displayName": "Hlynsson Fridbjorn",
+      "sex": "male",
+      "countryName": "Iceland",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 707.5
+    },
+    {
+      "id": "men-83-mur-urban",
+      "displayName": "Mur Urban",
+      "sex": "male",
+      "countryName": "Slovenia",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 705.0
+    },
+    {
+      "id": "men-83-ruscitti-karim",
+      "displayName": "Ruscitti Karim",
+      "sex": "male",
+      "countryName": "Qatar",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 700.0
+    },
+    {
+      "id": "men-83-arnaud-alexandre",
+      "displayName": "Arnaud Alexandre",
+      "sex": "male",
+      "countryName": "Switzerland",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 695.0
+    },
+    {
+      "id": "men-83-kuzmic-marko",
+      "displayName": "Kuzmic Marko",
+      "sex": "male",
+      "countryName": "Croatia",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 687.5
+    },
+    {
+      "id": "men-83-asmonas-arnas",
+      "displayName": "Asmonas Arnas",
+      "sex": "male",
+      "countryName": "Lithuania",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 677.5
+    },
+    {
+      "id": "men-83-henderson-samuel",
+      "displayName": "Henderson Samuel",
+      "sex": "male",
+      "countryName": "New Zealand",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 677.5
+    },
+    {
+      "id": "men-93-ball-william",
+      "displayName": "Ball William",
+      "sex": "male",
       "countryName": "United States",
-      "weightCategoryId": "women-84-plus",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 930.0
+    },
+    {
+      "id": "men-93-krastev-emil",
+      "displayName": "Krastev Emil",
+      "sex": "male",
+      "countryName": "Bulgaria",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 920.0
+    },
+    {
+      "id": "men-93-hedlund-gustav",
+      "displayName": "Hedlund Gustav",
+      "sex": "male",
+      "countryName": "Sweden",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 910.0
+    },
+    {
+      "id": "men-93-nouari-aimene",
+      "displayName": "Nouari Aimene",
+      "sex": "male",
+      "countryName": "Algeria",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 900.0
+    },
+    {
+      "id": "men-93-ayandokun-christian",
+      "displayName": "Ayandokun Christian",
+      "sex": "male",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 882.5
+    },
+    {
+      "id": "men-93-antwi-kwaku",
+      "displayName": "Antwi Kwaku",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 865.0
+    },
+    {
+      "id": "men-93-baiden-richmond",
+      "displayName": "Baiden Richmond",
+      "sex": "male",
+      "countryName": "France",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 840.5
+    },
+    {
+      "id": "men-93-balangwe-bakinien",
+      "displayName": "Balangwe Bakinien",
+      "sex": "male",
+      "countryName": "Cameroon",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 837.5
+    },
+    {
+      "id": "men-93-van-bezooijen-richard",
+      "displayName": "van Bezooijen Richard",
+      "sex": "male",
+      "countryName": "Netherlands",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 815.0
+    },
+    {
+      "id": "men-93-wortel-john",
+      "displayName": "Wortel John",
+      "sex": "male",
+      "countryName": "Netherlands",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 805.0
+    },
+    {
+      "id": "men-93-tsuruya-shimon",
+      "displayName": "Tsuruya Shimon",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 802.5
+    },
+    {
+      "id": "men-93-blackmore-aaron",
+      "displayName": "Blackmore Aaron",
+      "sex": "male",
+      "countryName": "Ireland",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 802.5
+    },
+    {
+      "id": "men-93-hermisdorf-leonardo",
+      "displayName": "Hermisdorf Leonardo",
+      "sex": "male",
+      "countryName": "Brazil",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 800.0
+    },
+    {
+      "id": "men-93-salim-khalleefah",
+      "displayName": "Salim Khalleefah",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 790.0
+    },
+    {
+      "id": "men-93-zerai-elyes",
+      "displayName": "Zerai Elyes",
+      "sex": "male",
+      "countryName": "Tunisia",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 780.0
+    },
+    {
+      "id": "men-93-gortz-guilherme",
+      "displayName": "Gortz Guilherme",
+      "sex": "male",
+      "countryName": "Brazil",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 777.5
+    },
+    {
+      "id": "men-93-ussing-daniel",
+      "displayName": "Ussing Daniel",
+      "sex": "male",
+      "countryName": "Denmark",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 770.0
+    },
+    {
+      "id": "men-93-zabeau-tom",
+      "displayName": "Zabeau Tom",
+      "sex": "male",
+      "countryName": "Belgium",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 740.0
+    },
+    {
+      "id": "men-93-gonzalez-jose",
+      "displayName": "Gonzalez Jose",
+      "sex": "male",
+      "countryName": "Mexico",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 740.0
+    },
+    {
+      "id": "men-93-choi-junwon",
+      "displayName": "Choi Junwon",
+      "sex": "male",
+      "countryName": "South Korea",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 739.0
+    },
+    {
+      "id": "men-93-hapon-danyil",
+      "displayName": "Hapon Danyil",
+      "sex": "male",
+      "countryName": "Poland",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 712.5
+    },
+    {
+      "id": "men-93-law-tak-kan-duncan",
+      "displayName": "Law Tak Kan Duncan",
+      "sex": "male",
+      "countryName": "Hong Kong, China",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 710.0
+    },
+    {
+      "id": "men-93-alsabri-taha",
+      "displayName": "Alsabri Taha",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 705.0
+    },
+    {
+      "id": "men-93-klimka-airidas",
+      "displayName": "Klimka Airidas",
+      "sex": "male",
+      "countryName": "Lithuania",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 695.0
+    },
+    {
+      "id": "men-93-hibsfelds-ricards",
+      "displayName": "Hibsfelds Ricards",
+      "sex": "male",
+      "countryName": "Latvia",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 685.0
+    },
+    {
+      "id": "men-93-khuzwayo-bandile",
+      "displayName": "Khuzwayo Bandile",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 675.0
+    },
+    {
+      "id": "men-105-mcnaughton-anthony",
+      "displayName": "McNaughton Anthony",
+      "sex": "male",
+      "countryName": "United States",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 980.0
+    },
+    {
+      "id": "men-105-novopysmennyi-anatolii",
+      "displayName": "Novopysmennyi Anatolii",
+      "sex": "male",
+      "countryName": "Ukraine",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 940.5
+    },
+    {
+      "id": "men-105-norling-emil",
+      "displayName": "Norling Emil",
+      "sex": "male",
+      "countryName": "Sweden",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 935.0
+    },
+    {
+      "id": "men-105-tchandeu-noundou-eliam",
+      "displayName": "Tchandeu Noundou Eliam",
+      "sex": "male",
+      "countryName": "France",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 927.0
+    },
+    {
+      "id": "men-105-stergakis-regin",
+      "displayName": "Stergakis Regin",
+      "sex": "male",
+      "countryName": "Denmark",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 922.5
+    },
+    {
+      "id": "men-105-sboui-fares",
+      "displayName": "Sboui Fares",
+      "sex": "male",
+      "countryName": "Tunisia",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 917.5
+    },
+    {
+      "id": "men-105-massiah-nathaniel",
+      "displayName": "Massiah Nathaniel",
+      "sex": "male",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 915.0
+    },
+    {
+      "id": "men-105-amponsah-ezeiel",
+      "displayName": "Amponsah Ezeiel",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 885.0
+    },
+    {
+      "id": "men-105-salgado-diego",
+      "displayName": "Salgado Diego",
+      "sex": "male",
+      "countryName": "Mexico",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 878.5
+    },
+    {
+      "id": "men-105-bentalha-ilyes",
+      "displayName": "Bentalha Ilyes",
+      "sex": "male",
+      "countryName": "Algeria",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 867.5
+    },
+    {
+      "id": "men-105-duecker-bjarne",
+      "displayName": "Duecker Bjarne",
+      "sex": "male",
+      "countryName": "Germany",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 865.0
+    },
+    {
+      "id": "men-105-celis-jonathan",
+      "displayName": "Celis Jonathan",
+      "sex": "male",
+      "countryName": "Belgium",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 852.5
+    },
+    {
+      "id": "men-105-slump-jacob",
+      "displayName": "Slump Jacob",
+      "sex": "male",
+      "countryName": "Netherlands",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 847.5
+    },
+    {
+      "id": "men-105-hamich-imad",
+      "displayName": "Hamich Imad",
+      "sex": "male",
+      "countryName": "Belgium",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 837.5
+    },
+    {
+      "id": "men-105-nwaezeigwe-kenneth",
+      "displayName": "Nwaezeigwe Kenneth",
+      "sex": "male",
+      "countryName": "Ireland",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 832.5
+    },
+    {
+      "id": "men-105-forsberg-samuel",
+      "displayName": "Forsberg Samuel",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 827.5
+    },
+    {
+      "id": "men-105-karason-alexander",
+      "displayName": "Karason Alexander",
+      "sex": "male",
+      "countryName": "Iceland",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 820.0
+    },
+    {
+      "id": "men-105-ibanez-pawathon-bernardo",
+      "displayName": "Ibanez Pawathon Bernardo",
+      "sex": "male",
+      "countryName": "Chile",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 817.5
+    },
+    {
+      "id": "men-105-henry-matthew",
+      "displayName": "Henry Matthew",
+      "sex": "male",
+      "countryName": "Ireland",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 810.0
+    },
+    {
+      "id": "men-105-erik-mata",
+      "displayName": "Erik Mata",
+      "sex": "male",
+      "countryName": "Hungary",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 802.5
+    },
+    {
+      "id": "men-105-sant-anna-rodrigo",
+      "displayName": "Sant'anna Rodrigo",
+      "sex": "male",
+      "countryName": "Brazil",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 802.5
+    },
+    {
+      "id": "men-105-franek-hynek",
+      "displayName": "Franek Hynek",
+      "sex": "male",
+      "countryName": "Czechia",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 795.0
+    },
+    {
+      "id": "men-105-aldirsi-mohammed",
+      "displayName": "Aldirsi Mohammed",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 790.0
+    },
+    {
+      "id": "men-105-norkus-martynas",
+      "displayName": "Norkus Martynas",
+      "sex": "male",
+      "countryName": "Lithuania",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 770.0
+    },
+    {
+      "id": "men-105-boss-dominic",
+      "displayName": "Boss Dominic",
+      "sex": "male",
+      "countryName": "Switzerland",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 735.0
+    },
+    {
+      "id": "men-105-jung-siwoo",
+      "displayName": "Jung Siwoo",
+      "sex": "male",
+      "countryName": "South Korea",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 667.5
+    },
+    {
+      "id": "men-105-choi-seungwan",
+      "displayName": "Choi Seungwan",
+      "sex": "male",
+      "countryName": "South Korea",
+      "weightCategoryId": "men-105",
       "seedTotalKg": 632.5
     },
     {
-      "id": "sofia-84-plus",
-      "displayName": "Sofia Petrov",
-      "sex": "female",
-      "countryCode": "BUL",
-      "countryName": "Bulgaria",
-      "weightCategoryId": "women-84-plus",
-      "seedTotalKg": 625
+      "id": "men-105-de-paula-vitor",
+      "displayName": "de Paula Vitor",
+      "sex": "male",
+      "countryName": "Brazil",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 75.0
+    },
+    {
+      "id": "men-105-tomko-patrik",
+      "displayName": "Tomko Patrik",
+      "sex": "male",
+      "countryName": "Slovakia",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 75.0
+    },
+    {
+      "id": "men-120-hunte-rondel",
+      "displayName": "Hunte Rondel",
+      "sex": "male",
+      "countryName": "Trinidad and Tobago",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 1025.0
+    },
+    {
+      "id": "men-120-el-chaer-etienne",
+      "displayName": "El Chaer Etienne",
+      "sex": "male",
+      "countryName": "Lebanon",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 984.0
+    },
+    {
+      "id": "men-120-rouska-ashton",
+      "displayName": "Rouska Ashton",
+      "sex": "male",
+      "countryName": "United States",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 983.0
+    },
+    {
+      "id": "men-120-mcdonald-joseph",
+      "displayName": "McDonald Joseph",
+      "sex": "male",
+      "countryName": "Trinidad and Tobago",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 975.0
+    },
+    {
+      "id": "men-120-ngoka-joshua",
+      "displayName": "Ngoka Joshua",
+      "sex": "male",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 965.5
+    },
+    {
+      "id": "men-120-melnychuk-taras",
+      "displayName": "Melnychuk Taras",
+      "sex": "male",
+      "countryName": "Ukraine",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 957.5
+    },
+    {
+      "id": "men-120-wiseman-lucas",
+      "displayName": "Wiseman Lucas",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 951.5
+    },
+    {
+      "id": "men-120-de-rohden-antoine",
+      "displayName": "de Rohden Antoine",
+      "sex": "male",
+      "countryName": "France",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 947.5
+    },
+    {
+      "id": "men-120-sulayman-abdul",
+      "displayName": "Sulayman Abdul",
+      "sex": "male",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 945.0
+    },
+    {
+      "id": "men-120-sahad-mohamed",
+      "displayName": "Sahad Mohamed",
+      "sex": "male",
+      "countryName": "Algeria",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 945.0
+    },
+    {
+      "id": "men-120-wiendieck-jonah",
+      "displayName": "Wiendieck Jonah",
+      "sex": "male",
+      "countryName": "Germany",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 938.0
+    },
+    {
+      "id": "men-120-sekenofsky-baruch",
+      "displayName": "Sekenofsky Baruch",
+      "sex": "male",
+      "countryName": "Israel",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 925.0
+    },
+    {
+      "id": "men-120-due-laurits",
+      "displayName": "Due Laurits",
+      "sex": "male",
+      "countryName": "Denmark",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 867.5
+    },
+    {
+      "id": "men-120-vogelius-jesper",
+      "displayName": "Vogelius Jesper",
+      "sex": "male",
+      "countryName": "Denmark",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 862.5
+    },
+    {
+      "id": "men-120-strubbe-jochen",
+      "displayName": "Strubbe Jochen",
+      "sex": "male",
+      "countryName": "Belgium",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 852.5
+    },
+    {
+      "id": "men-120-graham-heath",
+      "displayName": "Graham Heath",
+      "sex": "male",
+      "countryName": "New Zealand",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 850.0
+    },
+    {
+      "id": "men-120-pola-daniele",
+      "displayName": "Pola Daniele",
+      "sex": "male",
+      "countryName": "Switzerland",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 850.0
+    },
+    {
+      "id": "men-120-krisztian-cseszko",
+      "displayName": "Krisztian Cseszko",
+      "sex": "male",
+      "countryName": "Hungary",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 840.0
+    },
+    {
+      "id": "men-120-naoussi-nembot-ano",
+      "displayName": "Naoussi Nembot Ano",
+      "sex": "male",
+      "countryName": "Cameroon",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 835.0
+    },
+    {
+      "id": "men-120-juzups-maris",
+      "displayName": "Juzups Maris",
+      "sex": "male",
+      "countryName": "Latvia",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 832.5
+    },
+    {
+      "id": "men-120-penco-joseph",
+      "displayName": "Penco Joseph",
+      "sex": "male",
+      "countryName": "Ireland",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 825.5
+    },
+    {
+      "id": "men-120-stell-mark",
+      "displayName": "Stell Mark",
+      "sex": "male",
+      "countryName": "Ireland",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 825.0
+    },
+    {
+      "id": "men-120-sigurdsson-helgi",
+      "displayName": "Sigurdsson Helgi",
+      "sex": "male",
+      "countryName": "Iceland",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 812.5
+    },
+    {
+      "id": "men-120-motoki-ayuto",
+      "displayName": "Motoki Ayuto",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 800.0
+    },
+    {
+      "id": "men-120-karkusashvili-rubeni",
+      "displayName": "Karkusashvili Rubeni",
+      "sex": "male",
+      "countryName": "Georgia",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 782.5
+    },
+    {
+      "id": "men-120-thoma-thomas",
+      "displayName": "Thoma Thomas",
+      "sex": "male",
+      "countryName": "Switzerland",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 765.0
+    },
+    {
+      "id": "men-120-raw-simon",
+      "displayName": "Raw Simon",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 762.5
+    },
+    {
+      "id": "men-120plus-olivares-jesus",
+      "displayName": "Olivares Jesus",
+      "sex": "male",
+      "countryName": "United States",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 1110.0
+    },
+    {
+      "id": "men-120plus-sharma-ajay",
+      "displayName": "Sharma Ajay",
+      "sex": "male",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 1032.5
+    },
+    {
+      "id": "men-120plus-kocak-cenk",
+      "displayName": "Kocak Cenk",
+      "sex": "male",
+      "countryName": "Turkiye",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 1015.0
+    },
+    {
+      "id": "men-120plus-holinei-viktor",
+      "displayName": "Holinei Viktor",
+      "sex": "male",
+      "countryName": "Ukraine",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 993.5
+    },
+    {
+      "id": "men-120plus-samkharadze-temur",
+      "displayName": "Samkharadze Temur",
+      "sex": "male",
+      "countryName": "Georgia",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 985.0
+    },
+    {
+      "id": "men-120plus-mansukoski-nuutti",
+      "displayName": "Mansukoski Nuutti",
+      "sex": "male",
+      "countryName": "Finland",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 967.5
+    },
+    {
+      "id": "men-120plus-sutterud-westbye-bjorn",
+      "displayName": "Sutterud Westbye Bjorn",
+      "sex": "male",
+      "countryName": "Norway",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 967.5
+    },
+    {
+      "id": "men-120plus-patschke-markus",
+      "displayName": "Patschke Markus",
+      "sex": "male",
+      "countryName": "Germany",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 965.0
+    },
+    {
+      "id": "men-120plus-fidan-hussein",
+      "displayName": "Fidan Hussein",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 955.0
+    },
+    {
+      "id": "men-120plus-reinmuth-tony",
+      "displayName": "Reinmuth Tony",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 950.5
+    },
+    {
+      "id": "men-120plus-wang-pei-yu",
+      "displayName": "Wang Pei-Yu",
+      "sex": "male",
+      "countryName": "Chinese Taipei",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 950.0
+    },
+    {
+      "id": "men-120plus-soares-alexis",
+      "displayName": "Soares Alexis",
+      "sex": "male",
+      "countryName": "France",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 927.5
+    },
+    {
+      "id": "men-120plus-simonsen-martin",
+      "displayName": "Simonsen Martin",
+      "sex": "male",
+      "countryName": "Denmark",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 927.5
+    },
+    {
+      "id": "men-120plus-voigt-torben",
+      "displayName": "Voigt Torben",
+      "sex": "male",
+      "countryName": "Germany",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 920.5
+    },
+    {
+      "id": "men-120plus-abousinan-mohammed",
+      "displayName": "Abousinan Mohammed",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 915.0
+    },
+    {
+      "id": "men-120plus-wu-yi-chiu",
+      "displayName": "Wu Yi-Chiu",
+      "sex": "male",
+      "countryName": "Chinese Taipei",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 905.0
+    },
+    {
+      "id": "men-120plus-lekhal-abdeslam",
+      "displayName": "Lekhal Abdeslam",
+      "sex": "male",
+      "countryName": "Algeria",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 903.0
+    },
+    {
+      "id": "men-120plus-hendriks-giel",
+      "displayName": "Hendriks Giel",
+      "sex": "male",
+      "countryName": "Belgium",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 887.5
+    },
+    {
+      "id": "men-120plus-juszczyk-jacek",
+      "displayName": "Juszczyk Jacek",
+      "sex": "male",
+      "countryName": "Poland",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 880.0
+    },
+    {
+      "id": "men-120plus-gecas-tadas",
+      "displayName": "Gecas Tadas",
+      "sex": "male",
+      "countryName": "Lithuania",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 870.0
+    },
+    {
+      "id": "men-120plus-riudalbas-clemente-marc",
+      "displayName": "Riudalbas Clemente Marc",
+      "sex": "male",
+      "countryName": "Spain",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 860.0
+    },
+    {
+      "id": "men-120plus-mardones-meza-sergio-hernan",
+      "displayName": "Mardones Meza Sergio Hernan",
+      "sex": "male",
+      "countryName": "Chile",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 860.0
+    },
+    {
+      "id": "men-120plus-raw-robert",
+      "displayName": "Raw Robert",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 785.0
+    },
+    {
+      "id": "men-120plus-berzins-didzis",
+      "displayName": "Berzins Didzis",
+      "sex": "male",
+      "countryName": "Latvia",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 770.0
+    },
+    {
+      "id": "men-120plus-inoue-masaya",
+      "displayName": "Inoue Masaya",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 740.0
+    },
+    {
+      "id": "men-120plus-bowring-ray",
+      "displayName": "Bowring Ray",
+      "sex": "male",
+      "countryName": "United Kingdom",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 75.0
     }
   ],
   "categories": [
     {
-      "id": "women-73",
-      "name": "Women 73 kg",
+      "id": "women-47",
+      "name": "Women 47 kg",
       "sex": "female",
-      "weightLimitKg": 73,
-      "athleteIds": ["carla-73", "emma-73", "nora-73"]
+      "weightLimitKg": 47.0,
+      "athleteIds": [
+        "women-47-chapon-tiffany",
+        "women-47-le-leanne",
+        "women-47-picher-plante-amelie",
+        "women-47-motta-annalisa",
+        "women-47-kijumnuayporn-vicky",
+        "women-47-duno-frankmary",
+        "women-47-mikova-anezka",
+        "women-47-jones-ainsley",
+        "women-47-altamimi-alhanouf",
+        "women-47-santos-mediavilla-paula",
+        "women-47-al-jundi-nour",
+        "women-47-wedlock-sze-yee-venezia",
+        "women-47-clarke-joanne",
+        "women-47-mai-on-kotchaphan",
+        "women-47-beglarashvili-mari",
+        "women-47-idczak-karolina"
+      ]
+    },
+    {
+      "id": "women-52",
+      "name": "Women 52 kg",
+      "sex": "female",
+      "weightLimitKg": 52.0,
+      "athleteIds": [
+        "women-52-smith-megan-li",
+        "women-52-dekkers-pleun",
+        "women-52-gagne-catherine",
+        "women-52-lucas-lea",
+        "women-52-farid-farhanna",
+        "women-52-pineda-vanessa",
+        "women-52-lehoczkyne-fawal-margit",
+        "women-52-gerlach-eliza",
+        "women-52-craven-elizabeth",
+        "women-52-barwari-delal",
+        "women-52-la-bella-daiana",
+        "women-52-chorianopoulou-aikaterini",
+        "women-52-varol-fatma",
+        "women-52-carvalho-giulia",
+        "women-52-sim-cristy",
+        "women-52-saana-grassham",
+        "women-52-sveinsdottir-kristrun",
+        "women-52-caldona-jackielyn",
+        "women-52-bobileva-arina",
+        "women-52-koskipaasi-jaana",
+        "women-52-verhulst-stefanie",
+        "women-52-tsetskhladze-mariam"
+      ]
+    },
+    {
+      "id": "women-57",
+      "name": "Women 57 kg",
+      "sex": "female",
+      "weightLimitKg": 57.0,
+      "athleteIds": [
+        "women-57-naldi-sara",
+        "women-57-nnamani-joy",
+        "women-57-pal-sovannphaktra",
+        "women-57-butters-bobbie",
+        "women-57-corrigan-evie",
+        "women-57-olin-emelie",
+        "women-57-aguila-padilla-ana",
+        "women-57-amri-miriam",
+        "women-57-henry-marthe",
+        "women-57-de-la-torre-monica",
+        "women-57-kratz-samantha",
+        "women-57-babic-katja",
+        "women-57-oestergaard-mathilde",
+        "women-57-keenan-lauren",
+        "women-57-huang-zhiyin",
+        "women-57-rummens-elise",
+        "women-57-wandeler-anouk",
+        "women-57-boukalova-anna",
+        "women-57-lee-michelle",
+        "women-57-bondy-florence",
+        "women-57-viktoria-flavia-dr"
+      ]
+    },
+    {
+      "id": "women-63",
+      "name": "Women 63 kg",
+      "sex": "female",
+      "weightLimitKg": 63.0,
+      "athleteIds": [
+        "women-63-bostrom-alba",
+        "women-63-bernardi-chiara",
+        "women-63-aborah-betty",
+        "women-63-vidal-makeda",
+        "women-63-van-vianen-romy",
+        "women-63-haeberer-clara-isabelle",
+        "women-63-mamane-leah",
+        "women-63-maguregi-rodriguez-jone",
+        "women-63-kvantchiani-sopiko",
+        "women-63-lalime-sahyuri",
+        "women-63-wolf-jana",
+        "women-63-zurinskaite-deimante",
+        "women-63-stevens-jody",
+        "women-63-visan-ana-maria",
+        "women-63-tiong-natalie",
+        "women-63-torres-judith",
+        "women-63-jansova-dominika",
+        "women-63-kalinowska-ewelina",
+        "women-63-duus-cecilie",
+        "women-63-zunic-lea",
+        "women-63-vackova-kristyna",
+        "women-63-dunning-mary",
+        "women-63-wenn-cara",
+        "women-63-ong-yi",
+        "women-63-chatzigianni-andria",
+        "women-63-zhou-yiqian",
+        "women-63-gerute-lina",
+        "women-63-meshveliani-natela",
+        "women-63-liang-yim-chee"
+      ]
+    },
+    {
+      "id": "women-69",
+      "name": "Women 69 kg",
+      "sex": "female",
+      "weightLimitKg": 69.0,
+      "athleteIds": [
+        "women-69-garra-carola",
+        "women-69-babb-chandler",
+        "women-69-kovacs-janee",
+        "women-69-scanlon-meghan",
+        "women-69-van-daal-marie-jose",
+        "women-69-nelson-annie",
+        "women-69-kjenner-marte",
+        "women-69-bright-jordan",
+        "women-69-bouchoux-andorina",
+        "women-69-huff-shannon",
+        "women-69-belden-pavlovic-signe",
+        "women-69-tavares-cicera",
+        "women-69-mabidikama-acima",
+        "women-69-goossens-kaya",
+        "women-69-altman-hannah",
+        "women-69-materek-sabina",
+        "women-69-haulot-clara",
+        "women-69-skovlind-caroline",
+        "women-69-denise-guenther",
+        "women-69-seow-amanda",
+        "women-69-jones-jayne",
+        "women-69-khwang-hayley",
+        "women-69-kairaityte-dainora",
+        "women-69-larrimore-deshawn",
+        "women-69-marina-sanja",
+        "women-69-pacce-catalina",
+        "women-69-janulcikaite-ausrine"
+      ]
+    },
+    {
+      "id": "women-76",
+      "name": "Women 76 kg",
+      "sex": "female",
+      "weightLimitKg": 76.0,
+      "athleteIds": [
+        "women-76-worford-cranon",
+        "women-76-mazur-zuzanna",
+        "women-76-bisol-bruna",
+        "women-76-peyraud-clara",
+        "women-76-hames-mara",
+        "women-76-hanlon-bettina",
+        "women-76-ezeh-chisom",
+        "women-76-hunte-kezia",
+        "women-76-gronlund-ellen",
+        "women-76-tchrikishvili-nino",
+        "women-76-ophoff-tessa",
+        "women-76-govind-hema",
+        "women-76-szarek-justyna",
+        "women-76-varillas-modesta",
+        "women-76-swart-chanel",
+        "women-76-martens-mariska",
+        "women-76-reis-rafaela",
+        "women-76-muller-gaby",
+        "women-76-schvandtnerova-denisa",
+        "women-76-waldeck-danielle",
+        "women-76-wells-selina",
+        "women-76-khurtsilava-khatia",
+        "women-76-xie-thuy",
+        "women-76-marangoni-pia"
+      ]
+    },
+    {
+      "id": "women-84",
+      "name": "Women 84 kg",
+      "sex": "female",
+      "weightLimitKg": 84.0,
+      "athleteIds": [
+        "women-84-lawrence-amanda",
+        "women-84-tongotea-karlina",
+        "women-84-azariah-ziana",
+        "women-84-zeigler-nicolette",
+        "women-84-thorhallsdottir-kristin",
+        "women-84-almeida-marina",
+        "women-84-ieronimos-anna",
+        "women-84-buettner-jessica",
+        "women-84-mouchet-emilie",
+        "women-84-rudin-agnes",
+        "women-84-coopoosamy-nicole",
+        "women-84-lahtinen-mira",
+        "women-84-letting-regitze",
+        "women-84-bychok-liudmyla",
+        "women-84-zhao-yan-fei",
+        "women-84-sanchez-jorge-carla",
+        "women-84-joergensen-katja",
+        "women-84-alleyne-deresay",
+        "women-84-erimo-sabadell-rosa",
+        "women-84-matsuda-miyu",
+        "women-84-laitinen-jenna",
+        "women-84-abouassi-nour",
+        "women-84-adedokun-comfort",
+        "women-84-suitauloa-shaniele",
+        "women-84-rodrigues-ana",
+        "women-84-szymkowiak-magdalena"
+      ]
+    },
+    {
+      "id": "women-84plus",
+      "name": "Women 84+ kg",
+      "sex": "female",
+      "weightLimitKg": null,
+      "athleteIds": [
+        "women-84plus-muluh-sonita",
+        "women-84plus-schlater-brittany",
+        "women-84plus-onuoha-aquinn",
+        "women-84plus-omotoso-toyosi",
+        "women-84plus-brown-bonica",
+        "women-84plus-mierger-amelie",
+        "women-84plus-padia-zahra",
+        "women-84plus-o-reilly-alison",
+        "women-84plus-sigurjonsdottir-hanna",
+        "women-84plus-matthiasdottir-thorbjorg",
+        "women-84plus-kamoto-emi",
+        "women-84plus-de-la-barra-zelaya-marcela",
+        "women-84plus-malojlo-marta"
+      ]
+    },
+    {
+      "id": "men-59",
+      "name": "Men 59 kg",
+      "sex": "male",
+      "weightLimitKg": 59.0,
+      "athleteIds": [
+        "men-59-slabic-michael",
+        "men-59-campano-diaz-ivan",
+        "men-59-garcia-antoine",
+        "men-59-takiyama-yasutaka",
+        "men-59-elhamali-mohamed",
+        "men-59-nyarko-kwaku",
+        "men-59-leon-franklin",
+        "men-59-ho-david",
+        "men-59-huang-wei-chen",
+        "men-59-you-yao-wei",
+        "men-59-cruz-angel",
+        "men-59-gelashvili-giorgi",
+        "men-59-madera-joenas",
+        "men-59-imamura-ryo",
+        "men-59-santangelo-jacopo",
+        "men-59-ergin-kemal",
+        "men-59-cancel-ivan",
+        "men-59-flores-jose"
+      ]
+    },
+    {
+      "id": "men-66",
+      "name": "Men 66 kg",
+      "sex": "male",
+      "weightLimitKg": 66.0,
+      "athleteIds": [
+        "men-66-bakkelund-kjell",
+        "men-66-jordan-joseph",
+        "men-66-ushiyama-kyota",
+        "men-66-nikolai-austin",
+        "men-66-jimenez-santos",
+        "men-66-satake-yusuke",
+        "men-66-castillo-carlos",
+        "men-66-ong-wei",
+        "men-66-simonelli-mirko",
+        "men-66-catena-joel",
+        "men-66-liatsis-marios",
+        "men-66-sgro-julian",
+        "men-66-luu-joshua",
+        "men-66-zeng-wei-xiang",
+        "men-66-ghizoni-gabriel",
+        "men-66-naoussi-ezelgbo-darling-williams",
+        "men-66-lin-ching-lun"
+      ]
+    },
+    {
+      "id": "men-74",
+      "name": "Men 74 kg",
+      "sex": "male",
+      "weightLimitKg": 74.0,
+      "athleteIds": [
+        "men-74-perkins-austin",
+        "men-74-bertrand-balthazar",
+        "men-74-fan-chun-chia",
+        "men-74-lee-clinton",
+        "men-74-lavoie-jacob",
+        "men-74-homer-luke",
+        "men-74-babaei-somaghi-keyan",
+        "men-74-al-lanqawi-adel",
+        "men-74-gimorri-giacomo",
+        "men-74-konstantinou-christos",
+        "men-74-cheong-cheng",
+        "men-74-herraiz-frances-alberto",
+        "men-74-cheng-yu-jui",
+        "men-74-medjahed-yacine",
+        "men-74-ola-joshua",
+        "men-74-rada-karel",
+        "men-74-saed-awnullah",
+        "men-74-strachan-john",
+        "men-74-richards-lachlan",
+        "men-74-damlamajans-marats",
+        "men-74-marecki-mateusz",
+        "men-74-pacerinskis-marius",
+        "men-74-bledis-gintaras",
+        "men-74-cruz-leonardo",
+        "men-74-maisuradze-giorgi"
+      ]
     },
     {
       "id": "men-83",
       "name": "Men 83 kg",
       "sex": "male",
-      "weightLimitKg": 83,
-      "athleteIds": ["mason-83", "leo-83", "sam-83"]
+      "weightLimitKg": 83.0,
+      "athleteIds": [
+        "men-83-borenstein-joseph",
+        "men-83-kengamu-jurins",
+        "men-83-omisakin-ade",
+        "men-83-asein-enahoro",
+        "men-83-ducret-mathis",
+        "men-83-hotsonyame-kafui",
+        "men-83-fernandez-arevalo-andres",
+        "men-83-fornstam-kevin",
+        "men-83-rinaldo-marciano-saverio",
+        "men-83-ampofo-zachariah",
+        "men-83-figueroa-contreras-jose",
+        "men-83-kuerzi-patrick",
+        "men-83-castillo-jose",
+        "men-83-el-moukallif-naim",
+        "men-83-verstrepen-tuur",
+        "men-83-techap-fongang",
+        "men-83-ishikawa-aoi",
+        "men-83-nagem-mohamed",
+        "men-83-hoffmann-daniel",
+        "men-83-kloch-mathias",
+        "men-83-kraujutowicz-grzegorz",
+        "men-83-santos-matheus",
+        "men-83-alaradi-ali",
+        "men-83-menezes-guilherme",
+        "men-83-chong-kenzo",
+        "men-83-boulos-christophe",
+        "men-83-petcu-andrei",
+        "men-83-cheng-wee-herng-donovan",
+        "men-83-xiao-tianyu",
+        "men-83-hlynsson-fridbjorn",
+        "men-83-mur-urban",
+        "men-83-ruscitti-karim",
+        "men-83-arnaud-alexandre",
+        "men-83-kuzmic-marko",
+        "men-83-asmonas-arnas",
+        "men-83-henderson-samuel"
+      ]
     },
     {
-      "id": "women-84-plus",
-      "name": "Women 84+ kg",
-      "sex": "female",
-      "athleteIds": ["ida-84-plus", "maya-84-plus", "sofia-84-plus"]
+      "id": "men-93",
+      "name": "Men 93 kg",
+      "sex": "male",
+      "weightLimitKg": 93.0,
+      "athleteIds": [
+        "men-93-ball-william",
+        "men-93-krastev-emil",
+        "men-93-hedlund-gustav",
+        "men-93-nouari-aimene",
+        "men-93-ayandokun-christian",
+        "men-93-antwi-kwaku",
+        "men-93-baiden-richmond",
+        "men-93-balangwe-bakinien",
+        "men-93-van-bezooijen-richard",
+        "men-93-wortel-john",
+        "men-93-tsuruya-shimon",
+        "men-93-blackmore-aaron",
+        "men-93-hermisdorf-leonardo",
+        "men-93-salim-khalleefah",
+        "men-93-zerai-elyes",
+        "men-93-gortz-guilherme",
+        "men-93-ussing-daniel",
+        "men-93-zabeau-tom",
+        "men-93-gonzalez-jose",
+        "men-93-choi-junwon",
+        "men-93-hapon-danyil",
+        "men-93-law-tak-kan-duncan",
+        "men-93-alsabri-taha",
+        "men-93-klimka-airidas",
+        "men-93-hibsfelds-ricards",
+        "men-93-khuzwayo-bandile"
+      ]
+    },
+    {
+      "id": "men-105",
+      "name": "Men 105 kg",
+      "sex": "male",
+      "weightLimitKg": 105.0,
+      "athleteIds": [
+        "men-105-mcnaughton-anthony",
+        "men-105-novopysmennyi-anatolii",
+        "men-105-norling-emil",
+        "men-105-tchandeu-noundou-eliam",
+        "men-105-stergakis-regin",
+        "men-105-sboui-fares",
+        "men-105-massiah-nathaniel",
+        "men-105-amponsah-ezeiel",
+        "men-105-salgado-diego",
+        "men-105-bentalha-ilyes",
+        "men-105-duecker-bjarne",
+        "men-105-celis-jonathan",
+        "men-105-slump-jacob",
+        "men-105-hamich-imad",
+        "men-105-nwaezeigwe-kenneth",
+        "men-105-forsberg-samuel",
+        "men-105-karason-alexander",
+        "men-105-ibanez-pawathon-bernardo",
+        "men-105-henry-matthew",
+        "men-105-erik-mata",
+        "men-105-sant-anna-rodrigo",
+        "men-105-franek-hynek",
+        "men-105-aldirsi-mohammed",
+        "men-105-norkus-martynas",
+        "men-105-boss-dominic",
+        "men-105-jung-siwoo",
+        "men-105-choi-seungwan",
+        "men-105-de-paula-vitor",
+        "men-105-tomko-patrik"
+      ]
+    },
+    {
+      "id": "men-120",
+      "name": "Men 120 kg",
+      "sex": "male",
+      "weightLimitKg": 120.0,
+      "athleteIds": [
+        "men-120-hunte-rondel",
+        "men-120-el-chaer-etienne",
+        "men-120-rouska-ashton",
+        "men-120-mcdonald-joseph",
+        "men-120-ngoka-joshua",
+        "men-120-melnychuk-taras",
+        "men-120-wiseman-lucas",
+        "men-120-de-rohden-antoine",
+        "men-120-sulayman-abdul",
+        "men-120-sahad-mohamed",
+        "men-120-wiendieck-jonah",
+        "men-120-sekenofsky-baruch",
+        "men-120-due-laurits",
+        "men-120-vogelius-jesper",
+        "men-120-strubbe-jochen",
+        "men-120-graham-heath",
+        "men-120-pola-daniele",
+        "men-120-krisztian-cseszko",
+        "men-120-naoussi-nembot-ano",
+        "men-120-juzups-maris",
+        "men-120-penco-joseph",
+        "men-120-stell-mark",
+        "men-120-sigurdsson-helgi",
+        "men-120-motoki-ayuto",
+        "men-120-karkusashvili-rubeni",
+        "men-120-thoma-thomas",
+        "men-120-raw-simon"
+      ]
+    },
+    {
+      "id": "men-120plus",
+      "name": "Men 120+ kg",
+      "sex": "male",
+      "weightLimitKg": null,
+      "athleteIds": [
+        "men-120plus-olivares-jesus",
+        "men-120plus-sharma-ajay",
+        "men-120plus-kocak-cenk",
+        "men-120plus-holinei-viktor",
+        "men-120plus-samkharadze-temur",
+        "men-120plus-mansukoski-nuutti",
+        "men-120plus-sutterud-westbye-bjorn",
+        "men-120plus-patschke-markus",
+        "men-120plus-fidan-hussein",
+        "men-120plus-reinmuth-tony",
+        "men-120plus-wang-pei-yu",
+        "men-120plus-soares-alexis",
+        "men-120plus-simonsen-martin",
+        "men-120plus-voigt-torben",
+        "men-120plus-abousinan-mohammed",
+        "men-120plus-wu-yi-chiu",
+        "men-120plus-lekhal-abdeslam",
+        "men-120plus-hendriks-giel",
+        "men-120plus-juszczyk-jacek",
+        "men-120plus-gecas-tadas",
+        "men-120plus-riudalbas-clemente-marc",
+        "men-120plus-mardones-meza-sergio-hernan",
+        "men-120plus-raw-robert",
+        "men-120plus-berzins-didzis",
+        "men-120plus-inoue-masaya",
+        "men-120plus-bowring-ray"
+      ]
     }
   ],
   "predictionGroups": [
     {
-      "id": "category-picks",
-      "title": "Category podiums",
-      "description": "Pick the podium in every configured weight class.",
+      "id": "category-top5",
+      "title": "Top 5 by category",
+      "description": "Pick Top 5 lifters in every weight class.",
       "mode": "full",
       "order": 10,
       "required": true,
       "questions": [
         {
-          "id": "women-73-podium",
-          "type": "category-podium",
-          "title": "Women 73 kg podium",
+          "id": "top5-women-47",
+          "type": "athlete-ranking",
+          "title": "Top 5 Women 47 kg",
+          "description": "Pick top 5 lifters in Women 47 kg.",
           "order": 10,
           "required": true,
-          "categoryId": "women-73",
+          "categoryId": "women-47",
+          "athleteIds": [
+            "women-47-chapon-tiffany",
+            "women-47-le-leanne",
+            "women-47-picher-plante-amelie",
+            "women-47-motta-annalisa",
+            "women-47-kijumnuayporn-vicky",
+            "women-47-duno-frankmary",
+            "women-47-mikova-anezka",
+            "women-47-jones-ainsley",
+            "women-47-altamimi-alhanouf",
+            "women-47-santos-mediavilla-paula",
+            "women-47-al-jundi-nour",
+            "women-47-wedlock-sze-yee-venezia",
+            "women-47-clarke-joanne",
+            "women-47-mai-on-kotchaphan",
+            "women-47-beglarashvili-mari",
+            "women-47-idczak-karolina"
+          ],
           "constraints": {
-            "exactSelections": 3,
+            "exactSelections": 5,
             "disallowDuplicateAthletes": true
           }
         },
         {
-          "id": "men-83-podium",
-          "type": "category-podium",
-          "title": "Men 83 kg podium",
+          "id": "top5-women-52",
+          "type": "athlete-ranking",
+          "title": "Top 5 Women 52 kg",
+          "description": "Pick top 5 lifters in Women 52 kg.",
           "order": 20,
           "required": true,
-          "categoryId": "men-83",
+          "categoryId": "women-52",
+          "athleteIds": [
+            "women-52-smith-megan-li",
+            "women-52-dekkers-pleun",
+            "women-52-gagne-catherine",
+            "women-52-lucas-lea",
+            "women-52-farid-farhanna",
+            "women-52-pineda-vanessa",
+            "women-52-lehoczkyne-fawal-margit",
+            "women-52-gerlach-eliza",
+            "women-52-craven-elizabeth",
+            "women-52-barwari-delal",
+            "women-52-la-bella-daiana",
+            "women-52-chorianopoulou-aikaterini",
+            "women-52-varol-fatma",
+            "women-52-carvalho-giulia",
+            "women-52-sim-cristy",
+            "women-52-saana-grassham",
+            "women-52-sveinsdottir-kristrun",
+            "women-52-caldona-jackielyn",
+            "women-52-bobileva-arina",
+            "women-52-koskipaasi-jaana",
+            "women-52-verhulst-stefanie",
+            "women-52-tsetskhladze-mariam"
+          ],
           "constraints": {
-            "exactSelections": 3,
+            "exactSelections": 5,
             "disallowDuplicateAthletes": true
           }
         },
         {
-          "id": "women-84-plus-podium",
-          "type": "category-podium",
-          "title": "Women 84+ kg podium",
+          "id": "top5-women-57",
+          "type": "athlete-ranking",
+          "title": "Top 5 Women 57 kg",
+          "description": "Pick top 5 lifters in Women 57 kg.",
           "order": 30,
           "required": true,
-          "categoryId": "women-84-plus",
+          "categoryId": "women-57",
+          "athleteIds": [
+            "women-57-naldi-sara",
+            "women-57-nnamani-joy",
+            "women-57-pal-sovannphaktra",
+            "women-57-butters-bobbie",
+            "women-57-corrigan-evie",
+            "women-57-olin-emelie",
+            "women-57-aguila-padilla-ana",
+            "women-57-amri-miriam",
+            "women-57-henry-marthe",
+            "women-57-de-la-torre-monica",
+            "women-57-kratz-samantha",
+            "women-57-babic-katja",
+            "women-57-oestergaard-mathilde",
+            "women-57-keenan-lauren",
+            "women-57-huang-zhiyin",
+            "women-57-rummens-elise",
+            "women-57-wandeler-anouk",
+            "women-57-boukalova-anna",
+            "women-57-lee-michelle",
+            "women-57-bondy-florence",
+            "women-57-viktoria-flavia-dr"
+          ],
           "constraints": {
-            "exactSelections": 3,
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top5-women-63",
+          "type": "athlete-ranking",
+          "title": "Top 5 Women 63 kg",
+          "description": "Pick top 5 lifters in Women 63 kg.",
+          "order": 40,
+          "required": true,
+          "categoryId": "women-63",
+          "athleteIds": [
+            "women-63-bostrom-alba",
+            "women-63-bernardi-chiara",
+            "women-63-aborah-betty",
+            "women-63-vidal-makeda",
+            "women-63-van-vianen-romy",
+            "women-63-haeberer-clara-isabelle",
+            "women-63-mamane-leah",
+            "women-63-maguregi-rodriguez-jone",
+            "women-63-kvantchiani-sopiko",
+            "women-63-lalime-sahyuri",
+            "women-63-wolf-jana",
+            "women-63-zurinskaite-deimante",
+            "women-63-stevens-jody",
+            "women-63-visan-ana-maria",
+            "women-63-tiong-natalie",
+            "women-63-torres-judith",
+            "women-63-jansova-dominika",
+            "women-63-kalinowska-ewelina",
+            "women-63-duus-cecilie",
+            "women-63-zunic-lea",
+            "women-63-vackova-kristyna",
+            "women-63-dunning-mary",
+            "women-63-wenn-cara",
+            "women-63-ong-yi",
+            "women-63-chatzigianni-andria",
+            "women-63-zhou-yiqian",
+            "women-63-gerute-lina",
+            "women-63-meshveliani-natela",
+            "women-63-liang-yim-chee"
+          ],
+          "constraints": {
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top5-women-69",
+          "type": "athlete-ranking",
+          "title": "Top 5 Women 69 kg",
+          "description": "Pick top 5 lifters in Women 69 kg.",
+          "order": 50,
+          "required": true,
+          "categoryId": "women-69",
+          "athleteIds": [
+            "women-69-garra-carola",
+            "women-69-babb-chandler",
+            "women-69-kovacs-janee",
+            "women-69-scanlon-meghan",
+            "women-69-van-daal-marie-jose",
+            "women-69-nelson-annie",
+            "women-69-kjenner-marte",
+            "women-69-bright-jordan",
+            "women-69-bouchoux-andorina",
+            "women-69-huff-shannon",
+            "women-69-belden-pavlovic-signe",
+            "women-69-tavares-cicera",
+            "women-69-mabidikama-acima",
+            "women-69-goossens-kaya",
+            "women-69-altman-hannah",
+            "women-69-materek-sabina",
+            "women-69-haulot-clara",
+            "women-69-skovlind-caroline",
+            "women-69-denise-guenther",
+            "women-69-seow-amanda",
+            "women-69-jones-jayne",
+            "women-69-khwang-hayley",
+            "women-69-kairaityte-dainora",
+            "women-69-larrimore-deshawn",
+            "women-69-marina-sanja",
+            "women-69-pacce-catalina",
+            "women-69-janulcikaite-ausrine"
+          ],
+          "constraints": {
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top5-women-76",
+          "type": "athlete-ranking",
+          "title": "Top 5 Women 76 kg",
+          "description": "Pick top 5 lifters in Women 76 kg.",
+          "order": 60,
+          "required": true,
+          "categoryId": "women-76",
+          "athleteIds": [
+            "women-76-worford-cranon",
+            "women-76-mazur-zuzanna",
+            "women-76-bisol-bruna",
+            "women-76-peyraud-clara",
+            "women-76-hames-mara",
+            "women-76-hanlon-bettina",
+            "women-76-ezeh-chisom",
+            "women-76-hunte-kezia",
+            "women-76-gronlund-ellen",
+            "women-76-tchrikishvili-nino",
+            "women-76-ophoff-tessa",
+            "women-76-govind-hema",
+            "women-76-szarek-justyna",
+            "women-76-varillas-modesta",
+            "women-76-swart-chanel",
+            "women-76-martens-mariska",
+            "women-76-reis-rafaela",
+            "women-76-muller-gaby",
+            "women-76-schvandtnerova-denisa",
+            "women-76-waldeck-danielle",
+            "women-76-wells-selina",
+            "women-76-khurtsilava-khatia",
+            "women-76-xie-thuy",
+            "women-76-marangoni-pia"
+          ],
+          "constraints": {
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top5-women-84",
+          "type": "athlete-ranking",
+          "title": "Top 5 Women 84 kg",
+          "description": "Pick top 5 lifters in Women 84 kg.",
+          "order": 70,
+          "required": true,
+          "categoryId": "women-84",
+          "athleteIds": [
+            "women-84-lawrence-amanda",
+            "women-84-tongotea-karlina",
+            "women-84-azariah-ziana",
+            "women-84-zeigler-nicolette",
+            "women-84-thorhallsdottir-kristin",
+            "women-84-almeida-marina",
+            "women-84-ieronimos-anna",
+            "women-84-buettner-jessica",
+            "women-84-mouchet-emilie",
+            "women-84-rudin-agnes",
+            "women-84-coopoosamy-nicole",
+            "women-84-lahtinen-mira",
+            "women-84-letting-regitze",
+            "women-84-bychok-liudmyla",
+            "women-84-zhao-yan-fei",
+            "women-84-sanchez-jorge-carla",
+            "women-84-joergensen-katja",
+            "women-84-alleyne-deresay",
+            "women-84-erimo-sabadell-rosa",
+            "women-84-matsuda-miyu",
+            "women-84-laitinen-jenna",
+            "women-84-abouassi-nour",
+            "women-84-adedokun-comfort",
+            "women-84-suitauloa-shaniele",
+            "women-84-rodrigues-ana",
+            "women-84-szymkowiak-magdalena"
+          ],
+          "constraints": {
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top5-women-84plus",
+          "type": "athlete-ranking",
+          "title": "Top 5 Women 84+ kg",
+          "description": "Pick top 5 lifters in Women 84+ kg.",
+          "order": 80,
+          "required": true,
+          "categoryId": "women-84plus",
+          "athleteIds": [
+            "women-84plus-muluh-sonita",
+            "women-84plus-schlater-brittany",
+            "women-84plus-onuoha-aquinn",
+            "women-84plus-omotoso-toyosi",
+            "women-84plus-brown-bonica",
+            "women-84plus-mierger-amelie",
+            "women-84plus-padia-zahra",
+            "women-84plus-o-reilly-alison",
+            "women-84plus-sigurjonsdottir-hanna",
+            "women-84plus-matthiasdottir-thorbjorg",
+            "women-84plus-kamoto-emi",
+            "women-84plus-de-la-barra-zelaya-marcela",
+            "women-84plus-malojlo-marta"
+          ],
+          "constraints": {
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top5-men-59",
+          "type": "athlete-ranking",
+          "title": "Top 5 Men 59 kg",
+          "description": "Pick top 5 lifters in Men 59 kg.",
+          "order": 90,
+          "required": true,
+          "categoryId": "men-59",
+          "athleteIds": [
+            "men-59-slabic-michael",
+            "men-59-campano-diaz-ivan",
+            "men-59-garcia-antoine",
+            "men-59-takiyama-yasutaka",
+            "men-59-elhamali-mohamed",
+            "men-59-nyarko-kwaku",
+            "men-59-leon-franklin",
+            "men-59-ho-david",
+            "men-59-huang-wei-chen",
+            "men-59-you-yao-wei",
+            "men-59-cruz-angel",
+            "men-59-gelashvili-giorgi",
+            "men-59-madera-joenas",
+            "men-59-imamura-ryo",
+            "men-59-santangelo-jacopo",
+            "men-59-ergin-kemal",
+            "men-59-cancel-ivan",
+            "men-59-flores-jose"
+          ],
+          "constraints": {
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top5-men-66",
+          "type": "athlete-ranking",
+          "title": "Top 5 Men 66 kg",
+          "description": "Pick top 5 lifters in Men 66 kg.",
+          "order": 100,
+          "required": true,
+          "categoryId": "men-66",
+          "athleteIds": [
+            "men-66-bakkelund-kjell",
+            "men-66-jordan-joseph",
+            "men-66-ushiyama-kyota",
+            "men-66-nikolai-austin",
+            "men-66-jimenez-santos",
+            "men-66-satake-yusuke",
+            "men-66-castillo-carlos",
+            "men-66-ong-wei",
+            "men-66-simonelli-mirko",
+            "men-66-catena-joel",
+            "men-66-liatsis-marios",
+            "men-66-sgro-julian",
+            "men-66-luu-joshua",
+            "men-66-zeng-wei-xiang",
+            "men-66-ghizoni-gabriel",
+            "men-66-naoussi-ezelgbo-darling-williams",
+            "men-66-lin-ching-lun"
+          ],
+          "constraints": {
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top5-men-74",
+          "type": "athlete-ranking",
+          "title": "Top 5 Men 74 kg",
+          "description": "Pick top 5 lifters in Men 74 kg.",
+          "order": 110,
+          "required": true,
+          "categoryId": "men-74",
+          "athleteIds": [
+            "men-74-perkins-austin",
+            "men-74-bertrand-balthazar",
+            "men-74-fan-chun-chia",
+            "men-74-lee-clinton",
+            "men-74-lavoie-jacob",
+            "men-74-homer-luke",
+            "men-74-babaei-somaghi-keyan",
+            "men-74-al-lanqawi-adel",
+            "men-74-gimorri-giacomo",
+            "men-74-konstantinou-christos",
+            "men-74-cheong-cheng",
+            "men-74-herraiz-frances-alberto",
+            "men-74-cheng-yu-jui",
+            "men-74-medjahed-yacine",
+            "men-74-ola-joshua",
+            "men-74-rada-karel",
+            "men-74-saed-awnullah",
+            "men-74-strachan-john",
+            "men-74-richards-lachlan",
+            "men-74-damlamajans-marats",
+            "men-74-marecki-mateusz",
+            "men-74-pacerinskis-marius",
+            "men-74-bledis-gintaras",
+            "men-74-cruz-leonardo",
+            "men-74-maisuradze-giorgi"
+          ],
+          "constraints": {
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top5-men-83",
+          "type": "athlete-ranking",
+          "title": "Top 5 Men 83 kg",
+          "description": "Pick top 5 lifters in Men 83 kg.",
+          "order": 120,
+          "required": true,
+          "categoryId": "men-83",
+          "athleteIds": [
+            "men-83-borenstein-joseph",
+            "men-83-kengamu-jurins",
+            "men-83-omisakin-ade",
+            "men-83-asein-enahoro",
+            "men-83-ducret-mathis",
+            "men-83-hotsonyame-kafui",
+            "men-83-fernandez-arevalo-andres",
+            "men-83-fornstam-kevin",
+            "men-83-rinaldo-marciano-saverio",
+            "men-83-ampofo-zachariah",
+            "men-83-figueroa-contreras-jose",
+            "men-83-kuerzi-patrick",
+            "men-83-castillo-jose",
+            "men-83-el-moukallif-naim",
+            "men-83-verstrepen-tuur",
+            "men-83-techap-fongang",
+            "men-83-ishikawa-aoi",
+            "men-83-nagem-mohamed",
+            "men-83-hoffmann-daniel",
+            "men-83-kloch-mathias",
+            "men-83-kraujutowicz-grzegorz",
+            "men-83-santos-matheus",
+            "men-83-alaradi-ali",
+            "men-83-menezes-guilherme",
+            "men-83-chong-kenzo",
+            "men-83-boulos-christophe",
+            "men-83-petcu-andrei",
+            "men-83-cheng-wee-herng-donovan",
+            "men-83-xiao-tianyu",
+            "men-83-hlynsson-fridbjorn",
+            "men-83-mur-urban",
+            "men-83-ruscitti-karim",
+            "men-83-arnaud-alexandre",
+            "men-83-kuzmic-marko",
+            "men-83-asmonas-arnas",
+            "men-83-henderson-samuel"
+          ],
+          "constraints": {
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top5-men-93",
+          "type": "athlete-ranking",
+          "title": "Top 5 Men 93 kg",
+          "description": "Pick top 5 lifters in Men 93 kg.",
+          "order": 130,
+          "required": true,
+          "categoryId": "men-93",
+          "athleteIds": [
+            "men-93-ball-william",
+            "men-93-krastev-emil",
+            "men-93-hedlund-gustav",
+            "men-93-nouari-aimene",
+            "men-93-ayandokun-christian",
+            "men-93-antwi-kwaku",
+            "men-93-baiden-richmond",
+            "men-93-balangwe-bakinien",
+            "men-93-van-bezooijen-richard",
+            "men-93-wortel-john",
+            "men-93-tsuruya-shimon",
+            "men-93-blackmore-aaron",
+            "men-93-hermisdorf-leonardo",
+            "men-93-salim-khalleefah",
+            "men-93-zerai-elyes",
+            "men-93-gortz-guilherme",
+            "men-93-ussing-daniel",
+            "men-93-zabeau-tom",
+            "men-93-gonzalez-jose",
+            "men-93-choi-junwon",
+            "men-93-hapon-danyil",
+            "men-93-law-tak-kan-duncan",
+            "men-93-alsabri-taha",
+            "men-93-klimka-airidas",
+            "men-93-hibsfelds-ricards",
+            "men-93-khuzwayo-bandile"
+          ],
+          "constraints": {
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top5-men-105",
+          "type": "athlete-ranking",
+          "title": "Top 5 Men 105 kg",
+          "description": "Pick top 5 lifters in Men 105 kg.",
+          "order": 140,
+          "required": true,
+          "categoryId": "men-105",
+          "athleteIds": [
+            "men-105-mcnaughton-anthony",
+            "men-105-novopysmennyi-anatolii",
+            "men-105-norling-emil",
+            "men-105-tchandeu-noundou-eliam",
+            "men-105-stergakis-regin",
+            "men-105-sboui-fares",
+            "men-105-massiah-nathaniel",
+            "men-105-amponsah-ezeiel",
+            "men-105-salgado-diego",
+            "men-105-bentalha-ilyes",
+            "men-105-duecker-bjarne",
+            "men-105-celis-jonathan",
+            "men-105-slump-jacob",
+            "men-105-hamich-imad",
+            "men-105-nwaezeigwe-kenneth",
+            "men-105-forsberg-samuel",
+            "men-105-karason-alexander",
+            "men-105-ibanez-pawathon-bernardo",
+            "men-105-henry-matthew",
+            "men-105-erik-mata",
+            "men-105-sant-anna-rodrigo",
+            "men-105-franek-hynek",
+            "men-105-aldirsi-mohammed",
+            "men-105-norkus-martynas",
+            "men-105-boss-dominic",
+            "men-105-jung-siwoo",
+            "men-105-choi-seungwan",
+            "men-105-de-paula-vitor",
+            "men-105-tomko-patrik"
+          ],
+          "constraints": {
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top5-men-120",
+          "type": "athlete-ranking",
+          "title": "Top 5 Men 120 kg",
+          "description": "Pick top 5 lifters in Men 120 kg.",
+          "order": 150,
+          "required": true,
+          "categoryId": "men-120",
+          "athleteIds": [
+            "men-120-hunte-rondel",
+            "men-120-el-chaer-etienne",
+            "men-120-rouska-ashton",
+            "men-120-mcdonald-joseph",
+            "men-120-ngoka-joshua",
+            "men-120-melnychuk-taras",
+            "men-120-wiseman-lucas",
+            "men-120-de-rohden-antoine",
+            "men-120-sulayman-abdul",
+            "men-120-sahad-mohamed",
+            "men-120-wiendieck-jonah",
+            "men-120-sekenofsky-baruch",
+            "men-120-due-laurits",
+            "men-120-vogelius-jesper",
+            "men-120-strubbe-jochen",
+            "men-120-graham-heath",
+            "men-120-pola-daniele",
+            "men-120-krisztian-cseszko",
+            "men-120-naoussi-nembot-ano",
+            "men-120-juzups-maris",
+            "men-120-penco-joseph",
+            "men-120-stell-mark",
+            "men-120-sigurdsson-helgi",
+            "men-120-motoki-ayuto",
+            "men-120-karkusashvili-rubeni",
+            "men-120-thoma-thomas",
+            "men-120-raw-simon"
+          ],
+          "constraints": {
+            "exactSelections": 5,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top5-men-120plus",
+          "type": "athlete-ranking",
+          "title": "Top 5 Men 120+ kg",
+          "description": "Pick top 5 lifters in Men 120+ kg.",
+          "order": 160,
+          "required": true,
+          "categoryId": "men-120plus",
+          "athleteIds": [
+            "men-120plus-olivares-jesus",
+            "men-120plus-sharma-ajay",
+            "men-120plus-kocak-cenk",
+            "men-120plus-holinei-viktor",
+            "men-120plus-samkharadze-temur",
+            "men-120plus-mansukoski-nuutti",
+            "men-120plus-sutterud-westbye-bjorn",
+            "men-120plus-patschke-markus",
+            "men-120plus-fidan-hussein",
+            "men-120plus-reinmuth-tony",
+            "men-120plus-wang-pei-yu",
+            "men-120plus-soares-alexis",
+            "men-120plus-simonsen-martin",
+            "men-120plus-voigt-torben",
+            "men-120plus-abousinan-mohammed",
+            "men-120plus-wu-yi-chiu",
+            "men-120plus-lekhal-abdeslam",
+            "men-120plus-hendriks-giel",
+            "men-120plus-juszczyk-jacek",
+            "men-120plus-gecas-tadas",
+            "men-120plus-riudalbas-clemente-marc",
+            "men-120plus-mardones-meza-sergio-hernan",
+            "men-120plus-raw-robert",
+            "men-120plus-berzins-didzis",
+            "men-120plus-inoue-masaya",
+            "men-120plus-bowring-ray"
+          ],
+          "constraints": {
+            "exactSelections": 5,
             "disallowDuplicateAthletes": true
           }
         }

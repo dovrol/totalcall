@@ -1,25 +1,14 @@
 [
   {
-    "id": "sheffield-2026",
-    "slug": "sheffield-2026",
-    "name": "Sheffield 2026",
-    "description": "Overall-focused prediction game around top lifters, world record percentage and bonus questions.",
-    "cardBackgroundPosition": "center",
-    "startDate": "2026-01-31T09:00:00Z",
-    "predictionLockAt": "2026-01-31T08:00:00Z",
-    "status": "upcoming",
-    "configVersion": "2026.1"
-  },
-  {
     "id": "worlds-2026",
     "slug": "worlds-2026",
     "name": "Worlds 2026",
-    "description": "Podium picks for every configured weight class.",
+    "description": "The biggest stage in powerlifting. Crown the world's strongest.",
     "cardBackgroundImageUrl": "/assets/competitions/worlds-2026-card-bg.webp",
     "cardBackgroundPosition": "center",
     "startDate": "2026-06-07T09:00:00Z",
     "predictionLockAt": "2026-06-07T08:00:00Z",
     "status": "upcoming",
-    "configVersion": "2026.1"
+    "configVersion": "2026.2"
   }
 ]
