@@ -2,6 +2,7 @@
 
 <article
     class="@CssClass"
+    @onclick="OnContextRequested"
     draggable="@(!IsSelected)"
     @ondragstart="() => DragStartRequested.InvokeAsync(Athlete.Id)">
     <div class="athlete-candidate-row__details">
@@ -35,9 +36,13 @@
         }
         else
         {
-            <AppButton Size="Sm" Variant="Secondary" OnClick="OnPickClicked">
+            <button
+                type="button"
+                class="app-button app-button--secondary app-button--sm"
+                @onclick="OnPickClicked"
+                @onclick:stopPropagation="true">
                 @PickButtonLabel
-            </AppButton>
+            </button>
         }
     </div>
 </article>
@@ -48,6 +53,9 @@
 
     [Parameter]
     public bool IsSelected { get; set; }
+
+    [Parameter]
+    public bool IsContextSelected { get; set; }
 
     [Parameter]
     public string? WeightClassLabel { get; set; }
@@ -61,13 +69,22 @@
     [Parameter]
     public EventCallback<string> DragStartRequested { get; set; }
 
+    [Parameter]
+    public EventCallback<string> ContextRequested { get; set; }
+
     private string CssClass => string.Join(
         " ",
         "athlete-candidate-row",
-        IsSelected ? "athlete-candidate-row--selected" : null);
+        IsSelected ? "athlete-candidate-row--selected" : null,
+        IsContextSelected ? "athlete-candidate-row--context-active" : null);
 
     private Task OnPickClicked(MouseEventArgs _)
     {
         return PickRequested.InvokeAsync(Athlete.Id);
+    }
+
+    private Task OnContextRequested(MouseEventArgs _)
+    {
+        return ContextRequested.InvokeAsync(Athlete.Id);
     }
 }

@@ -8,41 +8,55 @@
     </a>
 
     <div class="prediction-shell-header__main">
-        <div class="prediction-shell-header__identity">
-            <div class="prediction-shell-header__mark" aria-hidden="true">
-                @if (!string.IsNullOrWhiteSpace(Competition.CardLogoImageUrl))
-                {
-                    <img src="@Competition.CardLogoImageUrl" alt="" loading="lazy" />
-                }
-                else
-                {
-                    <AppIcon Name="AppIconName.Trophy" Size="18" />
-                }
+        <div class="prediction-shell-header__summary">
+            <div class="prediction-shell-header__identity">
+                <div class="prediction-shell-header__mark" aria-hidden="true">
+                    @if (!string.IsNullOrWhiteSpace(Competition.CardLogoImageUrl))
+                    {
+                        <img src="@Competition.CardLogoImageUrl" alt="" loading="lazy" />
+                    }
+                    else
+                    {
+                        <AppIcon Name="AppIconName.Trophy" Size="18" />
+                    }
+                </div>
+
+                <div class="prediction-shell-header__text">
+                    <h1>@Competition.Name</h1>
+                    <p>@Text.GroupTitle(Competition, ActiveGroup)</p>
+                </div>
             </div>
 
-            <div class="prediction-shell-header__text">
-                <h1>@Competition.Name</h1>
-                <p>@Text.GroupTitle(Competition, ActiveGroup)</p>
-                @if (!string.IsNullOrWhiteSpace(SaveStatus))
-                {
-                    <small class="prediction-shell-header__save">@SaveStatus</small>
-                }
-            </div>
-        </div>
+            <div class="prediction-shell-header__meta">
+                <div>
+                    <span>@Localizer["Common.Locks"]</span>
+                    <strong>@FormatDate(Competition.PredictionLockAt)</strong>
+                </div>
+                <div>
+                    <span>@Localizer["Predictions.LastSaved"]</span>
+                    <strong>@FormatDate(LastSavedAt)</strong>
+                    @if (!string.IsNullOrWhiteSpace(SaveStatus))
+                    {
+                        <small>@SaveStatus</small>
+                    }
+                </div>
+                <div>
+                    <span>@Localizer["Common.Status"]</span>
+                    <PredictionStatusBadge
+                        Status="@CompetitionStatusAsPredictionStatus"
+                        CustomLabel="@Localizer[$"Status.{Competition.Status}"]" />
+                </div>
 
-        <div class="prediction-shell-header__meta">
-            <div>
-                <span>@Localizer["Common.Locks"]</span>
-                <strong>@FormatDate(Competition.PredictionLockAt)</strong>
-            </div>
-            <div>
-                <span>@Localizer["Predictions.LastSaved"]</span>
-                <strong>@FormatDate(LastSavedAt)</strong>
-            </div>
-            <div>
-                <span>@Localizer["Common.Status"]</span>
-                <PredictionStatusBadge Status="(CanEditPredictions ? PredictionCompletionStatus.InProgress : PredictionCompletionStatus.NotStarted)"
-                                      CustomLabel="@(CanEditPredictions ? Localizer["Status.Upcoming"].Value : Localizer["Status.Locked"].Value)" />
+                <div class="prediction-shell-header__meta-progress">
+                    <div class="prediction-shell-header__meta-progress-head">
+                        <span>@Localizer["Predictions.Progress"]</span>
+                        <strong>@Localizer["Predictions.CompletedOfTotalItems", ModuleValidation.CompletedItems, ModuleValidation.TotalItems, ItemLabelPlural]</strong>
+                    </div>
+
+                    <div class="prediction-shell-header__meta-progress-track" aria-hidden="true">
+                        <span style="@($"width: {CompletionPercent}%")"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -55,6 +69,9 @@
     [Parameter, EditorRequired]
     public PredictionGroup ActiveGroup { get; set; } = default!;
 
+    [Parameter, EditorRequired]
+    public PredictionModuleValidationResult ModuleValidation { get; set; } = default!;
+
     [Parameter]
     public string? SaveStatus { get; set; }
 
@@ -64,8 +81,37 @@
     [Parameter]
     public bool CanEditPredictions { get; set; }
 
+    private int CompletionPercent => ModuleValidation.TotalItems == 0
+        ? 0
+        : (int)Math.Round((decimal)ModuleValidation.CompletedItems / ModuleValidation.TotalItems * 100m);
+
+    private string ItemLabelPlural => ResolveItemLabelPlural(ActiveGroup);
+
+    private PredictionCompletionStatus CompetitionStatusAsPredictionStatus => Competition.Status switch
+    {
+        CompetitionStatus.Completed => PredictionCompletionStatus.Complete,
+        CompetitionStatus.Archived => PredictionCompletionStatus.Complete,
+        CompetitionStatus.Locked => PredictionCompletionStatus.NotStarted,
+        _ => CanEditPredictions
+            ? PredictionCompletionStatus.InProgress
+            : PredictionCompletionStatus.NotStarted
+    };
+
     private string FormatDate(DateTimeOffset? value)
     {
         return value?.ToLocalTime().ToString("d MMM yyyy, HH:mm") ?? Localizer["Common.Tbd"];
+    }
+
+    private string ResolveItemLabelPlural(PredictionGroup group)
+    {
+        var normalizedType = PredictionModuleType.Normalize(group.Type);
+
+        if (normalizedType == PredictionModuleType.TopNByCategory ||
+            group.Questions.All(question => !string.IsNullOrWhiteSpace(question.CategoryId)))
+        {
+            return Localizer["Predictions.Item.Categories"];
+        }
+
+        return Localizer["Predictions.Item.Predictions"];
     }
 }

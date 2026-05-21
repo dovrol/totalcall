@@ -30,21 +30,6 @@
     <p class="prediction-summary-panel__note">
         @Localizer["Predictions.ScoreOnlyComplete"]
     </p>
-
-    <dl class="prediction-summary-panel__meta">
-        <div>
-            <dt>@Localizer["Common.Locks"]</dt>
-            <dd>@FormatDate(Competition.PredictionLockAt)</dd>
-        </div>
-        <div>
-            <dt>@Localizer["Predictions.LastSaved"]</dt>
-            <dd>@FormatDate(LastSavedAt)</dd>
-        </div>
-        <div>
-            <dt>@Localizer["Predictions.SaveState"]</dt>
-            <dd>@(string.IsNullOrWhiteSpace(SaveStatus) ? Localizer["Predictions.Saving"] : SaveStatus)</dd>
-        </div>
-    </dl>
 </aside>
 
 @code {
@@ -64,11 +49,6 @@
     public DateTimeOffset? LastSavedAt { get; set; }
 
     private string ItemLabelPlural => ResolveItemLabelPlural(Group);
-
-    private string FormatDate(DateTimeOffset? value)
-    {
-        return value?.ToLocalTime().ToString("d MMM yyyy, HH:mm") ?? Localizer["Common.Tbd"];
-    }
 
     private string ResolveItemLabelPlural(PredictionGroup group)
     {

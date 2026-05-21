@@ -31,7 +31,7 @@ else
                 @if (ShowSummaryAction)
                 {
                     <AppButton Variant="Secondary" Size="Sm" OnClick="OnSummaryClicked">
-                        @Localizer["Predictions.Tab.Summary"]
+                        @Localizer["Predictions.Tab.Context"]
                     </AppButton>
                 }
             </div>
@@ -64,11 +64,11 @@ else
             </button>
             <button
                 type="button"
-                class="@GetWorkspaceTabClass(TopNWorkspaceTab.Summary)"
+                class="@GetWorkspaceTabClass(TopNWorkspaceTab.Context)"
                 role="tab"
-                aria-selected="@(activeWorkspaceTab == TopNWorkspaceTab.Summary)"
-                @onclick="() => SetWorkspaceTab(TopNWorkspaceTab.Summary)">
-                @Localizer["Predictions.Tab.Summary"]
+                aria-selected="@(activeWorkspaceTab == TopNWorkspaceTab.Context)"
+                @onclick="() => SetWorkspaceTab(TopNWorkspaceTab.Context)">
+                @Localizer["Predictions.Tab.Context"]
             </button>
         </div>
 
@@ -103,12 +103,14 @@ else
                     <RankingBuilder
                         Title="@Localizer["Predictions.YourRankingTopN", SlotsCount]"
                         SlotsCount="SlotsCount"
+                        ContextAthleteId="@EffectiveSelectedAthleteId"
                         SelectedAthletesByPosition="SelectedAthletesByPosition"
                         RemoveRequested="RemoveFromPosition"
                         MoveUpRequested="MoveSlotUp"
                         MoveDownRequested="MoveSlotDown"
                         DropToPositionRequested="DropToPosition"
-                        DragStartFromSlotRequested="DragFromSlot" />
+                        DragStartFromSlotRequested="DragFromSlot"
+                        AthleteContextRequested="OnAthleteContextRequested" />
 
                     <ModuleValidationSummary
                         Status="ActiveQuestionStatus"
@@ -119,19 +121,22 @@ else
                     <AthleteCandidateList
                         Title="@Localizer["Predictions.AvailableAthletes"]"
                         Athletes="EligibleAthletes"
+                        ContextAthleteId="@EffectiveSelectedAthleteId"
                         SelectedAthleteIds="SelectedAthleteIds"
                         WeightClassNamesById="WeightClassNamesById"
                         PickRequested="PickAthlete"
-                        DragStartRequested="DragFromCandidate" />
+                        DragStartRequested="DragFromCandidate"
+                        ContextRequested="OnAthleteContextRequested" />
                 </section>
 
-                <aside class="@GetWorkspacePaneClass(TopNWorkspaceTab.Summary)">
-                    <PredictionSummaryPanel
+                <aside class="@GetWorkspacePaneClass(TopNWorkspaceTab.Context)">
+                    <TopNContextPanel
                         Competition="@Competition"
-                        Group="@Group"
-                        ModuleValidation="@ModuleValidation"
-                        SaveStatus="@SaveStatus"
-                        LastSavedAt="@LastSavedAt" />
+                        ActiveQuestion="@ActiveQuestion"
+                        ActiveQuestionStatus="@ActiveQuestionStatus"
+                        SelectedAthleteId="@EffectiveSelectedAthleteId"
+                        AthleteContextRequested="@OnAthleteContextRequested"
+                        AthleteSelectionCleared="@OnAthleteContextCleared" />
                 </aside>
             </div>
         </div>
@@ -173,7 +178,13 @@ else
     public string? ActiveQuestionId { get; set; }
 
     [Parameter]
+    public string? SelectedAthleteId { get; set; }
+
+    [Parameter]
     public EventCallback<string> ActiveQuestionChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> AthleteContextRequested { get; set; }
 
     [Parameter]
     public EventCallback SummaryRequested { get; set; }
@@ -182,6 +193,7 @@ else
     public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
 
     private string? localActiveQuestionId;
+    private string? localSelectedAthleteId;
     private string? draggedAthleteId;
     private int? draggedFromPosition;
     private TopNWorkspaceTab activeWorkspaceTab = TopNWorkspaceTab.Ranking;
@@ -197,6 +209,10 @@ else
     private string? EffectiveActiveQuestionId => !string.IsNullOrWhiteSpace(ActiveQuestionId)
         ? ActiveQuestionId
         : localActiveQuestionId;
+
+    private string? EffectiveSelectedAthleteId => !string.IsNullOrWhiteSpace(SelectedAthleteId)
+        ? SelectedAthleteId
+        : localSelectedAthleteId;
 
     private string TopNModuleClass => string.Join(
         " ",
@@ -309,12 +325,19 @@ else
             OrderedQuestions.Any(question => string.Equals(question.Id, ActiveQuestionId, StringComparison.OrdinalIgnoreCase)))
         {
             localActiveQuestionId = ActiveQuestionId;
-            return;
         }
-
-        if (ActiveQuestion is null)
+        else if (ActiveQuestion is null)
         {
             localActiveQuestionId = OrderedQuestions.FirstOrDefault()?.Id;
+        }
+
+        if (!string.IsNullOrWhiteSpace(SelectedAthleteId))
+        {
+            localSelectedAthleteId = SelectedAthleteId;
+        }
+        else if (!IsAthleteEligibleForActiveQuestion(localSelectedAthleteId))
+        {
+            localSelectedAthleteId = null;
         }
     }
 
@@ -346,6 +369,21 @@ else
     private Task OnSummaryClicked(MouseEventArgs _)
     {
         return SummaryRequested.InvokeAsync();
+    }
+
+    private Task OnAthleteContextRequested(string athleteId)
+    {
+        localSelectedAthleteId = string.IsNullOrWhiteSpace(athleteId)
+            ? null
+            : athleteId;
+
+        return AthleteContextRequested.InvokeAsync(athleteId);
+    }
+
+    private Task OnAthleteContextCleared()
+    {
+        localSelectedAthleteId = null;
+        return AthleteContextRequested.InvokeAsync(string.Empty);
     }
 
     private Task DragFromCandidate(string athleteId)
@@ -586,6 +624,22 @@ else
         return Competition.Athletes.FirstOrDefault(athlete => athlete.Id == athleteId);
     }
 
+    private bool IsAthleteEligibleForActiveQuestion(string? athleteId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteId) || ActiveQuestion is null)
+        {
+            return false;
+        }
+
+        if (ActiveQuestion.AthleteIds.Count == 0)
+        {
+            return Competition.Athletes.Any(athlete =>
+                string.Equals(athlete.Id, athleteId, StringComparison.OrdinalIgnoreCase));
+        }
+
+        return ActiveQuestion.AthleteIds.Contains(athleteId, StringComparer.OrdinalIgnoreCase);
+    }
+
     private string GetCategoryName(PredictionQuestion question)
     {
         var category = Competition.Categories.FirstOrDefault(item => item.Id == question.CategoryId);
@@ -629,7 +683,7 @@ else
             {
                 TopNWorkspaceTab.Ranking => "topn-module__workspace",
                 TopNWorkspaceTab.Athletes => "topn-module__candidates",
-                _ => "topn-module__inline-summary"
+                _ => "topn-module__inline-context"
             },
             activeWorkspaceTab == tab ? "is-pane-active" : null);
     }
@@ -638,6 +692,6 @@ else
     {
         Ranking = 0,
         Athletes = 1,
-        Summary = 2
+        Context = 2
     }
 }

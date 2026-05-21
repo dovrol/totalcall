@@ -41,10 +41,12 @@
                 <AthleteCandidateRow
                     Athlete="athlete"
                     IsSelected="SelectedAthleteIds.Contains(athlete.Id)"
+                    IsContextSelected="@IsContextAthlete(athlete)"
                     WeightClassLabel="@GetWeightClassLabel(athlete)"
                     PickButtonLabel="@Localizer["Predictions.Pick"].Value"
                     PickRequested="PickRequested"
-                    DragStartRequested="DragStartRequested" />
+                    DragStartRequested="DragStartRequested"
+                    ContextRequested="ContextRequested" />
             }
         }
     </div>
@@ -61,6 +63,9 @@
     public IReadOnlySet<string> SelectedAthleteIds { get; set; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
     [Parameter]
+    public string? ContextAthleteId { get; set; }
+
+    [Parameter]
     public IReadOnlyDictionary<string, string> WeightClassNamesById { get; set; } =
         new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
@@ -69,6 +74,9 @@
 
     [Parameter]
     public EventCallback<string> DragStartRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ContextRequested { get; set; }
 
     private string searchTerm = string.Empty;
     private string sortMode = "nominated-desc";
@@ -120,5 +128,11 @@
         return WeightClassNamesById.TryGetValue(athlete.WeightCategoryId, out var label)
             ? label
             : athlete.WeightCategoryId;
+    }
+
+    private bool IsContextAthlete(Athlete athlete)
+    {
+        return !string.IsNullOrWhiteSpace(ContextAthleteId) &&
+               string.Equals(athlete.Id, ContextAthleteId, StringComparison.OrdinalIgnoreCase);
     }
 }

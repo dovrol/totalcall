@@ -1,0 +1,266 @@
+{
+  "competitionId": "worlds-2026",
+  "source": {
+    "name": "OpenPowerlifting",
+    "attribution": "This page uses data from the OpenPowerlifting project.",
+    "downloadedAt": "2026-05-21"
+  },
+  "athletes": {
+    "women-47-chapon-tiffany": {
+      "displayName": "Chapon Tiffany",
+      "countryCode": "FR",
+      "recentResults": [
+        {
+          "date": "2025-01-31",
+          "meetName": "Sheffield",
+          "federation": "IPF",
+          "equipment": "Raw",
+          "bodyweightKg": 46.8,
+          "squatKg": 192.5,
+          "benchKg": 107.5,
+          "deadliftKg": 222.5,
+          "totalKg": 522.5,
+          "placing": "1"
+        },
+        {
+          "date": "2024-06-13",
+          "meetName": "IPF Worlds",
+          "federation": "IPF",
+          "equipment": "Raw",
+          "bodyweightKg": 46.9,
+          "squatKg": 190,
+          "benchKg": 105,
+          "deadliftKg": 220,
+          "totalKg": 515,
+          "placing": "2"
+        },
+        {
+          "date": "2024-03-17",
+          "meetName": "European Open",
+          "federation": "IPF",
+          "equipment": "Raw",
+          "bodyweightKg": 46.7,
+          "squatKg": 187.5,
+          "benchKg": 102.5,
+          "deadliftKg": 215,
+          "totalKg": 505,
+          "placing": "1"
+        }
+      ],
+      "bests": {
+        "squatKg": 192.5,
+        "benchKg": 107.5,
+        "deadliftKg": 222.5,
+        "totalKg": 522.5
+      },
+      "lastResult": {
+        "date": "2025-01-31",
+        "meetName": "Sheffield",
+        "squatKg": 192.5,
+        "benchKg": 107.5,
+        "deadliftKg": 222.5,
+        "totalKg": 522.5
+      }
+    },
+    "women-47-picher-plante-amelie": {
+      "displayName": "Picher-Plante Amelie",
+      "countryCode": "CA",
+      "recentResults": [
+        {
+          "date": "2025-02-01",
+          "meetName": "Sheffield",
+          "federation": "IPF",
+          "equipment": "Raw",
+          "bodyweightKg": 46.5,
+          "squatKg": 175,
+          "benchKg": 112.5,
+          "deadliftKg": 210,
+          "totalKg": 497.5,
+          "placing": "3"
+        },
+        {
+          "date": "2024-06-14",
+          "meetName": "IPF Worlds",
+          "federation": "IPF",
+          "equipment": "Raw",
+          "bodyweightKg": 46.6,
+          "squatKg": 172.5,
+          "benchKg": 110,
+          "deadliftKg": 205,
+          "totalKg": 487.5,
+          "placing": "4"
+        },
+        {
+          "date": "2023-10-20",
+          "meetName": "Pan American",
+          "federation": "IPF",
+          "equipment": "Raw",
+          "bodyweightKg": 46.4,
+          "squatKg": 170,
+          "benchKg": 107.5,
+          "deadliftKg": 202.5,
+          "totalKg": 480,
+          "placing": "1"
+        }
+      ],
+      "bests": {
+        "squatKg": 175,
+        "benchKg": 112.5,
+        "deadliftKg": 210,
+        "totalKg": 497.5
+      },
+      "lastResult": {
+        "date": "2025-02-01",
+        "meetName": "Sheffield",
+        "squatKg": 175,
+        "benchKg": 112.5,
+        "deadliftKg": 210,
+        "totalKg": 497.5
+      }
+    },
+    "women-47-duno-frankmary": {
+      "displayName": "Duno Frankmary",
+      "countryCode": "PR",
+      "recentResults": [
+        {
+          "date": "2025-01-19",
+          "meetName": "North American Cup",
+          "federation": "IPF",
+          "equipment": "Raw",
+          "bodyweightKg": 46.7,
+          "squatKg": 167.5,
+          "benchKg": 95,
+          "deadliftKg": 200,
+          "totalKg": 462.5,
+          "placing": "2"
+        },
+        {
+          "date": "2024-06-12",
+          "meetName": "IPF Worlds",
+          "federation": "IPF",
+          "equipment": "Raw",
+          "bodyweightKg": 46.8,
+          "squatKg": 165,
+          "benchKg": 92.5,
+          "deadliftKg": 197.5,
+          "totalKg": 455,
+          "placing": "6"
+        },
+        {
+          "date": "2023-11-05",
+          "meetName": "Caribbean Championship",
+          "federation": "IPF",
+          "equipment": "Raw",
+          "bodyweightKg": 46.6,
+          "squatKg": 162.5,
+          "benchKg": 92.5,
+          "deadliftKg": 195,
+          "totalKg": 450,
+          "placing": "1"
+        }
+      ],
+      "bests": {
+        "squatKg": 167.5,
+        "benchKg": 95,
+        "deadliftKg": 200,
+        "totalKg": 462.5
+      },
+      "lastResult": {
+        "date": "2025-01-19",
+        "meetName": "North American Cup",
+        "squatKg": 167.5,
+        "benchKg": 95,
+        "deadliftKg": 200,
+        "totalKg": 462.5
+      }
+    },
+    "women-47-le-leanne": {
+      "displayName": "Le Leanne",
+      "countryCode": "US",
+      "recentResults": [
+        {
+          "date": "2025-03-08",
+          "meetName": "Arnold UK",
+          "federation": "IPF",
+          "equipment": "Raw",
+          "bodyweightKg": 46.7,
+          "squatKg": 170,
+          "benchKg": 100,
+          "deadliftKg": 205,
+          "totalKg": 475,
+          "placing": "2"
+        },
+        {
+          "date": "2024-08-18",
+          "meetName": "USAPL Nationals",
+          "federation": "USAPL",
+          "equipment": "Raw",
+          "bodyweightKg": 46.5,
+          "squatKg": 167.5,
+          "benchKg": 97.5,
+          "deadliftKg": 202.5,
+          "totalKg": 467.5,
+          "placing": "1"
+        }
+      ],
+      "bests": {
+        "squatKg": 170,
+        "benchKg": 100,
+        "deadliftKg": 205,
+        "totalKg": 475
+      },
+      "lastResult": {
+        "date": "2025-03-08",
+        "meetName": "Arnold UK",
+        "squatKg": 170,
+        "benchKg": 100,
+        "deadliftKg": 205,
+        "totalKg": 475
+      }
+    },
+    "women-47-motta-annalisa": {
+      "displayName": "Motta Annalisa",
+      "countryCode": "IT",
+      "recentResults": [
+        {
+          "date": "2025-02-22",
+          "meetName": "Italian Nationals",
+          "federation": "FIPL",
+          "equipment": "Raw",
+          "bodyweightKg": 46.9,
+          "squatKg": 160,
+          "benchKg": 95,
+          "deadliftKg": 190,
+          "totalKg": 445,
+          "placing": "1"
+        },
+        {
+          "date": "2024-06-10",
+          "meetName": "IPF Worlds",
+          "federation": "IPF",
+          "equipment": "Raw",
+          "bodyweightKg": 46.8,
+          "squatKg": 157.5,
+          "benchKg": 92.5,
+          "deadliftKg": 187.5,
+          "totalKg": 437.5,
+          "placing": "8"
+        }
+      ],
+      "bests": {
+        "squatKg": 160,
+        "benchKg": 95,
+        "deadliftKg": 190,
+        "totalKg": 445
+      },
+      "lastResult": {
+        "date": "2025-02-22",
+        "meetName": "Italian Nationals",
+        "squatKg": 160,
+        "benchKg": 95,
+        "deadliftKg": 190,
+        "totalKg": 445
+      }
+    }
+  }
+}

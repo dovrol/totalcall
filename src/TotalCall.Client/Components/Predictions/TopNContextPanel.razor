@@ -1,0 +1,350 @@
+@using System.Globalization
+@inject IStringLocalizer<SharedResource> Localizer
+@inject AthleteHistoryService AthleteHistoryService
+
+<aside class="prediction-context-panel" aria-label="@Localizer["Predictions.ContextPanel"]">
+    <header class="prediction-context-panel__head">
+        <h2>@Localizer["Predictions.ContextPanel"]</h2>
+
+        @if (SelectedAthlete is not null)
+        {
+            <button
+                type="button"
+                class="prediction-context-panel__dismiss"
+                aria-label="@Localizer["Predictions.ClearAthleteContext"]"
+                @onclick="OnClearAthleteSelectionClicked">
+                <AppIcon Name="AppIconName.X" Size="14" />
+            </button>
+        }
+    </header>
+
+    @if (SelectedAthlete is null)
+    {
+        <section class="prediction-context-panel__block">
+            <h3>@(ActiveCategoryName ?? Localizer["Common.Tbd"].Value)</h3>
+
+            <div class="prediction-context-panel__status">
+                <span>@Localizer["Common.Status"]</span>
+                <PredictionStatusBadge Status="@CategoryStatus.Status" />
+            </div>
+
+            <p class="prediction-context-panel__status-line">@CategoryStatusLine</p>
+        </section>
+
+        <section class="prediction-context-panel__block">
+            <h3>@Localizer["Predictions.TopNominatedTotals"]</h3>
+
+            @if (TopNominatedAthletes.Count == 0)
+            {
+                <p class="prediction-context-panel__empty">@Localizer["Predictions.NoAthletesDescription"]</p>
+            }
+            else
+            {
+                <ol class="prediction-context-panel__nominated-list">
+                    @foreach (var athlete in TopNominatedAthletes)
+                    {
+                        <li>
+                            <button
+                                type="button"
+                                class="prediction-context-panel__nominated-row"
+                                @onclick="() => AthleteContextRequested.InvokeAsync(athlete.Id)">
+                                <span>@athlete.DisplayName</span>
+                                <strong>@FormatKg(athlete.SeedTotalKg)</strong>
+                            </button>
+                        </li>
+                    }
+                </ol>
+            }
+        </section>
+
+        <p class="prediction-context-panel__hint">@Localizer["Predictions.CategoryContextHint"]</p>
+    }
+    else
+    {
+        <section class="prediction-context-panel__block">
+            <div class="prediction-context-panel__athlete-head">
+                <div class="prediction-context-panel__athlete-meta">
+                    <h3>@SelectedAthlete.DisplayName</h3>
+                    @if (!string.IsNullOrWhiteSpace(SelectedAthlete.CountryName))
+                    {
+                        <div class="prediction-context-panel__country">
+                            <CountryFlag Code="@SelectedAthlete.CountryCode" CountryName="@SelectedAthlete.CountryName" />
+                            <span>@SelectedAthlete.CountryName</span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <dl class="prediction-context-panel__details-grid">
+                <div>
+                    <dt>@Localizer["Predictions.Category"]</dt>
+                    <dd>@(SelectedAthleteCategoryName ?? Localizer["Common.Tbd"].Value)</dd>
+                </div>
+                <div>
+                    <dt>@Localizer["Predictions.NominatedTotal"]</dt>
+                    <dd>@FormatKg(SelectedAthlete.SeedTotalKg)</dd>
+                </div>
+            </dl>
+        </section>
+
+        <section class="prediction-context-panel__block">
+            <h3>@Localizer["Predictions.RecentStarts"]</h3>
+
+            @if (isLoadingHistory)
+            {
+                <p class="prediction-context-panel__empty">@Localizer["Predictions.LoadingHistory"]</p>
+            }
+            else if (SelectedAthleteHistory?.RecentResults.Count > 0)
+            {
+                <div class="prediction-context-panel__history-table-wrap">
+                    <table class="prediction-context-panel__history-table">
+                        <thead>
+                            <tr>
+                                <th>@Localizer["Predictions.Meet"]</th>
+                                <th>SQ</th>
+                                <th>BP</th>
+                                <th>DL</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var result in SelectedAthleteHistory.RecentResults.Take(6))
+                            {
+                                <tr>
+                                    <td>
+                                        <span>@(string.IsNullOrWhiteSpace(result.MeetName) ? Localizer["Common.Tbd"].Value : result.MeetName)</span>
+                                        <small>@FormatDate(result.Date)</small>
+                                    </td>
+                                    <td class="@GetHistoryLiftCellClass(result.SquatKg, SelectedAthleteHistory.Bests?.SquatKg)">
+                                        @FormatKg(result.SquatKg)
+                                        @if (IsPersonalBest(result.SquatKg, SelectedAthleteHistory.Bests?.SquatKg))
+                                        {
+                                            <span class="prediction-context-panel__pb">PB</span>
+                                        }
+                                    </td>
+                                    <td class="@GetHistoryLiftCellClass(result.BenchKg, SelectedAthleteHistory.Bests?.BenchKg)">
+                                        @FormatKg(result.BenchKg)
+                                        @if (IsPersonalBest(result.BenchKg, SelectedAthleteHistory.Bests?.BenchKg))
+                                        {
+                                            <span class="prediction-context-panel__pb">PB</span>
+                                        }
+                                    </td>
+                                    <td class="@GetHistoryLiftCellClass(result.DeadliftKg, SelectedAthleteHistory.Bests?.DeadliftKg)">
+                                        @FormatKg(result.DeadliftKg)
+                                        @if (IsPersonalBest(result.DeadliftKg, SelectedAthleteHistory.Bests?.DeadliftKg))
+                                        {
+                                            <span class="prediction-context-panel__pb">PB</span>
+                                        }
+                                    </td>
+                                    <td class="@GetHistoryLiftCellClass(result.TotalKg, SelectedAthleteHistory.Bests?.TotalKg)">
+                                        @FormatKg(result.TotalKg)
+                                        @if (IsPersonalBest(result.TotalKg, SelectedAthleteHistory.Bests?.TotalKg))
+                                        {
+                                            <span class="prediction-context-panel__pb">PB</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="prediction-context-panel__empty">@Localizer["Predictions.NoAthleteHistory"]</p>
+            }
+        </section>
+
+        <section class="prediction-context-panel__block">
+            <dl class="prediction-context-panel__details-grid">
+                <div>
+                    <dt>@Localizer["Predictions.BestResult"]</dt>
+                    <dd>@FormatKg(SelectedAthleteHistory?.Bests?.TotalKg)</dd>
+                </div>
+                <div>
+                    <dt>@Localizer["Predictions.LastResult"]</dt>
+                    <dd>@FormatKg(SelectedAthleteHistory?.LastResult?.TotalKg)</dd>
+                </div>
+            </dl>
+        </section>
+
+        <section class="prediction-context-panel__actions">
+            <button type="button" disabled>@Localizer["Predictions.UseNominatedTotal"]</button>
+            <button type="button" disabled>@Localizer["Predictions.UseLastResult"]</button>
+            <button type="button" disabled>@Localizer["Predictions.UseBestResult"]</button>
+        </section>
+
+        @if (!string.IsNullOrWhiteSpace(SourceAttribution))
+        {
+            <p class="prediction-context-panel__source">@SourceAttribution</p>
+        }
+    }
+</aside>
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter]
+    public PredictionQuestion? ActiveQuestion { get; set; }
+
+    [Parameter]
+    public PredictionQuestionCompletionResult? ActiveQuestionStatus { get; set; }
+
+    [Parameter]
+    public string? SelectedAthleteId { get; set; }
+
+    [Parameter]
+    public EventCallback<string> AthleteContextRequested { get; set; }
+
+    [Parameter]
+    public EventCallback AthleteSelectionCleared { get; set; }
+
+    private AthleteHistoryDataset? historyDataset;
+    private AthleteHistoryEntry? SelectedAthleteHistory;
+    private string? loadedCompetitionId;
+    private string? loadedAthleteId;
+    private bool isLoadingHistory;
+
+    private Athlete? SelectedAthlete => string.IsNullOrWhiteSpace(SelectedAthleteId)
+        ? null
+        : Competition.Athletes.FirstOrDefault(athlete =>
+            string.Equals(athlete.Id, SelectedAthleteId, StringComparison.OrdinalIgnoreCase));
+
+    private PredictionQuestionCompletionResult CategoryStatus => ActiveQuestionStatus ??
+        new PredictionQuestionCompletionResult(
+            ActiveQuestion?.Id ?? string.Empty,
+            PredictionCompletionStatus.NotStarted,
+            0,
+            0);
+
+    private string? ActiveCategoryName => ResolveCategoryName(ActiveQuestion?.CategoryId);
+
+    private string CategoryStatusLine =>
+        $"{CategoryStatus.SelectedCount}/{Math.Max(1, CategoryStatus.RequiredCount)} {GetStatusLabel(CategoryStatus.Status)}";
+
+    private IReadOnlyList<Athlete> TopNominatedAthletes => GetTopNominatedAthletes();
+
+    private string? SelectedAthleteCategoryName => ResolveCategoryName(SelectedAthlete?.WeightCategoryId);
+
+    private string? SourceAttribution => historyDataset?.Source?.Attribution;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (SelectedAthlete is null)
+        {
+            SelectedAthleteHistory = null;
+            loadedAthleteId = null;
+            return;
+        }
+
+        if (!string.Equals(loadedCompetitionId, Competition.Id, StringComparison.OrdinalIgnoreCase))
+        {
+            isLoadingHistory = true;
+            historyDataset = await AthleteHistoryService.GetCompetitionHistoryAsync(Competition.Id);
+            loadedCompetitionId = Competition.Id;
+            loadedAthleteId = null;
+            isLoadingHistory = false;
+        }
+
+        if (string.Equals(loadedAthleteId, SelectedAthlete.Id, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        isLoadingHistory = true;
+
+        SelectedAthleteHistory = historyDataset is not null &&
+                                historyDataset.Athletes.TryGetValue(SelectedAthlete.Id, out var history)
+            ? history
+            : null;
+
+        loadedAthleteId = SelectedAthlete.Id;
+        isLoadingHistory = false;
+    }
+
+    private Task OnClearAthleteSelectionClicked(MouseEventArgs _)
+    {
+        return AthleteSelectionCleared.InvokeAsync();
+    }
+
+    private IReadOnlyList<Athlete> GetTopNominatedAthletes()
+    {
+        if (ActiveQuestion is null)
+        {
+            return [];
+        }
+
+        var athletePool = ActiveQuestion.AthleteIds.Count == 0
+            ? Competition.Athletes
+            : Competition.Athletes
+                .Where(athlete => ActiveQuestion.AthleteIds.Contains(athlete.Id))
+                .ToArray();
+
+        return athletePool
+            .OrderByDescending(athlete => athlete.SeedTotalKg ?? 0m)
+            .ThenBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
+            .Take(5)
+            .ToArray();
+    }
+
+    private string? ResolveCategoryName(string? categoryId)
+    {
+        if (string.IsNullOrWhiteSpace(categoryId))
+        {
+            return null;
+        }
+
+        return Competition.Categories.FirstOrDefault(category =>
+            string.Equals(category.Id, categoryId, StringComparison.OrdinalIgnoreCase))?.Name;
+    }
+
+    private string FormatKg(decimal? value)
+    {
+        return value is null
+            ? Localizer["Common.Tbd"].Value
+            : $"{value.Value.ToString("0.#", CultureInfo.CurrentCulture)} kg";
+    }
+
+    private string FormatDate(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return Localizer["Common.Tbd"];
+        }
+
+        if (DateOnly.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsed))
+        {
+            return parsed.ToString("d MMM yyyy", CultureInfo.CurrentCulture);
+        }
+
+        return value;
+    }
+
+    private string GetStatusLabel(PredictionCompletionStatus status)
+    {
+        return status switch
+        {
+            PredictionCompletionStatus.Complete => Localizer["Predictions.Status.Complete"],
+            PredictionCompletionStatus.InProgress => Localizer["Predictions.Status.InProgress"],
+            _ => Localizer["Predictions.Status.NotStarted"]
+        };
+    }
+
+    private bool IsPersonalBest(decimal? value, decimal? bestValue)
+    {
+        if (value is null || bestValue is null)
+        {
+            return false;
+        }
+
+        return value.Value == bestValue.Value;
+    }
+
+    private string? GetHistoryLiftCellClass(decimal? value, decimal? bestValue)
+    {
+        return IsPersonalBest(value, bestValue)
+            ? "prediction-context-panel__history-cell--pb"
+            : null;
+    }
+}

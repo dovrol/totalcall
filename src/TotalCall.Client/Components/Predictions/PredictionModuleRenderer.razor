@@ -10,13 +10,15 @@
             Answers="Answers"
             ModuleValidation="ModuleValidation"
             CanEditPredictions="CanEditPredictions"
-            SaveStatus="SaveStatus"
+            SaveStatus="@SaveStatus"
             LastSavedAt="LastSavedAt"
             ShowSummaryAction="ShowSummaryAction"
             ShowCompactModuleInfo="ShowCompactModuleInfo"
             UseExternalSidebar="UseExternalTopNSidebar"
-            ActiveQuestionId="ActiveTopNQuestionId"
+            ActiveQuestionId="@ActiveTopNQuestionId"
+            SelectedAthleteId="@ActiveTopNAthleteId"
             ActiveQuestionChanged="TopNQuestionChanged"
+            AthleteContextRequested="TopNAthleteContextRequested"
             SummaryRequested="SummaryRequested"
             AnswerChanged="AnswerChanged" />
         break;
@@ -86,7 +88,13 @@
     public string? ActiveTopNQuestionId { get; set; }
 
     [Parameter]
+    public string? ActiveTopNAthleteId { get; set; }
+
+    [Parameter]
     public EventCallback<string> TopNQuestionChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> TopNAthleteContextRequested { get; set; }
 
     [Parameter]
     public EventCallback SummaryRequested { get; set; }

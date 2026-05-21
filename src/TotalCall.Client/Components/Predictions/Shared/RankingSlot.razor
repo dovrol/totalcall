@@ -2,6 +2,7 @@
 
 <div
     class="@CssClass"
+    @onclick="OnAthleteContextClicked"
     @ondrop:preventDefault="true"
     @ondragover:preventDefault="true"
     @ondrop="() => DropRequested.InvokeAsync(Position)">
@@ -20,7 +21,7 @@
             class="ranking-slot__athlete"
             draggable="true"
             @ondragstart="() => DragStartRequested.InvokeAsync(Position)">
-            <div class="ranking-slot__details">
+            <div class="@ContextButtonClass">
                 <strong>@Athlete.DisplayName</strong>
                 @if (!string.IsNullOrWhiteSpace(Athlete.CountryName))
                 {
@@ -42,6 +43,7 @@
                         type="button"
                         class="ranking-slot__action ranking-slot__action--icon"
                         @onclick="() => MoveUpRequested.InvokeAsync(Position)"
+                        @onclick:stopPropagation="true"
                         disabled="@(!CanMoveUp)"
                         aria-label="@Localizer["Predictions.MoveUp"]">
                         <AppIcon
@@ -53,6 +55,7 @@
                         type="button"
                         class="ranking-slot__action ranking-slot__action--icon"
                         @onclick="() => MoveDownRequested.InvokeAsync(Position)"
+                        @onclick:stopPropagation="true"
                         disabled="@(!CanMoveDown)"
                         aria-label="@Localizer["Predictions.MoveDown"]">
                         <AppIcon
@@ -64,6 +67,7 @@
                         type="button"
                         class="ranking-slot__action ranking-slot__action--icon"
                         @onclick="() => RemoveRequested.InvokeAsync(Position)"
+                        @onclick:stopPropagation="true"
                         aria-label="@Localizer["Predictions.RemoveAthlete"]">
                         <AppIcon Name="AppIconName.X" Size="14" Class="ranking-slot__action-icon" />
                     </button>
@@ -79,6 +83,9 @@
 
     [Parameter]
     public Athlete? Athlete { get; set; }
+
+    [Parameter]
+    public bool IsContextSelected { get; set; }
 
     [Parameter]
     public bool CanMoveUp { get; set; }
@@ -101,8 +108,24 @@
     [Parameter]
     public EventCallback<int> DragStartRequested { get; set; }
 
+    [Parameter]
+    public EventCallback<string> AthleteContextRequested { get; set; }
+
     private string CssClass => string.Join(
         " ",
         "ranking-slot",
-        Athlete is null ? "ranking-slot--empty" : "ranking-slot--filled");
+        Athlete is null ? "ranking-slot--empty" : "ranking-slot--filled",
+        IsContextSelected ? "ranking-slot--context-active" : null);
+
+    private string ContextButtonClass => string.Join(
+        " ",
+        "ranking-slot__details",
+        IsContextSelected ? "ranking-slot__details--context-active" : null);
+
+    private Task OnAthleteContextClicked(MouseEventArgs _)
+    {
+        return Athlete is null
+            ? Task.CompletedTask
+            : AthleteContextRequested.InvokeAsync(Athlete.Id);
+    }
 }

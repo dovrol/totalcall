@@ -26,6 +26,7 @@ builder.Services.AddScoped<PredictionService>();
 builder.Services.AddScoped<IPredictionValidationService, PredictionValidationService>();
 builder.Services.AddScoped<PredictionAnswerDisplayService>();
 builder.Services.AddScoped<PredictionTextService>();
+builder.Services.AddScoped<AthleteHistoryService>();
 builder.Services.AddScoped<IPredictionScoringService, PredictionScoringService>();
 
 var host = builder.Build();

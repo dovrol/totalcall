@@ -7,13 +7,15 @@
             <RankingSlot
                 Position="position"
                 Athlete="GetAthlete(position)"
+                IsContextSelected="@IsContextAthlete(GetAthlete(position))"
                 CanMoveUp="@(position > 1)"
                 CanMoveDown="@(position < SlotsCount)"
                 RemoveRequested="RemoveRequested"
                 MoveUpRequested="MoveUpRequested"
                 MoveDownRequested="MoveDownRequested"
                 DropRequested="DropToPositionRequested"
-                DragStartRequested="DragStartFromSlotRequested" />
+                DragStartRequested="DragStartFromSlotRequested"
+                AthleteContextRequested="AthleteContextRequested" />
         }
     </div>
 </section>
@@ -30,6 +32,9 @@
         new Dictionary<int, Athlete>();
 
     [Parameter]
+    public string? ContextAthleteId { get; set; }
+
+    [Parameter]
     public EventCallback<int> RemoveRequested { get; set; }
 
     [Parameter]
@@ -44,10 +49,20 @@
     [Parameter]
     public EventCallback<int> DragStartFromSlotRequested { get; set; }
 
+    [Parameter]
+    public EventCallback<string> AthleteContextRequested { get; set; }
+
     private Athlete? GetAthlete(int position)
     {
         return SelectedAthletesByPosition.TryGetValue(position, out var athlete)
             ? athlete
             : null;
+    }
+
+    private bool IsContextAthlete(Athlete? athlete)
+    {
+        return athlete is not null &&
+               !string.IsNullOrWhiteSpace(ContextAthleteId) &&
+               string.Equals(athlete.Id, ContextAthleteId, StringComparison.OrdinalIgnoreCase);
     }
 }

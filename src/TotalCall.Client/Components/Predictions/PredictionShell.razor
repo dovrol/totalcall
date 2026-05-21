@@ -2,7 +2,7 @@
 @inject PredictionTextService Text
 
 <section class="prediction-shell">
-    <div class="@FrameClass">
+    <div class="prediction-shell__frame">
         <aside class="prediction-shell__left-rail">
             <div class="prediction-shell__left-rail-inner">
                 <PredictionModuleNav
@@ -24,18 +24,17 @@
             </div>
         </aside>
 
-        <div class="prediction-shell__center-column">
+        <div class="prediction-shell__top-row">
             <PredictionHeader
                 Competition="@Competition"
                 ActiveGroup="@ActiveGroup"
+                ModuleValidation="@ActiveModuleValidation"
                 SaveStatus="@SaveStatus"
                 LastSavedAt="@LastSavedAt"
                 CanEditPredictions="@CanEditPredictions" />
+        </div>
 
-            <PredictionProgressSummary
-                Group="@ActiveGroup"
-                ModuleValidation="@ActiveModuleValidation" />
-
+        <div class="prediction-shell__center-column">
             @if (!CanEditPredictions)
             {
                 <div class="notice notice--warning">
@@ -56,7 +55,9 @@
                     ShowCompactModuleInfo="false"
                     UseExternalTopNSidebar="@IsTopNActiveGroup"
                     ActiveTopNQuestionId="@CurrentTopNQuestionId"
+                    ActiveTopNAthleteId="@selectedTopNAthleteId"
                     TopNQuestionChanged="@OnTopNQuestionChanged"
+                    TopNAthleteContextRequested="@OnTopNAthleteContextRequested"
                     SummaryRequested="@OpenSummaryDrawer"
                     AnswerChanged="@AnswerChanged" />
             </section>
@@ -65,20 +66,25 @@
         <aside class="@SummaryRailClass">
             <div class="prediction-shell__summary-rail-content">
                 <div class="prediction-shell__summary-panel-wrap">
-                    <button
-                        type="button"
-                        class="prediction-shell__summary-rail-toggle"
-                        aria-label="@Localizer["Predictions.Tab.Summary"]"
-                        @onclick="OnSummaryRailToggleClicked">
-                        <AppIcon Name="AppIconName.ChevronRight" Size="14" />
-                    </button>
-
-                    <PredictionSummaryPanel
-                        Competition="@Competition"
-                        Group="@ActiveGroup"
-                        ModuleValidation="@ActiveModuleValidation"
-                        SaveStatus="@SaveStatus"
-                        LastSavedAt="@LastSavedAt" />
+                    @if (IsTopNActiveGroup)
+                    {
+                        <TopNContextPanel
+                            Competition="@Competition"
+                            ActiveQuestion="@CurrentTopNQuestion"
+                            ActiveQuestionStatus="@CurrentTopNQuestionStatus"
+                            SelectedAthleteId="@selectedTopNAthleteId"
+                            AthleteContextRequested="@OnTopNAthleteContextRequested"
+                            AthleteSelectionCleared="@OnTopNAthleteSelectionCleared" />
+                    }
+                    else
+                    {
+                        <PredictionSummaryPanel
+                            Competition="@Competition"
+                            Group="@ActiveGroup"
+                            ModuleValidation="@ActiveModuleValidation"
+                            SaveStatus="@SaveStatus"
+                            LastSavedAt="@LastSavedAt" />
+                    }
                 </div>
             </div>
         </aside>
@@ -96,17 +102,30 @@
         <button
             type="button"
             class="prediction-shell__summary-drawer-close"
-            aria-label="@Localizer["Predictions.CloseSummary"]"
+            aria-label="@Localizer["Predictions.CloseContext"]"
             @onclick="OnCloseSummaryClicked">
             <AppIcon Name="AppIconName.X" Size="14" />
         </button>
 
-        <PredictionSummaryPanel
-            Competition="@Competition"
-            Group="@ActiveGroup"
-            ModuleValidation="@ActiveModuleValidation"
-            SaveStatus="@SaveStatus"
-            LastSavedAt="@LastSavedAt" />
+        @if (IsTopNActiveGroup)
+        {
+            <TopNContextPanel
+                Competition="@Competition"
+                ActiveQuestion="@CurrentTopNQuestion"
+                ActiveQuestionStatus="@CurrentTopNQuestionStatus"
+                SelectedAthleteId="@selectedTopNAthleteId"
+                AthleteContextRequested="@OnTopNAthleteContextRequested"
+                AthleteSelectionCleared="@OnTopNAthleteSelectionCleared" />
+        }
+        else
+        {
+            <PredictionSummaryPanel
+                Competition="@Competition"
+                Group="@ActiveGroup"
+                ModuleValidation="@ActiveModuleValidation"
+                SaveStatus="@SaveStatus"
+                LastSavedAt="@LastSavedAt" />
+        }
     </aside>
 
     <PredictionNavigationBar
@@ -172,18 +191,9 @@
 
     private bool HasMultipleGroups => Groups.Count > 1;
     private string? activeTopNQuestionId;
+    private string? selectedTopNAthleteId;
     private bool isSummaryDrawerOpen;
-    private bool isSummaryRailCollapsed;
-
-    private string FrameClass => string.Join(
-        " ",
-        "prediction-shell__frame",
-        isSummaryRailCollapsed ? "prediction-shell__frame--summary-collapsed" : null);
-
-    private string SummaryRailClass => string.Join(
-        " ",
-        "prediction-shell__summary-rail",
-        isSummaryRailCollapsed ? "is-collapsed" : null);
+    private const string SummaryRailClass = "prediction-shell__summary-rail";
 
     private string SummaryDrawerClass => string.Join(
         " ",
@@ -209,11 +219,21 @@
         OrderedTopNQuestions.FirstOrDefault()?.Id ??
         string.Empty;
 
+    private PredictionQuestion? CurrentTopNQuestion => OrderedTopNQuestions
+        .FirstOrDefault(question => string.Equals(question.Id, CurrentTopNQuestionId, StringComparison.OrdinalIgnoreCase));
+
+    private PredictionQuestionCompletionResult? CurrentTopNQuestionStatus => CurrentTopNQuestion is null
+        ? null
+        : TopNStatusByQuestionId.TryGetValue(CurrentTopNQuestion.Id, out var status)
+            ? status
+            : null;
+
     protected override void OnParametersSet()
     {
         if (!IsTopNActiveGroup)
         {
             activeTopNQuestionId = null;
+            selectedTopNAthleteId = null;
             return;
         }
 
@@ -221,6 +241,11 @@
             OrderedTopNQuestions.All(question => !string.Equals(question.Id, activeTopNQuestionId, StringComparison.OrdinalIgnoreCase)))
         {
             activeTopNQuestionId = OrderedTopNQuestions.FirstOrDefault()?.Id;
+        }
+
+        if (!IsAthleteInCurrentTopNQuestion(selectedTopNAthleteId))
+        {
+            selectedTopNAthleteId = null;
         }
     }
 
@@ -244,6 +269,7 @@
             return;
         }
 
+        selectedTopNAthleteId = null;
         isSummaryDrawerOpen = false;
         await GroupChanged.InvokeAsync(Groups[ActiveGroupIndex - 1].Id);
     }
@@ -252,6 +278,7 @@
     {
         if (HasNextGroup)
         {
+            selectedTopNAthleteId = null;
             isSummaryDrawerOpen = false;
             await GroupChanged.InvokeAsync(Groups[ActiveGroupIndex + 1].Id);
             return;
@@ -262,7 +289,6 @@
 
     private Task OpenSummaryDrawer()
     {
-        isSummaryRailCollapsed = false;
         isSummaryDrawerOpen = true;
         return Task.CompletedTask;
     }
@@ -281,8 +307,8 @@
 
     private async Task OnGroupChanged(string groupId)
     {
+        selectedTopNAthleteId = null;
         isSummaryDrawerOpen = false;
-        isSummaryRailCollapsed = false;
         await GroupChanged.InvokeAsync(groupId);
     }
 
@@ -291,16 +317,33 @@
         if (OrderedTopNQuestions.Any(question => string.Equals(question.Id, questionId, StringComparison.OrdinalIgnoreCase)))
         {
             activeTopNQuestionId = questionId;
+
+            if (!IsAthleteInCurrentTopNQuestion(selectedTopNAthleteId))
+            {
+                selectedTopNAthleteId = null;
+            }
+
             return InvokeAsync(StateHasChanged);
         }
 
         return Task.CompletedTask;
     }
 
-    private Task OnSummaryRailToggleClicked(MouseEventArgs _)
+    private Task OnTopNAthleteContextRequested(string athleteId)
     {
-        isSummaryRailCollapsed = !isSummaryRailCollapsed;
-        isSummaryDrawerOpen = false;
+        if (string.IsNullOrWhiteSpace(athleteId))
+        {
+            selectedTopNAthleteId = null;
+            return Task.CompletedTask;
+        }
+
+        selectedTopNAthleteId = athleteId;
+        return Task.CompletedTask;
+    }
+
+    private Task OnTopNAthleteSelectionCleared()
+    {
+        selectedTopNAthleteId = null;
         return Task.CompletedTask;
     }
 
@@ -308,6 +351,22 @@
     {
         var category = Competition.Categories.FirstOrDefault(item => item.Id == question.CategoryId);
         return category?.Name ?? Text.QuestionTitle(Competition, question);
+    }
+
+    private bool IsAthleteInCurrentTopNQuestion(string? athleteId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteId) || CurrentTopNQuestion is null)
+        {
+            return false;
+        }
+
+        if (CurrentTopNQuestion.AthleteIds.Count == 0)
+        {
+            return Competition.Athletes.Any(athlete =>
+                string.Equals(athlete.Id, athleteId, StringComparison.OrdinalIgnoreCase));
+        }
+
+        return CurrentTopNQuestion.AthleteIds.Contains(athleteId, StringComparer.OrdinalIgnoreCase);
     }
 
     private static string ResolveGroupType(PredictionGroup group)
