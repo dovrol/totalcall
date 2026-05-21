@@ -10,7 +10,7 @@
 }
 else
 {
-    <section class="topn-module">
+    <section class="@TopNModuleClass">
         <div class="topn-module__header">
             <div>
                 <h2>@GetCategoryName(ActiveQuestion)</h2>
@@ -28,6 +28,12 @@ else
                 <AppButton Variant="Ghost" Size="Sm" OnClick="OnClearClicked" Disabled="@(!CanEditPredictions)">
                     @Localizer["Predictions.ClearCategory"]
                 </AppButton>
+                @if (ShowSummaryAction)
+                {
+                    <AppButton Variant="Secondary" Size="Sm" OnClick="OnSummaryClicked">
+                        @Localizer["Predictions.Tab.Summary"]
+                    </AppButton>
+                }
             </div>
         </div>
 
@@ -39,41 +45,95 @@ else
                 CategoryChanged="OnCategoryChanged" />
         </div>
 
+        <div class="topn-module__desktop-tabs" role="tablist" aria-label="@Localizer["Predictions.WorkspaceView"]">
+            <button
+                type="button"
+                class="@GetWorkspaceTabClass(TopNWorkspaceTab.Ranking)"
+                role="tab"
+                aria-selected="@(activeWorkspaceTab == TopNWorkspaceTab.Ranking)"
+                @onclick="() => SetWorkspaceTab(TopNWorkspaceTab.Ranking)">
+                @Localizer["Predictions.Tab.Ranking"]
+            </button>
+            <button
+                type="button"
+                class="@GetWorkspaceTabClass(TopNWorkspaceTab.Athletes)"
+                role="tab"
+                aria-selected="@(activeWorkspaceTab == TopNWorkspaceTab.Athletes)"
+                @onclick="() => SetWorkspaceTab(TopNWorkspaceTab.Athletes)">
+                @Localizer["Predictions.Tab.AvailableAthletes"]
+            </button>
+            <button
+                type="button"
+                class="@GetWorkspaceTabClass(TopNWorkspaceTab.Summary)"
+                role="tab"
+                aria-selected="@(activeWorkspaceTab == TopNWorkspaceTab.Summary)"
+                @onclick="() => SetWorkspaceTab(TopNWorkspaceTab.Summary)">
+                @Localizer["Predictions.Tab.Summary"]
+            </button>
+        </div>
+
         <div class="topn-module__layout">
-            <aside class="topn-module__categories">
-                <CategoryStatusList
-                    Questions="OrderedQuestions"
-                    StatusByQuestionId="StatusByQuestionId"
-                    ActiveQuestionId="@ActiveQuestion.Id"
-                    CategoryLabelSelector="GetCategoryName"
-                    CategoryChanged="OnCategoryChanged" />
-            </aside>
+            @if (!UseExternalSidebar)
+            {
+                <aside class="topn-module__sidebar">
+                    @if (ShowCompactModuleInfo)
+                    {
+                        <section class="topn-module__sidebar-module">
+                            <div class="topn-module__sidebar-module-head">
+                                <strong>@Text.GroupTitle(Competition, Group)</strong>
+                                <PredictionStatusBadge Status="@ModuleValidation.Status" />
+                            </div>
+                            <small>@Localizer["Predictions.CompletedOfTotal", ModuleValidation.CompletedItems, ModuleValidation.TotalItems]</small>
+                        </section>
+                    }
 
-            <div class="topn-module__workspace">
-                <RankingBuilder
-                    Title="@Localizer["Predictions.YourRankingTopN", SlotsCount]"
-                    SlotsCount="SlotsCount"
-                    SelectedAthletesByPosition="SelectedAthletesByPosition"
-                    RemoveRequested="RemoveFromPosition"
-                    MoveUpRequested="MoveSlotUp"
-                    MoveDownRequested="MoveSlotDown"
-                    DropToPositionRequested="DropToPosition"
-                    DragStartFromSlotRequested="DragFromSlot" />
+                    <div class="topn-module__categories">
+                        <CategoryStatusList
+                            Questions="OrderedQuestions"
+                            StatusByQuestionId="StatusByQuestionId"
+                            ActiveQuestionId="@ActiveQuestion.Id"
+                            CategoryLabelSelector="GetCategoryName"
+                            CategoryChanged="OnCategoryChanged" />
+                    </div>
+                </aside>
+            }
 
-                <ModuleValidationSummary
-                    Status="ActiveQuestionStatus"
-                    Errors="ActiveQuestionErrors" />
+            <div class="topn-module__workspace-stack">
+                <div class="@GetWorkspacePaneClass(TopNWorkspaceTab.Ranking)">
+                    <RankingBuilder
+                        Title="@Localizer["Predictions.YourRankingTopN", SlotsCount]"
+                        SlotsCount="SlotsCount"
+                        SelectedAthletesByPosition="SelectedAthletesByPosition"
+                        RemoveRequested="RemoveFromPosition"
+                        MoveUpRequested="MoveSlotUp"
+                        MoveDownRequested="MoveSlotDown"
+                        DropToPositionRequested="DropToPosition"
+                        DragStartFromSlotRequested="DragFromSlot" />
+
+                    <ModuleValidationSummary
+                        Status="ActiveQuestionStatus"
+                        Errors="ActiveQuestionErrors" />
+                </div>
+
+                <section class="@GetWorkspacePaneClass(TopNWorkspaceTab.Athletes)">
+                    <AthleteCandidateList
+                        Title="@Localizer["Predictions.AvailableAthletes"]"
+                        Athletes="EligibleAthletes"
+                        SelectedAthleteIds="SelectedAthleteIds"
+                        WeightClassNamesById="WeightClassNamesById"
+                        PickRequested="PickAthlete"
+                        DragStartRequested="DragFromCandidate" />
+                </section>
+
+                <aside class="@GetWorkspacePaneClass(TopNWorkspaceTab.Summary)">
+                    <PredictionSummaryPanel
+                        Competition="@Competition"
+                        Group="@Group"
+                        ModuleValidation="@ModuleValidation"
+                        SaveStatus="@SaveStatus"
+                        LastSavedAt="@LastSavedAt" />
+                </aside>
             </div>
-
-            <aside class="topn-module__candidates">
-                <AthleteCandidateList
-                    Title="@Localizer["Predictions.AvailableAthletes"]"
-                    Athletes="EligibleAthletes"
-                    SelectedAthleteIds="SelectedAthleteIds"
-                    WeightClassNamesById="WeightClassNamesById"
-                    PickRequested="PickAthlete"
-                    DragStartRequested="DragFromCandidate" />
-            </aside>
         </div>
     </section>
 }
@@ -95,19 +155,53 @@ else
     public bool CanEditPredictions { get; set; }
 
     [Parameter]
+    public string? SaveStatus { get; set; }
+
+    [Parameter]
+    public DateTimeOffset? LastSavedAt { get; set; }
+
+    [Parameter]
+    public bool ShowSummaryAction { get; set; } = true;
+
+    [Parameter]
+    public bool ShowCompactModuleInfo { get; set; } = true;
+
+    [Parameter]
+    public bool UseExternalSidebar { get; set; }
+
+    [Parameter]
+    public string? ActiveQuestionId { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ActiveQuestionChanged { get; set; }
+
+    [Parameter]
+    public EventCallback SummaryRequested { get; set; }
+
+    [Parameter]
     public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
 
-    private string? activeQuestionId;
+    private string? localActiveQuestionId;
     private string? draggedAthleteId;
     private int? draggedFromPosition;
+    private TopNWorkspaceTab activeWorkspaceTab = TopNWorkspaceTab.Ranking;
 
     private IReadOnlyList<PredictionQuestion> OrderedQuestions => Group.Questions
         .OrderBy(question => question.Order)
         .ToArray();
 
     private PredictionQuestion? ActiveQuestion => OrderedQuestions
-        .FirstOrDefault(question => question.Id == activeQuestionId) ??
+        .FirstOrDefault(question => question.Id == EffectiveActiveQuestionId) ??
         OrderedQuestions.FirstOrDefault();
+
+    private string? EffectiveActiveQuestionId => !string.IsNullOrWhiteSpace(ActiveQuestionId)
+        ? ActiveQuestionId
+        : localActiveQuestionId;
+
+    private string TopNModuleClass => string.Join(
+        " ",
+        "topn-module",
+        UseExternalSidebar ? "topn-module--external-sidebar" : null);
 
     private int ActiveQuestionIndex
     {
@@ -211,16 +305,32 @@ else
 
     protected override void OnParametersSet()
     {
+        if (!string.IsNullOrWhiteSpace(ActiveQuestionId) &&
+            OrderedQuestions.Any(question => string.Equals(question.Id, ActiveQuestionId, StringComparison.OrdinalIgnoreCase)))
+        {
+            localActiveQuestionId = ActiveQuestionId;
+            return;
+        }
+
         if (ActiveQuestion is null)
         {
-            activeQuestionId = OrderedQuestions.FirstOrDefault()?.Id;
+            localActiveQuestionId = OrderedQuestions.FirstOrDefault()?.Id;
         }
     }
 
-    private Task OnCategoryChanged(string questionId)
+    private async Task OnCategoryChanged(string questionId)
     {
-        activeQuestionId = questionId;
-        return Task.CompletedTask;
+        localActiveQuestionId = questionId;
+
+        if (ActiveQuestionChanged.HasDelegate)
+        {
+            await ActiveQuestionChanged.InvokeAsync(questionId);
+        }
+    }
+
+    private void SetWorkspaceTab(TopNWorkspaceTab tab)
+    {
+        activeWorkspaceTab = tab;
     }
 
     private Task OnAutoFillClicked(MouseEventArgs _)
@@ -231,6 +341,11 @@ else
     private Task OnClearClicked(MouseEventArgs _)
     {
         return ClearCategory();
+    }
+
+    private Task OnSummaryClicked(MouseEventArgs _)
+    {
+        return SummaryRequested.InvokeAsync();
     }
 
     private Task DragFromCandidate(string athleteId)
@@ -485,6 +600,44 @@ else
         }
 
         var requiredCount = Math.Max(1, status.RequiredCount);
-        return $"{status.SelectedCount}/{requiredCount}";
+        return $"{status.SelectedCount}/{requiredCount} {GetStatusLabel(status.Status)}";
+    }
+
+    private string GetStatusLabel(PredictionCompletionStatus status)
+    {
+        return status switch
+        {
+            PredictionCompletionStatus.Complete => Localizer["Predictions.Status.Complete"],
+            PredictionCompletionStatus.InProgress => Localizer["Predictions.Status.InProgress"],
+            _ => Localizer["Predictions.Status.NotStarted"]
+        };
+    }
+
+    private string GetWorkspaceTabClass(TopNWorkspaceTab tab)
+    {
+        return string.Join(
+            " ",
+            "topn-module__desktop-tab",
+            activeWorkspaceTab == tab ? "topn-module__desktop-tab--active" : null);
+    }
+
+    private string GetWorkspacePaneClass(TopNWorkspaceTab tab)
+    {
+        return string.Join(
+            " ",
+            tab switch
+            {
+                TopNWorkspaceTab.Ranking => "topn-module__workspace",
+                TopNWorkspaceTab.Athletes => "topn-module__candidates",
+                _ => "topn-module__inline-summary"
+            },
+            activeWorkspaceTab == tab ? "is-pane-active" : null);
+    }
+
+    private enum TopNWorkspaceTab
+    {
+        Ranking = 0,
+        Athletes = 1,
+        Summary = 2
     }
 }

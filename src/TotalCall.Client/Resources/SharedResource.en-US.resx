@@ -121,6 +121,12 @@
   <data name="Predictions.Status.NotStarted" xml:space="preserve"><value>Not started</value></data>
   <data name="Predictions.RemainingItems" xml:space="preserve"><value>Remaining {0}</value></data>
   <data name="Predictions.ModuleSummary" xml:space="preserve"><value>Module summary</value></data>
+  <data name="Predictions.WorkspaceView" xml:space="preserve"><value>Workspace view</value></data>
+  <data name="Predictions.Tab.Ranking" xml:space="preserve"><value>Ranking</value></data>
+  <data name="Predictions.Tab.AvailableAthletes" xml:space="preserve"><value>Available athletes</value></data>
+  <data name="Predictions.Tab.Summary" xml:space="preserve"><value>Summary</value></data>
+  <data name="Predictions.CloseSummary" xml:space="preserve"><value>Close summary</value></data>
+  <data name="Predictions.ActiveCategory" xml:space="preserve"><value>Active category</value></data>
   <data name="Predictions.ScoreOnlyComplete" xml:space="preserve"><value>Only completed predictions will score.</value></data>
   <data name="Predictions.SaveAnyTime" xml:space="preserve"><value>You can save at any time. Only completed predictions will score.</value></data>
   <data name="Predictions.SaveState" xml:space="preserve"><value>Save state</value></data>

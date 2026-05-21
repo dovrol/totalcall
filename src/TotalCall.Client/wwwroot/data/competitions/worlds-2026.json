@@ -19,7 +19,8 @@
       "sex": "female",
       "countryName": "France",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 451.5
+      "seedTotalKg": 451.5,
+      "countryCode": "FR"
     },
     {
       "id": "women-47-le-leanne",
@@ -27,7 +28,8 @@
       "sex": "female",
       "countryName": "United States",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 440.5
+      "seedTotalKg": 440.5,
+      "countryCode": "US"
     },
     {
       "id": "women-47-picher-plante-amelie",
@@ -35,7 +37,8 @@
       "sex": "female",
       "countryName": "Canada",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 436.5
+      "seedTotalKg": 436.5,
+      "countryCode": "CA"
     },
     {
       "id": "women-47-motta-annalisa",
@@ -43,7 +46,8 @@
       "sex": "female",
       "countryName": "Italy",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 408.0
+      "seedTotalKg": 408,
+      "countryCode": "IT"
     },
     {
       "id": "women-47-kijumnuayporn-vicky",
@@ -51,7 +55,8 @@
       "sex": "female",
       "countryName": "Australia",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 400.0
+      "seedTotalKg": 400,
+      "countryCode": "AU"
     },
     {
       "id": "women-47-duno-frankmary",
@@ -59,7 +64,8 @@
       "sex": "female",
       "countryName": "Puerto Rico",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 400.0
+      "seedTotalKg": 400,
+      "countryCode": "PR"
     },
     {
       "id": "women-47-mikova-anezka",
@@ -67,7 +73,8 @@
       "sex": "female",
       "countryName": "Czechia",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 390.0
+      "seedTotalKg": 390,
+      "countryCode": "CZ"
     },
     {
       "id": "women-47-jones-ainsley",
@@ -75,7 +82,8 @@
       "sex": "female",
       "countryName": "Australia",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 386.0
+      "seedTotalKg": 386,
+      "countryCode": "AU"
     },
     {
       "id": "women-47-altamimi-alhanouf",
@@ -83,7 +91,8 @@
       "sex": "female",
       "countryName": "Kuwait",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 377.5
+      "seedTotalKg": 377.5,
+      "countryCode": "KW"
     },
     {
       "id": "women-47-santos-mediavilla-paula",
@@ -91,7 +100,8 @@
       "sex": "female",
       "countryName": "Spain",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 351.0
+      "seedTotalKg": 351,
+      "countryCode": "ES"
     },
     {
       "id": "women-47-al-jundi-nour",
@@ -99,7 +109,8 @@
       "sex": "female",
       "countryName": "Thailand",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 340.0
+      "seedTotalKg": 340,
+      "countryCode": "TH"
     },
     {
       "id": "women-47-wedlock-sze-yee-venezia",
@@ -107,7 +118,8 @@
       "sex": "female",
       "countryName": "Singapore",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 325.0
+      "seedTotalKg": 325,
+      "countryCode": "SG"
     },
     {
       "id": "women-47-clarke-joanne",
@@ -115,7 +127,8 @@
       "sex": "female",
       "countryName": "Ireland",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 325.0
+      "seedTotalKg": 325,
+      "countryCode": "IE"
     },
     {
       "id": "women-47-mai-on-kotchaphan",
@@ -123,7 +136,8 @@
       "sex": "female",
       "countryName": "Ireland",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 317.5
+      "seedTotalKg": 317.5,
+      "countryCode": "IE"
     },
     {
       "id": "women-47-beglarashvili-mari",
@@ -131,7 +145,8 @@
       "sex": "female",
       "countryName": "Georgia",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 317.5
+      "seedTotalKg": 317.5,
+      "countryCode": "GE"
     },
     {
       "id": "women-47-idczak-karolina",
@@ -139,7 +154,8 @@
       "sex": "female",
       "countryName": "Poland",
       "weightCategoryId": "women-47",
-      "seedTotalKg": 285.0
+      "seedTotalKg": 285,
+      "countryCode": "PL"
     },
     {
       "id": "women-52-smith-megan-li",
@@ -147,7 +163,8 @@
       "sex": "female",
       "countryName": "New Zealand",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 482.5
+      "seedTotalKg": 482.5,
+      "countryCode": "NZ"
     },
     {
       "id": "women-52-dekkers-pleun",
@@ -155,7 +172,8 @@
       "sex": "female",
       "countryName": "Netherlands",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 464.5
+      "seedTotalKg": 464.5,
+      "countryCode": "NL"
     },
     {
       "id": "women-52-gagne-catherine",
@@ -163,7 +181,8 @@
       "sex": "female",
       "countryName": "Canada",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 455.0
+      "seedTotalKg": 455,
+      "countryCode": "CA"
     },
     {
       "id": "women-52-lucas-lea",
@@ -171,7 +190,8 @@
       "sex": "female",
       "countryName": "France",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 437.5
+      "seedTotalKg": 437.5,
+      "countryCode": "FR"
     },
     {
       "id": "women-52-farid-farhanna",
@@ -179,7 +199,8 @@
       "sex": "female",
       "countryName": "Singapore",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 434.5
+      "seedTotalKg": 434.5,
+      "countryCode": "SG"
     },
     {
       "id": "women-52-pineda-vanessa",
@@ -187,7 +208,8 @@
       "sex": "female",
       "countryName": "United States",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 432.5
+      "seedTotalKg": 432.5,
+      "countryCode": "US"
     },
     {
       "id": "women-52-lehoczkyne-fawal-margit",
@@ -195,7 +217,8 @@
       "sex": "female",
       "countryName": "Hungary",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 427.5
+      "seedTotalKg": 427.5,
+      "countryCode": "HU"
     },
     {
       "id": "women-52-gerlach-eliza",
@@ -203,7 +226,8 @@
       "sex": "female",
       "countryName": "Poland",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 422.5
+      "seedTotalKg": 422.5,
+      "countryCode": "PL"
     },
     {
       "id": "women-52-craven-elizabeth",
@@ -211,7 +235,8 @@
       "sex": "female",
       "countryName": "Australia",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 420.5
+      "seedTotalKg": 420.5,
+      "countryCode": "AU"
     },
     {
       "id": "women-52-barwari-delal",
@@ -219,7 +244,8 @@
       "sex": "female",
       "countryName": "Sweden",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 407.5
+      "seedTotalKg": 407.5,
+      "countryCode": "SE"
     },
     {
       "id": "women-52-la-bella-daiana",
@@ -227,7 +253,8 @@
       "sex": "female",
       "countryName": "Argentina",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 403.0
+      "seedTotalKg": 403,
+      "countryCode": "AR"
     },
     {
       "id": "women-52-chorianopoulou-aikaterini",
@@ -235,7 +262,8 @@
       "sex": "female",
       "countryName": "Australia",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 402.5
+      "seedTotalKg": 402.5,
+      "countryCode": "AU"
     },
     {
       "id": "women-52-varol-fatma",
@@ -243,7 +271,8 @@
       "sex": "female",
       "countryName": "Turkiye",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 401.5
+      "seedTotalKg": 401.5,
+      "countryCode": "TR"
     },
     {
       "id": "women-52-carvalho-giulia",
@@ -251,7 +280,8 @@
       "sex": "female",
       "countryName": "Brazil",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 401.0
+      "seedTotalKg": 401,
+      "countryCode": "BR"
     },
     {
       "id": "women-52-sim-cristy",
@@ -259,7 +289,8 @@
       "sex": "female",
       "countryName": "Mexico",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 395.0
+      "seedTotalKg": 395,
+      "countryCode": "MX"
     },
     {
       "id": "women-52-saana-grassham",
@@ -267,7 +298,8 @@
       "sex": "female",
       "countryName": "Japan",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 390.0
+      "seedTotalKg": 390,
+      "countryCode": "JP"
     },
     {
       "id": "women-52-sveinsdottir-kristrun",
@@ -275,7 +307,8 @@
       "sex": "female",
       "countryName": "Iceland",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 375.0
+      "seedTotalKg": 375,
+      "countryCode": "IS"
     },
     {
       "id": "women-52-caldona-jackielyn",
@@ -283,7 +316,8 @@
       "sex": "female",
       "countryName": "Philippines",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 366.0
+      "seedTotalKg": 366,
+      "countryCode": "PH"
     },
     {
       "id": "women-52-bobileva-arina",
@@ -291,7 +325,8 @@
       "sex": "female",
       "countryName": "Latvia",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 362.5
+      "seedTotalKg": 362.5,
+      "countryCode": "LV"
     },
     {
       "id": "women-52-koskipaasi-jaana",
@@ -299,7 +334,8 @@
       "sex": "female",
       "countryName": "Finland",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 360.0
+      "seedTotalKg": 360,
+      "countryCode": "FI"
     },
     {
       "id": "women-52-verhulst-stefanie",
@@ -307,7 +343,8 @@
       "sex": "female",
       "countryName": "Belgium",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 357.5
+      "seedTotalKg": 357.5,
+      "countryCode": "BE"
     },
     {
       "id": "women-52-tsetskhladze-mariam",
@@ -315,7 +352,8 @@
       "sex": "female",
       "countryName": "Georgia",
       "weightCategoryId": "women-52",
-      "seedTotalKg": 307.5
+      "seedTotalKg": 307.5,
+      "countryCode": "GE"
     },
     {
       "id": "women-57-naldi-sara",
@@ -323,7 +361,8 @@
       "sex": "female",
       "countryName": "Italy",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 530.5
+      "seedTotalKg": 530.5,
+      "countryCode": "IT"
     },
     {
       "id": "women-57-nnamani-joy",
@@ -331,7 +370,8 @@
       "sex": "female",
       "countryName": "United Kingdom",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 520.5
+      "seedTotalKg": 520.5,
+      "countryCode": "GB"
     },
     {
       "id": "women-57-pal-sovannphaktra",
@@ -339,7 +379,8 @@
       "sex": "female",
       "countryName": "France",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 502.5
+      "seedTotalKg": 502.5,
+      "countryCode": "FR"
     },
     {
       "id": "women-57-butters-bobbie",
@@ -347,7 +388,8 @@
       "sex": "female",
       "countryName": "United Kingdom",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 492.5
+      "seedTotalKg": 492.5,
+      "countryCode": "GB"
     },
     {
       "id": "women-57-corrigan-evie",
@@ -355,7 +397,8 @@
       "sex": "female",
       "countryName": "New Zealand",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 490.0
+      "seedTotalKg": 490,
+      "countryCode": "NZ"
     },
     {
       "id": "women-57-olin-emelie",
@@ -363,7 +406,8 @@
       "sex": "female",
       "countryName": "Sweden",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 458.5
+      "seedTotalKg": 458.5,
+      "countryCode": "SE"
     },
     {
       "id": "women-57-aguila-padilla-ana",
@@ -371,7 +415,8 @@
       "sex": "female",
       "countryName": "Spain",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 455.0
+      "seedTotalKg": 455,
+      "countryCode": "ES"
     },
     {
       "id": "women-57-amri-miriam",
@@ -379,7 +424,8 @@
       "sex": "female",
       "countryName": "Netherlands",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 452.5
+      "seedTotalKg": 452.5,
+      "countryCode": "NL"
     },
     {
       "id": "women-57-henry-marthe",
@@ -387,7 +433,8 @@
       "sex": "female",
       "countryName": "Canada",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 452.5
+      "seedTotalKg": 452.5,
+      "countryCode": "CA"
     },
     {
       "id": "women-57-de-la-torre-monica",
@@ -395,7 +442,8 @@
       "sex": "female",
       "countryName": "Mexico",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 448.5
+      "seedTotalKg": 448.5,
+      "countryCode": "MX"
     },
     {
       "id": "women-57-kratz-samantha",
@@ -403,7 +451,8 @@
       "sex": "female",
       "countryName": "Australia",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 437.5
+      "seedTotalKg": 437.5,
+      "countryCode": "AU"
     },
     {
       "id": "women-57-babic-katja",
@@ -411,7 +460,8 @@
       "sex": "female",
       "countryName": "Slovenia",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 427.5
+      "seedTotalKg": 427.5,
+      "countryCode": "SI"
     },
     {
       "id": "women-57-oestergaard-mathilde",
@@ -419,7 +469,8 @@
       "sex": "female",
       "countryName": "Denmark",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 423.0
+      "seedTotalKg": 423,
+      "countryCode": "DK"
     },
     {
       "id": "women-57-keenan-lauren",
@@ -427,7 +478,8 @@
       "sex": "female",
       "countryName": "Qatar",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 417.5
+      "seedTotalKg": 417.5,
+      "countryCode": "QA"
     },
     {
       "id": "women-57-huang-zhiyin",
@@ -435,7 +487,8 @@
       "sex": "female",
       "countryName": "China",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 415.0
+      "seedTotalKg": 415,
+      "countryCode": "CN"
     },
     {
       "id": "women-57-rummens-elise",
@@ -443,7 +496,8 @@
       "sex": "female",
       "countryName": "Belgium",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 405.0
+      "seedTotalKg": 405,
+      "countryCode": "BE"
     },
     {
       "id": "women-57-wandeler-anouk",
@@ -451,7 +505,8 @@
       "sex": "female",
       "countryName": "Switzerland",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 403.0
+      "seedTotalKg": 403,
+      "countryCode": "CH"
     },
     {
       "id": "women-57-boukalova-anna",
@@ -459,7 +514,8 @@
       "sex": "female",
       "countryName": "Czechia",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 390.0
+      "seedTotalKg": 390,
+      "countryCode": "CZ"
     },
     {
       "id": "women-57-lee-michelle",
@@ -467,7 +523,8 @@
       "sex": "female",
       "countryName": "Singapore",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 375.0
+      "seedTotalKg": 375,
+      "countryCode": "SG"
     },
     {
       "id": "women-57-bondy-florence",
@@ -475,7 +532,8 @@
       "sex": "female",
       "countryName": "Thailand",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 342.5
+      "seedTotalKg": 342.5,
+      "countryCode": "TH"
     },
     {
       "id": "women-57-viktoria-flavia-dr",
@@ -483,7 +541,8 @@
       "sex": "female",
       "countryName": "Hungary",
       "weightCategoryId": "women-57",
-      "seedTotalKg": 75.0
+      "seedTotalKg": 75,
+      "countryCode": "HU"
     },
     {
       "id": "women-63-bostrom-alba",
@@ -491,7 +550,8 @@
       "sex": "female",
       "countryName": "Sweden",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 582.5
+      "seedTotalKg": 582.5,
+      "countryCode": "SE"
     },
     {
       "id": "women-63-bernardi-chiara",
@@ -499,7 +559,8 @@
       "sex": "female",
       "countryName": "Italy",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 542.5
+      "seedTotalKg": 542.5,
+      "countryCode": "IT"
     },
     {
       "id": "women-63-aborah-betty",
@@ -507,7 +568,8 @@
       "sex": "female",
       "countryName": "Netherlands",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 518.5
+      "seedTotalKg": 518.5,
+      "countryCode": "NL"
     },
     {
       "id": "women-63-vidal-makeda",
@@ -515,7 +577,8 @@
       "sex": "female",
       "countryName": "United Kingdom",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 501.0
+      "seedTotalKg": 501,
+      "countryCode": "GB"
     },
     {
       "id": "women-63-van-vianen-romy",
@@ -523,7 +586,8 @@
       "sex": "female",
       "countryName": "Netherlands",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 500.0
+      "seedTotalKg": 500,
+      "countryCode": "NL"
     },
     {
       "id": "women-63-haeberer-clara-isabelle",
@@ -531,7 +595,8 @@
       "sex": "female",
       "countryName": "Germany",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 500.0
+      "seedTotalKg": 500,
+      "countryCode": "DE"
     },
     {
       "id": "women-63-mamane-leah",
@@ -539,7 +604,8 @@
       "sex": "female",
       "countryName": "Canada",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 494.0
+      "seedTotalKg": 494,
+      "countryCode": "CA"
     },
     {
       "id": "women-63-maguregi-rodriguez-jone",
@@ -547,7 +613,8 @@
       "sex": "female",
       "countryName": "Spain",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 490.0
+      "seedTotalKg": 490,
+      "countryCode": "ES"
     },
     {
       "id": "women-63-kvantchiani-sopiko",
@@ -555,7 +622,8 @@
       "sex": "female",
       "countryName": "Georgia",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 487.5
+      "seedTotalKg": 487.5,
+      "countryCode": "GE"
     },
     {
       "id": "women-63-lalime-sahyuri",
@@ -563,7 +631,8 @@
       "sex": "female",
       "countryName": "Belgium",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 485.0
+      "seedTotalKg": 485,
+      "countryCode": "BE"
     },
     {
       "id": "women-63-wolf-jana",
@@ -571,7 +640,8 @@
       "sex": "female",
       "countryName": "Switzerland",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 480.0
+      "seedTotalKg": 480,
+      "countryCode": "CH"
     },
     {
       "id": "women-63-zurinskaite-deimante",
@@ -579,7 +649,8 @@
       "sex": "female",
       "countryName": "Lithuania",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 472.5
+      "seedTotalKg": 472.5,
+      "countryCode": "LT"
     },
     {
       "id": "women-63-stevens-jody",
@@ -587,7 +658,8 @@
       "sex": "female",
       "countryName": "Ireland",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 470.0
+      "seedTotalKg": 470,
+      "countryCode": "IE"
     },
     {
       "id": "women-63-visan-ana-maria",
@@ -595,7 +667,8 @@
       "sex": "female",
       "countryName": "New Zealand",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 455.0
+      "seedTotalKg": 455,
+      "countryCode": "NZ"
     },
     {
       "id": "women-63-tiong-natalie",
@@ -603,7 +676,8 @@
       "sex": "female",
       "countryName": "Singapore",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 442.5
+      "seedTotalKg": 442.5,
+      "countryCode": "SG"
     },
     {
       "id": "women-63-torres-judith",
@@ -611,7 +685,8 @@
       "sex": "female",
       "countryName": "Mexico",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 442.5
+      "seedTotalKg": 442.5,
+      "countryCode": "MX"
     },
     {
       "id": "women-63-jansova-dominika",
@@ -619,7 +694,8 @@
       "sex": "female",
       "countryName": "Czechia",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 430.0
+      "seedTotalKg": 430,
+      "countryCode": "CZ"
     },
     {
       "id": "women-63-kalinowska-ewelina",
@@ -627,7 +703,8 @@
       "sex": "female",
       "countryName": "Poland",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 422.5
+      "seedTotalKg": 422.5,
+      "countryCode": "PL"
     },
     {
       "id": "women-63-duus-cecilie",
@@ -635,7 +712,8 @@
       "sex": "female",
       "countryName": "Denmark",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 422.5
+      "seedTotalKg": 422.5,
+      "countryCode": "DK"
     },
     {
       "id": "women-63-zunic-lea",
@@ -643,7 +721,8 @@
       "sex": "female",
       "countryName": "Croatia",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 405.0
+      "seedTotalKg": 405,
+      "countryCode": "HR"
     },
     {
       "id": "women-63-vackova-kristyna",
@@ -651,7 +730,8 @@
       "sex": "female",
       "countryName": "Czechia",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 392.5
+      "seedTotalKg": 392.5,
+      "countryCode": "CZ"
     },
     {
       "id": "women-63-dunning-mary",
@@ -659,7 +739,8 @@
       "sex": "female",
       "countryName": "Thailand",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 390.0
+      "seedTotalKg": 390,
+      "countryCode": "TH"
     },
     {
       "id": "women-63-wenn-cara",
@@ -667,7 +748,8 @@
       "sex": "female",
       "countryName": "South Africa",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 385.0
+      "seedTotalKg": 385,
+      "countryCode": "ZA"
     },
     {
       "id": "women-63-ong-yi",
@@ -675,7 +757,8 @@
       "sex": "female",
       "countryName": "Singapore",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 372.5
+      "seedTotalKg": 372.5,
+      "countryCode": "SG"
     },
     {
       "id": "women-63-chatzigianni-andria",
@@ -683,7 +766,8 @@
       "sex": "female",
       "countryName": "Cyprus",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 367.5
+      "seedTotalKg": 367.5,
+      "countryCode": "CY"
     },
     {
       "id": "women-63-zhou-yiqian",
@@ -691,7 +775,8 @@
       "sex": "female",
       "countryName": "China",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 360.0
+      "seedTotalKg": 360,
+      "countryCode": "CN"
     },
     {
       "id": "women-63-gerute-lina",
@@ -699,7 +784,8 @@
       "sex": "female",
       "countryName": "Lithuania",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 357.5
+      "seedTotalKg": 357.5,
+      "countryCode": "LT"
     },
     {
       "id": "women-63-meshveliani-natela",
@@ -707,7 +793,8 @@
       "sex": "female",
       "countryName": "Georgia",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 335.0
+      "seedTotalKg": 335,
+      "countryCode": "GE"
     },
     {
       "id": "women-63-liang-yim-chee",
@@ -715,7 +802,8 @@
       "sex": "female",
       "countryName": "Hong Kong, China",
       "weightCategoryId": "women-63",
-      "seedTotalKg": 325.0
+      "seedTotalKg": 325,
+      "countryCode": "HK"
     },
     {
       "id": "women-69-garra-carola",
@@ -723,7 +811,8 @@
       "sex": "female",
       "countryName": "Italy",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 588.5
+      "seedTotalKg": 588.5,
+      "countryCode": "IT"
     },
     {
       "id": "women-69-babb-chandler",
@@ -731,7 +820,8 @@
       "sex": "female",
       "countryName": "US Virgin Islands",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 570.0
+      "seedTotalKg": 570,
+      "countryCode": "VI"
     },
     {
       "id": "women-69-kovacs-janee",
@@ -739,7 +829,8 @@
       "sex": "female",
       "countryName": "United States",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 570.0
+      "seedTotalKg": 570,
+      "countryCode": "US"
     },
     {
       "id": "women-69-scanlon-meghan",
@@ -747,7 +838,8 @@
       "sex": "female",
       "countryName": "United States",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 563.5
+      "seedTotalKg": 563.5,
+      "countryCode": "US"
     },
     {
       "id": "women-69-van-daal-marie-jose",
@@ -755,7 +847,8 @@
       "sex": "female",
       "countryName": "Netherlands",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 552.5
+      "seedTotalKg": 552.5,
+      "countryCode": "NL"
     },
     {
       "id": "women-69-nelson-annie",
@@ -763,7 +856,8 @@
       "sex": "female",
       "countryName": "United Kingdom",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 550.0
+      "seedTotalKg": 550,
+      "countryCode": "GB"
     },
     {
       "id": "women-69-kjenner-marte",
@@ -771,7 +865,8 @@
       "sex": "female",
       "countryName": "Norway",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 550.0
+      "seedTotalKg": 550,
+      "countryCode": "NO"
     },
     {
       "id": "women-69-bright-jordan",
@@ -779,7 +874,8 @@
       "sex": "female",
       "countryName": "Ireland",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 545.0
+      "seedTotalKg": 545,
+      "countryCode": "IE"
     },
     {
       "id": "women-69-bouchoux-andorina",
@@ -787,7 +883,8 @@
       "sex": "female",
       "countryName": "France",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 540.0
+      "seedTotalKg": 540,
+      "countryCode": "FR"
     },
     {
       "id": "women-69-huff-shannon",
@@ -795,7 +892,8 @@
       "sex": "female",
       "countryName": "Canada",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 533.0
+      "seedTotalKg": 533,
+      "countryCode": "CA"
     },
     {
       "id": "women-69-belden-pavlovic-signe",
@@ -803,7 +901,8 @@
       "sex": "female",
       "countryName": "Norway",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 518.0
+      "seedTotalKg": 518,
+      "countryCode": "NO"
     },
     {
       "id": "women-69-tavares-cicera",
@@ -811,7 +910,8 @@
       "sex": "female",
       "countryName": "Brazil",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 494.0
+      "seedTotalKg": 494,
+      "countryCode": "BR"
     },
     {
       "id": "women-69-mabidikama-acima",
@@ -819,7 +919,8 @@
       "sex": "female",
       "countryName": "New Zealand",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 494.0
+      "seedTotalKg": 494,
+      "countryCode": "NZ"
     },
     {
       "id": "women-69-goossens-kaya",
@@ -827,7 +928,8 @@
       "sex": "female",
       "countryName": "Belgium",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 494.0
+      "seedTotalKg": 494,
+      "countryCode": "BE"
     },
     {
       "id": "women-69-altman-hannah",
@@ -835,7 +937,8 @@
       "sex": "female",
       "countryName": "Australia",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 486.0
+      "seedTotalKg": 486,
+      "countryCode": "AU"
     },
     {
       "id": "women-69-materek-sabina",
@@ -843,7 +946,8 @@
       "sex": "female",
       "countryName": "Poland",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 480.0
+      "seedTotalKg": 480,
+      "countryCode": "PL"
     },
     {
       "id": "women-69-haulot-clara",
@@ -851,7 +955,8 @@
       "sex": "female",
       "countryName": "Belgium",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 472.5
+      "seedTotalKg": 472.5,
+      "countryCode": "BE"
     },
     {
       "id": "women-69-skovlind-caroline",
@@ -859,7 +964,8 @@
       "sex": "female",
       "countryName": "Denmark",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 470.0
+      "seedTotalKg": 470,
+      "countryCode": "DK"
     },
     {
       "id": "women-69-denise-guenther",
@@ -867,7 +973,8 @@
       "sex": "female",
       "countryName": "Switzerland",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 461.5
+      "seedTotalKg": 461.5,
+      "countryCode": "CH"
     },
     {
       "id": "women-69-seow-amanda",
@@ -875,7 +982,8 @@
       "sex": "female",
       "countryName": "Singapore",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 446.0
+      "seedTotalKg": 446,
+      "countryCode": "SG"
     },
     {
       "id": "women-69-jones-jayne",
@@ -883,7 +991,8 @@
       "sex": "female",
       "countryName": "Ireland",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 442.5
+      "seedTotalKg": 442.5,
+      "countryCode": "IE"
     },
     {
       "id": "women-69-khwang-hayley",
@@ -891,7 +1000,8 @@
       "sex": "female",
       "countryName": "Singapore",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 420.0
+      "seedTotalKg": 420,
+      "countryCode": "SG"
     },
     {
       "id": "women-69-kairaityte-dainora",
@@ -899,7 +1009,8 @@
       "sex": "female",
       "countryName": "Lithuania",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 420.0
+      "seedTotalKg": 420,
+      "countryCode": "LT"
     },
     {
       "id": "women-69-larrimore-deshawn",
@@ -907,7 +1018,8 @@
       "sex": "female",
       "countryName": "US Virgin Islands",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 415.0
+      "seedTotalKg": 415,
+      "countryCode": "VI"
     },
     {
       "id": "women-69-marina-sanja",
@@ -915,7 +1027,8 @@
       "sex": "female",
       "countryName": "Croatia",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 410.0
+      "seedTotalKg": 410,
+      "countryCode": "HR"
     },
     {
       "id": "women-69-pacce-catalina",
@@ -923,7 +1036,8 @@
       "sex": "female",
       "countryName": "Uruguay",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 400.0
+      "seedTotalKg": 400,
+      "countryCode": "UY"
     },
     {
       "id": "women-69-janulcikaite-ausrine",
@@ -931,7 +1045,8 @@
       "sex": "female",
       "countryName": "Lithuania",
       "weightCategoryId": "women-69",
-      "seedTotalKg": 360.0
+      "seedTotalKg": 360,
+      "countryCode": "LT"
     },
     {
       "id": "women-76-worford-cranon",
@@ -939,7 +1054,8 @@
       "sex": "female",
       "countryName": "United States",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 629.0
+      "seedTotalKg": 629,
+      "countryCode": "US"
     },
     {
       "id": "women-76-mazur-zuzanna",
@@ -947,7 +1063,8 @@
       "sex": "female",
       "countryName": "Poland",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 586.5
+      "seedTotalKg": 586.5,
+      "countryCode": "PL"
     },
     {
       "id": "women-76-bisol-bruna",
@@ -955,7 +1072,8 @@
       "sex": "female",
       "countryName": "Brazil",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 568.5
+      "seedTotalKg": 568.5,
+      "countryCode": "BR"
     },
     {
       "id": "women-76-peyraud-clara",
@@ -963,7 +1081,8 @@
       "sex": "female",
       "countryName": "France",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 567.5
+      "seedTotalKg": 567.5,
+      "countryCode": "FR"
     },
     {
       "id": "women-76-hames-mara",
@@ -971,7 +1090,8 @@
       "sex": "female",
       "countryName": "Germany",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 565.5
+      "seedTotalKg": 565.5,
+      "countryCode": "DE"
     },
     {
       "id": "women-76-hanlon-bettina",
@@ -979,7 +1099,8 @@
       "sex": "female",
       "countryName": "United Kingdom",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 565.0
+      "seedTotalKg": 565,
+      "countryCode": "GB"
     },
     {
       "id": "women-76-ezeh-chisom",
@@ -987,7 +1108,8 @@
       "sex": "female",
       "countryName": "Canada",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 545.0
+      "seedTotalKg": 545,
+      "countryCode": "CA"
     },
     {
       "id": "women-76-hunte-kezia",
@@ -995,7 +1117,8 @@
       "sex": "female",
       "countryName": "Trinidad and Tobago",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 535.0
+      "seedTotalKg": 535,
+      "countryCode": "TT"
     },
     {
       "id": "women-76-gronlund-ellen",
@@ -1003,7 +1126,8 @@
       "sex": "female",
       "countryName": "Finland",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 535.0
+      "seedTotalKg": 535,
+      "countryCode": "FI"
     },
     {
       "id": "women-76-tchrikishvili-nino",
@@ -1011,7 +1135,8 @@
       "sex": "female",
       "countryName": "Georgia",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 532.5
+      "seedTotalKg": 532.5,
+      "countryCode": "GE"
     },
     {
       "id": "women-76-ophoff-tessa",
@@ -1019,7 +1144,8 @@
       "sex": "female",
       "countryName": "Netherlands",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 532.5
+      "seedTotalKg": 532.5,
+      "countryCode": "NL"
     },
     {
       "id": "women-76-govind-hema",
@@ -1027,7 +1153,8 @@
       "sex": "female",
       "countryName": "New Zealand",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 517.5
+      "seedTotalKg": 517.5,
+      "countryCode": "NZ"
     },
     {
       "id": "women-76-szarek-justyna",
@@ -1035,7 +1162,8 @@
       "sex": "female",
       "countryName": "Poland",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 517.5
+      "seedTotalKg": 517.5,
+      "countryCode": "PL"
     },
     {
       "id": "women-76-varillas-modesta",
@@ -1043,7 +1171,8 @@
       "sex": "female",
       "countryName": "Mexico",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 513.0
+      "seedTotalKg": 513,
+      "countryCode": "MX"
     },
     {
       "id": "women-76-swart-chanel",
@@ -1051,7 +1180,8 @@
       "sex": "female",
       "countryName": "New Zealand",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 503.0
+      "seedTotalKg": 503,
+      "countryCode": "NZ"
     },
     {
       "id": "women-76-martens-mariska",
@@ -1059,7 +1189,8 @@
       "sex": "female",
       "countryName": "Belgium",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 502.5
+      "seedTotalKg": 502.5,
+      "countryCode": "BE"
     },
     {
       "id": "women-76-reis-rafaela",
@@ -1067,7 +1198,8 @@
       "sex": "female",
       "countryName": "Portugal",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 490.0
+      "seedTotalKg": 490,
+      "countryCode": "PT"
     },
     {
       "id": "women-76-muller-gaby",
@@ -1075,7 +1207,8 @@
       "sex": "female",
       "countryName": "Belgium",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 470.0
+      "seedTotalKg": 470,
+      "countryCode": "BE"
     },
     {
       "id": "women-76-schvandtnerova-denisa",
@@ -1083,7 +1216,8 @@
       "sex": "female",
       "countryName": "Czechia",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 465.0
+      "seedTotalKg": 465,
+      "countryCode": "CZ"
     },
     {
       "id": "women-76-waldeck-danielle",
@@ -1091,7 +1225,8 @@
       "sex": "female",
       "countryName": "South Africa",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 452.5
+      "seedTotalKg": 452.5,
+      "countryCode": "ZA"
     },
     {
       "id": "women-76-wells-selina",
@@ -1099,7 +1234,8 @@
       "sex": "female",
       "countryName": "Thailand",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 440.0
+      "seedTotalKg": 440,
+      "countryCode": "TH"
     },
     {
       "id": "women-76-khurtsilava-khatia",
@@ -1107,7 +1243,8 @@
       "sex": "female",
       "countryName": "Georgia",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 432.5
+      "seedTotalKg": 432.5,
+      "countryCode": "GE"
     },
     {
       "id": "women-76-xie-thuy",
@@ -1115,7 +1252,8 @@
       "sex": "female",
       "countryName": "Singapore",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 432.5
+      "seedTotalKg": 432.5,
+      "countryCode": "SG"
     },
     {
       "id": "women-76-marangoni-pia",
@@ -1123,7 +1261,8 @@
       "sex": "female",
       "countryName": "South Africa",
       "weightCategoryId": "women-76",
-      "seedTotalKg": 410.0
+      "seedTotalKg": 410,
+      "countryCode": "ZA"
     },
     {
       "id": "women-84-lawrence-amanda",
@@ -1131,7 +1270,8 @@
       "sex": "female",
       "countryName": "United States",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 648.0
+      "seedTotalKg": 648,
+      "countryCode": "US"
     },
     {
       "id": "women-84-tongotea-karlina",
@@ -1139,7 +1279,8 @@
       "sex": "female",
       "countryName": "New Zealand",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 628.5
+      "seedTotalKg": 628.5,
+      "countryCode": "NZ"
     },
     {
       "id": "women-84-azariah-ziana",
@@ -1147,7 +1288,8 @@
       "sex": "female",
       "countryName": "United Kingdom",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 607.0
+      "seedTotalKg": 607,
+      "countryCode": "GB"
     },
     {
       "id": "women-84-zeigler-nicolette",
@@ -1155,7 +1297,8 @@
       "sex": "female",
       "countryName": "United States",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 600.0
+      "seedTotalKg": 600,
+      "countryCode": "US"
     },
     {
       "id": "women-84-thorhallsdottir-kristin",
@@ -1163,7 +1306,8 @@
       "sex": "female",
       "countryName": "Iceland",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 570.5
+      "seedTotalKg": 570.5,
+      "countryCode": "IS"
     },
     {
       "id": "women-84-almeida-marina",
@@ -1171,7 +1315,8 @@
       "sex": "female",
       "countryName": "Brazil",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 565.5
+      "seedTotalKg": 565.5,
+      "countryCode": "BR"
     },
     {
       "id": "women-84-ieronimos-anna",
@@ -1179,7 +1324,8 @@
       "sex": "female",
       "countryName": "Germany",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 565.0
+      "seedTotalKg": 565,
+      "countryCode": "DE"
     },
     {
       "id": "women-84-buettner-jessica",
@@ -1187,7 +1333,8 @@
       "sex": "female",
       "countryName": "Canada",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 561.0
+      "seedTotalKg": 561,
+      "countryCode": "CA"
     },
     {
       "id": "women-84-mouchet-emilie",
@@ -1195,7 +1342,8 @@
       "sex": "female",
       "countryName": "France",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 555.0
+      "seedTotalKg": 555,
+      "countryCode": "FR"
     },
     {
       "id": "women-84-rudin-agnes",
@@ -1203,7 +1351,8 @@
       "sex": "female",
       "countryName": "Sweden",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 552.5
+      "seedTotalKg": 552.5,
+      "countryCode": "SE"
     },
     {
       "id": "women-84-coopoosamy-nicole",
@@ -1211,7 +1360,8 @@
       "sex": "female",
       "countryName": "South Africa",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 550.0
+      "seedTotalKg": 550,
+      "countryCode": "ZA"
     },
     {
       "id": "women-84-lahtinen-mira",
@@ -1219,7 +1369,8 @@
       "sex": "female",
       "countryName": "Finland",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 549.0
+      "seedTotalKg": 549,
+      "countryCode": "FI"
     },
     {
       "id": "women-84-letting-regitze",
@@ -1227,7 +1378,8 @@
       "sex": "female",
       "countryName": "Denmark",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 547.5
+      "seedTotalKg": 547.5,
+      "countryCode": "DK"
     },
     {
       "id": "women-84-bychok-liudmyla",
@@ -1235,7 +1387,8 @@
       "sex": "female",
       "countryName": "Ukraine",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 547.5
+      "seedTotalKg": 547.5,
+      "countryCode": "UA"
     },
     {
       "id": "women-84-zhao-yan-fei",
@@ -1243,7 +1396,8 @@
       "sex": "female",
       "countryName": "Australia",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 547.0
+      "seedTotalKg": 547,
+      "countryCode": "AU"
     },
     {
       "id": "women-84-sanchez-jorge-carla",
@@ -1251,7 +1405,8 @@
       "sex": "female",
       "countryName": "Spain",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 542.5
+      "seedTotalKg": 542.5,
+      "countryCode": "ES"
     },
     {
       "id": "women-84-joergensen-katja",
@@ -1259,7 +1414,8 @@
       "sex": "female",
       "countryName": "Denmark",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 527.5
+      "seedTotalKg": 527.5,
+      "countryCode": "DK"
     },
     {
       "id": "women-84-alleyne-deresay",
@@ -1267,7 +1423,8 @@
       "sex": "female",
       "countryName": "Trinidad and Tobago",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 525.5
+      "seedTotalKg": 525.5,
+      "countryCode": "TT"
     },
     {
       "id": "women-84-erimo-sabadell-rosa",
@@ -1275,7 +1432,8 @@
       "sex": "female",
       "countryName": "Spain",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 525.0
+      "seedTotalKg": 525,
+      "countryCode": "ES"
     },
     {
       "id": "women-84-matsuda-miyu",
@@ -1283,7 +1441,8 @@
       "sex": "female",
       "countryName": "Japan",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 523.0
+      "seedTotalKg": 523,
+      "countryCode": "JP"
     },
     {
       "id": "women-84-laitinen-jenna",
@@ -1291,7 +1450,8 @@
       "sex": "female",
       "countryName": "Finland",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 519.5
+      "seedTotalKg": 519.5,
+      "countryCode": "FI"
     },
     {
       "id": "women-84-abouassi-nour",
@@ -1299,7 +1459,8 @@
       "sex": "female",
       "countryName": "Qatar",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 490.0
+      "seedTotalKg": 490,
+      "countryCode": "QA"
     },
     {
       "id": "women-84-adedokun-comfort",
@@ -1307,7 +1468,8 @@
       "sex": "female",
       "countryName": "Ireland",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 488.0
+      "seedTotalKg": 488,
+      "countryCode": "IE"
     },
     {
       "id": "women-84-suitauloa-shaniele",
@@ -1315,7 +1477,8 @@
       "sex": "female",
       "countryName": "New Zealand",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 487.5
+      "seedTotalKg": 487.5,
+      "countryCode": "NZ"
     },
     {
       "id": "women-84-rodrigues-ana",
@@ -1323,7 +1486,8 @@
       "sex": "female",
       "countryName": "Lithuania",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 457.2
+      "seedTotalKg": 457.2,
+      "countryCode": "LT"
     },
     {
       "id": "women-84-szymkowiak-magdalena",
@@ -1331,7 +1495,8 @@
       "sex": "female",
       "countryName": "Poland",
       "weightCategoryId": "women-84",
-      "seedTotalKg": 420.0
+      "seedTotalKg": 420,
+      "countryCode": "PL"
     },
     {
       "id": "women-84plus-muluh-sonita",
@@ -1339,7 +1504,8 @@
       "sex": "female",
       "countryName": "Belgium",
       "weightCategoryId": "women-84plus",
-      "seedTotalKg": 751.0
+      "seedTotalKg": 751,
+      "countryCode": "BE"
     },
     {
       "id": "women-84plus-schlater-brittany",
@@ -1347,7 +1513,8 @@
       "sex": "female",
       "countryName": "Canada",
       "weightCategoryId": "women-84plus",
-      "seedTotalKg": 732.5
+      "seedTotalKg": 732.5,
+      "countryCode": "CA"
     },
     {
       "id": "women-84plus-onuoha-aquinn",
@@ -1355,7 +1522,8 @@
       "sex": "female",
       "countryName": "United Kingdom",
       "weightCategoryId": "women-84plus",
-      "seedTotalKg": 671.5
+      "seedTotalKg": 671.5,
+      "countryCode": "GB"
     },
     {
       "id": "women-84plus-omotoso-toyosi",
@@ -1363,7 +1531,8 @@
       "sex": "female",
       "countryName": "United Kingdom",
       "weightCategoryId": "women-84plus",
-      "seedTotalKg": 662.5
+      "seedTotalKg": 662.5,
+      "countryCode": "GB"
     },
     {
       "id": "women-84plus-brown-bonica",
@@ -1371,7 +1540,8 @@
       "sex": "female",
       "countryName": "United States",
       "weightCategoryId": "women-84plus",
-      "seedTotalKg": 662.5
+      "seedTotalKg": 662.5,
+      "countryCode": "US"
     },
     {
       "id": "women-84plus-mierger-amelie",
@@ -1379,7 +1549,8 @@
       "sex": "female",
       "countryName": "France",
       "weightCategoryId": "women-84plus",
-      "seedTotalKg": 632.5
+      "seedTotalKg": 632.5,
+      "countryCode": "FR"
     },
     {
       "id": "women-84plus-padia-zahra",
@@ -1387,7 +1558,8 @@
       "sex": "female",
       "countryName": "Trinidad and Tobago",
       "weightCategoryId": "women-84plus",
-      "seedTotalKg": 608.0
+      "seedTotalKg": 608,
+      "countryCode": "TT"
     },
     {
       "id": "women-84plus-o-reilly-alison",
@@ -1395,7 +1567,8 @@
       "sex": "female",
       "countryName": "Ireland",
       "weightCategoryId": "women-84plus",
-      "seedTotalKg": 550.0
+      "seedTotalKg": 550,
+      "countryCode": "IE"
     },
     {
       "id": "women-84plus-sigurjonsdottir-hanna",
@@ -1403,7 +1576,8 @@
       "sex": "female",
       "countryName": "Iceland",
       "weightCategoryId": "women-84plus",
-      "seedTotalKg": 525.0
+      "seedTotalKg": 525,
+      "countryCode": "IS"
     },
     {
       "id": "women-84plus-matthiasdottir-thorbjorg",
@@ -1411,7 +1585,8 @@
       "sex": "female",
       "countryName": "Iceland",
       "weightCategoryId": "women-84plus",
-      "seedTotalKg": 522.5
+      "seedTotalKg": 522.5,
+      "countryCode": "IS"
     },
     {
       "id": "women-84plus-kamoto-emi",
@@ -1419,7 +1594,8 @@
       "sex": "female",
       "countryName": "Japan",
       "weightCategoryId": "women-84plus",
-      "seedTotalKg": 486.0
+      "seedTotalKg": 486,
+      "countryCode": "JP"
     },
     {
       "id": "women-84plus-de-la-barra-zelaya-marcela",
@@ -1427,7 +1603,8 @@
       "sex": "female",
       "countryName": "Chile",
       "weightCategoryId": "women-84plus",
-      "seedTotalKg": 471.5
+      "seedTotalKg": 471.5,
+      "countryCode": "CL"
     },
     {
       "id": "women-84plus-malojlo-marta",
@@ -1435,7 +1612,8 @@
       "sex": "female",
       "countryName": "Latvia",
       "weightCategoryId": "women-84plus",
-      "seedTotalKg": 467.5
+      "seedTotalKg": 467.5,
+      "countryCode": "LV"
     },
     {
       "id": "men-59-slabic-michael",
@@ -1443,7 +1621,8 @@
       "sex": "male",
       "countryName": "United States",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 651.0
+      "seedTotalKg": 651,
+      "countryCode": "US"
     },
     {
       "id": "men-59-campano-diaz-ivan",
@@ -1451,7 +1630,8 @@
       "sex": "male",
       "countryName": "Spain",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 642.5
+      "seedTotalKg": 642.5,
+      "countryCode": "ES"
     },
     {
       "id": "men-59-garcia-antoine",
@@ -1459,7 +1639,8 @@
       "sex": "male",
       "countryName": "France",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 628.0
+      "seedTotalKg": 628,
+      "countryCode": "FR"
     },
     {
       "id": "men-59-takiyama-yasutaka",
@@ -1467,7 +1648,8 @@
       "sex": "male",
       "countryName": "Japan",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 625.0
+      "seedTotalKg": 625,
+      "countryCode": "JP"
     },
     {
       "id": "men-59-elhamali-mohamed",
@@ -1475,7 +1657,8 @@
       "sex": "male",
       "countryName": "Libya",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 615.0
+      "seedTotalKg": 615,
+      "countryCode": "LY"
     },
     {
       "id": "men-59-nyarko-kwaku",
@@ -1483,7 +1666,8 @@
       "sex": "male",
       "countryName": "Ghana",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 602.5
+      "seedTotalKg": 602.5,
+      "countryCode": "GH"
     },
     {
       "id": "men-59-leon-franklin",
@@ -1491,7 +1675,8 @@
       "sex": "male",
       "countryName": "Ecuador",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 602.5
+      "seedTotalKg": 602.5,
+      "countryCode": "EC"
     },
     {
       "id": "men-59-ho-david",
@@ -1499,7 +1684,8 @@
       "sex": "male",
       "countryName": "Canada",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 600.0
+      "seedTotalKg": 600,
+      "countryCode": "CA"
     },
     {
       "id": "men-59-huang-wei-chen",
@@ -1507,7 +1693,8 @@
       "sex": "male",
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 577.5
+      "seedTotalKg": 577.5,
+      "countryCode": "TW"
     },
     {
       "id": "men-59-you-yao-wei",
@@ -1515,7 +1702,8 @@
       "sex": "male",
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 570.0
+      "seedTotalKg": 570,
+      "countryCode": "TW"
     },
     {
       "id": "men-59-cruz-angel",
@@ -1523,7 +1711,8 @@
       "sex": "male",
       "countryName": "Mexico",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 570.0
+      "seedTotalKg": 570,
+      "countryCode": "MX"
     },
     {
       "id": "men-59-gelashvili-giorgi",
@@ -1531,7 +1720,8 @@
       "sex": "male",
       "countryName": "Georgia",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 562.0
+      "seedTotalKg": 562,
+      "countryCode": "GE"
     },
     {
       "id": "men-59-madera-joenas",
@@ -1539,7 +1729,8 @@
       "sex": "male",
       "countryName": "Australia",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 558.0
+      "seedTotalKg": 558,
+      "countryCode": "AU"
     },
     {
       "id": "men-59-imamura-ryo",
@@ -1547,7 +1738,8 @@
       "sex": "male",
       "countryName": "Japan",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 557.5
+      "seedTotalKg": 557.5,
+      "countryCode": "JP"
     },
     {
       "id": "men-59-santangelo-jacopo",
@@ -1555,7 +1747,8 @@
       "sex": "male",
       "countryName": "Italy",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 557.5
+      "seedTotalKg": 557.5,
+      "countryCode": "IT"
     },
     {
       "id": "men-59-ergin-kemal",
@@ -1563,7 +1756,8 @@
       "sex": "male",
       "countryName": "Netherlands",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 535.0
+      "seedTotalKg": 535,
+      "countryCode": "NL"
     },
     {
       "id": "men-59-cancel-ivan",
@@ -1571,7 +1765,8 @@
       "sex": "male",
       "countryName": "Puerto Rico",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 514.0
+      "seedTotalKg": 514,
+      "countryCode": "PR"
     },
     {
       "id": "men-59-flores-jose",
@@ -1579,7 +1774,8 @@
       "sex": "male",
       "countryName": "New Zealand",
       "weightCategoryId": "men-59",
-      "seedTotalKg": 500.0
+      "seedTotalKg": 500,
+      "countryCode": "NZ"
     },
     {
       "id": "men-66-bakkelund-kjell",
@@ -1587,7 +1783,8 @@
       "sex": "male",
       "countryName": "Norway",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 782.0
+      "seedTotalKg": 782,
+      "countryCode": "NO"
     },
     {
       "id": "men-66-jordan-joseph",
@@ -1595,7 +1792,8 @@
       "sex": "male",
       "countryName": "US Virgin Islands",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 720.0
+      "seedTotalKg": 720,
+      "countryCode": "VI"
     },
     {
       "id": "men-66-ushiyama-kyota",
@@ -1603,7 +1801,8 @@
       "sex": "male",
       "countryName": "Japan",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 717.5
+      "seedTotalKg": 717.5,
+      "countryCode": "JP"
     },
     {
       "id": "men-66-nikolai-austin",
@@ -1611,7 +1810,8 @@
       "sex": "male",
       "countryName": "United States",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 710.0
+      "seedTotalKg": 710,
+      "countryCode": "US"
     },
     {
       "id": "men-66-jimenez-santos",
@@ -1619,7 +1819,8 @@
       "sex": "male",
       "countryName": "Mexico",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 685.0
+      "seedTotalKg": 685,
+      "countryCode": "MX"
     },
     {
       "id": "men-66-satake-yusuke",
@@ -1627,7 +1828,8 @@
       "sex": "male",
       "countryName": "Japan",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 685.0
+      "seedTotalKg": 685,
+      "countryCode": "JP"
     },
     {
       "id": "men-66-castillo-carlos",
@@ -1635,7 +1837,8 @@
       "sex": "male",
       "countryName": "Canada",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 667.5
+      "seedTotalKg": 667.5,
+      "countryCode": "CA"
     },
     {
       "id": "men-66-ong-wei",
@@ -1643,7 +1846,8 @@
       "sex": "male",
       "countryName": "Singapore",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 662.5
+      "seedTotalKg": 662.5,
+      "countryCode": "SG"
     },
     {
       "id": "men-66-simonelli-mirko",
@@ -1651,7 +1855,8 @@
       "sex": "male",
       "countryName": "Italy",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 660.5
+      "seedTotalKg": 660.5,
+      "countryCode": "IT"
     },
     {
       "id": "men-66-catena-joel",
@@ -1659,7 +1864,8 @@
       "sex": "male",
       "countryName": "Austria",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 660.0
+      "seedTotalKg": 660,
+      "countryCode": "AT"
     },
     {
       "id": "men-66-liatsis-marios",
@@ -1667,7 +1873,8 @@
       "sex": "male",
       "countryName": "Greece",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 653.0
+      "seedTotalKg": 653,
+      "countryCode": "GR"
     },
     {
       "id": "men-66-sgro-julian",
@@ -1675,7 +1882,8 @@
       "sex": "male",
       "countryName": "Australia",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 627.5
+      "seedTotalKg": 627.5,
+      "countryCode": "AU"
     },
     {
       "id": "men-66-luu-joshua",
@@ -1683,7 +1891,8 @@
       "sex": "male",
       "countryName": "Australia",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 625.0
+      "seedTotalKg": 625,
+      "countryCode": "AU"
     },
     {
       "id": "men-66-zeng-wei-xiang",
@@ -1691,7 +1900,8 @@
       "sex": "male",
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 610.0
+      "seedTotalKg": 610,
+      "countryCode": "TW"
     },
     {
       "id": "men-66-ghizoni-gabriel",
@@ -1699,7 +1909,8 @@
       "sex": "male",
       "countryName": "Brazil",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 600.0
+      "seedTotalKg": 600,
+      "countryCode": "BR"
     },
     {
       "id": "men-66-naoussi-ezelgbo-darling-williams",
@@ -1707,7 +1918,8 @@
       "sex": "male",
       "countryName": "Cameroon",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 600.0
+      "seedTotalKg": 600,
+      "countryCode": "CM"
     },
     {
       "id": "men-66-lin-ching-lun",
@@ -1715,7 +1927,8 @@
       "sex": "male",
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-66",
-      "seedTotalKg": 600.0
+      "seedTotalKg": 600,
+      "countryCode": "TW"
     },
     {
       "id": "men-74-perkins-austin",
@@ -1723,7 +1936,8 @@
       "sex": "male",
       "countryName": "United States",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 891.5
+      "seedTotalKg": 891.5,
+      "countryCode": "US"
     },
     {
       "id": "men-74-bertrand-balthazar",
@@ -1731,7 +1945,8 @@
       "sex": "male",
       "countryName": "France",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 800.5
+      "seedTotalKg": 800.5,
+      "countryCode": "FR"
     },
     {
       "id": "men-74-fan-chun-chia",
@@ -1739,7 +1954,8 @@
       "sex": "male",
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 767.5
+      "seedTotalKg": 767.5,
+      "countryCode": "TW"
     },
     {
       "id": "men-74-lee-clinton",
@@ -1747,7 +1963,8 @@
       "sex": "male",
       "countryName": "Singapore",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 766.0
+      "seedTotalKg": 766,
+      "countryCode": "SG"
     },
     {
       "id": "men-74-lavoie-jacob",
@@ -1755,7 +1972,8 @@
       "sex": "male",
       "countryName": "Canada",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 763.0
+      "seedTotalKg": 763,
+      "countryCode": "CA"
     },
     {
       "id": "men-74-homer-luke",
@@ -1763,7 +1981,8 @@
       "sex": "male",
       "countryName": "Canada",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 763.0
+      "seedTotalKg": 763,
+      "countryCode": "CA"
     },
     {
       "id": "men-74-babaei-somaghi-keyan",
@@ -1771,7 +1990,8 @@
       "sex": "male",
       "countryName": "Australia",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 750.5
+      "seedTotalKg": 750.5,
+      "countryCode": "AU"
     },
     {
       "id": "men-74-al-lanqawi-adel",
@@ -1779,7 +1999,8 @@
       "sex": "male",
       "countryName": "Switzerland",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 737.5
+      "seedTotalKg": 737.5,
+      "countryCode": "CH"
     },
     {
       "id": "men-74-gimorri-giacomo",
@@ -1787,7 +2008,8 @@
       "sex": "male",
       "countryName": "Italy",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 735.0
+      "seedTotalKg": 735,
+      "countryCode": "IT"
     },
     {
       "id": "men-74-konstantinou-christos",
@@ -1795,7 +2017,8 @@
       "sex": "male",
       "countryName": "Cyprus",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 726.5
+      "seedTotalKg": 726.5,
+      "countryCode": "CY"
     },
     {
       "id": "men-74-cheong-cheng",
@@ -1803,7 +2026,8 @@
       "sex": "male",
       "countryName": "Singapore",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 720.0
+      "seedTotalKg": 720,
+      "countryCode": "SG"
     },
     {
       "id": "men-74-herraiz-frances-alberto",
@@ -1811,7 +2035,8 @@
       "sex": "male",
       "countryName": "Spain",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 717.5
+      "seedTotalKg": 717.5,
+      "countryCode": "ES"
     },
     {
       "id": "men-74-cheng-yu-jui",
@@ -1819,7 +2044,8 @@
       "sex": "male",
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 702.5
+      "seedTotalKg": 702.5,
+      "countryCode": "TW"
     },
     {
       "id": "men-74-medjahed-yacine",
@@ -1827,7 +2053,8 @@
       "sex": "male",
       "countryName": "Algeria",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 700.0
+      "seedTotalKg": 700,
+      "countryCode": "DZ"
     },
     {
       "id": "men-74-ola-joshua",
@@ -1835,7 +2062,8 @@
       "sex": "male",
       "countryName": "Ireland",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 695.0
+      "seedTotalKg": 695,
+      "countryCode": "IE"
     },
     {
       "id": "men-74-rada-karel",
@@ -1843,7 +2071,8 @@
       "sex": "male",
       "countryName": "Czechia",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 685.0
+      "seedTotalKg": 685,
+      "countryCode": "CZ"
     },
     {
       "id": "men-74-saed-awnullah",
@@ -1851,7 +2080,8 @@
       "sex": "male",
       "countryName": "Libya",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 685.0
+      "seedTotalKg": 685,
+      "countryCode": "LY"
     },
     {
       "id": "men-74-strachan-john",
@@ -1859,7 +2089,8 @@
       "sex": "male",
       "countryName": "New Zealand",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 650.0
+      "seedTotalKg": 650,
+      "countryCode": "NZ"
     },
     {
       "id": "men-74-richards-lachlan",
@@ -1867,7 +2098,8 @@
       "sex": "male",
       "countryName": "New Zealand",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 642.5
+      "seedTotalKg": 642.5,
+      "countryCode": "NZ"
     },
     {
       "id": "men-74-damlamajans-marats",
@@ -1875,7 +2107,8 @@
       "sex": "male",
       "countryName": "Latvia",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 625.0
+      "seedTotalKg": 625,
+      "countryCode": "LV"
     },
     {
       "id": "men-74-marecki-mateusz",
@@ -1883,7 +2116,8 @@
       "sex": "male",
       "countryName": "Poland",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 620.0
+      "seedTotalKg": 620,
+      "countryCode": "PL"
     },
     {
       "id": "men-74-pacerinskis-marius",
@@ -1891,7 +2125,8 @@
       "sex": "male",
       "countryName": "Lithuania",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 617.5
+      "seedTotalKg": 617.5,
+      "countryCode": "LT"
     },
     {
       "id": "men-74-bledis-gintaras",
@@ -1899,7 +2134,8 @@
       "sex": "male",
       "countryName": "Lithuania",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 601.0
+      "seedTotalKg": 601,
+      "countryCode": "LT"
     },
     {
       "id": "men-74-cruz-leonardo",
@@ -1907,7 +2143,8 @@
       "sex": "male",
       "countryName": "Portugal",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 592.5
+      "seedTotalKg": 592.5,
+      "countryCode": "PT"
     },
     {
       "id": "men-74-maisuradze-giorgi",
@@ -1915,7 +2152,8 @@
       "sex": "male",
       "countryName": "Georgia",
       "weightCategoryId": "men-74",
-      "seedTotalKg": 590.0
+      "seedTotalKg": 590,
+      "countryCode": "GE"
     },
     {
       "id": "men-83-borenstein-joseph",
@@ -1923,7 +2161,8 @@
       "sex": "male",
       "countryName": "United States",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 892.5
+      "seedTotalKg": 892.5,
+      "countryCode": "US"
     },
     {
       "id": "men-83-kengamu-jurins",
@@ -1931,7 +2170,8 @@
       "sex": "male",
       "countryName": "United Kingdom",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 872.5
+      "seedTotalKg": 872.5,
+      "countryCode": "GB"
     },
     {
       "id": "men-83-omisakin-ade",
@@ -1939,7 +2179,8 @@
       "sex": "male",
       "countryName": "United Kingdom",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 842.5
+      "seedTotalKg": 842.5,
+      "countryCode": "GB"
     },
     {
       "id": "men-83-asein-enahoro",
@@ -1947,7 +2188,8 @@
       "sex": "male",
       "countryName": "Hungary",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 832.5
+      "seedTotalKg": 832.5,
+      "countryCode": "HU"
     },
     {
       "id": "men-83-ducret-mathis",
@@ -1955,7 +2197,8 @@
       "sex": "male",
       "countryName": "France",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 822.5
+      "seedTotalKg": 822.5,
+      "countryCode": "FR"
     },
     {
       "id": "men-83-hotsonyame-kafui",
@@ -1963,7 +2206,8 @@
       "sex": "male",
       "countryName": "Canada",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 815.0
+      "seedTotalKg": 815,
+      "countryCode": "CA"
     },
     {
       "id": "men-83-fernandez-arevalo-andres",
@@ -1971,7 +2215,8 @@
       "sex": "male",
       "countryName": "Spain",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 797.5
+      "seedTotalKg": 797.5,
+      "countryCode": "ES"
     },
     {
       "id": "men-83-fornstam-kevin",
@@ -1979,7 +2224,8 @@
       "sex": "male",
       "countryName": "Sweden",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 785.0
+      "seedTotalKg": 785,
+      "countryCode": "SE"
     },
     {
       "id": "men-83-rinaldo-marciano-saverio",
@@ -1987,7 +2233,8 @@
       "sex": "male",
       "countryName": "Italy",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 780.0
+      "seedTotalKg": 780,
+      "countryCode": "IT"
     },
     {
       "id": "men-83-ampofo-zachariah",
@@ -1995,7 +2242,8 @@
       "sex": "male",
       "countryName": "Germany",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 777.5
+      "seedTotalKg": 777.5,
+      "countryCode": "DE"
     },
     {
       "id": "men-83-figueroa-contreras-jose",
@@ -2003,7 +2251,8 @@
       "sex": "male",
       "countryName": "Chile",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 775.5
+      "seedTotalKg": 775.5,
+      "countryCode": "CL"
     },
     {
       "id": "men-83-kuerzi-patrick",
@@ -2011,7 +2260,8 @@
       "sex": "male",
       "countryName": "Switzerland",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 772.5
+      "seedTotalKg": 772.5,
+      "countryCode": "CH"
     },
     {
       "id": "men-83-castillo-jose",
@@ -2019,7 +2269,8 @@
       "sex": "male",
       "countryName": "Ecuador",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 770.0
+      "seedTotalKg": 770,
+      "countryCode": "EC"
     },
     {
       "id": "men-83-el-moukallif-naim",
@@ -2027,7 +2278,8 @@
       "sex": "male",
       "countryName": "Spain",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 760.0
+      "seedTotalKg": 760,
+      "countryCode": "ES"
     },
     {
       "id": "men-83-verstrepen-tuur",
@@ -2035,7 +2287,8 @@
       "sex": "male",
       "countryName": "Belgium",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 752.5
+      "seedTotalKg": 752.5,
+      "countryCode": "BE"
     },
     {
       "id": "men-83-techap-fongang",
@@ -2043,7 +2296,8 @@
       "sex": "male",
       "countryName": "Cameroon",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 752.5
+      "seedTotalKg": 752.5,
+      "countryCode": "CM"
     },
     {
       "id": "men-83-ishikawa-aoi",
@@ -2051,7 +2305,8 @@
       "sex": "male",
       "countryName": "Japan",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 752.5
+      "seedTotalKg": 752.5,
+      "countryCode": "JP"
     },
     {
       "id": "men-83-nagem-mohamed",
@@ -2059,7 +2314,8 @@
       "sex": "male",
       "countryName": "Libya",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 750.0
+      "seedTotalKg": 750,
+      "countryCode": "LY"
     },
     {
       "id": "men-83-hoffmann-daniel",
@@ -2067,7 +2323,8 @@
       "sex": "male",
       "countryName": "Czechia",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 745.5
+      "seedTotalKg": 745.5,
+      "countryCode": "CZ"
     },
     {
       "id": "men-83-kloch-mathias",
@@ -2075,7 +2332,8 @@
       "sex": "male",
       "countryName": "Denmark",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 740.0
+      "seedTotalKg": 740,
+      "countryCode": "DK"
     },
     {
       "id": "men-83-kraujutowicz-grzegorz",
@@ -2083,7 +2341,8 @@
       "sex": "male",
       "countryName": "Poland",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 735.0
+      "seedTotalKg": 735,
+      "countryCode": "PL"
     },
     {
       "id": "men-83-santos-matheus",
@@ -2091,7 +2350,8 @@
       "sex": "male",
       "countryName": "Brazil",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 734.0
+      "seedTotalKg": 734,
+      "countryCode": "BR"
     },
     {
       "id": "men-83-alaradi-ali",
@@ -2099,7 +2359,8 @@
       "sex": "male",
       "countryName": "Kuwait",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 734.0
+      "seedTotalKg": 734,
+      "countryCode": "KW"
     },
     {
       "id": "men-83-menezes-guilherme",
@@ -2107,7 +2368,8 @@
       "sex": "male",
       "countryName": "Brazil",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 732.5
+      "seedTotalKg": 732.5,
+      "countryCode": "BR"
     },
     {
       "id": "men-83-chong-kenzo",
@@ -2115,7 +2377,8 @@
       "sex": "male",
       "countryName": "Singapore",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 730.0
+      "seedTotalKg": 730,
+      "countryCode": "SG"
     },
     {
       "id": "men-83-boulos-christophe",
@@ -2123,7 +2386,8 @@
       "sex": "male",
       "countryName": "Qatar",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 722.5
+      "seedTotalKg": 722.5,
+      "countryCode": "QA"
     },
     {
       "id": "men-83-petcu-andrei",
@@ -2131,7 +2395,8 @@
       "sex": "male",
       "countryName": "Romania",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 720.0
+      "seedTotalKg": 720,
+      "countryCode": "RO"
     },
     {
       "id": "men-83-cheng-wee-herng-donovan",
@@ -2139,7 +2404,8 @@
       "sex": "male",
       "countryName": "Singapore",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 712.5
+      "seedTotalKg": 712.5,
+      "countryCode": "SG"
     },
     {
       "id": "men-83-xiao-tianyu",
@@ -2147,7 +2413,8 @@
       "sex": "male",
       "countryName": "China",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 710.0
+      "seedTotalKg": 710,
+      "countryCode": "CN"
     },
     {
       "id": "men-83-hlynsson-fridbjorn",
@@ -2155,7 +2422,8 @@
       "sex": "male",
       "countryName": "Iceland",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 707.5
+      "seedTotalKg": 707.5,
+      "countryCode": "IS"
     },
     {
       "id": "men-83-mur-urban",
@@ -2163,7 +2431,8 @@
       "sex": "male",
       "countryName": "Slovenia",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 705.0
+      "seedTotalKg": 705,
+      "countryCode": "SI"
     },
     {
       "id": "men-83-ruscitti-karim",
@@ -2171,7 +2440,8 @@
       "sex": "male",
       "countryName": "Qatar",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 700.0
+      "seedTotalKg": 700,
+      "countryCode": "QA"
     },
     {
       "id": "men-83-arnaud-alexandre",
@@ -2179,7 +2449,8 @@
       "sex": "male",
       "countryName": "Switzerland",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 695.0
+      "seedTotalKg": 695,
+      "countryCode": "CH"
     },
     {
       "id": "men-83-kuzmic-marko",
@@ -2187,7 +2458,8 @@
       "sex": "male",
       "countryName": "Croatia",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 687.5
+      "seedTotalKg": 687.5,
+      "countryCode": "HR"
     },
     {
       "id": "men-83-asmonas-arnas",
@@ -2195,7 +2467,8 @@
       "sex": "male",
       "countryName": "Lithuania",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 677.5
+      "seedTotalKg": 677.5,
+      "countryCode": "LT"
     },
     {
       "id": "men-83-henderson-samuel",
@@ -2203,7 +2476,8 @@
       "sex": "male",
       "countryName": "New Zealand",
       "weightCategoryId": "men-83",
-      "seedTotalKg": 677.5
+      "seedTotalKg": 677.5,
+      "countryCode": "NZ"
     },
     {
       "id": "men-93-ball-william",
@@ -2211,7 +2485,8 @@
       "sex": "male",
       "countryName": "United States",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 930.0
+      "seedTotalKg": 930,
+      "countryCode": "US"
     },
     {
       "id": "men-93-krastev-emil",
@@ -2219,7 +2494,8 @@
       "sex": "male",
       "countryName": "Bulgaria",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 920.0
+      "seedTotalKg": 920,
+      "countryCode": "BG"
     },
     {
       "id": "men-93-hedlund-gustav",
@@ -2227,7 +2503,8 @@
       "sex": "male",
       "countryName": "Sweden",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 910.0
+      "seedTotalKg": 910,
+      "countryCode": "SE"
     },
     {
       "id": "men-93-nouari-aimene",
@@ -2235,7 +2512,8 @@
       "sex": "male",
       "countryName": "Algeria",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 900.0
+      "seedTotalKg": 900,
+      "countryCode": "DZ"
     },
     {
       "id": "men-93-ayandokun-christian",
@@ -2243,7 +2521,8 @@
       "sex": "male",
       "countryName": "United Kingdom",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 882.5
+      "seedTotalKg": 882.5,
+      "countryCode": "GB"
     },
     {
       "id": "men-93-antwi-kwaku",
@@ -2251,7 +2530,8 @@
       "sex": "male",
       "countryName": "Canada",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 865.0
+      "seedTotalKg": 865,
+      "countryCode": "CA"
     },
     {
       "id": "men-93-baiden-richmond",
@@ -2259,7 +2539,8 @@
       "sex": "male",
       "countryName": "France",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 840.5
+      "seedTotalKg": 840.5,
+      "countryCode": "FR"
     },
     {
       "id": "men-93-balangwe-bakinien",
@@ -2267,7 +2548,8 @@
       "sex": "male",
       "countryName": "Cameroon",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 837.5
+      "seedTotalKg": 837.5,
+      "countryCode": "CM"
     },
     {
       "id": "men-93-van-bezooijen-richard",
@@ -2275,7 +2557,8 @@
       "sex": "male",
       "countryName": "Netherlands",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 815.0
+      "seedTotalKg": 815,
+      "countryCode": "NL"
     },
     {
       "id": "men-93-wortel-john",
@@ -2283,7 +2566,8 @@
       "sex": "male",
       "countryName": "Netherlands",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 805.0
+      "seedTotalKg": 805,
+      "countryCode": "NL"
     },
     {
       "id": "men-93-tsuruya-shimon",
@@ -2291,7 +2575,8 @@
       "sex": "male",
       "countryName": "Japan",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 802.5
+      "seedTotalKg": 802.5,
+      "countryCode": "JP"
     },
     {
       "id": "men-93-blackmore-aaron",
@@ -2299,7 +2584,8 @@
       "sex": "male",
       "countryName": "Ireland",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 802.5
+      "seedTotalKg": 802.5,
+      "countryCode": "IE"
     },
     {
       "id": "men-93-hermisdorf-leonardo",
@@ -2307,7 +2593,8 @@
       "sex": "male",
       "countryName": "Brazil",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 800.0
+      "seedTotalKg": 800,
+      "countryCode": "BR"
     },
     {
       "id": "men-93-salim-khalleefah",
@@ -2315,7 +2602,8 @@
       "sex": "male",
       "countryName": "Libya",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 790.0
+      "seedTotalKg": 790,
+      "countryCode": "LY"
     },
     {
       "id": "men-93-zerai-elyes",
@@ -2323,7 +2611,8 @@
       "sex": "male",
       "countryName": "Tunisia",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 780.0
+      "seedTotalKg": 780,
+      "countryCode": "TN"
     },
     {
       "id": "men-93-gortz-guilherme",
@@ -2331,7 +2620,8 @@
       "sex": "male",
       "countryName": "Brazil",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 777.5
+      "seedTotalKg": 777.5,
+      "countryCode": "BR"
     },
     {
       "id": "men-93-ussing-daniel",
@@ -2339,7 +2629,8 @@
       "sex": "male",
       "countryName": "Denmark",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 770.0
+      "seedTotalKg": 770,
+      "countryCode": "DK"
     },
     {
       "id": "men-93-zabeau-tom",
@@ -2347,7 +2638,8 @@
       "sex": "male",
       "countryName": "Belgium",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 740.0
+      "seedTotalKg": 740,
+      "countryCode": "BE"
     },
     {
       "id": "men-93-gonzalez-jose",
@@ -2355,7 +2647,8 @@
       "sex": "male",
       "countryName": "Mexico",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 740.0
+      "seedTotalKg": 740,
+      "countryCode": "MX"
     },
     {
       "id": "men-93-choi-junwon",
@@ -2363,7 +2656,8 @@
       "sex": "male",
       "countryName": "South Korea",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 739.0
+      "seedTotalKg": 739,
+      "countryCode": "KR"
     },
     {
       "id": "men-93-hapon-danyil",
@@ -2371,7 +2665,8 @@
       "sex": "male",
       "countryName": "Poland",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 712.5
+      "seedTotalKg": 712.5,
+      "countryCode": "PL"
     },
     {
       "id": "men-93-law-tak-kan-duncan",
@@ -2379,7 +2674,8 @@
       "sex": "male",
       "countryName": "Hong Kong, China",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 710.0
+      "seedTotalKg": 710,
+      "countryCode": "HK"
     },
     {
       "id": "men-93-alsabri-taha",
@@ -2387,7 +2683,8 @@
       "sex": "male",
       "countryName": "Libya",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 705.0
+      "seedTotalKg": 705,
+      "countryCode": "LY"
     },
     {
       "id": "men-93-klimka-airidas",
@@ -2395,7 +2692,8 @@
       "sex": "male",
       "countryName": "Lithuania",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 695.0
+      "seedTotalKg": 695,
+      "countryCode": "LT"
     },
     {
       "id": "men-93-hibsfelds-ricards",
@@ -2403,7 +2701,8 @@
       "sex": "male",
       "countryName": "Latvia",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 685.0
+      "seedTotalKg": 685,
+      "countryCode": "LV"
     },
     {
       "id": "men-93-khuzwayo-bandile",
@@ -2411,7 +2710,8 @@
       "sex": "male",
       "countryName": "South Africa",
       "weightCategoryId": "men-93",
-      "seedTotalKg": 675.0
+      "seedTotalKg": 675,
+      "countryCode": "ZA"
     },
     {
       "id": "men-105-mcnaughton-anthony",
@@ -2419,7 +2719,8 @@
       "sex": "male",
       "countryName": "United States",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 980.0
+      "seedTotalKg": 980,
+      "countryCode": "US"
     },
     {
       "id": "men-105-novopysmennyi-anatolii",
@@ -2427,7 +2728,8 @@
       "sex": "male",
       "countryName": "Ukraine",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 940.5
+      "seedTotalKg": 940.5,
+      "countryCode": "UA"
     },
     {
       "id": "men-105-norling-emil",
@@ -2435,7 +2737,8 @@
       "sex": "male",
       "countryName": "Sweden",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 935.0
+      "seedTotalKg": 935,
+      "countryCode": "SE"
     },
     {
       "id": "men-105-tchandeu-noundou-eliam",
@@ -2443,7 +2746,8 @@
       "sex": "male",
       "countryName": "France",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 927.0
+      "seedTotalKg": 927,
+      "countryCode": "FR"
     },
     {
       "id": "men-105-stergakis-regin",
@@ -2451,7 +2755,8 @@
       "sex": "male",
       "countryName": "Denmark",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 922.5
+      "seedTotalKg": 922.5,
+      "countryCode": "DK"
     },
     {
       "id": "men-105-sboui-fares",
@@ -2459,7 +2764,8 @@
       "sex": "male",
       "countryName": "Tunisia",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 917.5
+      "seedTotalKg": 917.5,
+      "countryCode": "TN"
     },
     {
       "id": "men-105-massiah-nathaniel",
@@ -2467,7 +2773,8 @@
       "sex": "male",
       "countryName": "United Kingdom",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 915.0
+      "seedTotalKg": 915,
+      "countryCode": "GB"
     },
     {
       "id": "men-105-amponsah-ezeiel",
@@ -2475,7 +2782,8 @@
       "sex": "male",
       "countryName": "Canada",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 885.0
+      "seedTotalKg": 885,
+      "countryCode": "CA"
     },
     {
       "id": "men-105-salgado-diego",
@@ -2483,7 +2791,8 @@
       "sex": "male",
       "countryName": "Mexico",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 878.5
+      "seedTotalKg": 878.5,
+      "countryCode": "MX"
     },
     {
       "id": "men-105-bentalha-ilyes",
@@ -2491,7 +2800,8 @@
       "sex": "male",
       "countryName": "Algeria",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 867.5
+      "seedTotalKg": 867.5,
+      "countryCode": "DZ"
     },
     {
       "id": "men-105-duecker-bjarne",
@@ -2499,7 +2809,8 @@
       "sex": "male",
       "countryName": "Germany",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 865.0
+      "seedTotalKg": 865,
+      "countryCode": "DE"
     },
     {
       "id": "men-105-celis-jonathan",
@@ -2507,7 +2818,8 @@
       "sex": "male",
       "countryName": "Belgium",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 852.5
+      "seedTotalKg": 852.5,
+      "countryCode": "BE"
     },
     {
       "id": "men-105-slump-jacob",
@@ -2515,7 +2827,8 @@
       "sex": "male",
       "countryName": "Netherlands",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 847.5
+      "seedTotalKg": 847.5,
+      "countryCode": "NL"
     },
     {
       "id": "men-105-hamich-imad",
@@ -2523,7 +2836,8 @@
       "sex": "male",
       "countryName": "Belgium",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 837.5
+      "seedTotalKg": 837.5,
+      "countryCode": "BE"
     },
     {
       "id": "men-105-nwaezeigwe-kenneth",
@@ -2531,7 +2845,8 @@
       "sex": "male",
       "countryName": "Ireland",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 832.5
+      "seedTotalKg": 832.5,
+      "countryCode": "IE"
     },
     {
       "id": "men-105-forsberg-samuel",
@@ -2539,7 +2854,8 @@
       "sex": "male",
       "countryName": "Australia",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 827.5
+      "seedTotalKg": 827.5,
+      "countryCode": "AU"
     },
     {
       "id": "men-105-karason-alexander",
@@ -2547,7 +2863,8 @@
       "sex": "male",
       "countryName": "Iceland",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 820.0
+      "seedTotalKg": 820,
+      "countryCode": "IS"
     },
     {
       "id": "men-105-ibanez-pawathon-bernardo",
@@ -2555,7 +2872,8 @@
       "sex": "male",
       "countryName": "Chile",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 817.5
+      "seedTotalKg": 817.5,
+      "countryCode": "CL"
     },
     {
       "id": "men-105-henry-matthew",
@@ -2563,7 +2881,8 @@
       "sex": "male",
       "countryName": "Ireland",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 810.0
+      "seedTotalKg": 810,
+      "countryCode": "IE"
     },
     {
       "id": "men-105-erik-mata",
@@ -2571,7 +2890,8 @@
       "sex": "male",
       "countryName": "Hungary",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 802.5
+      "seedTotalKg": 802.5,
+      "countryCode": "HU"
     },
     {
       "id": "men-105-sant-anna-rodrigo",
@@ -2579,7 +2899,8 @@
       "sex": "male",
       "countryName": "Brazil",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 802.5
+      "seedTotalKg": 802.5,
+      "countryCode": "BR"
     },
     {
       "id": "men-105-franek-hynek",
@@ -2587,7 +2908,8 @@
       "sex": "male",
       "countryName": "Czechia",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 795.0
+      "seedTotalKg": 795,
+      "countryCode": "CZ"
     },
     {
       "id": "men-105-aldirsi-mohammed",
@@ -2595,7 +2917,8 @@
       "sex": "male",
       "countryName": "Libya",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 790.0
+      "seedTotalKg": 790,
+      "countryCode": "LY"
     },
     {
       "id": "men-105-norkus-martynas",
@@ -2603,7 +2926,8 @@
       "sex": "male",
       "countryName": "Lithuania",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 770.0
+      "seedTotalKg": 770,
+      "countryCode": "LT"
     },
     {
       "id": "men-105-boss-dominic",
@@ -2611,7 +2935,8 @@
       "sex": "male",
       "countryName": "Switzerland",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 735.0
+      "seedTotalKg": 735,
+      "countryCode": "CH"
     },
     {
       "id": "men-105-jung-siwoo",
@@ -2619,7 +2944,8 @@
       "sex": "male",
       "countryName": "South Korea",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 667.5
+      "seedTotalKg": 667.5,
+      "countryCode": "KR"
     },
     {
       "id": "men-105-choi-seungwan",
@@ -2627,7 +2953,8 @@
       "sex": "male",
       "countryName": "South Korea",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 632.5
+      "seedTotalKg": 632.5,
+      "countryCode": "KR"
     },
     {
       "id": "men-105-de-paula-vitor",
@@ -2635,7 +2962,8 @@
       "sex": "male",
       "countryName": "Brazil",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 75.0
+      "seedTotalKg": 75,
+      "countryCode": "BR"
     },
     {
       "id": "men-105-tomko-patrik",
@@ -2643,7 +2971,8 @@
       "sex": "male",
       "countryName": "Slovakia",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 75.0
+      "seedTotalKg": 75,
+      "countryCode": "SK"
     },
     {
       "id": "men-120-hunte-rondel",
@@ -2651,7 +2980,8 @@
       "sex": "male",
       "countryName": "Trinidad and Tobago",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 1025.0
+      "seedTotalKg": 1025,
+      "countryCode": "TT"
     },
     {
       "id": "men-120-el-chaer-etienne",
@@ -2659,7 +2989,8 @@
       "sex": "male",
       "countryName": "Lebanon",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 984.0
+      "seedTotalKg": 984,
+      "countryCode": "LB"
     },
     {
       "id": "men-120-rouska-ashton",
@@ -2667,7 +2998,8 @@
       "sex": "male",
       "countryName": "United States",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 983.0
+      "seedTotalKg": 983,
+      "countryCode": "US"
     },
     {
       "id": "men-120-mcdonald-joseph",
@@ -2675,7 +3007,8 @@
       "sex": "male",
       "countryName": "Trinidad and Tobago",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 975.0
+      "seedTotalKg": 975,
+      "countryCode": "TT"
     },
     {
       "id": "men-120-ngoka-joshua",
@@ -2683,7 +3016,8 @@
       "sex": "male",
       "countryName": "United Kingdom",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 965.5
+      "seedTotalKg": 965.5,
+      "countryCode": "GB"
     },
     {
       "id": "men-120-melnychuk-taras",
@@ -2691,7 +3025,8 @@
       "sex": "male",
       "countryName": "Ukraine",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 957.5
+      "seedTotalKg": 957.5,
+      "countryCode": "UA"
     },
     {
       "id": "men-120-wiseman-lucas",
@@ -2699,7 +3034,8 @@
       "sex": "male",
       "countryName": "Canada",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 951.5
+      "seedTotalKg": 951.5,
+      "countryCode": "CA"
     },
     {
       "id": "men-120-de-rohden-antoine",
@@ -2707,7 +3043,8 @@
       "sex": "male",
       "countryName": "France",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 947.5
+      "seedTotalKg": 947.5,
+      "countryCode": "FR"
     },
     {
       "id": "men-120-sulayman-abdul",
@@ -2715,7 +3052,8 @@
       "sex": "male",
       "countryName": "United Kingdom",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 945.0
+      "seedTotalKg": 945,
+      "countryCode": "GB"
     },
     {
       "id": "men-120-sahad-mohamed",
@@ -2723,7 +3061,8 @@
       "sex": "male",
       "countryName": "Algeria",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 945.0
+      "seedTotalKg": 945,
+      "countryCode": "DZ"
     },
     {
       "id": "men-120-wiendieck-jonah",
@@ -2731,7 +3070,8 @@
       "sex": "male",
       "countryName": "Germany",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 938.0
+      "seedTotalKg": 938,
+      "countryCode": "DE"
     },
     {
       "id": "men-120-sekenofsky-baruch",
@@ -2739,7 +3079,8 @@
       "sex": "male",
       "countryName": "Israel",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 925.0
+      "seedTotalKg": 925,
+      "countryCode": "IL"
     },
     {
       "id": "men-120-due-laurits",
@@ -2747,7 +3088,8 @@
       "sex": "male",
       "countryName": "Denmark",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 867.5
+      "seedTotalKg": 867.5,
+      "countryCode": "DK"
     },
     {
       "id": "men-120-vogelius-jesper",
@@ -2755,7 +3097,8 @@
       "sex": "male",
       "countryName": "Denmark",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 862.5
+      "seedTotalKg": 862.5,
+      "countryCode": "DK"
     },
     {
       "id": "men-120-strubbe-jochen",
@@ -2763,7 +3106,8 @@
       "sex": "male",
       "countryName": "Belgium",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 852.5
+      "seedTotalKg": 852.5,
+      "countryCode": "BE"
     },
     {
       "id": "men-120-graham-heath",
@@ -2771,7 +3115,8 @@
       "sex": "male",
       "countryName": "New Zealand",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 850.0
+      "seedTotalKg": 850,
+      "countryCode": "NZ"
     },
     {
       "id": "men-120-pola-daniele",
@@ -2779,7 +3124,8 @@
       "sex": "male",
       "countryName": "Switzerland",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 850.0
+      "seedTotalKg": 850,
+      "countryCode": "CH"
     },
     {
       "id": "men-120-krisztian-cseszko",
@@ -2787,7 +3133,8 @@
       "sex": "male",
       "countryName": "Hungary",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 840.0
+      "seedTotalKg": 840,
+      "countryCode": "HU"
     },
     {
       "id": "men-120-naoussi-nembot-ano",
@@ -2795,7 +3142,8 @@
       "sex": "male",
       "countryName": "Cameroon",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 835.0
+      "seedTotalKg": 835,
+      "countryCode": "CM"
     },
     {
       "id": "men-120-juzups-maris",
@@ -2803,7 +3151,8 @@
       "sex": "male",
       "countryName": "Latvia",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 832.5
+      "seedTotalKg": 832.5,
+      "countryCode": "LV"
     },
     {
       "id": "men-120-penco-joseph",
@@ -2811,7 +3160,8 @@
       "sex": "male",
       "countryName": "Ireland",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 825.5
+      "seedTotalKg": 825.5,
+      "countryCode": "IE"
     },
     {
       "id": "men-120-stell-mark",
@@ -2819,7 +3169,8 @@
       "sex": "male",
       "countryName": "Ireland",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 825.0
+      "seedTotalKg": 825,
+      "countryCode": "IE"
     },
     {
       "id": "men-120-sigurdsson-helgi",
@@ -2827,7 +3178,8 @@
       "sex": "male",
       "countryName": "Iceland",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 812.5
+      "seedTotalKg": 812.5,
+      "countryCode": "IS"
     },
     {
       "id": "men-120-motoki-ayuto",
@@ -2835,7 +3187,8 @@
       "sex": "male",
       "countryName": "Japan",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 800.0
+      "seedTotalKg": 800,
+      "countryCode": "JP"
     },
     {
       "id": "men-120-karkusashvili-rubeni",
@@ -2843,7 +3196,8 @@
       "sex": "male",
       "countryName": "Georgia",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 782.5
+      "seedTotalKg": 782.5,
+      "countryCode": "GE"
     },
     {
       "id": "men-120-thoma-thomas",
@@ -2851,7 +3205,8 @@
       "sex": "male",
       "countryName": "Switzerland",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 765.0
+      "seedTotalKg": 765,
+      "countryCode": "CH"
     },
     {
       "id": "men-120-raw-simon",
@@ -2859,7 +3214,8 @@
       "sex": "male",
       "countryName": "South Africa",
       "weightCategoryId": "men-120",
-      "seedTotalKg": 762.5
+      "seedTotalKg": 762.5,
+      "countryCode": "ZA"
     },
     {
       "id": "men-120plus-olivares-jesus",
@@ -2867,7 +3223,8 @@
       "sex": "male",
       "countryName": "United States",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 1110.0
+      "seedTotalKg": 1110,
+      "countryCode": "US"
     },
     {
       "id": "men-120plus-sharma-ajay",
@@ -2875,7 +3232,8 @@
       "sex": "male",
       "countryName": "United Kingdom",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 1032.5
+      "seedTotalKg": 1032.5,
+      "countryCode": "GB"
     },
     {
       "id": "men-120plus-kocak-cenk",
@@ -2883,7 +3241,8 @@
       "sex": "male",
       "countryName": "Turkiye",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 1015.0
+      "seedTotalKg": 1015,
+      "countryCode": "TR"
     },
     {
       "id": "men-120plus-holinei-viktor",
@@ -2891,7 +3250,8 @@
       "sex": "male",
       "countryName": "Ukraine",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 993.5
+      "seedTotalKg": 993.5,
+      "countryCode": "UA"
     },
     {
       "id": "men-120plus-samkharadze-temur",
@@ -2899,7 +3259,8 @@
       "sex": "male",
       "countryName": "Georgia",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 985.0
+      "seedTotalKg": 985,
+      "countryCode": "GE"
     },
     {
       "id": "men-120plus-mansukoski-nuutti",
@@ -2907,7 +3268,8 @@
       "sex": "male",
       "countryName": "Finland",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 967.5
+      "seedTotalKg": 967.5,
+      "countryCode": "FI"
     },
     {
       "id": "men-120plus-sutterud-westbye-bjorn",
@@ -2915,7 +3277,8 @@
       "sex": "male",
       "countryName": "Norway",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 967.5
+      "seedTotalKg": 967.5,
+      "countryCode": "NO"
     },
     {
       "id": "men-120plus-patschke-markus",
@@ -2923,7 +3286,8 @@
       "sex": "male",
       "countryName": "Germany",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 965.0
+      "seedTotalKg": 965,
+      "countryCode": "DE"
     },
     {
       "id": "men-120plus-fidan-hussein",
@@ -2931,7 +3295,8 @@
       "sex": "male",
       "countryName": "Libya",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 955.0
+      "seedTotalKg": 955,
+      "countryCode": "LY"
     },
     {
       "id": "men-120plus-reinmuth-tony",
@@ -2939,7 +3304,8 @@
       "sex": "male",
       "countryName": "Australia",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 950.5
+      "seedTotalKg": 950.5,
+      "countryCode": "AU"
     },
     {
       "id": "men-120plus-wang-pei-yu",
@@ -2947,7 +3313,8 @@
       "sex": "male",
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 950.0
+      "seedTotalKg": 950,
+      "countryCode": "TW"
     },
     {
       "id": "men-120plus-soares-alexis",
@@ -2955,7 +3322,8 @@
       "sex": "male",
       "countryName": "France",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 927.5
+      "seedTotalKg": 927.5,
+      "countryCode": "FR"
     },
     {
       "id": "men-120plus-simonsen-martin",
@@ -2963,7 +3331,8 @@
       "sex": "male",
       "countryName": "Denmark",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 927.5
+      "seedTotalKg": 927.5,
+      "countryCode": "DK"
     },
     {
       "id": "men-120plus-voigt-torben",
@@ -2971,7 +3340,8 @@
       "sex": "male",
       "countryName": "Germany",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 920.5
+      "seedTotalKg": 920.5,
+      "countryCode": "DE"
     },
     {
       "id": "men-120plus-abousinan-mohammed",
@@ -2979,7 +3349,8 @@
       "sex": "male",
       "countryName": "Libya",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 915.0
+      "seedTotalKg": 915,
+      "countryCode": "LY"
     },
     {
       "id": "men-120plus-wu-yi-chiu",
@@ -2987,7 +3358,8 @@
       "sex": "male",
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 905.0
+      "seedTotalKg": 905,
+      "countryCode": "TW"
     },
     {
       "id": "men-120plus-lekhal-abdeslam",
@@ -2995,7 +3367,8 @@
       "sex": "male",
       "countryName": "Algeria",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 903.0
+      "seedTotalKg": 903,
+      "countryCode": "DZ"
     },
     {
       "id": "men-120plus-hendriks-giel",
@@ -3003,7 +3376,8 @@
       "sex": "male",
       "countryName": "Belgium",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 887.5
+      "seedTotalKg": 887.5,
+      "countryCode": "BE"
     },
     {
       "id": "men-120plus-juszczyk-jacek",
@@ -3011,7 +3385,8 @@
       "sex": "male",
       "countryName": "Poland",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 880.0
+      "seedTotalKg": 880,
+      "countryCode": "PL"
     },
     {
       "id": "men-120plus-gecas-tadas",
@@ -3019,7 +3394,8 @@
       "sex": "male",
       "countryName": "Lithuania",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 870.0
+      "seedTotalKg": 870,
+      "countryCode": "LT"
     },
     {
       "id": "men-120plus-riudalbas-clemente-marc",
@@ -3027,7 +3403,8 @@
       "sex": "male",
       "countryName": "Spain",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 860.0
+      "seedTotalKg": 860,
+      "countryCode": "ES"
     },
     {
       "id": "men-120plus-mardones-meza-sergio-hernan",
@@ -3035,7 +3412,8 @@
       "sex": "male",
       "countryName": "Chile",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 860.0
+      "seedTotalKg": 860,
+      "countryCode": "CL"
     },
     {
       "id": "men-120plus-raw-robert",
@@ -3043,7 +3421,8 @@
       "sex": "male",
       "countryName": "South Africa",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 785.0
+      "seedTotalKg": 785,
+      "countryCode": "ZA"
     },
     {
       "id": "men-120plus-berzins-didzis",
@@ -3051,7 +3430,8 @@
       "sex": "male",
       "countryName": "Latvia",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 770.0
+      "seedTotalKg": 770,
+      "countryCode": "LV"
     },
     {
       "id": "men-120plus-inoue-masaya",
@@ -3059,7 +3439,8 @@
       "sex": "male",
       "countryName": "Japan",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 740.0
+      "seedTotalKg": 740,
+      "countryCode": "JP"
     },
     {
       "id": "men-120plus-bowring-ray",
@@ -3067,7 +3448,8 @@
       "sex": "male",
       "countryName": "United Kingdom",
       "weightCategoryId": "men-120plus",
-      "seedTotalKg": 75.0
+      "seedTotalKg": 75,
+      "countryCode": "GB"
     }
   ],
   "categories": [
@@ -3075,7 +3457,7 @@
       "id": "women-47",
       "name": "Women 47 kg",
       "sex": "female",
-      "weightLimitKg": 47.0,
+      "weightLimitKg": 47,
       "athleteIds": [
         "women-47-chapon-tiffany",
         "women-47-le-leanne",
@@ -3099,7 +3481,7 @@
       "id": "women-52",
       "name": "Women 52 kg",
       "sex": "female",
-      "weightLimitKg": 52.0,
+      "weightLimitKg": 52,
       "athleteIds": [
         "women-52-smith-megan-li",
         "women-52-dekkers-pleun",
@@ -3129,7 +3511,7 @@
       "id": "women-57",
       "name": "Women 57 kg",
       "sex": "female",
-      "weightLimitKg": 57.0,
+      "weightLimitKg": 57,
       "athleteIds": [
         "women-57-naldi-sara",
         "women-57-nnamani-joy",
@@ -3158,7 +3540,7 @@
       "id": "women-63",
       "name": "Women 63 kg",
       "sex": "female",
-      "weightLimitKg": 63.0,
+      "weightLimitKg": 63,
       "athleteIds": [
         "women-63-bostrom-alba",
         "women-63-bernardi-chiara",
@@ -3195,7 +3577,7 @@
       "id": "women-69",
       "name": "Women 69 kg",
       "sex": "female",
-      "weightLimitKg": 69.0,
+      "weightLimitKg": 69,
       "athleteIds": [
         "women-69-garra-carola",
         "women-69-babb-chandler",
@@ -3230,7 +3612,7 @@
       "id": "women-76",
       "name": "Women 76 kg",
       "sex": "female",
-      "weightLimitKg": 76.0,
+      "weightLimitKg": 76,
       "athleteIds": [
         "women-76-worford-cranon",
         "women-76-mazur-zuzanna",
@@ -3262,7 +3644,7 @@
       "id": "women-84",
       "name": "Women 84 kg",
       "sex": "female",
-      "weightLimitKg": 84.0,
+      "weightLimitKg": 84,
       "athleteIds": [
         "women-84-lawrence-amanda",
         "women-84-tongotea-karlina",
@@ -3317,7 +3699,7 @@
       "id": "men-59",
       "name": "Men 59 kg",
       "sex": "male",
-      "weightLimitKg": 59.0,
+      "weightLimitKg": 59,
       "athleteIds": [
         "men-59-slabic-michael",
         "men-59-campano-diaz-ivan",
@@ -3343,7 +3725,7 @@
       "id": "men-66",
       "name": "Men 66 kg",
       "sex": "male",
-      "weightLimitKg": 66.0,
+      "weightLimitKg": 66,
       "athleteIds": [
         "men-66-bakkelund-kjell",
         "men-66-jordan-joseph",
@@ -3368,7 +3750,7 @@
       "id": "men-74",
       "name": "Men 74 kg",
       "sex": "male",
-      "weightLimitKg": 74.0,
+      "weightLimitKg": 74,
       "athleteIds": [
         "men-74-perkins-austin",
         "men-74-bertrand-balthazar",
@@ -3401,7 +3783,7 @@
       "id": "men-83",
       "name": "Men 83 kg",
       "sex": "male",
-      "weightLimitKg": 83.0,
+      "weightLimitKg": 83,
       "athleteIds": [
         "men-83-borenstein-joseph",
         "men-83-kengamu-jurins",
@@ -3445,7 +3827,7 @@
       "id": "men-93",
       "name": "Men 93 kg",
       "sex": "male",
-      "weightLimitKg": 93.0,
+      "weightLimitKg": 93,
       "athleteIds": [
         "men-93-ball-william",
         "men-93-krastev-emil",
@@ -3479,7 +3861,7 @@
       "id": "men-105",
       "name": "Men 105 kg",
       "sex": "male",
-      "weightLimitKg": 105.0,
+      "weightLimitKg": 105,
       "athleteIds": [
         "men-105-mcnaughton-anthony",
         "men-105-novopysmennyi-anatolii",
@@ -3516,7 +3898,7 @@
       "id": "men-120",
       "name": "Men 120 kg",
       "sex": "male",
-      "weightLimitKg": 120.0,
+      "weightLimitKg": 120,
       "athleteIds": [
         "men-120-hunte-rondel",
         "men-120-el-chaer-etienne",

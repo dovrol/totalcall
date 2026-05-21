@@ -67,6 +67,16 @@
     private string GetStatusSummary(PredictionQuestionCompletionResult status)
     {
         var requiredCount = Math.Max(status.RequiredCount, 1);
-        return $"{status.SelectedCount}/{requiredCount}";
+        return $"{status.SelectedCount}/{requiredCount} {GetStatusLabel(status.Status)}";
+    }
+
+    private string GetStatusLabel(PredictionCompletionStatus status)
+    {
+        return status switch
+        {
+            PredictionCompletionStatus.Complete => Localizer["Predictions.Status.Complete"],
+            PredictionCompletionStatus.InProgress => Localizer["Predictions.Status.InProgress"],
+            _ => Localizer["Predictions.Status.NotStarted"]
+        };
     }
 }

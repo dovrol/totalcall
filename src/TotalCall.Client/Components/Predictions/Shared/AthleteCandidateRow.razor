@@ -8,7 +8,10 @@
         <strong>@Athlete.DisplayName</strong>
         @if (!string.IsNullOrWhiteSpace(Athlete.CountryName))
         {
-            <small>@Athlete.CountryName</small>
+            <small class="athlete-candidate-row__country">
+                <CountryFlag Code="@Athlete.CountryCode" CountryName="@Athlete.CountryName" />
+                <span>@Athlete.CountryName</span>
+            </small>
         }
         @if (!string.IsNullOrWhiteSpace(WeightClassLabel))
         {
@@ -19,11 +22,11 @@
     <div class="athlete-candidate-row__meta">
         @if (Athlete.SeedTotalKg is not null)
         {
-            <span>@Athlete.SeedTotalKg.Value.ToString("0.#") kg</span>
+            <span class="athlete-candidate-row__total">@Athlete.SeedTotalKg.Value.ToString("0.#") kg</span>
         }
         else
         {
-            <span>@Localizer["Common.Tbd"]</span>
+            <span class="athlete-candidate-row__total athlete-candidate-row__total--muted">@Localizer["Common.Tbd"]</span>
         }
 
         @if (IsSelected)

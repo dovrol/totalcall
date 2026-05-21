@@ -1,41 +1,105 @@
 @inject IStringLocalizer<SharedResource> Localizer
+@inject PredictionTextService Text
 
 <section class="prediction-shell">
-    <PredictionHeader
-        Competition="@Competition"
-        ActiveGroup="@ActiveGroup"
-        SaveStatus="@SaveStatus"
-        LastSavedAt="@LastSavedAt"
-        CanEditPredictions="@CanEditPredictions" />
+    <div class="@FrameClass">
+        <aside class="prediction-shell__left-rail">
+            <div class="prediction-shell__left-rail-inner">
+                <PredictionModuleNav
+                    Competition="@Competition"
+                    Groups="@Groups"
+                    ActiveGroupId="@ActiveGroup.Id"
+                    ModuleValidationByGroupId="@ModuleValidationByGroupId"
+                    GroupChanged="@OnGroupChanged" />
 
-    <PredictionProgressSummary
-        Group="@ActiveGroup"
-        ModuleValidation="@ActiveModuleValidation" />
+                @if (IsTopNActiveGroup && OrderedTopNQuestions.Count > 0)
+                {
+                    <CategoryStatusList
+                        Questions="OrderedTopNQuestions"
+                        StatusByQuestionId="TopNStatusByQuestionId"
+                        ActiveQuestionId="@CurrentTopNQuestionId"
+                        CategoryLabelSelector="GetTopNCategoryName"
+                        CategoryChanged="OnTopNQuestionChanged" />
+                }
+            </div>
+        </aside>
 
-    @if (!CanEditPredictions)
-    {
-        <div class="notice notice--warning">
-            @Localizer["Predictions.Locked"]
-        </div>
-    }
-
-    <div class="prediction-shell__layout">
-        <PredictionModuleNav
-            Competition="@Competition"
-            Groups="@Groups"
-            ActiveGroupId="@ActiveGroup.Id"
-            ModuleValidationByGroupId="@ModuleValidationByGroupId"
-            GroupChanged="@GroupChanged" />
-
-        <section class="prediction-shell__module" aria-label="@Localizer["Predictions.ActiveModuleAria"]">
-            <PredictionModuleRenderer
+        <div class="prediction-shell__center-column">
+            <PredictionHeader
                 Competition="@Competition"
+                ActiveGroup="@ActiveGroup"
+                SaveStatus="@SaveStatus"
+                LastSavedAt="@LastSavedAt"
+                CanEditPredictions="@CanEditPredictions" />
+
+            <PredictionProgressSummary
                 Group="@ActiveGroup"
-                Answers="@Answers.Where(answer => answer.GroupId == ActiveGroup.Id).ToArray()"
-                ModuleValidation="@ActiveModuleValidation"
-                CanEditPredictions="@CanEditPredictions"
-                AnswerChanged="@AnswerChanged" />
-        </section>
+                ModuleValidation="@ActiveModuleValidation" />
+
+            @if (!CanEditPredictions)
+            {
+                <div class="notice notice--warning">
+                    @Localizer["Predictions.Locked"]
+                </div>
+            }
+
+            <section class="prediction-shell__module" aria-label="@Localizer["Predictions.ActiveModuleAria"]">
+                <PredictionModuleRenderer
+                    Competition="@Competition"
+                    Group="@ActiveGroup"
+                    Answers="@Answers.Where(answer => answer.GroupId == ActiveGroup.Id).ToArray()"
+                    ModuleValidation="@ActiveModuleValidation"
+                    CanEditPredictions="@CanEditPredictions"
+                    SaveStatus="@SaveStatus"
+                    LastSavedAt="@LastSavedAt"
+                    ShowSummaryAction="false"
+                    ShowCompactModuleInfo="false"
+                    UseExternalTopNSidebar="@IsTopNActiveGroup"
+                    ActiveTopNQuestionId="@CurrentTopNQuestionId"
+                    TopNQuestionChanged="@OnTopNQuestionChanged"
+                    SummaryRequested="@OpenSummaryDrawer"
+                    AnswerChanged="@AnswerChanged" />
+            </section>
+        </div>
+
+        <aside class="@SummaryRailClass">
+            <div class="prediction-shell__summary-rail-content">
+                <div class="prediction-shell__summary-panel-wrap">
+                    <button
+                        type="button"
+                        class="prediction-shell__summary-rail-toggle"
+                        aria-label="@Localizer["Predictions.Tab.Summary"]"
+                        @onclick="OnSummaryRailToggleClicked">
+                        <AppIcon Name="AppIconName.ChevronRight" Size="14" />
+                    </button>
+
+                    <PredictionSummaryPanel
+                        Competition="@Competition"
+                        Group="@ActiveGroup"
+                        ModuleValidation="@ActiveModuleValidation"
+                        SaveStatus="@SaveStatus"
+                        LastSavedAt="@LastSavedAt" />
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <button
+        type="button"
+        class="@SummaryBackdropClass"
+        aria-hidden="@(!isSummaryDrawerOpen)"
+        tabindex="-1"
+        @onclick="OnSummaryBackdropClicked">
+    </button>
+
+    <aside class="@SummaryDrawerClass" aria-hidden="@(!isSummaryDrawerOpen)">
+        <button
+            type="button"
+            class="prediction-shell__summary-drawer-close"
+            aria-label="@Localizer["Predictions.CloseSummary"]"
+            @onclick="OnCloseSummaryClicked">
+            <AppIcon Name="AppIconName.X" Size="14" />
+        </button>
 
         <PredictionSummaryPanel
             Competition="@Competition"
@@ -43,7 +107,7 @@
             ModuleValidation="@ActiveModuleValidation"
             SaveStatus="@SaveStatus"
             LastSavedAt="@LastSavedAt" />
-    </div>
+    </aside>
 
     <PredictionNavigationBar
         HasPrevious="@HasPreviousGroup"
@@ -106,6 +170,60 @@
 
     private bool HasNextGroup => ActiveGroupIndex >= 0 && ActiveGroupIndex < Groups.Count - 1;
 
+    private bool HasMultipleGroups => Groups.Count > 1;
+    private string? activeTopNQuestionId;
+    private bool isSummaryDrawerOpen;
+    private bool isSummaryRailCollapsed;
+
+    private string FrameClass => string.Join(
+        " ",
+        "prediction-shell__frame",
+        isSummaryRailCollapsed ? "prediction-shell__frame--summary-collapsed" : null);
+
+    private string SummaryRailClass => string.Join(
+        " ",
+        "prediction-shell__summary-rail",
+        isSummaryRailCollapsed ? "is-collapsed" : null);
+
+    private string SummaryDrawerClass => string.Join(
+        " ",
+        "prediction-shell__summary-drawer",
+        isSummaryDrawerOpen ? "is-open" : null);
+
+    private string SummaryBackdropClass => string.Join(
+        " ",
+        "prediction-shell__summary-backdrop",
+        isSummaryDrawerOpen ? "is-open" : null);
+
+    private bool IsTopNActiveGroup => ResolveGroupType(ActiveGroup) == PredictionModuleType.TopNByCategory;
+
+    private IReadOnlyList<PredictionQuestion> OrderedTopNQuestions => IsTopNActiveGroup
+        ? ActiveGroup.Questions.OrderBy(question => question.Order).ToArray()
+        : [];
+
+    private IReadOnlyDictionary<string, PredictionQuestionCompletionResult> TopNStatusByQuestionId => IsTopNActiveGroup
+        ? ActiveModuleValidation.Questions.ToDictionary(result => result.QuestionId, StringComparer.OrdinalIgnoreCase)
+        : new Dictionary<string, PredictionQuestionCompletionResult>(StringComparer.OrdinalIgnoreCase);
+
+    private string CurrentTopNQuestionId => activeTopNQuestionId ??
+        OrderedTopNQuestions.FirstOrDefault()?.Id ??
+        string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        if (!IsTopNActiveGroup)
+        {
+            activeTopNQuestionId = null;
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(activeTopNQuestionId) ||
+            OrderedTopNQuestions.All(question => !string.Equals(question.Id, activeTopNQuestionId, StringComparison.OrdinalIgnoreCase)))
+        {
+            activeTopNQuestionId = OrderedTopNQuestions.FirstOrDefault()?.Id;
+        }
+    }
+
     private int GetGroupIndex(string groupId)
     {
         for (var index = 0; index < Groups.Count; index++)
@@ -126,6 +244,7 @@
             return;
         }
 
+        isSummaryDrawerOpen = false;
         await GroupChanged.InvokeAsync(Groups[ActiveGroupIndex - 1].Id);
     }
 
@@ -133,10 +252,85 @@
     {
         if (HasNextGroup)
         {
+            isSummaryDrawerOpen = false;
             await GroupChanged.InvokeAsync(Groups[ActiveGroupIndex + 1].Id);
             return;
         }
 
         await ReviewRequested.InvokeAsync();
+    }
+
+    private Task OpenSummaryDrawer()
+    {
+        isSummaryRailCollapsed = false;
+        isSummaryDrawerOpen = true;
+        return Task.CompletedTask;
+    }
+
+    private Task OnSummaryBackdropClicked(MouseEventArgs _)
+    {
+        isSummaryDrawerOpen = false;
+        return Task.CompletedTask;
+    }
+
+    private Task OnCloseSummaryClicked(MouseEventArgs _)
+    {
+        isSummaryDrawerOpen = false;
+        return Task.CompletedTask;
+    }
+
+    private async Task OnGroupChanged(string groupId)
+    {
+        isSummaryDrawerOpen = false;
+        isSummaryRailCollapsed = false;
+        await GroupChanged.InvokeAsync(groupId);
+    }
+
+    private Task OnTopNQuestionChanged(string questionId)
+    {
+        if (OrderedTopNQuestions.Any(question => string.Equals(question.Id, questionId, StringComparison.OrdinalIgnoreCase)))
+        {
+            activeTopNQuestionId = questionId;
+            return InvokeAsync(StateHasChanged);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task OnSummaryRailToggleClicked(MouseEventArgs _)
+    {
+        isSummaryRailCollapsed = !isSummaryRailCollapsed;
+        isSummaryDrawerOpen = false;
+        return Task.CompletedTask;
+    }
+
+    private string GetTopNCategoryName(PredictionQuestion question)
+    {
+        var category = Competition.Categories.FirstOrDefault(item => item.Id == question.CategoryId);
+        return category?.Name ?? Text.QuestionTitle(Competition, question);
+    }
+
+    private static string ResolveGroupType(PredictionGroup group)
+    {
+        var normalizedType = PredictionModuleType.Normalize(group.Type);
+        if (!string.IsNullOrWhiteSpace(normalizedType))
+        {
+            return normalizedType;
+        }
+
+        var questionTypes = group.Questions
+            .Select(question => question.Type)
+            .Distinct()
+            .ToArray();
+
+        if (questionTypes.Length == 1 &&
+            questionTypes[0] == PredictionQuestionType.AthleteRanking &&
+            group.Questions.Count > 1 &&
+            group.Questions.All(question => !string.IsNullOrWhiteSpace(question.CategoryId)))
+        {
+            return PredictionModuleType.TopNByCategory;
+        }
+
+        return string.Empty;
     }
 }

@@ -225,7 +225,9 @@ public sealed class PredictionValidationService : IPredictionValidationService
             return;
         }
 
-        if (question.Constraints.ExactSelections is not null && count != question.Constraints.ExactSelections)
+        // Incomplete categories are tracked via completion status (not validation errors).
+        // We only raise selection-count errors when the user exceeds configured limits.
+        if (question.Constraints.ExactSelections is not null && count > question.Constraints.ExactSelections)
         {
             errors.Add(CreateError(
                 group.Id,
@@ -233,16 +235,6 @@ public sealed class PredictionValidationService : IPredictionValidationService
                 "Validation.ExactSelections",
                 $"Select exactly {question.Constraints.ExactSelections} item(s).",
                 ("count", question.Constraints.ExactSelections.Value.ToString())));
-        }
-
-        if (question.Constraints.MinSelections is not null && count < question.Constraints.MinSelections)
-        {
-            errors.Add(CreateError(
-                group.Id,
-                question.Id,
-                "Validation.MinSelections",
-                $"Select at least {question.Constraints.MinSelections} item(s).",
-                ("count", question.Constraints.MinSelections.Value.ToString())));
         }
 
         if (question.Constraints.MaxSelections is not null && count > question.Constraints.MaxSelections)

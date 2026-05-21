@@ -1,0 +1,48 @@
+<span class="@Class"
+      title="@Tooltip"
+      aria-label="@AriaLabel"
+      role="img">
+    @FlagEmoji
+</span>
+
+@code {
+    private const string FallbackFlag = "🏳️";
+
+    [Parameter]
+    public string? Code { get; set; }
+
+    [Parameter]
+    public string? CountryName { get; set; }
+
+    [Parameter]
+    public string Class { get; set; } = "flag-emoji";
+
+    private string FlagEmoji => ToFlagEmoji(Code);
+
+    private string Tooltip => string.IsNullOrWhiteSpace(CountryName)
+        ? (string.IsNullOrWhiteSpace(Code) ? "Unknown country" : Code.ToUpperInvariant())
+        : CountryName;
+
+    private string AriaLabel => string.IsNullOrWhiteSpace(CountryName)
+        ? "Country flag"
+        : $"Flag of {CountryName}";
+
+    private static string ToFlagEmoji(string? code)
+    {
+        if (string.IsNullOrWhiteSpace(code))
+        {
+            return FallbackFlag;
+        }
+
+        var normalized = code.Trim().ToUpperInvariant();
+        if (normalized.Length != 2 || normalized.Any(character => character is < 'A' or > 'Z'))
+        {
+            return FallbackFlag;
+        }
+
+        var first = char.ConvertFromUtf32(0x1F1E6 + (normalized[0] - 'A'));
+        var second = char.ConvertFromUtf32(0x1F1E6 + (normalized[1] - 'A'));
+
+        return string.Concat(first, second);
+    }
+}

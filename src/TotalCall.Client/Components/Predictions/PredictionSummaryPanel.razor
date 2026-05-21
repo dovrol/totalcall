@@ -21,10 +21,14 @@
             <dt>@Localizer["Predictions.Status.NotStarted"]</dt>
             <dd>@ModuleValidation.NotStartedItems</dd>
         </div>
+        <div>
+            <dt>@Localizer["Predictions.RemainingItems", ItemLabelPlural]</dt>
+            <dd>@ModuleValidation.RemainingItems</dd>
+        </div>
     </dl>
 
     <p class="prediction-summary-panel__note">
-        @Localizer["Predictions.SaveAnyTime"]
+        @Localizer["Predictions.ScoreOnlyComplete"]
     </p>
 
     <dl class="prediction-summary-panel__meta">
@@ -59,8 +63,23 @@
     [Parameter]
     public DateTimeOffset? LastSavedAt { get; set; }
 
+    private string ItemLabelPlural => ResolveItemLabelPlural(Group);
+
     private string FormatDate(DateTimeOffset? value)
     {
         return value?.ToLocalTime().ToString("d MMM yyyy, HH:mm") ?? Localizer["Common.Tbd"];
+    }
+
+    private string ResolveItemLabelPlural(PredictionGroup group)
+    {
+        var normalizedType = PredictionModuleType.Normalize(group.Type);
+
+        if (normalizedType == PredictionModuleType.TopNByCategory ||
+            group.Questions.All(question => !string.IsNullOrWhiteSpace(question.CategoryId)))
+        {
+            return Localizer["Predictions.Item.Categories"];
+        }
+
+        return Localizer["Predictions.Item.Predictions"];
     }
 }

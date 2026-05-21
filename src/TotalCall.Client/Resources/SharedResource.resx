@@ -121,6 +121,12 @@
   <data name="Predictions.Status.NotStarted" xml:space="preserve"><value>Nie rozpoczęto</value></data>
   <data name="Predictions.RemainingItems" xml:space="preserve"><value>Pozostałe {0}</value></data>
   <data name="Predictions.ModuleSummary" xml:space="preserve"><value>Podsumowanie modułu</value></data>
+  <data name="Predictions.WorkspaceView" xml:space="preserve"><value>Widok workspace</value></data>
+  <data name="Predictions.Tab.Ranking" xml:space="preserve"><value>Ranking</value></data>
+  <data name="Predictions.Tab.AvailableAthletes" xml:space="preserve"><value>Dostępni zawodnicy</value></data>
+  <data name="Predictions.Tab.Summary" xml:space="preserve"><value>Podsumowanie</value></data>
+  <data name="Predictions.CloseSummary" xml:space="preserve"><value>Zamknij podsumowanie</value></data>
+  <data name="Predictions.ActiveCategory" xml:space="preserve"><value>Aktywna kategoria</value></data>
   <data name="Predictions.ScoreOnlyComplete" xml:space="preserve"><value>Punkty dostajesz tylko za kompletne predykcje.</value></data>
   <data name="Predictions.SaveAnyTime" xml:space="preserve"><value>Możesz zapisać typ w dowolnym momencie. Punkty dostaniesz tylko za kompletne predykcje.</value></data>
   <data name="Predictions.SaveState" xml:space="preserve"><value>Status zapisu</value></data>

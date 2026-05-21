@@ -22,37 +22,52 @@
             @ondragstart="() => DragStartRequested.InvokeAsync(Position)">
             <div class="ranking-slot__details">
                 <strong>@Athlete.DisplayName</strong>
-                <small>@Athlete.CountryName</small>
-                @if (Athlete.SeedTotalKg is not null)
+                @if (!string.IsNullOrWhiteSpace(Athlete.CountryName))
                 {
-                    <span>@Athlete.SeedTotalKg.Value.ToString("0.#") kg</span>
+                    <small class="ranking-slot__country">
+                        <CountryFlag Code="@Athlete.CountryCode" CountryName="@Athlete.CountryName" />
+                        <span>@Athlete.CountryName</span>
+                    </small>
                 }
             </div>
 
-            <div class="ranking-slot__actions">
-                <button
-                    type="button"
-                    class="ranking-slot__action"
-                    @onclick="() => MoveUpRequested.InvokeAsync(Position)"
-                    disabled="@(!CanMoveUp)"
-                    aria-label="@Localizer["Predictions.MoveUp"]">
-                    Up
-                </button>
-                <button
-                    type="button"
-                    class="ranking-slot__action"
-                    @onclick="() => MoveDownRequested.InvokeAsync(Position)"
-                    disabled="@(!CanMoveDown)"
-                    aria-label="@Localizer["Predictions.MoveDown"]">
-                    Down
-                </button>
-                <button
-                    type="button"
-                    class="ranking-slot__action"
-                    @onclick="() => RemoveRequested.InvokeAsync(Position)"
-                    aria-label="@Localizer["Predictions.RemoveAthlete"]">
-                    <AppIcon Name="AppIconName.X" Size="14" />
-                </button>
+            <div class="ranking-slot__side">
+                @if (Athlete.SeedTotalKg is not null)
+                {
+                    <span class="ranking-slot__total">@Athlete.SeedTotalKg.Value.ToString("0.#") kg</span>
+                }
+
+                <div class="ranking-slot__actions">
+                    <button
+                        type="button"
+                        class="ranking-slot__action ranking-slot__action--icon"
+                        @onclick="() => MoveUpRequested.InvokeAsync(Position)"
+                        disabled="@(!CanMoveUp)"
+                        aria-label="@Localizer["Predictions.MoveUp"]">
+                        <AppIcon
+                            Name="AppIconName.ChevronRight"
+                            Size="13"
+                            Class="ranking-slot__action-icon ranking-slot__action-icon--up" />
+                    </button>
+                    <button
+                        type="button"
+                        class="ranking-slot__action ranking-slot__action--icon"
+                        @onclick="() => MoveDownRequested.InvokeAsync(Position)"
+                        disabled="@(!CanMoveDown)"
+                        aria-label="@Localizer["Predictions.MoveDown"]">
+                        <AppIcon
+                            Name="AppIconName.ChevronRight"
+                            Size="13"
+                            Class="ranking-slot__action-icon ranking-slot__action-icon--down" />
+                    </button>
+                    <button
+                        type="button"
+                        class="ranking-slot__action ranking-slot__action--icon"
+                        @onclick="() => RemoveRequested.InvokeAsync(Position)"
+                        aria-label="@Localizer["Predictions.RemoveAthlete"]">
+                        <AppIcon Name="AppIconName.X" Size="14" Class="ranking-slot__action-icon" />
+                    </button>
+                </div>
             </div>
         </div>
     }
