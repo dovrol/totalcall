@@ -4,3 +4,4 @@
 - `./scripts/restore.sh` - przywraca paczki NuGet.
 - `./scripts/build.sh` - buduje cale rozwiazanie.
 - `./scripts/test.sh` - uruchamia testy.
+- `./scripts/clean.sh` - usuwa wszystkie katalogi `bin` i `obj`.

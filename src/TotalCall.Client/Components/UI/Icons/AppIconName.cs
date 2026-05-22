@@ -21,5 +21,8 @@ public enum AppIconName
     Filter,
     ChevronRight,
     Settings,
-    AlertCircle
+    AlertCircle,
+    TrendUp,
+    UserPlus,
+    Trash2
 }

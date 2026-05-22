@@ -73,8 +73,11 @@
                             ActiveQuestion="@CurrentTopNQuestion"
                             ActiveQuestionStatus="@CurrentTopNQuestionStatus"
                             SelectedAthleteId="@selectedTopNAthleteId"
+                            SelectedAthleteRank="@SelectedTopNAthleteRank"
                             AthleteContextRequested="@OnTopNAthleteContextRequested"
-                            AthleteSelectionCleared="@OnTopNAthleteSelectionCleared" />
+                            AthleteSelectionCleared="@OnTopNAthleteSelectionCleared"
+                            UseNominatedTotalRequested="@OnTopNUseNominatedTotalRequested"
+                            CompareAthletesRequested="@OnTopNCompareAthletesRequested" />
                     }
                     else
                     {
@@ -114,8 +117,11 @@
                 ActiveQuestion="@CurrentTopNQuestion"
                 ActiveQuestionStatus="@CurrentTopNQuestionStatus"
                 SelectedAthleteId="@selectedTopNAthleteId"
+                SelectedAthleteRank="@SelectedTopNAthleteRank"
                 AthleteContextRequested="@OnTopNAthleteContextRequested"
-                AthleteSelectionCleared="@OnTopNAthleteSelectionCleared" />
+                AthleteSelectionCleared="@OnTopNAthleteSelectionCleared"
+                UseNominatedTotalRequested="@OnTopNUseNominatedTotalRequested"
+                CompareAthletesRequested="@OnTopNCompareAthletesRequested" />
         }
         else
         {
@@ -227,6 +233,8 @@
         : TopNStatusByQuestionId.TryGetValue(CurrentTopNQuestion.Id, out var status)
             ? status
             : null;
+
+    private int? SelectedTopNAthleteRank => GetSelectedAthleteRank(selectedTopNAthleteId);
 
     protected override void OnParametersSet()
     {
@@ -347,6 +355,53 @@
         return Task.CompletedTask;
     }
 
+    private Task OnTopNCompareAthletesRequested()
+    {
+        isSummaryDrawerOpen = false;
+        return Task.CompletedTask;
+    }
+
+    private Task OnTopNUseNominatedTotalRequested()
+    {
+        if (!CanEditPredictions || CurrentTopNQuestion is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var slotsCount = CurrentTopNQuestion.Constraints.ExactSelections ??
+                         CurrentTopNQuestion.Constraints.MaxSelections ??
+                         5;
+
+        var athletePool = CurrentTopNQuestion.AthleteIds.Count == 0
+            ? Competition.Athletes
+            : Competition.Athletes
+                .Where(athlete => CurrentTopNQuestion.AthleteIds.Contains(athlete.Id))
+                .ToArray();
+
+        var placements = athletePool
+            .OrderByDescending(athlete => athlete.SeedTotalKg ?? 0m)
+            .ThenBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
+            .Take(slotsCount)
+            .Select((athlete, index) => new AthletePlacementPick
+            {
+                Position = index + 1,
+                AthleteId = athlete.Id
+            })
+            .ToArray();
+
+        return AnswerChanged.InvokeAsync(new PredictionAnswer
+        {
+            GroupId = ActiveGroup.Id,
+            QuestionId = CurrentTopNQuestion.Id,
+            QuestionType = CurrentTopNQuestion.Type,
+            Value = new PredictionAnswerValue
+            {
+                AthletePlacements = placements
+            },
+            UpdatedAt = DateTimeOffset.UtcNow
+        });
+    }
+
     private string GetTopNCategoryName(PredictionQuestion question)
     {
         var category = Competition.Categories.FirstOrDefault(item => item.Id == question.CategoryId);
@@ -367,6 +422,24 @@
         }
 
         return CurrentTopNQuestion.AthleteIds.Contains(athleteId, StringComparer.OrdinalIgnoreCase);
+    }
+
+    private int? GetSelectedAthleteRank(string? athleteId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteId) || CurrentTopNQuestion is null)
+        {
+            return null;
+        }
+
+        var placements = Answers
+            .FirstOrDefault(answer =>
+                string.Equals(answer.GroupId, ActiveGroup.Id, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(answer.QuestionId, CurrentTopNQuestion.Id, StringComparison.OrdinalIgnoreCase))
+            ?.Value.AthletePlacements ?? [];
+
+        return placements
+            .FirstOrDefault(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase))
+            ?.Position;
     }
 
     private static string ResolveGroupType(PredictionGroup group)

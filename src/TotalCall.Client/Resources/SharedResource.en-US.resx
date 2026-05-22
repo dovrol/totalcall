@@ -133,7 +133,13 @@
   <data name="Predictions.TopNominatedTotals" xml:space="preserve"><value>Top nominated totals</value></data>
   <data name="Predictions.CategoryContextHint" xml:space="preserve"><value>Select an athlete from ranking or shortlist to view detailed context and start history.</value></data>
   <data name="Predictions.NominatedTotal" xml:space="preserve"><value>Nominated total</value></data>
+  <data name="Predictions.CurrentProjection" xml:space="preserve"><value>Current projection</value></data>
+  <data name="Predictions.RecentLifts" xml:space="preserve"><value>Latest lifts snapshot</value></data>
   <data name="Predictions.RecentStarts" xml:space="preserve"><value>Recent starts</value></data>
+  <data name="Predictions.RecentStartsShort" xml:space="preserve"><value>Recent starts</value></data>
+  <data name="Predictions.ViewFullHistory" xml:space="preserve"><value>View full history</value></data>
+  <data name="Predictions.BestLifts" xml:space="preserve"><value>Best lifts</value></data>
+  <data name="Predictions.TotalTrend" xml:space="preserve"><value>Total trend (last {0} starts)</value></data>
   <data name="Predictions.LoadingHistory" xml:space="preserve"><value>Loading history...</value></data>
   <data name="Predictions.NoAthleteHistory" xml:space="preserve"><value>No recent results available yet.</value></data>
   <data name="Predictions.BestResult" xml:space="preserve"><value>Best total</value></data>
@@ -141,6 +147,8 @@
   <data name="Predictions.UseNominatedTotal" xml:space="preserve"><value>Use nominated total</value></data>
   <data name="Predictions.UseLastResult" xml:space="preserve"><value>Use last result</value></data>
   <data name="Predictions.UseBestResult" xml:space="preserve"><value>Use best result</value></data>
+  <data name="Predictions.CompareAthletes" xml:space="preserve"><value>Compare athletes</value></data>
+  <data name="Predictions.ContextPanelInsight" xml:space="preserve"><value>The context panel helps compare athlete form before ranking picks.</value></data>
   <data name="Predictions.Meet" xml:space="preserve"><value>Meet</value></data>
   <data name="Predictions.ActiveCategory" xml:space="preserve"><value>Active category</value></data>
   <data name="Predictions.ScoreOnlyComplete" xml:space="preserve"><value>Only completed predictions will score.</value></data>

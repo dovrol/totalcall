@@ -135,8 +135,11 @@ else
                         ActiveQuestion="@ActiveQuestion"
                         ActiveQuestionStatus="@ActiveQuestionStatus"
                         SelectedAthleteId="@EffectiveSelectedAthleteId"
+                        SelectedAthleteRank="@SelectedAthleteRank"
                         AthleteContextRequested="@OnAthleteContextRequested"
-                        AthleteSelectionCleared="@OnAthleteContextCleared" />
+                        AthleteSelectionCleared="@OnAthleteContextCleared"
+                        UseNominatedTotalRequested="@OnUseNominatedTotalFromContext"
+                        CompareAthletesRequested="@OnCompareAthletesFromContext" />
                 </aside>
             </div>
         </div>
@@ -319,6 +322,8 @@ else
         .Select(athlete => athlete.Id)
         .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
+    private int? SelectedAthleteRank => GetSelectedAthleteRank(EffectiveSelectedAthleteId);
+
     protected override void OnParametersSet()
     {
         if (!string.IsNullOrWhiteSpace(ActiveQuestionId) &&
@@ -384,6 +389,17 @@ else
     {
         localSelectedAthleteId = null;
         return AthleteContextRequested.InvokeAsync(string.Empty);
+    }
+
+    private Task OnUseNominatedTotalFromContext()
+    {
+        return AutoFillByNominatedTotal();
+    }
+
+    private Task OnCompareAthletesFromContext()
+    {
+        activeWorkspaceTab = TopNWorkspaceTab.Athletes;
+        return Task.CompletedTask;
     }
 
     private Task DragFromCandidate(string athleteId)
@@ -622,6 +638,18 @@ else
         }
 
         return Competition.Athletes.FirstOrDefault(athlete => athlete.Id == athleteId);
+    }
+
+    private int? GetSelectedAthleteRank(string? athleteId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteId) || ActiveQuestion is null)
+        {
+            return null;
+        }
+
+        return GetPlacements(ActiveQuestion.Id)
+            .FirstOrDefault(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase))
+            ?.Position;
     }
 
     private bool IsAthleteEligibleForActiveQuestion(string? athleteId)
