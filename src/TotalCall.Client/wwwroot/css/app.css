@@ -2355,8 +2355,10 @@ textarea {
 }
 
 .prediction-shell {
+    --prediction-bottom-bar-space: 8.8rem;
     display: grid;
     gap: 0.85rem;
+    padding-bottom: 0;
 }
 
 .prediction-shell__frame {
@@ -2364,6 +2366,7 @@ textarea {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.82rem;
     align-items: start;
+    align-content: start;
 }
 
 .prediction-shell__left-rail,
@@ -2373,7 +2376,9 @@ textarea {
 
 .prediction-shell__left-rail,
 .prediction-shell__left-rail-inner,
+.prediction-shell__main-area,
 .prediction-shell__top-row,
+.prediction-shell__content-row,
 .prediction-shell__center-column,
 .prediction-shell__summary-rail-content,
 .prediction-shell__module {
@@ -2383,6 +2388,19 @@ textarea {
 .prediction-shell__center-column {
     display: grid;
     gap: 0.8rem;
+    align-content: start;
+}
+
+.prediction-shell__main-area,
+.prediction-shell__content-row {
+    display: grid;
+    gap: 0.82rem;
+    align-content: start;
+}
+
+.prediction-shell__content-row {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
 }
 
 .prediction-shell__left-rail-inner {
@@ -2638,7 +2656,7 @@ textarea {
     top: 0;
     right: 0;
     z-index: 49;
-    width: min(25rem, 100vw);
+    width: min(27.5rem, 100vw);
     height: 100vh;
     padding: 0.92rem;
     display: grid;
@@ -2818,6 +2836,8 @@ textarea {
     display: grid;
     gap: 0.68rem;
     height: fit-content;
+    align-content: start;
+    align-items: start;
 }
 
 .prediction-context-panel__head {
@@ -3448,20 +3468,32 @@ textarea {
 
 .prediction-context-panel__history-link {
     min-height: 2.3rem;
+    width: 100%;
+    min-width: 0;
     border: 1px solid var(--border);
     border-radius: 0.56rem;
     background: color-mix(in srgb, var(--bg-surface) 90%, transparent);
     color: var(--text-secondary);
     font-size: 0.9rem;
     font-weight: 600;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    padding: 0.42rem 0.62rem;
+    text-align: center;
+    line-height: 1.25;
+    white-space: normal;
 }
 
 .prediction-context-panel__history-link .app-icon {
     color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.prediction-context-panel__history-link span {
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .prediction-context-panel__best-lifts {
@@ -3511,11 +3543,335 @@ textarea {
     text-align: center;
 }
 
+.prediction-context-panel__selector {
+    gap: 0.56rem;
+}
+
+.prediction-context-panel__selector-current {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.76rem;
+}
+
+.prediction-context-panel__selector-controls {
+    display: grid;
+    gap: 0.46rem;
+}
+
+.prediction-context-panel__selector-search {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--border);
+    border-radius: 0.56rem;
+    background: color-mix(in srgb, var(--bg-surface) 90%, transparent);
+    padding: 0 0.56rem;
+    min-height: 2.25rem;
+}
+
+.prediction-context-panel__selector-search-icon {
+    color: var(--text-secondary);
+}
+
+.prediction-context-panel__selector-search-input {
+    min-height: 2.05rem;
+    border: 0;
+    background: transparent;
+    padding: 0;
+}
+
+.prediction-context-panel__selector-search-input:focus {
+    outline: none;
+}
+
+.prediction-context-panel__selector-sort {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.42rem;
+    align-items: center;
+}
+
+.prediction-context-panel__selector-sort > span {
+    color: var(--text-secondary);
+    font-size: 0.84rem;
+    font-weight: 600;
+}
+
+.prediction-context-panel__selector-sort-select {
+    min-height: 2.2rem;
+}
+
+.prediction-context-panel__selector-list {
+    display: grid;
+    gap: 0;
+    max-height: 31rem;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    border-radius: 0.58rem;
+    background: color-mix(in srgb, var(--bg-surface) 90%, transparent);
+    align-content: start;
+}
+
+.prediction-context-panel__selector-row {
+    border: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 86%, transparent);
+    border-radius: 0;
+    background: transparent;
+    padding: 0.42rem 0.52rem;
+    display: grid;
+    grid-template-columns: 1.35rem minmax(0, 1fr) auto auto;
+    gap: 0.5rem;
+    align-items: center;
+    min-height: 4.1rem;
+}
+
+.prediction-context-panel__selector-row:last-child {
+    border-bottom: 0;
+}
+
+.prediction-context-panel__selector-row--picked {
+    background: color-mix(in srgb, var(--success) 7%, transparent);
+}
+
+.prediction-context-panel__selector-row--current-slot {
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.prediction-context-panel__selector-rank {
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--border-strong) 72%, transparent);
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.prediction-context-panel__selector-meta {
+    min-width: 0;
+    display: grid;
+    gap: 0.12rem;
+}
+
+.prediction-context-panel__selector-meta strong {
+    font-size: 0.88rem;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.prediction-context-panel__selector-meta small {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.32rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.prediction-context-panel__selector-total {
+    white-space: nowrap;
+    font-size: 0.88rem;
+    font-weight: 700;
+    min-width: 4.8rem;
+    text-align: right;
+}
+
+.prediction-context-panel__selector-pick {
+    min-height: 1.82rem;
+    min-width: 5rem;
+    padding-inline: 0.66rem;
+    font-size: 0.8rem;
+}
+
+.prediction-history-dialog-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 56;
+    display: grid;
+    place-items: center;
+    padding: 1.1rem;
+}
+
+.prediction-history-dialog__backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgb(3 10 21 / 0.72);
+}
+
+.prediction-history-dialog {
+    position: relative;
+    width: min(58rem, 100%);
+    max-height: min(90vh, 54rem);
+    overflow: auto;
+    border: 1px solid color-mix(in srgb, var(--border-strong) 90%, transparent);
+    border-radius: var(--radius-md);
+    background:
+        linear-gradient(
+            160deg,
+            color-mix(in srgb, var(--accent) 8%, var(--bg-surface)) 0%,
+            color-mix(in srgb, var(--bg-surface) 94%, transparent) 60%
+        ),
+        color-mix(in srgb, var(--bg-surface) 94%, transparent);
+    padding: 0.9rem;
+    display: grid;
+    gap: 0.72rem;
+}
+
+.prediction-history-dialog__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.prediction-history-dialog__head h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.2;
+}
+
+.prediction-history-dialog__close {
+    min-height: 2rem;
+    min-width: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 0.56rem;
+    background: color-mix(in srgb, var(--bg-surface) 90%, transparent);
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prediction-history-dialog__summary {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--bg-surface-muted) 88%, transparent);
+    padding: 0.58rem;
+    display: grid;
+    gap: 0.52rem;
+}
+
+.prediction-history-dialog__summary-athlete {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.58rem;
+    align-items: center;
+}
+
+.prediction-history-dialog__summary-avatar {
+    width: 2.6rem;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--border-strong) 84%, transparent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.98rem;
+    font-weight: 800;
+    background: color-mix(in srgb, var(--bg-surface) 90%, transparent);
+}
+
+.prediction-history-dialog__summary-athlete strong {
+    display: block;
+    font-size: 0.98rem;
+}
+
+.prediction-history-dialog__summary-athlete small {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.prediction-history-dialog__summary-meta {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+.prediction-history-dialog__summary-meta div {
+    display: grid;
+    gap: 0.14rem;
+}
+
+.prediction-history-dialog__summary-meta dt {
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.prediction-history-dialog__summary-meta dd {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.prediction-history-dialog__trend,
+.prediction-history-dialog__table-wrap {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--bg-surface-muted) 88%, transparent);
+    padding: 0.58rem;
+    display: grid;
+    gap: 0.52rem;
+}
+
+.prediction-history-dialog__trend h3,
+.prediction-history-dialog__table-wrap h3 {
+    margin: 0;
+    font-size: 0.96rem;
+}
+
+.prediction-history-dialog__footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.7rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.prediction-history-dialog__source {
+    display: grid;
+    gap: 0.1rem;
+}
+
+.prediction-history-dialog__source p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+}
+
+.prediction-history-dialog__actions {
+    display: inline-flex;
+    gap: 0.42rem;
+    flex-wrap: wrap;
+}
+
 .prediction-navigation-bar {
     display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(0.85rem + env(safe-area-inset-bottom));
+    width: min(112rem, calc(100vw - 2rem));
+    margin-inline: auto;
+    z-index: 34;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     background: color-mix(in srgb, var(--bg-surface) 90%, transparent);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--shadow-card);
     padding: 0.72rem;
     align-items: center;
     grid-template-columns: auto minmax(0, 1fr) auto;
@@ -3535,12 +3891,18 @@ textarea {
 }
 
 .prediction-mobile-bottom-bar {
-    position: sticky;
+    position: fixed;
+    left: 0;
+    right: 0;
     bottom: calc(4.2rem + env(safe-area-inset-bottom));
+    width: min(112rem, calc(100vw - 2rem));
+    margin-inline: auto;
     z-index: 35;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--shadow-card);
     padding: 0.55rem;
 }
 
@@ -3798,9 +4160,12 @@ textarea {
 }
 
 .prediction-shell__left-rail .category-status-list {
-    height: 100%;
+    height: auto;
+    max-height: 100%;
+    min-height: 0;
     display: grid;
     grid-template-rows: auto minmax(0, 1fr);
+    overflow: hidden;
 }
 
 .prediction-shell__left-rail .category-status-list ol {
@@ -3851,6 +4216,15 @@ textarea {
     border-style: solid;
 }
 
+.ranking-slot--interactive {
+    cursor: pointer;
+}
+
+.ranking-slot--selector-target {
+    border-color: color-mix(in srgb, var(--danger) 74%, var(--border));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--danger) 54%, transparent);
+}
+
 .ranking-slot--context-active {
     border-color: color-mix(in srgb, var(--accent) 78%, var(--border));
     background: color-mix(in srgb, var(--accent) 16%, var(--bg-surface));
@@ -3869,6 +4243,11 @@ textarea {
     justify-content: center;
     font-size: 0.78rem;
     font-weight: 700;
+}
+
+.ranking-slot__empty {
+    display: grid;
+    gap: 0.12rem;
 }
 
 .ranking-slot__empty strong {
@@ -3971,6 +4350,11 @@ textarea {
     font-size: 0.73rem;
     font-weight: 700;
     padding: 0 0.3rem;
+}
+
+.ranking-slot__action--change {
+    min-width: 4.35rem;
+    padding-inline: 0.56rem;
 }
 
 .ranking-slot__action--icon {
@@ -4134,6 +4518,7 @@ textarea {
 
 .prediction-shell__left-rail .category-status-list ol,
 .athlete-candidate-list__rows,
+.prediction-context-panel__selector-list,
 .topn-module__categories .category-status-list ol,
 .prediction-shell__summary-rail .prediction-summary-panel,
 .prediction-shell__summary-drawer .prediction-summary-panel,
@@ -4146,6 +4531,7 @@ textarea {
 
 .prediction-shell__left-rail .category-status-list ol::-webkit-scrollbar,
 .athlete-candidate-list__rows::-webkit-scrollbar,
+.prediction-context-panel__selector-list::-webkit-scrollbar,
 .topn-module__categories .category-status-list ol::-webkit-scrollbar,
 .prediction-shell__summary-rail .prediction-summary-panel::-webkit-scrollbar,
 .prediction-shell__summary-drawer .prediction-summary-panel::-webkit-scrollbar,
@@ -4158,6 +4544,7 @@ textarea {
 
 .prediction-shell__left-rail .category-status-list ol::-webkit-scrollbar-track,
 .athlete-candidate-list__rows::-webkit-scrollbar-track,
+.prediction-context-panel__selector-list::-webkit-scrollbar-track,
 .topn-module__categories .category-status-list ol::-webkit-scrollbar-track,
 .prediction-shell__summary-rail .prediction-summary-panel::-webkit-scrollbar-track,
 .prediction-shell__summary-drawer .prediction-summary-panel::-webkit-scrollbar-track,
@@ -4170,6 +4557,7 @@ textarea {
 
 .prediction-shell__left-rail .category-status-list ol::-webkit-scrollbar-thumb,
 .athlete-candidate-list__rows::-webkit-scrollbar-thumb,
+.prediction-context-panel__selector-list::-webkit-scrollbar-thumb,
 .topn-module__categories .category-status-list ol::-webkit-scrollbar-thumb,
 .prediction-shell__summary-rail .prediction-summary-panel::-webkit-scrollbar-thumb,
 .prediction-shell__summary-drawer .prediction-summary-panel::-webkit-scrollbar-thumb,
@@ -4183,6 +4571,7 @@ textarea {
 
 .prediction-shell__left-rail .category-status-list ol::-webkit-scrollbar-thumb:hover,
 .athlete-candidate-list__rows::-webkit-scrollbar-thumb:hover,
+.prediction-context-panel__selector-list::-webkit-scrollbar-thumb:hover,
 .topn-module__categories .category-status-list ol::-webkit-scrollbar-thumb:hover,
 .prediction-shell__summary-rail .prediction-summary-panel::-webkit-scrollbar-thumb:hover,
 .prediction-shell__summary-drawer .prediction-summary-panel::-webkit-scrollbar-thumb:hover,
@@ -4245,9 +4634,61 @@ textarea {
     cursor: pointer;
 }
 
+@media (max-width: 1023.98px) {
+    .prediction-shell__summary-drawer {
+        top: auto;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: min(82vh, 46rem);
+        border-left: 0;
+        border-top: 1px solid var(--border);
+        border-radius: 0.9rem 0.9rem 0 0;
+        transform: translateY(102%);
+        padding-bottom: calc(0.92rem + env(safe-area-inset-bottom));
+    }
+
+    .prediction-shell__summary-drawer.is-open {
+        transform: translateY(0);
+    }
+
+    .prediction-shell__summary-drawer .prediction-summary-panel,
+    .prediction-shell__summary-drawer .prediction-context-panel {
+        max-height: calc(min(82vh, 46rem) - 3.9rem);
+    }
+
+    .prediction-history-dialog-layer {
+        padding: 0.62rem;
+    }
+
+    .prediction-history-dialog {
+        width: 100%;
+        max-height: 92vh;
+        padding: 0.72rem;
+    }
+
+    .prediction-history-dialog__summary-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .prediction-history-dialog__footer {
+        align-items: stretch;
+    }
+
+    .prediction-history-dialog__actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
 @media (min-width: 640px) {
     .page-container {
         padding-inline: 1.25rem;
+    }
+
+    .prediction-navigation-bar,
+    .prediction-mobile-bottom-bar {
+        width: min(112rem, calc(100vw - 2.5rem));
     }
 
     .app-topbar__inner {
@@ -4372,6 +4813,11 @@ textarea {
         padding-block: 1.8rem 2.6rem;
     }
 
+    .prediction-navigation-bar,
+    .prediction-mobile-bottom-bar {
+        width: min(112rem, calc(100vw - 4rem));
+    }
+
     .page-container {
         padding-inline: 2rem;
     }
@@ -4482,6 +4928,29 @@ textarea {
 }
 
 @media (min-width: 1024px) {
+    .app-shell:has(.prediction-shell) {
+        height: 100dvh;
+        overflow: hidden;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .app-shell:has(.prediction-shell) .app-shell__main {
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: clip;
+        overscroll-behavior: contain;
+    }
+
+    .app-shell__content:has(.prediction-shell) {
+        padding-bottom: 0.9rem;
+    }
+
+    .prediction-shell {
+        --prediction-bottom-bar-space: 5.9rem;
+        padding-bottom: calc(var(--prediction-bottom-bar-space) + 0.9rem);
+    }
+
     .prediction-navigation-bar {
         display: grid;
     }
@@ -4529,18 +4998,16 @@ textarea {
 
     .topn-module__desktop-tabs {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.45rem;
     }
 
     .topn-module__workspace,
-    .topn-module__candidates,
     .topn-module__inline-context {
         display: none;
     }
 
-    .topn-module__workspace.is-pane-active,
-    .topn-module__candidates.is-pane-active {
+    .topn-module__workspace.is-pane-active {
         display: grid;
     }
 
@@ -4551,34 +5018,48 @@ textarea {
 
 @media (min-width: 1280px) {
     .prediction-shell {
-        --prediction-rail-top: 4.95rem;
-        --prediction-rail-bottom: 5.8rem;
+        --prediction-rail-top: 0.75rem;
+        --prediction-rail-bottom: calc(var(--prediction-bottom-bar-space) + 0.9rem);
+        --prediction-rail-height: calc(100dvh - var(--prediction-rail-top) - var(--prediction-rail-bottom));
     }
 
     .prediction-shell__frame {
-        grid-template-columns: minmax(15rem, 17.25rem) minmax(0, 1fr) minmax(20rem, 22.5rem);
+        grid-template-columns: minmax(15rem, 17.25rem) minmax(0, 1fr);
         column-gap: 1.1rem;
         row-gap: 0.88rem;
+        align-content: start;
+        align-items: start;
     }
 
     .prediction-shell__left-rail {
         grid-column: 1;
-        grid-row: 1 / span 2;
-    }
-
-    .prediction-shell__top-row {
-        grid-column: 2 / 4;
         grid-row: 1;
     }
 
-    .prediction-shell__center-column {
+    .prediction-shell__main-area {
         grid-column: 2;
-        grid-row: 2;
+        grid-row: 1;
+        gap: 0.88rem;
+        align-content: start;
+    }
+
+    .prediction-shell__content-row {
+        grid-template-columns: minmax(0, 1fr) minmax(24rem, 28rem);
+        gap: 1.1rem;
+        align-content: start;
+        align-items: start;
+    }
+
+    .prediction-shell__center-column {
+        grid-column: 1;
+        grid-row: 1;
+        align-self: start;
     }
 
     .prediction-shell__summary-rail {
-        grid-column: 3;
-        grid-row: 2;
+        grid-column: 2;
+        grid-row: 1;
+        align-self: start;
     }
 
     .prediction-shell-header__summary {
@@ -4628,41 +5109,59 @@ textarea {
         height: 0.34rem;
     }
 
-    .prediction-shell__left-rail,
+    .prediction-shell__left-rail {
+        display: block;
+        position: sticky;
+        top: var(--prediction-rail-top);
+        align-self: start;
+        min-height: 0;
+        height: auto;
+        max-height: var(--prediction-rail-height);
+        overflow: hidden;
+    }
+
     .prediction-shell__summary-rail {
         display: block;
         position: sticky;
         top: var(--prediction-rail-top);
         align-self: start;
-        min-height: 32rem;
-        height: calc(100vh - var(--prediction-rail-top) - var(--prediction-rail-bottom));
+        min-height: 0;
+        height: auto;
+        max-height: var(--prediction-rail-height);
+        overflow: hidden;
     }
 
     .prediction-shell__left-rail-inner {
-        height: 100%;
+        height: auto;
+        max-height: var(--prediction-rail-height);
+        min-height: 0;
         grid-template-rows: auto minmax(0, 1fr);
+        overflow: hidden;
     }
 
     .prediction-shell__summary-rail-content {
-        height: 100%;
+        height: auto;
+        max-height: var(--prediction-rail-height);
         min-height: 0;
-        display: grid;
-        grid-template-rows: minmax(0, 1fr);
-        align-content: stretch;
+        display: block;
+        overflow: hidden;
     }
 
     .prediction-shell__summary-panel-wrap {
         width: 100%;
-        height: 100%;
+        height: auto;
+        max-height: var(--prediction-rail-height);
         min-height: 0;
+        display: block;
+        overflow: hidden;
     }
 
     .prediction-shell__summary-rail .prediction-summary-panel,
     .prediction-shell__summary-rail .prediction-context-panel {
         width: 100%;
-        height: 100%;
+        height: auto;
         min-height: 0;
-        max-height: 100%;
+        max-height: var(--prediction-rail-height);
         overflow-y: auto;
     }
 
@@ -4695,7 +5194,9 @@ textarea {
         align-self: start;
         position: sticky;
         top: 5.6rem;
-        max-height: calc(100vh - 7.5rem);
+        bottom: var(--prediction-rail-bottom);
+        max-height: calc(100dvh - 5.6rem - var(--prediction-rail-bottom));
+        overflow: hidden;
     }
 
     .topn-module:not(.topn-module--external-sidebar) .topn-module__categories {
@@ -4716,9 +5217,20 @@ textarea {
     }
 }
 
+@media (max-width: 1023.98px) {
+    .prediction-shell {
+        padding-bottom: var(--prediction-bottom-bar-space);
+    }
+}
+
 @media (min-width: 1600px) {
     .prediction-shell__frame {
-        grid-template-columns: minmax(15.5rem, 17.5rem) minmax(0, 1fr) minmax(21rem, 24rem);
+        grid-template-columns: minmax(15.5rem, 17.5rem) minmax(0, 1fr);
+        column-gap: 1.45rem;
+    }
+
+    .prediction-shell__content-row {
+        grid-template-columns: minmax(0, 1fr) minmax(25rem, 30rem);
         column-gap: 1.45rem;
     }
 }

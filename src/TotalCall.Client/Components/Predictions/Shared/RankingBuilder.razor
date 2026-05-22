@@ -7,7 +7,9 @@
             <RankingSlot
                 Position="position"
                 Athlete="GetAthlete(position)"
+                CanEditPredictions="CanEditPredictions"
                 IsContextSelected="@IsContextAthlete(GetAthlete(position))"
+                IsSelectorTarget="@(SelectorSlotPosition == position)"
                 CanMoveUp="@(position > 1)"
                 CanMoveDown="@(position < SlotsCount)"
                 RemoveRequested="RemoveRequested"
@@ -15,6 +17,7 @@
                 MoveDownRequested="MoveDownRequested"
                 DropRequested="DropToPositionRequested"
                 DragStartRequested="DragStartFromSlotRequested"
+                SlotSelectionRequested="SlotSelectionRequested"
                 AthleteContextRequested="AthleteContextRequested" />
         }
     </div>
@@ -32,7 +35,13 @@
         new Dictionary<int, Athlete>();
 
     [Parameter]
+    public bool CanEditPredictions { get; set; } = true;
+
+    [Parameter]
     public string? ContextAthleteId { get; set; }
+
+    [Parameter]
+    public int? SelectorSlotPosition { get; set; }
 
     [Parameter]
     public EventCallback<int> RemoveRequested { get; set; }
@@ -48,6 +57,9 @@
 
     [Parameter]
     public EventCallback<int> DragStartFromSlotRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> SlotSelectionRequested { get; set; }
 
     [Parameter]
     public EventCallback<string> AthleteContextRequested { get; set; }

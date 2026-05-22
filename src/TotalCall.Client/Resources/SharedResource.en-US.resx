@@ -129,7 +129,9 @@
   <data name="Predictions.CloseSummary" xml:space="preserve"><value>Close summary</value></data>
   <data name="Predictions.CloseContext" xml:space="preserve"><value>Close context panel</value></data>
   <data name="Predictions.ContextPanel" xml:space="preserve"><value>Athlete context</value></data>
+  <data name="Predictions.CategoryContextPanel" xml:space="preserve"><value>Category context</value></data>
   <data name="Predictions.ClearAthleteContext" xml:space="preserve"><value>Clear athlete context</value></data>
+  <data name="Predictions.CloseSelector" xml:space="preserve"><value>Close athlete selector</value></data>
   <data name="Predictions.TopNominatedTotals" xml:space="preserve"><value>Top nominated totals</value></data>
   <data name="Predictions.CategoryContextHint" xml:space="preserve"><value>Select an athlete from ranking or shortlist to view detailed context and start history.</value></data>
   <data name="Predictions.NominatedTotal" xml:space="preserve"><value>Nominated total</value></data>
@@ -138,6 +140,13 @@
   <data name="Predictions.RecentStarts" xml:space="preserve"><value>Recent starts</value></data>
   <data name="Predictions.RecentStartsShort" xml:space="preserve"><value>Recent starts</value></data>
   <data name="Predictions.ViewFullHistory" xml:space="preserve"><value>View full history</value></data>
+  <data name="Predictions.HistoryDialogTitle" xml:space="preserve"><value>Start history — {0}</value></data>
+  <data name="Predictions.HistoryDialogClose" xml:space="preserve"><value>Close</value></data>
+  <data name="Predictions.BackToContext" xml:space="preserve"><value>Back to context</value></data>
+  <data name="Predictions.History.Date" xml:space="preserve"><value>Date</value></data>
+  <data name="Predictions.History.Meet" xml:space="preserve"><value>Meet</value></data>
+  <data name="Predictions.History.Place" xml:space="preserve"><value>Place</value></data>
+  <data name="Predictions.SourceUpdatedAt" xml:space="preserve"><value>Last updated: {0}</value></data>
   <data name="Predictions.BestLifts" xml:space="preserve"><value>Best lifts</value></data>
   <data name="Predictions.TotalTrend" xml:space="preserve"><value>Total trend (last {0} starts)</value></data>
   <data name="Predictions.LoadingHistory" xml:space="preserve"><value>Loading history...</value></data>
@@ -166,12 +175,17 @@
   <data name="Predictions.ClearCategory" xml:space="preserve"><value>Clear category</value></data>
   <data name="Predictions.YourRankingTopN" xml:space="preserve"><value>Your ranking (Top {0})</value></data>
   <data name="Predictions.AvailableAthletes" xml:space="preserve"><value>Available athletes</value></data>
+  <data name="Predictions.PickAthleteCta" xml:space="preserve"><value>+ Pick athlete</value></data>
+  <data name="Predictions.ChangeAthlete" xml:space="preserve"><value>Change</value></data>
+  <data name="Predictions.SelectAthleteForSlot" xml:space="preserve"><value>Pick athlete for slot #{0}</value></data>
+  <data name="Predictions.CurrentSlotAthlete" xml:space="preserve"><value>Current pick: {0}</value></data>
   <data name="Predictions.DragOrPickHint" xml:space="preserve"><value>Drag or pick from the list</value></data>
   <data name="Predictions.MoveUp" xml:space="preserve"><value>Move up</value></data>
   <data name="Predictions.MoveDown" xml:space="preserve"><value>Move down</value></data>
   <data name="Predictions.Picked" xml:space="preserve"><value>Picked</value></data>
   <data name="Predictions.SearchAthlete" xml:space="preserve"><value>Search athlete</value></data>
   <data name="Predictions.SearchAthletePlaceholder" xml:space="preserve"><value>Search by name or country...</value></data>
+  <data name="Predictions.SelectorSearchPlaceholder" xml:space="preserve"><value>Search athlete or country...</value></data>
   <data name="Predictions.SortBy" xml:space="preserve"><value>Sort by</value></data>
   <data name="Predictions.SortNominatedDesc" xml:space="preserve"><value>Nominated total (high to low)</value></data>
   <data name="Predictions.SortNominatedAsc" xml:space="preserve"><value>Nominated total (low to high)</value></data>

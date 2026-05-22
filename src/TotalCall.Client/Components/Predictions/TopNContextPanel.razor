@@ -5,23 +5,94 @@
 <aside class="prediction-context-panel" aria-label="@Localizer["Predictions.ContextPanel"]">
     <header class="prediction-context-panel__head">
         <div class="prediction-context-panel__title-wrap">
-            <h2>@Localizer["Predictions.ContextPanel"]</h2>
-            <AppIcon Name="AppIconName.AlertCircle" Size="14" Class="prediction-context-panel__title-icon" />
+            <h2>@PanelTitle</h2>
+            @if (!IsSelectorMode)
+            {
+                <AppIcon Name="AppIconName.AlertCircle" Size="14" Class="prediction-context-panel__title-icon" />
+            }
         </div>
 
-        @if (SelectedAthlete is not null)
+        @if (CanDismissPanel)
         {
             <button
                 type="button"
                 class="prediction-context-panel__dismiss"
-                aria-label="@Localizer["Predictions.ClearAthleteContext"]"
-                @onclick="OnClearAthleteSelectionClicked">
+                aria-label="@DismissAriaLabel"
+                @onclick="OnDismissClicked">
                 <AppIcon Name="AppIconName.X" Size="14" />
             </button>
         }
     </header>
 
-    @if (SelectedAthlete is null)
+    @if (IsSelectorMode)
+    {
+        <section class="prediction-context-panel__block prediction-context-panel__selector">
+            @if (CurrentSlotAthlete is not null)
+            {
+                <p class="prediction-context-panel__selector-current">
+                    @Localizer["Predictions.CurrentSlotAthlete", CurrentSlotAthlete.DisplayName]
+                </p>
+            }
+
+            <div class="prediction-context-panel__selector-controls">
+                <label class="prediction-context-panel__selector-search">
+                    <AppIcon Name="AppIconName.Search" Size="16" Class="prediction-context-panel__selector-search-icon" />
+                    <input
+                        class="control prediction-context-panel__selector-search-input"
+                        type="search"
+                        @bind="selectorSearchTerm"
+                        @bind:event="oninput"
+                        placeholder="@Localizer["Predictions.SelectorSearchPlaceholder"]" />
+                </label>
+
+                <label class="prediction-context-panel__selector-sort">
+                    <span>@Localizer["Predictions.SortBy"]:</span>
+                    <select class="control prediction-context-panel__selector-sort-select" @bind="selectorSortMode">
+                        <option value="nominated-desc">@Localizer["Predictions.SortNominatedDesc"]</option>
+                        <option value="nominated-asc">@Localizer["Predictions.SortNominatedAsc"]</option>
+                        <option value="name-asc">@Localizer["Predictions.SortNameAsc"]</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="prediction-context-panel__selector-list">
+                @if (FilteredSelectorAthletes.Count == 0)
+                {
+                    <PredictionEmptyState
+                        Title="@Localizer["Predictions.NoAthletesTitle"]"
+                        Description="@Localizer["Predictions.NoAthletesDescription"]" />
+                }
+                else
+                {
+                    @foreach (var entry in FilteredSelectorAthletes.Select((athlete, index) => new { Athlete = athlete, Index = index }))
+                    {
+                        <article class="@GetSelectorRowClass(entry.Athlete)">
+                            <span class="prediction-context-panel__selector-rank">@(entry.Index + 1)</span>
+
+                            <div class="prediction-context-panel__selector-meta">
+                                <strong>@entry.Athlete.DisplayName</strong>
+                                <small>
+                                    <CountryFlag Code="@entry.Athlete.CountryCode" CountryName="@entry.Athlete.CountryName" />
+                                    <span>@(entry.Athlete.CountryName ?? Localizer["Common.Tbd"].Value)</span>
+                                </small>
+                            </div>
+
+                            <strong class="prediction-context-panel__selector-total">@FormatKg(entry.Athlete.SeedTotalKg)</strong>
+
+                            <button
+                                type="button"
+                                class="app-button app-button--primary app-button--sm prediction-context-panel__selector-pick"
+                                disabled="@(!CanEditPredictions)"
+                                @onclick="() => OnSelectorAthletePickedClicked(entry.Athlete.Id)">
+                                @Localizer["Predictions.Pick"]
+                            </button>
+                        </article>
+                    }
+                }
+            </div>
+        </section>
+    }
+    else if (SelectedAthlete is null)
     {
         <section class="prediction-context-panel__block">
             <h3>@(ActiveCategoryName ?? Localizer["Common.Tbd"].Value)</h3>
@@ -121,7 +192,7 @@
                     }
                 </ol>
 
-                <button type="button" class="prediction-context-panel__history-link" disabled>
+                <button type="button" class="prediction-context-panel__history-link" @onclick="OnOpenHistoryDialogClicked">
                     <AppIcon Name="AppIconName.TrendUp" Size="15" />
                     <span>@Localizer["Predictions.ViewFullHistory"]</span>
                 </button>
@@ -210,6 +281,150 @@
     }
 </aside>
 
+@if (isHistoryDialogOpen && SelectedAthlete is not null && !IsSelectorMode)
+{
+    <div class="prediction-history-dialog-layer" role="presentation">
+        <button
+            type="button"
+            class="prediction-history-dialog__backdrop"
+            aria-label="@Localizer["Predictions.HistoryDialogClose"]"
+            @onclick="OnCloseHistoryDialogClicked">
+        </button>
+
+        <section
+            class="prediction-history-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-label="@Localizer["Predictions.HistoryDialogTitle", SelectedAthlete.DisplayName]">
+            <header class="prediction-history-dialog__head">
+                <h2>@Localizer["Predictions.HistoryDialogTitle", SelectedAthlete.DisplayName]</h2>
+                <button
+                    type="button"
+                    class="prediction-history-dialog__close"
+                    aria-label="@Localizer["Predictions.HistoryDialogClose"]"
+                    @onclick="OnCloseHistoryDialogClicked">
+                    <AppIcon Name="AppIconName.X" Size="16" />
+                </button>
+            </header>
+
+            <section class="prediction-history-dialog__summary">
+                <div class="prediction-history-dialog__summary-athlete">
+                    <span class="prediction-history-dialog__summary-avatar">@GetAthleteInitials(SelectedAthlete.DisplayName)</span>
+                    <div>
+                        <strong>@SelectedAthlete.DisplayName</strong>
+                        <small>
+                            <CountryFlag Code="@SelectedAthlete.CountryCode" CountryName="@SelectedAthlete.CountryName" />
+                            <span>@(SelectedAthlete.CountryName ?? Localizer["Common.Tbd"].Value)</span>
+                        </small>
+                    </div>
+                </div>
+
+                <dl class="prediction-history-dialog__summary-meta">
+                    <div>
+                        <dt>@Localizer["Predictions.Category"]</dt>
+                        <dd>@(SelectedAthleteCategoryName ?? Localizer["Common.Tbd"].Value)</dd>
+                    </div>
+                    <div>
+                        <dt>@Localizer["Predictions.NominatedTotal"]</dt>
+                        <dd>@FormatKg(SelectedAthlete.SeedTotalKg)</dd>
+                    </div>
+                </dl>
+            </section>
+
+            @if (TrendPoints.Count > 1)
+            {
+                <section class="prediction-history-dialog__trend">
+                    <h3>@Localizer["Predictions.TotalTrend", TrendPoints.Count]</h3>
+                    <div class="prediction-context-panel__trend-wrap">
+                        <div class="prediction-context-panel__trend-range">
+                            <span>@TrendUpperBoundLabel</span>
+                            <span>@TrendLowerBoundLabel</span>
+                        </div>
+                        <svg class="prediction-context-panel__trend-chart" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+                            <polyline points="@TrendPolylinePoints" class="prediction-context-panel__trend-line" />
+                            @foreach (var point in TrendPoints)
+                            {
+                                <circle
+                                    class="prediction-context-panel__trend-dot"
+                                    cx="@FormatTrendAxisValue(point.X)"
+                                    cy="@FormatTrendAxisValue(point.Y)"
+                                    r="1.8" />
+                            }
+                        </svg>
+                        <ol class="prediction-context-panel__trend-labels">
+                            @foreach (var point in TrendPoints)
+                            {
+                                <li>@point.Label</li>
+                            }
+                        </ol>
+                    </div>
+                </section>
+            }
+
+            <section class="prediction-history-dialog__table-wrap">
+                <h3>@Localizer["Predictions.RecentStarts"]</h3>
+                <div class="prediction-context-panel__history-table-wrap">
+                    <table class="prediction-context-panel__history-table">
+                        <thead>
+                            <tr>
+                                <th>@Localizer["Predictions.History.Date"]</th>
+                                <th>@Localizer["Predictions.History.Meet"]</th>
+                                <th>SQ</th>
+                                <th>BP</th>
+                                <th>DL</th>
+                                <th>Total</th>
+                                <th>@Localizer["Predictions.History.Place"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var result in HistoryResults)
+                            {
+                                <tr>
+                                    <td>@FormatDate(result.Date)</td>
+                                    <td>
+                                        @FormatRecentStartTitle(result)
+                                        @if (!string.IsNullOrWhiteSpace(result.Federation))
+                                        {
+                                            <small>@result.Federation</small>
+                                        }
+                                    </td>
+                                    <td class="@GetHistoryLiftCellClass(result.SquatKg, BestSquatKg)">@FormatKgValue(result.SquatKg)</td>
+                                    <td class="@GetHistoryLiftCellClass(result.BenchKg, BestBenchKg)">@FormatKgValue(result.BenchKg)</td>
+                                    <td class="@GetHistoryLiftCellClass(result.DeadliftKg, BestDeadliftKg)">@FormatKgValue(result.DeadliftKg)</td>
+                                    <td class="@GetHistoryLiftCellClass(result.TotalKg, BestTotalKg)">@FormatKgValue(result.TotalKg)</td>
+                                    <td>@(string.IsNullOrWhiteSpace(result.Placing) ? "—" : result.Placing)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <footer class="prediction-history-dialog__footer">
+                <div class="prediction-history-dialog__source">
+                    @if (!string.IsNullOrWhiteSpace(SourceAttribution))
+                    {
+                        <p>@SourceAttribution</p>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(SourceDownloadedAt))
+                    {
+                        <p>@Localizer["Predictions.SourceUpdatedAt", FormatDate(SourceDownloadedAt)]</p>
+                    }
+                </div>
+
+                <div class="prediction-history-dialog__actions">
+                    <button type="button" class="app-button app-button--secondary app-button--sm" @onclick="OnCloseHistoryDialogClicked">
+                        @Localizer["Predictions.BackToContext"]
+                    </button>
+                    <button type="button" class="app-button app-button--ghost app-button--sm" @onclick="OnCloseHistoryDialogClicked">
+                        @Localizer["Predictions.HistoryDialogClose"]
+                    </button>
+                </div>
+            </footer>
+        </section>
+    </div>
+}
+
 @code {
     [Parameter, EditorRequired]
     public Competition Competition { get; set; } = default!;
@@ -227,10 +442,26 @@
     public int? SelectedAthleteRank { get; set; }
 
     [Parameter]
+    public bool CanEditPredictions { get; set; } = true;
+
+    [Parameter]
+    public int? SelectorSlotPosition { get; set; }
+
+    [Parameter]
+    public IReadOnlyDictionary<int, Athlete> SelectedAthletesByPosition { get; set; } =
+        new Dictionary<int, Athlete>(EqualityComparer<int>.Default);
+
+    [Parameter]
     public EventCallback<string> AthleteContextRequested { get; set; }
 
     [Parameter]
     public EventCallback AthleteSelectionCleared { get; set; }
+
+    [Parameter]
+    public EventCallback<string> SelectorAthletePicked { get; set; }
+
+    [Parameter]
+    public EventCallback SelectorDismissRequested { get; set; }
 
     [Parameter]
     public EventCallback UseNominatedTotalRequested { get; set; }
@@ -243,6 +474,10 @@
     private string? loadedCompetitionId;
     private string? loadedAthleteId;
     private bool isLoadingHistory;
+    private bool isHistoryDialogOpen;
+    private string selectorSearchTerm = string.Empty;
+    private string selectorSortMode = "nominated-desc";
+    private int? previousSelectorSlotPosition;
 
     private Athlete? SelectedAthlete => string.IsNullOrWhiteSpace(SelectedAthleteId)
         ? null
@@ -263,15 +498,40 @@
 
     private IReadOnlyList<Athlete> TopNominatedAthletes => GetTopNominatedAthletes();
 
+    private IReadOnlyList<Athlete> FilteredSelectorAthletes => GetFilteredSelectorAthletes();
+
+    private bool IsSelectorMode => SelectorSlotPosition is not null;
+
+    private Athlete? CurrentSlotAthlete => SelectorSlotPosition is not null &&
+                                          SelectedAthletesByPosition.TryGetValue(SelectorSlotPosition.Value, out var athlete)
+        ? athlete
+        : null;
+
+    private bool CanDismissPanel => IsSelectorMode || SelectedAthlete is not null;
+
+    private string DismissAriaLabel => IsSelectorMode
+        ? Localizer["Predictions.CloseSelector"]
+        : Localizer["Predictions.ClearAthleteContext"];
+
+    private string PanelTitle => IsSelectorMode
+        ? Localizer["Predictions.SelectAthleteForSlot", SelectorSlotPosition!.Value]
+        : SelectedAthlete is null
+            ? Localizer["Predictions.CategoryContextPanel"]
+            : Localizer["Predictions.ContextPanel"];
+
     private string? SelectedAthleteCategoryName => ResolveCategoryName(SelectedAthlete?.WeightCategoryId);
 
     private string? SourceAttribution => historyDataset?.Source?.Attribution;
+
+    private string? SourceDownloadedAt => historyDataset?.Source?.DownloadedAt;
 
     private string RankBadgeLabel => SelectedAthleteRank?.ToString(CultureInfo.CurrentCulture) ?? "•";
 
     private IReadOnlyList<AthleteRecentResult> RecentStarts => SelectedAthleteHistory?.RecentResults
         .Take(3)
         .ToArray() ?? [];
+
+    private IReadOnlyList<AthleteRecentResult> HistoryResults => SelectedAthleteHistory?.RecentResults ?? [];
 
     private decimal? BestSquatKg => SelectedAthleteHistory?.Bests?.SquatKg ??
                                     SelectedAthleteHistory?.RecentResults.Max(result => result.SquatKg);
@@ -301,6 +561,18 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        if (previousSelectorSlotPosition != SelectorSlotPosition)
+        {
+            selectorSearchTerm = string.Empty;
+            selectorSortMode = "nominated-desc";
+            previousSelectorSlotPosition = SelectorSlotPosition;
+        }
+
+        if (IsSelectorMode)
+        {
+            isHistoryDialogOpen = false;
+        }
+
         if (SelectedAthlete is null)
         {
             SelectedAthleteHistory = null;
@@ -333,8 +605,19 @@
         isLoadingHistory = false;
     }
 
+    private Task OnDismissClicked(MouseEventArgs _)
+    {
+        if (IsSelectorMode)
+        {
+            return SelectorDismissRequested.InvokeAsync();
+        }
+
+        return OnClearAthleteSelectionClicked(_);
+    }
+
     private Task OnClearAthleteSelectionClicked(MouseEventArgs _)
     {
+        isHistoryDialogOpen = false;
         return AthleteSelectionCleared.InvokeAsync();
     }
 
@@ -346,6 +629,23 @@
     private Task OnCompareAthletesClicked(MouseEventArgs _)
     {
         return CompareAthletesRequested.InvokeAsync();
+    }
+
+    private Task OnSelectorAthletePickedClicked(string athleteId)
+    {
+        return SelectorAthletePicked.InvokeAsync(athleteId);
+    }
+
+    private Task OnOpenHistoryDialogClicked(MouseEventArgs _)
+    {
+        isHistoryDialogOpen = true;
+        return Task.CompletedTask;
+    }
+
+    private Task OnCloseHistoryDialogClicked(MouseEventArgs _)
+    {
+        isHistoryDialogOpen = false;
+        return Task.CompletedTask;
     }
 
     private IReadOnlyList<Athlete> GetTopNominatedAthletes()
@@ -366,6 +666,72 @@
             .ThenBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
             .Take(5)
             .ToArray();
+    }
+
+    private IReadOnlyList<Athlete> GetFilteredSelectorAthletes()
+    {
+        if (ActiveQuestion is null)
+        {
+            return [];
+        }
+
+        var athletePool = ActiveQuestion.AthleteIds.Count == 0
+            ? Competition.Athletes
+            : Competition.Athletes
+                .Where(athlete => ActiveQuestion.AthleteIds.Contains(athlete.Id))
+                .ToArray();
+
+        var filtered = athletePool
+            .Where(MatchesSelectorSearch)
+            .ToArray();
+
+        return selectorSortMode switch
+        {
+            "nominated-asc" => filtered
+                .OrderBy(athlete => athlete.SeedTotalKg ?? decimal.MaxValue)
+                .ThenBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
+                .ToArray(),
+            "name-asc" => filtered
+                .OrderBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
+                .ToArray(),
+            _ => filtered
+                .OrderByDescending(athlete => athlete.SeedTotalKg ?? 0m)
+                .ThenBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
+                .ToArray()
+        };
+    }
+
+    private bool MatchesSelectorSearch(Athlete athlete)
+    {
+        if (string.IsNullOrWhiteSpace(selectorSearchTerm))
+        {
+            return true;
+        }
+
+        return athlete.DisplayName.Contains(selectorSearchTerm, StringComparison.OrdinalIgnoreCase) ||
+               (!string.IsNullOrWhiteSpace(athlete.CountryName) &&
+                athlete.CountryName.Contains(selectorSearchTerm, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private string GetSelectorRowClass(Athlete athlete)
+    {
+        return string.Join(
+            " ",
+            "prediction-context-panel__selector-row",
+            IsCurrentSlotAthlete(athlete) ? "prediction-context-panel__selector-row--current-slot" : null,
+            IsAthleteSelectedInRanking(athlete.Id) ? "prediction-context-panel__selector-row--picked" : null);
+    }
+
+    private bool IsCurrentSlotAthlete(Athlete athlete)
+    {
+        return CurrentSlotAthlete is not null &&
+               string.Equals(CurrentSlotAthlete.Id, athlete.Id, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private bool IsAthleteSelectedInRanking(string athleteId)
+    {
+        return SelectedAthletesByPosition.Values.Any(athlete =>
+            string.Equals(athlete.Id, athleteId, StringComparison.OrdinalIgnoreCase));
     }
 
     private string? ResolveCategoryName(string? categoryId)
@@ -530,6 +896,27 @@
     private static string FormatTrendAxisValue(decimal value)
     {
         return value.ToString("0.##", CultureInfo.InvariantCulture);
+    }
+
+    private string GetAthleteInitials(string? displayName)
+    {
+        if (string.IsNullOrWhiteSpace(displayName))
+        {
+            return "--";
+        }
+
+        var parts = displayName
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Take(2)
+            .Select(part => part[0].ToString(CultureInfo.CurrentCulture))
+            .ToArray();
+
+        if (parts.Length == 0)
+        {
+            return "--";
+        }
+
+        return string.Concat(parts).ToUpper(CultureInfo.CurrentCulture);
     }
 
     private sealed record TrendPoint(decimal TotalKg, string Label, decimal X, decimal Y);

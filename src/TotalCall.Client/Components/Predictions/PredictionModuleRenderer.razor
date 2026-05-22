@@ -17,8 +17,10 @@
             UseExternalSidebar="UseExternalTopNSidebar"
             ActiveQuestionId="@ActiveTopNQuestionId"
             SelectedAthleteId="@ActiveTopNAthleteId"
+            SelectorSlotPosition="@ActiveTopNSelectorSlotPosition"
             ActiveQuestionChanged="TopNQuestionChanged"
             AthleteContextRequested="TopNAthleteContextRequested"
+            SelectorSlotPositionChanged="TopNSelectorSlotPositionChanged"
             SummaryRequested="SummaryRequested"
             AnswerChanged="AnswerChanged" />
         break;
@@ -91,10 +93,16 @@
     public string? ActiveTopNAthleteId { get; set; }
 
     [Parameter]
+    public int? ActiveTopNSelectorSlotPosition { get; set; }
+
+    [Parameter]
     public EventCallback<string> TopNQuestionChanged { get; set; }
 
     [Parameter]
     public EventCallback<string> TopNAthleteContextRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int?> TopNSelectorSlotPositionChanged { get; set; }
 
     [Parameter]
     public EventCallback SummaryRequested { get; set; }

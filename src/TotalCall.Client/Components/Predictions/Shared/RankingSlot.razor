@@ -2,7 +2,7 @@
 
 <div
     class="@CssClass"
-    @onclick="OnAthleteContextClicked"
+    @onclick="OnSlotClicked"
     @ondrop:preventDefault="true"
     @ondragover:preventDefault="true"
     @ondrop="() => DropRequested.InvokeAsync(Position)">
@@ -11,7 +11,7 @@
     @if (Athlete is null)
     {
         <div class="ranking-slot__empty">
-            <strong>@Localizer["Predictions.DropAthleteHere"]</strong>
+            <strong>@Localizer["Predictions.PickAthleteCta"]</strong>
             <small>@Localizer["Predictions.DragOrPickHint"]</small>
         </div>
     }
@@ -39,6 +39,14 @@
                 }
 
                 <div class="ranking-slot__actions">
+                    <button
+                        type="button"
+                        class="ranking-slot__action ranking-slot__action--change"
+                        @onclick="OnSlotSelectionClicked"
+                        @onclick:stopPropagation="true"
+                        disabled="@(!CanEditPredictions)">
+                        @Localizer["Predictions.ChangeAthlete"]
+                    </button>
                     <button
                         type="button"
                         class="ranking-slot__action ranking-slot__action--icon"
@@ -85,7 +93,13 @@
     public Athlete? Athlete { get; set; }
 
     [Parameter]
+    public bool CanEditPredictions { get; set; } = true;
+
+    [Parameter]
     public bool IsContextSelected { get; set; }
+
+    [Parameter]
+    public bool IsSelectorTarget { get; set; }
 
     [Parameter]
     public bool CanMoveUp { get; set; }
@@ -109,12 +123,17 @@
     public EventCallback<int> DragStartRequested { get; set; }
 
     [Parameter]
+    public EventCallback<int> SlotSelectionRequested { get; set; }
+
+    [Parameter]
     public EventCallback<string> AthleteContextRequested { get; set; }
 
     private string CssClass => string.Join(
         " ",
         "ranking-slot",
         Athlete is null ? "ranking-slot--empty" : "ranking-slot--filled",
+        CanEditPredictions ? "ranking-slot--interactive" : null,
+        IsSelectorTarget ? "ranking-slot--selector-target" : null,
         IsContextSelected ? "ranking-slot--context-active" : null);
 
     private string ContextButtonClass => string.Join(
@@ -122,10 +141,22 @@
         "ranking-slot__details",
         IsContextSelected ? "ranking-slot__details--context-active" : null);
 
-    private Task OnAthleteContextClicked(MouseEventArgs _)
+    private Task OnSlotClicked(MouseEventArgs _)
     {
-        return Athlete is null
-            ? Task.CompletedTask
-            : AthleteContextRequested.InvokeAsync(Athlete.Id);
+        if (Athlete is null)
+        {
+            return CanEditPredictions
+                ? SlotSelectionRequested.InvokeAsync(Position)
+                : Task.CompletedTask;
+        }
+
+        return AthleteContextRequested.InvokeAsync(Athlete.Id);
+    }
+
+    private Task OnSlotSelectionClicked(MouseEventArgs _)
+    {
+        return CanEditPredictions
+            ? SlotSelectionRequested.InvokeAsync(Position)
+            : Task.CompletedTask;
     }
 }

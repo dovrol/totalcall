@@ -56,14 +56,6 @@ else
             </button>
             <button
                 type="button"
-                class="@GetWorkspaceTabClass(TopNWorkspaceTab.Athletes)"
-                role="tab"
-                aria-selected="@(activeWorkspaceTab == TopNWorkspaceTab.Athletes)"
-                @onclick="() => SetWorkspaceTab(TopNWorkspaceTab.Athletes)">
-                @Localizer["Predictions.Tab.AvailableAthletes"]
-            </button>
-            <button
-                type="button"
                 class="@GetWorkspaceTabClass(TopNWorkspaceTab.Context)"
                 role="tab"
                 aria-selected="@(activeWorkspaceTab == TopNWorkspaceTab.Context)"
@@ -103,31 +95,22 @@ else
                     <RankingBuilder
                         Title="@Localizer["Predictions.YourRankingTopN", SlotsCount]"
                         SlotsCount="SlotsCount"
+                        CanEditPredictions="CanEditPredictions"
                         ContextAthleteId="@EffectiveSelectedAthleteId"
+                        SelectorSlotPosition="EffectiveSelectorSlotPosition"
                         SelectedAthletesByPosition="SelectedAthletesByPosition"
                         RemoveRequested="RemoveFromPosition"
                         MoveUpRequested="MoveSlotUp"
                         MoveDownRequested="MoveSlotDown"
                         DropToPositionRequested="DropToPosition"
                         DragStartFromSlotRequested="DragFromSlot"
+                        SlotSelectionRequested="OnSlotSelectionRequested"
                         AthleteContextRequested="OnAthleteContextRequested" />
 
                     <ModuleValidationSummary
                         Status="ActiveQuestionStatus"
                         Errors="ActiveQuestionErrors" />
                 </div>
-
-                <section class="@GetWorkspacePaneClass(TopNWorkspaceTab.Athletes)">
-                    <AthleteCandidateList
-                        Title="@Localizer["Predictions.AvailableAthletes"]"
-                        Athletes="EligibleAthletes"
-                        ContextAthleteId="@EffectiveSelectedAthleteId"
-                        SelectedAthleteIds="SelectedAthleteIds"
-                        WeightClassNamesById="WeightClassNamesById"
-                        PickRequested="PickAthlete"
-                        DragStartRequested="DragFromCandidate"
-                        ContextRequested="OnAthleteContextRequested" />
-                </section>
 
                 <aside class="@GetWorkspacePaneClass(TopNWorkspaceTab.Context)">
                     <TopNContextPanel
@@ -136,8 +119,13 @@ else
                         ActiveQuestionStatus="@ActiveQuestionStatus"
                         SelectedAthleteId="@EffectiveSelectedAthleteId"
                         SelectedAthleteRank="@SelectedAthleteRank"
+                        CanEditPredictions="CanEditPredictions"
+                        SelectorSlotPosition="@EffectiveSelectorSlotPosition"
+                        SelectedAthletesByPosition="SelectedAthletesByPosition"
                         AthleteContextRequested="@OnAthleteContextRequested"
                         AthleteSelectionCleared="@OnAthleteContextCleared"
+                        SelectorAthletePicked="@OnSelectorAthletePicked"
+                        SelectorDismissRequested="@OnSelectorDismissRequested"
                         UseNominatedTotalRequested="@OnUseNominatedTotalFromContext"
                         CompareAthletesRequested="@OnCompareAthletesFromContext" />
                 </aside>
@@ -184,10 +172,16 @@ else
     public string? SelectedAthleteId { get; set; }
 
     [Parameter]
+    public int? SelectorSlotPosition { get; set; }
+
+    [Parameter]
     public EventCallback<string> ActiveQuestionChanged { get; set; }
 
     [Parameter]
     public EventCallback<string> AthleteContextRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int?> SelectorSlotPositionChanged { get; set; }
 
     [Parameter]
     public EventCallback SummaryRequested { get; set; }
@@ -197,6 +191,7 @@ else
 
     private string? localActiveQuestionId;
     private string? localSelectedAthleteId;
+    private int? localSelectorSlotPosition;
     private string? draggedAthleteId;
     private int? draggedFromPosition;
     private TopNWorkspaceTab activeWorkspaceTab = TopNWorkspaceTab.Ranking;
@@ -216,6 +211,8 @@ else
     private string? EffectiveSelectedAthleteId => !string.IsNullOrWhiteSpace(SelectedAthleteId)
         ? SelectedAthleteId
         : localSelectedAthleteId;
+
+    private int? EffectiveSelectorSlotPosition => localSelectorSlotPosition;
 
     private string TopNModuleClass => string.Join(
         " ",
@@ -273,9 +270,6 @@ else
             .Where(error => error.QuestionId == ActiveQuestion.Id)
             .ToArray();
 
-    private IReadOnlyDictionary<string, string> WeightClassNamesById => Competition.Categories
-        .ToDictionary(category => category.Id, category => category.Name, StringComparer.OrdinalIgnoreCase);
-
     private IReadOnlyList<Athlete> EligibleAthletes
     {
         get
@@ -318,10 +312,6 @@ else
         }
     }
 
-    private IReadOnlySet<string> SelectedAthleteIds => SelectedAthletesByPosition.Values
-        .Select(athlete => athlete.Id)
-        .ToHashSet(StringComparer.OrdinalIgnoreCase);
-
     private int? SelectedAthleteRank => GetSelectedAthleteRank(EffectiveSelectedAthleteId);
 
     protected override void OnParametersSet()
@@ -344,11 +334,27 @@ else
         {
             localSelectedAthleteId = null;
         }
+
+        if (SelectorSlotPositionChanged.HasDelegate)
+        {
+            localSelectorSlotPosition = SelectorSlotPosition;
+        }
+
+        if (localSelectorSlotPosition is < 1)
+        {
+            localSelectorSlotPosition = null;
+        }
+
+        if (localSelectorSlotPosition is not null && localSelectorSlotPosition > SlotsCount)
+        {
+            localSelectorSlotPosition = null;
+        }
     }
 
     private async Task OnCategoryChanged(string questionId)
     {
         localActiveQuestionId = questionId;
+        await SetSelectorSlotPosition(null);
 
         if (ActiveQuestionChanged.HasDelegate)
         {
@@ -376,19 +382,50 @@ else
         return SummaryRequested.InvokeAsync();
     }
 
-    private Task OnAthleteContextRequested(string athleteId)
+    private async Task OnAthleteContextRequested(string athleteId)
     {
         localSelectedAthleteId = string.IsNullOrWhiteSpace(athleteId)
             ? null
             : athleteId;
+        await SetSelectorSlotPosition(null);
 
-        return AthleteContextRequested.InvokeAsync(athleteId);
+        await AthleteContextRequested.InvokeAsync(athleteId);
     }
 
-    private Task OnAthleteContextCleared()
+    private async Task OnAthleteContextCleared()
     {
         localSelectedAthleteId = null;
-        return AthleteContextRequested.InvokeAsync(string.Empty);
+        await SetSelectorSlotPosition(null);
+        await AthleteContextRequested.InvokeAsync(string.Empty);
+    }
+
+    private async Task OnSlotSelectionRequested(int position)
+    {
+        if (!CanEditPredictions || position < 1 || position > SlotsCount)
+        {
+            return;
+        }
+
+        activeWorkspaceTab = TopNWorkspaceTab.Context;
+        await SetSelectorSlotPosition(position);
+    }
+
+    private async Task OnSelectorAthletePicked(string athleteId)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null || !EffectiveSelectorSlotPosition.HasValue)
+        {
+            return;
+        }
+
+        var selectorSlot = EffectiveSelectorSlotPosition.Value;
+        await SetAthleteAtPosition(selectorSlot, athleteId);
+        await SetSelectorSlotPosition(null);
+        await OnAthleteContextRequested(athleteId);
+    }
+
+    private Task OnSelectorDismissRequested()
+    {
+        return SetSelectorSlotPosition(null);
     }
 
     private Task OnUseNominatedTotalFromContext()
@@ -398,20 +435,9 @@ else
 
     private Task OnCompareAthletesFromContext()
     {
-        activeWorkspaceTab = TopNWorkspaceTab.Athletes;
-        return Task.CompletedTask;
-    }
-
-    private Task DragFromCandidate(string athleteId)
-    {
-        if (!CanEditPredictions)
-        {
-            return Task.CompletedTask;
-        }
-
-        draggedAthleteId = athleteId;
-        draggedFromPosition = null;
-        return Task.CompletedTask;
+        activeWorkspaceTab = TopNWorkspaceTab.Context;
+        var selectorSlot = GetFirstAvailableSlotPosition() ?? 1;
+        return SetSelectorSlotPosition(selectorSlot);
     }
 
     private Task DragFromSlot(int position)
@@ -442,11 +468,6 @@ else
         await SetAthleteAtPosition(targetPosition, draggedAthleteId, draggedFromPosition);
         draggedAthleteId = null;
         draggedFromPosition = null;
-    }
-
-    private Task PickAthlete(string athleteId)
-    {
-        return AssignFirstEmptySlot(athleteId);
     }
 
     private Task MoveSlotUp(int position)
@@ -518,23 +539,6 @@ else
         return SetAthleteAtPosition(toPosition, sourceAthlete.Id, fromPosition);
     }
 
-    private async Task AssignFirstEmptySlot(string athleteId)
-    {
-        if (!CanEditPredictions || ActiveQuestion is null)
-        {
-            return;
-        }
-
-        for (var position = 1; position <= SlotsCount; position++)
-        {
-            if (GetSelectedAthlete(position) is null)
-            {
-                await SetAthleteAtPosition(position, athleteId);
-                return;
-            }
-        }
-    }
-
     private Task SetAthleteAtPosition(int targetPosition, string athleteId, int? sourcePosition = null)
     {
         if (!CanEditPredictions || ActiveQuestion is null || targetPosition < 1 || targetPosition > SlotsCount)
@@ -576,6 +580,21 @@ else
         }
 
         return EmitAnswer(placements);
+    }
+
+    private async Task SetSelectorSlotPosition(int? slotPosition)
+    {
+        if (localSelectorSlotPosition == slotPosition)
+        {
+            return;
+        }
+
+        localSelectorSlotPosition = slotPosition;
+
+        if (SelectorSlotPositionChanged.HasDelegate)
+        {
+            await SelectorSlotPositionChanged.InvokeAsync(slotPosition);
+        }
     }
 
     private Task EmitAnswer(IEnumerable<AthletePlacementPick> placements)
@@ -652,6 +671,19 @@ else
             ?.Position;
     }
 
+    private int? GetFirstAvailableSlotPosition()
+    {
+        for (var position = 1; position <= SlotsCount; position++)
+        {
+            if (GetSelectedAthlete(position) is null)
+            {
+                return position;
+            }
+        }
+
+        return null;
+    }
+
     private bool IsAthleteEligibleForActiveQuestion(string? athleteId)
     {
         if (string.IsNullOrWhiteSpace(athleteId) || ActiveQuestion is null)
@@ -710,7 +742,6 @@ else
             tab switch
             {
                 TopNWorkspaceTab.Ranking => "topn-module__workspace",
-                TopNWorkspaceTab.Athletes => "topn-module__candidates",
                 _ => "topn-module__inline-context"
             },
             activeWorkspaceTab == tab ? "is-pane-active" : null);
@@ -719,7 +750,6 @@ else
     private enum TopNWorkspaceTab
     {
         Ranking = 0,
-        Athletes = 1,
-        Context = 2
+        Context = 1
     }
 }
