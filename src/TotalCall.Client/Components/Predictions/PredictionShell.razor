@@ -113,13 +113,16 @@
     </button>
 
     <aside class="@SummaryDrawerClass" aria-hidden="@(!isSummaryDrawerOpen)">
-        <button
-            type="button"
-            class="prediction-shell__summary-drawer-close"
-            aria-label="@Localizer["Predictions.CloseContext"]"
-            @onclick="OnCloseSummaryClicked">
-            <AppIcon Name="AppIconName.X" Size="14" />
-        </button>
+        @if (ShouldShowSummaryDrawerClose)
+        {
+            <button
+                type="button"
+                class="prediction-shell__summary-drawer-close"
+                aria-label="@Localizer["Predictions.CloseContext"]"
+                @onclick="OnCloseSummaryClicked">
+                <AppIcon Name="AppIconName.X" Size="14" />
+            </button>
+        }
 
         @if (IsTopNActiveGroup)
         {
@@ -159,12 +162,6 @@
         NextRequested="@GoNextOrReview"
         ReviewRequested="@ReviewRequested" />
 
-    <PredictionMobileBottomBar
-        HasNext="@HasNextGroup"
-        CanEditPredictions="@CanEditPredictions"
-        ActiveModuleValidation="@ActiveModuleValidation"
-        NextRequested="@GoNextOrReview"
-        ReviewRequested="@ReviewRequested" />
 </section>
 
 @code {
@@ -227,6 +224,8 @@
         " ",
         "prediction-shell__summary-backdrop",
         isSummaryDrawerOpen ? "is-open" : null);
+
+    private bool ShouldShowSummaryDrawerClose => !(IsTopNActiveGroup && topNSelectorSlotPosition is not null);
 
     private bool IsTopNActiveGroup => ResolveGroupType(ActiveGroup) == PredictionModuleType.TopNByCategory;
 

@@ -37,7 +37,7 @@ else
         LastSavedAt="@predictionSet.SavedAt"
         GroupChanged="@SelectGroup"
         AnswerChanged="@OnAnswerChanged"
-        ReviewRequested="@GoToReview" />
+        ReviewRequested="@GoToCompetition" />
 }
 
 @code {
@@ -158,11 +158,11 @@ else
         return Task.CompletedTask;
     }
 
-    private Task GoToReview()
+    private Task GoToCompetition()
     {
         if (competition is not null)
         {
-            Navigation.NavigateTo($"competitions/{competition.Slug}/review");
+            Navigation.NavigateTo($"competitions/{competition.Slug}");
         }
 
         return Task.CompletedTask;
