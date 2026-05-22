@@ -53,19 +53,12 @@
                 <div class="ranking-slot__actions">
                     <button
                         type="button"
-                        class="ranking-slot__action ranking-slot__action--change"
+                        class="ranking-slot__action ranking-slot__action--edit"
                         @onclick="() => PredictionEditRequested.InvokeAsync(Position)"
                         @onclick:stopPropagation="true"
                         disabled="@(!CanEditPredictions)">
+                        <AppIcon Name="AppIconName.PencilLine" Size="14" />
                         @Localizer["Predictions.EditPredictedTotal"]
-                    </button>
-                    <button
-                        type="button"
-                        class="ranking-slot__action ranking-slot__action--change"
-                        @onclick="OnSlotSelectionClicked"
-                        @onclick:stopPropagation="true"
-                        disabled="@(!CanEditPredictions)">
-                        @Localizer["Predictions.ChangeAthlete"]
                     </button>
                     <button
                         type="button"
@@ -73,7 +66,8 @@
                         @onclick="() => MoveUpRequested.InvokeAsync(Position)"
                         @onclick:stopPropagation="true"
                         disabled="@(!CanMoveUp)"
-                        aria-label="@Localizer["Predictions.MoveUp"]">
+                        aria-label="@Localizer["Predictions.MoveUp"]"
+                        title="@Localizer["Predictions.MoveUp"]">
                         <AppIcon
                             Name="AppIconName.ChevronRight"
                             Size="13"
@@ -85,7 +79,8 @@
                         @onclick="() => MoveDownRequested.InvokeAsync(Position)"
                         @onclick:stopPropagation="true"
                         disabled="@(!CanMoveDown)"
-                        aria-label="@Localizer["Predictions.MoveDown"]">
+                        aria-label="@Localizer["Predictions.MoveDown"]"
+                        title="@Localizer["Predictions.MoveDown"]">
                         <AppIcon
                             Name="AppIconName.ChevronRight"
                             Size="13"
@@ -93,11 +88,12 @@
                     </button>
                     <button
                         type="button"
-                        class="ranking-slot__action ranking-slot__action--icon"
+                        class="@RemoveActionClass"
                         @onclick="() => RemoveRequested.InvokeAsync(Position)"
                         @onclick:stopPropagation="true"
-                        aria-label="@Localizer["Predictions.RemoveAthlete"]">
-                        <AppIcon Name="AppIconName.X" Size="14" Class="ranking-slot__action-icon" />
+                        aria-label="@RemoveAriaLabel"
+                        title="@RemoveAriaLabel">
+                        <AppIcon Name="AppIconName.Trash2" Size="14" Class="ranking-slot__action-icon" />
                     </button>
                 </div>
             </div>
@@ -110,14 +106,30 @@
             </div>
         }
 
+        @if (IsRemovePending)
+        {
+            <p class="ranking-slot__remove-hint">@Localizer["Predictions.RemoveConfirmHint"]</p>
+        }
+
         @if (IsPredictionEditorOpen)
         {
             <section class="ranking-slot__prediction-editor" @onclick:stopPropagation="true">
                 <header class="ranking-slot__prediction-editor-head">
-                    <div>
+                    <div class="ranking-slot__prediction-editor-title">
                         <strong>@Localizer["Predictions.PredictionEditorTitle"]</strong>
-                        <small>@Localizer["Predictions.PredictionEditorSubtitle"]</small>
                     </div>
+
+                    @if (PredictionEditorMode == "lifts")
+                    {
+                        <div class="@PredictionCalculatedTotalClass">
+                            <span>
+                                <AppIcon Name="AppIconName.Calculator" Size="12" />
+                                @Localizer["Predictions.PredictedTotalAuto"]
+                            </span>
+                            <strong>@AutoTotalDisplay</strong>
+                            <small>@Localizer["Predictions.PredictedTotalFormula"]</small>
+                        </div>
+                    }
                 </header>
 
                 <div class="ranking-slot__prediction-mode" role="radiogroup" aria-label="@Localizer["Predictions.PredictionMode"]">
@@ -156,10 +168,6 @@
                             <span>DL</span>
                             <input class="control" type="number" min="0" step="0.5" value="@PredictionDeadliftInput" @oninput="OnDeadliftInput" />
                         </label>
-                        <div class="ranking-slot__prediction-calculated-total">
-                            <span>@Localizer["Predictions.PredictedTotal"]</span>
-                            <strong>@FormatKg(CalculatedLiftTotalKg)</strong>
-                        </div>
                     </div>
                 }
                 else
@@ -172,25 +180,37 @@
                     </div>
                 }
 
+                <p class="ranking-slot__prediction-quick-title">@Localizer["Predictions.QuickFill"]</p>
+
                 <div class="ranking-slot__prediction-quick-actions">
                     @if (Athlete.SeedTotalKg is not null)
                     {
                         <button type="button" class="ranking-slot__prediction-quick-action" @onclick="() => UseNominatedTotalRequested.InvokeAsync()">
-                            @Localizer["Predictions.UseNominatedTotal"]
+                            <AppIcon Name="AppIconName.Target" Size="15" />
+                            <span>@Localizer["Predictions.UseNominatedTotal"]</span>
+                            <small>@FormatKgValue(Athlete.SeedTotalKg)</small>
                         </button>
                     }
                     @if (PredictionHistory?.LastResult?.TotalKg is not null)
                     {
                         <button type="button" class="ranking-slot__prediction-quick-action" @onclick="() => UseLastResultRequested.InvokeAsync()">
-                            @Localizer["Predictions.UseLastResult"]
+                            <AppIcon Name="AppIconName.Clock" Size="15" />
+                            <span>@Localizer["Predictions.UseLastResult"]</span>
+                            <small>@FormatLastResultMeta()</small>
                         </button>
                     }
                     @if (PredictionHistory?.Bests?.TotalKg is not null)
                     {
                         <button type="button" class="ranking-slot__prediction-quick-action" @onclick="() => UseBestResultRequested.InvokeAsync()">
-                            @Localizer["Predictions.UseBestResult"]
+                            <AppIcon Name="AppIconName.Trophy" Size="15" />
+                            <span>@Localizer["Predictions.UseBestResult"]</span>
+                            <small>@FormatKgValue(PredictionHistory.Bests.TotalKg)</small>
                         </button>
                     }
+                    <button type="button" class="ranking-slot__prediction-quick-action ranking-slot__prediction-quick-action--history" @onclick="() => ShowHistoryRequested.InvokeAsync()">
+                        <AppIcon Name="AppIconName.ExternalLink" Size="15" />
+                        <span>@Localizer["Predictions.ShowHistory"]</span>
+                    </button>
                 </div>
 
                 @if (IsPredictionHistoryLoading)
@@ -208,11 +228,13 @@
                 }
 
                 <footer class="ranking-slot__prediction-editor-actions">
-                    <button type="button" class="app-button app-button--secondary app-button--sm" @onclick="() => PredictionEditorSaveRequested.InvokeAsync()">
-                        @Localizer["Common.Save"]
-                    </button>
                     <button type="button" class="app-button app-button--ghost app-button--sm" @onclick="() => PredictionEditorCancelRequested.InvokeAsync()">
+                        <AppIcon Name="AppIconName.X" Size="14" />
                         @Localizer["Common.Cancel"]
+                    </button>
+                    <button type="button" class="app-button app-button--primary app-button--sm" @onclick="() => PredictionEditorSaveRequested.InvokeAsync()">
+                        <AppIcon Name="AppIconName.Check" Size="14" />
+                        @Localizer["Common.Save"]
                     </button>
                 </footer>
             </section>
@@ -241,6 +263,9 @@
 
     [Parameter]
     public bool IsPredictionEditorOpen { get; set; }
+
+    [Parameter]
+    public bool IsRemovePending { get; set; }
 
     [Parameter]
     public string PredictionEditorMode { get; set; } = "total";
@@ -306,6 +331,9 @@
     public EventCallback UseBestResultRequested { get; set; }
 
     [Parameter]
+    public EventCallback ShowHistoryRequested { get; set; }
+
+    [Parameter]
     public EventCallback<int> RemoveRequested { get; set; }
 
     [Parameter]
@@ -340,6 +368,17 @@
         "ranking-slot__details",
         IsContextSelected ? "ranking-slot__details--context-active" : null);
 
+    private string RemoveAriaLabel => IsRemovePending
+        ? Localizer["Predictions.RemoveConfirm"]
+        : Localizer["Predictions.RemoveAthlete"];
+
+    private string RemoveActionClass => string.Join(
+        " ",
+        "ranking-slot__action",
+        "ranking-slot__action--icon",
+        "ranking-slot__action--danger",
+        IsRemovePending ? "ranking-slot__action--danger-pending" : null);
+
     private decimal? PredictedTotalKg => Placement?.PredictedTotalKg;
 
     private string? PredictedLiftSummary
@@ -363,7 +402,7 @@
                 parts.Add($"DL {FormatKgValue(Placement.PredictedDeadliftKg)}");
             }
 
-            return parts.Count == 0 ? null : string.Join(" / ", parts);
+            return parts.Count == 0 ? null : $"{string.Join("  •  ", parts)}";
         }
     }
 
@@ -384,6 +423,15 @@
         }
     }
 
+    private string PredictionCalculatedTotalClass => string.Join(
+        " ",
+        "ranking-slot__prediction-calculated-total",
+        CalculatedLiftTotalKg is null ? "ranking-slot__prediction-calculated-total--empty" : null);
+
+    private string AutoTotalDisplay => CalculatedLiftTotalKg is null
+        ? "—"
+        : FormatKgValue(CalculatedLiftTotalKg);
+
     private Task OnSlotClicked(MouseEventArgs _)
     {
         if (Athlete is null)
@@ -394,13 +442,6 @@
         }
 
         return AthleteContextRequested.InvokeAsync(Athlete.Id);
-    }
-
-    private Task OnSlotSelectionClicked(MouseEventArgs _)
-    {
-        return CanEditPredictions
-            ? SlotSelectionRequested.InvokeAsync(Position)
-            : Task.CompletedTask;
     }
 
     private Task OnTotalInput(ChangeEventArgs args)
@@ -445,6 +486,22 @@
         return value is null
             ? string.Empty
             : $"{value.Value.ToString("0.#", CultureInfo.CurrentCulture)} kg";
+    }
+
+    private string FormatLastResultMeta()
+    {
+        if (PredictionHistory?.LastResult is null)
+        {
+            return string.Empty;
+        }
+
+        var total = FormatKgValue(PredictionHistory.LastResult.TotalKg);
+        if (string.IsNullOrWhiteSpace(PredictionHistory.LastResult.MeetName))
+        {
+            return total;
+        }
+
+        return $"{total} · {PredictionHistory.LastResult.MeetName}";
     }
 
     private static decimal? ParseNullableDecimal(string value)

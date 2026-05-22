@@ -33,6 +33,8 @@
                 UseNominatedTotalRequested="UseNominatedTotalRequested"
                 UseLastResultRequested="UseLastResultRequested"
                 UseBestResultRequested="UseBestResultRequested"
+                ShowHistoryRequested="ShowHistoryRequested"
+                IsRemovePending="@(IsRemovePendingPosition == position)"
                 RemoveRequested="RemoveRequested"
                 MoveUpRequested="MoveUpRequested"
                 MoveDownRequested="MoveDownRequested"
@@ -127,6 +129,12 @@
 
     [Parameter]
     public EventCallback UseBestResultRequested { get; set; }
+
+    [Parameter]
+    public EventCallback ShowHistoryRequested { get; set; }
+
+    [Parameter]
+    public int? IsRemovePendingPosition { get; set; }
 
     [Parameter]
     public EventCallback<int> RemoveRequested { get; set; }

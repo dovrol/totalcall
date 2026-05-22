@@ -24,5 +24,10 @@ public enum AppIconName
     AlertCircle,
     TrendUp,
     UserPlus,
-    Trash2
+    Trash2,
+    Sparkles,
+    ArrowUpDown,
+    PencilLine,
+    Calculator,
+    ExternalLink
 }

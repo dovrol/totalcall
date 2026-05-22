@@ -194,6 +194,12 @@
   <data name="Predictions.PredictionModeTotal" xml:space="preserve"><value>Total only</value></data>
   <data name="Predictions.PredictionModeLifts" xml:space="preserve"><value>SQ / BP / DL</value></data>
   <data name="Predictions.PredictedTotal" xml:space="preserve"><value>Predicted total</value></data>
+  <data name="Predictions.PredictedTotalAuto" xml:space="preserve"><value>Predicted total (auto)</value></data>
+  <data name="Predictions.PredictedTotalFormula" xml:space="preserve"><value>Suma SQ + BP + DL</value></data>
+  <data name="Predictions.QuickFill" xml:space="preserve"><value>Szybkie wypełnianie</value></data>
+  <data name="Predictions.ShowHistory" xml:space="preserve"><value>Pokaż historię</value></data>
+  <data name="Predictions.RemoveConfirmHint" xml:space="preserve"><value>Kliknij usuń ponownie, aby potwierdzić.</value></data>
+  <data name="Predictions.RemoveConfirm" xml:space="preserve"><value>Potwierdź usunięcie</value></data>
   <data name="Predictions.PredictedShort" xml:space="preserve"><value>Pred</value></data>
   <data name="Predictions.NominatedShort" xml:space="preserve"><value>Nom</value></data>
   <data name="Predictions.PredictionValueInvalid" xml:space="preserve"><value>Wpisz dodatnią, sensowną wartość liczbową albo zostaw pole puste.</value></data>
