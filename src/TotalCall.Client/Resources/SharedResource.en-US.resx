@@ -129,6 +129,7 @@
   <data name="Predictions.CloseSummary" xml:space="preserve"><value>Close summary</value></data>
   <data name="Predictions.CloseContext" xml:space="preserve"><value>Close context panel</value></data>
   <data name="Predictions.ContextPanel" xml:space="preserve"><value>Athlete context</value></data>
+  <data name="Predictions.ContextPanelFemale" xml:space="preserve"><value>Athlete context</value></data>
   <data name="Predictions.CategoryContextPanel" xml:space="preserve"><value>Category context</value></data>
   <data name="Predictions.ClearAthleteContext" xml:space="preserve"><value>Clear athlete context</value></data>
   <data name="Predictions.CloseSelector" xml:space="preserve"><value>Close athlete selector</value></data>
@@ -140,15 +141,21 @@
   <data name="Predictions.RecentStarts" xml:space="preserve"><value>Recent starts</value></data>
   <data name="Predictions.RecentStartsShort" xml:space="preserve"><value>Recent starts</value></data>
   <data name="Predictions.ViewFullHistory" xml:space="preserve"><value>View full history</value></data>
+  <data name="Predictions.ShowStartHistory" xml:space="preserve"><value>Show start history</value></data>
   <data name="Predictions.HistoryDialogTitle" xml:space="preserve"><value>Start history — {0}</value></data>
   <data name="Predictions.HistoryDialogClose" xml:space="preserve"><value>Close</value></data>
   <data name="Predictions.BackToContext" xml:space="preserve"><value>Back to context</value></data>
   <data name="Predictions.History.Date" xml:space="preserve"><value>Date</value></data>
   <data name="Predictions.History.Meet" xml:space="preserve"><value>Meet</value></data>
+  <data name="Predictions.History.Bodyweight" xml:space="preserve"><value>BW</value></data>
   <data name="Predictions.History.Place" xml:space="preserve"><value>Place</value></data>
+  <data name="Predictions.BodyweightShort" xml:space="preserve"><value>BW</value></data>
+  <data name="Predictions.LatestBodyweight" xml:space="preserve"><value>Latest bodyweight</value></data>
   <data name="Predictions.SourceUpdatedAt" xml:space="preserve"><value>Last updated: {0}</value></data>
   <data name="Predictions.BestLifts" xml:space="preserve"><value>Best lifts</value></data>
+  <data name="Predictions.BestLiftsPr" xml:space="preserve"><value>Best lifts (PR)</value></data>
   <data name="Predictions.TotalTrend" xml:space="preserve"><value>Total trend (last {0} starts)</value></data>
+  <data name="Predictions.TotalTrendShort" xml:space="preserve"><value>Total trend</value></data>
   <data name="Predictions.LoadingHistory" xml:space="preserve"><value>Loading history...</value></data>
   <data name="Predictions.NoAthleteHistory" xml:space="preserve"><value>No recent results available yet.</value></data>
   <data name="Predictions.BestResult" xml:space="preserve"><value>Best total</value></data>

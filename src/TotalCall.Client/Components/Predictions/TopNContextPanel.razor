@@ -140,144 +140,114 @@
     }
     else
     {
-        <section class="prediction-context-panel__block prediction-context-panel__athlete-card">
-            <div class="prediction-context-panel__athlete-main">
-                <div class="prediction-context-panel__position-badge" aria-hidden="true">
-                    @RankBadgeLabel
-                </div>
-
-                <div class="prediction-context-panel__athlete-meta">
-                    <h3>@SelectedAthlete.DisplayName</h3>
-                    @if (!string.IsNullOrWhiteSpace(SelectedAthlete.CountryName))
-                    {
-                        <div class="prediction-context-panel__country">
-                            <CountryFlag Code="@SelectedAthlete.CountryCode" CountryName="@SelectedAthlete.CountryName" />
-                            <span>@SelectedAthlete.CountryName</span>
-                        </div>
-                    }
-                </div>
-            </div>
-
-            <dl class="prediction-context-panel__meta-list">
-                <div>
-                    <dt>@Localizer["Predictions.Category"]</dt>
-                    <dd>@(SelectedAthleteCategoryName ?? Localizer["Common.Tbd"].Value)</dd>
-                </div>
-                <div>
-                    <dt>@Localizer["Predictions.NominatedTotal"]</dt>
-                    <dd>@FormatKg(SelectedAthlete.SeedTotalKg)</dd>
-                </div>
-            </dl>
-        </section>
-
-        <section class="prediction-context-panel__block">
-            <h3>@Localizer["Predictions.RecentStartsShort"]</h3>
-
-            @if (isLoadingHistory)
-            {
-                <p class="prediction-context-panel__empty">@Localizer["Predictions.LoadingHistory"]</p>
-            }
-            else if (RecentStarts.Count > 0)
-            {
-                <ol class="prediction-context-panel__recent-list">
-                    @foreach (var result in RecentStarts)
-                    {
-                        <li class="prediction-context-panel__recent-item">
-                            <div class="prediction-context-panel__recent-item-main">
-                                <strong>@FormatRecentStartTitle(result)</strong>
-                                <span class="prediction-context-panel__recent-item-lifts">@FormatLiftTriplet(result)</span>
-                            </div>
-                            <strong class="@GetRecentStartTotalClass(result)">@FormatKg(result.TotalKg)</strong>
-                        </li>
-                    }
-                </ol>
-
-                <button type="button" class="prediction-context-panel__history-link" @onclick="OnOpenHistoryDialogClicked">
-                    <AppIcon Name="AppIconName.TrendUp" Size="15" />
-                    <span>@Localizer["Predictions.ViewFullHistory"]</span>
-                </button>
-            }
-            else
-            {
-                <p class="prediction-context-panel__empty">@Localizer["Predictions.NoAthleteHistory"]</p>
-            }
-        </section>
-
-        <section class="prediction-context-panel__block">
-            <h3>@Localizer["Predictions.BestLifts"]</h3>
-            <dl class="prediction-context-panel__best-lifts">
-                <div class="prediction-context-panel__best-lift">
-                    <dt>SQ</dt>
-                    <dd>@FormatKg(BestSquatKg)</dd>
-                </div>
-                <div class="prediction-context-panel__best-lift">
-                    <dt>BP</dt>
-                    <dd>@FormatKg(BestBenchKg)</dd>
-                </div>
-                <div class="prediction-context-panel__best-lift">
-                    <dt>DL</dt>
-                    <dd>@FormatKg(BestDeadliftKg)</dd>
-                </div>
-                <div class="prediction-context-panel__best-lift prediction-context-panel__best-lift--total">
-                    <dt>Total</dt>
-                    <dd>@FormatKg(BestTotalKg)</dd>
-                </div>
-            </dl>
-        </section>
-
-        @if (TrendPoints.Count > 1)
-        {
-            <section class="prediction-context-panel__block">
-                <h3>@Localizer["Predictions.TotalTrend", TrendPoints.Count]</h3>
-                <div class="prediction-context-panel__trend-wrap">
-                    <div class="prediction-context-panel__trend-range">
-                        <span>@TrendUpperBoundLabel</span>
-                        <span>@TrendLowerBoundLabel</span>
+        <div class="prediction-context-panel__athlete-content">
+            <section class="prediction-context-panel__athlete-card">
+                <div class="prediction-context-panel__athlete-main">
+                    <div class="prediction-context-panel__position-badge" aria-hidden="true">
+                        @RankBadgeLabel
                     </div>
-                    <svg class="prediction-context-panel__trend-chart" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
-                        <polyline points="@TrendPolylinePoints" class="prediction-context-panel__trend-line" />
-                        @foreach (var point in TrendPoints)
+
+                    <div class="prediction-context-panel__athlete-meta">
+                        <h3>@SelectedAthlete.DisplayName</h3>
+                        @if (!string.IsNullOrWhiteSpace(SelectedAthlete.CountryName))
                         {
-                            <circle
-                                class="prediction-context-panel__trend-dot"
-                                cx="@FormatTrendAxisValue(point.X)"
-                                cy="@FormatTrendAxisValue(point.Y)"
-                                r="1.8" />
+                            <div class="prediction-context-panel__country">
+                                <CountryFlag Code="@SelectedAthlete.CountryCode" CountryName="@SelectedAthlete.CountryName" />
+                                <span>@SelectedAthlete.CountryName</span>
+                            </div>
                         }
-                    </svg>
-                    <ol class="prediction-context-panel__trend-labels">
-                        @foreach (var point in TrendPoints)
-                        {
-                            <li>@point.Label</li>
-                        }
-                    </ol>
+                    </div>
+                </div>
+
+                <dl class="prediction-context-panel__meta-list prediction-context-panel__meta-list--split">
+                    <div>
+                        <dt>@Localizer["Predictions.Category"]</dt>
+                        <dd>@(SelectedAthleteCategoryName ?? Localizer["Common.Tbd"].Value)</dd>
+                    </div>
+                    <div>
+                        <dt>@Localizer["Predictions.NominatedTotal"]</dt>
+                        <dd class="prediction-context-panel__meta-value--accent">@FormatKg(SelectedAthlete.SeedTotalKg)</dd>
+                    </div>
+                </dl>
+
+                <div class="prediction-context-panel__athlete-actions">
+                    <button type="button" class="prediction-context-panel__history-link" @onclick="OnOpenHistoryDialogClicked">
+                        <AppIcon Name="AppIconName.BarChart" Size="17" />
+                        <span>@Localizer["Predictions.ViewFullHistory"]</span>
+                    </button>
                 </div>
             </section>
-        }
 
-        <section class="prediction-context-panel__actions prediction-context-panel__actions--stacked">
-            <button
-                type="button"
-                class="prediction-context-panel__action prediction-context-panel__action--primary prediction-context-panel__action--centered"
-                disabled="@(!UseNominatedTotalRequested.HasDelegate)"
-                @onclick="OnUseNominatedTotalClicked">
-                <AppIcon Name="AppIconName.Target" Size="14" />
-                <span>@Localizer["Predictions.UseNominatedTotal"]</span>
-            </button>
-            <button
-                type="button"
-                class="prediction-context-panel__action prediction-context-panel__action--centered"
-                disabled="@(!CompareAthletesRequested.HasDelegate)"
-                @onclick="OnCompareAthletesClicked">
-                <AppIcon Name="AppIconName.UserPlus" Size="14" />
-                <span>@Localizer["Predictions.CompareAthletes"]</span>
-            </button>
-        </section>
+            @if (ContextTrendChartPoints.Count > 1)
+            {
+                <section class="prediction-context-panel__block prediction-context-panel__trend-card">
+                    <h3>@Localizer["Predictions.TotalTrendShort"]</h3>
+                    <AppTrendChart
+                        Points="@ContextTrendChartPoints"
+                        Variant="AppTrendChartVariant.Compact"
+                        AdditionalClass="app-trend-chart--context"
+                        AriaLabel="@Localizer["Predictions.TotalTrend", ContextTrendChartPoints.Count]" />
+                </section>
+            }
 
-        @if (!string.IsNullOrWhiteSpace(SourceAttribution))
-        {
-            <p class="prediction-context-panel__source">@SourceAttribution</p>
-        }
+            <section class="prediction-context-panel__block prediction-context-panel__recent-card">
+                <h3>@Localizer["Predictions.RecentStartsShort"]</h3>
+
+                @if (isLoadingHistory)
+                {
+                    <p class="prediction-context-panel__empty">@Localizer["Predictions.LoadingHistory"]</p>
+                }
+                else if (RecentStarts.Count > 0)
+                {
+                    <ol class="prediction-context-panel__recent-list">
+                        @foreach (var entry in RecentStarts.Select((result, index) => new { Result = result, Index = index }))
+                        {
+                            <li class="prediction-context-panel__recent-item">
+                                <span class="prediction-context-panel__recent-rank">@(entry.Index + 1)</span>
+                                <div class="prediction-context-panel__recent-item-main">
+                                    <strong>@FormatRecentStartTitle(entry.Result)</strong>
+                                    <span class="prediction-context-panel__recent-item-lifts">@FormatRecentStartMeta(entry.Result)</span>
+                                </div>
+                                <div class="prediction-context-panel__recent-item-result">
+                                    <strong class="@GetRecentStartTotalClass(entry.Result)">@FormatKg(entry.Result.TotalKg)</strong>
+                                    @if (entry.Result.BodyweightKg is not null)
+                                    {
+                                        <span>@FormatBodyweightInline(entry.Result.BodyweightKg)</span>
+                                    }
+                                </div>
+                            </li>
+                        }
+                    </ol>
+                }
+                else
+                {
+                    <p class="prediction-context-panel__empty">@Localizer["Predictions.NoAthleteHistory"]</p>
+                }
+            </section>
+
+            <section class="prediction-context-panel__block prediction-context-panel__best-card">
+                <h3>@Localizer["Predictions.BestLiftsPr"]</h3>
+                <dl class="prediction-context-panel__best-lifts">
+                    <div class="prediction-context-panel__best-lift">
+                        <dt>SQ</dt>
+                        <dd>@FormatKg(BestSquatKg)</dd>
+                    </div>
+                    <div class="prediction-context-panel__best-lift">
+                        <dt>BP</dt>
+                        <dd>@FormatKg(BestBenchKg)</dd>
+                    </div>
+                    <div class="prediction-context-panel__best-lift">
+                        <dt>DL</dt>
+                        <dd>@FormatKg(BestDeadliftKg)</dd>
+                    </div>
+                    <div class="prediction-context-panel__best-lift prediction-context-panel__best-lift--total">
+                        <dt>Total</dt>
+                        <dd>@FormatKg(BestTotalKg)</dd>
+                    </div>
+                </dl>
+            </section>
+        </div>
+
     }
 </aside>
 
@@ -331,33 +301,21 @@
                 </dl>
             </section>
 
-            @if (TrendPoints.Count > 1)
+            @if (HistoryTrendChartPoints.Count > 1)
             {
                 <section class="prediction-history-dialog__trend">
-                    <h3>@Localizer["Predictions.TotalTrend", TrendPoints.Count]</h3>
-                    <div class="prediction-context-panel__trend-wrap">
-                        <div class="prediction-context-panel__trend-range">
-                            <span>@TrendUpperBoundLabel</span>
-                            <span>@TrendLowerBoundLabel</span>
-                        </div>
-                        <svg class="prediction-context-panel__trend-chart" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
-                            <polyline points="@TrendPolylinePoints" class="prediction-context-panel__trend-line" />
-                            @foreach (var point in TrendPoints)
-                            {
-                                <circle
-                                    class="prediction-context-panel__trend-dot"
-                                    cx="@FormatTrendAxisValue(point.X)"
-                                    cy="@FormatTrendAxisValue(point.Y)"
-                                    r="1.8" />
-                            }
-                        </svg>
-                        <ol class="prediction-context-panel__trend-labels">
-                            @foreach (var point in TrendPoints)
-                            {
-                                <li>@point.Label</li>
-                            }
-                        </ol>
-                    </div>
+                    <header class="prediction-history-dialog__trend-head">
+                        <h3>@Localizer["Predictions.TotalTrend", HistoryTrendChartPoints.Count]</h3>
+                        <span class="prediction-history-dialog__metric-pill">
+                            <AppIcon Name="AppIconName.BarChart" Size="15" />
+                            Total (kg)
+                        </span>
+                    </header>
+
+                    <AppTrendChart
+                        Points="@HistoryTrendChartPoints"
+                        Variant="AppTrendChartVariant.Full"
+                        AriaLabel="@Localizer["Predictions.TotalTrend", HistoryTrendChartPoints.Count]" />
                 </section>
             }
 
@@ -369,6 +327,7 @@
                             <tr>
                                 <th>@Localizer["Predictions.History.Date"]</th>
                                 <th>@Localizer["Predictions.History.Meet"]</th>
+                                <th>@Localizer["Predictions.History.Bodyweight"]</th>
                                 <th>SQ</th>
                                 <th>BP</th>
                                 <th>DL</th>
@@ -388,6 +347,7 @@
                                             <small>@result.Federation</small>
                                         }
                                     </td>
+                                    <td>@FormatBodyweightValue(result.BodyweightKg)</td>
                                     <td class="@GetHistoryLiftCellClass(result.SquatKg, BestSquatKg)">@FormatKgValue(result.SquatKg)</td>
                                     <td class="@GetHistoryLiftCellClass(result.BenchKg, BestBenchKg)">@FormatKgValue(result.BenchKg)</td>
                                     <td class="@GetHistoryLiftCellClass(result.DeadliftKg, BestDeadliftKg)">@FormatKgValue(result.DeadliftKg)</td>
@@ -507,7 +467,7 @@
         ? athlete
         : null;
 
-    private bool CanDismissPanel => IsSelectorMode || SelectedAthlete is not null;
+    private bool CanDismissPanel => IsSelectorMode;
 
     private string DismissAriaLabel => IsSelectorMode
         ? Localizer["Predictions.CloseSelector"]
@@ -517,7 +477,9 @@
         ? Localizer["Predictions.SelectAthleteForSlot", SelectorSlotPosition!.Value]
         : SelectedAthlete is null
             ? Localizer["Predictions.CategoryContextPanel"]
-            : Localizer["Predictions.ContextPanel"];
+            : SelectedAthlete.Sex == AthleteSex.Female
+                ? Localizer["Predictions.ContextPanelFemale"]
+                : Localizer["Predictions.ContextPanel"];
 
     private string? SelectedAthleteCategoryName => ResolveCategoryName(SelectedAthlete?.WeightCategoryId);
 
@@ -545,19 +507,13 @@
     private decimal? BestTotalKg => SelectedAthleteHistory?.Bests?.TotalKg ??
                                     SelectedAthleteHistory?.RecentResults.Max(result => result.TotalKg);
 
-    private IReadOnlyList<TrendPoint> TrendPoints => BuildTrendPoints();
+    private decimal? LatestBodyweightKg =>
+        SelectedAthleteHistory?.RecentResults.FirstOrDefault()?.BodyweightKg ??
+        SelectedAthleteHistory?.LastResult?.BodyweightKg;
 
-    private string TrendPolylinePoints => string.Join(
-        " ",
-        TrendPoints.Select(point => $"{FormatTrendAxisValue(point.X)},{FormatTrendAxisValue(point.Y)}"));
+    private IReadOnlyList<AppTrendChartPoint> ContextTrendChartPoints => BuildTrendChartPoints(4);
 
-    private string TrendLowerBoundLabel => TrendPoints.Count == 0
-        ? FormatKg(null)
-        : FormatKg(TrendPoints.Min(point => point.TotalKg));
-
-    private string TrendUpperBoundLabel => TrendPoints.Count == 0
-        ? FormatKg(null)
-        : FormatKg(TrendPoints.Max(point => point.TotalKg));
+    private IReadOnlyList<AppTrendChartPoint> HistoryTrendChartPoints => BuildTrendChartPoints(8);
 
     protected override async Task OnParametersSetAsync()
     {
@@ -789,11 +745,54 @@
         return $"{FormatKgValue(result.SquatKg)} / {FormatKgValue(result.BenchKg)} / {FormatKgValue(result.DeadliftKg)}";
     }
 
+    private string FormatRecentStartMeta(AthleteRecentResult result)
+    {
+        var parts = new List<string>();
+
+        if (!string.IsNullOrWhiteSpace(result.Federation))
+        {
+            parts.Add(result.Federation.Trim());
+        }
+
+        if (!string.IsNullOrWhiteSpace(result.Equipment))
+        {
+            parts.Add(result.Equipment.Trim());
+        }
+
+        if (result.BodyweightKg is not null)
+        {
+            parts.Add(FormatBodyweightInline(result.BodyweightKg));
+        }
+
+        return parts.Count == 0
+            ? FormatLiftTriplet(result)
+            : string.Join(" · ", parts);
+    }
+
     private string FormatKgValue(decimal? value)
     {
         return value is null
             ? "--"
             : value.Value.ToString("0.#", CultureInfo.CurrentCulture);
+    }
+
+    private string FormatBodyweight(decimal? value)
+    {
+        return value is null
+            ? Localizer["Common.Tbd"].Value
+            : $"{value.Value.ToString("0.##", CultureInfo.CurrentCulture)} kg";
+    }
+
+    private string FormatBodyweightInline(decimal? value)
+    {
+        return $"{Localizer["Predictions.BodyweightShort"]}: {FormatBodyweight(value)}";
+    }
+
+    private string FormatBodyweightValue(decimal? value)
+    {
+        return value is null
+            ? "--"
+            : value.Value.ToString("0.##", CultureInfo.CurrentCulture);
     }
 
     private string GetRecentStartTotalClass(AthleteRecentResult result)
@@ -830,7 +829,7 @@
             : null;
     }
 
-    private IReadOnlyList<TrendPoint> BuildTrendPoints()
+    private IReadOnlyList<AppTrendChartPoint> BuildTrendChartPoints(int maxResults)
     {
         if (SelectedAthleteHistory?.RecentResults.Count is null or 0)
         {
@@ -838,7 +837,7 @@
         }
 
         var sample = SelectedAthleteHistory.RecentResults
-            .Take(6)
+            .Take(maxResults)
             .Where(result => result.TotalKg is not null)
             .ToList();
 
@@ -849,32 +848,11 @@
 
         sample.Reverse();
 
-        var minValue = sample.Min(result => result.TotalKg ?? 0m);
-        var maxValue = sample.Max(result => result.TotalKg ?? 0m);
-        var range = maxValue - minValue;
-        const decimal verticalSpan = 32m;
-        const decimal verticalOffset = 4m;
-
         return sample
-            .Select((result, index) =>
-            {
-                var x = sample.Count == 1
-                    ? 50m
-                    : (index * 100m) / (sample.Count - 1);
-                var totalKg = result.TotalKg ?? minValue;
-
-                var normalizedValue = range <= 0m
-                    ? 0.5m
-                    : (totalKg - minValue) / range;
-
-                var y = (verticalOffset + verticalSpan) - (normalizedValue * verticalSpan);
-
-                return new TrendPoint(
-                    totalKg,
-                    FormatTrendLabel(result.Date),
-                    x,
-                    y);
-            })
+            .Select(result => new AppTrendChartPoint(
+                result.TotalKg ?? 0m,
+                FormatTrendLabel(result.Date),
+                FormatTrendDetail(result)))
             .ToArray();
     }
 
@@ -887,15 +865,15 @@
 
         if (DateOnly.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsed))
         {
-            return parsed.ToString("MM.yyyy", CultureInfo.CurrentCulture);
+            return parsed.ToString("MMM yyyy", CultureInfo.CurrentCulture);
         }
 
         return value.Length <= 7 ? value : value[..7];
     }
 
-    private static string FormatTrendAxisValue(decimal value)
+    private string FormatTrendDetail(AthleteRecentResult result)
     {
-        return value.ToString("0.##", CultureInfo.InvariantCulture);
+        return $"{FormatKg(result.TotalKg)} · {FormatBodyweightInline(result.BodyweightKg)}";
     }
 
     private string GetAthleteInitials(string? displayName)
@@ -918,6 +896,4 @@
 
         return string.Concat(parts).ToUpper(CultureInfo.CurrentCulture);
     }
-
-    private sealed record TrendPoint(decimal TotalKg, string Label, decimal X, decimal Y);
 }

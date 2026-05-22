@@ -79,4 +79,6 @@ public sealed record AthleteLastResult
     public decimal? DeadliftKg { get; init; }
 
     public decimal? TotalKg { get; init; }
+
+    public decimal? BodyweightKg { get; init; }
 }

@@ -1,0 +1,230 @@
+@using System.Globalization
+
+@if (ChartPoints.Count > 1)
+{
+    <div class="@CssClass" role="img" aria-label="@AriaLabel">
+        <div class="app-trend-chart__body">
+            <ol class="app-trend-chart__y-axis" aria-hidden="true">
+                @foreach (var label in YAxisLabels)
+                {
+                    <li>@label</li>
+                }
+            </ol>
+
+            <div class="app-trend-chart__plot">
+                <svg class="app-trend-chart__svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    @foreach (var line in GridLines)
+                    {
+                        <line
+                            x1="0"
+                            x2="100"
+                            y1="@FormatAxisValue(line.Y)"
+                            y2="@FormatAxisValue(line.Y)"
+                            class="@line.CssClass" />
+                    }
+                    <polygon points="@AreaPoints" class="app-trend-chart__area" />
+                    <polyline points="@PolylinePoints" class="app-trend-chart__line" />
+                </svg>
+
+                @foreach (var point in ChartPoints)
+                {
+                    <span
+                        class="@GetPointClass(point)"
+                        style="@GetPointStyle(point)"
+                        tabindex="0"
+                        aria-label="@point.Detail">
+                        <span class="app-trend-chart__point-value">@FormatValue(point.Value)</span>
+                        <span class="app-trend-chart__dot" aria-hidden="true"></span>
+                        @if (!string.IsNullOrWhiteSpace(point.Detail))
+                        {
+                            <span class="app-trend-chart__tooltip" role="tooltip">@point.Detail</span>
+                        }
+                    </span>
+                }
+            </div>
+        </div>
+
+        <ol class="app-trend-chart__x-axis" aria-hidden="true">
+            @foreach (var point in ChartPoints)
+            {
+                <li class="@GetLabelClass(point)" style="@GetLabelStyle(point)">@point.Label</li>
+            }
+        </ol>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<AppTrendChartPoint> Points { get; set; } = [];
+
+    [Parameter]
+    public AppTrendChartVariant Variant { get; set; } = AppTrendChartVariant.Compact;
+
+    [Parameter]
+    public string Unit { get; set; } = "kg";
+
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    [Parameter]
+    public string? AdditionalClass { get; set; }
+
+    private const decimal Top = 14m;
+    private const decimal Bottom = 86m;
+    private const decimal EdgeInset = 4m;
+    private const int TickCount = 5;
+
+    private IReadOnlyList<ChartPoint> ChartPoints => BuildChartPoints();
+
+    private string CssClass => string.Join(
+        " ",
+        "app-trend-chart",
+        Variant == AppTrendChartVariant.Full ? "app-trend-chart--full" : "app-trend-chart--compact",
+        AdditionalClass);
+
+    private string PolylinePoints => string.Join(
+        " ",
+        ChartPoints.Select(point => $"{FormatAxisValue(point.X)},{FormatAxisValue(point.Y)}"));
+
+    private string AreaPoints => ChartPoints.Count == 0
+        ? string.Empty
+        : string.Join(
+            " ",
+            new[]
+                {
+                    $"{FormatAxisValue(ChartPoints[0].X)},{FormatAxisValue(Bottom)}"
+                }
+                .Concat(ChartPoints.Select(point => $"{FormatAxisValue(point.X)},{FormatAxisValue(point.Y)}"))
+                .Concat(
+                [
+                    $"{FormatAxisValue(ChartPoints[^1].X)},{FormatAxisValue(Bottom)}"
+                ]));
+
+    private IReadOnlyList<string> YAxisLabels => BuildYAxisLabels();
+
+    private IReadOnlyList<GridLine> GridLines => Enumerable.Range(0, TickCount)
+        .Select(index =>
+        {
+            var y = Top + ((Bottom - Top) / (TickCount - 1) * index);
+            return new GridLine(y, index == TickCount - 1
+                ? "app-trend-chart__axis-line"
+                : "app-trend-chart__grid-line");
+        })
+        .ToArray();
+
+    private IReadOnlyList<ChartPoint> BuildChartPoints()
+    {
+        var values = Points
+            .Where(point => !string.IsNullOrWhiteSpace(point.Label))
+            .ToArray();
+
+        if (values.Length == 0)
+        {
+            return [];
+        }
+
+        var (lowerBound, upperBound) = GetAxisBounds(values);
+        var axisRange = upperBound - lowerBound;
+
+        return values
+            .Select((point, index) =>
+            {
+                var x = values.Length == 1
+                    ? 50m
+                    : EdgeInset + (index * (100m - (EdgeInset * 2m))) / (values.Length - 1);
+
+                var normalizedValue = axisRange <= 0m
+                    ? 0.5m
+                    : (point.Value - lowerBound) / axisRange;
+
+                var y = Bottom - (normalizedValue * (Bottom - Top));
+
+                return new ChartPoint(point.Value, point.Label, point.Detail, x, y, index);
+            })
+            .ToArray();
+    }
+
+    private IReadOnlyList<string> BuildYAxisLabels()
+    {
+        if (Points.Count == 0)
+        {
+            return [];
+        }
+
+        var (lowerBound, upperBound) = GetAxisBounds(Points);
+        var step = (upperBound - lowerBound) / (TickCount - 1);
+
+        return Enumerable.Range(0, TickCount)
+            .Select(index => FormatValue(upperBound - (step * index)))
+            .ToArray();
+    }
+
+    private static (decimal LowerBound, decimal UpperBound) GetAxisBounds(IReadOnlyList<AppTrendChartPoint> points)
+    {
+        var minValue = points.Min(point => point.Value);
+        var maxValue = points.Max(point => point.Value);
+        var rawRange = maxValue - minValue;
+        var padding = rawRange <= 0m ? 5m : Math.Max(5m, rawRange * 0.14m);
+        var lowerBound = RoundDownToStep(Math.Max(0m, minValue - padding), 5m);
+        var upperBound = RoundUpToStep(maxValue + padding, 5m);
+
+        if (upperBound <= lowerBound)
+        {
+            upperBound = lowerBound + 10m;
+        }
+
+        return (lowerBound, upperBound);
+    }
+
+    private string GetPointClass(ChartPoint point)
+    {
+        return string.Join(
+            " ",
+            "app-trend-chart__point",
+            point.Index == 0 ? "app-trend-chart__point--first" : null,
+            point.Index == ChartPoints.Count - 1 ? "app-trend-chart__point--last" : null);
+    }
+
+    private static string GetPointStyle(ChartPoint point)
+    {
+        return $"left: {FormatAxisValue(point.X)}%; top: {FormatAxisValue(point.Y)}%;";
+    }
+
+    private string GetLabelClass(ChartPoint point)
+    {
+        return string.Join(
+            " ",
+            "app-trend-chart__x-label",
+            point.Index == 0 ? "app-trend-chart__x-label--first" : null,
+            point.Index == ChartPoints.Count - 1 ? "app-trend-chart__x-label--last" : null);
+    }
+
+    private static string GetLabelStyle(ChartPoint point)
+    {
+        return $"left: {FormatAxisValue(point.X)}%;";
+    }
+
+    private string FormatValue(decimal value)
+    {
+        return $"{value.ToString("0.#", CultureInfo.CurrentCulture)} {Unit}";
+    }
+
+    private static string FormatAxisValue(decimal value)
+    {
+        return value.ToString("0.##", CultureInfo.InvariantCulture);
+    }
+
+    private static decimal RoundDownToStep(decimal value, decimal step)
+    {
+        return Math.Floor(value / step) * step;
+    }
+
+    private static decimal RoundUpToStep(decimal value, decimal step)
+    {
+        return Math.Ceiling(value / step) * step;
+    }
+
+    private sealed record ChartPoint(decimal Value, string Label, string? Detail, decimal X, decimal Y, int Index);
+
+    private sealed record GridLine(decimal Y, string CssClass);
+}

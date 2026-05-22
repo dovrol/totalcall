@@ -129,26 +129,33 @@
   <data name="Predictions.CloseSummary" xml:space="preserve"><value>Zamknij podsumowanie</value></data>
   <data name="Predictions.CloseContext" xml:space="preserve"><value>Zamknij panel kontekstowy</value></data>
   <data name="Predictions.ContextPanel" xml:space="preserve"><value>Kontekst zawodnika</value></data>
+  <data name="Predictions.ContextPanelFemale" xml:space="preserve"><value>Kontekst zawodniczki</value></data>
   <data name="Predictions.CategoryContextPanel" xml:space="preserve"><value>Kontekst kategorii</value></data>
   <data name="Predictions.ClearAthleteContext" xml:space="preserve"><value>Wyczyść kontekst zawodnika</value></data>
   <data name="Predictions.CloseSelector" xml:space="preserve"><value>Zamknij wybór zawodniczki</value></data>
   <data name="Predictions.TopNominatedTotals" xml:space="preserve"><value>Top nominated totals</value></data>
   <data name="Predictions.CategoryContextHint" xml:space="preserve"><value>Wybierz zawodnika z rankingu lub listy, aby zobaczyć szczegóły i historię startów.</value></data>
-  <data name="Predictions.NominatedTotal" xml:space="preserve"><value>Nominated total</value></data>
+  <data name="Predictions.NominatedTotal" xml:space="preserve"><value>Nominowany total</value></data>
   <data name="Predictions.CurrentProjection" xml:space="preserve"><value>Obecna predykcja</value></data>
   <data name="Predictions.RecentLifts" xml:space="preserve"><value>Ostatni rozkład bojów</value></data>
   <data name="Predictions.RecentStarts" xml:space="preserve"><value>Historia startów</value></data>
   <data name="Predictions.RecentStartsShort" xml:space="preserve"><value>Ostatnie starty</value></data>
   <data name="Predictions.ViewFullHistory" xml:space="preserve"><value>Zobacz pełną historię</value></data>
+  <data name="Predictions.ShowStartHistory" xml:space="preserve"><value>Pokaż historię startów</value></data>
   <data name="Predictions.HistoryDialogTitle" xml:space="preserve"><value>Historia startów — {0}</value></data>
   <data name="Predictions.HistoryDialogClose" xml:space="preserve"><value>Zamknij</value></data>
   <data name="Predictions.BackToContext" xml:space="preserve"><value>Wróć do kontekstu</value></data>
   <data name="Predictions.History.Date" xml:space="preserve"><value>Data</value></data>
   <data name="Predictions.History.Meet" xml:space="preserve"><value>Zawody</value></data>
+  <data name="Predictions.History.Bodyweight" xml:space="preserve"><value>Waga</value></data>
   <data name="Predictions.History.Place" xml:space="preserve"><value>Miejsce</value></data>
+  <data name="Predictions.BodyweightShort" xml:space="preserve"><value>BW</value></data>
+  <data name="Predictions.LatestBodyweight" xml:space="preserve"><value>Waga z ostatniego startu</value></data>
   <data name="Predictions.SourceUpdatedAt" xml:space="preserve"><value>Ostatnia aktualizacja: {0}</value></data>
   <data name="Predictions.BestLifts" xml:space="preserve"><value>Najlepsze wyniki</value></data>
+  <data name="Predictions.BestLiftsPr" xml:space="preserve"><value>Najlepsze boje (PR)</value></data>
   <data name="Predictions.TotalTrend" xml:space="preserve"><value>Trend totalu (ostatnie {0} startów)</value></data>
+  <data name="Predictions.TotalTrendShort" xml:space="preserve"><value>Trend totalu</value></data>
   <data name="Predictions.LoadingHistory" xml:space="preserve"><value>Ładowanie historii...</value></data>
   <data name="Predictions.NoAthleteHistory" xml:space="preserve"><value>Brak historii startów dla tego zawodnika.</value></data>
   <data name="Predictions.BestResult" xml:space="preserve"><value>Najlepszy total</value></data>
