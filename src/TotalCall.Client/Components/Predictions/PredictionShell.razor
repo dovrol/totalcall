@@ -487,7 +487,11 @@
             .Select((athlete, index) => new AthletePlacementPick
             {
                 Position = index + 1,
-                AthleteId = athlete.Id
+                AthleteId = athlete.Id,
+                PredictedSquatKg = CurrentTopNPlacements.FirstOrDefault(placement => string.Equals(placement.AthleteId, athlete.Id, StringComparison.OrdinalIgnoreCase))?.PredictedSquatKg,
+                PredictedBenchKg = CurrentTopNPlacements.FirstOrDefault(placement => string.Equals(placement.AthleteId, athlete.Id, StringComparison.OrdinalIgnoreCase))?.PredictedBenchKg,
+                PredictedDeadliftKg = CurrentTopNPlacements.FirstOrDefault(placement => string.Equals(placement.AthleteId, athlete.Id, StringComparison.OrdinalIgnoreCase))?.PredictedDeadliftKg,
+                PredictedTotalKg = CurrentTopNPlacements.FirstOrDefault(placement => string.Equals(placement.AthleteId, athlete.Id, StringComparison.OrdinalIgnoreCase))?.PredictedTotalKg
             })
             .ToArray();
 
@@ -568,7 +572,11 @@
             .Select(placement => new AthletePlacementPick
             {
                 Position = placement.Position,
-                AthleteId = placement.AthleteId
+                AthleteId = placement.AthleteId,
+                PredictedSquatKg = placement.PredictedSquatKg,
+                PredictedBenchKg = placement.PredictedBenchKg,
+                PredictedDeadliftKg = placement.PredictedDeadliftKg,
+                PredictedTotalKg = placement.PredictedTotalKg
             })
             .ToList();
 
@@ -592,7 +600,19 @@
         updatedPlacements.Add(new AthletePlacementPick
         {
             Position = targetPosition,
-            AthleteId = athleteId
+            AthleteId = athleteId,
+            PredictedSquatKg = sourcePosition is not null
+                ? placements.FirstOrDefault(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase))?.PredictedSquatKg
+                : null,
+            PredictedBenchKg = sourcePosition is not null
+                ? placements.FirstOrDefault(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase))?.PredictedBenchKg
+                : null,
+            PredictedDeadliftKg = sourcePosition is not null
+                ? placements.FirstOrDefault(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase))?.PredictedDeadliftKg
+                : null,
+            PredictedTotalKg = sourcePosition is not null
+                ? placements.FirstOrDefault(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase))?.PredictedTotalKg
+                : null
         });
 
         if (sourcePosition is not null &&
@@ -602,7 +622,11 @@
             updatedPlacements.Add(new AthletePlacementPick
             {
                 Position = sourcePosition.Value,
-                AthleteId = targetAthleteId
+                AthleteId = targetAthleteId,
+                PredictedSquatKg = placements.FirstOrDefault(placement => string.Equals(placement.AthleteId, targetAthleteId, StringComparison.OrdinalIgnoreCase))?.PredictedSquatKg,
+                PredictedBenchKg = placements.FirstOrDefault(placement => string.Equals(placement.AthleteId, targetAthleteId, StringComparison.OrdinalIgnoreCase))?.PredictedBenchKg,
+                PredictedDeadliftKg = placements.FirstOrDefault(placement => string.Equals(placement.AthleteId, targetAthleteId, StringComparison.OrdinalIgnoreCase))?.PredictedDeadliftKg,
+                PredictedTotalKg = placements.FirstOrDefault(placement => string.Equals(placement.AthleteId, targetAthleteId, StringComparison.OrdinalIgnoreCase))?.PredictedTotalKg
             });
         }
 

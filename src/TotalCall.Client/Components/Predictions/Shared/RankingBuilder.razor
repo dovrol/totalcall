@@ -7,11 +7,32 @@
             <RankingSlot
                 Position="position"
                 Athlete="GetAthlete(position)"
+                Placement="GetPlacement(position)"
                 CanEditPredictions="CanEditPredictions"
                 IsContextSelected="@IsContextAthlete(GetAthlete(position))"
+                IsPredictionEditorOpen="@(PredictionEditorPosition == position)"
+                PredictionEditorMode="@PredictionEditorMode"
+                PredictionTotalInput="@PredictionTotalInput"
+                PredictionSquatInput="@PredictionSquatInput"
+                PredictionBenchInput="@PredictionBenchInput"
+                PredictionDeadliftInput="@PredictionDeadliftInput"
+                PredictionEditorError="@PredictionEditorError"
+                IsPredictionHistoryLoading="@IsPredictionHistoryLoading"
+                PredictionHistory="@PredictionHistory"
                 IsSelectorTarget="@(SelectorSlotPosition == position)"
                 CanMoveUp="@(position > 1)"
                 CanMoveDown="@(position < SlotsCount)"
+                PredictionEditRequested="PredictionEditRequested"
+                PredictionEditorModeChanged="PredictionEditorModeChanged"
+                PredictionTotalInputChanged="PredictionTotalInputChanged"
+                PredictionSquatInputChanged="PredictionSquatInputChanged"
+                PredictionBenchInputChanged="PredictionBenchInputChanged"
+                PredictionDeadliftInputChanged="PredictionDeadliftInputChanged"
+                PredictionEditorSaveRequested="PredictionEditorSaveRequested"
+                PredictionEditorCancelRequested="PredictionEditorCancelRequested"
+                UseNominatedTotalRequested="UseNominatedTotalRequested"
+                UseLastResultRequested="UseLastResultRequested"
+                UseBestResultRequested="UseBestResultRequested"
                 RemoveRequested="RemoveRequested"
                 MoveUpRequested="MoveUpRequested"
                 MoveDownRequested="MoveDownRequested"
@@ -35,6 +56,10 @@
         new Dictionary<int, Athlete>();
 
     [Parameter]
+    public IReadOnlyDictionary<int, AthletePlacementPick> PlacementsByPosition { get; set; } =
+        new Dictionary<int, AthletePlacementPick>();
+
+    [Parameter]
     public bool CanEditPredictions { get; set; } = true;
 
     [Parameter]
@@ -42,6 +67,66 @@
 
     [Parameter]
     public int? SelectorSlotPosition { get; set; }
+
+    [Parameter]
+    public int? PredictionEditorPosition { get; set; }
+
+    [Parameter]
+    public string PredictionEditorMode { get; set; } = "total";
+
+    [Parameter]
+    public string PredictionTotalInput { get; set; } = string.Empty;
+
+    [Parameter]
+    public string PredictionSquatInput { get; set; } = string.Empty;
+
+    [Parameter]
+    public string PredictionBenchInput { get; set; } = string.Empty;
+
+    [Parameter]
+    public string PredictionDeadliftInput { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? PredictionEditorError { get; set; }
+
+    [Parameter]
+    public bool IsPredictionHistoryLoading { get; set; }
+
+    [Parameter]
+    public AthleteHistoryEntry? PredictionHistory { get; set; }
+
+    [Parameter]
+    public EventCallback<int> PredictionEditRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<string> PredictionEditorModeChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> PredictionTotalInputChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> PredictionSquatInputChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> PredictionBenchInputChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> PredictionDeadliftInputChanged { get; set; }
+
+    [Parameter]
+    public EventCallback PredictionEditorSaveRequested { get; set; }
+
+    [Parameter]
+    public EventCallback PredictionEditorCancelRequested { get; set; }
+
+    [Parameter]
+    public EventCallback UseNominatedTotalRequested { get; set; }
+
+    [Parameter]
+    public EventCallback UseLastResultRequested { get; set; }
+
+    [Parameter]
+    public EventCallback UseBestResultRequested { get; set; }
 
     [Parameter]
     public EventCallback<int> RemoveRequested { get; set; }
@@ -68,6 +153,13 @@
     {
         return SelectedAthletesByPosition.TryGetValue(position, out var athlete)
             ? athlete
+            : null;
+    }
+
+    private AthletePlacementPick? GetPlacement(int position)
+    {
+        return PlacementsByPosition.TryGetValue(position, out var placement)
+            ? placement
             : null;
     }
 

@@ -49,6 +49,8 @@
   <data name="Common.BackToCompetitions" xml:space="preserve"><value>Wróć do zawodów</value></data>
   <data name="Common.Back" xml:space="preserve"><value>Wstecz</value></data>
   <data name="Common.Continue" xml:space="preserve"><value>Dalej</value></data>
+  <data name="Common.Save" xml:space="preserve"><value>Zapisz</value></data>
+  <data name="Common.Cancel" xml:space="preserve"><value>Anuluj</value></data>
   <data name="Common.Tbd" xml:space="preserve"><value>Do ustalenia</value></data>
   <data name="Common.Required" xml:space="preserve"><value>Wymagane</value></data>
   <data name="Common.Optional" xml:space="preserve"><value>Opcjonalne</value></data>
@@ -179,11 +181,23 @@
   <data name="Predictions.NoCategoriesDescription" xml:space="preserve"><value>Ten moduł nie ma jeszcze listy kategorii.</value></data>
   <data name="Predictions.CategoryIndex" xml:space="preserve"><value>Kategoria {0} z {1}</value></data>
   <data name="Predictions.AutoFillByNominated" xml:space="preserve"><value>Auto-fill wg nominated total</value></data>
+  <data name="Predictions.SortByPredictedTotal" xml:space="preserve"><value>Sortuj wg predicted total</value></data>
   <data name="Predictions.ClearCategory" xml:space="preserve"><value>Wyczyść kategorię</value></data>
   <data name="Predictions.YourRankingTopN" xml:space="preserve"><value>Twój ranking (Top {0})</value></data>
   <data name="Predictions.AvailableAthletes" xml:space="preserve"><value>Dostępni zawodnicy</value></data>
   <data name="Predictions.PickAthleteCta" xml:space="preserve"><value>+ Wybierz zawodniczkę</value></data>
   <data name="Predictions.ChangeAthlete" xml:space="preserve"><value>Zmień</value></data>
+  <data name="Predictions.EditPredictedTotal" xml:space="preserve"><value>Edytuj total / boje</value></data>
+  <data name="Predictions.PredictionEditorTitle" xml:space="preserve"><value>Predicted total / boje</value></data>
+  <data name="Predictions.PredictionEditorSubtitle" xml:space="preserve"><value>Opcjonalna pomoc do ustawienia rankingu.</value></data>
+  <data name="Predictions.PredictionMode" xml:space="preserve"><value>Tryb predykcji</value></data>
+  <data name="Predictions.PredictionModeTotal" xml:space="preserve"><value>Total only</value></data>
+  <data name="Predictions.PredictionModeLifts" xml:space="preserve"><value>SQ / BP / DL</value></data>
+  <data name="Predictions.PredictedTotal" xml:space="preserve"><value>Predicted total</value></data>
+  <data name="Predictions.PredictedShort" xml:space="preserve"><value>Pred</value></data>
+  <data name="Predictions.NominatedShort" xml:space="preserve"><value>Nom</value></data>
+  <data name="Predictions.PredictionValueInvalid" xml:space="preserve"><value>Wpisz dodatnią, sensowną wartość liczbową albo zostaw pole puste.</value></data>
+  <data name="Predictions.NoAthleteHistoryInline" xml:space="preserve"><value>Brak historii dla tego zawodnika. Możesz nadal wpisać total ręcznie.</value></data>
   <data name="Predictions.SelectAthleteForSlot" xml:space="preserve"><value>Wybierz zawodniczkę na miejsce #{0}</value></data>
   <data name="Predictions.CurrentSlotAthlete" xml:space="preserve"><value>Aktualnie: {0}</value></data>
   <data name="Predictions.DragOrPickHint" xml:space="preserve"><value>Przeciągnij albo wybierz z listy</value></data>

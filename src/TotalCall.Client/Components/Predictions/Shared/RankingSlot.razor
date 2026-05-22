@@ -1,3 +1,4 @@
+@using System.Globalization
 @inject IStringLocalizer<SharedResource> Localizer
 
 <div
@@ -35,10 +36,29 @@
             <div class="ranking-slot__side">
                 @if (Athlete.SeedTotalKg is not null)
                 {
-                    <span class="ranking-slot__total">@Athlete.SeedTotalKg.Value.ToString("0.#") kg</span>
+                    <span class="ranking-slot__total ranking-slot__total--nominated">
+                        <span>@Localizer["Predictions.NominatedShort"]</span>
+                        <strong>@FormatKgValue(Athlete.SeedTotalKg)</strong>
+                    </span>
+                }
+
+                @if (PredictedTotalKg is not null)
+                {
+                    <span class="ranking-slot__total ranking-slot__total--predicted">
+                        <span>@Localizer["Predictions.PredictedShort"]</span>
+                        <strong>@FormatKgValue(PredictedTotalKg)</strong>
+                    </span>
                 }
 
                 <div class="ranking-slot__actions">
+                    <button
+                        type="button"
+                        class="ranking-slot__action ranking-slot__action--change"
+                        @onclick="() => PredictionEditRequested.InvokeAsync(Position)"
+                        @onclick:stopPropagation="true"
+                        disabled="@(!CanEditPredictions)">
+                        @Localizer["Predictions.EditPredictedTotal"]
+                    </button>
                     <button
                         type="button"
                         class="ranking-slot__action ranking-slot__action--change"
@@ -82,6 +102,121 @@
                 </div>
             </div>
         </div>
+
+        @if (!string.IsNullOrWhiteSpace(PredictedLiftSummary))
+        {
+            <div class="ranking-slot__prediction-summary">
+                @PredictedLiftSummary
+            </div>
+        }
+
+        @if (IsPredictionEditorOpen)
+        {
+            <section class="ranking-slot__prediction-editor" @onclick:stopPropagation="true">
+                <header class="ranking-slot__prediction-editor-head">
+                    <div>
+                        <strong>@Localizer["Predictions.PredictionEditorTitle"]</strong>
+                        <small>@Localizer["Predictions.PredictionEditorSubtitle"]</small>
+                    </div>
+                </header>
+
+                <div class="ranking-slot__prediction-mode" role="radiogroup" aria-label="@Localizer["Predictions.PredictionMode"]">
+                    <label class="ranking-slot__prediction-mode-option">
+                        <input
+                            type="radio"
+                            name="@($"prediction-mode-{Position}")"
+                            value="total"
+                            checked="@(PredictionEditorMode == "total")"
+                            @onchange="OnTotalModeSelected" />
+                        <span>@Localizer["Predictions.PredictionModeTotal"]</span>
+                    </label>
+                    <label class="ranking-slot__prediction-mode-option">
+                        <input
+                            type="radio"
+                            name="@($"prediction-mode-{Position}")"
+                            value="lifts"
+                            checked="@(PredictionEditorMode == "lifts")"
+                            @onchange="OnLiftsModeSelected" />
+                        <span>@Localizer["Predictions.PredictionModeLifts"]</span>
+                    </label>
+                </div>
+
+                @if (PredictionEditorMode == "lifts")
+                {
+                    <div class="ranking-slot__prediction-fields ranking-slot__prediction-fields--lifts">
+                        <label>
+                            <span>SQ</span>
+                            <input class="control" type="number" min="0" step="0.5" value="@PredictionSquatInput" @oninput="OnSquatInput" />
+                        </label>
+                        <label>
+                            <span>BP</span>
+                            <input class="control" type="number" min="0" step="0.5" value="@PredictionBenchInput" @oninput="OnBenchInput" />
+                        </label>
+                        <label>
+                            <span>DL</span>
+                            <input class="control" type="number" min="0" step="0.5" value="@PredictionDeadliftInput" @oninput="OnDeadliftInput" />
+                        </label>
+                        <div class="ranking-slot__prediction-calculated-total">
+                            <span>@Localizer["Predictions.PredictedTotal"]</span>
+                            <strong>@FormatKg(CalculatedLiftTotalKg)</strong>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="ranking-slot__prediction-fields">
+                        <label>
+                            <span>@Localizer["Predictions.PredictedTotal"]</span>
+                            <input class="control" type="number" min="0" step="0.5" value="@PredictionTotalInput" @oninput="OnTotalInput" />
+                        </label>
+                    </div>
+                }
+
+                <div class="ranking-slot__prediction-quick-actions">
+                    @if (Athlete.SeedTotalKg is not null)
+                    {
+                        <button type="button" class="ranking-slot__prediction-quick-action" @onclick="() => UseNominatedTotalRequested.InvokeAsync()">
+                            @Localizer["Predictions.UseNominatedTotal"]
+                        </button>
+                    }
+                    @if (PredictionHistory?.LastResult?.TotalKg is not null)
+                    {
+                        <button type="button" class="ranking-slot__prediction-quick-action" @onclick="() => UseLastResultRequested.InvokeAsync()">
+                            @Localizer["Predictions.UseLastResult"]
+                        </button>
+                    }
+                    @if (PredictionHistory?.Bests?.TotalKg is not null)
+                    {
+                        <button type="button" class="ranking-slot__prediction-quick-action" @onclick="() => UseBestResultRequested.InvokeAsync()">
+                            @Localizer["Predictions.UseBestResult"]
+                        </button>
+                    }
+                </div>
+
+                @if (IsPredictionHistoryLoading)
+                {
+                    <p class="ranking-slot__prediction-empty">@Localizer["Predictions.LoadingHistory"]</p>
+                }
+                else if (PredictionHistory is null)
+                {
+                    <p class="ranking-slot__prediction-empty">@Localizer["Predictions.NoAthleteHistoryInline"]</p>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(PredictionEditorError))
+                {
+                    <p class="ranking-slot__prediction-error">@PredictionEditorError</p>
+                }
+
+                <footer class="ranking-slot__prediction-editor-actions">
+                    <button type="button" class="app-button app-button--secondary app-button--sm" @onclick="() => PredictionEditorSaveRequested.InvokeAsync()">
+                        @Localizer["Common.Save"]
+                    </button>
+                    <button type="button" class="app-button app-button--ghost app-button--sm" @onclick="() => PredictionEditorCancelRequested.InvokeAsync()">
+                        @Localizer["Common.Cancel"]
+                    </button>
+                </footer>
+            </section>
+        }
     }
 </div>
 
@@ -93,6 +228,9 @@
     public Athlete? Athlete { get; set; }
 
     [Parameter]
+    public AthletePlacementPick? Placement { get; set; }
+
+    [Parameter]
     public bool CanEditPredictions { get; set; } = true;
 
     [Parameter]
@@ -102,10 +240,70 @@
     public bool IsSelectorTarget { get; set; }
 
     [Parameter]
+    public bool IsPredictionEditorOpen { get; set; }
+
+    [Parameter]
+    public string PredictionEditorMode { get; set; } = "total";
+
+    [Parameter]
+    public string PredictionTotalInput { get; set; } = string.Empty;
+
+    [Parameter]
+    public string PredictionSquatInput { get; set; } = string.Empty;
+
+    [Parameter]
+    public string PredictionBenchInput { get; set; } = string.Empty;
+
+    [Parameter]
+    public string PredictionDeadliftInput { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? PredictionEditorError { get; set; }
+
+    [Parameter]
+    public bool IsPredictionHistoryLoading { get; set; }
+
+    [Parameter]
+    public AthleteHistoryEntry? PredictionHistory { get; set; }
+
+    [Parameter]
     public bool CanMoveUp { get; set; }
 
     [Parameter]
     public bool CanMoveDown { get; set; }
+
+    [Parameter]
+    public EventCallback<int> PredictionEditRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<string> PredictionEditorModeChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> PredictionTotalInputChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> PredictionSquatInputChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> PredictionBenchInputChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> PredictionDeadliftInputChanged { get; set; }
+
+    [Parameter]
+    public EventCallback PredictionEditorSaveRequested { get; set; }
+
+    [Parameter]
+    public EventCallback PredictionEditorCancelRequested { get; set; }
+
+    [Parameter]
+    public EventCallback UseNominatedTotalRequested { get; set; }
+
+    [Parameter]
+    public EventCallback UseLastResultRequested { get; set; }
+
+    [Parameter]
+    public EventCallback UseBestResultRequested { get; set; }
 
     [Parameter]
     public EventCallback<int> RemoveRequested { get; set; }
@@ -134,12 +332,57 @@
         Athlete is null ? "ranking-slot--empty" : "ranking-slot--filled",
         CanEditPredictions ? "ranking-slot--interactive" : null,
         IsSelectorTarget ? "ranking-slot--selector-target" : null,
-        IsContextSelected ? "ranking-slot--context-active" : null);
+        IsContextSelected ? "ranking-slot--context-active" : null,
+        IsPredictionEditorOpen ? "ranking-slot--prediction-active" : null);
 
     private string ContextButtonClass => string.Join(
         " ",
         "ranking-slot__details",
         IsContextSelected ? "ranking-slot__details--context-active" : null);
+
+    private decimal? PredictedTotalKg => Placement?.PredictedTotalKg;
+
+    private string? PredictedLiftSummary
+    {
+        get
+        {
+            var parts = new List<string>();
+
+            if (Placement?.PredictedSquatKg is not null)
+            {
+                parts.Add($"SQ {FormatKgValue(Placement.PredictedSquatKg)}");
+            }
+
+            if (Placement?.PredictedBenchKg is not null)
+            {
+                parts.Add($"BP {FormatKgValue(Placement.PredictedBenchKg)}");
+            }
+
+            if (Placement?.PredictedDeadliftKg is not null)
+            {
+                parts.Add($"DL {FormatKgValue(Placement.PredictedDeadliftKg)}");
+            }
+
+            return parts.Count == 0 ? null : string.Join(" / ", parts);
+        }
+    }
+
+    private decimal? CalculatedLiftTotalKg
+    {
+        get
+        {
+            var values = new[]
+            {
+                ParseNullableDecimal(PredictionSquatInput),
+                ParseNullableDecimal(PredictionBenchInput),
+                ParseNullableDecimal(PredictionDeadliftInput)
+            };
+
+            return values.Any(value => value is not null)
+                ? values.Sum(value => value ?? 0m)
+                : null;
+        }
+    }
 
     private Task OnSlotClicked(MouseEventArgs _)
     {
@@ -158,5 +401,57 @@
         return CanEditPredictions
             ? SlotSelectionRequested.InvokeAsync(Position)
             : Task.CompletedTask;
+    }
+
+    private Task OnTotalInput(ChangeEventArgs args)
+    {
+        return PredictionTotalInputChanged.InvokeAsync(args.Value?.ToString() ?? string.Empty);
+    }
+
+    private Task OnTotalModeSelected(ChangeEventArgs _)
+    {
+        return PredictionEditorModeChanged.InvokeAsync("total");
+    }
+
+    private Task OnLiftsModeSelected(ChangeEventArgs _)
+    {
+        return PredictionEditorModeChanged.InvokeAsync("lifts");
+    }
+
+    private Task OnSquatInput(ChangeEventArgs args)
+    {
+        return PredictionSquatInputChanged.InvokeAsync(args.Value?.ToString() ?? string.Empty);
+    }
+
+    private Task OnBenchInput(ChangeEventArgs args)
+    {
+        return PredictionBenchInputChanged.InvokeAsync(args.Value?.ToString() ?? string.Empty);
+    }
+
+    private Task OnDeadliftInput(ChangeEventArgs args)
+    {
+        return PredictionDeadliftInputChanged.InvokeAsync(args.Value?.ToString() ?? string.Empty);
+    }
+
+    private string FormatKg(decimal? value)
+    {
+        return value is null
+            ? Localizer["Common.Tbd"].Value
+            : FormatKgValue(value);
+    }
+
+    private static string FormatKgValue(decimal? value)
+    {
+        return value is null
+            ? string.Empty
+            : $"{value.Value.ToString("0.#", CultureInfo.CurrentCulture)} kg";
+    }
+
+    private static decimal? ParseNullableDecimal(string value)
+    {
+        return decimal.TryParse(value, NumberStyles.Number, CultureInfo.CurrentCulture, out var parsed) ||
+               decimal.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out parsed)
+            ? parsed
+            : null;
     }
 }

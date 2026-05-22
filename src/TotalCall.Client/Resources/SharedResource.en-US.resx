@@ -49,6 +49,8 @@
   <data name="Common.BackToCompetitions" xml:space="preserve"><value>Back to competitions</value></data>
   <data name="Common.Back" xml:space="preserve"><value>Back</value></data>
   <data name="Common.Continue" xml:space="preserve"><value>Continue</value></data>
+  <data name="Common.Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Common.Cancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="Common.Tbd" xml:space="preserve"><value>TBD</value></data>
   <data name="Common.Required" xml:space="preserve"><value>Required</value></data>
   <data name="Common.Optional" xml:space="preserve"><value>Optional</value></data>
@@ -179,11 +181,23 @@
   <data name="Predictions.NoCategoriesDescription" xml:space="preserve"><value>This module does not have configured categories.</value></data>
   <data name="Predictions.CategoryIndex" xml:space="preserve"><value>Category {0} of {1}</value></data>
   <data name="Predictions.AutoFillByNominated" xml:space="preserve"><value>Auto-fill by nominated total</value></data>
+  <data name="Predictions.SortByPredictedTotal" xml:space="preserve"><value>Sort by predicted total</value></data>
   <data name="Predictions.ClearCategory" xml:space="preserve"><value>Clear category</value></data>
   <data name="Predictions.YourRankingTopN" xml:space="preserve"><value>Your ranking (Top {0})</value></data>
   <data name="Predictions.AvailableAthletes" xml:space="preserve"><value>Available athletes</value></data>
   <data name="Predictions.PickAthleteCta" xml:space="preserve"><value>+ Pick athlete</value></data>
   <data name="Predictions.ChangeAthlete" xml:space="preserve"><value>Change</value></data>
+  <data name="Predictions.EditPredictedTotal" xml:space="preserve"><value>Edit total / lifts</value></data>
+  <data name="Predictions.PredictionEditorTitle" xml:space="preserve"><value>Predicted total / lifts</value></data>
+  <data name="Predictions.PredictionEditorSubtitle" xml:space="preserve"><value>Optional helper for arranging the ranking.</value></data>
+  <data name="Predictions.PredictionMode" xml:space="preserve"><value>Prediction mode</value></data>
+  <data name="Predictions.PredictionModeTotal" xml:space="preserve"><value>Total only</value></data>
+  <data name="Predictions.PredictionModeLifts" xml:space="preserve"><value>SQ / BP / DL</value></data>
+  <data name="Predictions.PredictedTotal" xml:space="preserve"><value>Predicted total</value></data>
+  <data name="Predictions.PredictedShort" xml:space="preserve"><value>Pred</value></data>
+  <data name="Predictions.NominatedShort" xml:space="preserve"><value>Nom</value></data>
+  <data name="Predictions.PredictionValueInvalid" xml:space="preserve"><value>Enter a positive, realistic number or leave the field empty.</value></data>
+  <data name="Predictions.NoAthleteHistoryInline" xml:space="preserve"><value>No history is available for this athlete. You can still enter a total manually.</value></data>
   <data name="Predictions.SelectAthleteForSlot" xml:space="preserve"><value>Pick athlete for slot #{0}</value></data>
   <data name="Predictions.CurrentSlotAthlete" xml:space="preserve"><value>Current pick: {0}</value></data>
   <data name="Predictions.DragOrPickHint" xml:space="preserve"><value>Drag or pick from the list</value></data>

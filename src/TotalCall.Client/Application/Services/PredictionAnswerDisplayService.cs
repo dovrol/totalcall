@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Localization;
+using System.Globalization;
 using TotalCall.Client.Domain.Competitions;
 using TotalCall.Client.Domain.Predictions;
 
@@ -86,7 +87,40 @@ public sealed class PredictionAnswerDisplayService(
             ", ",
             answer.Value.AthletePlacements
                 .OrderBy(placement => placement.Position)
-                .Select(placement => $"{FormatPosition(placement.Position, useMedalLabels)} {FormatAthlete(competition, placement.AthleteId)}"));
+                .Select(placement => $"{FormatPosition(placement.Position, useMedalLabels)} {FormatAthlete(competition, placement.AthleteId)}{FormatPlacementPrediction(placement)}"));
+    }
+
+    private static string FormatPlacementPrediction(AthletePlacementPick placement)
+    {
+        var parts = new List<string>();
+
+        if (placement.PredictedTotalKg is not null)
+        {
+            parts.Add($"predicted {placement.PredictedTotalKg.Value.ToString("0.#", CultureInfo.CurrentCulture)} kg");
+        }
+
+        var liftParts = new List<string>();
+        if (placement.PredictedSquatKg is not null)
+        {
+            liftParts.Add($"SQ {placement.PredictedSquatKg.Value.ToString("0.#", CultureInfo.CurrentCulture)}");
+        }
+
+        if (placement.PredictedBenchKg is not null)
+        {
+            liftParts.Add($"BP {placement.PredictedBenchKg.Value.ToString("0.#", CultureInfo.CurrentCulture)}");
+        }
+
+        if (placement.PredictedDeadliftKg is not null)
+        {
+            liftParts.Add($"DL {placement.PredictedDeadliftKg.Value.ToString("0.#", CultureInfo.CurrentCulture)}");
+        }
+
+        if (liftParts.Count > 0)
+        {
+            parts.Add(string.Join(" / ", liftParts));
+        }
+
+        return parts.Count == 0 ? string.Empty : $" ({string.Join(", ", parts)})";
     }
 
     private string FormatAthlete(Competition competition, string? athleteId)

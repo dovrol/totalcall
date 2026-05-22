@@ -1,6 +1,8 @@
 @using TotalCall.Client.Components.Predictions.Shared
+@using System.Globalization
 @inject IStringLocalizer<SharedResource> Localizer
 @inject PredictionTextService Text
+@inject AthleteHistoryService AthleteHistoryService
 
 @if (OrderedQuestions.Count == 0 || ActiveQuestion is null)
 {
@@ -24,6 +26,9 @@ else
             <div class="topn-module__actions">
                 <AppButton Variant="Secondary" Size="Sm" OnClick="OnAutoFillClicked" Disabled="@(!CanEditPredictions)">
                     @Localizer["Predictions.AutoFillByNominated"]
+                </AppButton>
+                <AppButton Variant="Secondary" Size="Sm" OnClick="OnSortByPredictedTotalClicked" Disabled="@(!CanEditPredictions)">
+                    @Localizer["Predictions.SortByPredictedTotal"]
                 </AppButton>
                 <AppButton Variant="Ghost" Size="Sm" OnClick="OnClearClicked" Disabled="@(!CanEditPredictions)">
                     @Localizer["Predictions.ClearCategory"]
@@ -99,6 +104,27 @@ else
                         ContextAthleteId="@EffectiveSelectedAthleteId"
                         SelectorSlotPosition="EffectiveSelectorSlotPosition"
                         SelectedAthletesByPosition="SelectedAthletesByPosition"
+                        PlacementsByPosition="PlacementsByPosition"
+                        PredictionEditorPosition="predictionEditorPosition"
+                        PredictionEditorMode="@predictionEditorMode"
+                        PredictionTotalInput="@predictionTotalInput"
+                        PredictionSquatInput="@predictionSquatInput"
+                        PredictionBenchInput="@predictionBenchInput"
+                        PredictionDeadliftInput="@predictionDeadliftInput"
+                        PredictionEditorError="@predictionEditorError"
+                        IsPredictionHistoryLoading="isPredictionHistoryLoading"
+                        PredictionHistory="predictionHistory"
+                        PredictionEditRequested="OpenPredictionEditor"
+                        PredictionEditorModeChanged="OnPredictionEditorModeChanged"
+                        PredictionTotalInputChanged="OnPredictionTotalInputChanged"
+                        PredictionSquatInputChanged="OnPredictionSquatInputChanged"
+                        PredictionBenchInputChanged="OnPredictionBenchInputChanged"
+                        PredictionDeadliftInputChanged="OnPredictionDeadliftInputChanged"
+                        PredictionEditorSaveRequested="SavePredictionEditor"
+                        PredictionEditorCancelRequested="CancelPredictionEditor"
+                        UseNominatedTotalRequested="UseNominatedTotalForEditedAthlete"
+                        UseLastResultRequested="UseLastResultForEditedAthlete"
+                        UseBestResultRequested="UseBestResultForEditedAthlete"
                         RemoveRequested="RemoveFromPosition"
                         MoveUpRequested="MoveSlotUp"
                         MoveDownRequested="MoveSlotDown"
@@ -195,6 +221,18 @@ else
     private string? draggedAthleteId;
     private int? draggedFromPosition;
     private TopNWorkspaceTab activeWorkspaceTab = TopNWorkspaceTab.Ranking;
+    private int? predictionEditorPosition;
+    private string predictionEditorMode = "total";
+    private string predictionTotalInput = string.Empty;
+    private string predictionSquatInput = string.Empty;
+    private string predictionBenchInput = string.Empty;
+    private string predictionDeadliftInput = string.Empty;
+    private string? predictionEditorError;
+    private AthleteHistoryDataset? predictionHistoryDataset;
+    private AthleteHistoryEntry? predictionHistory;
+    private string? loadedPredictionHistoryCompetitionId;
+    private string? loadedPredictionHistoryAthleteId;
+    private bool isPredictionHistoryLoading;
 
     private IReadOnlyList<PredictionQuestion> OrderedQuestions => Group.Questions
         .OrderBy(question => question.Order)
@@ -312,9 +350,23 @@ else
         }
     }
 
+    private IReadOnlyDictionary<int, AthletePlacementPick> PlacementsByPosition
+    {
+        get
+        {
+            if (ActiveQuestion is null)
+            {
+                return new Dictionary<int, AthletePlacementPick>();
+            }
+
+            return GetPlacements(ActiveQuestion.Id)
+                .ToDictionary(placement => placement.Position, EqualityComparer<int>.Default);
+        }
+    }
+
     private int? SelectedAthleteRank => GetSelectedAthleteRank(EffectiveSelectedAthleteId);
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
         if (!string.IsNullOrWhiteSpace(ActiveQuestionId) &&
             OrderedQuestions.Any(question => string.Equals(question.Id, ActiveQuestionId, StringComparison.OrdinalIgnoreCase)))
@@ -349,11 +401,22 @@ else
         {
             localSelectorSlotPosition = null;
         }
+
+        if (predictionEditorPosition is not null &&
+            (predictionEditorPosition < 1 ||
+             predictionEditorPosition > SlotsCount ||
+             GetSelectedAthlete(predictionEditorPosition.Value) is null))
+        {
+            ClosePredictionEditor();
+        }
+
+        await LoadPredictionHistoryAsync();
     }
 
     private async Task OnCategoryChanged(string questionId)
     {
         localActiveQuestionId = questionId;
+        ClosePredictionEditor();
         await SetSelectorSlotPosition(null);
 
         if (ActiveQuestionChanged.HasDelegate)
@@ -375,6 +438,11 @@ else
     private Task OnClearClicked(MouseEventArgs _)
     {
         return ClearCategory();
+    }
+
+    private Task OnSortByPredictedTotalClicked(MouseEventArgs _)
+    {
+        return SortByPredictedTotal();
     }
 
     private Task OnSummaryClicked(MouseEventArgs _)
@@ -487,6 +555,11 @@ else
             return Task.CompletedTask;
         }
 
+        if (predictionEditorPosition == position)
+        {
+            ClosePredictionEditor();
+        }
+
         var placements = GetPlacements(ActiveQuestion.Id)
             .Where(placement => placement.Position != position)
             .ToArray();
@@ -501,6 +574,7 @@ else
             return Task.CompletedTask;
         }
 
+        ClosePredictionEditor();
         return EmitAnswer([]);
     }
 
@@ -511,16 +585,40 @@ else
             return Task.CompletedTask;
         }
 
+        ClosePredictionEditor();
         var placements = EligibleAthletes
             .Take(SlotsCount)
             .Select((athlete, index) => new AthletePlacementPick
             {
                 Position = index + 1,
-                AthleteId = athlete.Id
+                AthleteId = athlete.Id,
+                PredictedSquatKg = GetPlacementByAthleteId(athlete.Id)?.PredictedSquatKg,
+                PredictedBenchKg = GetPlacementByAthleteId(athlete.Id)?.PredictedBenchKg,
+                PredictedDeadliftKg = GetPlacementByAthleteId(athlete.Id)?.PredictedDeadliftKg,
+                PredictedTotalKg = GetPlacementByAthleteId(athlete.Id)?.PredictedTotalKg
             })
             .ToArray();
 
         return EmitAnswer(placements);
+    }
+
+    private Task SortByPredictedTotal()
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        ClosePredictionEditor();
+        var sortedPlacements = GetPlacements(ActiveQuestion.Id)
+            .Select((placement, index) => new { Placement = placement, Index = index })
+            .OrderBy(item => item.Placement.PredictedTotalKg is null ? 1 : 0)
+            .ThenByDescending(item => item.Placement.PredictedTotalKg ?? 0m)
+            .ThenBy(item => item.Index)
+            .Select((item, index) => item.Placement with { Position = index + 1 })
+            .ToArray();
+
+        return EmitAnswer(sortedPlacements);
     }
 
     private Task MoveSlot(int fromPosition, int toPosition)
@@ -534,6 +632,11 @@ else
         if (sourceAthlete is null)
         {
             return Task.CompletedTask;
+        }
+
+        if (predictionEditorPosition == fromPosition || predictionEditorPosition == toPosition)
+        {
+            ClosePredictionEditor();
         }
 
         return SetAthleteAtPosition(toPosition, sourceAthlete.Id, fromPosition);
@@ -551,6 +654,11 @@ else
             return Task.CompletedTask;
         }
 
+        if (predictionEditorPosition == targetPosition || predictionEditorPosition == sourcePosition)
+        {
+            ClosePredictionEditor();
+        }
+
         var placements = GetPlacements(ActiveQuestion.Id).ToList();
         var targetAthleteId = placements.FirstOrDefault(placement => placement.Position == targetPosition)?.AthleteId;
 
@@ -565,7 +673,11 @@ else
         placements.Add(new AthletePlacementPick
         {
             Position = targetPosition,
-            AthleteId = athleteId
+            AthleteId = athleteId,
+            PredictedSquatKg = GetPlacementByAthleteId(athleteId)?.PredictedSquatKg,
+            PredictedBenchKg = GetPlacementByAthleteId(athleteId)?.PredictedBenchKg,
+            PredictedDeadliftKg = GetPlacementByAthleteId(athleteId)?.PredictedDeadliftKg,
+            PredictedTotalKg = GetPlacementByAthleteId(athleteId)?.PredictedTotalKg
         });
 
         if (sourcePosition is not null &&
@@ -575,11 +687,250 @@ else
             placements.Add(new AthletePlacementPick
             {
                 Position = sourcePosition.Value,
-                AthleteId = targetAthleteId
+                AthleteId = targetAthleteId,
+                PredictedSquatKg = GetPlacementByAthleteId(targetAthleteId)?.PredictedSquatKg,
+                PredictedBenchKg = GetPlacementByAthleteId(targetAthleteId)?.PredictedBenchKg,
+                PredictedDeadliftKg = GetPlacementByAthleteId(targetAthleteId)?.PredictedDeadliftKg,
+                PredictedTotalKg = GetPlacementByAthleteId(targetAthleteId)?.PredictedTotalKg
             });
         }
 
         return EmitAnswer(placements);
+    }
+
+    private async Task OpenPredictionEditor(int position)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null || GetSelectedAthlete(position) is null)
+        {
+            return;
+        }
+
+        predictionEditorPosition = predictionEditorPosition == position ? null : position;
+        predictionEditorError = null;
+
+        if (predictionEditorPosition is null)
+        {
+            return;
+        }
+
+        var placement = GetPlacements(ActiveQuestion.Id).FirstOrDefault(item => item.Position == position);
+        predictionEditorMode = placement?.PredictedSquatKg is not null ||
+                               placement?.PredictedBenchKg is not null ||
+                               placement?.PredictedDeadliftKg is not null
+            ? "lifts"
+            : "total";
+        predictionTotalInput = FormatInputValue(placement?.PredictedTotalKg);
+        predictionSquatInput = FormatInputValue(placement?.PredictedSquatKg);
+        predictionBenchInput = FormatInputValue(placement?.PredictedBenchKg);
+        predictionDeadliftInput = FormatInputValue(placement?.PredictedDeadliftKg);
+
+        await OnAthleteContextRequested(placement?.AthleteId ?? string.Empty);
+        await LoadPredictionHistoryAsync(forceReloadAthlete: true);
+    }
+
+    private Task OnPredictionEditorModeChanged(string mode)
+    {
+        predictionEditorMode = mode == "lifts" ? "lifts" : "total";
+        predictionEditorError = null;
+        return Task.CompletedTask;
+    }
+
+    private Task OnPredictionTotalInputChanged(string value)
+    {
+        predictionTotalInput = value;
+        predictionEditorError = null;
+        return Task.CompletedTask;
+    }
+
+    private Task OnPredictionSquatInputChanged(string value)
+    {
+        predictionSquatInput = value;
+        predictionEditorError = null;
+        return Task.CompletedTask;
+    }
+
+    private Task OnPredictionBenchInputChanged(string value)
+    {
+        predictionBenchInput = value;
+        predictionEditorError = null;
+        return Task.CompletedTask;
+    }
+
+    private Task OnPredictionDeadliftInputChanged(string value)
+    {
+        predictionDeadliftInput = value;
+        predictionEditorError = null;
+        return Task.CompletedTask;
+    }
+
+    private Task SavePredictionEditor()
+    {
+        if (!CanEditPredictions || ActiveQuestion is null || predictionEditorPosition is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var placement = GetPlacements(ActiveQuestion.Id)
+            .FirstOrDefault(item => item.Position == predictionEditorPosition.Value);
+
+        if (placement is null)
+        {
+            ClosePredictionEditor();
+            return Task.CompletedTask;
+        }
+
+        decimal? squat = null;
+        decimal? bench = null;
+        decimal? deadlift = null;
+        decimal? total;
+
+        if (predictionEditorMode == "lifts")
+        {
+            if (!TryReadOptionalPositiveDecimal(predictionSquatInput, out squat) ||
+                !TryReadOptionalPositiveDecimal(predictionBenchInput, out bench) ||
+                !TryReadOptionalPositiveDecimal(predictionDeadliftInput, out deadlift))
+            {
+                predictionEditorError = Localizer["Predictions.PredictionValueInvalid"];
+                return Task.CompletedTask;
+            }
+
+            total = squat is not null || bench is not null || deadlift is not null
+                ? (squat ?? 0m) + (bench ?? 0m) + (deadlift ?? 0m)
+                : null;
+        }
+        else
+        {
+            if (!TryReadOptionalPositiveDecimal(predictionTotalInput, out total))
+            {
+                predictionEditorError = Localizer["Predictions.PredictionValueInvalid"];
+                return Task.CompletedTask;
+            }
+        }
+
+        var placements = GetPlacements(ActiveQuestion.Id)
+            .Select(item => item.Position == placement.Position
+                ? item with
+                {
+                    PredictedSquatKg = squat,
+                    PredictedBenchKg = bench,
+                    PredictedDeadliftKg = deadlift,
+                    PredictedTotalKg = total
+                }
+                : item)
+            .ToArray();
+
+        ClosePredictionEditor();
+        return EmitAnswer(placements);
+    }
+
+    private Task CancelPredictionEditor()
+    {
+        ClosePredictionEditor();
+        return Task.CompletedTask;
+    }
+
+    private Task UseNominatedTotalForEditedAthlete()
+    {
+        var athlete = predictionEditorPosition is null ? null : GetSelectedAthlete(predictionEditorPosition.Value);
+        if (athlete?.SeedTotalKg is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        predictionEditorMode = "total";
+        predictionTotalInput = FormatInputValue(athlete.SeedTotalKg);
+        predictionEditorError = null;
+        return Task.CompletedTask;
+    }
+
+    private Task UseLastResultForEditedAthlete()
+    {
+        if (predictionHistory?.LastResult?.TotalKg is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        ApplyHistoryResult(
+            predictionHistory.LastResult.SquatKg,
+            predictionHistory.LastResult.BenchKg,
+            predictionHistory.LastResult.DeadliftKg,
+            predictionHistory.LastResult.TotalKg);
+
+        return Task.CompletedTask;
+    }
+
+    private Task UseBestResultForEditedAthlete()
+    {
+        if (predictionHistory?.Bests?.TotalKg is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        ApplyHistoryResult(
+            predictionHistory.Bests.SquatKg,
+            predictionHistory.Bests.BenchKg,
+            predictionHistory.Bests.DeadliftKg,
+            predictionHistory.Bests.TotalKg);
+
+        return Task.CompletedTask;
+    }
+
+    private void ApplyHistoryResult(decimal? squat, decimal? bench, decimal? deadlift, decimal? total)
+    {
+        if (squat is not null || bench is not null || deadlift is not null)
+        {
+            predictionEditorMode = "lifts";
+            predictionSquatInput = FormatInputValue(squat);
+            predictionBenchInput = FormatInputValue(bench);
+            predictionDeadliftInput = FormatInputValue(deadlift);
+        }
+        else
+        {
+            predictionEditorMode = "total";
+            predictionTotalInput = FormatInputValue(total);
+        }
+
+        predictionEditorError = null;
+    }
+
+    private void ClosePredictionEditor()
+    {
+        predictionEditorPosition = null;
+        predictionEditorError = null;
+    }
+
+    private async Task LoadPredictionHistoryAsync(bool forceReloadAthlete = false)
+    {
+        var athlete = predictionEditorPosition is null ? null : GetSelectedAthlete(predictionEditorPosition.Value);
+        if (athlete is null)
+        {
+            predictionHistory = null;
+            loadedPredictionHistoryAthleteId = null;
+            return;
+        }
+
+        if (!string.Equals(loadedPredictionHistoryCompetitionId, Competition.Id, StringComparison.OrdinalIgnoreCase))
+        {
+            isPredictionHistoryLoading = true;
+            predictionHistoryDataset = await AthleteHistoryService.GetCompetitionHistoryAsync(Competition.Id);
+            loadedPredictionHistoryCompetitionId = Competition.Id;
+            loadedPredictionHistoryAthleteId = null;
+            isPredictionHistoryLoading = false;
+        }
+
+        if (!forceReloadAthlete &&
+            string.Equals(loadedPredictionHistoryAthleteId, athlete.Id, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        isPredictionHistoryLoading = true;
+        predictionHistory = predictionHistoryDataset is not null &&
+                            predictionHistoryDataset.Athletes.TryGetValue(athlete.Id, out var history)
+            ? history
+            : null;
+        loadedPredictionHistoryAthleteId = athlete.Id;
+        isPredictionHistoryLoading = false;
     }
 
     private async Task SetSelectorSlotPosition(int? slotPosition)
@@ -657,6 +1008,44 @@ else
         }
 
         return Competition.Athletes.FirstOrDefault(athlete => athlete.Id == athleteId);
+    }
+
+    private AthletePlacementPick? GetPlacementByAthleteId(string? athleteId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteId) || ActiveQuestion is null)
+        {
+            return null;
+        }
+
+        return GetPlacements(ActiveQuestion.Id)
+            .FirstOrDefault(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static bool TryReadOptionalPositiveDecimal(string value, out decimal? parsed)
+    {
+        parsed = null;
+
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return true;
+        }
+
+        if ((!decimal.TryParse(value, NumberStyles.Number, CultureInfo.CurrentCulture, out var number) &&
+             !decimal.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out number)) ||
+            number <= 0 ||
+            number > 1500m)
+        {
+            return false;
+        }
+
+        parsed = number;
+        return true;
+    }
+
+    private static string FormatInputValue(decimal? value)
+    {
+        // HTML number inputs require invariant decimal separator (dot).
+        return value?.ToString("0.###", CultureInfo.InvariantCulture) ?? string.Empty;
     }
 
     private int? GetSelectedAthleteRank(string? athleteId)
