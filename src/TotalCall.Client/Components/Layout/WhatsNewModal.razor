@@ -1,0 +1,119 @@
+@inject CultureService Culture
+@inject IStringLocalizer<SharedResource> Localizer
+
+@if (IsOpen && Entries.Count > 0)
+{
+    <div class="whats-new-dialog-layer" role="presentation">
+        <button
+            type="button"
+            class="whats-new-dialog__backdrop"
+            aria-label="@Localizer["WhatsNew.Close"]"
+            @onclick="HandleCloseAsync"></button>
+
+        <div
+            class="whats-new-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="whats-new-dialog-title">
+            <header class="whats-new-dialog__head">
+                <div>
+                    <small class="whats-new-dialog__eyebrow">
+                        @(IsHistoryView ? Localizer["WhatsNew.Eyebrow.History"] : Localizer["WhatsNew.Eyebrow"])
+                    </small>
+                    <h2 id="whats-new-dialog-title">
+                        @(IsHistoryView ? Localizer["WhatsNew.Title.History"] : Localizer["WhatsNew.Title"])
+                    </h2>
+                </div>
+                <button
+                    type="button"
+                    class="whats-new-dialog__close"
+                    aria-label="@Localizer["WhatsNew.Close"]"
+                    @onclick="HandleCloseAsync">
+                    ×
+                </button>
+            </header>
+
+            <div class="whats-new-dialog__body">
+                @foreach (var entry in Entries)
+                {
+                    <section class="whats-new-release">
+                        <header class="whats-new-release__head">
+                            <h3>
+                                v@(entry.Version)
+                                @if (entry.Title is not null)
+                                {
+                                    var title = entry.Title.Resolve(Culture.CurrentCultureName);
+                                    if (!string.IsNullOrWhiteSpace(title))
+                                    {
+                                        <span class="whats-new-release__subtitle">— @title</span>
+                                    }
+                                }
+                            </h3>
+                            @if (entry.ReleasedAt is { } releasedAt)
+                            {
+                                <small>@releasedAt.ToString("d", System.Globalization.CultureInfo.CurrentUICulture)</small>
+                            }
+                        </header>
+
+                        <ul class="whats-new-release__items">
+                            @foreach (var item in entry.Items)
+                            {
+                                <li class="whats-new-release__item whats-new-release__item--@GetTypeModifier(item.ResolvedType)">
+                                    <span class="whats-new-release__badge">@GetTypeLabel(item.ResolvedType)</span>
+                                    <span class="whats-new-release__text">@item.Text.Resolve(Culture.CurrentCultureName)</span>
+                                </li>
+                            }
+                        </ul>
+                    </section>
+                }
+            </div>
+
+            <footer class="whats-new-dialog__footer">
+                <button
+                    type="button"
+                    class="whats-new-dialog__primary"
+                    @onclick="HandleCloseAsync">
+                    @(IsHistoryView ? Localizer["WhatsNew.Close"] : Localizer["WhatsNew.Acknowledge"])
+                </button>
+            </footer>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public bool IsHistoryView { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<ChangelogEntry> Entries { get; set; } = [];
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    private async Task HandleCloseAsync()
+    {
+        if (OnClose.HasDelegate)
+        {
+            await OnClose.InvokeAsync();
+        }
+    }
+
+    private string GetTypeModifier(ChangelogItemType type) => type switch
+    {
+        ChangelogItemType.Feature => "feature",
+        ChangelogItemType.Fix => "fix",
+        ChangelogItemType.Improvement => "improvement",
+        _ => "other"
+    };
+
+    private string GetTypeLabel(ChangelogItemType type) => type switch
+    {
+        ChangelogItemType.Feature => Localizer["WhatsNew.Type.Feature"],
+        ChangelogItemType.Fix => Localizer["WhatsNew.Type.Fix"],
+        ChangelogItemType.Improvement => Localizer["WhatsNew.Type.Improvement"],
+        _ => Localizer["WhatsNew.Type.Other"]
+    };
+}

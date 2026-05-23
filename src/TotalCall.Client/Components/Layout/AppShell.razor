@@ -1,6 +1,7 @@
 @implements IDisposable
 @inject CultureService Culture
 @inject AppInfoService AppInfo
+@inject ChangelogService Changelog
 @inject IStringLocalizer<SharedResource> Localizer
 
 <div class="app-shell app-shell-background">
@@ -13,19 +14,63 @@
             </article>
 
             <footer class="app-shell__meta">
-                <small>@Localizer["App.VersionLine", AppInfo.FullDisplayVersion]</small>
+                <button
+                    type="button"
+                    class="app-shell__version-btn"
+                    title="@Localizer["WhatsNew.HistoryButtonTitle"]"
+                    @onclick="HandleOpenHistoryAsync">
+                    @Localizer["App.VersionLine", AppInfo.FullDisplayVersion]
+                </button>
             </footer>
         </PageContainer>
     </main>
 </div>
 
+<WhatsNewModal
+    IsOpen="isWhatsNewOpen"
+    IsHistoryView="isHistoryView"
+    Entries="modalEntries"
+    OnClose="HandleWhatsNewCloseAsync" />
+
 @code {
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    private IReadOnlyList<ChangelogEntry> modalEntries = [];
+    private bool isWhatsNewOpen;
+    private bool isHistoryView;
+
     protected override void OnInitialized()
     {
         Culture.CultureChanged += OnCultureChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        try
+        {
+            var entries = await Changelog.GetUnseenEntriesAsync();
+
+            if (entries.Count == 0)
+            {
+                return;
+            }
+
+            modalEntries = entries;
+            isHistoryView = false;
+            isWhatsNewOpen = true;
+
+            await InvokeAsync(StateHasChanged);
+        }
+        catch
+        {
+            // Release notes are non-critical — never block the app on failure.
+        }
     }
 
     public void Dispose()
@@ -36,5 +81,31 @@
     private void OnCultureChanged()
     {
         _ = InvokeAsync(StateHasChanged);
+    }
+
+    private async Task HandleOpenHistoryAsync()
+    {
+        try
+        {
+            modalEntries = await Changelog.GetAllEntriesAsync();
+            isHistoryView = true;
+            isWhatsNewOpen = true;
+        }
+        catch
+        {
+            // Non-critical.
+        }
+    }
+
+    private async Task HandleWhatsNewCloseAsync()
+    {
+        isWhatsNewOpen = false;
+
+        if (!isHistoryView)
+        {
+            await Changelog.MarkCurrentVersionSeenAsync();
+        }
+
+        await InvokeAsync(StateHasChanged);
     }
 }

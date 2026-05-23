@@ -22,6 +22,7 @@ builder.Services.AddScoped<BrowserLocalStorage>();
 builder.Services.AddScoped<CultureService>();
 builder.Services.AddScoped<ThemeService>();
 builder.Services.AddSingleton<AppInfoService>();
+builder.Services.AddScoped<ChangelogService>();
 builder.Services.AddScoped<IPredictionStore, LocalStoragePredictionStore>();
 builder.Services.AddScoped<PredictionService>();
 builder.Services.AddScoped<IPredictionValidationService, PredictionValidationService>();
