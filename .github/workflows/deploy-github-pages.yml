@@ -1,0 +1,87 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Resolve app version
+        id: app_version
+        shell: bash
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = "tag" ] && [[ "${GITHUB_REF_NAME}" == v* ]]; then
+            APP_VERSION="${GITHUB_REF_NAME#v}"
+          else
+            SHORT_SHA="${GITHUB_SHA::7}"
+            APP_VERSION="0.1.0-dev+${SHORT_SHA}"
+          fi
+
+          echo "app_version=${APP_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Using AppVersion=${APP_VERSION}"
+
+      - name: Publish Blazor WebAssembly
+        run: >
+          dotnet publish src/TotalCall.Client/TotalCall.Client.csproj
+          -c Release
+          -p:InformationalVersion=${{ steps.app_version.outputs.app_version }}
+
+      - name: Prepare static site artifact
+        shell: bash
+        run: |
+          PUBLISH_DIR="src/TotalCall.Client/bin/Release/net10.0/publish/wwwroot"
+          BASE_PATH="${{ steps.pages.outputs.base_path }}"
+
+          if [ "${BASE_PATH}" = "/" ]; then
+            BASE_HREF="/"
+          else
+            BASE_HREF="${BASE_PATH}/"
+          fi
+
+          sed -i "s|<base href=\"/\" />|<base href=\"${BASE_HREF}\" />|g" "${PUBLISH_DIR}/index.html"
+          cp "${PUBLISH_DIR}/index.html" "${PUBLISH_DIR}/404.html"
+          touch "${PUBLISH_DIR}/.nojekyll"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: src/TotalCall.Client/bin/Release/net10.0/publish/wwwroot
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

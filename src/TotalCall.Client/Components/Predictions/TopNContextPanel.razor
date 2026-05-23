@@ -42,7 +42,7 @@
                         type="search"
                         @bind="selectorSearchTerm"
                         @bind:event="oninput"
-                        placeholder="@Localizer["Predictions.SelectorSearchPlaceholder"]" />
+                        placeholder="@SelectorSearchPlaceholder" />
                 </label>
 
                 <label class="prediction-context-panel__selector-sort">
@@ -470,16 +470,24 @@
     private bool CanDismissPanel => IsSelectorMode;
 
     private string DismissAriaLabel => IsSelectorMode
-        ? Localizer["Predictions.CloseSelector"]
+        ? SelectorAthleteSex == AthleteSex.Male
+            ? Localizer["Predictions.CloseSelectorMale"]
+            : Localizer["Predictions.CloseSelector"]
         : Localizer["Predictions.ClearAthleteContext"];
 
     private string PanelTitle => IsSelectorMode
-        ? Localizer["Predictions.SelectAthleteForSlot", SelectorSlotPosition!.Value]
+        ? SelectorAthleteSex == AthleteSex.Male
+            ? Localizer["Predictions.SelectAthleteForSlotMale", SelectorSlotPosition!.Value]
+            : Localizer["Predictions.SelectAthleteForSlot", SelectorSlotPosition!.Value]
         : SelectedAthlete is null
             ? Localizer["Predictions.CategoryContextPanel"]
             : SelectedAthlete.Sex == AthleteSex.Female
                 ? Localizer["Predictions.ContextPanelFemale"]
                 : Localizer["Predictions.ContextPanel"];
+
+    private string SelectorSearchPlaceholder => SelectorAthleteSex == AthleteSex.Male
+        ? Localizer["Predictions.SelectorSearchPlaceholderMale"]
+        : Localizer["Predictions.SelectorSearchPlaceholder"];
 
     private string? SelectedAthleteCategoryName => ResolveCategoryName(SelectedAthlete?.WeightCategoryId);
 
@@ -514,6 +522,33 @@
     private IReadOnlyList<AppTrendChartPoint> ContextTrendChartPoints => BuildTrendChartPoints(4);
 
     private IReadOnlyList<AppTrendChartPoint> HistoryTrendChartPoints => BuildTrendChartPoints(8);
+
+    private AthleteSex SelectorAthleteSex
+    {
+        get
+        {
+            if (ActiveQuestion is null)
+            {
+                return AthleteSex.Unspecified;
+            }
+
+            var athletePool = ActiveQuestion.AthleteIds.Count == 0
+                ? Competition.Athletes
+                : Competition.Athletes
+                    .Where(athlete => ActiveQuestion.AthleteIds.Contains(athlete.Id, StringComparer.OrdinalIgnoreCase))
+                    .ToArray();
+
+            var knownSexes = athletePool
+                .Select(athlete => athlete.Sex)
+                .Where(sex => sex != AthleteSex.Unspecified)
+                .Distinct()
+                .ToArray();
+
+            return knownSexes.Length == 1
+                ? knownSexes[0]
+                : AthleteSex.Unspecified;
+        }
+    }
 
     protected override async Task OnParametersSetAsync()
     {

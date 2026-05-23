@@ -12,7 +12,7 @@
     @if (Athlete is null)
     {
         <div class="ranking-slot__empty">
-            <strong>@Localizer["Predictions.PickAthleteCta"]</strong>
+            <strong>@EmptySlotCtaLabel</strong>
             <small>@Localizer["Predictions.DragOrPickHint"]</small>
         </div>
     }
@@ -207,10 +207,6 @@
                             <small>@FormatKgValue(PredictionHistory.Bests.TotalKg)</small>
                         </button>
                     }
-                    <button type="button" class="ranking-slot__prediction-quick-action ranking-slot__prediction-quick-action--history" @onclick="() => ShowHistoryRequested.InvokeAsync()">
-                        <AppIcon Name="AppIconName.ExternalLink" Size="15" />
-                        <span>@Localizer["Predictions.ShowHistory"]</span>
-                    </button>
                 </div>
 
                 @if (IsPredictionHistoryLoading)
@@ -331,7 +327,7 @@
     public EventCallback UseBestResultRequested { get; set; }
 
     [Parameter]
-    public EventCallback ShowHistoryRequested { get; set; }
+    public string? EmptySlotCta { get; set; }
 
     [Parameter]
     public EventCallback<int> RemoveRequested { get; set; }
@@ -353,6 +349,10 @@
 
     [Parameter]
     public EventCallback<string> AthleteContextRequested { get; set; }
+
+    private string EmptySlotCtaLabel => string.IsNullOrWhiteSpace(EmptySlotCta)
+        ? Localizer["Predictions.PickAthleteCta"]
+        : EmptySlotCta;
 
     private string CssClass => string.Join(
         " ",

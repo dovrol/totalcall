@@ -4,7 +4,9 @@ using TotalCall.Client.Storage;
 
 namespace TotalCall.Client.Application.Services;
 
-public sealed class PredictionService(IPredictionStore predictionStore)
+public sealed class PredictionService(
+    IPredictionStore predictionStore,
+    AppInfoService appInfo)
 {
     public async Task<PredictionSet> GetOrCreatePredictionSetAsync(
         Competition competition,
@@ -15,13 +17,15 @@ public sealed class PredictionService(IPredictionStore predictionStore)
         if (savedPredictions is not null &&
             savedPredictions.CompetitionConfigVersion == competition.ConfigVersion)
         {
-            return savedPredictions;
+            return EnsureStorageMetadata(savedPredictions);
         }
 
         return new PredictionSet
         {
             CompetitionId = competition.Id,
             CompetitionConfigVersion = competition.ConfigVersion,
+            AppVersion = appInfo.AppVersion,
+            SchemaVersion = PredictionSet.StorageSchemaVersion,
             SavedAt = DateTimeOffset.UtcNow
         };
     }
@@ -38,6 +42,18 @@ public sealed class PredictionService(IPredictionStore predictionStore)
         return predictionSet with
         {
             Answers = answers,
+            AppVersion = appInfo.AppVersion,
+            SchemaVersion = PredictionSet.StorageSchemaVersion,
+            SavedAt = DateTimeOffset.UtcNow
+        };
+    }
+
+    public PredictionSet CreateExportPayload(PredictionSet predictionSet)
+    {
+        return predictionSet with
+        {
+            AppVersion = appInfo.AppVersion,
+            SchemaVersion = PredictionSet.StorageSchemaVersion,
             SavedAt = DateTimeOffset.UtcNow
         };
     }
@@ -45,7 +61,20 @@ public sealed class PredictionService(IPredictionStore predictionStore)
     public Task SaveAsync(PredictionSet predictionSet, CancellationToken cancellationToken = default)
     {
         return predictionStore.SaveAsync(
-            predictionSet with { SavedAt = DateTimeOffset.UtcNow },
+            CreateExportPayload(predictionSet),
             cancellationToken);
+    }
+
+    private PredictionSet EnsureStorageMetadata(PredictionSet predictionSet)
+    {
+        return predictionSet with
+        {
+            AppVersion = string.IsNullOrWhiteSpace(predictionSet.AppVersion)
+                ? appInfo.AppVersion
+                : predictionSet.AppVersion,
+            SchemaVersion = predictionSet.SchemaVersion > 0
+                ? predictionSet.SchemaVersion
+                : PredictionSet.StorageSchemaVersion
+        };
     }
 }

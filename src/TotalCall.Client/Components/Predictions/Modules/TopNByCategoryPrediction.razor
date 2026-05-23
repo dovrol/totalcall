@@ -134,7 +134,7 @@ else
                         UseNominatedTotalRequested="UseNominatedTotalForEditedAthlete"
                         UseLastResultRequested="UseLastResultForEditedAthlete"
                         UseBestResultRequested="UseBestResultForEditedAthlete"
-                        ShowHistoryRequested="ShowHistoryForEditedAthlete"
+                        EmptySlotCta="@EmptySlotCta"
                         IsRemovePendingPosition="@pendingRemovalPosition"
                         RemoveRequested="RemoveFromPosition"
                         MoveUpRequested="MoveSlotUp"
@@ -378,6 +378,26 @@ else
 
     private int? SelectedAthleteRank => GetSelectedAthleteRank(EffectiveSelectedAthleteId);
 
+    private AthleteSex ActiveQuestionAthleteSex
+    {
+        get
+        {
+            var knownSexes = EligibleAthletes
+                .Select(athlete => athlete.Sex)
+                .Where(sex => sex != AthleteSex.Unspecified)
+                .Distinct()
+                .ToArray();
+
+            return knownSexes.Length == 1
+                ? knownSexes[0]
+                : AthleteSex.Unspecified;
+        }
+    }
+
+    private string EmptySlotCta => ActiveQuestionAthleteSex == AthleteSex.Male
+        ? Localizer["Predictions.PickAthleteCtaMale"]
+        : Localizer["Predictions.PickAthleteCta"];
+
     protected override async Task OnParametersSetAsync()
     {
         if (!string.IsNullOrWhiteSpace(ActiveQuestionId) &&
@@ -504,8 +524,10 @@ else
         var selectorSlot = EffectiveSelectorSlotPosition.Value;
         await SetAthleteAtPosition(selectorSlot, athleteId);
         await SetSelectorSlotPosition(null);
+        localSelectedAthleteId = null;
+        activeWorkspaceTab = TopNWorkspaceTab.Ranking;
         pendingRemovalPosition = null;
-        await OnAthleteContextRequested(athleteId);
+        await AthleteContextRequested.InvokeAsync(string.Empty);
     }
 
     private Task OnSelectorDismissRequested()
@@ -919,23 +941,6 @@ else
 
         pendingRemovalPosition = null;
         return Task.CompletedTask;
-    }
-
-    private async Task ShowHistoryForEditedAthlete()
-    {
-        if (predictionEditorPosition is null)
-        {
-            return;
-        }
-
-        var athlete = GetSelectedAthlete(predictionEditorPosition.Value);
-        if (athlete is null)
-        {
-            return;
-        }
-
-        activeWorkspaceTab = TopNWorkspaceTab.Context;
-        await OnAthleteContextRequested(athlete.Id);
     }
 
     private void ApplyHistoryResult(decimal? squat, decimal? bench, decimal? deadlift, decimal? total)

@@ -5,8 +5,11 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="App.Tagline" xml:space="preserve"><value>Typowania trójbojowe</value></data>
+  <data name="App.BrandSubtitle" xml:space="preserve"><value>Powerlifting Predictions</value></data>
   <data name="App.DataSource" xml:space="preserve"><value>Statyczne dane JSON</value></data>
   <data name="App.Storage" xml:space="preserve"><value>Zapis lokalny</value></data>
+  <data name="App.BetaBadge" xml:space="preserve"><value>BETA</value></data>
+  <data name="App.VersionLine" xml:space="preserve"><value>TotalCall Beta · {0}</value></data>
   <data name="Nav.Competitions" xml:space="preserve"><value>Zawody</value></data>
   <data name="Nav.Overview" xml:space="preserve"><value>Przegląd</value></data>
   <data name="Nav.Predictions" xml:space="preserve"><value>Typowania</value></data>
@@ -105,7 +108,7 @@
   <data name="Predictions.ReviewPicks" xml:space="preserve"><value>Sprawdź typy</value></data>
   <data name="Predictions.SavedLocally" xml:space="preserve"><value>Zapisano lokalnie.</value></data>
   <data name="Predictions.DraftSaved" xml:space="preserve"><value>Szkic zapisany lokalnie. Popraw błędy przed finalnym podglądem.</value></data>
-  <data name="Predictions.LocalNotice" xml:space="preserve"><value>MVP działa bez konta. Typy są dostępne tylko w tej przeglądarce.</value></data>
+  <data name="Predictions.LocalNotice" xml:space="preserve"><value>Wersja beta: typy zapisują się lokalnie tylko w tej przeglądarce.</value></data>
   <data name="Predictions.DropAthleteHere" xml:space="preserve"><value>Upuść zawodnika tutaj</value></data>
   <data name="Predictions.DragFromShortlist" xml:space="preserve"><value>Przeciągnij z listy po prawej</value></data>
   <data name="Predictions.RemoveAthlete" xml:space="preserve"><value>Usuń zawodnika</value></data>
@@ -135,6 +138,7 @@
   <data name="Predictions.CategoryContextPanel" xml:space="preserve"><value>Kontekst kategorii</value></data>
   <data name="Predictions.ClearAthleteContext" xml:space="preserve"><value>Wyczyść kontekst zawodnika</value></data>
   <data name="Predictions.CloseSelector" xml:space="preserve"><value>Zamknij wybór zawodniczki</value></data>
+  <data name="Predictions.CloseSelectorMale" xml:space="preserve"><value>Zamknij wybór zawodnika</value></data>
   <data name="Predictions.TopNominatedTotals" xml:space="preserve"><value>Top nominated totals</value></data>
   <data name="Predictions.CategoryContextHint" xml:space="preserve"><value>Wybierz zawodnika z rankingu lub listy, aby zobaczyć szczegóły i historię startów.</value></data>
   <data name="Predictions.NominatedTotal" xml:space="preserve"><value>Nominowany total</value></data>
@@ -186,6 +190,7 @@
   <data name="Predictions.YourRankingTopN" xml:space="preserve"><value>Twój ranking (Top {0})</value></data>
   <data name="Predictions.AvailableAthletes" xml:space="preserve"><value>Dostępni zawodnicy</value></data>
   <data name="Predictions.PickAthleteCta" xml:space="preserve"><value>+ Wybierz zawodniczkę</value></data>
+  <data name="Predictions.PickAthleteCtaMale" xml:space="preserve"><value>+ Wybierz zawodnika</value></data>
   <data name="Predictions.ChangeAthlete" xml:space="preserve"><value>Zmień</value></data>
   <data name="Predictions.EditPredictedTotal" xml:space="preserve"><value>Edytuj total / boje</value></data>
   <data name="Predictions.PredictionEditorTitle" xml:space="preserve"><value>Predicted total / boje</value></data>
@@ -205,6 +210,7 @@
   <data name="Predictions.PredictionValueInvalid" xml:space="preserve"><value>Wpisz dodatnią, sensowną wartość liczbową albo zostaw pole puste.</value></data>
   <data name="Predictions.NoAthleteHistoryInline" xml:space="preserve"><value>Brak historii dla tego zawodnika. Możesz nadal wpisać total ręcznie.</value></data>
   <data name="Predictions.SelectAthleteForSlot" xml:space="preserve"><value>Wybierz zawodniczkę na miejsce #{0}</value></data>
+  <data name="Predictions.SelectAthleteForSlotMale" xml:space="preserve"><value>Wybierz zawodnika na miejsce #{0}</value></data>
   <data name="Predictions.CurrentSlotAthlete" xml:space="preserve"><value>Aktualnie: {0}</value></data>
   <data name="Predictions.DragOrPickHint" xml:space="preserve"><value>Przeciągnij albo wybierz z listy</value></data>
   <data name="Predictions.MoveUp" xml:space="preserve"><value>Przesuń wyżej</value></data>
@@ -213,6 +219,7 @@
   <data name="Predictions.SearchAthlete" xml:space="preserve"><value>Szukaj zawodnika</value></data>
   <data name="Predictions.SearchAthletePlaceholder" xml:space="preserve"><value>Szukaj po nazwisku lub kraju...</value></data>
   <data name="Predictions.SelectorSearchPlaceholder" xml:space="preserve"><value>Szukaj zawodniczki, kraju...</value></data>
+  <data name="Predictions.SelectorSearchPlaceholderMale" xml:space="preserve"><value>Szukaj zawodnika, kraju...</value></data>
   <data name="Predictions.SortBy" xml:space="preserve"><value>Sortuj</value></data>
   <data name="Predictions.SortNominatedDesc" xml:space="preserve"><value>Nominated total (malejąco)</value></data>
   <data name="Predictions.SortNominatedAsc" xml:space="preserve"><value>Nominated total (rosnąco)</value></data>

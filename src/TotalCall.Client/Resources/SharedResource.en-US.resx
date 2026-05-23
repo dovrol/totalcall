@@ -5,8 +5,11 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="App.Tagline" xml:space="preserve"><value>Powerlifting picks</value></data>
+  <data name="App.BrandSubtitle" xml:space="preserve"><value>Powerlifting Predictions</value></data>
   <data name="App.DataSource" xml:space="preserve"><value>Static JSON data</value></data>
   <data name="App.Storage" xml:space="preserve"><value>Local storage</value></data>
+  <data name="App.BetaBadge" xml:space="preserve"><value>BETA</value></data>
+  <data name="App.VersionLine" xml:space="preserve"><value>TotalCall Beta · {0}</value></data>
   <data name="Nav.Competitions" xml:space="preserve"><value>Competitions</value></data>
   <data name="Nav.Overview" xml:space="preserve"><value>Overview</value></data>
   <data name="Nav.Predictions" xml:space="preserve"><value>Predictions</value></data>
@@ -105,7 +108,7 @@
   <data name="Predictions.ReviewPicks" xml:space="preserve"><value>Review picks</value></data>
   <data name="Predictions.SavedLocally" xml:space="preserve"><value>Saved locally.</value></data>
   <data name="Predictions.DraftSaved" xml:space="preserve"><value>Draft saved locally. Fix validation issues before final review.</value></data>
-  <data name="Predictions.LocalNotice" xml:space="preserve"><value>The MVP works without an account. Picks are available only in this browser.</value></data>
+  <data name="Predictions.LocalNotice" xml:space="preserve"><value>Beta build: picks are saved locally in this browser only.</value></data>
   <data name="Predictions.DropAthleteHere" xml:space="preserve"><value>Drop athlete here</value></data>
   <data name="Predictions.DragFromShortlist" xml:space="preserve"><value>Drag from shortlist</value></data>
   <data name="Predictions.RemoveAthlete" xml:space="preserve"><value>Remove athlete</value></data>
@@ -135,6 +138,7 @@
   <data name="Predictions.CategoryContextPanel" xml:space="preserve"><value>Category context</value></data>
   <data name="Predictions.ClearAthleteContext" xml:space="preserve"><value>Clear athlete context</value></data>
   <data name="Predictions.CloseSelector" xml:space="preserve"><value>Close athlete selector</value></data>
+  <data name="Predictions.CloseSelectorMale" xml:space="preserve"><value>Close athlete selector</value></data>
   <data name="Predictions.TopNominatedTotals" xml:space="preserve"><value>Top nominated totals</value></data>
   <data name="Predictions.CategoryContextHint" xml:space="preserve"><value>Select an athlete from ranking or shortlist to view detailed context and start history.</value></data>
   <data name="Predictions.NominatedTotal" xml:space="preserve"><value>Nominated total</value></data>
@@ -186,6 +190,7 @@
   <data name="Predictions.YourRankingTopN" xml:space="preserve"><value>Your ranking (Top {0})</value></data>
   <data name="Predictions.AvailableAthletes" xml:space="preserve"><value>Available athletes</value></data>
   <data name="Predictions.PickAthleteCta" xml:space="preserve"><value>+ Pick athlete</value></data>
+  <data name="Predictions.PickAthleteCtaMale" xml:space="preserve"><value>+ Pick athlete</value></data>
   <data name="Predictions.ChangeAthlete" xml:space="preserve"><value>Change</value></data>
   <data name="Predictions.EditPredictedTotal" xml:space="preserve"><value>Edit total / lifts</value></data>
   <data name="Predictions.PredictionEditorTitle" xml:space="preserve"><value>Predicted total / lifts</value></data>
@@ -205,6 +210,7 @@
   <data name="Predictions.PredictionValueInvalid" xml:space="preserve"><value>Enter a positive, realistic number or leave the field empty.</value></data>
   <data name="Predictions.NoAthleteHistoryInline" xml:space="preserve"><value>No history is available for this athlete. You can still enter a total manually.</value></data>
   <data name="Predictions.SelectAthleteForSlot" xml:space="preserve"><value>Pick athlete for slot #{0}</value></data>
+  <data name="Predictions.SelectAthleteForSlotMale" xml:space="preserve"><value>Pick athlete for slot #{0}</value></data>
   <data name="Predictions.CurrentSlotAthlete" xml:space="preserve"><value>Current pick: {0}</value></data>
   <data name="Predictions.DragOrPickHint" xml:space="preserve"><value>Drag or pick from the list</value></data>
   <data name="Predictions.MoveUp" xml:space="preserve"><value>Move up</value></data>
@@ -213,6 +219,7 @@
   <data name="Predictions.SearchAthlete" xml:space="preserve"><value>Search athlete</value></data>
   <data name="Predictions.SearchAthletePlaceholder" xml:space="preserve"><value>Search by name or country...</value></data>
   <data name="Predictions.SelectorSearchPlaceholder" xml:space="preserve"><value>Search athlete or country...</value></data>
+  <data name="Predictions.SelectorSearchPlaceholderMale" xml:space="preserve"><value>Search athlete or country...</value></data>
   <data name="Predictions.SortBy" xml:space="preserve"><value>Sort by</value></data>
   <data name="Predictions.SortNominatedDesc" xml:space="preserve"><value>Nominated total (high to low)</value></data>
   <data name="Predictions.SortNominatedAsc" xml:space="preserve"><value>Nominated total (low to high)</value></data>

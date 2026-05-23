@@ -33,7 +33,7 @@
                 UseNominatedTotalRequested="UseNominatedTotalRequested"
                 UseLastResultRequested="UseLastResultRequested"
                 UseBestResultRequested="UseBestResultRequested"
-                ShowHistoryRequested="ShowHistoryRequested"
+                EmptySlotCta="@EmptySlotCta"
                 IsRemovePending="@(IsRemovePendingPosition == position)"
                 RemoveRequested="RemoveRequested"
                 MoveUpRequested="MoveUpRequested"
@@ -131,7 +131,7 @@
     public EventCallback UseBestResultRequested { get; set; }
 
     [Parameter]
-    public EventCallback ShowHistoryRequested { get; set; }
+    public string? EmptySlotCta { get; set; }
 
     [Parameter]
     public int? IsRemovePendingPosition { get; set; }

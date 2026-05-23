@@ -153,15 +153,6 @@
         }
     </aside>
 
-    <PredictionNavigationBar
-        HasPrevious="@HasPreviousGroup"
-        HasNext="@HasNextGroup"
-        CanEditPredictions="@CanEditPredictions"
-        ActiveModuleValidation="@ActiveModuleValidation"
-        PreviousRequested="@GoPrevious"
-        NextRequested="@GoNextOrReview"
-        ReviewRequested="@ReviewRequested" />
-
 </section>
 
 @code {
@@ -199,16 +190,6 @@
     [Parameter]
     public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
 
-    [Parameter]
-    public EventCallback ReviewRequested { get; set; }
-
-    private int ActiveGroupIndex => GetGroupIndex(ActiveGroup.Id);
-
-    private bool HasPreviousGroup => ActiveGroupIndex > 0;
-
-    private bool HasNextGroup => ActiveGroupIndex >= 0 && ActiveGroupIndex < Groups.Count - 1;
-
-    private bool HasMultipleGroups => Groups.Count > 1;
     private string? activeTopNQuestionId;
     private string? selectedTopNAthleteId;
     private int? topNSelectorSlotPosition;
@@ -298,46 +279,6 @@
         }
     }
 
-    private int GetGroupIndex(string groupId)
-    {
-        for (var index = 0; index < Groups.Count; index++)
-        {
-            if (Groups[index].Id == groupId)
-            {
-                return index;
-            }
-        }
-
-        return -1;
-    }
-
-    private async Task GoPrevious()
-    {
-        if (!HasPreviousGroup)
-        {
-            return;
-        }
-
-        selectedTopNAthleteId = null;
-        topNSelectorSlotPosition = null;
-        isSummaryDrawerOpen = false;
-        await GroupChanged.InvokeAsync(Groups[ActiveGroupIndex - 1].Id);
-    }
-
-    private async Task GoNextOrReview()
-    {
-        if (HasNextGroup)
-        {
-            selectedTopNAthleteId = null;
-            topNSelectorSlotPosition = null;
-            isSummaryDrawerOpen = false;
-            await GroupChanged.InvokeAsync(Groups[ActiveGroupIndex + 1].Id);
-            return;
-        }
-
-        await ReviewRequested.InvokeAsync();
-    }
-
     private Task OpenSummaryDrawer()
     {
         isSummaryDrawerOpen = true;
@@ -391,10 +332,12 @@
         if (string.IsNullOrWhiteSpace(athleteId))
         {
             selectedTopNAthleteId = null;
+            isSummaryDrawerOpen = false;
             return Task.CompletedTask;
         }
 
         selectedTopNAthleteId = athleteId;
+        isSummaryDrawerOpen = true;
         return Task.CompletedTask;
     }
 
@@ -440,8 +383,9 @@
             topNSelectorSlotPosition.Value,
             athleteId);
 
-        selectedTopNAthleteId = athleteId;
+        selectedTopNAthleteId = null;
         topNSelectorSlotPosition = null;
+        isSummaryDrawerOpen = false;
 
         return AnswerChanged.InvokeAsync(new PredictionAnswer
         {

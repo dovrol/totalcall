@@ -1,5 +1,7 @@
 @implements IDisposable
 @inject CultureService Culture
+@inject AppInfoService AppInfo
+@inject IStringLocalizer<SharedResource> Localizer
 
 <div class="app-shell app-shell-background">
     <AppSidebar />
@@ -9,6 +11,10 @@
             <article class="app-shell__article" @key="Culture.CurrentCultureName">
                 @ChildContent
             </article>
+
+            <footer class="app-shell__meta">
+                <small>@Localizer["App.VersionLine", AppInfo.FullDisplayVersion]</small>
+            </footer>
         </PageContainer>
     </main>
 </div>

@@ -1,16 +1,21 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
 <a href="" class="@LinkClass" aria-label="TotalCall">
+    <span class="@MarkWrapClass" aria-hidden="true">
+        <img class="app-logo__mark app-logo__mark--dark" src="assets/logo/totalcall-mark.svg" alt="" />
+        <img class="app-logo__mark app-logo__mark--light" src="assets/logo/totalcall-mark-light.svg" alt="" />
+    </span>
+
     @if (ShowText)
     {
-        <span class="app-logo__full-wrap">
-            <img class="app-logo__full app-logo__full--dark" src="assets/logo/totalcall-logo-horizontal.svg" alt="TotalCall" />
-            <img class="app-logo__full app-logo__full--light" src="assets/logo/totalcall-logo-horizontal-light.svg" alt="TotalCall" />
-        </span>
-    }
-    else
-    {
-        <span class="@MarkWrapClass" aria-hidden="true">
-            <img class="app-logo__mark app-logo__mark--dark" src="assets/logo/totalcall-mark.svg" alt="" />
-            <img class="app-logo__mark app-logo__mark--light" src="assets/logo/totalcall-mark-light.svg" alt="" />
+        <span class="app-logo__copy">
+            <span class="app-logo__title-row">
+                <span class="app-logo__title">
+                    <span class="app-logo__title-total">Total</span><span class="app-logo__title-call">Call</span>
+                </span>
+                <span class="app-logo__beta">@Localizer["App.BetaBadge"]</span>
+            </span>
+            <span class="app-logo__subtitle">@Localizer["App.BrandSubtitle"]</span>
         </span>
     }
 </a>

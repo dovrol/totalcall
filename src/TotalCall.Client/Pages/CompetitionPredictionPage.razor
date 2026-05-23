@@ -3,7 +3,6 @@
 @inject PredictionService PredictionService
 @inject IPredictionValidationService PredictionValidationService
 @inject IStringLocalizer<SharedResource> Localizer
-@inject NavigationManager Navigation
 
 <PageTitle>@(competition is null ? Localizer["Predictions.PageTitle"] : $"{competition.Name} - {Localizer["Predictions.PageTitle"]}")</PageTitle>
 
@@ -36,8 +35,7 @@ else
         SaveStatus="@saveStatus"
         LastSavedAt="@predictionSet.SavedAt"
         GroupChanged="@SelectGroup"
-        AnswerChanged="@OnAnswerChanged"
-        ReviewRequested="@GoToCompetition" />
+        AnswerChanged="@OnAnswerChanged" />
 }
 
 @code {
@@ -158,13 +156,4 @@ else
         return Task.CompletedTask;
     }
 
-    private Task GoToCompetition()
-    {
-        if (competition is not null)
-        {
-            Navigation.NavigateTo($"competitions/{competition.Slug}");
-        }
-
-        return Task.CompletedTask;
-    }
 }
