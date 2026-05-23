@@ -10,6 +10,17 @@
   <data name="App.Storage" xml:space="preserve"><value>Local storage</value></data>
   <data name="App.BetaBadge" xml:space="preserve"><value>BETA</value></data>
   <data name="App.VersionLine" xml:space="preserve"><value>TotalCall Beta · {0}</value></data>
+  <data name="WhatsNew.Eyebrow" xml:space="preserve"><value>NEW RELEASE</value></data>
+  <data name="WhatsNew.Eyebrow.History" xml:space="preserve"><value>RELEASE HISTORY</value></data>
+  <data name="WhatsNew.Title" xml:space="preserve"><value>What's new in TotalCall</value></data>
+  <data name="WhatsNew.Title.History" xml:space="preserve"><value>Changelog</value></data>
+  <data name="WhatsNew.HistoryButtonTitle" xml:space="preserve"><value>View release history</value></data>
+  <data name="WhatsNew.Close" xml:space="preserve"><value>Close</value></data>
+  <data name="WhatsNew.Acknowledge" xml:space="preserve"><value>Got it</value></data>
+  <data name="WhatsNew.Type.Feature" xml:space="preserve"><value>New</value></data>
+  <data name="WhatsNew.Type.Fix" xml:space="preserve"><value>Fix</value></data>
+  <data name="WhatsNew.Type.Improvement" xml:space="preserve"><value>Better</value></data>
+  <data name="WhatsNew.Type.Other" xml:space="preserve"><value>Change</value></data>
   <data name="Nav.Competitions" xml:space="preserve"><value>Competitions</value></data>
   <data name="Nav.Overview" xml:space="preserve"><value>Overview</value></data>
   <data name="Nav.Predictions" xml:space="preserve"><value>Predictions</value></data>

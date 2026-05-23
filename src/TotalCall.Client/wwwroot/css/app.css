@@ -252,6 +252,24 @@ textarea {
     font-size: 0.72rem;
 }
 
+.app-shell__version-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 2px;
+    transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.app-shell__version-btn:hover {
+    color: var(--text-secondary);
+    text-decoration-color: currentColor;
+}
+
 .page-container {
     width: 100%;
     max-width: 112rem;
@@ -6323,3 +6341,206 @@ textarea {
         column-gap: 1.45rem;
     }
 }
+
+/* What's New modal */
+
+.whats-new-dialog-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: grid;
+    place-items: center;
+    padding: 1.1rem;
+    overscroll-behavior: contain;
+}
+
+.whats-new-dialog__backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border: 0;
+    background: rgb(3 10 21 / 0.76);
+    backdrop-filter: blur(3px);
+    cursor: pointer;
+}
+
+.whats-new-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(40rem, 100%);
+    max-height: min(86vh, 48rem);
+    overflow: auto;
+    border: 1px solid color-mix(in srgb, var(--border-strong) 90%, transparent);
+    border-radius: var(--radius-md);
+    background:
+        linear-gradient(
+            160deg,
+            color-mix(in srgb, var(--accent) 10%, var(--bg-surface)) 0%,
+            color-mix(in srgb, var(--bg-surface) 94%, transparent) 60%
+        ),
+        color-mix(in srgb, var(--bg-surface) 94%, transparent);
+    padding: 1.1rem 1.2rem 1.2rem;
+    display: grid;
+    gap: 1rem;
+    box-shadow: 0 24px 72px rgb(0 0 0 / 0.46);
+}
+
+.whats-new-dialog__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.6rem;
+    align-items: flex-start;
+}
+
+.whats-new-dialog__eyebrow {
+    display: block;
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.whats-new-dialog__head h2 {
+    margin: 0.25rem 0 0;
+    font-size: 1.4rem;
+    line-height: 1.2;
+}
+
+.whats-new-dialog__close {
+    min-height: 2rem;
+    min-width: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 0.56rem;
+    background: color-mix(in srgb, var(--bg-surface) 90%, transparent);
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.whats-new-dialog__close:hover {
+    color: var(--text-primary);
+    border-color: var(--border-strong);
+}
+
+.whats-new-dialog__body {
+    display: grid;
+    gap: 1rem;
+}
+
+.whats-new-release {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--bg-surface-muted) 88%, transparent);
+    padding: 0.9rem 0.95rem;
+    display: grid;
+    gap: 0.6rem;
+}
+
+.whats-new-release__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.whats-new-release__head h3 {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 700;
+}
+
+.whats-new-release__subtitle {
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-left: 0.25rem;
+}
+
+.whats-new-release__head small {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+}
+
+.whats-new-release__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+}
+
+.whats-new-release__item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.55rem;
+    align-items: start;
+    font-size: 0.92rem;
+    line-height: 1.4;
+}
+
+.whats-new-release__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3.4rem;
+    padding: 0.16rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg-surface) 86%, transparent);
+    color: var(--text-secondary);
+    line-height: 1;
+}
+
+.whats-new-release__item--feature .whats-new-release__badge {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 56%, transparent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.whats-new-release__item--fix .whats-new-release__badge {
+    color: #f5a524;
+    border-color: color-mix(in srgb, #f5a524 56%, transparent);
+    background: color-mix(in srgb, #f5a524 12%, transparent);
+}
+
+.whats-new-release__item--improvement .whats-new-release__badge {
+    color: #4ea8de;
+    border-color: color-mix(in srgb, #4ea8de 56%, transparent);
+    background: color-mix(in srgb, #4ea8de 12%, transparent);
+}
+
+.whats-new-release__text {
+    color: var(--text-primary);
+}
+
+.whats-new-dialog__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.whats-new-dialog__primary {
+    min-height: 2.4rem;
+    padding: 0 1.2rem;
+    border-radius: 0.6rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 72%, transparent);
+    background: var(--accent);
+    color: var(--accent-contrast, #fff);
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+}
+
+.whats-new-dialog__primary:hover {
+    filter: brightness(1.05);
+}
+

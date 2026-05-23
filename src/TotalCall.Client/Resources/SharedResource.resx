@@ -10,6 +10,17 @@
   <data name="App.Storage" xml:space="preserve"><value>Zapis lokalny</value></data>
   <data name="App.BetaBadge" xml:space="preserve"><value>BETA</value></data>
   <data name="App.VersionLine" xml:space="preserve"><value>TotalCall Beta · {0}</value></data>
+  <data name="WhatsNew.Eyebrow" xml:space="preserve"><value>NOWA WERSJA</value></data>
+  <data name="WhatsNew.Eyebrow.History" xml:space="preserve"><value>HISTORIA WERSJI</value></data>
+  <data name="WhatsNew.Title" xml:space="preserve"><value>Co nowego w TotalCall</value></data>
+  <data name="WhatsNew.Title.History" xml:space="preserve"><value>Historia zmian</value></data>
+  <data name="WhatsNew.HistoryButtonTitle" xml:space="preserve"><value>Zobacz historię wersji</value></data>
+  <data name="WhatsNew.Close" xml:space="preserve"><value>Zamknij</value></data>
+  <data name="WhatsNew.Acknowledge" xml:space="preserve"><value>Świetnie, rozumiem</value></data>
+  <data name="WhatsNew.Type.Feature" xml:space="preserve"><value>Nowe</value></data>
+  <data name="WhatsNew.Type.Fix" xml:space="preserve"><value>Fix</value></data>
+  <data name="WhatsNew.Type.Improvement" xml:space="preserve"><value>Lepsze</value></data>
+  <data name="WhatsNew.Type.Other" xml:space="preserve"><value>Zmiana</value></data>
   <data name="Nav.Competitions" xml:space="preserve"><value>Zawody</value></data>
   <data name="Nav.Overview" xml:space="preserve"><value>Przegląd</value></data>
   <data name="Nav.Predictions" xml:space="preserve"><value>Typowania</value></data>
