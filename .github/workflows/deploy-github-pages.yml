@@ -2,9 +2,6 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-      - master
     tags:
       - "v*"
   workflow_dispatch:
@@ -16,11 +13,12 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -52,12 +50,13 @@ jobs:
         run: >
           dotnet publish src/TotalCall.Client/TotalCall.Client.csproj
           -c Release
+          -o release
           -p:InformationalVersion=${{ steps.app_version.outputs.app_version }}
 
       - name: Prepare static site artifact
         shell: bash
         run: |
-          PUBLISH_DIR="src/TotalCall.Client/bin/Release/net10.0/publish/wwwroot"
+          PUBLISH_DIR="release/wwwroot"
           BASE_PATH="${{ steps.pages.outputs.base_path }}"
 
           if [ "${BASE_PATH}" = "/" ]; then
@@ -73,14 +72,16 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: src/TotalCall.Client/bin/Release/net10.0/publish/wwwroot
+          path: release/wwwroot
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
