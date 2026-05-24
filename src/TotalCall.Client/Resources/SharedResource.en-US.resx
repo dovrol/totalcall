@@ -322,4 +322,17 @@
   <data name="Data.Option.worlds-2026.most-medals-country.gbr.Label" xml:space="preserve"><value>Great Britain</value></data>
   <data name="Data.Option.worlds-2026.most-medals-country.other.Label" xml:space="preserve"><value>Other</value></data>
   <data name="Data.Question.worlds-2026.any-perfect-day.Title" xml:space="preserve"><value>Will any lifter go 9/9 and win gold?</value></data>
+  <data name="Privacy.FooterLink" xml:space="preserve"><value>Privacy &amp; data</value></data>
+  <data name="Privacy.Title" xml:space="preserve"><value>Privacy &amp; data</value></data>
+  <data name="Privacy.Close" xml:space="preserve"><value>Close</value></data>
+  <data name="Privacy.LocalStorage.Title" xml:space="preserve"><value>Local storage</value></data>
+  <data name="Privacy.LocalStorage.Body" xml:space="preserve"><value>Your picks are stored locally in this browser using localStorage. We do not send them to a server or store them in the cloud. If you clear your browser data or switch devices, your picks may be lost.</value></data>
+  <data name="Privacy.Export.Title" xml:space="preserve"><value>Export</value></data>
+  <data name="Privacy.Export.Body" xml:space="preserve"><value>You can export your picks to a JSON file to keep a copy or send them to a competition organiser or podcast.</value></data>
+  <data name="Privacy.Analytics.Title" xml:space="preserve"><value>Visit statistics</value></data>
+  <data name="Privacy.Analytics.Body" xml:space="preserve"><value>We use privacy-friendly visit statistics to understand how many people use the app. We do not send prediction content or athlete names to analytics.</value></data>
+  <data name="Privacy.Analytics.Provider" xml:space="preserve"><value>Visit statistics: Cloudflare Web Analytics, no cookies.</value></data>
+  <data name="Privacy.Beta.Title" xml:space="preserve"><value>Beta version</value></data>
+  <data name="Privacy.Beta.Body" xml:space="preserve"><value>This is a beta version of the app. Features and data format may change, so it is worth exporting your picks before major updates.</value></data>
+  <data name="Privacy.Footer.Short" xml:space="preserve"><value>Picks are stored locally in this browser. Analytics without prediction content.</value></data>
 </root>

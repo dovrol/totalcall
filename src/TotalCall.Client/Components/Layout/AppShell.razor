@@ -14,13 +14,22 @@
             </article>
 
             <footer class="app-shell__meta">
-                <button
-                    type="button"
-                    class="app-shell__version-btn"
-                    title="@Localizer["WhatsNew.HistoryButtonTitle"]"
-                    @onclick="HandleOpenHistoryAsync">
-                    @Localizer["App.VersionLine", AppInfo.FullDisplayVersion]
-                </button>
+                <div class="app-shell__meta-row">
+                    <button
+                        type="button"
+                        class="app-shell__version-btn"
+                        title="@Localizer["WhatsNew.HistoryButtonTitle"]"
+                        @onclick="HandleOpenHistoryAsync">
+                        @Localizer["App.VersionLine", AppInfo.FullDisplayVersion]
+                    </button>
+                    <span class="app-shell__meta-sep" aria-hidden="true">·</span>
+                    <button
+                        type="button"
+                        class="app-shell__version-btn"
+                        @onclick="HandleOpenPrivacy">
+                        @Localizer["Privacy.FooterLink"]
+                    </button>
+                </div>
             </footer>
         </PageContainer>
     </main>
@@ -32,6 +41,10 @@
     Entries="modalEntries"
     OnClose="HandleWhatsNewCloseAsync" />
 
+<PrivacyInfoModal
+    IsOpen="isPrivacyOpen"
+    OnClose="HandlePrivacyCloseAsync" />
+
 @code {
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -39,6 +52,7 @@
     private IReadOnlyList<ChangelogEntry> modalEntries = [];
     private bool isWhatsNewOpen;
     private bool isHistoryView;
+    private bool isPrivacyOpen;
 
     protected override void OnInitialized()
     {
@@ -106,6 +120,17 @@
             await Changelog.MarkCurrentVersionSeenAsync();
         }
 
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void HandleOpenPrivacy()
+    {
+        isPrivacyOpen = true;
+    }
+
+    private async Task HandlePrivacyCloseAsync()
+    {
+        isPrivacyOpen = false;
         await InvokeAsync(StateHasChanged);
     }
 }

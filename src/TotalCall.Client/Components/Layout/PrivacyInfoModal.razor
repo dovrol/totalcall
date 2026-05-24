@@ -1,0 +1,74 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+@if (IsOpen)
+{
+    <div class="privacy-dialog-layer" role="presentation">
+        <button
+            type="button"
+            class="privacy-dialog__backdrop"
+            aria-label="@Localizer["Privacy.Close"]"
+            @onclick="HandleClose"></button>
+
+        <div
+            class="privacy-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="privacy-dialog-title">
+            <header class="privacy-dialog__head">
+                <h2 id="privacy-dialog-title">@Localizer["Privacy.Title"]</h2>
+                <button
+                    type="button"
+                    class="privacy-dialog__close"
+                    aria-label="@Localizer["Privacy.Close"]"
+                    @onclick="HandleClose">&#xD7;</button>
+            </header>
+
+            <div class="privacy-dialog__body">
+                <section class="privacy-section">
+                    <h3 class="privacy-section__title">@Localizer["Privacy.LocalStorage.Title"]</h3>
+                    <p class="privacy-section__body">@Localizer["Privacy.LocalStorage.Body"]</p>
+                </section>
+
+                <section class="privacy-section">
+                    <h3 class="privacy-section__title">@Localizer["Privacy.Export.Title"]</h3>
+                    <p class="privacy-section__body">@Localizer["Privacy.Export.Body"]</p>
+                </section>
+
+                <section class="privacy-section">
+                    <h3 class="privacy-section__title">@Localizer["Privacy.Analytics.Title"]</h3>
+                    <p class="privacy-section__body">@Localizer["Privacy.Analytics.Body"]</p>
+                    <p class="privacy-section__provider">@Localizer["Privacy.Analytics.Provider"]</p>
+                </section>
+
+                <section class="privacy-section">
+                    <h3 class="privacy-section__title">@Localizer["Privacy.Beta.Title"]</h3>
+                    <p class="privacy-section__body">@Localizer["Privacy.Beta.Body"]</p>
+                </section>
+            </div>
+
+            <footer class="privacy-dialog__footer">
+                <small class="privacy-dialog__note">@Localizer["Privacy.Footer.Short"]</small>
+                <button
+                    type="button"
+                    class="privacy-dialog__close-btn"
+                    @onclick="HandleClose">@Localizer["Privacy.Close"]</button>
+            </footer>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    private async Task HandleClose()
+    {
+        if (OnClose.HasDelegate)
+        {
+            await OnClose.InvokeAsync();
+        }
+    }
+}

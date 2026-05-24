@@ -69,6 +69,15 @@ jobs:
           cp "${PUBLISH_DIR}/index.html" "${PUBLISH_DIR}/404.html"
           touch "${PUBLISH_DIR}/.nojekyll"
 
+      - name: Inject analytics snippet
+        shell: bash
+        env:
+          ANALYTICS_SNIPPET: ${{ secrets.ANALYTICS_SNIPPET }}
+        run: |
+          perl -i -pe 's/<!-- ANALYTICS_SNIPPET -->/$ENV{ANALYTICS_SNIPPET}/g' release/wwwroot/index.html
+          cp release/wwwroot/index.html release/wwwroot/404.html
+          [ -n "$ANALYTICS_SNIPPET" ] && echo "Analytics snippet injected." || echo "No analytics snippet configured, placeholder removed."
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -322,4 +322,17 @@
   <data name="Data.Option.worlds-2026.most-medals-country.gbr.Label" xml:space="preserve"><value>Wielka Brytania</value></data>
   <data name="Data.Option.worlds-2026.most-medals-country.other.Label" xml:space="preserve"><value>Inny kraj</value></data>
   <data name="Data.Question.worlds-2026.any-perfect-day.Title" xml:space="preserve"><value>Czy ktoś zrobi 9/9 i wygra złoto?</value></data>
+  <data name="Privacy.FooterLink" xml:space="preserve"><value>Prywatność i dane</value></data>
+  <data name="Privacy.Title" xml:space="preserve"><value>Prywatność i dane</value></data>
+  <data name="Privacy.Close" xml:space="preserve"><value>Zamknij</value></data>
+  <data name="Privacy.LocalStorage.Title" xml:space="preserve"><value>Zapis lokalny</value></data>
+  <data name="Privacy.LocalStorage.Body" xml:space="preserve"><value>Twoje typy są zapisywane lokalnie w tej przeglądarce przy użyciu localStorage. Nie wysyłamy ich na serwer i nie zapisujemy ich w chmurze. Jeśli wyczyścisz dane przeglądarki albo zmienisz urządzenie, typy mogą zniknąć.</value></data>
+  <data name="Privacy.Export.Title" xml:space="preserve"><value>Eksport</value></data>
+  <data name="Privacy.Export.Body" xml:space="preserve"><value>Możesz wyeksportować swoje typy do pliku JSON, żeby zachować kopię albo wysłać je organizatorowi/podcastowi.</value></data>
+  <data name="Privacy.Analytics.Title" xml:space="preserve"><value>Statystyki odwiedzin</value></data>
+  <data name="Privacy.Analytics.Body" xml:space="preserve"><value>Używamy prywatnościowych statystyk odwiedzin, żeby wiedzieć, ile osób korzysta z aplikacji. Nie wysyłamy do analytics treści Twoich predykcji ani nazw wybranych zawodników.</value></data>
+  <data name="Privacy.Analytics.Provider" xml:space="preserve"><value>Statystyki odwiedzin: Cloudflare Web Analytics, bez cookies.</value></data>
+  <data name="Privacy.Beta.Title" xml:space="preserve"><value>Wersja beta</value></data>
+  <data name="Privacy.Beta.Body" xml:space="preserve"><value>To jest wersja beta aplikacji. Funkcje i format danych mogą się zmieniać, dlatego warto eksportować swoje typy przed większymi zmianami.</value></data>
+  <data name="Privacy.Footer.Short" xml:space="preserve"><value>Typy zapisują się lokalnie w tej przeglądarce. Analytics bez treści predykcji.</value></data>
 </root>
