@@ -1,48 +1,9 @@
-﻿@page "/"
+@page "/"
+@implements IDisposable
 @inject CompetitionService CompetitionService
 @inject IStringLocalizer<SharedResource> Localizer
 
 <PageTitle>TotalCall</PageTitle>
-
-<section class="home-hero-panel">
-    <div class="home-hero-panel__content">
-        <p class="home-hero-panel__eyebrow">@Localizer["Home.Eyebrow"]</p>
-        <h1 class="home-hero-panel__title">
-            @Localizer["Home.TitleLine1"]
-            <span>@Localizer["Home.TitleLine2"]</span>
-        </h1>
-        <p class="home-hero-panel__description">
-            @Localizer["Home.Description"]
-        </p>
-
-        @if (PrimaryCompetition is not null)
-        {
-            <AppButton Href="@($"competitions/{PrimaryCompetition.Slug}/predictions")" Size="Lg" AdditionalClass="home-hero-panel__cta">
-                <span class="home-hero-panel__cta-content">
-                    <span>@Localizer["Home.PrimaryCta"]</span>
-                    <AppIcon Name="AppIconName.ChevronRight" Size="16" />
-                </span>
-            </AppButton>
-        }
-
-        <div class="home-hero-panel__points">
-            <span>
-                <AppIcon Name="AppIconName.Target" Size="16" />
-                <span>@Localizer["Home.PointNoOdds"]</span>
-            </span>
-            <span>
-                <AppIcon Name="AppIconName.Lock" Size="16" />
-                <span>@Localizer["Home.PointLocal"]</span>
-            </span>
-            <span>
-                <AppIcon Name="AppIconName.Users" Size="16" />
-                <span>@Localizer["Home.PointSkills"]</span>
-            </span>
-        </div>
-    </div>
-
-    <div class="home-hero-panel__media" aria-hidden="true"></div>
-</section>
 
 @if (competitions is null)
 {
@@ -54,28 +15,226 @@ else if (competitions.Count == 0)
 }
 else
 {
-    <AppSection
-        Id="competitions"
-        Title="@Localizer["Home.CompetitionsLabel"]"
-        Description="@Localizer["Home.CompetitionsHint"]"
-        AdditionalClass="home-competitions-section">
-        <div class="competition-grid">
-            @foreach (var competition in competitions)
+    <div class="scoreboard-page">
+        @if (UpNext is not null)
+        {
+            <ScoreboardMarquee Competition="UpNext" />
+        }
+
+        <section class="sb-section">
+            <div class="sb-tools">
+                <label class="search-input">
+                    <AppIcon Name="AppIconName.Search" Size="16" />
+                    <input value="@search"
+                           @oninput="OnSearchChanged"
+                           placeholder="@Localizer["Scoreboard.SearchPlaceholder"]" />
+                    @if (!string.IsNullOrEmpty(search))
+                    {
+                        <button type="button" class="search-input__clear" @onclick="ClearSearch">
+                            <AppIcon Name="AppIconName.X" Size="14" />
+                        </button>
+                    }
+                </label>
+                <div class="filter-chips">
+                    @foreach (var chip in StatusChips)
+                    {
+                        <button type="button"
+                                class="@FilterChipClass(statusFilter == chip.Id)"
+                                @onclick="() => SetStatusFilter(chip.Id)">
+                            @if (chip.DotColor is not null)
+                            {
+                                <span class="filter-chip__dot" style="background: @chip.DotColor"></span>
+                            }
+                            <span>@chip.Label</span>
+                            <span class="filter-chip__count">@chip.Count</span>
+                        </button>
+                    }
+                </div>
+            </div>
+
+            @if (HasAnyTier)
             {
-                <CompetitionCard Competition="competition" />
+                <div class="sb-tools sb-tools__row--secondary">
+                    <div class="sb-tools__tier">
+                        <span class="sb-tools__tier-label">@Localizer["Scoreboard.FilterByTier"]</span>
+                        <div class="filter-chips">
+                            @foreach (var chip in TierChips)
+                            {
+                                <button type="button"
+                                        class="@FilterChipClass(tierFilter == chip.Id)"
+                                        @onclick="() => SetTierFilter(chip.Id)">
+                                    <span>@chip.Label</span>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                    <div class="sb-tools__summary">
+                        @Localizer["Scoreboard.Showing"] <strong>@FilteredCompetitions.Count</strong>
+                        @Localizer["Scoreboard.Of"] @competitions.Count @Localizer["Scoreboard.Competitions"]
+                    </div>
+                </div>
             }
-        </div>
-    </AppSection>
+        </section>
+
+        @foreach (var section in SectionOrder)
+        {
+            var rows = GroupedFiltered.TryGetValue(section.Status, out var list) ? list : null;
+            if (rows is null || rows.Count == 0)
+            {
+                continue;
+            }
+
+            <section class="sb-section">
+                <div class="sb-sec-head">
+                    <div class="sb-sec-head__lead">
+                        <span class="sb-sec-head__eyebrow" style="color: @section.Color">
+                            <span class="sb-sec-head__dot"></span>
+                            @section.Eyebrow
+                        </span>
+                        <span class="sb-sec-head__count">@rows.Count</span>
+                    </div>
+                </div>
+                <div class="sb-board">
+                    @foreach (var competition in rows)
+                    {
+                        <ScoreboardRow Competition="competition" IsFeatured="@(UpNext?.Slug == competition.Slug)" />
+                    }
+                </div>
+            </section>
+        }
+
+        @if (FilteredCompetitions.Count == 0)
+        {
+            <div class="sb-empty">@Localizer["Scoreboard.NoMatches"]</div>
+        }
+    </div>
 }
 
 @code {
     private IReadOnlyList<CompetitionSummary>? competitions;
+    private string search = string.Empty;
+    private string statusFilter = "all";
+    private string tierFilter = "all";
+    private System.Threading.Timer? rerenderTimer;
 
-    private CompetitionSummary? PrimaryCompetition => competitions?
-        .FirstOrDefault(competition => competition.Status == CompetitionStatus.Upcoming);
+    private CompetitionSummary? UpNext => competitions?
+        .Where(competition => competition.Status is CompetitionStatus.Upcoming or CompetitionStatus.Locked)
+        .OrderBy(competition => competition.PredictionLockAt ?? DateTimeOffset.MaxValue)
+        .FirstOrDefault();
+
+    private IReadOnlyList<CompetitionSummary> FilteredCompetitions
+    {
+        get
+        {
+            if (competitions is null)
+            {
+                return [];
+            }
+
+            IEnumerable<CompetitionSummary> query = competitions;
+
+            if (statusFilter != "all")
+            {
+                var statuses = statusFilter switch
+                {
+                    "open" => new[] { CompetitionStatus.Upcoming },
+                    "locked" => new[] { CompetitionStatus.Locked },
+                    "completed" => new[] { CompetitionStatus.Completed, CompetitionStatus.Archived },
+                    _ => Array.Empty<CompetitionStatus>()
+                };
+
+                query = query.Where(competition => statuses.Contains(competition.Status));
+            }
+
+            if (tierFilter != "all" && Enum.TryParse<CompetitionTier>(tierFilter, true, out var tier))
+            {
+                query = query.Where(competition => competition.Tier == tier);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var trimmed = search.Trim();
+                query = query.Where(competition =>
+                    competition.Name.Contains(trimmed, StringComparison.OrdinalIgnoreCase) ||
+                    (competition.City?.Contains(trimmed, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (competition.CountryCode?.Contains(trimmed, StringComparison.OrdinalIgnoreCase) ?? false));
+            }
+
+            return query.ToArray();
+        }
+    }
+
+    private IReadOnlyDictionary<CompetitionStatus, List<CompetitionSummary>> GroupedFiltered =>
+        FilteredCompetitions
+            .GroupBy(competition => competition.Status == CompetitionStatus.Archived
+                ? CompetitionStatus.Completed
+                : competition.Status)
+            .ToDictionary(group => group.Key, group => group.ToList());
+
+    private record SectionMeta(CompetitionStatus Status, string Eyebrow, string Color);
+
+    private IReadOnlyList<SectionMeta> SectionOrder => [
+        new(CompetitionStatus.Upcoming, Localizer["Scoreboard.Section.Open"], "var(--success)"),
+        new(CompetitionStatus.Locked, Localizer["Scoreboard.Section.Locked"], "var(--accent)"),
+        new(CompetitionStatus.Completed, Localizer["Scoreboard.Section.Review"], "var(--text-muted)")
+    ];
+
+    private record ChipMeta(string Id, string Label, int Count, string? DotColor = null);
+
+    private IReadOnlyList<ChipMeta> StatusChips
+    {
+        get
+        {
+            var open = competitions?.Count(competition => competition.Status == CompetitionStatus.Upcoming) ?? 0;
+            var locked = competitions?.Count(competition => competition.Status == CompetitionStatus.Locked) ?? 0;
+            var completed = competitions?.Count(competition => competition.Status is CompetitionStatus.Completed or CompetitionStatus.Archived) ?? 0;
+
+            return [
+                new("all", Localizer["Scoreboard.Filter.All"], competitions?.Count ?? 0),
+                new("open", Localizer["Scoreboard.Section.Open"], open, "var(--success)"),
+                new("locked", Localizer["Scoreboard.Section.Locked"], locked, "var(--accent)"),
+                new("completed", Localizer["Scoreboard.Section.Review"], completed, "var(--text-muted)")
+            ];
+        }
+    }
+
+    private IReadOnlyList<ChipMeta> TierChips => [
+        new("all", Localizer["Scoreboard.Filter.All"], 0),
+        new("s", "S", 0),
+        new("a", "A", 0),
+        new("b", "B", 0)
+    ];
+
+    private bool HasAnyTier => competitions?.Any(competition => competition.Tier is not null) ?? false;
 
     protected override async Task OnInitializedAsync()
     {
         competitions = await CompetitionService.GetCompetitionsAsync();
+
+        if (UpNext?.PredictionLockAt is not null)
+        {
+            rerenderTimer = new System.Threading.Timer(_ => InvokeAsync(StateHasChanged), null, 60_000, 60_000);
+        }
+    }
+
+    private void OnSearchChanged(ChangeEventArgs e)
+    {
+        search = e.Value?.ToString() ?? string.Empty;
+    }
+
+    private void ClearSearch() => search = string.Empty;
+
+    private void SetStatusFilter(string id) => statusFilter = id;
+
+    private void SetTierFilter(string id) => tierFilter = id;
+
+    private static string FilterChipClass(bool active)
+    {
+        return active ? "filter-chip filter-chip--active" : "filter-chip";
+    }
+
+    public void Dispose()
+    {
+        rerenderTimer?.Dispose();
     }
 }

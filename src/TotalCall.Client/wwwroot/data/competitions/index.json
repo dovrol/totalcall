@@ -9,6 +9,10 @@
     "startDate": "2026-06-07T09:00:00Z",
     "predictionLockAt": "2026-06-07T08:00:00Z",
     "status": "upcoming",
-    "configVersion": "2026.2"
+    "configVersion": "2026.2",
+    "city": "Druskininkai",
+    "countryCode": "LT",
+    "tier": "s",
+    "modulesCount": 3
   }
 ]

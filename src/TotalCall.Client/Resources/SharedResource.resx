@@ -34,6 +34,32 @@
   <data name="Theme.Dark" xml:space="preserve"><value>Dark</value></data>
   <data name="Theme.Light" xml:space="preserve"><value>Light</value></data>
   <data name="Competition.Navigation" xml:space="preserve"><value>Nawigacja zawodów</value></data>
+  <data name="Scoreboard.Eyebrow.LocksIn" xml:space="preserve"><value>Najbliższe · Lock za</value></data>
+  <data name="Scoreboard.Eyebrow.Awaiting" xml:space="preserve"><value>Najbliższe · Czeka na wynik</value></data>
+  <data name="Scoreboard.LocksIn" xml:space="preserve"><value>Lock za</value></data>
+  <data name="Scoreboard.Locked" xml:space="preserve"><value>Zamknięte</value></data>
+  <data name="Scoreboard.ModulesCount" xml:space="preserve"><value>{0} modułów</value></data>
+  <data name="Scoreboard.MainEvent" xml:space="preserve"><value>Główny event</value></data>
+  <data name="Scoreboard.SearchPlaceholder" xml:space="preserve"><value>Szukaj zawodów, miast, federacji…</value></data>
+  <data name="Scoreboard.FilterByTier" xml:space="preserve"><value>Ranga</value></data>
+  <data name="Scoreboard.Filter.All" xml:space="preserve"><value>Wszystkie</value></data>
+  <data name="Scoreboard.Showing" xml:space="preserve"><value>Wyświetla się</value></data>
+  <data name="Scoreboard.Of" xml:space="preserve"><value>z</value></data>
+  <data name="Scoreboard.Competitions" xml:space="preserve"><value>zawodów</value></data>
+  <data name="Scoreboard.Section.Open" xml:space="preserve"><value>Otwarte do typowania</value></data>
+  <data name="Scoreboard.Section.Locked" xml:space="preserve"><value>Czekają na wynik</value></data>
+  <data name="Scoreboard.Section.Review" xml:space="preserve"><value>Zakończone</value></data>
+  <data name="Scoreboard.Action.Predict" xml:space="preserve"><value>Typuj</value></data>
+  <data name="Scoreboard.Action.Continue" xml:space="preserve"><value>Kontynuuj</value></data>
+  <data name="Scoreboard.Action.Review" xml:space="preserve"><value>Zobacz</value></data>
+  <data name="Scoreboard.NoMatches" xml:space="preserve"><value>Brak zawodów pasujących do filtrów.</value></data>
+  <data name="Scoreboard.Clock.Days" xml:space="preserve"><value>D</value></data>
+  <data name="Scoreboard.Clock.Hours" xml:space="preserve"><value>H</value></data>
+  <data name="Scoreboard.Clock.Minutes" xml:space="preserve"><value>MIN</value></data>
+  <data name="Scoreboard.Clock.Seconds" xml:space="preserve"><value>S</value></data>
+  <data name="Scoreboard.Clock.DaysShort" xml:space="preserve"><value>d</value></data>
+  <data name="Scoreboard.Clock.HoursShort" xml:space="preserve"><value>h</value></data>
+  <data name="Scoreboard.Clock.MinutesShort" xml:space="preserve"><value>min</value></data>
   <data name="Home.Eyebrow" xml:space="preserve"><value>Fantasy dla fanów trójboju</value></data>
   <data name="Home.Title" xml:space="preserve"><value>TotalCall</value></data>
   <data name="Home.TitleLine1" xml:space="preserve"><value>Typuj zawody</value></data>

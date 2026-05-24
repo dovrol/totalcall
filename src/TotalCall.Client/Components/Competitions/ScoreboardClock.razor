@@ -1,0 +1,55 @@
+@implements IDisposable
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="sb-clock">
+    @{
+        var parts = ComputeParts();
+    }
+    <div class="sb-clock__cell">
+        <span class="sb-clock__num">@parts.Days.ToString("00")</span>
+        <span class="sb-clock__label">@Localizer["Scoreboard.Clock.Days"]</span>
+    </div>
+    <span class="sb-clock__sep">:</span>
+    <div class="sb-clock__cell">
+        <span class="sb-clock__num">@parts.Hours.ToString("00")</span>
+        <span class="sb-clock__label">@Localizer["Scoreboard.Clock.Hours"]</span>
+    </div>
+    <span class="sb-clock__sep">:</span>
+    <div class="sb-clock__cell">
+        <span class="sb-clock__num">@parts.Minutes.ToString("00")</span>
+        <span class="sb-clock__label">@Localizer["Scoreboard.Clock.Minutes"]</span>
+    </div>
+    <span class="sb-clock__sep">:</span>
+    <div class="sb-clock__cell">
+        <span class="sb-clock__num">@parts.Seconds.ToString("00")</span>
+        <span class="sb-clock__label">@Localizer["Scoreboard.Clock.Seconds"]</span>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public DateTimeOffset Target { get; set; }
+
+    private System.Threading.Timer? timer;
+
+    protected override void OnInitialized()
+    {
+        timer = new System.Threading.Timer(_ => InvokeAsync(StateHasChanged), null, 1000, 1000);
+    }
+
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
+
+    private (int Days, int Hours, int Minutes, int Seconds) ComputeParts()
+    {
+        var diff = Target - DateTimeOffset.UtcNow;
+        if (diff < TimeSpan.Zero)
+        {
+            diff = TimeSpan.Zero;
+        }
+
+        return ((int)diff.TotalDays, diff.Hours, diff.Minutes, diff.Seconds);
+    }
+}

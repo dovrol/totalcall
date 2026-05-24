@@ -1,0 +1,143 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="@RowClass">
+    <div class="sb-date">
+        <div class="sb-date__day">@DayNumber</div>
+        <div class="sb-date__month">@MonthLabel</div>
+    </div>
+
+    @if (Competition.Tier is { } tier)
+    {
+        <span class="@TierClass">@tier.ToString()</span>
+    }
+    else
+    {
+        <span></span>
+    }
+
+    <div class="sb-name">
+        <div class="sb-name__row">
+            <div class="sb-name__title">@Competition.Name</div>
+            @if (IsFeatured)
+            {
+                <AppBadge Variant="Accent">@Localizer["Scoreboard.MainEvent"]</AppBadge>
+            }
+        </div>
+        <div class="sb-name__sub">
+            @if (!string.IsNullOrWhiteSpace(Competition.City))
+            {
+                <span>@Competition.City</span>
+            }
+            @if (!string.IsNullOrWhiteSpace(Competition.CountryCode))
+            {
+                <span class="sb-name__sub-divider"></span>
+                <span class="country-tag">@Competition.CountryCode.ToUpperInvariant()</span>
+            }
+            @if (Competition.ModulesCount is { } modules)
+            {
+                <span class="sb-name__sub-divider"></span>
+                <span>@Localizer["Scoreboard.ModulesCount", modules]</span>
+            }
+        </div>
+    </div>
+
+    <div class="sb-mid">
+        @if (IsCompleted)
+        {
+            <div class="sb-mid__val sb-mid__val--muted">@StartDateLabel</div>
+        }
+        else
+        {
+            <div class="sb-mid__label">@Localizer["Scoreboard.LocksIn"]</div>
+            <div class="sb-mid__val">@RelativeLockTime</div>
+        }
+    </div>
+
+    <div class="sb-prog">
+        <div class="sb-prog__row">
+            <span></span>
+            <span class="@StatusPillClass">
+                <span class="sb-pill__dot"></span>
+                @StatusLabel
+            </span>
+        </div>
+    </div>
+
+    <a class="@ActionClass" href="@($"competitions/{Competition.Slug}/predictions")">
+        <span>@ActionLabel</span>
+        <AppIcon Name="AppIconName.ChevronRight" Size="14" />
+    </a>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public CompetitionSummary Competition { get; set; } = default!;
+
+    [Parameter]
+    public bool IsFeatured { get; set; }
+
+    private bool IsCompleted => Competition.Status is CompetitionStatus.Completed or CompetitionStatus.Archived;
+    private bool IsLocked => Competition.Status == CompetitionStatus.Locked;
+    private bool IsOpen => Competition.Status == CompetitionStatus.Upcoming;
+
+    private string RowClass => IsFeatured ? "sb-row sb-row--featured" : "sb-row";
+
+    private string DayNumber => Competition.StartDate?.ToLocalTime().ToString("dd") ?? "—";
+    private string MonthLabel => Competition.StartDate?.ToLocalTime().ToString("MMM").ToUpperInvariant() ?? "";
+    private string StartDateLabel => Competition.StartDate?.ToLocalTime().ToString("d MMM yyyy") ?? Localizer["Common.Tbd"].Value;
+
+    private string TierClass => Competition.Tier switch
+    {
+        CompetitionTier.S => "tier-badge tier-badge--s",
+        CompetitionTier.A => "tier-badge tier-badge--a",
+        CompetitionTier.B => "tier-badge tier-badge--b",
+        _ => "tier-badge"
+    };
+
+    private string StatusPillClass => Competition.Status switch
+    {
+        CompetitionStatus.Upcoming => "sb-pill sb-pill--open",
+        CompetitionStatus.Locked => "sb-pill sb-pill--locked",
+        _ => "sb-pill sb-pill--completed"
+    };
+
+    private string StatusLabel => Localizer[$"Status.{Competition.Status}"];
+
+    private string ActionLabel => Competition.Status switch
+    {
+        CompetitionStatus.Completed or CompetitionStatus.Archived => Localizer["Scoreboard.Action.Review"],
+        CompetitionStatus.Locked => Localizer["Scoreboard.Action.Review"],
+        _ => Localizer["Scoreboard.Action.Predict"]
+    };
+
+    private string ActionClass => IsOpen ? "sb-act sb-act--primary" : "sb-act";
+
+    private string RelativeLockTime
+    {
+        get
+        {
+            if (Competition.PredictionLockAt is not { } lockAt)
+            {
+                return Localizer["Common.Tbd"];
+            }
+
+            var diff = lockAt - DateTimeOffset.UtcNow;
+            if (diff < TimeSpan.Zero)
+            {
+                return Localizer["Scoreboard.Locked"];
+            }
+
+            if (diff.TotalDays >= 1)
+            {
+                return $"{(int)diff.TotalDays}{Localizer["Scoreboard.Clock.DaysShort"]} {diff.Hours}{Localizer["Scoreboard.Clock.HoursShort"]}";
+            }
+
+            if (diff.TotalHours >= 1)
+            {
+                return $"{(int)diff.TotalHours}{Localizer["Scoreboard.Clock.HoursShort"]} {diff.Minutes}{Localizer["Scoreboard.Clock.MinutesShort"]}";
+            }
+
+            return $"{diff.Minutes}{Localizer["Scoreboard.Clock.MinutesShort"]}";
+        }
+    }
+}

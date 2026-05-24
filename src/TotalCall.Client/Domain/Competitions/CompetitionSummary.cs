@@ -25,4 +25,12 @@ public sealed record CompetitionSummary
     public CompetitionStatus Status { get; init; } = CompetitionStatus.Upcoming;
 
     public required string ConfigVersion { get; init; }
+
+    public string? City { get; init; }
+
+    public string? CountryCode { get; init; }
+
+    public CompetitionTier? Tier { get; init; }
+
+    public int? ModulesCount { get; init; }
 }

@@ -34,6 +34,32 @@
   <data name="Theme.Dark" xml:space="preserve"><value>Dark</value></data>
   <data name="Theme.Light" xml:space="preserve"><value>Light</value></data>
   <data name="Competition.Navigation" xml:space="preserve"><value>Competition navigation</value></data>
+  <data name="Scoreboard.Eyebrow.LocksIn" xml:space="preserve"><value>Up next · Locks in</value></data>
+  <data name="Scoreboard.Eyebrow.Awaiting" xml:space="preserve"><value>Up next · Awaiting results</value></data>
+  <data name="Scoreboard.LocksIn" xml:space="preserve"><value>Locks in</value></data>
+  <data name="Scoreboard.Locked" xml:space="preserve"><value>Locked</value></data>
+  <data name="Scoreboard.ModulesCount" xml:space="preserve"><value>{0} modules</value></data>
+  <data name="Scoreboard.MainEvent" xml:space="preserve"><value>Main event</value></data>
+  <data name="Scoreboard.SearchPlaceholder" xml:space="preserve"><value>Search competitions, cities, federations…</value></data>
+  <data name="Scoreboard.FilterByTier" xml:space="preserve"><value>By tier</value></data>
+  <data name="Scoreboard.Filter.All" xml:space="preserve"><value>All</value></data>
+  <data name="Scoreboard.Showing" xml:space="preserve"><value>Showing</value></data>
+  <data name="Scoreboard.Of" xml:space="preserve"><value>of</value></data>
+  <data name="Scoreboard.Competitions" xml:space="preserve"><value>competitions</value></data>
+  <data name="Scoreboard.Section.Open" xml:space="preserve"><value>Open for picks</value></data>
+  <data name="Scoreboard.Section.Locked" xml:space="preserve"><value>Awaiting results</value></data>
+  <data name="Scoreboard.Section.Review" xml:space="preserve"><value>Review</value></data>
+  <data name="Scoreboard.Action.Predict" xml:space="preserve"><value>Predict</value></data>
+  <data name="Scoreboard.Action.Continue" xml:space="preserve"><value>Continue</value></data>
+  <data name="Scoreboard.Action.Review" xml:space="preserve"><value>Review</value></data>
+  <data name="Scoreboard.NoMatches" xml:space="preserve"><value>No competitions match the filters.</value></data>
+  <data name="Scoreboard.Clock.Days" xml:space="preserve"><value>D</value></data>
+  <data name="Scoreboard.Clock.Hours" xml:space="preserve"><value>H</value></data>
+  <data name="Scoreboard.Clock.Minutes" xml:space="preserve"><value>MIN</value></data>
+  <data name="Scoreboard.Clock.Seconds" xml:space="preserve"><value>S</value></data>
+  <data name="Scoreboard.Clock.DaysShort" xml:space="preserve"><value>d</value></data>
+  <data name="Scoreboard.Clock.HoursShort" xml:space="preserve"><value>h</value></data>
+  <data name="Scoreboard.Clock.MinutesShort" xml:space="preserve"><value>m</value></data>
   <data name="Home.Eyebrow" xml:space="preserve"><value>Fantasy for powerlifting fans</value></data>
   <data name="Home.Title" xml:space="preserve"><value>TotalCall</value></data>
   <data name="Home.TitleLine1" xml:space="preserve"><value>Call the meet</value></data>
