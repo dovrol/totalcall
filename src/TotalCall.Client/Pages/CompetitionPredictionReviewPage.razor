@@ -1,0 +1,126 @@
+@page "/competitions/{Slug}/review"
+@inject CompetitionService CompetitionService
+@inject PredictionService PredictionService
+@inject IPredictionValidationService PredictionValidationService
+@inject PredictionAnswerDisplayService AnswerDisplay
+@inject PredictionTextService Text
+@inject IStringLocalizer<SharedResource> Localizer
+
+<PageTitle>@(competition is null ? Localizer["Review.PageTitle"] : $"{competition.Name} - {Localizer["Review.PageTitle"]}")</PageTitle>
+
+@if (isLoading)
+{
+    <AppLoadingState Message="@Localizer["Review.Loading"]" />
+}
+else if (competition is null || predictionSet is null)
+{
+    <AppErrorState
+        Title="@Localizer["Review.NotFoundTitle"]"
+        Description="@Localizer["Review.NotFoundDescription"]" />
+}
+else
+{
+    <div class="prediction-review-page">
+        <header class="prediction-header">
+            <div class="prediction-header__main">
+                <h1>@Localizer["Review.PageTitle"]</h1>
+                <p>@competition.Name</p>
+                <p>@Localizer["Review.Description"]</p>
+            </div>
+
+            <div class="review-actions">
+                <AppButton
+                    Href="@PredictionsHref"
+                    Variant="Secondary">
+                    <AppIcon Name="AppIconName.PencilLine" Size="16" />
+                    <span>@Localizer["Review.EditPredictions"]</span>
+                </AppButton>
+            </div>
+        </header>
+
+        @if (predictionSet.Answers.Count == 0)
+        {
+            <PredictionEmptyState
+                Title="@Localizer["Review.EmptyTitle"]"
+                Description="@Localizer["Review.EmptyDescription"]" />
+        }
+        else
+        {
+            @if (!validationResult.IsValid)
+            {
+                <div class="notice notice--warning">
+                    @Localizer["Review.ValidationIssues", validationResult.Errors.Count]
+                </div>
+            }
+
+            <div class="review-list">
+                @foreach (var group in OrderedGroups)
+                {
+                    <AppCard AdditionalClass="prediction-review-card">
+                        <div class="prediction-review-card__head">
+                            <h2>@Text.GroupTitle(competition, group)</h2>
+                            @if (!string.IsNullOrWhiteSpace(Text.GroupDescription(competition, group)))
+                            {
+                                <p>@Text.GroupDescription(competition, group)</p>
+                            }
+                        </div>
+
+                        <div class="answer-list">
+                            @foreach (var question in group.Questions.OrderBy(question => question.Order))
+                            {
+                                var answer = FindAnswer(group.Id, question.Id);
+                                <article class="answer-row">
+                                    <h3>@Text.QuestionTitle(competition, question)</h3>
+                                    <p>@AnswerDisplay.FormatAnswer(competition, question, answer)</p>
+                                </article>
+                            }
+                        </div>
+                    </AppCard>
+                }
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Slug { get; set; } = string.Empty;
+
+    private Competition? competition;
+    private PredictionSet? predictionSet;
+    private PredictionValidationResult validationResult = new([]);
+    private bool isLoading = true;
+
+    private string PredictionsHref => $"competitions/{Slug}/predictions";
+
+    private IReadOnlyList<PredictionGroup> OrderedGroups => competition?
+        .PredictionGroups
+        .OrderBy(group => group.Order)
+        .ToArray() ?? [];
+
+    protected override async Task OnParametersSetAsync()
+    {
+        isLoading = true;
+        competition = await CompetitionService.GetCompetitionAsync(Slug);
+
+        if (competition is not null)
+        {
+            predictionSet = await PredictionService.GetOrCreatePredictionSetAsync(competition);
+            validationResult = PredictionValidationService.Validate(competition, predictionSet);
+        }
+        else
+        {
+            predictionSet = null;
+            validationResult = new PredictionValidationResult([]);
+        }
+
+        isLoading = false;
+    }
+
+    private PredictionAnswer? FindAnswer(string groupId, string questionId)
+    {
+        return predictionSet?.Answers.FirstOrDefault(answer =>
+            string.Equals(answer.GroupId, groupId, StringComparison.OrdinalIgnoreCase) &&
+            string.Equals(answer.QuestionId, questionId, StringComparison.OrdinalIgnoreCase));
+    }
+}

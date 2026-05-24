@@ -153,6 +153,12 @@
         }
     </aside>
 
+    <PredictionActionBar
+        CompetitionSlug="@Competition.Slug"
+        LastSavedAt="@LastSavedAt"
+        CopyRequested="@CopySummaryRequested"
+        ExportRequested="@ExportJsonRequested" />
+
 </section>
 
 @code {
@@ -189,6 +195,12 @@
 
     [Parameter]
     public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> CopySummaryRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> ExportJsonRequested { get; set; }
 
     private string? activeTopNQuestionId;
     private string? selectedTopNAthleteId;
