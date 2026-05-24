@@ -14,13 +14,17 @@ else
 {
     <section class="@TopNModuleClass">
         <div class="topn-module__header">
-            <div>
-                <h2>@GetCategoryName(ActiveQuestion)</h2>
-                <p>
+            <div class="topn-module__header-main">
+                <div class="topn-module__header-title-row">
+                    <h2>@GetCategoryName(ActiveQuestion)</h2>
+                    <span class="@GetHeaderStatusClass(ActiveQuestion.Id)">@GetCategoryStatusLine(ActiveQuestion.Id)</span>
+                </div>
+
+                <p class="topn-module__header-index">
                     @Localizer["Predictions.CategoryIndex", ActiveQuestionIndex + 1, OrderedQuestions.Count]
-                    <span aria-hidden="true">.</span>
-                    @GetCategoryStatusLine(ActiveQuestion.Id)
                 </p>
+
+                <p class="topn-module__header-hint">@TopNHeaderHint</p>
             </div>
 
             <div class="topn-module__actions">
@@ -36,10 +40,16 @@ else
                         <span>@Localizer["Predictions.SortByPredictedTotal"]</span>
                     </span>
                 </AppButton>
-                <AppButton Variant="Ghost" Size="Sm" AdditionalClass="topn-module__clear-action" OnClick="OnClearClicked" Disabled="@(!CanEditPredictions)">
+                <AppButton
+                    Variant="Ghost"
+                    Size="Sm"
+                    AdditionalClass="topn-module__clear-action"
+                    AriaLabel="@Localizer["Predictions.ClearCategory"]"
+                    OnClick="OnClearClicked"
+                    Disabled="@(!CanEditPredictions)">
                     <span class="topn-module__action-content">
                         <AppIcon Name="AppIconName.Trash2" Size="15" />
-                        <span>@Localizer["Predictions.ClearCategory"]</span>
+                        <span class="topn-module__clear-label">@Localizer["Predictions.ClearCategory"]</span>
                     </span>
                 </AppButton>
                 @if (ShowSummaryAction)
@@ -48,6 +58,13 @@ else
                         @Localizer["Predictions.Tab.Context"]
                     </AppButton>
                 }
+            </div>
+
+            <div class="topn-module__header-progress">
+                <div class="topn-module__header-progress-track" aria-hidden="true">
+                    <span style="@($"width: {ActiveQuestionCompletionPercent}%")"></span>
+                </div>
+                <strong>@SelectedAthletesCountText</strong>
             </div>
         </div>
 
@@ -313,6 +330,49 @@ else
                 : null;
         }
     }
+
+    private int ActiveSelectedCount => ActiveQuestionStatus?.SelectedCount ?? 0;
+
+    private int ActiveRequiredCount => Math.Max(1, ActiveQuestionStatus?.RequiredCount ?? SlotsCount);
+
+    private int ActiveQuestionCompletionPercent => ActiveRequiredCount == 0
+        ? 0
+        : Math.Clamp((int)Math.Round((double)ActiveSelectedCount / ActiveRequiredCount * 100), 0, 100);
+
+    private AthleteSex ActiveQuestionSex
+    {
+        get
+        {
+            if (ActiveQuestion is null)
+            {
+                return AthleteSex.Unspecified;
+            }
+
+            var knownSexes = EligibleAthletes
+                .Select(athlete => athlete.Sex)
+                .Where(sex => sex != AthleteSex.Unspecified)
+                .Distinct()
+                .ToArray();
+
+            return knownSexes.Length == 1
+                ? knownSexes[0]
+                : AthleteSex.Unspecified;
+        }
+    }
+
+    private string TopNHeaderHint => ActiveQuestionSex switch
+    {
+        AthleteSex.Female => Localizer["Predictions.TopNHeaderHintFemale", SlotsCount].Value,
+        AthleteSex.Male => Localizer["Predictions.TopNHeaderHintMale", SlotsCount].Value,
+        _ => Localizer["Predictions.TopNHeaderHint", SlotsCount].Value
+    };
+
+    private string SelectedAthletesCountText => ActiveQuestionSex switch
+    {
+        AthleteSex.Female => Localizer["Predictions.SelectedAthletesCountFemale", ActiveSelectedCount, ActiveRequiredCount].Value,
+        AthleteSex.Male => Localizer["Predictions.SelectedAthletesCountMale", ActiveSelectedCount, ActiveRequiredCount].Value,
+        _ => Localizer["Predictions.SelectedAthletesCount", ActiveSelectedCount, ActiveRequiredCount].Value
+    };
 
     private IReadOnlyList<PredictionValidationError> ActiveQuestionErrors => ActiveQuestion is null
         ? []
@@ -1179,7 +1239,24 @@ else
         }
 
         var requiredCount = Math.Max(1, status.RequiredCount);
-        return $"{status.SelectedCount}/{requiredCount} {GetStatusLabel(status.Status)}";
+        return $"{status.SelectedCount} / {requiredCount} · {GetStatusLabel(status.Status)}";
+    }
+
+    private string GetHeaderStatusClass(string questionId)
+    {
+        var status = StatusByQuestionId.TryGetValue(questionId, out var result)
+            ? result.Status
+            : PredictionCompletionStatus.NotStarted;
+
+        return string.Join(
+            " ",
+            "topn-module__header-status",
+            status switch
+            {
+                PredictionCompletionStatus.Complete => "topn-module__header-status--complete",
+                PredictionCompletionStatus.InProgress => "topn-module__header-status--in-progress",
+                _ => "topn-module__header-status--not-started"
+            });
     }
 
     private string GetStatusLabel(PredictionCompletionStatus status)

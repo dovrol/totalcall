@@ -2,8 +2,6 @@
 @inject PredictionTextService Text
 
 <nav class="prediction-module-nav" aria-label="@Localizer["Competition.PredictionGroups"]">
-    <h2>@Localizer["Competition.PredictionGroups"]</h2>
-
     <ol class="prediction-module-nav__list">
         @foreach (var group in Groups.OrderBy(group => group.Order))
         {
@@ -15,11 +13,24 @@
                     type="button"
                     class="@GetButtonClass(isActive)"
                     @onclick="() => GroupChanged.InvokeAsync(group.Id)">
-                    <div>
-                        <strong>@Text.GroupTitle(Competition, group)</strong>
-                        <small>@GetSummary(moduleValidation)</small>
+                    <div class="prediction-module-nav__meta">
+                        <span>
+                            <AppIcon Name="AppIconName.Target" Size="11" StrokeWidth="2" />
+                            @Localizer["Predictions.Sidebar.ModuleEyebrow"]
+                        </span>
+                        <strong>@GetCompactSummary(moduleValidation)</strong>
                     </div>
-                    <PredictionStatusBadge Status="@moduleValidation.Status" />
+
+                    <strong class="prediction-module-nav__title">@Text.GroupTitle(Competition, group)</strong>
+
+                    <div class="prediction-module-nav__progress" aria-hidden="true">
+                        <span style="@GetProgressStyle(moduleValidation)"></span>
+                    </div>
+
+                    <small class="prediction-module-nav__hint">
+                        <AppIcon Name="AppIconName.ChevronRight" Size="11" StrokeWidth="2" />
+                        @Localizer["Predictions.Sidebar.MoreModulesSoon"]
+                    </small>
                 </button>
             </li>
         }
@@ -69,13 +80,24 @@
             isActive ? "prediction-module-nav__button--active" : null);
     }
 
-    private string GetSummary(PredictionModuleValidationResult validation)
+    private static string GetCompactSummary(PredictionModuleValidationResult validation)
     {
         if (validation.TotalItems == 0)
         {
-            return Localizer["Predictions.Status.NotStarted"];
+            return "0/0";
         }
 
-        return Localizer["Predictions.CompletedOfTotal", validation.CompletedItems, validation.TotalItems];
+        return $"{validation.CompletedItems}/{validation.TotalItems}";
+    }
+
+    private static string GetProgressStyle(PredictionModuleValidationResult validation)
+    {
+        if (validation.TotalItems <= 0)
+        {
+            return "width: 0%";
+        }
+
+        var percent = Math.Clamp((int)Math.Round((double)validation.CompletedItems / validation.TotalItems * 100), 0, 100);
+        return $"width: {percent}%";
     }
 }
