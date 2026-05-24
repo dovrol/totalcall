@@ -1,0 +1,132 @@
+@using System.Globalization
+@inject IStringLocalizer<SharedResource> Localizer
+
+<nav class="prediction-action-bar" aria-label="@Localizer["Predictions.ActionBarAria"]">
+    <div class="prediction-action-bar__left">
+        <AppButton
+            Href="/"
+            Variant="Ghost"
+            Size="Sm"
+            AdditionalClass="prediction-action-bar__back">
+            <AppIcon Name="AppIconName.ChevronRight" Size="15" Class="prediction-action-bar__back-icon" />
+            <span>@Localizer["Common.Back"]</span>
+        </AppButton>
+    </div>
+
+    <div class="prediction-action-bar__status">
+        <strong>@Localizer["Predictions.LocalSavedAt", FormatTime(LastSavedAt)]</strong>
+        <span>@Localizer["Predictions.LocalBrowserOnly"]</span>
+    </div>
+
+    <div class="prediction-action-bar__actions">
+        <div class="prediction-action-bar__secondary-actions">
+            <AppButton
+                Variant="Secondary"
+                Size="Sm"
+                OnClick="@OnCopyClicked">
+                <AppIcon Name="AppIconName.Copy" Size="15" />
+                <span>@Localizer["Predictions.CopySummary"]</span>
+            </AppButton>
+            <AppButton
+                Variant="Secondary"
+                Size="Sm"
+                OnClick="@OnExportClicked">
+                <AppIcon Name="AppIconName.Download" Size="15" />
+                <span>@Localizer["Predictions.ExportJson"]</span>
+            </AppButton>
+        </div>
+
+        <div class="prediction-action-bar__more">
+            <button
+                type="button"
+                class="app-button app-button--secondary app-button--sm prediction-action-bar__more-button"
+                aria-haspopup="menu"
+                aria-expanded="@isMoreOpen"
+                @onclick="ToggleMoreMenu">
+                <AppIcon Name="AppIconName.MoreHorizontal" Size="16" />
+                <span>@Localizer["Predictions.MoreActions"]</span>
+            </button>
+
+            @if (isMoreOpen)
+            {
+                <div class="prediction-action-bar__menu" role="menu">
+                    <button
+                        type="button"
+                        class="prediction-action-bar__menu-item"
+                        role="menuitem"
+                        @onclick="OnMobileCopyClicked">
+                        <AppIcon Name="AppIconName.Copy" Size="15" />
+                        <span>@Localizer["Predictions.CopySummary"]</span>
+                    </button>
+                    <button
+                        type="button"
+                        class="prediction-action-bar__menu-item"
+                        role="menuitem"
+                        @onclick="OnMobileExportClicked">
+                        <AppIcon Name="AppIconName.Download" Size="15" />
+                        <span>@Localizer["Predictions.ExportJson"]</span>
+                    </button>
+                </div>
+            }
+        </div>
+
+        <AppButton
+            Href="@ReviewHref"
+            Variant="Primary"
+            Size="Sm"
+            AdditionalClass="prediction-action-bar__primary">
+            <AppIcon Name="AppIconName.Check" Size="15" />
+            <span>@Localizer["Predictions.ReviewPicks"]</span>
+        </AppButton>
+    </div>
+</nav>
+
+@code {
+    [Parameter, EditorRequired]
+    public string CompetitionSlug { get; set; } = string.Empty;
+
+    [Parameter]
+    public DateTimeOffset? LastSavedAt { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> CopyRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> ExportRequested { get; set; }
+
+    private bool isMoreOpen;
+
+    private string ReviewHref => $"competitions/{CompetitionSlug}/review";
+
+    private void ToggleMoreMenu()
+    {
+        isMoreOpen = !isMoreOpen;
+    }
+
+    private Task OnCopyClicked(MouseEventArgs args)
+    {
+        return CopyRequested.InvokeAsync(args);
+    }
+
+    private Task OnExportClicked(MouseEventArgs args)
+    {
+        return ExportRequested.InvokeAsync(args);
+    }
+
+    private async Task OnMobileCopyClicked(MouseEventArgs args)
+    {
+        isMoreOpen = false;
+        await CopyRequested.InvokeAsync(args);
+    }
+
+    private async Task OnMobileExportClicked(MouseEventArgs args)
+    {
+        isMoreOpen = false;
+        await ExportRequested.InvokeAsync(args);
+    }
+
+    private string FormatTime(DateTimeOffset? value)
+    {
+        return value?.ToLocalTime().ToString("HH:mm", CultureInfo.CurrentCulture) ?? Localizer["Common.Tbd"];
+    }
+}

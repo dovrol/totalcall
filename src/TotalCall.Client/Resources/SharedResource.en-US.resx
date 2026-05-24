@@ -146,6 +146,12 @@
   <data name="Predictions.SavedLocally" xml:space="preserve"><value>Saved locally.</value></data>
   <data name="Predictions.DraftSaved" xml:space="preserve"><value>Draft saved locally. Fix validation issues before final review.</value></data>
   <data name="Predictions.LocalNotice" xml:space="preserve"><value>Beta build: picks are saved locally in this browser only.</value></data>
+  <data name="Predictions.LocalSavedAt" xml:space="preserve"><value>Saved locally · {0}</value></data>
+  <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Picks are saved only in this browser</value></data>
+  <data name="Predictions.CopySummary" xml:space="preserve"><value>Copy summary</value></data>
+  <data name="Predictions.ExportJson" xml:space="preserve"><value>Export JSON</value></data>
+  <data name="Predictions.MoreActions" xml:space="preserve"><value>More</value></data>
+  <data name="Predictions.ActionBarAria" xml:space="preserve"><value>Pick actions</value></data>
   <data name="Predictions.DropAthleteHere" xml:space="preserve"><value>Drop athlete here</value></data>
   <data name="Predictions.DragFromShortlist" xml:space="preserve"><value>Drag from shortlist</value></data>
   <data name="Predictions.RemoveAthlete" xml:space="preserve"><value>Remove athlete</value></data>

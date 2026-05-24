@@ -146,6 +146,12 @@
   <data name="Predictions.SavedLocally" xml:space="preserve"><value>Zapisano lokalnie.</value></data>
   <data name="Predictions.DraftSaved" xml:space="preserve"><value>Szkic zapisany lokalnie. Popraw błędy przed finalnym podglądem.</value></data>
   <data name="Predictions.LocalNotice" xml:space="preserve"><value>Wersja beta: typy zapisują się lokalnie tylko w tej przeglądarce.</value></data>
+  <data name="Predictions.LocalSavedAt" xml:space="preserve"><value>Zapisano lokalnie · {0}</value></data>
+  <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Typy zapisują się tylko w tej przeglądarce</value></data>
+  <data name="Predictions.CopySummary" xml:space="preserve"><value>Kopiuj podsumowanie</value></data>
+  <data name="Predictions.ExportJson" xml:space="preserve"><value>Eksportuj JSON</value></data>
+  <data name="Predictions.MoreActions" xml:space="preserve"><value>Więcej</value></data>
+  <data name="Predictions.ActionBarAria" xml:space="preserve"><value>Akcje typów</value></data>
   <data name="Predictions.DropAthleteHere" xml:space="preserve"><value>Upuść zawodnika tutaj</value></data>
   <data name="Predictions.DragFromShortlist" xml:space="preserve"><value>Przeciągnij z listy po prawej</value></data>
   <data name="Predictions.RemoveAthlete" xml:space="preserve"><value>Usuń zawodnika</value></data>
