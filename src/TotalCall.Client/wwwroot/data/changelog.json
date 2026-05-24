@@ -2,6 +2,51 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.1.0-beta.2",
+      "releasedAt": "2026-05-24",
+      "title": {
+        "pl": "Tablica wyników i informacje o prywatności",
+        "en": "Scoreboard home and privacy info"
+      },
+      "items": [
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Nowa strona główna w stylu tablicy wyników — zawody z odliczaniem do blokady typów.",
+            "en": "New scoreboard-style home page — competitions with live countdown to pick lock time."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Wyszukiwarka i filtry zawodów według rangi (S/A/B) i statusu.",
+            "en": "Competition search and filtering by tier (S/A/B) and status."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Przejście z listy zawodów bezpośrednio do typowania — bez pośredniej strony szczegółów.",
+            "en": "Navigate directly from the competition list to predictions — no intermediate details page."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Modal \"Co nowego?\" po aktualizacji aplikacji oraz historia zmian w stopce.",
+            "en": "\"What's new\" modal after app updates and full changelog accessible from the footer."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Informacja o prywatności i danych — localStorage, eksport i analytics — dostępna w stopce.",
+            "en": "Privacy & data disclosure — localStorage, export and analytics info — accessible from the footer."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.1.0-beta.1",
       "releasedAt": "2026-05-23",
       "title": {
