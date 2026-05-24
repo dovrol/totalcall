@@ -94,47 +94,71 @@
     }
     else if (SelectedAthlete is null)
     {
-        <section class="prediction-context-panel__block">
-            <h3>@(ActiveCategoryName ?? Localizer["Common.Tbd"].Value)</h3>
-
-            <div class="prediction-context-panel__status">
-                <span>@Localizer["Common.Status"]</span>
-                <PredictionStatusBadge Status="@CategoryStatus.Status" />
+        <section class="prediction-context-panel__block prediction-context-panel__category-card">
+            <div class="prediction-context-panel__category-head">
+                <h3>@(ActiveCategoryName ?? Localizer["Common.Tbd"].Value)</h3>
+                <span class="@GetCategoryStatusPillClass()">@CategoryStatusLine</span>
             </div>
 
-            <p class="prediction-context-panel__status-line">@CategoryStatusLine</p>
+            <dl class="prediction-context-panel__category-stats">
+                <div>
+                    <dt>@Localizer["Predictions.Starts"]</dt>
+                    <dd>@FormatCategoryAthleteCount()</dd>
+                </div>
+                <div>
+                    <dt>@Localizer["Predictions.NominatedRange"]</dt>
+                    <dd>@NominatedTotalRange</dd>
+                </div>
+            </dl>
         </section>
 
-        <section class="prediction-context-panel__block">
+        <section class="prediction-context-panel__block prediction-context-panel__nominated-card">
             <h3>@Localizer["Predictions.TopNominatedTotals"]</h3>
 
-            @if (TopNominatedAthletes.Count == 0)
+            @if (DisplayedNominatedAthletes.Count == 0)
             {
                 <p class="prediction-context-panel__empty">@Localizer["Predictions.NoAthletesDescription"]</p>
             }
             else
             {
                 <ol class="prediction-context-panel__nominated-list">
-                    @foreach (var athlete in TopNominatedAthletes)
+                    @foreach (var entry in DisplayedNominatedAthletes.Select((athlete, index) => new { Athlete = athlete, Index = index }))
                     {
                         <li>
                             <button
                                 type="button"
                                 class="prediction-context-panel__nominated-row"
-                                @onclick="() => AthleteContextRequested.InvokeAsync(athlete.Id)">
-                                <span>@athlete.DisplayName</span>
-                                <strong>@FormatKg(athlete.SeedTotalKg)</strong>
+                                @onclick="() => AthleteContextRequested.InvokeAsync(entry.Athlete.Id)">
+                                <span class="prediction-context-panel__nominated-rank">@(entry.Index + 1)</span>
+
+                                <span class="prediction-context-panel__nominated-meta">
+                                    <strong>@entry.Athlete.DisplayName</strong>
+                                    <small>
+                                        <CountryFlag Code="@entry.Athlete.CountryCode" CountryName="@entry.Athlete.CountryName" />
+                                        <span>@(entry.Athlete.CountryName ?? Localizer["Common.Tbd"].Value)</span>
+                                    </small>
+                                </span>
+
+                                <strong class="prediction-context-panel__nominated-total">@FormatKg(entry.Athlete.SeedTotalKg)</strong>
                             </button>
                         </li>
                     }
                 </ol>
+
+                @if (AllNominatedAthletes.Count > NominatedPreviewCount)
+                {
+                    <button type="button" class="prediction-context-panel__show-all" @onclick="ToggleShowAllNominated">
+                        <AppIcon Name="AppIconName.Users" Size="15" />
+                        <span>@ShowAllNominatedLabel</span>
+                    </button>
+                }
             }
         </section>
 
         <section class="prediction-context-panel__notice">
             <p>
                 <AppIcon Name="AppIconName.AlertCircle" Size="14" />
-                <span>@Localizer["Predictions.CategoryContextHint"]</span>
+                <span>@CategoryContextHint</span>
             </p>
         </section>
     }
@@ -143,9 +167,7 @@
         <div class="prediction-context-panel__athlete-content">
             <section class="prediction-context-panel__athlete-card">
                 <div class="prediction-context-panel__athlete-main">
-                    <div class="prediction-context-panel__position-badge" aria-hidden="true">
-                        @RankBadgeLabel
-                    </div>
+                    <span class="prediction-context-panel__avatar" aria-hidden="true">@GetAthleteInitials(SelectedAthlete.DisplayName)</span>
 
                     <div class="prediction-context-panel__athlete-meta">
                         <h3>@SelectedAthlete.DisplayName</h3>
@@ -157,6 +179,13 @@
                             </div>
                         }
                     </div>
+
+                    @if (SelectedAthleteRank is not null)
+                    {
+                        <span class="prediction-context-panel__ranking-pill">
+                            @Localizer["Predictions.RankingBadge", SelectedAthleteRank.Value]
+                        </span>
+                    }
                 </div>
 
                 <dl class="prediction-context-panel__meta-list prediction-context-panel__meta-list--split">
@@ -189,6 +218,28 @@
                         AriaLabel="@Localizer["Predictions.TotalTrend", ContextTrendChartPoints.Count]" />
                 </section>
             }
+
+            <section class="prediction-context-panel__block prediction-context-panel__best-card">
+                <h3>@Localizer["Predictions.BestLiftsPr"]</h3>
+                <dl class="prediction-context-panel__best-lifts">
+                    <div class="prediction-context-panel__best-lift">
+                        <dt>SQ</dt>
+                        <dd>@FormatKg(BestSquatKg)</dd>
+                    </div>
+                    <div class="prediction-context-panel__best-lift">
+                        <dt>BP</dt>
+                        <dd>@FormatKg(BestBenchKg)</dd>
+                    </div>
+                    <div class="prediction-context-panel__best-lift">
+                        <dt>DL</dt>
+                        <dd>@FormatKg(BestDeadliftKg)</dd>
+                    </div>
+                    <div class="prediction-context-panel__best-lift prediction-context-panel__best-lift--total">
+                        <dt>Total</dt>
+                        <dd>@FormatKg(BestTotalKg)</dd>
+                    </div>
+                </dl>
+            </section>
 
             <section class="prediction-context-panel__block prediction-context-panel__recent-card">
                 <h3>@Localizer["Predictions.RecentStartsShort"]</h3>
@@ -223,28 +274,6 @@
                 {
                     <p class="prediction-context-panel__empty">@Localizer["Predictions.NoAthleteHistory"]</p>
                 }
-            </section>
-
-            <section class="prediction-context-panel__block prediction-context-panel__best-card">
-                <h3>@Localizer["Predictions.BestLiftsPr"]</h3>
-                <dl class="prediction-context-panel__best-lifts">
-                    <div class="prediction-context-panel__best-lift">
-                        <dt>SQ</dt>
-                        <dd>@FormatKg(BestSquatKg)</dd>
-                    </div>
-                    <div class="prediction-context-panel__best-lift">
-                        <dt>BP</dt>
-                        <dd>@FormatKg(BestBenchKg)</dd>
-                    </div>
-                    <div class="prediction-context-panel__best-lift">
-                        <dt>DL</dt>
-                        <dd>@FormatKg(BestDeadliftKg)</dd>
-                    </div>
-                    <div class="prediction-context-panel__best-lift prediction-context-panel__best-lift--total">
-                        <dt>Total</dt>
-                        <dd>@FormatKg(BestTotalKg)</dd>
-                    </div>
-                </dl>
             </section>
         </div>
 
@@ -435,9 +464,12 @@
     private string? loadedAthleteId;
     private bool isLoadingHistory;
     private bool isHistoryDialogOpen;
+    private bool showAllNominated;
     private string selectorSearchTerm = string.Empty;
     private string selectorSortMode = "nominated-desc";
     private int? previousSelectorSlotPosition;
+    private string? previousActiveQuestionId;
+    private const int NominatedPreviewCount = 5;
 
     private Athlete? SelectedAthlete => string.IsNullOrWhiteSpace(SelectedAthleteId)
         ? null
@@ -454,9 +486,13 @@
     private string? ActiveCategoryName => ResolveCategoryName(ActiveQuestion?.CategoryId);
 
     private string CategoryStatusLine =>
-        $"{CategoryStatus.SelectedCount}/{Math.Max(1, CategoryStatus.RequiredCount)} {GetStatusLabel(CategoryStatus.Status)}";
+        $"{CategoryStatus.SelectedCount} / {Math.Max(1, CategoryStatus.RequiredCount)} · {GetStatusLabel(CategoryStatus.Status)}";
 
-    private IReadOnlyList<Athlete> TopNominatedAthletes => GetTopNominatedAthletes();
+    private IReadOnlyList<Athlete> AllNominatedAthletes => GetAllNominatedAthletes();
+
+    private IReadOnlyList<Athlete> DisplayedNominatedAthletes => showAllNominated
+        ? AllNominatedAthletes
+        : AllNominatedAthletes.Take(NominatedPreviewCount).ToArray();
 
     private IReadOnlyList<Athlete> FilteredSelectorAthletes => GetFilteredSelectorAthletes();
 
@@ -496,6 +532,35 @@
     private string? SourceDownloadedAt => historyDataset?.Source?.DownloadedAt;
 
     private string RankBadgeLabel => SelectedAthleteRank?.ToString(CultureInfo.CurrentCulture) ?? "•";
+
+    private string ShowAllNominatedLabel => showAllNominated
+        ? Localizer["Predictions.ShowTopNominated", NominatedPreviewCount].Value
+        : Localizer["Predictions.ShowAllAthletes", AllNominatedAthletes.Count].Value;
+
+    private string CategoryContextHint => SelectorAthleteSex == AthleteSex.Male
+        ? Localizer["Predictions.CategoryContextHintMale"].Value
+        : Localizer["Predictions.CategoryContextHint"].Value;
+
+    private int CategoryAthleteCount => ActiveQuestion is null
+        ? 0
+        : ActiveQuestion.AthleteIds.Count == 0
+            ? Competition.Athletes.Count
+            : ActiveQuestion.AthleteIds.Count;
+
+    private string NominatedTotalRange
+    {
+        get
+        {
+            var totals = AllNominatedAthletes
+                .Select(athlete => athlete.SeedTotalKg)
+                .OfType<decimal>()
+                .ToArray();
+
+            return totals.Length == 0
+                ? Localizer["Common.Tbd"].Value
+                : $"{FormatKgValue(totals.Min())}-{FormatKg(totals.Max())}";
+        }
+    }
 
     private IReadOnlyList<AthleteRecentResult> RecentStarts => SelectedAthleteHistory?.RecentResults
         .Take(3)
@@ -552,6 +617,12 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        if (!string.Equals(previousActiveQuestionId, ActiveQuestion?.Id, StringComparison.OrdinalIgnoreCase))
+        {
+            showAllNominated = false;
+            previousActiveQuestionId = ActiveQuestion?.Id;
+        }
+
         if (previousSelectorSlotPosition != SelectorSlotPosition)
         {
             selectorSearchTerm = string.Empty;
@@ -639,7 +710,12 @@
         return Task.CompletedTask;
     }
 
-    private IReadOnlyList<Athlete> GetTopNominatedAthletes()
+    private void ToggleShowAllNominated()
+    {
+        showAllNominated = !showAllNominated;
+    }
+
+    private IReadOnlyList<Athlete> GetAllNominatedAthletes()
     {
         if (ActiveQuestion is null)
         {
@@ -655,7 +731,6 @@
         return athletePool
             .OrderByDescending(athlete => athlete.SeedTotalKg ?? 0m)
             .ThenBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
-            .Take(5)
             .ToArray();
     }
 
@@ -741,6 +816,18 @@
         return value is null
             ? Localizer["Common.Tbd"].Value
             : $"{value.Value.ToString("0.#", CultureInfo.CurrentCulture)} kg";
+    }
+
+    private string FormatCategoryAthleteCount()
+    {
+        var key = SelectorAthleteSex switch
+        {
+            AthleteSex.Female => "Predictions.AthleteCountFemale",
+            AthleteSex.Male => "Predictions.AthleteCountMale",
+            _ => "Predictions.AthleteCount"
+        };
+
+        return Localizer[key, CategoryAthleteCount].Value;
     }
 
     private string FormatDate(string? value)
@@ -845,6 +932,19 @@
             PredictionCompletionStatus.InProgress => Localizer["Predictions.Status.InProgress"],
             _ => Localizer["Predictions.Status.NotStarted"]
         };
+    }
+
+    private string GetCategoryStatusPillClass()
+    {
+        return string.Join(
+            " ",
+            "prediction-context-panel__category-status",
+            CategoryStatus.Status switch
+            {
+                PredictionCompletionStatus.Complete => "prediction-context-panel__category-status--complete",
+                PredictionCompletionStatus.InProgress => "prediction-context-panel__category-status--in-progress",
+                _ => "prediction-context-panel__category-status--not-started"
+            });
     }
 
     private bool IsPersonalBest(decimal? value, decimal? bestValue)

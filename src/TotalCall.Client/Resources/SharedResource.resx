@@ -92,6 +92,8 @@
   <data name="Common.Save" xml:space="preserve"><value>Zapisz</value></data>
   <data name="Common.Cancel" xml:space="preserve"><value>Anuluj</value></data>
   <data name="Common.Tbd" xml:space="preserve"><value>Do ustalenia</value></data>
+  <data name="Common.Today" xml:space="preserve"><value>dzisiaj</value></data>
+  <data name="Common.Tomorrow" xml:space="preserve"><value>jutro</value></data>
   <data name="Common.Required" xml:space="preserve"><value>Wymagane</value></data>
   <data name="Common.Optional" xml:space="preserve"><value>Opcjonalne</value></data>
   <data name="Common.NotAnswered" xml:space="preserve"><value>Brak odpowiedzi</value></data>
@@ -135,6 +137,8 @@
   <data name="Predictions.Description" xml:space="preserve"><value>Odpowiedzi zapisują się lokalnie w tej przeglądarce.</value></data>
   <data name="Predictions.Locked" xml:space="preserve"><value>Edycja typów jest zablokowana dla tych zawodów.</value></data>
   <data name="Predictions.Progress" xml:space="preserve"><value>Postęp</value></data>
+  <data name="Predictions.PredictionProgress" xml:space="preserve"><value>Postęp typowania</value></data>
+  <data name="Predictions.DaysUntil" xml:space="preserve"><value>za {0} dni</value></data>
   <data name="Predictions.Answered" xml:space="preserve"><value>Uzupełnione</value></data>
   <data name="Predictions.NotAnswered" xml:space="preserve"><value>Do uzupełnienia</value></data>
   <data name="Predictions.SavedAnswers" xml:space="preserve"><value>Zapisane odpowiedzi</value></data>
@@ -160,6 +164,10 @@
   <data name="Predictions.NoModulesTitle" xml:space="preserve"><value>Brak modułów predykcji</value></data>
   <data name="Predictions.NoModulesDescription" xml:space="preserve"><value>Dla tych zawodów nie skonfigurowano żadnych modułów predykcji.</value></data>
   <data name="Predictions.ActiveModuleAria" xml:space="preserve"><value>Aktywny moduł predykcji</value></data>
+  <data name="Predictions.Sidebar.ModuleEyebrow" xml:space="preserve"><value>Moduł</value></data>
+  <data name="Predictions.Sidebar.MoreModulesSoon" xml:space="preserve"><value>Inne moduły — wkrótce</value></data>
+  <data name="Predictions.Sidebar.WomenSection" xml:space="preserve"><value>Kobiety</value></data>
+  <data name="Predictions.Sidebar.MenSection" xml:space="preserve"><value>Mężczyźni</value></data>
   <data name="Predictions.CompletedOfTotal" xml:space="preserve"><value>{0} / {1} ukończone</value></data>
   <data name="Predictions.CompletedOfTotalItems" xml:space="preserve"><value>{0} / {1} {2} ukończone</value></data>
   <data name="Predictions.Item.Categories" xml:space="preserve"><value>kategorii</value></data>
@@ -183,7 +191,16 @@
   <data name="Predictions.CloseSelector" xml:space="preserve"><value>Zamknij wybór zawodniczki</value></data>
   <data name="Predictions.CloseSelectorMale" xml:space="preserve"><value>Zamknij wybór zawodnika</value></data>
   <data name="Predictions.TopNominatedTotals" xml:space="preserve"><value>Top nominated totals</value></data>
-  <data name="Predictions.CategoryContextHint" xml:space="preserve"><value>Wybierz zawodnika z rankingu lub listy, aby zobaczyć szczegóły i historię startów.</value></data>
+  <data name="Predictions.Starts" xml:space="preserve"><value>Startuje</value></data>
+  <data name="Predictions.NominatedRange" xml:space="preserve"><value>Range nom</value></data>
+  <data name="Predictions.AthleteCountFemale" xml:space="preserve"><value>{0} zawodniczek</value></data>
+  <data name="Predictions.AthleteCountMale" xml:space="preserve"><value>{0} zawodników</value></data>
+  <data name="Predictions.AthleteCount" xml:space="preserve"><value>{0} zawodników</value></data>
+  <data name="Predictions.ShowAllAthletes" xml:space="preserve"><value>Zobacz wszystkich ({0})</value></data>
+  <data name="Predictions.ShowTopNominated" xml:space="preserve"><value>Pokaż top {0}</value></data>
+  <data name="Predictions.RankingBadge" xml:space="preserve"><value>#{0} w rankingu</value></data>
+  <data name="Predictions.CategoryContextHint" xml:space="preserve"><value>Kliknij zawodniczkę w rankingu, aby zobaczyć jej szczegóły i historię startów.</value></data>
+  <data name="Predictions.CategoryContextHintMale" xml:space="preserve"><value>Kliknij zawodnika w rankingu, aby zobaczyć jego szczegóły i historię startów.</value></data>
   <data name="Predictions.NominatedTotal" xml:space="preserve"><value>Nominowany total</value></data>
   <data name="Predictions.CurrentProjection" xml:space="preserve"><value>Obecna predykcja</value></data>
   <data name="Predictions.RecentLifts" xml:space="preserve"><value>Ostatni rozkład bojów</value></data>
@@ -227,8 +244,14 @@
   <data name="Predictions.NoCategoriesTitle" xml:space="preserve"><value>Brak skonfigurowanych kategorii</value></data>
   <data name="Predictions.NoCategoriesDescription" xml:space="preserve"><value>Ten moduł nie ma jeszcze listy kategorii.</value></data>
   <data name="Predictions.CategoryIndex" xml:space="preserve"><value>Kategoria {0} z {1}</value></data>
+  <data name="Predictions.TopNHeaderHintFemale" xml:space="preserve"><value>Top {0} zawodniczek po total — przeciągnij, aby zmienić kolejność</value></data>
+  <data name="Predictions.TopNHeaderHintMale" xml:space="preserve"><value>Top {0} zawodników po total — przeciągnij, aby zmienić kolejność</value></data>
+  <data name="Predictions.TopNHeaderHint" xml:space="preserve"><value>Top {0} zawodników po total — przeciągnij, aby zmienić kolejność</value></data>
+  <data name="Predictions.SelectedAthletesCountFemale" xml:space="preserve"><value>{0}/{1} zawodniczek wybranych</value></data>
+  <data name="Predictions.SelectedAthletesCountMale" xml:space="preserve"><value>{0}/{1} zawodników wybranych</value></data>
+  <data name="Predictions.SelectedAthletesCount" xml:space="preserve"><value>{0}/{1} zawodniczek wybranych</value></data>
   <data name="Predictions.AutoFillByNominated" xml:space="preserve"><value>Auto-fill wg nominated total</value></data>
-  <data name="Predictions.SortByPredictedTotal" xml:space="preserve"><value>Sortuj wg predicted total</value></data>
+  <data name="Predictions.SortByPredictedTotal" xml:space="preserve"><value>Sortuj wg PRED</value></data>
   <data name="Predictions.ClearCategory" xml:space="preserve"><value>Wyczyść kategorię</value></data>
   <data name="Predictions.YourRankingTopN" xml:space="preserve"><value>Twój ranking (Top {0})</value></data>
   <data name="Predictions.AvailableAthletes" xml:space="preserve"><value>Dostępni zawodnicy</value></data>

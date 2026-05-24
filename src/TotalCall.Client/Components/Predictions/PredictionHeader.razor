@@ -17,34 +17,38 @@
                 </div>
 
                 <div class="prediction-shell-header__text">
-                    <h1>@Competition.Name</h1>
+                    <div class="prediction-shell-header__title-row">
+                        <h1>@Competition.Name</h1>
+                        <PredictionStatusBadge
+                            Status="@CompetitionStatusAsPredictionStatus"
+                            CustomLabel="@Localizer[$"Status.{Competition.Status}"].Value" />
+                    </div>
                     <p>@Text.GroupTitle(Competition, ActiveGroup)</p>
                 </div>
             </div>
 
             <div class="prediction-shell-header__meta">
-                <div>
+                <div class="prediction-shell-header__meta-item">
                     <span>@Localizer["Common.Locks"]</span>
-                    <strong>@FormatDate(Competition.PredictionLockAt)</strong>
-                </div>
-                <div>
-                    <span>@Localizer["Common.Status"]</span>
-                    <PredictionStatusBadge
-                        Status="@CompetitionStatusAsPredictionStatus"
-                        CustomLabel="@Localizer[$"Status.{Competition.Status}"]" />
+                    <strong>
+                        @FormatDate(Competition.PredictionLockAt)
+                        @if (!string.IsNullOrWhiteSpace(FormatDateDistance(Competition.PredictionLockAt)))
+                        {
+                            <small>@FormatDateDistance(Competition.PredictionLockAt)</small>
+                        }
+                    </strong>
                 </div>
 
-                <div class="prediction-shell-header__meta-progress">
-                    <div class="prediction-shell-header__meta-progress-head">
-                        <span>@Localizer["Predictions.Progress"]</span>
-                        <strong>@Localizer["Predictions.CompletedOfTotalItems", ModuleValidation.CompletedItems, ModuleValidation.TotalItems, ItemLabelPlural]</strong>
-                    </div>
-
-                    <div class="prediction-shell-header__meta-progress-track" aria-hidden="true">
-                        <span style="@($"width: {CompletionPercent}%")"></span>
-                    </div>
-                </div>
             </div>
+        </div>
+
+        <div class="prediction-shell-header__progress-head">
+            <span>@Localizer["Predictions.PredictionProgress"]</span>
+            <strong>@Localizer["Predictions.CompletedOfTotalItems", ModuleValidation.CompletedItems, ModuleValidation.TotalItems, ItemLabelPlural]</strong>
+        </div>
+
+        <div class="prediction-shell-header__progress-track" aria-hidden="true">
+            <span style="@($"width: {CompletionPercent}%")"></span>
         </div>
     </div>
 </header>
@@ -87,6 +91,24 @@
     private string FormatDate(DateTimeOffset? value)
     {
         return value?.ToLocalTime().ToString("d MMM yyyy, HH:mm") ?? Localizer["Common.Tbd"];
+    }
+
+    private string? FormatDateDistance(DateTimeOffset? value)
+    {
+        if (value is null)
+        {
+            return null;
+        }
+
+        var days = (value.Value.ToLocalTime().Date - DateTimeOffset.Now.ToLocalTime().Date).Days;
+
+        return days switch
+        {
+            < 0 => null,
+            0 => Localizer["Common.Today"].Value,
+            1 => Localizer["Common.Tomorrow"].Value,
+            _ => Localizer["Predictions.DaysUntil", days].Value
+        };
     }
 
     private string ResolveItemLabelPlural(PredictionGroup group)

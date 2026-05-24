@@ -19,24 +19,23 @@
                         StatusByQuestionId="TopNStatusByQuestionId"
                         ActiveQuestionId="@CurrentTopNQuestionId"
                         CategoryLabelSelector="GetTopNCategoryName"
+                        CategorySectionSelector="GetTopNCategorySectionName"
                         CategoryChanged="OnTopNQuestionChanged" />
                 }
             </div>
         </aside>
 
         <div class="prediction-shell__main-area">
-            <div class="prediction-shell__top-row">
-                <PredictionHeader
-                    Competition="@Competition"
-                    ActiveGroup="@ActiveGroup"
-                    ModuleValidation="@ActiveModuleValidation"
-                    SaveStatus="@SaveStatus"
-                    LastSavedAt="@LastSavedAt"
-                    CanEditPredictions="@CanEditPredictions" />
-            </div>
-
             <div class="prediction-shell__content-row">
                 <div class="prediction-shell__center-column">
+                    <PredictionHeader
+                        Competition="@Competition"
+                        ActiveGroup="@ActiveGroup"
+                        ModuleValidation="@ActiveModuleValidation"
+                        SaveStatus="@SaveStatus"
+                        LastSavedAt="@LastSavedAt"
+                        CanEditPredictions="@CanEditPredictions" />
+
                     @if (!CanEditPredictions)
                     {
                         <div class="notice notice--warning">
@@ -467,6 +466,18 @@
     {
         var category = Competition.Categories.FirstOrDefault(item => item.Id == question.CategoryId);
         return category?.Name ?? Text.QuestionTitle(Competition, question);
+    }
+
+    private string? GetTopNCategorySectionName(PredictionQuestion question)
+    {
+        var category = Competition.Categories.FirstOrDefault(item => item.Id == question.CategoryId);
+
+        return category?.Sex switch
+        {
+            AthleteSex.Female => Localizer["Predictions.Sidebar.WomenSection"].Value,
+            AthleteSex.Male => Localizer["Predictions.Sidebar.MenSection"].Value,
+            _ => null
+        };
     }
 
     private bool IsAthleteInCurrentTopNQuestion(string? athleteId)
