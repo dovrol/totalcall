@@ -5153,6 +5153,44 @@ textarea {
     background: color-mix(in srgb, var(--bg-surface-muted) 84%, transparent);
 }
 
+.prediction-review-page {
+    display: grid;
+    gap: 0.85rem;
+}
+
+@media (max-width: 899.98px) {
+    .app-shell--no-mobile-tabs .app-mobile-nav {
+        display: none;
+    }
+
+    .app-shell--no-mobile-tabs .app-shell__content {
+        padding-block: 1.5rem calc(env(safe-area-inset-bottom) + 4.4rem);
+    }
+
+    .app-shell--no-mobile-tabs .prediction-shell {
+        --prediction-action-bar-offset: calc(env(safe-area-inset-bottom) + 0.6rem);
+        --prediction-bottom-bar-space: calc(env(safe-area-inset-bottom) + 4.4rem);
+        --prediction-rail-bottom: calc(env(safe-area-inset-bottom) + 4.4rem);
+    }
+
+    .app-shell--no-mobile-tabs .prediction-review-page {
+        padding-bottom: calc(env(safe-area-inset-bottom) + 4.4rem);
+    }
+
+    .app-shell--no-mobile-tabs .floating-window-host__taskbar {
+        bottom: calc(env(safe-area-inset-bottom) + 4.4rem);
+    }
+
+    .prediction-action-bar {
+        padding: 0.4rem;
+        gap: 0.35rem;
+    }
+
+    .prediction-action-bar .app-button {
+        padding-inline: 0.55rem;
+    }
+}
+
 .prediction-status-badge {
     min-height: 1.5rem;
     display: inline-flex;

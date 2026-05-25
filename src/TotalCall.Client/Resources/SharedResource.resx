@@ -317,6 +317,8 @@
   <data name="Review.EmptyDescription" xml:space="preserve"><value>Przejdź do formularza typowań, żeby utworzyć lokalny szkic.</value></data>
   <data name="Review.ValidationIssues" xml:space="preserve"><value>Ten szkic ma jeszcze {0} błędów walidacji.</value></data>
   <data name="Review.EditPredictions" xml:space="preserve"><value>Edytuj typy</value></data>
+  <data name="Review.CloseReview" xml:space="preserve"><value>Zamknij przegląd</value></data>
+  <data name="Review.ActionBarAria" xml:space="preserve"><value>Akcje przeglądu typów</value></data>
   <data name="Validation.Required" xml:space="preserve"><value>To pytanie jest wymagane.</value></data>
   <data name="Validation.ExactSelections" xml:space="preserve"><value>Wybierz dokładnie {count}.</value></data>
   <data name="Validation.MinSelections" xml:space="preserve"><value>Wybierz co najmniej {count}.</value></data>

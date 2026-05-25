@@ -317,6 +317,8 @@
   <data name="Review.EmptyDescription" xml:space="preserve"><value>Start the prediction form to create a local draft.</value></data>
   <data name="Review.ValidationIssues" xml:space="preserve"><value>This draft still has {0} validation issue(s).</value></data>
   <data name="Review.EditPredictions" xml:space="preserve"><value>Edit predictions</value></data>
+  <data name="Review.CloseReview" xml:space="preserve"><value>Close review</value></data>
+  <data name="Review.ActionBarAria" xml:space="preserve"><value>Review actions</value></data>
   <data name="Validation.Required" xml:space="preserve"><value>This question is required.</value></data>
   <data name="Validation.ExactSelections" xml:space="preserve"><value>Select exactly {count}.</value></data>
   <data name="Validation.MinSelections" xml:space="preserve"><value>Select at least {count}.</value></data>

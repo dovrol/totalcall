@@ -2,9 +2,10 @@
 @inject CultureService Culture
 @inject AppInfoService AppInfo
 @inject ChangelogService Changelog
+@inject NavigationManager NavigationManager
 @inject IStringLocalizer<SharedResource> Localizer
 
-<div class="app-shell app-shell-background">
+<div class="@ShellClass">
     <AppSidebar />
 
     <main class="app-shell__main">
@@ -59,6 +60,35 @@
     protected override void OnInitialized()
     {
         Culture.CultureChanged += OnCultureChanged;
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private string ShellClass
+    {
+        get
+        {
+            var baseClass = "app-shell app-shell-background";
+            return IsWorkingScreen(NavigationManager.Uri)
+                ? $"{baseClass} app-shell--no-mobile-tabs"
+                : baseClass;
+        }
+    }
+
+    private static bool IsWorkingScreen(string uri)
+    {
+        if (!Uri.TryCreate(uri, UriKind.Absolute, out var parsed))
+        {
+            return false;
+        }
+
+        var path = parsed.AbsolutePath;
+        return path.Contains("/predictions", StringComparison.OrdinalIgnoreCase)
+            || path.Contains("/review", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        _ = InvokeAsync(StateHasChanged);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -92,6 +122,7 @@
     public void Dispose()
     {
         Culture.CultureChanged -= OnCultureChanged;
+        NavigationManager.LocationChanged -= OnLocationChanged;
     }
 
     private void OnCultureChanged()
