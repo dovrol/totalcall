@@ -1,9 +1,15 @@
 (function () {
     function copyText(text) {
         if (navigator.clipboard && window.isSecureContext) {
-            return navigator.clipboard.writeText(text);
+            return navigator.clipboard.writeText(text)
+                .then(function () { return true; })
+                .catch(function () { return execCommandCopy(text); });
         }
 
+        return Promise.resolve(execCommandCopy(text));
+    }
+
+    function execCommandCopy(text) {
         var textarea = document.createElement("textarea");
         textarea.value = text;
         textarea.setAttribute("readonly", "");
@@ -12,13 +18,16 @@
         document.body.appendChild(textarea);
         textarea.select();
 
+        var succeeded = false;
         try {
-            document.execCommand("copy");
+            succeeded = document.execCommand("copy");
+        } catch (err) {
+            succeeded = false;
         } finally {
             document.body.removeChild(textarea);
         }
 
-        return Promise.resolve();
+        return succeeded;
     }
 
     function downloadTextFile(fileName, content, contentType) {

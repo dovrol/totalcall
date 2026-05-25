@@ -1,14 +1,9 @@
 @page "/competitions/{Slug}/predictions"
-@using System.Text
-@using System.Text.Json
-@using TotalCall.Client.Infrastructure.Browser
-@using TotalCall.Client.Infrastructure.Json
+@using TotalCall.Client.Components.Predictions.Share
 @inject CompetitionService CompetitionService
 @inject PredictionService PredictionService
 @inject IPredictionValidationService PredictionValidationService
-@inject PredictionAnswerDisplayService AnswerDisplay
-@inject PredictionTextService Text
-@inject BrowserFileActions BrowserFileActions
+@inject CompetitionReviewBuilder ReviewBuilder
 @inject IStringLocalizer<SharedResource> Localizer
 
 <PageTitle>@(competition is null ? Localizer["Predictions.PageTitle"] : $"{competition.Name} - {Localizer["Predictions.PageTitle"]}")</PageTitle>
@@ -43,9 +38,15 @@ else
         LastSavedAt="@predictionSet.SavedAt"
         GroupChanged="@SelectGroup"
         AnswerChanged="@OnAnswerChanged"
-        CopySummaryRequested="@OnCopySummaryRequested"
-        ExportJsonRequested="@OnExportJsonRequested" />
+        ShareRequested="@OnShareRequested" />
 }
+
+<ShareExportModal
+    IsOpen="@isShareOpen"
+    Competition="@competition"
+    PredictionSet="@predictionSet"
+    Review="@shareReview"
+    OnClose="@CloseShare" />
 
 @code {
     [Parameter]
@@ -60,6 +61,8 @@ else
     private bool canEditPredictions;
     private string? saveStatus;
     private string? activeGroupId;
+    private bool isShareOpen;
+    private CompetitionReviewModel? shareReview;
 
     private IReadOnlyList<PredictionGroup> OrderedGroups => competition?
         .PredictionGroups
@@ -165,63 +168,21 @@ else
         return Task.CompletedTask;
     }
 
-    private async Task OnCopySummaryRequested(MouseEventArgs _)
+    private Task OnShareRequested(MouseEventArgs _)
     {
         if (competition is null || predictionSet is null)
         {
-            return;
+            return Task.CompletedTask;
         }
 
-        await BrowserFileActions.CopyTextAsync(BuildPredictionSummary(competition, predictionSet));
+        shareReview = ReviewBuilder.Build(competition, predictionSet, canEditPredictions);
+        isShareOpen = true;
+        return Task.CompletedTask;
     }
 
-    private async Task OnExportJsonRequested(MouseEventArgs _)
+    private Task CloseShare()
     {
-        if (competition is null || predictionSet is null)
-        {
-            return;
-        }
-
-        var exportPayload = PredictionService.CreateExportPayload(predictionSet);
-        var options = new JsonSerializerOptions(JsonDataOptions.SerializerOptions)
-        {
-            WriteIndented = true
-        };
-        var json = JsonSerializer.Serialize(exportPayload, options);
-
-        await BrowserFileActions.DownloadTextFileAsync(
-            $"{competition.Slug}-totalcall-picks.json",
-            json,
-            "application/json;charset=utf-8");
+        isShareOpen = false;
+        return Task.CompletedTask;
     }
-
-    private string BuildPredictionSummary(Competition competition, PredictionSet predictionSet)
-    {
-        var builder = new StringBuilder();
-
-        builder.AppendLine(competition.Name);
-        builder.AppendLine($"{Localizer["Predictions.LastSaved"]}: {predictionSet.SavedAt.ToLocalTime():d MMM yyyy, HH:mm}");
-
-        foreach (var group in OrderedGroups)
-        {
-            builder.AppendLine();
-            builder.AppendLine(Text.GroupTitle(competition, group));
-
-            foreach (var question in group.Questions.OrderBy(question => question.Order))
-            {
-                var answer = FindAnswer(predictionSet, group.Id, question.Id);
-                builder.AppendLine($"- {Text.QuestionTitle(competition, question)}: {AnswerDisplay.FormatAnswer(competition, question, answer)}");
-            }
-        }
-
-        return builder.ToString().TrimEnd();
-    }
-
-    private static PredictionAnswer? FindAnswer(PredictionSet predictionSet, string groupId, string questionId)
-    {
-        return predictionSet.Answers.FirstOrDefault(answer =>
-            string.Equals(answer.GroupId, groupId, StringComparison.OrdinalIgnoreCase) &&
-            string.Equals(answer.QuestionId, questionId, StringComparison.OrdinalIgnoreCase));
-    }
-
 }

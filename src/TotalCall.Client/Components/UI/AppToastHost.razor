@@ -1,0 +1,94 @@
+@using TotalCall.Client.Application.Services.Notifications
+@implements IDisposable
+@inject ToastService Toasts
+
+<div class="app-toast-host" role="status" aria-live="polite">
+    @foreach (var message in Toasts.Messages)
+    {
+        <div class="@ClassFor(message)" role="@RoleFor(message)">
+            <span class="app-toast__icon" aria-hidden="true">@IconFor(message)</span>
+            <span class="app-toast__text">@message.Text</span>
+            <button
+                type="button"
+                class="app-toast__close"
+                aria-label="Close"
+                @onclick="() => Toasts.Dismiss(message.Id)">&#xD7;</button>
+        </div>
+    }
+</div>
+
+@code {
+    private readonly Dictionary<Guid, CancellationTokenSource> autoHideTokens = new();
+
+    protected override void OnInitialized()
+    {
+        Toasts.OnChanged += HandleChanged;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        foreach (var message in Toasts.Messages)
+        {
+            if (autoHideTokens.ContainsKey(message.Id) || message.AutoHideAfter <= TimeSpan.Zero)
+            {
+                continue;
+            }
+
+            var cts = new CancellationTokenSource();
+            autoHideTokens[message.Id] = cts;
+            _ = ScheduleAutoHideAsync(message.Id, message.AutoHideAfter, cts.Token);
+        }
+
+        var activeIds = Toasts.Messages.Select(message => message.Id).ToHashSet();
+        foreach (var staleId in autoHideTokens.Keys.Where(id => !activeIds.Contains(id)).ToArray())
+        {
+            autoHideTokens[staleId].Cancel();
+            autoHideTokens.Remove(staleId);
+        }
+    }
+
+    private async Task ScheduleAutoHideAsync(Guid id, TimeSpan delay, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await Task.Delay(delay, cancellationToken);
+            Toasts.Dismiss(id);
+        }
+        catch (TaskCanceledException)
+        {
+        }
+    }
+
+    private void HandleChanged()
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Toasts.OnChanged -= HandleChanged;
+        foreach (var cts in autoHideTokens.Values)
+        {
+            cts.Cancel();
+            cts.Dispose();
+        }
+        autoHideTokens.Clear();
+    }
+
+    private static string ClassFor(ToastMessage message) => message.Kind switch
+    {
+        ToastKind.Success => "app-toast app-toast--success",
+        ToastKind.Error => "app-toast app-toast--error",
+        _ => "app-toast app-toast--info"
+    };
+
+    private static string RoleFor(ToastMessage message) =>
+        message.Kind == ToastKind.Error ? "alert" : "status";
+
+    private static string IconFor(ToastMessage message) => message.Kind switch
+    {
+        ToastKind.Success => "✓",
+        ToastKind.Error => "⚠",
+        _ => "ℹ"
+    };
+}

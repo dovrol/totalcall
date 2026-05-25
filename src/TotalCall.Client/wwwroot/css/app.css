@@ -9041,3 +9041,366 @@ textarea {
         box-shadow: inset 3px 0 0 var(--accent);
     }
 }
+
+
+/* =======================================================================
+   TOAST NOTIFICATIONS
+   ====================================================================== */
+
+.app-toast-host {
+    position: fixed;
+    top: calc(env(safe-area-inset-top) + 1rem);
+    right: 1rem;
+    z-index: 1300;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    pointer-events: none;
+    max-width: min(28rem, calc(100vw - 2rem));
+}
+
+.app-toast {
+    pointer-events: auto;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-size: 0.88rem;
+    line-height: 1.35;
+    box-shadow: 0 10px 36px rgb(0 0 0 / 0.38);
+    animation: app-toast-in 160ms ease-out;
+}
+
+.app-toast--success {
+    border-color: color-mix(in srgb, #22c55e 60%, var(--border-strong));
+    box-shadow: 0 10px 36px rgb(34 197 94 / 0.16);
+}
+
+.app-toast--error {
+    border-color: color-mix(in srgb, #ef4444 65%, var(--border-strong));
+    box-shadow: 0 10px 36px rgb(239 68 68 / 0.18);
+}
+
+.app-toast__icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.app-toast--success .app-toast__icon {
+    background: color-mix(in srgb, #22c55e 25%, transparent);
+    color: #22c55e;
+}
+
+.app-toast--error .app-toast__icon {
+    background: color-mix(in srgb, #ef4444 25%, transparent);
+    color: #ef4444;
+}
+
+.app-toast--info .app-toast__icon {
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+    color: var(--accent);
+}
+
+.app-toast__text {
+    min-width: 0;
+    word-wrap: break-word;
+}
+
+.app-toast__close {
+    border: 0;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.15rem 0.4rem;
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.app-toast__close:hover {
+    color: var(--text-primary);
+}
+
+@keyframes app-toast-in {
+    from { transform: translateY(-6px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 580px) {
+    .app-toast-host {
+        right: 0.6rem;
+        left: 0.6rem;
+        max-width: none;
+    }
+}
+
+/* =======================================================================
+   SHARE & EXPORT MODAL
+   ====================================================================== */
+
+.share-dialog-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: grid;
+    place-items: center;
+    padding: 1.1rem;
+    overscroll-behavior: contain;
+}
+
+.share-dialog__backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border: 0;
+    background: rgb(3 10 21 / 0.76);
+    backdrop-filter: blur(3px);
+    cursor: pointer;
+}
+
+.share-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(38rem, 100%);
+    max-height: min(90vh, 52rem);
+    overflow: auto;
+    border: 1px solid color-mix(in srgb, var(--border-strong) 90%, transparent);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    padding: 1.1rem 1.2rem 1.2rem;
+    display: grid;
+    gap: 1rem;
+    box-shadow: 0 24px 72px rgb(0 0 0 / 0.46);
+}
+
+.share-dialog__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.6rem;
+    align-items: flex-start;
+}
+
+.share-dialog__head-text h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    line-height: 1.2;
+}
+
+.share-dialog__subtitle {
+    margin: 0.25rem 0 0;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+.share-dialog__close {
+    min-height: 2rem;
+    min-width: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 0.56rem;
+    background: color-mix(in srgb, var(--bg-surface) 90%, transparent);
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.share-dialog__close:hover {
+    color: var(--text-primary);
+    border-color: var(--border-strong);
+}
+
+.share-dialog__body {
+    display: grid;
+    gap: 0.7rem;
+}
+
+.share-dialog__notice {
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 0.75rem;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg-surface-muted) 86%, transparent);
+    color: var(--text-secondary);
+}
+
+.share-dialog__notice--warn {
+    border-color: color-mix(in srgb, #f59e0b 55%, var(--border-strong));
+    background: color-mix(in srgb, #f59e0b 12%, var(--bg-surface));
+    color: var(--text-primary);
+}
+
+.share-cards {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.share-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 0.8rem;
+    text-align: left;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--bg-surface-muted) 88%, transparent);
+    padding: 0.85rem 0.95rem;
+    cursor: pointer;
+    color: var(--text-primary);
+    transition: border-color 120ms ease, transform 120ms ease, background 120ms ease;
+}
+
+.share-card:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--bg-surface) 80%, transparent);
+}
+
+.share-card:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.share-card[aria-busy="true"] {
+    border-color: var(--accent);
+}
+
+.share-card__icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 16%, var(--bg-surface));
+    color: var(--accent);
+}
+
+.share-card__content {
+    display: grid;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.share-card__title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.share-card__title {
+    font-weight: 700;
+    font-size: 0.96rem;
+}
+
+.share-card__badge {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+    color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.share-card__description {
+    color: var(--text-secondary);
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.share-card__cta {
+    margin-top: 0.3rem;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.share-card__spinner {
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 999px;
+    border: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    border-top-color: var(--accent);
+    animation: share-card-spin 0.7s linear infinite;
+    display: inline-block;
+}
+
+@keyframes share-card-spin {
+    to { transform: rotate(360deg); }
+}
+
+.share-dialog__footer {
+    border-top: 1px solid var(--border);
+    padding-top: 0.7rem;
+}
+
+.share-dialog__note {
+    color: var(--text-muted);
+    font-size: 0.76rem;
+    line-height: 1.5;
+}
+
+.share-fallback {
+    display: grid;
+    gap: 0.55rem;
+}
+
+.share-fallback__title {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.share-fallback__body {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+.share-fallback__textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface-muted);
+    color: var(--text-primary);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    padding: 0.6rem 0.75rem;
+    resize: vertical;
+}
+
+.share-fallback__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+@media (max-width: 580px) {
+    .share-dialog {
+        padding: 0.9rem 0.95rem 1rem;
+    }
+
+    .share-card {
+        padding: 0.7rem 0.8rem;
+    }
+}

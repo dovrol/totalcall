@@ -154,7 +154,31 @@
   <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Typy zapisują się tylko w tej przeglądarce</value></data>
   <data name="Predictions.CopySummary" xml:space="preserve"><value>Kopiuj podsumowanie</value></data>
   <data name="Predictions.ExportJson" xml:space="preserve"><value>Eksportuj JSON</value></data>
+  <data name="Predictions.ExportCsv" xml:space="preserve"><value>Eksportuj CSV</value></data>
   <data name="Predictions.MoreActions" xml:space="preserve"><value>Więcej</value></data>
+  <data name="Share.Trigger" xml:space="preserve"><value>Udostępnij</value></data>
+  <data name="Share.Title" xml:space="preserve"><value>Eksport i udostępnianie</value></data>
+  <data name="Share.Subtitle" xml:space="preserve"><value>Zachowaj kopię swoich typów albo udostępnij je dalej. Wszystko dzieje się lokalnie w Twojej przeglądarce.</value></data>
+  <data name="Share.Close" xml:space="preserve"><value>Zamknij</value></data>
+  <data name="Share.Working" xml:space="preserve"><value>Pracuję…</value></data>
+  <data name="Share.CopyAppLink" xml:space="preserve"><value>Skopiuj link</value></data>
+  <data name="Share.NoPicksHint" xml:space="preserve"><value>Nie masz jeszcze zapisanych typów. Eksport zostanie odblokowany po pierwszym wyborze.</value></data>
+  <data name="Share.PrivacyNote" xml:space="preserve"><value>Twoje typy są zapisywane lokalnie w tej przeglądarce. Eksport JSON/CSV pozwala zachować kopię — nic nie jest wysyłane na serwer.</value></data>
+  <data name="Share.Card.CopySummary.Title" xml:space="preserve"><value>Kopiuj podsumowanie</value></data>
+  <data name="Share.Card.CopySummary.Body" xml:space="preserve"><value>Czytelny tekst do Discorda, wiadomości albo notatek podcastu.</value></data>
+  <data name="Share.Card.ExportJson.Title" xml:space="preserve"><value>Eksportuj JSON</value></data>
+  <data name="Share.Card.ExportJson.Body" xml:space="preserve"><value>Pełne dane do backupu, importu albo dla organizatora.</value></data>
+  <data name="Share.Card.ExportCsv.Title" xml:space="preserve"><value>Eksportuj CSV</value></data>
+  <data name="Share.Card.ExportCsv.Body" xml:space="preserve"><value>Tabela do analizy i porównań — otwiera się w Excelu, Numbers i Sheets. (CSV, nie XLSX.)</value></data>
+  <data name="Share.Card.CopyLink.Title" xml:space="preserve"><value>Skopiuj link do aplikacji</value></data>
+  <data name="Share.Card.CopyLink.Body" xml:space="preserve"><value>Link do TotalCall bez Twoich typów — typy zostają w Twojej przeglądarce.</value></data>
+  <data name="Share.Toast.CopySummary.Success" xml:space="preserve"><value>Skopiowano podsumowanie do schowka.</value></data>
+  <data name="Share.Toast.ExportJson.Success" xml:space="preserve"><value>Pobrano plik JSON z typami.</value></data>
+  <data name="Share.Toast.ExportCsv.Success" xml:space="preserve"><value>Pobrano plik CSV z typami.</value></data>
+  <data name="Share.Toast.CopyLink.Success" xml:space="preserve"><value>Skopiowano link do aplikacji.</value></data>
+  <data name="Share.Toast.Generic.Error" xml:space="preserve"><value>Coś poszło nie tak. Spróbuj ponownie.</value></data>
+  <data name="Share.Clipboard.FallbackTitle" xml:space="preserve"><value>Skopiuj ręcznie</value></data>
+  <data name="Share.Clipboard.FallbackBody" xml:space="preserve"><value>Przeglądarka zablokowała automatyczne kopiowanie. Zaznacz tekst poniżej i skopiuj go ręcznie (Cmd/Ctrl + C).</value></data>
   <data name="Predictions.ActionBarAria" xml:space="preserve"><value>Akcje typów</value></data>
   <data name="Predictions.DropAthleteHere" xml:space="preserve"><value>Upuść zawodnika tutaj</value></data>
   <data name="Predictions.DragFromShortlist" xml:space="preserve"><value>Przeciągnij z listy po prawej</value></data>

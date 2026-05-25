@@ -1,0 +1,316 @@
+@using TotalCall.Client.Application.Services.Export
+@using TotalCall.Client.Application.Services.Notifications
+@using TotalCall.Client.Domain.Predictions.Export
+@using TotalCall.Client.Infrastructure.Browser
+@inject PredictionExportService Exporter
+@inject BrowserFileActions BrowserFileActions
+@inject ToastService Toasts
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<SharedResource> Localizer
+
+@if (IsOpen && Competition is not null && PredictionSet is not null && Review is not null)
+{
+    <div class="share-dialog-layer" role="presentation">
+        <button
+            type="button"
+            class="share-dialog__backdrop"
+            aria-label="@Localizer["Share.Close"]"
+            @onclick="HandleClose"></button>
+
+        <div
+            class="share-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="share-dialog-title">
+            <header class="share-dialog__head">
+                <div class="share-dialog__head-text">
+                    <h2 id="share-dialog-title">@Localizer["Share.Title"]</h2>
+                    <p class="share-dialog__subtitle">@Localizer["Share.Subtitle"]</p>
+                </div>
+                <button
+                    type="button"
+                    class="share-dialog__close"
+                    aria-label="@Localizer["Share.Close"]"
+                    @onclick="HandleClose">&#xD7;</button>
+            </header>
+
+            @if (fallbackOpen)
+            {
+                <div class="share-dialog__body">
+                    <section class="share-fallback">
+                        <h3 class="share-fallback__title">@Localizer["Share.Clipboard.FallbackTitle"]</h3>
+                        <p class="share-fallback__body">@Localizer["Share.Clipboard.FallbackBody"]</p>
+                        <textarea
+                            class="share-fallback__textarea"
+                            readonly
+                            rows="10"
+                            @ref="fallbackTextareaRef">@fallbackText</textarea>
+                        <div class="share-fallback__actions">
+                            <button type="button" class="app-button app-button--secondary app-button--sm" @onclick="CloseFallback">
+                                @Localizer["Common.Back"]
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            }
+            else
+            {
+                <div class="share-dialog__body">
+                    @if (!HasPicks)
+                    {
+                        <div class="share-dialog__notice share-dialog__notice--warn">
+                            @Localizer["Share.NoPicksHint"]
+                        </div>
+                    }
+
+                    <div class="share-cards">
+                        @RenderCard(
+                            title: Localizer["Share.Card.CopySummary.Title"],
+                            description: Localizer["Share.Card.CopySummary.Body"],
+                            badge: null,
+                            icon: AppIconName.Copy,
+                            kind: ActionKind.CopySummary,
+                            cta: Localizer["Predictions.CopySummary"])
+                        @RenderCard(
+                            title: Localizer["Share.Card.ExportJson.Title"],
+                            description: Localizer["Share.Card.ExportJson.Body"],
+                            badge: "JSON",
+                            icon: AppIconName.Download,
+                            kind: ActionKind.ExportJson,
+                            cta: Localizer["Predictions.ExportJson"])
+                        @RenderCard(
+                            title: Localizer["Share.Card.ExportCsv.Title"],
+                            description: Localizer["Share.Card.ExportCsv.Body"],
+                            badge: "CSV",
+                            icon: AppIconName.Download,
+                            kind: ActionKind.ExportCsv,
+                            cta: Localizer["Predictions.ExportCsv"])
+                        @RenderCard(
+                            title: Localizer["Share.Card.CopyLink.Title"],
+                            description: Localizer["Share.Card.CopyLink.Body"],
+                            badge: null,
+                            icon: AppIconName.ExternalLink,
+                            kind: ActionKind.CopyLink,
+                            cta: Localizer["Share.CopyAppLink"],
+                            disabledOverride: false)
+                    </div>
+                </div>
+
+                <footer class="share-dialog__footer">
+                    <small class="share-dialog__note">@Localizer["Share.PrivacyNote"]</small>
+                </footer>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private enum ActionKind { CopySummary, ExportJson, ExportCsv, CopyLink }
+
+    [Parameter] public bool IsOpen { get; set; }
+    [Parameter] public Competition? Competition { get; set; }
+    [Parameter] public PredictionSet? PredictionSet { get; set; }
+    [Parameter] public CompetitionReviewModel? Review { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private ActionKind? runningAction;
+    private bool fallbackOpen;
+    private string fallbackText = string.Empty;
+    private ElementReference fallbackTextareaRef;
+
+    private bool HasPicks => Review?.HasAnyAnswer ?? false;
+
+    private RenderFragment RenderCard(
+        string title,
+        string description,
+        string? badge,
+        AppIconName icon,
+        ActionKind kind,
+        string cta,
+        bool? disabledOverride = null)
+    {
+        return @<button
+            type="button"
+            class="share-card"
+            disabled="@IsCardDisabled(kind, disabledOverride)"
+            aria-busy="@(runningAction == kind)"
+            @onclick="() => InvokeActionAsync(kind)">
+            <span class="share-card__icon" aria-hidden="true">
+                <AppIcon Name="@icon" Size="20" />
+            </span>
+            <span class="share-card__content">
+                <span class="share-card__title-row">
+                    <span class="share-card__title">@title</span>
+                    @if (!string.IsNullOrEmpty(badge))
+                    {
+                        <span class="share-card__badge">@badge</span>
+                    }
+                </span>
+                <span class="share-card__description">@description</span>
+                <span class="share-card__cta">
+                    @if (runningAction == kind)
+                    {
+                        <span class="share-card__spinner" aria-hidden="true"></span>
+                        <span>@Localizer["Share.Working"]</span>
+                    }
+                    else
+                    {
+                        <span>@cta</span>
+                    }
+                </span>
+            </span>
+        </button>;
+    }
+
+    private bool IsCardDisabled(ActionKind kind, bool? disabledOverride)
+    {
+        if (runningAction is not null && runningAction != kind)
+        {
+            return true;
+        }
+        if (disabledOverride is not null)
+        {
+            return disabledOverride.Value;
+        }
+        return !HasPicks;
+    }
+
+    private async Task InvokeActionAsync(ActionKind kind)
+    {
+        if (runningAction is not null) return;
+
+        runningAction = kind;
+        try
+        {
+            switch (kind)
+            {
+                case ActionKind.CopySummary: await CopySummaryAsync(); break;
+                case ActionKind.ExportJson: await ExportJsonAsync(); break;
+                case ActionKind.ExportCsv: await ExportCsvAsync(); break;
+                case ActionKind.CopyLink: await CopyAppLinkAsync(); break;
+            }
+        }
+        finally
+        {
+            runningAction = null;
+            StateHasChanged();
+        }
+    }
+
+    private PredictionExportContext BuildContext()
+    {
+        var envelope = Exporter.BuildEnvelope(Competition!, PredictionSet!);
+        return new PredictionExportContext(Competition!, Review!, envelope);
+    }
+
+    private async Task CopySummaryAsync()
+    {
+        try
+        {
+            var context = BuildContext();
+            var text = Exporter.BuildPlainSummary(context);
+            var success = await BrowserFileActions.CopyTextAsync(text);
+            if (success)
+            {
+                Toasts.ShowSuccess(Localizer["Share.Toast.CopySummary.Success"]);
+            }
+            else
+            {
+                OpenFallback(text);
+            }
+        }
+        catch
+        {
+            Toasts.ShowError(Localizer["Share.Toast.Generic.Error"]);
+        }
+    }
+
+    private async Task ExportJsonAsync()
+    {
+        try
+        {
+            var context = BuildContext();
+            var json = Exporter.BuildJson(context, PredictionSet!);
+            var fileName = Exporter.BuildJsonFileName(Competition!, context.Envelope);
+            await BrowserFileActions.DownloadTextFileAsync(fileName, json, "application/json;charset=utf-8");
+            Toasts.ShowSuccess(Localizer["Share.Toast.ExportJson.Success"]);
+        }
+        catch
+        {
+            Toasts.ShowError(Localizer["Share.Toast.Generic.Error"]);
+        }
+    }
+
+    private async Task ExportCsvAsync()
+    {
+        try
+        {
+            var context = BuildContext();
+            var csv = Exporter.BuildCsv(context);
+            var fileName = Exporter.BuildCsvFileName(Competition!, context.Envelope);
+            await BrowserFileActions.DownloadTextFileAsync(fileName, csv, "text/csv;charset=utf-8");
+            Toasts.ShowSuccess(Localizer["Share.Toast.ExportCsv.Success"]);
+        }
+        catch
+        {
+            Toasts.ShowError(Localizer["Share.Toast.Generic.Error"]);
+        }
+    }
+
+    private async Task CopyAppLinkAsync()
+    {
+        try
+        {
+            var link = NavigationManager.BaseUri;
+            var success = await BrowserFileActions.CopyTextAsync(link);
+            if (success)
+            {
+                Toasts.ShowSuccess(Localizer["Share.Toast.CopyLink.Success"]);
+            }
+            else
+            {
+                OpenFallback(link);
+            }
+        }
+        catch
+        {
+            Toasts.ShowError(Localizer["Share.Toast.Generic.Error"]);
+        }
+    }
+
+    private void OpenFallback(string text)
+    {
+        fallbackText = text;
+        fallbackOpen = true;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (fallbackOpen)
+        {
+            try
+            {
+                await fallbackTextareaRef.FocusAsync();
+            }
+            catch
+            {
+            }
+        }
+    }
+
+    private void CloseFallback()
+    {
+        fallbackOpen = false;
+        fallbackText = string.Empty;
+    }
+
+    private async Task HandleClose()
+    {
+        fallbackOpen = false;
+        fallbackText = string.Empty;
+        if (OnClose.HasDelegate)
+        {
+            await OnClose.InvokeAsync();
+        }
+    }
+}

@@ -1,4 +1,3 @@
-using System.Globalization;
 using TotalCall.Client.Domain.Athletes;
 using TotalCall.Client.Domain.Competitions;
 using TotalCall.Client.Domain.Predictions;
@@ -10,8 +9,7 @@ namespace TotalCall.Client.Application.Services.Review;
 public sealed class CompetitionReviewBuilder(
     IPredictionValidationService validationService,
     PredictionTextService text,
-    PredictionAnswerDisplayService answerDisplay,
-    IStringLocalizer<SharedResource> localizer)
+    PredictionAnswerDisplayService answerDisplay)
 {
     public CompetitionReviewModel Build(Competition competition, PredictionSet predictionSet, bool canEditPredictions)
     {
@@ -80,55 +78,6 @@ public sealed class CompetitionReviewBuilder(
                 savedPicks),
             Modules = modules
         };
-    }
-
-    public string BuildPlainSummary(CompetitionReviewModel review)
-    {
-        var builder = new System.Text.StringBuilder();
-        builder.AppendLine(review.CompetitionName);
-        builder.AppendLine($"{localizer["Predictions.LastSaved"]}: {review.SavedAt.ToLocalTime():d MMM yyyy, HH:mm}");
-        builder.AppendLine($"{localizer["Review.Summary.Modules"]}: {review.Stats.CompletedModules}/{review.Stats.TotalModules}");
-        builder.AppendLine($"{localizer["Review.Summary.Sections"]}: {review.Stats.CompletedSections}/{review.Stats.TotalSections}");
-
-        foreach (var module in review.Modules)
-        {
-            builder.AppendLine();
-            builder.AppendLine($"## {module.Title}");
-            builder.AppendLine($"  {localizer["Review.Summary.SectionsCompleted"]}: {module.CompletedSections}/{module.TotalSections}");
-
-            foreach (var section in module.Sections)
-            {
-                builder.AppendLine();
-                var sectionHead = string.IsNullOrWhiteSpace(section.GroupLabel)
-                    ? section.Title
-                    : $"{section.GroupLabel} · {section.Title}";
-                builder.AppendLine($"- {sectionHead} [{StatusLabel(section.Status)}]");
-
-                if (section.Layout == ReviewSectionLayout.AthleteRanking)
-                {
-                    if (section.Picks.Count == 0)
-                    {
-                        builder.AppendLine($"    {localizer["Review.Summary.NoPicks"]}");
-                        continue;
-                    }
-
-                    foreach (var pick in section.Picks.OrderBy(row => row.Position ?? int.MaxValue))
-                    {
-                        var position = pick.Position is null ? "-" : $"#{pick.Position}";
-                        var country = string.IsNullOrWhiteSpace(pick.CountryCode) ? "" : $" ({pick.CountryCode})";
-                        var total = pick.PredictedTotalKg is null ? "—" : $"{Format(pick.PredictedTotalKg.Value)} kg";
-                        var lifts = FormatLifts(pick);
-                        builder.AppendLine($"    {position} {pick.AthleteName}{country}  total={total}{lifts}");
-                    }
-                }
-                else if (!string.IsNullOrWhiteSpace(section.SummaryText))
-                {
-                    builder.AppendLine($"    {section.SummaryText}");
-                }
-            }
-        }
-
-        return builder.ToString().TrimEnd();
     }
 
     private IReadOnlyList<ReviewSectionModel> BuildSections(
@@ -302,32 +251,4 @@ public sealed class CompetitionReviewBuilder(
         return string.IsNullOrWhiteSpace(value) ? null : value;
     }
 
-    private string StatusLabel(PredictionCompletionStatus status)
-    {
-        return status switch
-        {
-            PredictionCompletionStatus.Complete => localizer["Predictions.Status.Complete"],
-            PredictionCompletionStatus.InProgress => localizer["Predictions.Status.InProgress"],
-            _ => localizer["Predictions.Status.NotStarted"]
-        };
-    }
-
-    private static string Format(decimal value)
-    {
-        return value.ToString("0.#", CultureInfo.CurrentCulture);
-    }
-
-    private static string FormatLifts(ReviewPickRowModel pick)
-    {
-        if (!pick.HasAnyLift)
-        {
-            return string.Empty;
-        }
-
-        var parts = new List<string>(3);
-        if (pick.PredictedSquatKg is not null) parts.Add($"SQ {Format(pick.PredictedSquatKg.Value)}");
-        if (pick.PredictedBenchKg is not null) parts.Add($"BP {Format(pick.PredictedBenchKg.Value)}");
-        if (pick.PredictedDeadliftKg is not null) parts.Add($"DL {Format(pick.PredictedDeadliftKg.Value)}");
-        return $"  {string.Join(" / ", parts)}";
-    }
 }

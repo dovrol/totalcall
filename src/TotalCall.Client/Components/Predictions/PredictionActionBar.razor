@@ -19,56 +19,14 @@
     </div>
 
     <div class="prediction-action-bar__actions">
-        <div class="prediction-action-bar__secondary-actions">
-            <AppButton
-                Variant="Secondary"
-                Size="Sm"
-                OnClick="@OnCopyClicked">
-                <AppIcon Name="AppIconName.Copy" Size="15" />
-                <span>@Localizer["Predictions.CopySummary"]</span>
-            </AppButton>
-            <AppButton
-                Variant="Secondary"
-                Size="Sm"
-                OnClick="@OnExportClicked">
-                <AppIcon Name="AppIconName.Download" Size="15" />
-                <span>@Localizer["Predictions.ExportJson"]</span>
-            </AppButton>
-        </div>
-
-        <div class="prediction-action-bar__more">
-            <button
-                type="button"
-                class="app-button app-button--secondary app-button--sm prediction-action-bar__more-button"
-                aria-haspopup="menu"
-                aria-expanded="@isMoreOpen"
-                @onclick="ToggleMoreMenu">
-                <AppIcon Name="AppIconName.MoreHorizontal" Size="16" />
-                <span>@Localizer["Predictions.MoreActions"]</span>
-            </button>
-
-            @if (isMoreOpen)
-            {
-                <div class="prediction-action-bar__menu" role="menu">
-                    <button
-                        type="button"
-                        class="prediction-action-bar__menu-item"
-                        role="menuitem"
-                        @onclick="OnMobileCopyClicked">
-                        <AppIcon Name="AppIconName.Copy" Size="15" />
-                        <span>@Localizer["Predictions.CopySummary"]</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="prediction-action-bar__menu-item"
-                        role="menuitem"
-                        @onclick="OnMobileExportClicked">
-                        <AppIcon Name="AppIconName.Download" Size="15" />
-                        <span>@Localizer["Predictions.ExportJson"]</span>
-                    </button>
-                </div>
-            }
-        </div>
+        <AppButton
+            Variant="Secondary"
+            Size="Sm"
+            OnClick="@OnShareClicked"
+            AriaLabel="@Localizer["Share.Title"]">
+            <AppIcon Name="AppIconName.Share" Size="15" />
+            <span>@Localizer["Share.Trigger"]</span>
+        </AppButton>
 
         <AppButton
             Href="@ReviewHref"
@@ -89,40 +47,13 @@
     public DateTimeOffset? LastSavedAt { get; set; }
 
     [Parameter]
-    public EventCallback<MouseEventArgs> CopyRequested { get; set; }
-
-    [Parameter]
-    public EventCallback<MouseEventArgs> ExportRequested { get; set; }
-
-    private bool isMoreOpen;
+    public EventCallback<MouseEventArgs> ShareRequested { get; set; }
 
     private string ReviewHref => $"competitions/{CompetitionSlug}/review";
 
-    private void ToggleMoreMenu()
+    private Task OnShareClicked(MouseEventArgs args)
     {
-        isMoreOpen = !isMoreOpen;
-    }
-
-    private Task OnCopyClicked(MouseEventArgs args)
-    {
-        return CopyRequested.InvokeAsync(args);
-    }
-
-    private Task OnExportClicked(MouseEventArgs args)
-    {
-        return ExportRequested.InvokeAsync(args);
-    }
-
-    private async Task OnMobileCopyClicked(MouseEventArgs args)
-    {
-        isMoreOpen = false;
-        await CopyRequested.InvokeAsync(args);
-    }
-
-    private async Task OnMobileExportClicked(MouseEventArgs args)
-    {
-        isMoreOpen = false;
-        await ExportRequested.InvokeAsync(args);
+        return ShareRequested.InvokeAsync(args);
     }
 
     private string FormatTime(DateTimeOffset? value)

@@ -154,7 +154,31 @@
   <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Picks are saved only in this browser</value></data>
   <data name="Predictions.CopySummary" xml:space="preserve"><value>Copy summary</value></data>
   <data name="Predictions.ExportJson" xml:space="preserve"><value>Export JSON</value></data>
+  <data name="Predictions.ExportCsv" xml:space="preserve"><value>Export CSV</value></data>
   <data name="Predictions.MoreActions" xml:space="preserve"><value>More</value></data>
+  <data name="Share.Trigger" xml:space="preserve"><value>Share</value></data>
+  <data name="Share.Title" xml:space="preserve"><value>Export &amp; share</value></data>
+  <data name="Share.Subtitle" xml:space="preserve"><value>Keep a copy of your picks or share them on. Everything happens locally in your browser.</value></data>
+  <data name="Share.Close" xml:space="preserve"><value>Close</value></data>
+  <data name="Share.Working" xml:space="preserve"><value>Working…</value></data>
+  <data name="Share.CopyAppLink" xml:space="preserve"><value>Copy link</value></data>
+  <data name="Share.NoPicksHint" xml:space="preserve"><value>You don't have any saved picks yet. Export will unlock after your first selection.</value></data>
+  <data name="Share.PrivacyNote" xml:space="preserve"><value>Your picks are stored locally in this browser. JSON/CSV export lets you keep a copy — nothing is sent to a server.</value></data>
+  <data name="Share.Card.CopySummary.Title" xml:space="preserve"><value>Copy summary</value></data>
+  <data name="Share.Card.CopySummary.Body" xml:space="preserve"><value>Readable text for Discord, messages or podcast notes.</value></data>
+  <data name="Share.Card.ExportJson.Title" xml:space="preserve"><value>Export JSON</value></data>
+  <data name="Share.Card.ExportJson.Body" xml:space="preserve"><value>Full data for backup, import or to send to an organiser.</value></data>
+  <data name="Share.Card.ExportCsv.Title" xml:space="preserve"><value>Export CSV</value></data>
+  <data name="Share.Card.ExportCsv.Body" xml:space="preserve"><value>Table for analysis &amp; comparison — opens in Excel, Numbers and Sheets. (CSV, not XLSX.)</value></data>
+  <data name="Share.Card.CopyLink.Title" xml:space="preserve"><value>Copy app link</value></data>
+  <data name="Share.Card.CopyLink.Body" xml:space="preserve"><value>A link to TotalCall without your picks — your picks stay in your browser.</value></data>
+  <data name="Share.Toast.CopySummary.Success" xml:space="preserve"><value>Summary copied to clipboard.</value></data>
+  <data name="Share.Toast.ExportJson.Success" xml:space="preserve"><value>JSON file downloaded.</value></data>
+  <data name="Share.Toast.ExportCsv.Success" xml:space="preserve"><value>CSV file downloaded.</value></data>
+  <data name="Share.Toast.CopyLink.Success" xml:space="preserve"><value>App link copied.</value></data>
+  <data name="Share.Toast.Generic.Error" xml:space="preserve"><value>Something went wrong. Please try again.</value></data>
+  <data name="Share.Clipboard.FallbackTitle" xml:space="preserve"><value>Copy manually</value></data>
+  <data name="Share.Clipboard.FallbackBody" xml:space="preserve"><value>The browser blocked automatic copy. Select the text below and copy it manually (Cmd/Ctrl + C).</value></data>
   <data name="Predictions.ActionBarAria" xml:space="preserve"><value>Pick actions</value></data>
   <data name="Predictions.DropAthleteHere" xml:space="preserve"><value>Drop athlete here</value></data>
   <data name="Predictions.DragFromShortlist" xml:space="preserve"><value>Drag from shortlist</value></data>

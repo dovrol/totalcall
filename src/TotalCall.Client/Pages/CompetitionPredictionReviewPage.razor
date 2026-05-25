@@ -1,11 +1,8 @@
 @page "/competitions/{Slug}/review"
-@using System.Text.Json
-@using TotalCall.Client.Infrastructure.Browser
-@using TotalCall.Client.Infrastructure.Json
+@using TotalCall.Client.Components.Predictions.Share
 @inject CompetitionService CompetitionService
 @inject PredictionService PredictionService
 @inject CompetitionReviewBuilder ReviewBuilder
-@inject BrowserFileActions BrowserFileActions
 @inject IStringLocalizer<SharedResource> Localizer
 
 <PageTitle>@(competition is null ? Localizer["Review.PageTitle"] : $"{competition.Name} - {Localizer["Review.PageTitle"]}")</PageTitle>
@@ -52,10 +49,16 @@ else
 
         <ReviewActionBar
             CompetitionSlug="@competition.Slug"
-            CopyRequested="@OnCopySummaryRequested"
-            ExportRequested="@OnExportJsonRequested" />
+            ShareRequested="@OnShareRequested" />
     </div>
 }
+
+<ShareExportModal
+    IsOpen="@isShareOpen"
+    Competition="@competition"
+    PredictionSet="@predictionSet"
+    Review="@review"
+    OnClose="@CloseShare" />
 
 @code {
     [Parameter]
@@ -65,6 +68,7 @@ else
     private PredictionSet? predictionSet;
     private CompetitionReviewModel? review;
     private bool isLoading = true;
+    private bool isShareOpen;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -86,33 +90,15 @@ else
         isLoading = false;
     }
 
-    private async Task OnCopySummaryRequested(MouseEventArgs _)
+    private Task OnShareRequested(MouseEventArgs _)
     {
-        if (review is null)
-        {
-            return;
-        }
-
-        await BrowserFileActions.CopyTextAsync(ReviewBuilder.BuildPlainSummary(review));
+        isShareOpen = true;
+        return Task.CompletedTask;
     }
 
-    private async Task OnExportJsonRequested(MouseEventArgs _)
+    private Task CloseShare()
     {
-        if (competition is null || predictionSet is null)
-        {
-            return;
-        }
-
-        var exportPayload = PredictionService.CreateExportPayload(predictionSet);
-        var options = new JsonSerializerOptions(JsonDataOptions.SerializerOptions)
-        {
-            WriteIndented = true
-        };
-        var json = JsonSerializer.Serialize(exportPayload, options);
-
-        await BrowserFileActions.DownloadTextFileAsync(
-            $"{competition.Slug}-totalcall-picks.json",
-            json,
-            "application/json;charset=utf-8");
+        isShareOpen = false;
+        return Task.CompletedTask;
     }
 }
