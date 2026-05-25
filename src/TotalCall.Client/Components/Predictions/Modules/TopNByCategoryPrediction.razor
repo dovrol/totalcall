@@ -1,8 +1,10 @@
 @using TotalCall.Client.Components.Predictions.Shared
 @using System.Globalization
+@implements IDisposable
 @inject IStringLocalizer<SharedResource> Localizer
 @inject PredictionTextService Text
 @inject AthleteHistoryService AthleteHistoryService
+@inject WindowManager Windows
 
 @if (OrderedQuestions.Count == 0 || ActiveQuestion is null)
 {
@@ -151,6 +153,7 @@ else
                         UseNominatedTotalRequested="UseNominatedTotalForEditedAthlete"
                         UseLastResultRequested="UseLastResultForEditedAthlete"
                         UseBestResultRequested="UseBestResultForEditedAthlete"
+                        ShowHistoryWindowRequested="OpenHistoryWindowForSlot"
                         EmptySlotCta="@EmptySlotCta"
                         IsRemovePendingPosition="@pendingRemovalPosition"
                         RemoveRequested="RemoveFromPosition"
@@ -262,6 +265,7 @@ else
     private string? loadedPredictionHistoryAthleteId;
     private bool isPredictionHistoryLoading;
     private int? pendingRemovalPosition;
+    private string? lastEditorAthleteIdForWindows;
 
     private IReadOnlyList<PredictionQuestion> OrderedQuestions => Group.Questions
         .OrderBy(question => question.Order)
@@ -457,6 +461,11 @@ else
     private string EmptySlotCta => ActiveQuestionAthleteSex == AthleteSex.Male
         ? Localizer["Predictions.PickAthleteCtaMale"]
         : Localizer["Predictions.PickAthleteCta"];
+
+    protected override void OnInitialized()
+    {
+        Windows.AthleteHistoryActionRequested += HandleAthleteHistoryActionRequested;
+    }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -1293,5 +1302,139 @@ else
     {
         Ranking = 0,
         Context = 1
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var editorAthlete = GetEditorAthlete();
+        var editorAthleteId = editorAthlete?.Id;
+
+        if (!string.Equals(lastEditorAthleteIdForWindows, editorAthleteId, StringComparison.OrdinalIgnoreCase))
+        {
+            if (!string.IsNullOrWhiteSpace(lastEditorAthleteIdForWindows))
+            {
+                Windows.UpdateAthleteHistorySlotContext(lastEditorAthleteIdForWindows, null);
+            }
+
+            lastEditorAthleteIdForWindows = editorAthleteId;
+        }
+
+        if (!string.IsNullOrWhiteSpace(editorAthleteId))
+        {
+            Windows.UpdateAthleteHistorySlotContext(
+                editorAthleteId!,
+                BuildSlotContext(editorAthlete, predictionEditorPosition));
+        }
+
+        await Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        Windows.AthleteHistoryActionRequested -= HandleAthleteHistoryActionRequested;
+    }
+
+    private Task OpenHistoryWindowForSlot(int position)
+    {
+        var athlete = GetSelectedAthlete(position);
+        if (athlete is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        return OpenHistoryWindow(athlete, position);
+    }
+
+    private Task OpenHistoryWindow(Athlete athlete, int? slotPosition)
+    {
+        var slotContext = BuildSlotContext(athlete, slotPosition);
+
+        Windows.OpenAthleteHistory(
+            competitionId: Competition.Id,
+            athleteId: athlete.Id,
+            athleteName: athlete.DisplayName,
+            countryCode: athlete.CountryCode,
+            countryName: athlete.CountryName,
+            categoryName: ResolveCategoryNameForAthlete(athlete),
+            nominatedTotalKg: athlete.SeedTotalKg,
+            title: Localizer["Predictions.HistoryDialogTitle", athlete.DisplayName],
+            slotContext: slotContext);
+
+        return Task.CompletedTask;
+    }
+
+    private AthleteHistorySlotContext? BuildSlotContext(Athlete? athlete, int? slotPosition)
+    {
+        if (athlete is null ||
+            predictionEditorPosition is null ||
+            slotPosition is null ||
+            predictionEditorPosition != slotPosition)
+        {
+            return null;
+        }
+
+        var editorAthlete = GetEditorAthlete();
+        if (editorAthlete is null ||
+            !string.Equals(editorAthlete.Id, athlete.Id, StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        return new AthleteHistorySlotContext(
+            SlotPosition: predictionEditorPosition.Value,
+            EditorAthleteId: athlete.Id,
+            CanUseLast: predictionHistory?.LastResult?.TotalKg is not null,
+            CanUseBest: predictionHistory?.Bests?.TotalKg is not null,
+            CanUseNominated: athlete.SeedTotalKg is not null);
+    }
+
+    private Athlete? GetEditorAthlete()
+    {
+        return predictionEditorPosition is null
+            ? null
+            : GetSelectedAthlete(predictionEditorPosition.Value);
+    }
+
+    private string? ResolveCategoryNameForAthlete(Athlete athlete)
+    {
+        if (string.IsNullOrWhiteSpace(athlete.WeightCategoryId))
+        {
+            return null;
+        }
+
+        return Competition.Categories
+            .FirstOrDefault(category => string.Equals(category.Id, athlete.WeightCategoryId, StringComparison.OrdinalIgnoreCase))
+            ?.Name;
+    }
+
+    private void HandleAthleteHistoryActionRequested(string windowId, AthleteHistoryAction action)
+    {
+        var descriptor = Windows.Windows
+            .OfType<AthleteHistoryWindowDescriptor>()
+            .FirstOrDefault(window => string.Equals(window.Id, windowId, StringComparison.Ordinal));
+
+        if (descriptor?.SlotContext is null ||
+            predictionEditorPosition is null ||
+            descriptor.SlotContext.SlotPosition != predictionEditorPosition.Value)
+        {
+            return;
+        }
+
+        var editorAthlete = GetEditorAthlete();
+        if (editorAthlete is null ||
+            !string.Equals(editorAthlete.Id, descriptor.SlotContext.EditorAthleteId, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        _ = action switch
+        {
+            AthleteHistoryAction.UseLastResult => UseLastResultForEditedAthlete(),
+            AthleteHistoryAction.UseBestResult => UseBestResultForEditedAthlete(),
+            AthleteHistoryAction.UseNominatedTotal => UseNominatedTotalForEditedAthlete(),
+            _ => Task.CompletedTask
+        };
+
+        InvokeAsync(StateHasChanged);
     }
 }

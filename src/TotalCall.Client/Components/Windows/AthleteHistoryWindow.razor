@@ -1,0 +1,413 @@
+@using System.Globalization
+@using TotalCall.Client.Application.Services
+@using TotalCall.Client.Application.Windows
+@using TotalCall.Client.Domain.Athletes
+@inject AthleteHistoryService AthleteHistoryService
+@inject WindowManager Windows
+@inject IStringLocalizer<SharedResource> Localizer
+
+<FloatingWindow Descriptor="Descriptor" AdditionalClass="floating-window--athlete-history">
+    <section class="athlete-history-window">
+        <header class="athlete-history-window__identity">
+            <span class="athlete-history-window__avatar" aria-hidden="true">@GetAthleteInitials(Descriptor.AthleteName)</span>
+            <div class="athlete-history-window__identity-meta">
+                <strong>@Descriptor.AthleteName</strong>
+                <small>
+                    <CountryFlag Code="@Descriptor.CountryCode" CountryName="@Descriptor.CountryName" />
+                    <span>@(Descriptor.CountryName ?? Localizer["Common.Tbd"].Value)</span>
+                </small>
+            </div>
+        </header>
+
+        <dl class="athlete-history-window__meta">
+            <div>
+                <dt>@Localizer["Predictions.Category"]</dt>
+                <dd>@(Descriptor.CategoryName ?? Localizer["Common.Tbd"].Value)</dd>
+            </div>
+            <div>
+                <dt>@Localizer["Predictions.NominatedTotal"]</dt>
+                <dd class="athlete-history-window__meta-value--accent">@FormatKg(Descriptor.NominatedTotalKg)</dd>
+            </div>
+        </dl>
+
+        @if (HasActiveSlotActions)
+        {
+            <section class="athlete-history-window__actions" aria-label="@Localizer["FloatingWindow.HistoryActionsLabel"]">
+                <p class="athlete-history-window__actions-hint">
+                    @string.Format(Localizer["FloatingWindow.ApplyToSlot"].Value, Descriptor.SlotContext!.SlotPosition)
+                </p>
+                <div class="athlete-history-window__actions-row">
+                    <button
+                        type="button"
+                        class="app-button app-button--secondary app-button--sm"
+                        disabled="@(!CanUseLast)"
+                        @onclick="OnUseLast">
+                        <AppIcon Name="AppIconName.Clock" Size="14" />
+                        @Localizer["Predictions.UseLastResult"]
+                    </button>
+                    <button
+                        type="button"
+                        class="app-button app-button--secondary app-button--sm"
+                        disabled="@(!CanUseBest)"
+                        @onclick="OnUseBest">
+                        <AppIcon Name="AppIconName.Trophy" Size="14" />
+                        @Localizer["Predictions.UseBestResult"]
+                    </button>
+                    <button
+                        type="button"
+                        class="app-button app-button--secondary app-button--sm"
+                        disabled="@(!CanUseNominated)"
+                        @onclick="OnUseNominated">
+                        <AppIcon Name="AppIconName.Target" Size="14" />
+                        @Localizer["Predictions.UseNominatedTotal"]
+                    </button>
+                </div>
+            </section>
+        }
+        else
+        {
+            <p class="athlete-history-window__no-context">
+                <AppIcon Name="AppIconName.AlertCircle" Size="14" />
+                <span>@Localizer["FloatingWindow.NoSlotContextHint"]</span>
+            </p>
+        }
+
+        @if (isLoading)
+        {
+            <p class="athlete-history-window__empty">@Localizer["Predictions.LoadingHistory"]</p>
+        }
+        else if (History is null)
+        {
+            <p class="athlete-history-window__empty">@Localizer["Predictions.NoAthleteHistory"]</p>
+        }
+        else
+        {
+            @if (TrendPoints.Count > 1)
+            {
+                <section class="athlete-history-window__trend">
+                    <header class="athlete-history-window__section-head">
+                        <h3>@string.Format(Localizer["Predictions.TotalTrend"].Value, TrendPoints.Count)</h3>
+                        <span class="athlete-history-window__pill">
+                            <AppIcon Name="AppIconName.BarChart" Size="13" />
+                            Total (kg)
+                        </span>
+                    </header>
+                    <AppTrendChart
+                        Points="@TrendPoints"
+                        Variant="AppTrendChartVariant.Full"
+                        AdditionalClass="app-trend-chart--athlete-history-window"
+                        AriaLabel="@string.Format(Localizer["Predictions.TotalTrend"].Value, TrendPoints.Count)" />
+                </section>
+            }
+
+            <section class="athlete-history-window__bests">
+                <header class="athlete-history-window__section-head">
+                    <h3>@Localizer["Predictions.BestLiftsPr"]</h3>
+                </header>
+                <dl class="athlete-history-window__bests-list">
+                    <div>
+                        <dt>SQ</dt>
+                        <dd>@FormatKg(BestSquatKg)</dd>
+                    </div>
+                    <div>
+                        <dt>BP</dt>
+                        <dd>@FormatKg(BestBenchKg)</dd>
+                    </div>
+                    <div>
+                        <dt>DL</dt>
+                        <dd>@FormatKg(BestDeadliftKg)</dd>
+                    </div>
+                    <div class="athlete-history-window__bests-total">
+                        <dt>Total</dt>
+                        <dd>@FormatKg(BestTotalKg)</dd>
+                    </div>
+                </dl>
+            </section>
+
+            <section class="athlete-history-window__starts">
+                <header class="athlete-history-window__section-head">
+                    <h3>@Localizer["Predictions.RecentStarts"]</h3>
+                </header>
+
+                @if (RecentResults.Count == 0)
+                {
+                    <p class="athlete-history-window__empty">@Localizer["Predictions.NoAthleteHistory"]</p>
+                }
+                else
+                {
+                    <div class="athlete-history-window__starts-table-wrap">
+                        <table class="athlete-history-window__starts-table">
+                            <thead>
+                                <tr>
+                                    <th>@Localizer["Predictions.History.Date"]</th>
+                                    <th>@Localizer["Predictions.History.Meet"]</th>
+                                    <th>@Localizer["Predictions.History.Bodyweight"]</th>
+                                    <th>SQ</th>
+                                    <th>BP</th>
+                                    <th>DL</th>
+                                    <th>Total</th>
+                                    <th>@Localizer["Predictions.History.Place"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var result in RecentResults)
+                                {
+                                    <tr>
+                                        <td>@FormatDate(result.Date)</td>
+                                        <td>
+                                            @FormatRecentStartTitle(result)
+                                            @if (!string.IsNullOrWhiteSpace(result.Federation))
+                                            {
+                                                <small>@result.Federation</small>
+                                            }
+                                        </td>
+                                        <td>@FormatBodyweightValue(result.BodyweightKg)</td>
+                                        <td class="@LiftCellClass(result.SquatKg, BestSquatKg)">@FormatKgValue(result.SquatKg)</td>
+                                        <td class="@LiftCellClass(result.BenchKg, BestBenchKg)">@FormatKgValue(result.BenchKg)</td>
+                                        <td class="@LiftCellClass(result.DeadliftKg, BestDeadliftKg)">@FormatKgValue(result.DeadliftKg)</td>
+                                        <td class="@LiftCellClass(result.TotalKg, BestTotalKg)">@FormatKgValue(result.TotalKg)</td>
+                                        <td>@(string.IsNullOrWhiteSpace(result.Placing) ? "—" : result.Placing)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </section>
+
+            @if (HasSourceInfo)
+            {
+                <footer class="athlete-history-window__source">
+                    @if (!string.IsNullOrWhiteSpace(SourceAttribution))
+                    {
+                        <p>@SourceAttribution</p>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(SourceDownloadedAt))
+                    {
+                        <p>@string.Format(Localizer["Predictions.SourceUpdatedAt"].Value, FormatDate(SourceDownloadedAt))</p>
+                    }
+                </footer>
+            }
+        }
+    </section>
+</FloatingWindow>
+
+@code {
+    [Parameter, EditorRequired]
+    public AthleteHistoryWindowDescriptor Descriptor { get; set; } = default!;
+
+    private AthleteHistoryDataset? dataset;
+    private AthleteHistoryEntry? History;
+    private string? loadedCompetitionId;
+    private string? loadedAthleteId;
+    private bool isLoading;
+
+    private AthleteHistorySlotContext? Slot => Descriptor.SlotContext;
+
+    private bool HasActiveSlotActions => Slot is not null;
+
+    private bool CanUseLast => Slot is { CanUseLast: true } && History?.LastResult?.TotalKg is not null;
+
+    private bool CanUseBest => Slot is { CanUseBest: true } && History?.Bests?.TotalKg is not null;
+
+    private bool CanUseNominated => Slot is { CanUseNominated: true } && Descriptor.NominatedTotalKg is not null;
+
+    private string? SourceAttribution => dataset?.Source?.Attribution;
+
+    private string? SourceDownloadedAt => dataset?.Source?.DownloadedAt;
+
+    private bool HasSourceInfo => !string.IsNullOrWhiteSpace(SourceAttribution) ||
+                                  !string.IsNullOrWhiteSpace(SourceDownloadedAt);
+
+    private IReadOnlyList<AthleteRecentResult> RecentResults => History?.RecentResults ?? [];
+
+    private decimal? BestSquatKg => History?.Bests?.SquatKg ??
+                                    History?.RecentResults.Max(result => result.SquatKg);
+
+    private decimal? BestBenchKg => History?.Bests?.BenchKg ??
+                                    History?.RecentResults.Max(result => result.BenchKg);
+
+    private decimal? BestDeadliftKg => History?.Bests?.DeadliftKg ??
+                                       History?.RecentResults.Max(result => result.DeadliftKg);
+
+    private decimal? BestTotalKg => History?.Bests?.TotalKg ??
+                                    History?.RecentResults.Max(result => result.TotalKg);
+
+    private IReadOnlyList<AppTrendChartPoint> TrendPoints => BuildTrendPoints();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.Equals(loadedCompetitionId, Descriptor.CompetitionId, StringComparison.OrdinalIgnoreCase))
+        {
+            isLoading = true;
+            dataset = await AthleteHistoryService.GetCompetitionHistoryAsync(Descriptor.CompetitionId);
+            loadedCompetitionId = Descriptor.CompetitionId;
+            loadedAthleteId = null;
+            isLoading = false;
+        }
+
+        if (string.Equals(loadedAthleteId, Descriptor.AthleteId, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        isLoading = true;
+        History = dataset is not null &&
+                  dataset.Athletes.TryGetValue(Descriptor.AthleteId, out var entry)
+            ? entry
+            : null;
+        loadedAthleteId = Descriptor.AthleteId;
+        isLoading = false;
+    }
+
+    private Task OnUseLast()
+    {
+        Windows.RequestAthleteHistoryAction(Descriptor.Id, AthleteHistoryAction.UseLastResult);
+        return Task.CompletedTask;
+    }
+
+    private Task OnUseBest()
+    {
+        Windows.RequestAthleteHistoryAction(Descriptor.Id, AthleteHistoryAction.UseBestResult);
+        return Task.CompletedTask;
+    }
+
+    private Task OnUseNominated()
+    {
+        Windows.RequestAthleteHistoryAction(Descriptor.Id, AthleteHistoryAction.UseNominatedTotal);
+        return Task.CompletedTask;
+    }
+
+    private IReadOnlyList<AppTrendChartPoint> BuildTrendPoints()
+    {
+        if (History?.RecentResults.Count is null or 0)
+        {
+            return [];
+        }
+
+        var sample = History.RecentResults
+            .Take(8)
+            .Where(result => result.TotalKg is not null)
+            .ToList();
+
+        if (sample.Count == 0)
+        {
+            return [];
+        }
+
+        sample.Reverse();
+
+        return sample
+            .Select(result => new AppTrendChartPoint(
+                result.TotalKg ?? 0m,
+                FormatTrendLabel(result.Date),
+                FormatTrendDetail(result)))
+            .ToArray();
+    }
+
+    private string FormatKg(decimal? value)
+    {
+        return value is null
+            ? Localizer["Common.Tbd"].Value
+            : $"{value.Value.ToString("0.#", CultureInfo.CurrentCulture)} kg";
+    }
+
+    private string FormatKgValue(decimal? value)
+    {
+        return value is null
+            ? "--"
+            : value.Value.ToString("0.#", CultureInfo.CurrentCulture);
+    }
+
+    private string FormatBodyweightValue(decimal? value)
+    {
+        return value is null
+            ? "--"
+            : value.Value.ToString("0.##", CultureInfo.CurrentCulture);
+    }
+
+    private string FormatDate(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return Localizer["Common.Tbd"];
+        }
+
+        if (DateOnly.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsed))
+        {
+            return parsed.ToString("d MMM yyyy", CultureInfo.CurrentCulture);
+        }
+
+        return value;
+    }
+
+    private string FormatRecentStartTitle(AthleteRecentResult result)
+    {
+        var meet = string.IsNullOrWhiteSpace(result.MeetName)
+            ? Localizer["Common.Tbd"].Value
+            : result.MeetName.Trim();
+
+        if (!DateOnly.TryParse(result.Date, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate))
+        {
+            return meet;
+        }
+
+        var year = parsedDate.Year.ToString(CultureInfo.CurrentCulture);
+        return meet.Contains(year, StringComparison.Ordinal)
+            ? meet
+            : $"{meet} {year}";
+    }
+
+    private string FormatTrendLabel(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return "--";
+        }
+
+        if (DateOnly.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsed))
+        {
+            return parsed.ToString("MMM yyyy", CultureInfo.CurrentCulture);
+        }
+
+        return value.Length <= 7 ? value : value[..7];
+    }
+
+    private string FormatTrendDetail(AthleteRecentResult result)
+    {
+        return $"{FormatKg(result.TotalKg)} · {FormatBodyweightInline(result.BodyweightKg)}";
+    }
+
+    private string FormatBodyweightInline(decimal? value)
+    {
+        var formatted = value is null
+            ? Localizer["Common.Tbd"].Value
+            : $"{value.Value.ToString("0.##", CultureInfo.CurrentCulture)} kg";
+        return $"{Localizer["Predictions.BodyweightShort"]}: {formatted}";
+    }
+
+    private string LiftCellClass(decimal? value, decimal? best)
+    {
+        return value is not null && best is not null && value.Value == best.Value
+            ? "athlete-history-window__cell--pb"
+            : string.Empty;
+    }
+
+    private string GetAthleteInitials(string? displayName)
+    {
+        if (string.IsNullOrWhiteSpace(displayName))
+        {
+            return "--";
+        }
+
+        var parts = displayName
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Take(2)
+            .Select(part => part[0].ToString(CultureInfo.CurrentCulture))
+            .ToArray();
+
+        return parts.Length == 0
+            ? "--"
+            : string.Concat(parts).ToUpper(CultureInfo.CurrentCulture);
+    }
+}

@@ -33,6 +33,7 @@
                 UseNominatedTotalRequested="UseNominatedTotalRequested"
                 UseLastResultRequested="UseLastResultRequested"
                 UseBestResultRequested="UseBestResultRequested"
+                ShowHistoryWindowRequested="ShowHistoryWindowRequested"
                 EmptySlotCta="@EmptySlotCta"
                 IsRemovePending="@(IsRemovePendingPosition == position)"
                 RemoveRequested="RemoveRequested"
@@ -129,6 +130,9 @@
 
     [Parameter]
     public EventCallback UseBestResultRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> ShowHistoryWindowRequested { get; set; }
 
     [Parameter]
     public string? EmptySlotCta { get; set; }

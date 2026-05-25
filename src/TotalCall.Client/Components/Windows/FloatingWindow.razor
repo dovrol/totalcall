@@ -1,0 +1,219 @@
+@using System.Globalization
+@using TotalCall.Client.Application.Services
+@using TotalCall.Client.Application.Windows
+@implements IAsyncDisposable
+@inject IStringLocalizer<SharedResource> Localizer
+@inject IJSRuntime JS
+@inject WindowManager Windows
+
+<section
+    @ref="rootElement"
+    class="@RootClass"
+    style="@RootStyle"
+    role="region"
+    aria-labelledby="@TitleElementId"
+    tabindex="-1"
+    @onkeydown="OnKeyDown">
+
+    <header
+        @ref="handleElement"
+        class="floating-window__header"
+        data-window-handle
+        title="@Localizer["FloatingWindow.DragHint"]">
+        <span class="floating-window__grab" aria-hidden="true">
+            <span></span><span></span><span></span>
+        </span>
+
+        <div class="floating-window__title-wrap">
+            <strong id="@TitleElementId" class="floating-window__title">@Descriptor.Title</strong>
+            @if (!string.IsNullOrWhiteSpace(Descriptor.Subtitle))
+            {
+                <small class="floating-window__subtitle">@Descriptor.Subtitle</small>
+            }
+        </div>
+
+        <div class="floating-window__controls" data-window-control>
+            <button
+                type="button"
+                class="floating-window__control"
+                data-window-control
+                aria-label="@Localizer["FloatingWindow.Minimize"]"
+                title="@Localizer["FloatingWindow.Minimize"]"
+                @onclick="OnMinimizeClicked"
+                @onclick:stopPropagation="true">
+                <span aria-hidden="true">—</span>
+            </button>
+            <button
+                type="button"
+                class="floating-window__control floating-window__control--close"
+                data-window-control
+                aria-label="@Localizer["FloatingWindow.Close"]"
+                title="@Localizer["FloatingWindow.Close"]"
+                @onclick="OnCloseClicked"
+                @onclick:stopPropagation="true">
+                <AppIcon Name="AppIconName.X" Size="14" />
+            </button>
+        </div>
+    </header>
+
+    <div class="floating-window__body">
+        @ChildContent
+    </div>
+
+    <div
+        @ref="resizeHandleElement"
+        class="floating-window__resize-handle"
+        data-window-resize
+        role="separator"
+        aria-orientation="horizontal"
+        aria-label="@Localizer["FloatingWindow.Resize"]"
+        title="@Localizer["FloatingWindow.Resize"]">
+        <span aria-hidden="true"></span>
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public FloatingWindowDescriptor Descriptor { get; set; } = default!;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? AdditionalClass { get; set; }
+
+    private ElementReference rootElement;
+    private ElementReference handleElement;
+    private ElementReference resizeHandleElement;
+    private DotNetObjectReference<FloatingWindow>? selfRef;
+    private bool dragAttached;
+    private string? lastAttachedId;
+
+    private string TitleElementId => $"floating-window-title-{Descriptor.Id}";
+
+    private bool IsActive => Windows.ActiveWindow?.Id == Descriptor.Id;
+
+    private string RootClass => string.Join(
+        " ",
+        "floating-window",
+        IsActive ? "floating-window--active" : null,
+        AdditionalClass);
+
+    private string RootStyle
+    {
+        get
+        {
+            var basePart = string.Create(
+                CultureInfo.InvariantCulture,
+                $"left:{Descriptor.Position.X:0.##}px;top:{Descriptor.Position.Y:0.##}px;z-index:{Descriptor.ZIndex};");
+
+            if (Descriptor.Size is { } size)
+            {
+                return basePart + string.Create(
+                    CultureInfo.InvariantCulture,
+                    $"width:{size.Width:0.##}px;height:{size.Height:0.##}px;max-height:{size.Height:0.##}px;");
+            }
+
+            return basePart;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender || lastAttachedId != Descriptor.Id)
+        {
+            selfRef ??= DotNetObjectReference.Create(this);
+
+            try
+            {
+                await JS.InvokeVoidAsync("totalCallWindows.attach", Descriptor.Id, handleElement, rootElement, resizeHandleElement, selfRef);
+                dragAttached = true;
+                lastAttachedId = Descriptor.Id;
+            }
+            catch (JSException)
+            {
+                // Script may not be loaded yet; the host will re-render which retries.
+            }
+            catch (JSDisconnectedException)
+            {
+                // Tearing down — nothing to do.
+            }
+        }
+
+        if (firstRender)
+        {
+            try
+            {
+                await rootElement.FocusAsync(preventScroll: true);
+            }
+            catch (JSException)
+            {
+                // Focus best-effort.
+            }
+        }
+    }
+
+    [JSInvokable]
+    public Task OnDragEnd(double x, double y)
+    {
+        Windows.SetPosition(Descriptor.Id, x, y);
+        return Task.CompletedTask;
+    }
+
+    [JSInvokable]
+    public Task OnActivate()
+    {
+        Windows.BringToFront(Descriptor.Id);
+        return Task.CompletedTask;
+    }
+
+    [JSInvokable]
+    public Task OnResizeEnd(double width, double height)
+    {
+        Windows.SetSize(Descriptor.Id, width, height);
+        return Task.CompletedTask;
+    }
+
+    private Task OnCloseClicked()
+    {
+        Windows.Close(Descriptor.Id);
+        return Task.CompletedTask;
+    }
+
+    private Task OnMinimizeClicked()
+    {
+        Windows.Minimize(Descriptor.Id, true);
+        return Task.CompletedTask;
+    }
+
+    private Task OnKeyDown(KeyboardEventArgs args)
+    {
+        if (string.Equals(args.Key, "Escape", StringComparison.OrdinalIgnoreCase))
+        {
+            Windows.Close(Descriptor.Id);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (dragAttached)
+        {
+            try
+            {
+                await JS.InvokeVoidAsync("totalCallWindows.detach", Descriptor.Id);
+            }
+            catch (JSException)
+            {
+                // Already torn down.
+            }
+            catch (JSDisconnectedException)
+            {
+                // Already torn down.
+            }
+        }
+
+        selfRef?.Dispose();
+    }
+}
