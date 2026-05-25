@@ -7,6 +7,17 @@
 @if (HasVisibleWindows || HasMinimizedWindows)
 {
     <div class="floating-window-host" data-floating-window-host>
+        @if (HasVisibleWindows)
+        {
+            <button
+                type="button"
+                class="floating-window-host__mobile-backdrop"
+                aria-hidden="true"
+                tabindex="-1"
+                @onclick="OnBackdropClicked">
+            </button>
+        }
+
         @foreach (var descriptor in VisibleWindows)
         {
             @RenderWindow(descriptor)
@@ -69,6 +80,15 @@
     private void OnRestore(string windowId)
     {
         Windows.Minimize(windowId, false);
+    }
+
+    private void OnBackdropClicked()
+    {
+        var topmost = Windows.ActiveWindow;
+        if (topmost is not null)
+        {
+            Windows.Close(topmost.Id);
+        }
     }
 
     public void Dispose()
