@@ -1,0 +1,93 @@
+@using System.Globalization
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="review-pick-table" role="table" aria-label="@Localizer["Review.Table.Aria"]">
+    <div class="review-pick-table__head" role="row">
+        <span class="review-pick-table__col review-pick-table__col--rank" role="columnheader">@Localizer["Review.Table.Rank"]</span>
+        <span class="review-pick-table__col review-pick-table__col--athlete" role="columnheader">@Localizer["Review.Table.Athlete"]</span>
+        <span class="review-pick-table__col review-pick-table__col--total" role="columnheader">@Localizer["Review.Table.PredictedTotal"]</span>
+        <span class="review-pick-table__col review-pick-table__col--lifts" role="columnheader">@Localizer["Review.Table.Attempts"]</span>
+    </div>
+    @foreach (var row in Rows)
+    {
+        var hasAthlete = row.HasAthlete;
+        var rowClass = hasAthlete
+            ? "review-pick-table__row"
+            : "review-pick-table__row review-pick-table__row--empty";
+
+        <div class="@rowClass" role="row">
+            <span class="review-pick-table__col review-pick-table__col--rank" role="cell">
+                @if (row.Position is { } position)
+                {
+                    <span class="review-pick-table__rank">@position</span>
+                }
+                else
+                {
+                    <span class="review-pick-table__rank review-pick-table__rank--muted">—</span>
+                }
+            </span>
+
+            <span class="review-pick-table__col review-pick-table__col--athlete" role="cell">
+                @if (hasAthlete)
+                {
+                    <span class="review-pick-table__athlete">
+                        @if (!string.IsNullOrWhiteSpace(row.CountryCode))
+                        {
+                            <CountryFlag Code="@row.CountryCode" CountryName="@row.CountryName" Class="review-pick-table__flag" />
+                        }
+                        <span class="review-pick-table__name">@row.AthleteName</span>
+                    </span>
+                }
+                else
+                {
+                    <span class="review-pick-table__placeholder">@Localizer["Review.Table.EmptySlot"]</span>
+                }
+            </span>
+
+            <span class="review-pick-table__col review-pick-table__col--total" role="cell">
+                @if (row.PredictedTotalKg is { } total)
+                {
+                    <strong class="review-pick-table__total">@Format(total) <span>kg</span></strong>
+                }
+                else
+                {
+                    <span class="review-pick-table__muted">—</span>
+                }
+            </span>
+
+            <span class="review-pick-table__col review-pick-table__col--lifts" role="cell">
+                @if (row.HasAnyLift)
+                {
+                    <span class="review-pick-table__lifts">
+                        @if (row.PredictedSquatKg is { } sq)
+                        {
+                            <span><em>SQ</em> @Format(sq)</span>
+                        }
+                        @if (row.PredictedBenchKg is { } bp)
+                        {
+                            <span><em>BP</em> @Format(bp)</span>
+                        }
+                        @if (row.PredictedDeadliftKg is { } dl)
+                        {
+                            <span><em>DL</em> @Format(dl)</span>
+                        }
+                    </span>
+                }
+                else
+                {
+                    <span class="review-pick-table__muted">—</span>
+                }
+            </span>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<ReviewPickRowModel> Rows { get; set; } = [];
+
+    private static string Format(decimal value)
+    {
+        return value.ToString("0.#", CultureInfo.CurrentCulture);
+    }
+}

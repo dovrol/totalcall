@@ -1,0 +1,54 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<header class="review-header">
+    <div class="review-header__main">
+        <div class="review-header__intro">
+            <p class="review-header__eyebrow">@Localizer["Review.Eyebrow"]</p>
+            <h1 class="review-header__title">@Localizer["Review.PageTitle"]</h1>
+            <p class="review-header__competition">@Review.CompetitionName</p>
+            <p class="review-header__description">@Localizer["Review.Description"]</p>
+        </div>
+
+        <div class="review-header__meta">
+            <div class="review-header__meta-item">
+                <span class="review-header__meta-icon" aria-hidden="true">
+                    <AppIcon Name="@LockIcon" Size="16" />
+                </span>
+                <div>
+                    <span class="review-header__meta-label">@Localizer["Common.Locks"]</span>
+                    <strong>@FormatLockDate()</strong>
+                </div>
+            </div>
+            <div class="review-header__meta-item">
+                <span class="review-header__meta-icon" aria-hidden="true">
+                    <AppIcon Name="AppIconName.Clock" Size="16" />
+                </span>
+                <div>
+                    <span class="review-header__meta-label">@Localizer["Predictions.LastSaved"]</span>
+                    <strong>@FormatLastSaved()</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+@code {
+    [Parameter, EditorRequired]
+    public CompetitionReviewModel Review { get; set; } = default!;
+
+    private AppIconName LockIcon => Review.CanEditPredictions
+        ? AppIconName.Unlock
+        : AppIconName.Lock;
+
+    private string FormatLockDate()
+    {
+        return Review.PredictionLockAt is { } value
+            ? value.ToLocalTime().ToString("d MMM yyyy, HH:mm")
+            : Localizer["Common.Tbd"].Value;
+    }
+
+    private string FormatLastSaved()
+    {
+        return Review.SavedAt.ToLocalTime().ToString("d MMM yyyy, HH:mm");
+    }
+}

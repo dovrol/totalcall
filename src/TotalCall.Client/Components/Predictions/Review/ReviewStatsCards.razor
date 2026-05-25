@@ -1,0 +1,82 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="review-stats">
+    <div class="review-stats__grid">
+        <AppStatCard
+            Icon="AppIconName.Check"
+            Label="@Localizer["Review.Stats.Modules"]"
+            Value="@($"{Review.Stats.CompletedModules} / {Review.Stats.TotalModules}")"
+            AdditionalClass="review-stats__card" />
+        <AppStatCard
+            Icon="AppIconName.BarChart"
+            Label="@Localizer["Review.Stats.Sections"]"
+            Value="@($"{Review.Stats.CompletedSections} / {Review.Stats.TotalSections}")"
+            AdditionalClass="review-stats__card" />
+        <AppStatCard
+            Icon="AppIconName.Users"
+            Label="@Localizer["Review.Stats.SavedPicks"]"
+            Value="@Review.Stats.SavedPicks.ToString()"
+            AdditionalClass="review-stats__card" />
+        <AppStatCard
+            Icon="@StatusIcon"
+            Label="@Localizer["Review.Stats.Status"]"
+            Value="@StatusValue"
+            AdditionalClass="@StatusCardClass" />
+    </div>
+
+    @if (Review.IsComplete)
+    {
+        <div class="notice notice--success review-stats__notice">
+            <span class="review-stats__notice-icon" aria-hidden="true">
+                <AppIcon Name="AppIconName.Check" Size="14" StrokeWidth="3" />
+            </span>
+            <span>@Localizer["Review.Notice.AllComplete"]</span>
+        </div>
+    }
+    else if (Review.Stats.RemainingSections > 0)
+    {
+        <div class="notice notice--warning review-stats__notice">
+            <span class="review-stats__notice-icon" aria-hidden="true">
+                <AppIcon Name="AppIconName.AlertCircle" Size="14" />
+            </span>
+            <span>@Localizer["Review.Notice.Incomplete", Review.Stats.RemainingSections]</span>
+            <span class="review-stats__notice-hint">@Localizer["Review.Notice.IncompleteHint"]</span>
+        </div>
+    }
+
+    <div class="review-stats__progress" aria-hidden="true">
+        <span style="@($"width: {PercentText}%")"></span>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public CompetitionReviewModel Review { get; set; } = default!;
+
+    private decimal Percent => Review.Stats.TotalSections == 0
+        ? 0m
+        : Math.Round((decimal)Review.Stats.CompletedSections / Review.Stats.TotalSections * 100m, 1);
+
+    private string PercentText => Percent.ToString(System.Globalization.CultureInfo.InvariantCulture);
+
+    private AppIconName StatusIcon => Review.IsComplete
+        ? AppIconName.Check
+        : Review.HasAnyAnswer
+            ? AppIconName.Sparkles
+            : AppIconName.AlertCircle;
+
+    private string StatusValue => Review.IsComplete
+        ? Localizer["Predictions.Status.Complete"]
+        : Review.HasAnyAnswer
+            ? Localizer["Predictions.Status.InProgress"]
+            : Localizer["Predictions.Status.NotStarted"];
+
+    private string StatusCardClass => string.Join(
+        " ",
+        "review-stats__card",
+        Review.IsComplete
+            ? "review-stats__card--success"
+            : Review.HasAnyAnswer
+                ? "review-stats__card--warning"
+                : "review-stats__card--muted");
+}

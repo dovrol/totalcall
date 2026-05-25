@@ -1,0 +1,119 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<article class="@ContainerClass">
+    <button
+        type="button"
+        class="review-section__head"
+        aria-expanded="@(IsOpen ? "true" : "false")"
+        @onclick="OnToggle">
+        <span class="review-section__status-dot @StatusDotClass" aria-hidden="true">
+            @if (Section.IsComplete)
+            {
+                <AppIcon Name="AppIconName.Check" Size="11" StrokeWidth="3" />
+            }
+        </span>
+
+        <span class="review-section__head-text">
+            <span class="review-section__title">@Section.Title</span>
+            @if (!string.IsNullOrWhiteSpace(Section.GroupLabel))
+            {
+                <span class="review-section__group">@Section.GroupLabel</span>
+            }
+        </span>
+
+        <PredictionStatusBadge Status="Section.Status" />
+
+        <span class="review-section__count">
+            @Section.SelectedCount / @Section.RequiredCount
+        </span>
+
+        <span class="review-section__chevron" aria-hidden="true">
+            <AppIcon Name="AppIconName.ChevronRight" Size="14" />
+        </span>
+    </button>
+
+    @if (IsOpen)
+    {
+        <div class="review-section__body">
+            @if (Section.Layout == ReviewSectionLayout.AthleteRanking)
+            {
+                @if (Section.IsNotStarted)
+                {
+                    <div class="review-section__empty">
+                        <p>@Localizer["Review.Section.NotStarted"]</p>
+                        <AppButton Href="@Section.EditHref" Variant="Secondary" Size="Sm">
+                            <AppIcon Name="AppIconName.PencilLine" Size="14" />
+                            <span>@Localizer["Review.Section.Fill"]</span>
+                        </AppButton>
+                    </div>
+                }
+                else
+                {
+                    @if (Section.IsInProgress)
+                    {
+                        <p class="review-section__hint">
+                            @Localizer["Review.Section.Missing", Section.RemainingItems]
+                        </p>
+                    }
+
+                    <ReviewPickTable Rows="@Section.Picks" />
+
+                    @if (Section.IsInProgress)
+                    {
+                        <div class="review-section__footer">
+                            <AppButton Href="@Section.EditHref" Variant="Secondary" Size="Sm">
+                                <AppIcon Name="AppIconName.PencilLine" Size="14" />
+                                <span>@Localizer["Review.Section.Continue"]</span>
+                            </AppButton>
+                        </div>
+                    }
+                }
+            }
+            else
+            {
+                @if (Section.IsNotStarted)
+                {
+                    <div class="review-section__empty">
+                        <p>@Localizer["Review.Section.NotStarted"]</p>
+                        <AppButton Href="@Section.EditHref" Variant="Secondary" Size="Sm">
+                            <AppIcon Name="AppIconName.PencilLine" Size="14" />
+                            <span>@Localizer["Review.Section.Fill"]</span>
+                        </AppButton>
+                    </div>
+                }
+                else
+                {
+                    <p class="review-section__answer">@Section.SummaryText</p>
+                }
+            }
+        </div>
+    }
+</article>
+
+@code {
+    [Parameter, EditorRequired]
+    public ReviewSectionModel Section { get; set; } = default!;
+
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public EventCallback<string> Toggled { get; set; }
+
+    private string ContainerClass => string.Join(
+        " ",
+        "review-section",
+        $"review-section--{StatusSlug(Section.Status)}",
+        IsOpen ? "review-section--open" : null);
+
+    private string StatusDotClass => $"review-section__status-dot--{StatusSlug(Section.Status)}";
+
+    private Task OnToggle() => Toggled.InvokeAsync(Section.Id);
+
+    private static string StatusSlug(PredictionCompletionStatus status) => status switch
+    {
+        PredictionCompletionStatus.Complete => "complete",
+        PredictionCompletionStatus.InProgress => "in-progress",
+        _ => "not-started"
+    };
+}

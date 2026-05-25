@@ -1,13 +1,10 @@
 @page "/competitions/{Slug}/review"
-@using System.Text
 @using System.Text.Json
 @using TotalCall.Client.Infrastructure.Browser
 @using TotalCall.Client.Infrastructure.Json
 @inject CompetitionService CompetitionService
 @inject PredictionService PredictionService
-@inject IPredictionValidationService PredictionValidationService
-@inject PredictionAnswerDisplayService AnswerDisplay
-@inject PredictionTextService Text
+@inject CompetitionReviewBuilder ReviewBuilder
 @inject BrowserFileActions BrowserFileActions
 @inject IStringLocalizer<SharedResource> Localizer
 
@@ -17,7 +14,7 @@
 {
     <AppLoadingState Message="@Localizer["Review.Loading"]" />
 }
-else if (competition is null || predictionSet is null)
+else if (competition is null || predictionSet is null || review is null)
 {
     <AppErrorState
         Title="@Localizer["Review.NotFoundTitle"]"
@@ -26,15 +23,11 @@ else if (competition is null || predictionSet is null)
 else
 {
     <div class="prediction-review-page">
-        <header class="prediction-header">
-            <div class="prediction-header__main">
-                <h1>@Localizer["Review.PageTitle"]</h1>
-                <p>@competition.Name</p>
-                <p>@Localizer["Review.Description"]</p>
-            </div>
-        </header>
+        <ReviewHeader Review="@review" />
 
-        @if (predictionSet.Answers.Count == 0)
+        <ReviewStatsCards Review="@review" />
+
+        @if (!review.HasAnyAnswer)
         {
             <PredictionEmptyState
                 Title="@Localizer["Review.EmptyTitle"]"
@@ -42,38 +35,19 @@ else
         }
         else
         {
-            @if (!validationResult.IsValid)
-            {
-                <div class="notice notice--warning">
-                    @Localizer["Review.ValidationIssues", validationResult.Errors.Count]
+            <section class="review-modules" aria-label="@Localizer["Review.Modules.Aria"]">
+                <header class="review-modules__head">
+                    <h2 class="review-modules__title">@Localizer["Review.Modules.Heading"]</h2>
+                    <p class="review-modules__description">@Localizer["Review.Modules.Description"]</p>
+                </header>
+
+                <div class="review-modules__list">
+                    @foreach (var module in review.Modules)
+                    {
+                        <ReviewModuleCard Module="@module" />
+                    }
                 </div>
-            }
-
-            <div class="review-list">
-                @foreach (var group in OrderedGroups)
-                {
-                    <AppCard AdditionalClass="prediction-review-card">
-                        <div class="prediction-review-card__head">
-                            <h2>@Text.GroupTitle(competition, group)</h2>
-                            @if (!string.IsNullOrWhiteSpace(Text.GroupDescription(competition, group)))
-                            {
-                                <p>@Text.GroupDescription(competition, group)</p>
-                            }
-                        </div>
-
-                        <div class="answer-list">
-                            @foreach (var question in group.Questions.OrderBy(question => question.Order))
-                            {
-                                var answer = FindAnswer(group.Id, question.Id);
-                                <article class="answer-row">
-                                    <h3>@Text.QuestionTitle(competition, question)</h3>
-                                    <p>@AnswerDisplay.FormatAnswer(competition, question, answer)</p>
-                                </article>
-                            }
-                        </div>
-                    </AppCard>
-                }
-            </div>
+            </section>
         }
 
         <ReviewActionBar
@@ -89,13 +63,8 @@ else
 
     private Competition? competition;
     private PredictionSet? predictionSet;
-    private PredictionValidationResult validationResult = new([]);
+    private CompetitionReviewModel? review;
     private bool isLoading = true;
-
-    private IReadOnlyList<PredictionGroup> OrderedGroups => competition?
-        .PredictionGroups
-        .OrderBy(group => group.Order)
-        .ToArray() ?? [];
 
     protected override async Task OnParametersSetAsync()
     {
@@ -105,32 +74,26 @@ else
         if (competition is not null)
         {
             predictionSet = await PredictionService.GetOrCreatePredictionSetAsync(competition);
-            validationResult = PredictionValidationService.Validate(competition, predictionSet);
+            var canEdit = CompetitionService.CanEditPredictions(competition);
+            review = ReviewBuilder.Build(competition, predictionSet, canEdit);
         }
         else
         {
             predictionSet = null;
-            validationResult = new PredictionValidationResult([]);
+            review = null;
         }
 
         isLoading = false;
     }
 
-    private PredictionAnswer? FindAnswer(string groupId, string questionId)
-    {
-        return predictionSet?.Answers.FirstOrDefault(answer =>
-            string.Equals(answer.GroupId, groupId, StringComparison.OrdinalIgnoreCase) &&
-            string.Equals(answer.QuestionId, questionId, StringComparison.OrdinalIgnoreCase));
-    }
-
     private async Task OnCopySummaryRequested(MouseEventArgs _)
     {
-        if (competition is null || predictionSet is null)
+        if (review is null)
         {
             return;
         }
 
-        await BrowserFileActions.CopyTextAsync(BuildPredictionSummary(competition, predictionSet));
+        await BrowserFileActions.CopyTextAsync(ReviewBuilder.BuildPlainSummary(review));
     }
 
     private async Task OnExportJsonRequested(MouseEventArgs _)
@@ -151,27 +114,5 @@ else
             $"{competition.Slug}-totalcall-picks.json",
             json,
             "application/json;charset=utf-8");
-    }
-
-    private string BuildPredictionSummary(Competition competition, PredictionSet predictionSet)
-    {
-        var builder = new StringBuilder();
-
-        builder.AppendLine(competition.Name);
-        builder.AppendLine($"{Localizer["Predictions.LastSaved"]}: {predictionSet.SavedAt.ToLocalTime():d MMM yyyy, HH:mm}");
-
-        foreach (var group in OrderedGroups)
-        {
-            builder.AppendLine();
-            builder.AppendLine(Text.GroupTitle(competition, group));
-
-            foreach (var question in group.Questions.OrderBy(question => question.Order))
-            {
-                var answer = FindAnswer(group.Id, question.Id);
-                builder.AppendLine($"- {Text.QuestionTitle(competition, question)}: {AnswerDisplay.FormatAnswer(competition, question, answer)}");
-            }
-        }
-
-        return builder.ToString().TrimEnd();
     }
 }

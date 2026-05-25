@@ -1,0 +1,211 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<AppCard AdditionalClass="@CardClass">
+    <header class="review-module__head">
+        <div class="review-module__identity">
+            <div class="review-module__icon-wrap @StatusModifier">
+                <AppIcon Name="@HeaderIcon" Size="18" />
+            </div>
+            <div class="review-module__text">
+                <h2 class="review-module__title">@Module.Title</h2>
+                @if (!string.IsNullOrWhiteSpace(Module.Description))
+                {
+                    <p class="review-module__description">@Module.Description</p>
+                }
+            </div>
+        </div>
+
+        <div class="review-module__meta">
+            <PredictionStatusBadge Status="Module.Status" />
+            <AppButton
+                Href="@Module.EditHref"
+                Variant="@(Module.IsComplete ? "Secondary" : "Primary")"
+                Size="Sm"
+                AdditionalClass="review-module__cta">
+                <AppIcon Name="AppIconName.ChevronRight" Size="14" />
+                <span>@Localizer["Review.Module.Open"]</span>
+            </AppButton>
+        </div>
+    </header>
+
+    <div class="review-module__metrics">
+        <div class="review-module__metric">
+            <span class="review-module__metric-label">@Localizer["Review.Module.Sections"]</span>
+            <span class="review-module__metric-value">
+                <strong>@Module.CompletedSections</strong>
+                <span> / @Module.TotalSections</span>
+            </span>
+        </div>
+        <div class="review-module__metric">
+            <span class="review-module__metric-label">@Localizer["Review.Module.SavedPicks"]</span>
+            <span class="review-module__metric-value">
+                <strong>@Module.SavedPicks</strong>
+            </span>
+        </div>
+        @if (!Module.IsComplete && Module.RemainingSections > 0)
+        {
+            <div class="review-module__metric review-module__metric--warning">
+                <span class="review-module__metric-label">@Localizer["Review.Module.Remaining"]</span>
+                <span class="review-module__metric-value">
+                    <strong>@Module.RemainingSections</strong>
+                </span>
+            </div>
+        }
+    </div>
+
+    <div class="review-module__progress" aria-hidden="true">
+        <span style="@($"width: {ProgressPercent.ToString(System.Globalization.CultureInfo.InvariantCulture)}%")"></span>
+    </div>
+
+    @if (Module.Sections.Count == 0)
+    {
+        <p class="review-module__empty">@Localizer["Review.Module.NoSections"]</p>
+    }
+    else
+    {
+        <div class="review-module__sections-toolbar">
+            <span class="review-module__sections-summary">
+                @Localizer["Review.Module.SectionsHeading", Module.CompletedSections, Module.TotalSections]
+            </span>
+            <div class="review-module__sections-toggles">
+                <button type="button" class="review-module__toggle" @onclick="ExpandAll">
+                    <AppIcon Name="AppIconName.ArrowUpDown" Size="13" />
+                    <span>@Localizer["Review.Module.ExpandAll"]</span>
+                </button>
+                <button type="button" class="review-module__toggle" @onclick="CollapseAll">
+                    <AppIcon Name="AppIconName.X" Size="13" />
+                    <span>@Localizer["Review.Module.CollapseAll"]</span>
+                </button>
+            </div>
+        </div>
+
+        @foreach (var sectionGroup in GroupedSections)
+        {
+            @if (!string.IsNullOrWhiteSpace(sectionGroup.Label))
+            {
+                <h3 class="review-module__section-group">@ResolveGroupLabel(sectionGroup.Label)</h3>
+            }
+
+            <div class="review-module__section-list">
+                @foreach (var section in sectionGroup.Sections)
+                {
+                    <ReviewSectionAccordion
+                        Section="@section"
+                        IsOpen="@IsOpen(section.Id)"
+                        Toggled="@ToggleSection" />
+                }
+            </div>
+        }
+    }
+</AppCard>
+
+@code {
+    [Parameter, EditorRequired]
+    public PredictionModuleReviewModel Module { get; set; } = default!;
+
+    private readonly HashSet<string> openSectionIds = new(StringComparer.OrdinalIgnoreCase);
+    private string? lastInitializedModuleId;
+
+    protected override void OnParametersSet()
+    {
+        if (!string.Equals(lastInitializedModuleId, Module.GroupId, StringComparison.OrdinalIgnoreCase))
+        {
+            openSectionIds.Clear();
+            ApplyDefaultExpansion();
+            lastInitializedModuleId = Module.GroupId;
+        }
+    }
+
+    private void ApplyDefaultExpansion()
+    {
+        var firstCompleteSeen = false;
+        foreach (var section in Module.Sections)
+        {
+            if (!section.IsComplete)
+            {
+                openSectionIds.Add(section.Id);
+            }
+            else if (!firstCompleteSeen)
+            {
+                openSectionIds.Add(section.Id);
+                firstCompleteSeen = true;
+            }
+        }
+    }
+
+    private bool IsOpen(string sectionId) => openSectionIds.Contains(sectionId);
+
+    private void ToggleSection(string sectionId)
+    {
+        if (!openSectionIds.Remove(sectionId))
+        {
+            openSectionIds.Add(sectionId);
+        }
+    }
+
+    private void ExpandAll()
+    {
+        openSectionIds.Clear();
+        foreach (var section in Module.Sections)
+        {
+            openSectionIds.Add(section.Id);
+        }
+    }
+
+    private void CollapseAll()
+    {
+        openSectionIds.Clear();
+    }
+
+    private decimal ProgressPercent => Module.TotalSections == 0
+        ? 0m
+        : Math.Round((decimal)Module.CompletedSections / Module.TotalSections * 100m, 1);
+
+    private string CardClass => string.Join(
+        " ",
+        "review-module",
+        $"review-module--{StatusSlug(Module.Status)}");
+
+    private string StatusModifier => $"review-module__icon-wrap--{StatusSlug(Module.Status)}";
+
+    private AppIconName HeaderIcon => Module.IsComplete
+        ? AppIconName.Check
+        : AppIconName.Trophy;
+
+    private IReadOnlyList<SectionGroup> GroupedSections
+    {
+        get
+        {
+            if (!Module.HasGroupedSections)
+            {
+                return [new SectionGroup(null, Module.Sections)];
+            }
+
+            return Module.Sections
+                .GroupBy(section => section.GroupLabel ?? string.Empty)
+                .Select(group => new SectionGroup(
+                    string.IsNullOrWhiteSpace(group.Key) ? null : group.Key,
+                    group.ToArray()))
+                .ToArray();
+        }
+    }
+
+    private string ResolveGroupLabel(string raw)
+    {
+        return raw.ToLowerInvariant() switch
+        {
+            "women" => Localizer["Predictions.Sidebar.WomenSection"],
+            "men" => Localizer["Predictions.Sidebar.MenSection"],
+            _ => raw
+        };
+    }
+
+    private static string StatusSlug(PredictionCompletionStatus status) => status switch
+    {
+        PredictionCompletionStatus.Complete => "complete",
+        PredictionCompletionStatus.InProgress => "in-progress",
+        _ => "not-started"
+    };
+
+    private sealed record SectionGroup(string? Label, IReadOnlyList<ReviewSectionModel> Sections);
+}

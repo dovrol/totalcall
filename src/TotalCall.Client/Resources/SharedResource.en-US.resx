@@ -319,6 +319,39 @@
   <data name="Review.EditPredictions" xml:space="preserve"><value>Edit predictions</value></data>
   <data name="Review.CloseReview" xml:space="preserve"><value>Close review</value></data>
   <data name="Review.ActionBarAria" xml:space="preserve"><value>Review actions</value></data>
+  <data name="Review.Eyebrow" xml:space="preserve"><value>Pre-meet review</value></data>
+  <data name="Review.Modules.Aria" xml:space="preserve"><value>Prediction modules</value></data>
+  <data name="Review.Modules.Heading" xml:space="preserve"><value>Prediction modules</value></data>
+  <data name="Review.Modules.Description" xml:space="preserve"><value>Check each module before copying or exporting your picks.</value></data>
+  <data name="Review.Module.Open" xml:space="preserve"><value>Open module</value></data>
+  <data name="Review.Module.Sections" xml:space="preserve"><value>Sections</value></data>
+  <data name="Review.Module.SavedPicks" xml:space="preserve"><value>Saved picks</value></data>
+  <data name="Review.Module.Remaining" xml:space="preserve"><value>Remaining</value></data>
+  <data name="Review.Module.NoSections" xml:space="preserve"><value>This module has no review sections.</value></data>
+  <data name="Review.Module.SectionsHeading" xml:space="preserve"><value>Sections · {0} / {1} complete</value></data>
+  <data name="Review.Module.ExpandAll" xml:space="preserve"><value>Expand all</value></data>
+  <data name="Review.Module.CollapseAll" xml:space="preserve"><value>Collapse all</value></data>
+  <data name="Review.Section.NotStarted" xml:space="preserve"><value>This section has not been started.</value></data>
+  <data name="Review.Section.Missing" xml:space="preserve"><value>Missing {0} pick(s) in this section.</value></data>
+  <data name="Review.Section.Fill" xml:space="preserve"><value>Fill section</value></data>
+  <data name="Review.Section.Continue" xml:space="preserve"><value>Finish section</value></data>
+  <data name="Review.Stats.Modules" xml:space="preserve"><value>Modules complete</value></data>
+  <data name="Review.Stats.Sections" xml:space="preserve"><value>Sections complete</value></data>
+  <data name="Review.Stats.SavedPicks" xml:space="preserve"><value>Saved picks</value></data>
+  <data name="Review.Stats.Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Review.Notice.AllComplete" xml:space="preserve"><value>All required picks are filled in. You can copy or export the summary.</value></data>
+  <data name="Review.Notice.Incomplete" xml:space="preserve"><value>You have {0} incomplete section(s).</value></data>
+  <data name="Review.Notice.IncompleteHint" xml:space="preserve"><value>Incomplete picks may not be scored.</value></data>
+  <data name="Review.Table.Aria" xml:space="preserve"><value>Prediction ranking</value></data>
+  <data name="Review.Table.Rank" xml:space="preserve"><value>Rank</value></data>
+  <data name="Review.Table.Athlete" xml:space="preserve"><value>Athlete</value></data>
+  <data name="Review.Table.PredictedTotal" xml:space="preserve"><value>Predicted total</value></data>
+  <data name="Review.Table.Attempts" xml:space="preserve"><value>Attempts</value></data>
+  <data name="Review.Table.EmptySlot" xml:space="preserve"><value>Empty slot</value></data>
+  <data name="Review.Summary.Modules" xml:space="preserve"><value>Modules</value></data>
+  <data name="Review.Summary.Sections" xml:space="preserve"><value>Sections</value></data>
+  <data name="Review.Summary.SectionsCompleted" xml:space="preserve"><value>Sections complete</value></data>
+  <data name="Review.Summary.NoPicks" xml:space="preserve"><value>(no picks)</value></data>
   <data name="Validation.Required" xml:space="preserve"><value>This question is required.</value></data>
   <data name="Validation.ExactSelections" xml:space="preserve"><value>Select exactly {count}.</value></data>
   <data name="Validation.MinSelections" xml:space="preserve"><value>Select at least {count}.</value></data>
