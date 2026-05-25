@@ -2,6 +2,37 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.2.0-beta.2",
+      "releasedAt": "2026-05-25",
+      "title": {
+        "pl": "Poprawki mobile — layout tab bar i action bar",
+        "en": "Mobile fixes — tab bar and action bar layout"
+      },
+      "items": [
+        {
+          "type": "fix",
+          "text": {
+            "pl": "Okna pływające na urządzeniach mobilnych — poprawne wyświetlanie, safe-area-inset, responsywne rozmiary.",
+            "en": "Floating windows on mobile — proper display, safe-area-inset support, responsive sizing."
+          }
+        },
+        {
+          "type": "fix",
+          "text": {
+            "pl": "Layout mobile na ekranach typowania — dolny action bar nie zachodzi na tab bar nawigacji.",
+            "en": "Mobile layout on prediction screens — bottom action bar no longer overlaps navigation tabs."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Ekran przeglądu typów teraz ma własny action bar z akcjami Copy/Export i zamknięciem.",
+            "en": "Review screen now has its own action bar with Copy/Export actions and close button."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.2.0-beta.1",
       "releasedAt": "2026-05-25",
       "title": {
