@@ -2,6 +2,51 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.2.0-beta.1",
+      "releasedAt": "2026-05-25",
+      "title": {
+        "pl": "System okien pływających i przeprojektowanie panelu predykcji",
+        "en": "Floating windows and prediction panel redesign"
+      },
+      "items": [
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Nieblokujący system pływających okien — przeciągaj, zmniejszaj, zmieniam rozmiar, otwieraj wiele naraz.",
+            "en": "Non-blocking floating window system — drag, minimize, resize, open multiple windows side-by-side."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Historia startów zawodnika w osobnym oknie — łatwe porównanie wyników, trend chart, akcje do edytora.",
+            "en": "Athlete start history in a floating window — compare results, view trends, quick actions to apply values."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Redesign panelu predykcji — lepszy layout, bardziej przejrzyste akcje, wskaźniki statusu.",
+            "en": "Redesigned prediction panels — improved layout, clearer action buttons, better status indicators."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Pasek akcji dla zawodów — szybkie akcje dla całej rundy bez otwierania każdego typowania.",
+            "en": "Prediction action bar for competitions — quick actions for the entire round without opening each prediction."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Piękniejsze scrollbary i ulepszony UX dla okien pływających na urządzeniach mobilnych.",
+            "en": "Prettier scrollbars and improved floating window experience on mobile devices."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.1.0-beta.2",
       "releasedAt": "2026-05-24",
       "title": {
