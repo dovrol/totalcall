@@ -1,6 +1,7 @@
 @using System.Globalization
 @inject IStringLocalizer<SharedResource> Localizer
 @inject AthleteHistoryService AthleteHistoryService
+@inject WindowManager Windows
 
 <aside class="prediction-context-panel" aria-label="@Localizer["Predictions.ContextPanel"]">
     <header class="prediction-context-panel__head">
@@ -200,9 +201,9 @@
                 </dl>
 
                 <div class="prediction-context-panel__athlete-actions">
-                    <button type="button" class="prediction-context-panel__history-link" @onclick="OnOpenHistoryDialogClicked">
+                    <button type="button" class="prediction-context-panel__history-link" @onclick="OnShowHistoryWindowClicked">
                         <AppIcon Name="AppIconName.BarChart" Size="17" />
-                        <span>@Localizer["Predictions.ViewFullHistory"]</span>
+                        <span>@Localizer["Predictions.ShowStartHistory"]</span>
                     </button>
                 </div>
             </section>
@@ -280,140 +281,6 @@
     }
 </aside>
 
-@if (isHistoryDialogOpen && SelectedAthlete is not null && !IsSelectorMode)
-{
-    <div class="prediction-history-dialog-layer" role="presentation">
-        <button
-            type="button"
-            class="prediction-history-dialog__backdrop"
-            aria-label="@Localizer["Predictions.HistoryDialogClose"]"
-            @onclick="OnCloseHistoryDialogClicked">
-        </button>
-
-        <section
-            class="prediction-history-dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-label="@Localizer["Predictions.HistoryDialogTitle", SelectedAthlete.DisplayName]">
-            <header class="prediction-history-dialog__head">
-                <h2>@Localizer["Predictions.HistoryDialogTitle", SelectedAthlete.DisplayName]</h2>
-                <button
-                    type="button"
-                    class="prediction-history-dialog__close"
-                    aria-label="@Localizer["Predictions.HistoryDialogClose"]"
-                    @onclick="OnCloseHistoryDialogClicked">
-                    <AppIcon Name="AppIconName.X" Size="16" />
-                </button>
-            </header>
-
-            <section class="prediction-history-dialog__summary">
-                <div class="prediction-history-dialog__summary-athlete">
-                    <span class="prediction-history-dialog__summary-avatar">@GetAthleteInitials(SelectedAthlete.DisplayName)</span>
-                    <div>
-                        <strong>@SelectedAthlete.DisplayName</strong>
-                        <small>
-                            <CountryFlag Code="@SelectedAthlete.CountryCode" CountryName="@SelectedAthlete.CountryName" />
-                            <span>@(SelectedAthlete.CountryName ?? Localizer["Common.Tbd"].Value)</span>
-                        </small>
-                    </div>
-                </div>
-
-                <dl class="prediction-history-dialog__summary-meta">
-                    <div>
-                        <dt>@Localizer["Predictions.Category"]</dt>
-                        <dd>@(SelectedAthleteCategoryName ?? Localizer["Common.Tbd"].Value)</dd>
-                    </div>
-                    <div>
-                        <dt>@Localizer["Predictions.NominatedTotal"]</dt>
-                        <dd>@FormatKg(SelectedAthlete.SeedTotalKg)</dd>
-                    </div>
-                </dl>
-            </section>
-
-            @if (HistoryTrendChartPoints.Count > 1)
-            {
-                <section class="prediction-history-dialog__trend">
-                    <header class="prediction-history-dialog__trend-head">
-                        <h3>@Localizer["Predictions.TotalTrend", HistoryTrendChartPoints.Count]</h3>
-                        <span class="prediction-history-dialog__metric-pill">
-                            <AppIcon Name="AppIconName.BarChart" Size="15" />
-                            Total (kg)
-                        </span>
-                    </header>
-
-                    <AppTrendChart
-                        Points="@HistoryTrendChartPoints"
-                        Variant="AppTrendChartVariant.Full"
-                        AriaLabel="@Localizer["Predictions.TotalTrend", HistoryTrendChartPoints.Count]" />
-                </section>
-            }
-
-            <section class="prediction-history-dialog__table-wrap">
-                <h3>@Localizer["Predictions.RecentStarts"]</h3>
-                <div class="prediction-context-panel__history-table-wrap">
-                    <table class="prediction-context-panel__history-table">
-                        <thead>
-                            <tr>
-                                <th>@Localizer["Predictions.History.Date"]</th>
-                                <th>@Localizer["Predictions.History.Meet"]</th>
-                                <th>@Localizer["Predictions.History.Bodyweight"]</th>
-                                <th>SQ</th>
-                                <th>BP</th>
-                                <th>DL</th>
-                                <th>Total</th>
-                                <th>@Localizer["Predictions.History.Place"]</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var result in HistoryResults)
-                            {
-                                <tr>
-                                    <td>@FormatDate(result.Date)</td>
-                                    <td>
-                                        @FormatRecentStartTitle(result)
-                                        @if (!string.IsNullOrWhiteSpace(result.Federation))
-                                        {
-                                            <small>@result.Federation</small>
-                                        }
-                                    </td>
-                                    <td>@FormatBodyweightValue(result.BodyweightKg)</td>
-                                    <td class="@GetHistoryLiftCellClass(result.SquatKg, BestSquatKg)">@FormatKgValue(result.SquatKg)</td>
-                                    <td class="@GetHistoryLiftCellClass(result.BenchKg, BestBenchKg)">@FormatKgValue(result.BenchKg)</td>
-                                    <td class="@GetHistoryLiftCellClass(result.DeadliftKg, BestDeadliftKg)">@FormatKgValue(result.DeadliftKg)</td>
-                                    <td class="@GetHistoryLiftCellClass(result.TotalKg, BestTotalKg)">@FormatKgValue(result.TotalKg)</td>
-                                    <td>@(string.IsNullOrWhiteSpace(result.Placing) ? "—" : result.Placing)</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <footer class="prediction-history-dialog__footer">
-                <div class="prediction-history-dialog__source">
-                    @if (!string.IsNullOrWhiteSpace(SourceAttribution))
-                    {
-                        <p>@SourceAttribution</p>
-                    }
-                    @if (!string.IsNullOrWhiteSpace(SourceDownloadedAt))
-                    {
-                        <p>@Localizer["Predictions.SourceUpdatedAt", FormatDate(SourceDownloadedAt)]</p>
-                    }
-                </div>
-
-                <div class="prediction-history-dialog__actions">
-                    <button type="button" class="app-button app-button--secondary app-button--sm" @onclick="OnCloseHistoryDialogClicked">
-                        @Localizer["Predictions.BackToContext"]
-                    </button>
-                    <button type="button" class="app-button app-button--ghost app-button--sm" @onclick="OnCloseHistoryDialogClicked">
-                        @Localizer["Predictions.HistoryDialogClose"]
-                    </button>
-                </div>
-            </footer>
-        </section>
-    </div>
-}
-
 @code {
     [Parameter, EditorRequired]
     public Competition Competition { get; set; } = default!;
@@ -463,7 +330,6 @@
     private string? loadedCompetitionId;
     private string? loadedAthleteId;
     private bool isLoadingHistory;
-    private bool isHistoryDialogOpen;
     private bool showAllNominated;
     private string selectorSearchTerm = string.Empty;
     private string selectorSortMode = "nominated-desc";
@@ -527,12 +393,6 @@
 
     private string? SelectedAthleteCategoryName => ResolveCategoryName(SelectedAthlete?.WeightCategoryId);
 
-    private string? SourceAttribution => historyDataset?.Source?.Attribution;
-
-    private string? SourceDownloadedAt => historyDataset?.Source?.DownloadedAt;
-
-    private string RankBadgeLabel => SelectedAthleteRank?.ToString(CultureInfo.CurrentCulture) ?? "•";
-
     private string ShowAllNominatedLabel => showAllNominated
         ? Localizer["Predictions.ShowTopNominated", NominatedPreviewCount].Value
         : Localizer["Predictions.ShowAllAthletes", AllNominatedAthletes.Count].Value;
@@ -566,8 +426,6 @@
         .Take(3)
         .ToArray() ?? [];
 
-    private IReadOnlyList<AthleteRecentResult> HistoryResults => SelectedAthleteHistory?.RecentResults ?? [];
-
     private decimal? BestSquatKg => SelectedAthleteHistory?.Bests?.SquatKg ??
                                     SelectedAthleteHistory?.RecentResults.Max(result => result.SquatKg);
 
@@ -580,13 +438,7 @@
     private decimal? BestTotalKg => SelectedAthleteHistory?.Bests?.TotalKg ??
                                     SelectedAthleteHistory?.RecentResults.Max(result => result.TotalKg);
 
-    private decimal? LatestBodyweightKg =>
-        SelectedAthleteHistory?.RecentResults.FirstOrDefault()?.BodyweightKg ??
-        SelectedAthleteHistory?.LastResult?.BodyweightKg;
-
     private IReadOnlyList<AppTrendChartPoint> ContextTrendChartPoints => BuildTrendChartPoints(4);
-
-    private IReadOnlyList<AppTrendChartPoint> HistoryTrendChartPoints => BuildTrendChartPoints(8);
 
     private AthleteSex SelectorAthleteSex
     {
@@ -628,11 +480,6 @@
             selectorSearchTerm = string.Empty;
             selectorSortMode = "nominated-desc";
             previousSelectorSlotPosition = SelectorSlotPosition;
-        }
-
-        if (IsSelectorMode)
-        {
-            isHistoryDialogOpen = false;
         }
 
         if (SelectedAthlete is null)
@@ -679,7 +526,6 @@
 
     private Task OnClearAthleteSelectionClicked(MouseEventArgs _)
     {
-        isHistoryDialogOpen = false;
         return AthleteSelectionCleared.InvokeAsync();
     }
 
@@ -698,15 +544,23 @@
         return SelectorAthletePicked.InvokeAsync(athleteId);
     }
 
-    private Task OnOpenHistoryDialogClicked(MouseEventArgs _)
+    private Task OnShowHistoryWindowClicked(MouseEventArgs _)
     {
-        isHistoryDialogOpen = true;
-        return Task.CompletedTask;
-    }
+        if (SelectedAthlete is null)
+        {
+            return Task.CompletedTask;
+        }
 
-    private Task OnCloseHistoryDialogClicked(MouseEventArgs _)
-    {
-        isHistoryDialogOpen = false;
+        Windows.OpenAthleteHistory(
+            competitionId: Competition.Id,
+            athleteId: SelectedAthlete.Id,
+            athleteName: SelectedAthlete.DisplayName,
+            countryCode: SelectedAthlete.CountryCode,
+            countryName: SelectedAthlete.CountryName,
+            categoryName: SelectedAthleteCategoryName,
+            nominatedTotalKg: SelectedAthlete.SeedTotalKg,
+            title: Localizer["Predictions.HistoryDialogTitle", SelectedAthlete.DisplayName]);
+
         return Task.CompletedTask;
     }
 
@@ -830,21 +684,6 @@
         return Localizer[key, CategoryAthleteCount].Value;
     }
 
-    private string FormatDate(string? value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return Localizer["Common.Tbd"];
-        }
-
-        if (DateOnly.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsed))
-        {
-            return parsed.ToString("d MMM yyyy", CultureInfo.CurrentCulture);
-        }
-
-        return value;
-    }
-
     private string FormatRecentStartTitle(AthleteRecentResult result)
     {
         var meet = string.IsNullOrWhiteSpace(result.MeetName)
@@ -910,13 +749,6 @@
         return $"{Localizer["Predictions.BodyweightShort"]}: {FormatBodyweight(value)}";
     }
 
-    private string FormatBodyweightValue(decimal? value)
-    {
-        return value is null
-            ? "--"
-            : value.Value.ToString("0.##", CultureInfo.CurrentCulture);
-    }
-
     private string GetRecentStartTotalClass(AthleteRecentResult result)
     {
         return IsPersonalBest(result.TotalKg, SelectedAthleteHistory?.Bests?.TotalKg)
@@ -955,13 +787,6 @@
         }
 
         return value.Value == bestValue.Value;
-    }
-
-    private string? GetHistoryLiftCellClass(decimal? value, decimal? bestValue)
-    {
-        return IsPersonalBest(value, bestValue)
-            ? "prediction-context-panel__history-cell--pb"
-            : null;
     }
 
     private IReadOnlyList<AppTrendChartPoint> BuildTrendChartPoints(int maxResults)

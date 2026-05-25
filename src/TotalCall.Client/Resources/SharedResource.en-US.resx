@@ -208,6 +208,16 @@
   <data name="Predictions.RecentStartsShort" xml:space="preserve"><value>Recent starts</value></data>
   <data name="Predictions.ViewFullHistory" xml:space="preserve"><value>View full history</value></data>
   <data name="Predictions.ShowStartHistory" xml:space="preserve"><value>Show start history</value></data>
+  <data name="FloatingWindow.DragHint" xml:space="preserve"><value>Drag to move window</value></data>
+  <data name="FloatingWindow.Minimize" xml:space="preserve"><value>Minimize window</value></data>
+  <data name="FloatingWindow.Close" xml:space="preserve"><value>Close window</value></data>
+  <data name="FloatingWindow.RestoreFormat" xml:space="preserve"><value>Restore: {0}</value></data>
+  <data name="FloatingWindow.MinimizedListLabel" xml:space="preserve"><value>Minimized windows</value></data>
+  <data name="FloatingWindow.OpenAsWindow" xml:space="preserve"><value>Opens as a draggable window</value></data>
+  <data name="FloatingWindow.ApplyToSlot" xml:space="preserve"><value>Apply to edited slot #{0}</value></data>
+  <data name="FloatingWindow.HistoryActionsLabel" xml:space="preserve"><value>Quick actions for the edited athlete</value></data>
+  <data name="FloatingWindow.NoSlotContextHint" xml:space="preserve"><value>Open the predicted total editor for this athlete to apply values with one click.</value></data>
+  <data name="FloatingWindow.Resize" xml:space="preserve"><value>Drag to resize window</value></data>
   <data name="Predictions.HistoryDialogTitle" xml:space="preserve"><value>Start history — {0}</value></data>
   <data name="Predictions.HistoryDialogClose" xml:space="preserve"><value>Close</value></data>
   <data name="Predictions.BackToContext" xml:space="preserve"><value>Back to context</value></data>
