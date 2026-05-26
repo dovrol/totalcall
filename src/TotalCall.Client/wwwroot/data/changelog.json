@@ -2,6 +2,58 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.3.0-beta.1",
+      "releasedAt": "2026-05-26",
+      "title": {
+        "pl": "Przegląd typów oraz udostępnianie i eksport",
+        "en": "Prediction review, sharing and export"
+      },
+      "items": [
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Nowy ekran przeglądu zapisanych typów — podsumowanie kompletności, sekcje modułów i czytelne tabele wyborów przed wysłaniem.",
+            "en": "New saved prediction review screen — completion summary, module sections and readable pick tables before sharing."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Nowy przepływ Share/Export — kopiowanie podsumowania, eksport JSON/CSV oraz kopiowanie linku w jednym oknie akcji.",
+            "en": "New Share/Export flow — copy summary, export JSON/CSV and copy link from one action modal."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Eksport CSV dla typowań z architekturą gotową na osobne eksportery dla kolejnych modułów.",
+            "en": "CSV export for predictions with an exporter architecture ready for module-specific formats."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Powiadomienia toast z automatycznym znikaniem dla akcji kopiowania, eksportu i błędów.",
+            "en": "Auto-dismissing toast notifications for copy, export and error states."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Fallback dla blokady schowka — aplikacja pokazuje tekst do ręcznego skopiowania, gdy przeglądarka odrzuci akcję.",
+            "en": "Clipboard failure fallback — the app shows text for manual copy when the browser blocks clipboard access."
+          }
+        },
+        {
+          "type": "fix",
+          "text": {
+            "pl": "Dopracowanie układu mobilnego dla ekranu przeglądu i dolnych pasków akcji, w tym zawijanie przycisków bez przepełnień.",
+            "en": "Mobile layout refinements for the review screen and bottom action bars, including button wrapping without overflow."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.2.0-beta.2",
       "releasedAt": "2026-05-25",
       "title": {
