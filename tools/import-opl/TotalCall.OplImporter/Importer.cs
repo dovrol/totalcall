@@ -97,7 +97,7 @@ public sealed class Importer
 
         // 4. Upsert athletes from competition JSON; fetch slug -> id map
         await UpsertAthletesAsync(supabase, roster, ct);
-        var slugToId = await FetchAthleteIdsAsync(supabase, roster.Select(a => a.Id).ToList(), ct);
+        var slugToId = await FetchAthleteIdsAsync(supabase, roster.Select(a => a.Id).Distinct().ToList(), ct);
         Console.WriteLine($"[info] Resolved {slugToId.Count}/{roster.Count} athletes in DB");
 
         // 5. Upsert aliases + external_ids

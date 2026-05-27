@@ -14,7 +14,7 @@
   "configVersion": "2026.2",
   "athletes": [
     {
-      "id": "women-47-chapon-tiffany",
+      "id": "chapon-tiffany",
       "displayName": "Chapon Tiffany",
       "sex": "female",
       "countryName": "France",
@@ -33,7 +33,7 @@
       ]
     },
     {
-      "id": "women-47-le-leanne",
+      "id": "le-leanne",
       "displayName": "Le Leanne",
       "sex": "female",
       "countryName": "United States",
@@ -48,7 +48,7 @@
       ]
     },
     {
-      "id": "women-47-picher-plante-amelie",
+      "id": "picher-plante-amelie",
       "displayName": "Picher-Plante Amelie",
       "sex": "female",
       "countryName": "Canada",
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "id": "women-47-motta-annalisa",
+      "id": "motta-annalisa",
       "displayName": "Motta Annalisa",
       "sex": "female",
       "countryName": "Italy",
@@ -78,7 +78,7 @@
       ]
     },
     {
-      "id": "women-47-kijumnuayporn-vicky",
+      "id": "kijumnuayporn-vicky",
       "displayName": "Kijumnuayporn Vicky",
       "sex": "female",
       "countryName": "Australia",
@@ -93,7 +93,7 @@
       ]
     },
     {
-      "id": "women-47-duno-frankmary",
+      "id": "duno-frankmary",
       "displayName": "Duno Frankmary",
       "sex": "female",
       "countryName": "Puerto Rico",
@@ -108,7 +108,7 @@
       ]
     },
     {
-      "id": "women-47-mikova-anezka",
+      "id": "mikova-anezka",
       "displayName": "Mikova Anezka",
       "sex": "female",
       "countryName": "Czechia",
@@ -123,7 +123,7 @@
       ]
     },
     {
-      "id": "women-47-jones-ainsley",
+      "id": "jones-ainsley",
       "displayName": "Jones Ainsley",
       "sex": "female",
       "countryName": "Australia",
@@ -138,7 +138,7 @@
       ]
     },
     {
-      "id": "women-47-altamimi-alhanouf",
+      "id": "altamimi-alhanouf",
       "displayName": "Altamimi Alhanouf",
       "sex": "female",
       "countryName": "Kuwait",
@@ -153,7 +153,7 @@
       ]
     },
     {
-      "id": "women-47-santos-mediavilla-paula",
+      "id": "santos-mediavilla-paula",
       "displayName": "Santos Mediavilla Paula",
       "sex": "female",
       "countryName": "Spain",
@@ -168,7 +168,7 @@
       ]
     },
     {
-      "id": "women-47-al-jundi-nour",
+      "id": "al-jundi-nour",
       "displayName": "Al Jundi Nour",
       "sex": "female",
       "countryName": "Thailand",
@@ -183,7 +183,7 @@
       ]
     },
     {
-      "id": "women-47-wedlock-sze-yee-venezia",
+      "id": "wedlock-sze-yee-venezia",
       "displayName": "Wedlock Sze Yee Venezia",
       "sex": "female",
       "countryName": "Singapore",
@@ -198,7 +198,7 @@
       ]
     },
     {
-      "id": "women-47-clarke-joanne",
+      "id": "clarke-joanne",
       "displayName": "Clarke Joanne",
       "sex": "female",
       "countryName": "Ireland",
@@ -213,7 +213,7 @@
       ]
     },
     {
-      "id": "women-47-mai-on-kotchaphan",
+      "id": "mai-on-kotchaphan",
       "displayName": "Mai-On Kotchaphan",
       "sex": "female",
       "countryName": "Ireland",
@@ -228,7 +228,7 @@
       ]
     },
     {
-      "id": "women-47-beglarashvili-mari",
+      "id": "beglarashvili-mari",
       "displayName": "Beglarashvili Mari",
       "sex": "female",
       "countryName": "Georgia",
@@ -243,7 +243,7 @@
       ]
     },
     {
-      "id": "women-47-idczak-karolina",
+      "id": "idczak-karolina",
       "displayName": "Idczak Karolina",
       "sex": "female",
       "countryName": "Poland",
@@ -258,7 +258,7 @@
       ]
     },
     {
-      "id": "women-52-smith-megan-li",
+      "id": "smith-megan-li",
       "displayName": "Smith Megan-Li",
       "sex": "female",
       "countryName": "New Zealand",
@@ -273,7 +273,7 @@
       ]
     },
     {
-      "id": "women-52-dekkers-pleun",
+      "id": "dekkers-pleun",
       "displayName": "Dekkers Pleun",
       "sex": "female",
       "countryName": "Netherlands",
@@ -288,7 +288,7 @@
       ]
     },
     {
-      "id": "women-52-gagne-catherine",
+      "id": "gagne-catherine",
       "displayName": "Gagne Catherine",
       "sex": "female",
       "countryName": "Canada",
@@ -303,7 +303,7 @@
       ]
     },
     {
-      "id": "women-52-lucas-lea",
+      "id": "lucas-lea",
       "displayName": "Lucas Lea",
       "sex": "female",
       "countryName": "France",
@@ -318,7 +318,7 @@
       ]
     },
     {
-      "id": "women-52-farid-farhanna",
+      "id": "farid-farhanna",
       "displayName": "Farid Farhanna",
       "sex": "female",
       "countryName": "Singapore",
@@ -333,7 +333,7 @@
       ]
     },
     {
-      "id": "women-52-pineda-vanessa",
+      "id": "pineda-vanessa",
       "displayName": "Pineda Vanessa",
       "sex": "female",
       "countryName": "United States",
@@ -348,7 +348,7 @@
       ]
     },
     {
-      "id": "women-52-lehoczkyne-fawal-margit",
+      "id": "lehoczkyne-fawal-margit",
       "displayName": "Lehoczkyne Fawal Margit",
       "sex": "female",
       "countryName": "Hungary",
@@ -363,7 +363,7 @@
       ]
     },
     {
-      "id": "women-52-gerlach-eliza",
+      "id": "gerlach-eliza",
       "displayName": "Gerlach Eliza",
       "sex": "female",
       "countryName": "Poland",
@@ -378,7 +378,7 @@
       ]
     },
     {
-      "id": "women-52-craven-elizabeth",
+      "id": "craven-elizabeth",
       "displayName": "Craven Elizabeth",
       "sex": "female",
       "countryName": "Australia",
@@ -393,7 +393,7 @@
       ]
     },
     {
-      "id": "women-52-barwari-delal",
+      "id": "barwari-delal",
       "displayName": "Barwari Delal",
       "sex": "female",
       "countryName": "Sweden",
@@ -408,7 +408,7 @@
       ]
     },
     {
-      "id": "women-52-la-bella-daiana",
+      "id": "la-bella-daiana",
       "displayName": "La Bella Daiana",
       "sex": "female",
       "countryName": "Argentina",
@@ -423,7 +423,7 @@
       ]
     },
     {
-      "id": "women-52-chorianopoulou-aikaterini",
+      "id": "chorianopoulou-aikaterini",
       "displayName": "Chorianopoulou Aikaterini",
       "sex": "female",
       "countryName": "Australia",
@@ -438,7 +438,7 @@
       ]
     },
     {
-      "id": "women-52-varol-fatma",
+      "id": "varol-fatma",
       "displayName": "Varol Fatma",
       "sex": "female",
       "countryName": "Turkiye",
@@ -453,7 +453,7 @@
       ]
     },
     {
-      "id": "women-52-carvalho-giulia",
+      "id": "carvalho-giulia",
       "displayName": "Carvalho Giulia",
       "sex": "female",
       "countryName": "Brazil",
@@ -468,7 +468,7 @@
       ]
     },
     {
-      "id": "women-52-sim-cristy",
+      "id": "sim-cristy",
       "displayName": "Sim Cristy",
       "sex": "female",
       "countryName": "Mexico",
@@ -483,7 +483,7 @@
       ]
     },
     {
-      "id": "women-52-saana-grassham",
+      "id": "saana-grassham",
       "displayName": "Saana Grassham",
       "sex": "female",
       "countryName": "Japan",
@@ -498,7 +498,7 @@
       ]
     },
     {
-      "id": "women-52-sveinsdottir-kristrun",
+      "id": "sveinsdottir-kristrun",
       "displayName": "Sveinsdottir Kristrun",
       "sex": "female",
       "countryName": "Iceland",
@@ -513,7 +513,7 @@
       ]
     },
     {
-      "id": "women-52-caldona-jackielyn",
+      "id": "caldona-jackielyn",
       "displayName": "Caldona Jackielyn",
       "sex": "female",
       "countryName": "Philippines",
@@ -528,7 +528,7 @@
       ]
     },
     {
-      "id": "women-52-bobileva-arina",
+      "id": "bobileva-arina",
       "displayName": "Bobileva Arina",
       "sex": "female",
       "countryName": "Latvia",
@@ -543,7 +543,7 @@
       ]
     },
     {
-      "id": "women-52-koskipaasi-jaana",
+      "id": "koskipaasi-jaana",
       "displayName": "Koskipaasi Jaana",
       "sex": "female",
       "countryName": "Finland",
@@ -558,7 +558,7 @@
       ]
     },
     {
-      "id": "women-52-verhulst-stefanie",
+      "id": "verhulst-stefanie",
       "displayName": "Verhulst Stefanie",
       "sex": "female",
       "countryName": "Belgium",
@@ -573,7 +573,7 @@
       ]
     },
     {
-      "id": "women-52-tsetskhladze-mariam",
+      "id": "tsetskhladze-mariam",
       "displayName": "Tsetskhladze Mariam",
       "sex": "female",
       "countryName": "Georgia",
@@ -588,7 +588,7 @@
       ]
     },
     {
-      "id": "women-57-naldi-sara",
+      "id": "naldi-sara",
       "displayName": "Naldi Sara",
       "sex": "female",
       "countryName": "Italy",
@@ -603,7 +603,7 @@
       ]
     },
     {
-      "id": "women-57-nnamani-joy",
+      "id": "nnamani-joy",
       "displayName": "Nnamani Joy",
       "sex": "female",
       "countryName": "United Kingdom",
@@ -618,7 +618,7 @@
       ]
     },
     {
-      "id": "women-57-pal-sovannphaktra",
+      "id": "pal-sovannphaktra",
       "displayName": "Pal Sovannphaktra",
       "sex": "female",
       "countryName": "France",
@@ -633,7 +633,7 @@
       ]
     },
     {
-      "id": "women-57-butters-bobbie",
+      "id": "butters-bobbie",
       "displayName": "Butters Bobbie",
       "sex": "female",
       "countryName": "United Kingdom",
@@ -648,7 +648,7 @@
       ]
     },
     {
-      "id": "women-57-corrigan-evie",
+      "id": "corrigan-evie",
       "displayName": "Corrigan Evie",
       "sex": "female",
       "countryName": "New Zealand",
@@ -663,7 +663,7 @@
       ]
     },
     {
-      "id": "women-57-olin-emelie",
+      "id": "olin-emelie",
       "displayName": "Olin Emelie",
       "sex": "female",
       "countryName": "Sweden",
@@ -678,7 +678,7 @@
       ]
     },
     {
-      "id": "women-57-aguila-padilla-ana",
+      "id": "aguila-padilla-ana",
       "displayName": "Aguila Padilla Ana",
       "sex": "female",
       "countryName": "Spain",
@@ -693,7 +693,7 @@
       ]
     },
     {
-      "id": "women-57-amri-miriam",
+      "id": "amri-miriam",
       "displayName": "Amri Miriam",
       "sex": "female",
       "countryName": "Netherlands",
@@ -708,7 +708,7 @@
       ]
     },
     {
-      "id": "women-57-henry-marthe",
+      "id": "henry-marthe",
       "displayName": "Henry Marthe",
       "sex": "female",
       "countryName": "Canada",
@@ -723,7 +723,7 @@
       ]
     },
     {
-      "id": "women-57-de-la-torre-monica",
+      "id": "de-la-torre-monica",
       "displayName": "de La Torre Monica",
       "sex": "female",
       "countryName": "Mexico",
@@ -738,7 +738,7 @@
       ]
     },
     {
-      "id": "women-57-kratz-samantha",
+      "id": "kratz-samantha",
       "displayName": "Kratz Samantha",
       "sex": "female",
       "countryName": "Australia",
@@ -753,7 +753,7 @@
       ]
     },
     {
-      "id": "women-57-babic-katja",
+      "id": "babic-katja",
       "displayName": "Babic Katja",
       "sex": "female",
       "countryName": "Slovenia",
@@ -768,7 +768,7 @@
       ]
     },
     {
-      "id": "women-57-oestergaard-mathilde",
+      "id": "oestergaard-mathilde",
       "displayName": "Oestergaard Mathilde",
       "sex": "female",
       "countryName": "Denmark",
@@ -783,7 +783,7 @@
       ]
     },
     {
-      "id": "women-57-keenan-lauren",
+      "id": "keenan-lauren",
       "displayName": "Keenan Lauren",
       "sex": "female",
       "countryName": "Qatar",
@@ -798,7 +798,7 @@
       ]
     },
     {
-      "id": "women-57-huang-zhiyin",
+      "id": "huang-zhiyin",
       "displayName": "Huang Zhiyin",
       "sex": "female",
       "countryName": "China",
@@ -813,7 +813,7 @@
       ]
     },
     {
-      "id": "women-57-rummens-elise",
+      "id": "rummens-elise",
       "displayName": "Rummens Elise",
       "sex": "female",
       "countryName": "Belgium",
@@ -828,7 +828,7 @@
       ]
     },
     {
-      "id": "women-57-wandeler-anouk",
+      "id": "wandeler-anouk",
       "displayName": "Wandeler Anouk",
       "sex": "female",
       "countryName": "Switzerland",
@@ -843,7 +843,7 @@
       ]
     },
     {
-      "id": "women-57-boukalova-anna",
+      "id": "boukalova-anna",
       "displayName": "Boukalova Anna",
       "sex": "female",
       "countryName": "Czechia",
@@ -858,7 +858,7 @@
       ]
     },
     {
-      "id": "women-57-lee-michelle",
+      "id": "lee-michelle",
       "displayName": "Lee Michelle",
       "sex": "female",
       "countryName": "Singapore",
@@ -873,7 +873,7 @@
       ]
     },
     {
-      "id": "women-57-bondy-florence",
+      "id": "bondy-florence",
       "displayName": "Bondy Florence",
       "sex": "female",
       "countryName": "Thailand",
@@ -888,7 +888,7 @@
       ]
     },
     {
-      "id": "women-57-viktoria-flavia-dr",
+      "id": "viktoria-flavia-dr",
       "displayName": "Viktoria Flavia Dr.",
       "sex": "female",
       "countryName": "Hungary",
@@ -903,7 +903,7 @@
       ]
     },
     {
-      "id": "women-63-bostrom-alba",
+      "id": "bostrom-alba",
       "displayName": "Bostrom Alba",
       "sex": "female",
       "countryName": "Sweden",
@@ -918,7 +918,7 @@
       ]
     },
     {
-      "id": "women-63-bernardi-chiara",
+      "id": "bernardi-chiara",
       "displayName": "Bernardi Chiara",
       "sex": "female",
       "countryName": "Italy",
@@ -933,7 +933,7 @@
       ]
     },
     {
-      "id": "women-63-aborah-betty",
+      "id": "aborah-betty",
       "displayName": "Aborah Betty",
       "sex": "female",
       "countryName": "Netherlands",
@@ -948,7 +948,7 @@
       ]
     },
     {
-      "id": "women-63-vidal-makeda",
+      "id": "vidal-makeda",
       "displayName": "Vidal Makeda",
       "sex": "female",
       "countryName": "United Kingdom",
@@ -963,7 +963,7 @@
       ]
     },
     {
-      "id": "women-63-van-vianen-romy",
+      "id": "van-vianen-romy",
       "displayName": "van Vianen Romy",
       "sex": "female",
       "countryName": "Netherlands",
@@ -978,7 +978,7 @@
       ]
     },
     {
-      "id": "women-63-haeberer-clara-isabelle",
+      "id": "haeberer-clara-isabelle",
       "displayName": "Haeberer Clara Isabelle",
       "sex": "female",
       "countryName": "Germany",
@@ -993,7 +993,7 @@
       ]
     },
     {
-      "id": "women-63-mamane-leah",
+      "id": "mamane-leah",
       "displayName": "Mamane Leah",
       "sex": "female",
       "countryName": "Canada",
@@ -1008,7 +1008,7 @@
       ]
     },
     {
-      "id": "women-63-maguregi-rodriguez-jone",
+      "id": "maguregi-rodriguez-jone",
       "displayName": "Maguregi Rodriguez Jone",
       "sex": "female",
       "countryName": "Spain",
@@ -1023,7 +1023,7 @@
       ]
     },
     {
-      "id": "women-63-kvantchiani-sopiko",
+      "id": "kvantchiani-sopiko",
       "displayName": "Kvantchiani Sopiko",
       "sex": "female",
       "countryName": "Georgia",
@@ -1038,7 +1038,7 @@
       ]
     },
     {
-      "id": "women-63-lalime-sahyuri",
+      "id": "lalime-sahyuri",
       "displayName": "Lalime Sahyuri",
       "sex": "female",
       "countryName": "Belgium",
@@ -1053,7 +1053,7 @@
       ]
     },
     {
-      "id": "women-63-wolf-jana",
+      "id": "wolf-jana",
       "displayName": "Wolf Jana",
       "sex": "female",
       "countryName": "Switzerland",
@@ -1068,7 +1068,7 @@
       ]
     },
     {
-      "id": "women-63-zurinskaite-deimante",
+      "id": "zurinskaite-deimante",
       "displayName": "Zurinskaite Deimante",
       "sex": "female",
       "countryName": "Lithuania",
@@ -1083,7 +1083,7 @@
       ]
     },
     {
-      "id": "women-63-stevens-jody",
+      "id": "stevens-jody",
       "displayName": "Stevens Jody",
       "sex": "female",
       "countryName": "Ireland",
@@ -1098,7 +1098,7 @@
       ]
     },
     {
-      "id": "women-63-visan-ana-maria",
+      "id": "visan-ana-maria",
       "displayName": "Visan Ana-Maria",
       "sex": "female",
       "countryName": "New Zealand",
@@ -1113,7 +1113,7 @@
       ]
     },
     {
-      "id": "women-63-tiong-natalie",
+      "id": "tiong-natalie",
       "displayName": "Tiong Natalie",
       "sex": "female",
       "countryName": "Singapore",
@@ -1128,7 +1128,7 @@
       ]
     },
     {
-      "id": "women-63-torres-judith",
+      "id": "torres-judith",
       "displayName": "Torres Judith",
       "sex": "female",
       "countryName": "Mexico",
@@ -1143,7 +1143,7 @@
       ]
     },
     {
-      "id": "women-63-jansova-dominika",
+      "id": "jansova-dominika",
       "displayName": "Jansova Dominika",
       "sex": "female",
       "countryName": "Czechia",
@@ -1158,7 +1158,7 @@
       ]
     },
     {
-      "id": "women-63-kalinowska-ewelina",
+      "id": "kalinowska-ewelina",
       "displayName": "Kalinowska Ewelina",
       "sex": "female",
       "countryName": "Poland",
@@ -1173,7 +1173,7 @@
       ]
     },
     {
-      "id": "women-63-duus-cecilie",
+      "id": "duus-cecilie",
       "displayName": "Duus Cecilie",
       "sex": "female",
       "countryName": "Denmark",
@@ -1188,7 +1188,7 @@
       ]
     },
     {
-      "id": "women-63-zunic-lea",
+      "id": "zunic-lea",
       "displayName": "Zunic Lea",
       "sex": "female",
       "countryName": "Croatia",
@@ -1203,7 +1203,7 @@
       ]
     },
     {
-      "id": "women-63-vackova-kristyna",
+      "id": "vackova-kristyna",
       "displayName": "Vackova Kristyna",
       "sex": "female",
       "countryName": "Czechia",
@@ -1218,7 +1218,7 @@
       ]
     },
     {
-      "id": "women-63-dunning-mary",
+      "id": "dunning-mary",
       "displayName": "Dunning Mary",
       "sex": "female",
       "countryName": "Thailand",
@@ -1233,7 +1233,7 @@
       ]
     },
     {
-      "id": "women-63-wenn-cara",
+      "id": "wenn-cara",
       "displayName": "Wenn Cara",
       "sex": "female",
       "countryName": "South Africa",
@@ -1248,7 +1248,7 @@
       ]
     },
     {
-      "id": "women-63-ong-yi",
+      "id": "ong-yi",
       "displayName": "Ong Yi",
       "sex": "female",
       "countryName": "Singapore",
@@ -1263,7 +1263,7 @@
       ]
     },
     {
-      "id": "women-63-chatzigianni-andria",
+      "id": "chatzigianni-andria",
       "displayName": "Chatzigianni Andria",
       "sex": "female",
       "countryName": "Cyprus",
@@ -1278,7 +1278,7 @@
       ]
     },
     {
-      "id": "women-63-zhou-yiqian",
+      "id": "zhou-yiqian",
       "displayName": "Zhou Yiqian",
       "sex": "female",
       "countryName": "China",
@@ -1293,7 +1293,7 @@
       ]
     },
     {
-      "id": "women-63-gerute-lina",
+      "id": "gerute-lina",
       "displayName": "Gerute Lina",
       "sex": "female",
       "countryName": "Lithuania",
@@ -1308,7 +1308,7 @@
       ]
     },
     {
-      "id": "women-63-meshveliani-natela",
+      "id": "meshveliani-natela",
       "displayName": "Meshveliani Natela",
       "sex": "female",
       "countryName": "Georgia",
@@ -1323,7 +1323,7 @@
       ]
     },
     {
-      "id": "women-63-liang-yim-chee",
+      "id": "liang-yim-chee",
       "displayName": "Liang Yim Chee",
       "sex": "female",
       "countryName": "Hong Kong, China",
@@ -1338,7 +1338,7 @@
       ]
     },
     {
-      "id": "women-69-garra-carola",
+      "id": "garra-carola",
       "displayName": "Garra Carola",
       "sex": "female",
       "countryName": "Italy",
@@ -1353,7 +1353,7 @@
       ]
     },
     {
-      "id": "women-69-babb-chandler",
+      "id": "babb-chandler",
       "displayName": "Babb Chandler",
       "sex": "female",
       "countryName": "US Virgin Islands",
@@ -1368,7 +1368,7 @@
       ]
     },
     {
-      "id": "women-69-kovacs-janee",
+      "id": "kovacs-janee",
       "displayName": "Kovacs Janee",
       "sex": "female",
       "countryName": "United States",
@@ -1383,7 +1383,7 @@
       ]
     },
     {
-      "id": "women-69-scanlon-meghan",
+      "id": "scanlon-meghan",
       "displayName": "Scanlon Meghan",
       "sex": "female",
       "countryName": "United States",
@@ -1398,7 +1398,7 @@
       ]
     },
     {
-      "id": "women-69-van-daal-marie-jose",
+      "id": "van-daal-marie-jose",
       "displayName": "van Daal Marie-Jose",
       "sex": "female",
       "countryName": "Netherlands",
@@ -1413,7 +1413,7 @@
       ]
     },
     {
-      "id": "women-69-nelson-annie",
+      "id": "nelson-annie",
       "displayName": "Nelson Annie",
       "sex": "female",
       "countryName": "United Kingdom",
@@ -1428,7 +1428,7 @@
       ]
     },
     {
-      "id": "women-69-kjenner-marte",
+      "id": "kjenner-marte",
       "displayName": "Kjenner Marte",
       "sex": "female",
       "countryName": "Norway",
@@ -1443,7 +1443,7 @@
       ]
     },
     {
-      "id": "women-69-bright-jordan",
+      "id": "bright-jordan",
       "displayName": "Bright Jordan",
       "sex": "female",
       "countryName": "Ireland",
@@ -1458,7 +1458,7 @@
       ]
     },
     {
-      "id": "women-69-bouchoux-andorina",
+      "id": "bouchoux-andorina",
       "displayName": "Bouchoux Andorina",
       "sex": "female",
       "countryName": "France",
@@ -1473,7 +1473,7 @@
       ]
     },
     {
-      "id": "women-69-huff-shannon",
+      "id": "huff-shannon",
       "displayName": "Huff Shannon",
       "sex": "female",
       "countryName": "Canada",
@@ -1488,7 +1488,7 @@
       ]
     },
     {
-      "id": "women-69-belden-pavlovic-signe",
+      "id": "belden-pavlovic-signe",
       "displayName": "Belden Pavlovic Signe",
       "sex": "female",
       "countryName": "Norway",
@@ -1503,7 +1503,7 @@
       ]
     },
     {
-      "id": "women-69-tavares-cicera",
+      "id": "tavares-cicera",
       "displayName": "Tavares Cicera",
       "sex": "female",
       "countryName": "Brazil",
@@ -1518,7 +1518,7 @@
       ]
     },
     {
-      "id": "women-69-mabidikama-acima",
+      "id": "mabidikama-acima",
       "displayName": "Mabidikama Acima",
       "sex": "female",
       "countryName": "New Zealand",
@@ -1533,7 +1533,7 @@
       ]
     },
     {
-      "id": "women-69-goossens-kaya",
+      "id": "goossens-kaya",
       "displayName": "Goossens Kaya",
       "sex": "female",
       "countryName": "Belgium",
@@ -1548,7 +1548,7 @@
       ]
     },
     {
-      "id": "women-69-altman-hannah",
+      "id": "altman-hannah",
       "displayName": "Altman Hannah",
       "sex": "female",
       "countryName": "Australia",
@@ -1563,7 +1563,7 @@
       ]
     },
     {
-      "id": "women-69-materek-sabina",
+      "id": "materek-sabina",
       "displayName": "Materek Sabina",
       "sex": "female",
       "countryName": "Poland",
@@ -1578,7 +1578,7 @@
       ]
     },
     {
-      "id": "women-69-haulot-clara",
+      "id": "haulot-clara",
       "displayName": "Haulot Clara",
       "sex": "female",
       "countryName": "Belgium",
@@ -1593,7 +1593,7 @@
       ]
     },
     {
-      "id": "women-69-skovlind-caroline",
+      "id": "skovlind-caroline",
       "displayName": "Skovlind Caroline",
       "sex": "female",
       "countryName": "Denmark",
@@ -1608,7 +1608,7 @@
       ]
     },
     {
-      "id": "women-69-denise-guenther",
+      "id": "denise-guenther",
       "displayName": "Denise Guenther",
       "sex": "female",
       "countryName": "Switzerland",
@@ -1623,7 +1623,7 @@
       ]
     },
     {
-      "id": "women-69-seow-amanda",
+      "id": "seow-amanda",
       "displayName": "Seow Amanda",
       "sex": "female",
       "countryName": "Singapore",
@@ -1638,7 +1638,7 @@
       ]
     },
     {
-      "id": "women-69-jones-jayne",
+      "id": "jones-jayne",
       "displayName": "Jones Jayne",
       "sex": "female",
       "countryName": "Ireland",
@@ -1653,7 +1653,7 @@
       ]
     },
     {
-      "id": "women-69-khwang-hayley",
+      "id": "khwang-hayley",
       "displayName": "Khwang Hayley",
       "sex": "female",
       "countryName": "Singapore",
@@ -1668,7 +1668,7 @@
       ]
     },
     {
-      "id": "women-69-kairaityte-dainora",
+      "id": "kairaityte-dainora",
       "displayName": "Kairaityte Dainora",
       "sex": "female",
       "countryName": "Lithuania",
@@ -1683,7 +1683,7 @@
       ]
     },
     {
-      "id": "women-69-larrimore-deshawn",
+      "id": "larrimore-deshawn",
       "displayName": "Larrimore Deshawn",
       "sex": "female",
       "countryName": "US Virgin Islands",
@@ -1698,7 +1698,7 @@
       ]
     },
     {
-      "id": "women-69-marina-sanja",
+      "id": "marina-sanja",
       "displayName": "Marina Sanja",
       "sex": "female",
       "countryName": "Croatia",
@@ -1713,7 +1713,7 @@
       ]
     },
     {
-      "id": "women-69-pacce-catalina",
+      "id": "pacce-catalina",
       "displayName": "Pacce Catalina",
       "sex": "female",
       "countryName": "Uruguay",
@@ -1728,7 +1728,7 @@
       ]
     },
     {
-      "id": "women-69-janulcikaite-ausrine",
+      "id": "janulcikaite-ausrine",
       "displayName": "Janulcikaite Ausrine",
       "sex": "female",
       "countryName": "Lithuania",
@@ -1743,7 +1743,7 @@
       ]
     },
     {
-      "id": "women-76-worford-cranon",
+      "id": "worford-cranon",
       "displayName": "Worford Cranon",
       "sex": "female",
       "countryName": "United States",
@@ -1758,7 +1758,7 @@
       ]
     },
     {
-      "id": "women-76-mazur-zuzanna",
+      "id": "mazur-zuzanna",
       "displayName": "Mazur Zuzanna",
       "sex": "female",
       "countryName": "Poland",
@@ -1773,7 +1773,7 @@
       ]
     },
     {
-      "id": "women-76-bisol-bruna",
+      "id": "bisol-bruna",
       "displayName": "Bisol Bruna",
       "sex": "female",
       "countryName": "Brazil",
@@ -1788,7 +1788,7 @@
       ]
     },
     {
-      "id": "women-76-peyraud-clara",
+      "id": "peyraud-clara",
       "displayName": "Peyraud Clara",
       "sex": "female",
       "countryName": "France",
@@ -1803,7 +1803,7 @@
       ]
     },
     {
-      "id": "women-76-hames-mara",
+      "id": "hames-mara",
       "displayName": "Hames Mara",
       "sex": "female",
       "countryName": "Germany",
@@ -1818,7 +1818,7 @@
       ]
     },
     {
-      "id": "women-76-hanlon-bettina",
+      "id": "hanlon-bettina",
       "displayName": "Hanlon Bettina",
       "sex": "female",
       "countryName": "United Kingdom",
@@ -1833,7 +1833,7 @@
       ]
     },
     {
-      "id": "women-76-ezeh-chisom",
+      "id": "ezeh-chisom",
       "displayName": "Ezeh Chisom",
       "sex": "female",
       "countryName": "Canada",
@@ -1848,7 +1848,7 @@
       ]
     },
     {
-      "id": "women-76-hunte-kezia",
+      "id": "hunte-kezia",
       "displayName": "Hunte Kezia",
       "sex": "female",
       "countryName": "Trinidad and Tobago",
@@ -1863,7 +1863,7 @@
       ]
     },
     {
-      "id": "women-76-gronlund-ellen",
+      "id": "gronlund-ellen",
       "displayName": "Gronlund Ellen",
       "sex": "female",
       "countryName": "Finland",
@@ -1878,7 +1878,7 @@
       ]
     },
     {
-      "id": "women-76-tchrikishvili-nino",
+      "id": "tchrikishvili-nino",
       "displayName": "Tchrikishvili Nino",
       "sex": "female",
       "countryName": "Georgia",
@@ -1893,7 +1893,7 @@
       ]
     },
     {
-      "id": "women-76-ophoff-tessa",
+      "id": "ophoff-tessa",
       "displayName": "Ophoff Tessa",
       "sex": "female",
       "countryName": "Netherlands",
@@ -1908,7 +1908,7 @@
       ]
     },
     {
-      "id": "women-76-govind-hema",
+      "id": "govind-hema",
       "displayName": "Govind Hema",
       "sex": "female",
       "countryName": "New Zealand",
@@ -1923,7 +1923,7 @@
       ]
     },
     {
-      "id": "women-76-szarek-justyna",
+      "id": "szarek-justyna",
       "displayName": "Szarek Justyna",
       "sex": "female",
       "countryName": "Poland",
@@ -1938,7 +1938,7 @@
       ]
     },
     {
-      "id": "women-76-varillas-modesta",
+      "id": "varillas-modesta",
       "displayName": "Varillas Modesta",
       "sex": "female",
       "countryName": "Mexico",
@@ -1953,7 +1953,7 @@
       ]
     },
     {
-      "id": "women-76-swart-chanel",
+      "id": "swart-chanel",
       "displayName": "Swart Chanel",
       "sex": "female",
       "countryName": "New Zealand",
@@ -1968,7 +1968,7 @@
       ]
     },
     {
-      "id": "women-76-martens-mariska",
+      "id": "martens-mariska",
       "displayName": "Martens Mariska",
       "sex": "female",
       "countryName": "Belgium",
@@ -1983,7 +1983,7 @@
       ]
     },
     {
-      "id": "women-76-reis-rafaela",
+      "id": "reis-rafaela",
       "displayName": "Reis Rafaela",
       "sex": "female",
       "countryName": "Portugal",
@@ -1998,7 +1998,7 @@
       ]
     },
     {
-      "id": "women-76-muller-gaby",
+      "id": "muller-gaby",
       "displayName": "Muller Gaby",
       "sex": "female",
       "countryName": "Belgium",
@@ -2013,7 +2013,7 @@
       ]
     },
     {
-      "id": "women-76-schvandtnerova-denisa",
+      "id": "schvandtnerova-denisa",
       "displayName": "Schvandtnerova Denisa",
       "sex": "female",
       "countryName": "Czechia",
@@ -2028,7 +2028,7 @@
       ]
     },
     {
-      "id": "women-76-waldeck-danielle",
+      "id": "waldeck-danielle",
       "displayName": "Waldeck Danielle",
       "sex": "female",
       "countryName": "South Africa",
@@ -2043,7 +2043,7 @@
       ]
     },
     {
-      "id": "women-76-wells-selina",
+      "id": "wells-selina",
       "displayName": "Wells Selina",
       "sex": "female",
       "countryName": "Thailand",
@@ -2058,7 +2058,7 @@
       ]
     },
     {
-      "id": "women-76-khurtsilava-khatia",
+      "id": "khurtsilava-khatia",
       "displayName": "Khurtsilava Khatia",
       "sex": "female",
       "countryName": "Georgia",
@@ -2073,7 +2073,7 @@
       ]
     },
     {
-      "id": "women-76-xie-thuy",
+      "id": "xie-thuy",
       "displayName": "Xie Thuy",
       "sex": "female",
       "countryName": "Singapore",
@@ -2088,7 +2088,7 @@
       ]
     },
     {
-      "id": "women-76-marangoni-pia",
+      "id": "marangoni-pia",
       "displayName": "Marangoni Pia",
       "sex": "female",
       "countryName": "South Africa",
@@ -2103,7 +2103,7 @@
       ]
     },
     {
-      "id": "women-84-lawrence-amanda",
+      "id": "lawrence-amanda",
       "displayName": "Lawrence Amanda",
       "sex": "female",
       "countryName": "United States",
@@ -2118,7 +2118,7 @@
       ]
     },
     {
-      "id": "women-84-tongotea-karlina",
+      "id": "tongotea-karlina",
       "displayName": "Tongotea Karlina",
       "sex": "female",
       "countryName": "New Zealand",
@@ -2133,7 +2133,7 @@
       ]
     },
     {
-      "id": "women-84-azariah-ziana",
+      "id": "azariah-ziana",
       "displayName": "Azariah Ziana",
       "sex": "female",
       "countryName": "United Kingdom",
@@ -2148,7 +2148,7 @@
       ]
     },
     {
-      "id": "women-84-zeigler-nicolette",
+      "id": "zeigler-nicolette",
       "displayName": "Zeigler Nicolette",
       "sex": "female",
       "countryName": "United States",
@@ -2163,7 +2163,7 @@
       ]
     },
     {
-      "id": "women-84-thorhallsdottir-kristin",
+      "id": "thorhallsdottir-kristin",
       "displayName": "Thorhallsdottir Kristin",
       "sex": "female",
       "countryName": "Iceland",
@@ -2178,7 +2178,7 @@
       ]
     },
     {
-      "id": "women-84-almeida-marina",
+      "id": "almeida-marina",
       "displayName": "Almeida Marina",
       "sex": "female",
       "countryName": "Brazil",
@@ -2193,7 +2193,7 @@
       ]
     },
     {
-      "id": "women-84-ieronimos-anna",
+      "id": "ieronimos-anna",
       "displayName": "Ieronimos Anna",
       "sex": "female",
       "countryName": "Germany",
@@ -2208,7 +2208,7 @@
       ]
     },
     {
-      "id": "women-84-buettner-jessica",
+      "id": "buettner-jessica",
       "displayName": "Buettner Jessica",
       "sex": "female",
       "countryName": "Canada",
@@ -2223,7 +2223,7 @@
       ]
     },
     {
-      "id": "women-84-mouchet-emilie",
+      "id": "mouchet-emilie",
       "displayName": "Mouchet Emilie",
       "sex": "female",
       "countryName": "France",
@@ -2238,7 +2238,7 @@
       ]
     },
     {
-      "id": "women-84-rudin-agnes",
+      "id": "rudin-agnes",
       "displayName": "Rudin Agnes",
       "sex": "female",
       "countryName": "Sweden",
@@ -2253,7 +2253,7 @@
       ]
     },
     {
-      "id": "women-84-coopoosamy-nicole",
+      "id": "coopoosamy-nicole",
       "displayName": "Coopoosamy Nicole",
       "sex": "female",
       "countryName": "South Africa",
@@ -2268,7 +2268,7 @@
       ]
     },
     {
-      "id": "women-84-lahtinen-mira",
+      "id": "lahtinen-mira",
       "displayName": "Lahtinen Mira",
       "sex": "female",
       "countryName": "Finland",
@@ -2283,7 +2283,7 @@
       ]
     },
     {
-      "id": "women-84-letting-regitze",
+      "id": "letting-regitze",
       "displayName": "Letting Regitze",
       "sex": "female",
       "countryName": "Denmark",
@@ -2298,7 +2298,7 @@
       ]
     },
     {
-      "id": "women-84-bychok-liudmyla",
+      "id": "bychok-liudmyla",
       "displayName": "Bychok Liudmyla",
       "sex": "female",
       "countryName": "Ukraine",
@@ -2313,7 +2313,7 @@
       ]
     },
     {
-      "id": "women-84-zhao-yan-fei",
+      "id": "zhao-yan-fei",
       "displayName": "Zhao Yan-Fei",
       "sex": "female",
       "countryName": "Australia",
@@ -2328,7 +2328,7 @@
       ]
     },
     {
-      "id": "women-84-sanchez-jorge-carla",
+      "id": "sanchez-jorge-carla",
       "displayName": "Sanchez Jorge Carla",
       "sex": "female",
       "countryName": "Spain",
@@ -2343,7 +2343,7 @@
       ]
     },
     {
-      "id": "women-84-joergensen-katja",
+      "id": "joergensen-katja",
       "displayName": "Joergensen Katja",
       "sex": "female",
       "countryName": "Denmark",
@@ -2358,7 +2358,7 @@
       ]
     },
     {
-      "id": "women-84-alleyne-deresay",
+      "id": "alleyne-deresay",
       "displayName": "Alleyne Deresay",
       "sex": "female",
       "countryName": "Trinidad and Tobago",
@@ -2373,7 +2373,7 @@
       ]
     },
     {
-      "id": "women-84-erimo-sabadell-rosa",
+      "id": "erimo-sabadell-rosa",
       "displayName": "Erimo Sabadell Rosa",
       "sex": "female",
       "countryName": "Spain",
@@ -2388,7 +2388,7 @@
       ]
     },
     {
-      "id": "women-84-matsuda-miyu",
+      "id": "matsuda-miyu",
       "displayName": "Matsuda Miyu",
       "sex": "female",
       "countryName": "Japan",
@@ -2403,7 +2403,7 @@
       ]
     },
     {
-      "id": "women-84-laitinen-jenna",
+      "id": "laitinen-jenna",
       "displayName": "Laitinen Jenna",
       "sex": "female",
       "countryName": "Finland",
@@ -2418,7 +2418,7 @@
       ]
     },
     {
-      "id": "women-84-abouassi-nour",
+      "id": "abouassi-nour",
       "displayName": "Abouassi Nour",
       "sex": "female",
       "countryName": "Qatar",
@@ -2433,7 +2433,7 @@
       ]
     },
     {
-      "id": "women-84-adedokun-comfort",
+      "id": "adedokun-comfort",
       "displayName": "Adedokun Comfort",
       "sex": "female",
       "countryName": "Ireland",
@@ -2448,7 +2448,7 @@
       ]
     },
     {
-      "id": "women-84-suitauloa-shaniele",
+      "id": "suitauloa-shaniele",
       "displayName": "Suitauloa Shaniele",
       "sex": "female",
       "countryName": "New Zealand",
@@ -2463,7 +2463,7 @@
       ]
     },
     {
-      "id": "women-84-rodrigues-ana",
+      "id": "rodrigues-ana",
       "displayName": "Rodrigues Ana",
       "sex": "female",
       "countryName": "Lithuania",
@@ -2478,7 +2478,7 @@
       ]
     },
     {
-      "id": "women-84-szymkowiak-magdalena",
+      "id": "szymkowiak-magdalena",
       "displayName": "Szymkowiak Magdalena",
       "sex": "female",
       "countryName": "Poland",
@@ -2493,7 +2493,7 @@
       ]
     },
     {
-      "id": "women-84plus-muluh-sonita",
+      "id": "muluh-sonita",
       "displayName": "Muluh Sonita",
       "sex": "female",
       "countryName": "Belgium",
@@ -2508,7 +2508,7 @@
       ]
     },
     {
-      "id": "women-84plus-schlater-brittany",
+      "id": "schlater-brittany",
       "displayName": "Schlater Brittany",
       "sex": "female",
       "countryName": "Canada",
@@ -2523,7 +2523,7 @@
       ]
     },
     {
-      "id": "women-84plus-onuoha-aquinn",
+      "id": "onuoha-aquinn",
       "displayName": "Onuoha Aquinn",
       "sex": "female",
       "countryName": "United Kingdom",
@@ -2538,7 +2538,7 @@
       ]
     },
     {
-      "id": "women-84plus-omotoso-toyosi",
+      "id": "omotoso-toyosi",
       "displayName": "Omotoso Toyosi",
       "sex": "female",
       "countryName": "United Kingdom",
@@ -2553,7 +2553,7 @@
       ]
     },
     {
-      "id": "women-84plus-brown-bonica",
+      "id": "brown-bonica",
       "displayName": "Brown Bonica",
       "sex": "female",
       "countryName": "United States",
@@ -2568,7 +2568,7 @@
       ]
     },
     {
-      "id": "women-84plus-mierger-amelie",
+      "id": "mierger-amelie",
       "displayName": "Mierger Amelie",
       "sex": "female",
       "countryName": "France",
@@ -2583,7 +2583,7 @@
       ]
     },
     {
-      "id": "women-84plus-padia-zahra",
+      "id": "padia-zahra",
       "displayName": "Padia Zahra",
       "sex": "female",
       "countryName": "Trinidad and Tobago",
@@ -2598,7 +2598,7 @@
       ]
     },
     {
-      "id": "women-84plus-o-reilly-alison",
+      "id": "o-reilly-alison",
       "displayName": "o'Reilly Alison",
       "sex": "female",
       "countryName": "Ireland",
@@ -2613,7 +2613,7 @@
       ]
     },
     {
-      "id": "women-84plus-sigurjonsdottir-hanna",
+      "id": "sigurjonsdottir-hanna",
       "displayName": "Sigurjonsdottir Hanna",
       "sex": "female",
       "countryName": "Iceland",
@@ -2628,7 +2628,7 @@
       ]
     },
     {
-      "id": "women-84plus-matthiasdottir-thorbjorg",
+      "id": "matthiasdottir-thorbjorg",
       "displayName": "Matthiasdottir Thorbjorg",
       "sex": "female",
       "countryName": "Iceland",
@@ -2643,7 +2643,7 @@
       ]
     },
     {
-      "id": "women-84plus-kamoto-emi",
+      "id": "kamoto-emi",
       "displayName": "Kamoto Emi",
       "sex": "female",
       "countryName": "Japan",
@@ -2658,7 +2658,7 @@
       ]
     },
     {
-      "id": "women-84plus-de-la-barra-zelaya-marcela",
+      "id": "de-la-barra-zelaya-marcela",
       "displayName": "de La Barra Zelaya Marcela",
       "sex": "female",
       "countryName": "Chile",
@@ -2673,7 +2673,7 @@
       ]
     },
     {
-      "id": "women-84plus-malojlo-marta",
+      "id": "malojlo-marta",
       "displayName": "Malojlo Marta",
       "sex": "female",
       "countryName": "Latvia",
@@ -2688,7 +2688,7 @@
       ]
     },
     {
-      "id": "men-59-slabic-michael",
+      "id": "slabic-michael",
       "displayName": "Slabic Michael",
       "sex": "male",
       "countryName": "United States",
@@ -2703,7 +2703,7 @@
       ]
     },
     {
-      "id": "men-59-campano-diaz-ivan",
+      "id": "campano-diaz-ivan",
       "displayName": "Campano Diaz Ivan",
       "sex": "male",
       "countryName": "Spain",
@@ -2718,7 +2718,7 @@
       ]
     },
     {
-      "id": "men-59-garcia-antoine",
+      "id": "garcia-antoine",
       "displayName": "Garcia Antoine",
       "sex": "male",
       "countryName": "France",
@@ -2733,7 +2733,7 @@
       ]
     },
     {
-      "id": "men-59-takiyama-yasutaka",
+      "id": "takiyama-yasutaka",
       "displayName": "Takiyama Yasutaka",
       "sex": "male",
       "countryName": "Japan",
@@ -2748,7 +2748,7 @@
       ]
     },
     {
-      "id": "men-59-elhamali-mohamed",
+      "id": "elhamali-mohamed",
       "displayName": "Elhamali Mohamed",
       "sex": "male",
       "countryName": "Libya",
@@ -2763,7 +2763,7 @@
       ]
     },
     {
-      "id": "men-59-nyarko-kwaku",
+      "id": "nyarko-kwaku",
       "displayName": "Nyarko Kwaku",
       "sex": "male",
       "countryName": "Ghana",
@@ -2778,7 +2778,7 @@
       ]
     },
     {
-      "id": "men-59-leon-franklin",
+      "id": "leon-franklin",
       "displayName": "Leon Franklin",
       "sex": "male",
       "countryName": "Ecuador",
@@ -2793,7 +2793,7 @@
       ]
     },
     {
-      "id": "men-59-ho-david",
+      "id": "ho-david",
       "displayName": "Ho David",
       "sex": "male",
       "countryName": "Canada",
@@ -2808,7 +2808,7 @@
       ]
     },
     {
-      "id": "men-59-huang-wei-chen",
+      "id": "huang-wei-chen",
       "displayName": "Huang Wei-Chen",
       "sex": "male",
       "countryName": "Chinese Taipei",
@@ -2823,7 +2823,7 @@
       ]
     },
     {
-      "id": "men-59-you-yao-wei",
+      "id": "you-yao-wei",
       "displayName": "You Yao-Wei",
       "sex": "male",
       "countryName": "Chinese Taipei",
@@ -2838,7 +2838,7 @@
       ]
     },
     {
-      "id": "men-59-cruz-angel",
+      "id": "cruz-angel",
       "displayName": "Cruz Angel",
       "sex": "male",
       "countryName": "Mexico",
@@ -2853,7 +2853,7 @@
       ]
     },
     {
-      "id": "men-59-gelashvili-giorgi",
+      "id": "gelashvili-giorgi",
       "displayName": "Gelashvili Giorgi",
       "sex": "male",
       "countryName": "Georgia",
@@ -2868,7 +2868,7 @@
       ]
     },
     {
-      "id": "men-59-madera-joenas",
+      "id": "madera-joenas",
       "displayName": "Madera Joenas",
       "sex": "male",
       "countryName": "Australia",
@@ -2883,7 +2883,7 @@
       ]
     },
     {
-      "id": "men-59-imamura-ryo",
+      "id": "imamura-ryo",
       "displayName": "Imamura Ryo",
       "sex": "male",
       "countryName": "Japan",
@@ -2898,7 +2898,7 @@
       ]
     },
     {
-      "id": "men-59-santangelo-jacopo",
+      "id": "santangelo-jacopo",
       "displayName": "Santangelo Jacopo",
       "sex": "male",
       "countryName": "Italy",
@@ -2913,7 +2913,7 @@
       ]
     },
     {
-      "id": "men-59-ergin-kemal",
+      "id": "ergin-kemal",
       "displayName": "Ergin Kemal",
       "sex": "male",
       "countryName": "Netherlands",
@@ -2928,7 +2928,7 @@
       ]
     },
     {
-      "id": "men-59-cancel-ivan",
+      "id": "cancel-ivan",
       "displayName": "Cancel Ivan",
       "sex": "male",
       "countryName": "Puerto Rico",
@@ -2943,7 +2943,7 @@
       ]
     },
     {
-      "id": "men-59-flores-jose",
+      "id": "flores-jose",
       "displayName": "Flores Jose",
       "sex": "male",
       "countryName": "New Zealand",
@@ -2958,7 +2958,7 @@
       ]
     },
     {
-      "id": "men-66-bakkelund-kjell",
+      "id": "bakkelund-kjell",
       "displayName": "Bakkelund Kjell",
       "sex": "male",
       "countryName": "Norway",
@@ -2973,7 +2973,7 @@
       ]
     },
     {
-      "id": "men-66-jordan-joseph",
+      "id": "jordan-joseph",
       "displayName": "Jordan Joseph",
       "sex": "male",
       "countryName": "US Virgin Islands",
@@ -2988,7 +2988,7 @@
       ]
     },
     {
-      "id": "men-66-ushiyama-kyota",
+      "id": "ushiyama-kyota",
       "displayName": "Ushiyama Kyota",
       "sex": "male",
       "countryName": "Japan",
@@ -3003,7 +3003,7 @@
       ]
     },
     {
-      "id": "men-66-nikolai-austin",
+      "id": "nikolai-austin",
       "displayName": "Nikolai Austin",
       "sex": "male",
       "countryName": "United States",
@@ -3018,7 +3018,7 @@
       ]
     },
     {
-      "id": "men-66-jimenez-santos",
+      "id": "jimenez-santos",
       "displayName": "Jimenez Santos",
       "sex": "male",
       "countryName": "Mexico",
@@ -3033,7 +3033,7 @@
       ]
     },
     {
-      "id": "men-66-satake-yusuke",
+      "id": "satake-yusuke",
       "displayName": "Satake Yusuke",
       "sex": "male",
       "countryName": "Japan",
@@ -3048,7 +3048,7 @@
       ]
     },
     {
-      "id": "men-66-castillo-carlos",
+      "id": "castillo-carlos",
       "displayName": "Castillo Carlos",
       "sex": "male",
       "countryName": "Canada",
@@ -3063,7 +3063,7 @@
       ]
     },
     {
-      "id": "men-66-ong-wei",
+      "id": "ong-wei",
       "displayName": "Ong Wei",
       "sex": "male",
       "countryName": "Singapore",
@@ -3078,7 +3078,7 @@
       ]
     },
     {
-      "id": "men-66-simonelli-mirko",
+      "id": "simonelli-mirko",
       "displayName": "Simonelli Mirko",
       "sex": "male",
       "countryName": "Italy",
@@ -3093,7 +3093,7 @@
       ]
     },
     {
-      "id": "men-66-catena-joel",
+      "id": "catena-joel",
       "displayName": "Catena Joel",
       "sex": "male",
       "countryName": "Austria",
@@ -3108,7 +3108,7 @@
       ]
     },
     {
-      "id": "men-66-liatsis-marios",
+      "id": "liatsis-marios",
       "displayName": "Liatsis Marios",
       "sex": "male",
       "countryName": "Greece",
@@ -3123,7 +3123,7 @@
       ]
     },
     {
-      "id": "men-66-sgro-julian",
+      "id": "sgro-julian",
       "displayName": "Sgro Julian",
       "sex": "male",
       "countryName": "Australia",
@@ -3138,7 +3138,7 @@
       ]
     },
     {
-      "id": "men-66-luu-joshua",
+      "id": "luu-joshua",
       "displayName": "Luu Joshua",
       "sex": "male",
       "countryName": "Australia",
@@ -3153,7 +3153,7 @@
       ]
     },
     {
-      "id": "men-66-zeng-wei-xiang",
+      "id": "zeng-wei-xiang",
       "displayName": "Zeng Wei-Xiang",
       "sex": "male",
       "countryName": "Chinese Taipei",
@@ -3168,7 +3168,7 @@
       ]
     },
     {
-      "id": "men-66-ghizoni-gabriel",
+      "id": "ghizoni-gabriel",
       "displayName": "Ghizoni Gabriel",
       "sex": "male",
       "countryName": "Brazil",
@@ -3183,7 +3183,7 @@
       ]
     },
     {
-      "id": "men-66-naoussi-ezelgbo-darling-williams",
+      "id": "naoussi-ezelgbo-darling-williams",
       "displayName": "Naoussi Ezelgbo Darling Williams",
       "sex": "male",
       "countryName": "Cameroon",
@@ -3198,7 +3198,7 @@
       ]
     },
     {
-      "id": "men-66-lin-ching-lun",
+      "id": "lin-ching-lun",
       "displayName": "Lin Ching-Lun",
       "sex": "male",
       "countryName": "Chinese Taipei",
@@ -3213,7 +3213,7 @@
       ]
     },
     {
-      "id": "men-74-perkins-austin",
+      "id": "perkins-austin",
       "displayName": "Perkins Austin",
       "sex": "male",
       "countryName": "United States",
@@ -3228,7 +3228,7 @@
       ]
     },
     {
-      "id": "men-74-bertrand-balthazar",
+      "id": "bertrand-balthazar",
       "displayName": "Bertrand Balthazar",
       "sex": "male",
       "countryName": "France",
@@ -3243,7 +3243,7 @@
       ]
     },
     {
-      "id": "men-74-fan-chun-chia",
+      "id": "fan-chun-chia",
       "displayName": "Fan Chun-Chia",
       "sex": "male",
       "countryName": "Chinese Taipei",
@@ -3258,7 +3258,7 @@
       ]
     },
     {
-      "id": "men-74-lee-clinton",
+      "id": "lee-clinton",
       "displayName": "Lee Clinton",
       "sex": "male",
       "countryName": "Singapore",
@@ -3273,7 +3273,7 @@
       ]
     },
     {
-      "id": "men-74-lavoie-jacob",
+      "id": "lavoie-jacob",
       "displayName": "Lavoie Jacob",
       "sex": "male",
       "countryName": "Canada",
@@ -3288,7 +3288,7 @@
       ]
     },
     {
-      "id": "men-74-homer-luke",
+      "id": "homer-luke",
       "displayName": "Homer Luke",
       "sex": "male",
       "countryName": "Canada",
@@ -3303,7 +3303,7 @@
       ]
     },
     {
-      "id": "men-74-babaei-somaghi-keyan",
+      "id": "babaei-somaghi-keyan",
       "displayName": "Babaei-Somaghi Keyan",
       "sex": "male",
       "countryName": "Australia",
@@ -3318,7 +3318,7 @@
       ]
     },
     {
-      "id": "men-74-al-lanqawi-adel",
+      "id": "al-lanqawi-adel",
       "displayName": "Al Lanqawi Adel",
       "sex": "male",
       "countryName": "Switzerland",
@@ -3333,7 +3333,7 @@
       ]
     },
     {
-      "id": "men-74-gimorri-giacomo",
+      "id": "gimorri-giacomo",
       "displayName": "Gimorri Giacomo",
       "sex": "male",
       "countryName": "Italy",
@@ -3348,7 +3348,7 @@
       ]
     },
     {
-      "id": "men-74-konstantinou-christos",
+      "id": "konstantinou-christos",
       "displayName": "Konstantinou Christos",
       "sex": "male",
       "countryName": "Cyprus",
@@ -3363,7 +3363,7 @@
       ]
     },
     {
-      "id": "men-74-cheong-cheng",
+      "id": "cheong-cheng",
       "displayName": "Cheong Cheng",
       "sex": "male",
       "countryName": "Singapore",
@@ -3378,7 +3378,7 @@
       ]
     },
     {
-      "id": "men-74-herraiz-frances-alberto",
+      "id": "herraiz-frances-alberto",
       "displayName": "Herraiz Frances Alberto",
       "sex": "male",
       "countryName": "Spain",
@@ -3393,7 +3393,7 @@
       ]
     },
     {
-      "id": "men-74-cheng-yu-jui",
+      "id": "cheng-yu-jui",
       "displayName": "Cheng Yu-Jui",
       "sex": "male",
       "countryName": "Chinese Taipei",
@@ -3408,7 +3408,7 @@
       ]
     },
     {
-      "id": "men-74-medjahed-yacine",
+      "id": "medjahed-yacine",
       "displayName": "Medjahed Yacine",
       "sex": "male",
       "countryName": "Algeria",
@@ -3423,7 +3423,7 @@
       ]
     },
     {
-      "id": "men-74-ola-joshua",
+      "id": "ola-joshua",
       "displayName": "Ola Joshua",
       "sex": "male",
       "countryName": "Ireland",
@@ -3438,7 +3438,7 @@
       ]
     },
     {
-      "id": "men-74-rada-karel",
+      "id": "rada-karel",
       "displayName": "Rada Karel",
       "sex": "male",
       "countryName": "Czechia",
@@ -3453,7 +3453,7 @@
       ]
     },
     {
-      "id": "men-74-saed-awnullah",
+      "id": "saed-awnullah",
       "displayName": "Saed Awnullah",
       "sex": "male",
       "countryName": "Libya",
@@ -3468,7 +3468,7 @@
       ]
     },
     {
-      "id": "men-74-strachan-john",
+      "id": "strachan-john",
       "displayName": "Strachan John",
       "sex": "male",
       "countryName": "New Zealand",
@@ -3483,7 +3483,7 @@
       ]
     },
     {
-      "id": "men-74-richards-lachlan",
+      "id": "richards-lachlan",
       "displayName": "Richards Lachlan",
       "sex": "male",
       "countryName": "New Zealand",
@@ -3498,7 +3498,7 @@
       ]
     },
     {
-      "id": "men-74-damlamajans-marats",
+      "id": "damlamajans-marats",
       "displayName": "Damlamajans Marats",
       "sex": "male",
       "countryName": "Latvia",
@@ -3513,7 +3513,7 @@
       ]
     },
     {
-      "id": "men-74-marecki-mateusz",
+      "id": "marecki-mateusz",
       "displayName": "Marecki Mateusz",
       "sex": "male",
       "countryName": "Poland",
@@ -3528,7 +3528,7 @@
       ]
     },
     {
-      "id": "men-74-pacerinskis-marius",
+      "id": "pacerinskis-marius",
       "displayName": "Pacerinskis Marius",
       "sex": "male",
       "countryName": "Lithuania",
@@ -3543,7 +3543,7 @@
       ]
     },
     {
-      "id": "men-74-bledis-gintaras",
+      "id": "bledis-gintaras",
       "displayName": "Bledis Gintaras",
       "sex": "male",
       "countryName": "Lithuania",
@@ -3558,7 +3558,7 @@
       ]
     },
     {
-      "id": "men-74-cruz-leonardo",
+      "id": "cruz-leonardo",
       "displayName": "Cruz Leonardo",
       "sex": "male",
       "countryName": "Portugal",
@@ -3573,7 +3573,7 @@
       ]
     },
     {
-      "id": "men-74-maisuradze-giorgi",
+      "id": "maisuradze-giorgi",
       "displayName": "Maisuradze Giorgi",
       "sex": "male",
       "countryName": "Georgia",
@@ -3588,7 +3588,7 @@
       ]
     },
     {
-      "id": "men-83-borenstein-joseph",
+      "id": "borenstein-joseph",
       "displayName": "Borenstein Joseph",
       "sex": "male",
       "countryName": "United States",
@@ -3603,7 +3603,7 @@
       ]
     },
     {
-      "id": "men-83-kengamu-jurins",
+      "id": "kengamu-jurins",
       "displayName": "Kengamu Jurins",
       "sex": "male",
       "countryName": "United Kingdom",
@@ -3618,7 +3618,7 @@
       ]
     },
     {
-      "id": "men-83-omisakin-ade",
+      "id": "omisakin-ade",
       "displayName": "Omisakin Ade",
       "sex": "male",
       "countryName": "United Kingdom",
@@ -3633,7 +3633,7 @@
       ]
     },
     {
-      "id": "men-83-asein-enahoro",
+      "id": "asein-enahoro",
       "displayName": "Asein Enahoro",
       "sex": "male",
       "countryName": "Hungary",
@@ -3648,7 +3648,7 @@
       ]
     },
     {
-      "id": "men-83-ducret-mathis",
+      "id": "ducret-mathis",
       "displayName": "Ducret Mathis",
       "sex": "male",
       "countryName": "France",
@@ -3663,7 +3663,7 @@
       ]
     },
     {
-      "id": "men-83-hotsonyame-kafui",
+      "id": "hotsonyame-kafui",
       "displayName": "Hotsonyame Kafui",
       "sex": "male",
       "countryName": "Canada",
@@ -3678,7 +3678,7 @@
       ]
     },
     {
-      "id": "men-83-fernandez-arevalo-andres",
+      "id": "fernandez-arevalo-andres",
       "displayName": "Fernandez Arevalo Andres",
       "sex": "male",
       "countryName": "Spain",
@@ -3693,7 +3693,7 @@
       ]
     },
     {
-      "id": "men-83-fornstam-kevin",
+      "id": "fornstam-kevin",
       "displayName": "Fornstam Kevin",
       "sex": "male",
       "countryName": "Sweden",
@@ -3708,7 +3708,7 @@
       ]
     },
     {
-      "id": "men-83-rinaldo-marciano-saverio",
+      "id": "rinaldo-marciano-saverio",
       "displayName": "Rinaldo Marciano Saverio",
       "sex": "male",
       "countryName": "Italy",
@@ -3723,7 +3723,7 @@
       ]
     },
     {
-      "id": "men-83-ampofo-zachariah",
+      "id": "ampofo-zachariah",
       "displayName": "Ampofo Zachariah",
       "sex": "male",
       "countryName": "Germany",
@@ -3738,7 +3738,7 @@
       ]
     },
     {
-      "id": "men-83-figueroa-contreras-jose",
+      "id": "figueroa-contreras-jose",
       "displayName": "Figueroa Contreras Jose",
       "sex": "male",
       "countryName": "Chile",
@@ -3753,7 +3753,7 @@
       ]
     },
     {
-      "id": "men-83-kuerzi-patrick",
+      "id": "kuerzi-patrick",
       "displayName": "Kuerzi Patrick",
       "sex": "male",
       "countryName": "Switzerland",
@@ -3768,7 +3768,7 @@
       ]
     },
     {
-      "id": "men-83-castillo-jose",
+      "id": "castillo-jose",
       "displayName": "Castillo Jose",
       "sex": "male",
       "countryName": "Ecuador",
@@ -3783,7 +3783,7 @@
       ]
     },
     {
-      "id": "men-83-el-moukallif-naim",
+      "id": "el-moukallif-naim",
       "displayName": "El Moukallif Naim",
       "sex": "male",
       "countryName": "Spain",
@@ -3798,7 +3798,7 @@
       ]
     },
     {
-      "id": "men-83-verstrepen-tuur",
+      "id": "verstrepen-tuur",
       "displayName": "Verstrepen Tuur",
       "sex": "male",
       "countryName": "Belgium",
@@ -3813,7 +3813,7 @@
       ]
     },
     {
-      "id": "men-83-techap-fongang",
+      "id": "techap-fongang",
       "displayName": "Techap Fongang",
       "sex": "male",
       "countryName": "Cameroon",
@@ -3828,7 +3828,7 @@
       ]
     },
     {
-      "id": "men-83-ishikawa-aoi",
+      "id": "ishikawa-aoi",
       "displayName": "Ishikawa Aoi",
       "sex": "male",
       "countryName": "Japan",
@@ -3843,7 +3843,7 @@
       ]
     },
     {
-      "id": "men-83-nagem-mohamed",
+      "id": "nagem-mohamed",
       "displayName": "Nagem Mohamed",
       "sex": "male",
       "countryName": "Libya",
@@ -3858,7 +3858,7 @@
       ]
     },
     {
-      "id": "men-83-hoffmann-daniel",
+      "id": "hoffmann-daniel",
       "displayName": "Hoffmann Daniel",
       "sex": "male",
       "countryName": "Czechia",
@@ -3873,7 +3873,7 @@
       ]
     },
     {
-      "id": "men-83-kloch-mathias",
+      "id": "kloch-mathias",
       "displayName": "Kloch Mathias",
       "sex": "male",
       "countryName": "Denmark",
@@ -3888,7 +3888,7 @@
       ]
     },
     {
-      "id": "men-83-kraujutowicz-grzegorz",
+      "id": "kraujutowicz-grzegorz",
       "displayName": "Kraujutowicz Grzegorz",
       "sex": "male",
       "countryName": "Poland",
@@ -3903,7 +3903,7 @@
       ]
     },
     {
-      "id": "men-83-santos-matheus",
+      "id": "santos-matheus",
       "displayName": "Santos Matheus",
       "sex": "male",
       "countryName": "Brazil",
@@ -3918,7 +3918,7 @@
       ]
     },
     {
-      "id": "men-83-alaradi-ali",
+      "id": "alaradi-ali",
       "displayName": "Alaradi Ali",
       "sex": "male",
       "countryName": "Kuwait",
@@ -3933,7 +3933,7 @@
       ]
     },
     {
-      "id": "men-83-menezes-guilherme",
+      "id": "menezes-guilherme",
       "displayName": "Menezes Guilherme",
       "sex": "male",
       "countryName": "Brazil",
@@ -3948,7 +3948,7 @@
       ]
     },
     {
-      "id": "men-83-chong-kenzo",
+      "id": "chong-kenzo",
       "displayName": "Chong Kenzo",
       "sex": "male",
       "countryName": "Singapore",
@@ -3963,7 +3963,7 @@
       ]
     },
     {
-      "id": "men-83-boulos-christophe",
+      "id": "boulos-christophe",
       "displayName": "Boulos Christophe",
       "sex": "male",
       "countryName": "Qatar",
@@ -3978,7 +3978,7 @@
       ]
     },
     {
-      "id": "men-83-petcu-andrei",
+      "id": "petcu-andrei",
       "displayName": "Petcu Andrei",
       "sex": "male",
       "countryName": "Romania",
@@ -3993,7 +3993,7 @@
       ]
     },
     {
-      "id": "men-83-cheng-wee-herng-donovan",
+      "id": "cheng-wee-herng-donovan",
       "displayName": "Cheng Wee Herng Donovan",
       "sex": "male",
       "countryName": "Singapore",
@@ -4008,7 +4008,7 @@
       ]
     },
     {
-      "id": "men-83-xiao-tianyu",
+      "id": "xiao-tianyu",
       "displayName": "Xiao Tianyu",
       "sex": "male",
       "countryName": "China",
@@ -4023,7 +4023,7 @@
       ]
     },
     {
-      "id": "men-83-hlynsson-fridbjorn",
+      "id": "hlynsson-fridbjorn",
       "displayName": "Hlynsson Fridbjorn",
       "sex": "male",
       "countryName": "Iceland",
@@ -4038,7 +4038,7 @@
       ]
     },
     {
-      "id": "men-83-mur-urban",
+      "id": "mur-urban",
       "displayName": "Mur Urban",
       "sex": "male",
       "countryName": "Slovenia",
@@ -4053,7 +4053,7 @@
       ]
     },
     {
-      "id": "men-83-ruscitti-karim",
+      "id": "ruscitti-karim",
       "displayName": "Ruscitti Karim",
       "sex": "male",
       "countryName": "Qatar",
@@ -4068,7 +4068,7 @@
       ]
     },
     {
-      "id": "men-83-arnaud-alexandre",
+      "id": "arnaud-alexandre",
       "displayName": "Arnaud Alexandre",
       "sex": "male",
       "countryName": "Switzerland",
@@ -4083,7 +4083,7 @@
       ]
     },
     {
-      "id": "men-83-kuzmic-marko",
+      "id": "kuzmic-marko",
       "displayName": "Kuzmic Marko",
       "sex": "male",
       "countryName": "Croatia",
@@ -4098,7 +4098,7 @@
       ]
     },
     {
-      "id": "men-83-asmonas-arnas",
+      "id": "asmonas-arnas",
       "displayName": "Asmonas Arnas",
       "sex": "male",
       "countryName": "Lithuania",
@@ -4113,7 +4113,7 @@
       ]
     },
     {
-      "id": "men-83-henderson-samuel",
+      "id": "henderson-samuel",
       "displayName": "Henderson Samuel",
       "sex": "male",
       "countryName": "New Zealand",
@@ -4128,7 +4128,7 @@
       ]
     },
     {
-      "id": "men-93-ball-william",
+      "id": "ball-william",
       "displayName": "Ball William",
       "sex": "male",
       "countryName": "United States",
@@ -4143,7 +4143,7 @@
       ]
     },
     {
-      "id": "men-93-krastev-emil",
+      "id": "krastev-emil",
       "displayName": "Krastev Emil",
       "sex": "male",
       "countryName": "Bulgaria",
@@ -4158,7 +4158,7 @@
       ]
     },
     {
-      "id": "men-93-hedlund-gustav",
+      "id": "hedlund-gustav",
       "displayName": "Hedlund Gustav",
       "sex": "male",
       "countryName": "Sweden",
@@ -4173,7 +4173,7 @@
       ]
     },
     {
-      "id": "men-93-nouari-aimene",
+      "id": "nouari-aimene",
       "displayName": "Nouari Aimene",
       "sex": "male",
       "countryName": "Algeria",
@@ -4188,7 +4188,7 @@
       ]
     },
     {
-      "id": "men-93-ayandokun-christian",
+      "id": "ayandokun-christian",
       "displayName": "Ayandokun Christian",
       "sex": "male",
       "countryName": "United Kingdom",
@@ -4203,7 +4203,7 @@
       ]
     },
     {
-      "id": "men-93-antwi-kwaku",
+      "id": "antwi-kwaku",
       "displayName": "Antwi Kwaku",
       "sex": "male",
       "countryName": "Canada",
@@ -4218,7 +4218,7 @@
       ]
     },
     {
-      "id": "men-93-baiden-richmond",
+      "id": "baiden-richmond",
       "displayName": "Baiden Richmond",
       "sex": "male",
       "countryName": "France",
@@ -4233,7 +4233,7 @@
       ]
     },
     {
-      "id": "men-93-balangwe-bakinien",
+      "id": "balangwe-bakinien",
       "displayName": "Balangwe Bakinien",
       "sex": "male",
       "countryName": "Cameroon",
@@ -4248,7 +4248,7 @@
       ]
     },
     {
-      "id": "men-93-van-bezooijen-richard",
+      "id": "van-bezooijen-richard",
       "displayName": "van Bezooijen Richard",
       "sex": "male",
       "countryName": "Netherlands",
@@ -4263,7 +4263,7 @@
       ]
     },
     {
-      "id": "men-93-wortel-john",
+      "id": "wortel-john",
       "displayName": "Wortel John",
       "sex": "male",
       "countryName": "Netherlands",
@@ -4278,7 +4278,7 @@
       ]
     },
     {
-      "id": "men-93-tsuruya-shimon",
+      "id": "tsuruya-shimon",
       "displayName": "Tsuruya Shimon",
       "sex": "male",
       "countryName": "Japan",
@@ -4293,7 +4293,7 @@
       ]
     },
     {
-      "id": "men-93-blackmore-aaron",
+      "id": "blackmore-aaron",
       "displayName": "Blackmore Aaron",
       "sex": "male",
       "countryName": "Ireland",
@@ -4308,7 +4308,7 @@
       ]
     },
     {
-      "id": "men-93-hermisdorf-leonardo",
+      "id": "hermisdorf-leonardo",
       "displayName": "Hermisdorf Leonardo",
       "sex": "male",
       "countryName": "Brazil",
@@ -4323,7 +4323,7 @@
       ]
     },
     {
-      "id": "men-93-salim-khalleefah",
+      "id": "salim-khalleefah",
       "displayName": "Salim Khalleefah",
       "sex": "male",
       "countryName": "Libya",
@@ -4338,7 +4338,7 @@
       ]
     },
     {
-      "id": "men-93-zerai-elyes",
+      "id": "zerai-elyes",
       "displayName": "Zerai Elyes",
       "sex": "male",
       "countryName": "Tunisia",
@@ -4353,7 +4353,7 @@
       ]
     },
     {
-      "id": "men-93-gortz-guilherme",
+      "id": "gortz-guilherme",
       "displayName": "Gortz Guilherme",
       "sex": "male",
       "countryName": "Brazil",
@@ -4368,7 +4368,7 @@
       ]
     },
     {
-      "id": "men-93-ussing-daniel",
+      "id": "ussing-daniel",
       "displayName": "Ussing Daniel",
       "sex": "male",
       "countryName": "Denmark",
@@ -4383,7 +4383,7 @@
       ]
     },
     {
-      "id": "men-93-zabeau-tom",
+      "id": "zabeau-tom",
       "displayName": "Zabeau Tom",
       "sex": "male",
       "countryName": "Belgium",
@@ -4398,7 +4398,7 @@
       ]
     },
     {
-      "id": "men-93-gonzalez-jose",
+      "id": "gonzalez-jose",
       "displayName": "Gonzalez Jose",
       "sex": "male",
       "countryName": "Mexico",
@@ -4413,7 +4413,7 @@
       ]
     },
     {
-      "id": "men-93-choi-junwon",
+      "id": "choi-junwon",
       "displayName": "Choi Junwon",
       "sex": "male",
       "countryName": "South Korea",
@@ -4428,7 +4428,7 @@
       ]
     },
     {
-      "id": "men-93-hapon-danyil",
+      "id": "hapon-danyil",
       "displayName": "Hapon Danyil",
       "sex": "male",
       "countryName": "Poland",
@@ -4443,7 +4443,7 @@
       ]
     },
     {
-      "id": "men-93-law-tak-kan-duncan",
+      "id": "law-tak-kan-duncan",
       "displayName": "Law Tak Kan Duncan",
       "sex": "male",
       "countryName": "Hong Kong, China",
@@ -4458,7 +4458,7 @@
       ]
     },
     {
-      "id": "men-93-alsabri-taha",
+      "id": "alsabri-taha",
       "displayName": "Alsabri Taha",
       "sex": "male",
       "countryName": "Libya",
@@ -4473,7 +4473,7 @@
       ]
     },
     {
-      "id": "men-93-klimka-airidas",
+      "id": "klimka-airidas",
       "displayName": "Klimka Airidas",
       "sex": "male",
       "countryName": "Lithuania",
@@ -4488,7 +4488,7 @@
       ]
     },
     {
-      "id": "men-93-hibsfelds-ricards",
+      "id": "hibsfelds-ricards",
       "displayName": "Hibsfelds Ricards",
       "sex": "male",
       "countryName": "Latvia",
@@ -4503,7 +4503,7 @@
       ]
     },
     {
-      "id": "men-93-khuzwayo-bandile",
+      "id": "khuzwayo-bandile",
       "displayName": "Khuzwayo Bandile",
       "sex": "male",
       "countryName": "South Africa",
@@ -4518,7 +4518,7 @@
       ]
     },
     {
-      "id": "men-105-mcnaughton-anthony",
+      "id": "mcnaughton-anthony",
       "displayName": "McNaughton Anthony",
       "sex": "male",
       "countryName": "United States",
@@ -4533,7 +4533,7 @@
       ]
     },
     {
-      "id": "men-105-novopysmennyi-anatolii",
+      "id": "novopysmennyi-anatolii",
       "displayName": "Novopysmennyi Anatolii",
       "sex": "male",
       "countryName": "Ukraine",
@@ -4548,7 +4548,7 @@
       ]
     },
     {
-      "id": "men-105-norling-emil",
+      "id": "norling-emil",
       "displayName": "Norling Emil",
       "sex": "male",
       "countryName": "Sweden",
@@ -4563,7 +4563,7 @@
       ]
     },
     {
-      "id": "men-105-tchandeu-noundou-eliam",
+      "id": "tchandeu-noundou-eliam",
       "displayName": "Tchandeu Noundou Eliam",
       "sex": "male",
       "countryName": "France",
@@ -4578,7 +4578,7 @@
       ]
     },
     {
-      "id": "men-105-stergakis-regin",
+      "id": "stergakis-regin",
       "displayName": "Stergakis Regin",
       "sex": "male",
       "countryName": "Denmark",
@@ -4593,7 +4593,7 @@
       ]
     },
     {
-      "id": "men-105-sboui-fares",
+      "id": "sboui-fares",
       "displayName": "Sboui Fares",
       "sex": "male",
       "countryName": "Tunisia",
@@ -4608,7 +4608,7 @@
       ]
     },
     {
-      "id": "men-105-massiah-nathaniel",
+      "id": "massiah-nathaniel",
       "displayName": "Massiah Nathaniel",
       "sex": "male",
       "countryName": "United Kingdom",
@@ -4623,7 +4623,7 @@
       ]
     },
     {
-      "id": "men-105-amponsah-ezeiel",
+      "id": "amponsah-ezeiel",
       "displayName": "Amponsah Ezeiel",
       "sex": "male",
       "countryName": "Canada",
@@ -4638,7 +4638,7 @@
       ]
     },
     {
-      "id": "men-105-salgado-diego",
+      "id": "salgado-diego",
       "displayName": "Salgado Diego",
       "sex": "male",
       "countryName": "Mexico",
@@ -4653,7 +4653,7 @@
       ]
     },
     {
-      "id": "men-105-bentalha-ilyes",
+      "id": "bentalha-ilyes",
       "displayName": "Bentalha Ilyes",
       "sex": "male",
       "countryName": "Algeria",
@@ -4668,7 +4668,7 @@
       ]
     },
     {
-      "id": "men-105-duecker-bjarne",
+      "id": "duecker-bjarne",
       "displayName": "Duecker Bjarne",
       "sex": "male",
       "countryName": "Germany",
@@ -4683,7 +4683,7 @@
       ]
     },
     {
-      "id": "men-105-celis-jonathan",
+      "id": "celis-jonathan",
       "displayName": "Celis Jonathan",
       "sex": "male",
       "countryName": "Belgium",
@@ -4698,7 +4698,7 @@
       ]
     },
     {
-      "id": "men-105-slump-jacob",
+      "id": "slump-jacob",
       "displayName": "Slump Jacob",
       "sex": "male",
       "countryName": "Netherlands",
@@ -4713,7 +4713,7 @@
       ]
     },
     {
-      "id": "men-105-hamich-imad",
+      "id": "hamich-imad",
       "displayName": "Hamich Imad",
       "sex": "male",
       "countryName": "Belgium",
@@ -4728,7 +4728,7 @@
       ]
     },
     {
-      "id": "men-105-nwaezeigwe-kenneth",
+      "id": "nwaezeigwe-kenneth",
       "displayName": "Nwaezeigwe Kenneth",
       "sex": "male",
       "countryName": "Ireland",
@@ -4743,7 +4743,7 @@
       ]
     },
     {
-      "id": "men-105-forsberg-samuel",
+      "id": "forsberg-samuel",
       "displayName": "Forsberg Samuel",
       "sex": "male",
       "countryName": "Australia",
@@ -4758,7 +4758,7 @@
       ]
     },
     {
-      "id": "men-105-karason-alexander",
+      "id": "karason-alexander",
       "displayName": "Karason Alexander",
       "sex": "male",
       "countryName": "Iceland",
@@ -4773,7 +4773,7 @@
       ]
     },
     {
-      "id": "men-105-ibanez-pawathon-bernardo",
+      "id": "ibanez-pawathon-bernardo",
       "displayName": "Ibanez Pawathon Bernardo",
       "sex": "male",
       "countryName": "Chile",
@@ -4788,7 +4788,7 @@
       ]
     },
     {
-      "id": "men-105-henry-matthew",
+      "id": "henry-matthew",
       "displayName": "Henry Matthew",
       "sex": "male",
       "countryName": "Ireland",
@@ -4803,7 +4803,7 @@
       ]
     },
     {
-      "id": "men-105-erik-mata",
+      "id": "erik-mata",
       "displayName": "Erik Mata",
       "sex": "male",
       "countryName": "Hungary",
@@ -4818,7 +4818,7 @@
       ]
     },
     {
-      "id": "men-105-sant-anna-rodrigo",
+      "id": "sant-anna-rodrigo",
       "displayName": "Sant'anna Rodrigo",
       "sex": "male",
       "countryName": "Brazil",
@@ -4833,7 +4833,7 @@
       ]
     },
     {
-      "id": "men-105-franek-hynek",
+      "id": "franek-hynek",
       "displayName": "Franek Hynek",
       "sex": "male",
       "countryName": "Czechia",
@@ -4848,7 +4848,7 @@
       ]
     },
     {
-      "id": "men-105-aldirsi-mohammed",
+      "id": "aldirsi-mohammed",
       "displayName": "Aldirsi Mohammed",
       "sex": "male",
       "countryName": "Libya",
@@ -4863,7 +4863,7 @@
       ]
     },
     {
-      "id": "men-105-norkus-martynas",
+      "id": "norkus-martynas",
       "displayName": "Norkus Martynas",
       "sex": "male",
       "countryName": "Lithuania",
@@ -4878,7 +4878,7 @@
       ]
     },
     {
-      "id": "men-105-boss-dominic",
+      "id": "boss-dominic",
       "displayName": "Boss Dominic",
       "sex": "male",
       "countryName": "Switzerland",
@@ -4893,7 +4893,7 @@
       ]
     },
     {
-      "id": "men-105-jung-siwoo",
+      "id": "jung-siwoo",
       "displayName": "Jung Siwoo",
       "sex": "male",
       "countryName": "South Korea",
@@ -4908,7 +4908,7 @@
       ]
     },
     {
-      "id": "men-105-choi-seungwan",
+      "id": "choi-seungwan",
       "displayName": "Choi Seungwan",
       "sex": "male",
       "countryName": "South Korea",
@@ -4923,7 +4923,7 @@
       ]
     },
     {
-      "id": "men-105-de-paula-vitor",
+      "id": "de-paula-vitor",
       "displayName": "de Paula Vitor",
       "sex": "male",
       "countryName": "Brazil",
@@ -4938,7 +4938,7 @@
       ]
     },
     {
-      "id": "men-105-tomko-patrik",
+      "id": "tomko-patrik",
       "displayName": "Tomko Patrik",
       "sex": "male",
       "countryName": "Slovakia",
@@ -4953,7 +4953,7 @@
       ]
     },
     {
-      "id": "men-120-hunte-rondel",
+      "id": "hunte-rondel",
       "displayName": "Hunte Rondel",
       "sex": "male",
       "countryName": "Trinidad and Tobago",
@@ -4968,7 +4968,7 @@
       ]
     },
     {
-      "id": "men-120-el-chaer-etienne",
+      "id": "el-chaer-etienne",
       "displayName": "El Chaer Etienne",
       "sex": "male",
       "countryName": "Lebanon",
@@ -4983,7 +4983,7 @@
       ]
     },
     {
-      "id": "men-120-rouska-ashton",
+      "id": "rouska-ashton",
       "displayName": "Rouska Ashton",
       "sex": "male",
       "countryName": "United States",
@@ -4998,7 +4998,7 @@
       ]
     },
     {
-      "id": "men-120-mcdonald-joseph",
+      "id": "mcdonald-joseph",
       "displayName": "McDonald Joseph",
       "sex": "male",
       "countryName": "Trinidad and Tobago",
@@ -5013,7 +5013,7 @@
       ]
     },
     {
-      "id": "men-120-ngoka-joshua",
+      "id": "ngoka-joshua",
       "displayName": "Ngoka Joshua",
       "sex": "male",
       "countryName": "United Kingdom",
@@ -5028,7 +5028,7 @@
       ]
     },
     {
-      "id": "men-120-melnychuk-taras",
+      "id": "melnychuk-taras",
       "displayName": "Melnychuk Taras",
       "sex": "male",
       "countryName": "Ukraine",
@@ -5043,7 +5043,7 @@
       ]
     },
     {
-      "id": "men-120-wiseman-lucas",
+      "id": "wiseman-lucas",
       "displayName": "Wiseman Lucas",
       "sex": "male",
       "countryName": "Canada",
@@ -5058,7 +5058,7 @@
       ]
     },
     {
-      "id": "men-120-de-rohden-antoine",
+      "id": "de-rohden-antoine",
       "displayName": "de Rohden Antoine",
       "sex": "male",
       "countryName": "France",
@@ -5073,7 +5073,7 @@
       ]
     },
     {
-      "id": "men-120-sulayman-abdul",
+      "id": "sulayman-abdul",
       "displayName": "Sulayman Abdul",
       "sex": "male",
       "countryName": "United Kingdom",
@@ -5088,7 +5088,7 @@
       ]
     },
     {
-      "id": "men-120-sahad-mohamed",
+      "id": "sahad-mohamed",
       "displayName": "Sahad Mohamed",
       "sex": "male",
       "countryName": "Algeria",
@@ -5103,7 +5103,7 @@
       ]
     },
     {
-      "id": "men-120-wiendieck-jonah",
+      "id": "wiendieck-jonah",
       "displayName": "Wiendieck Jonah",
       "sex": "male",
       "countryName": "Germany",
@@ -5118,7 +5118,7 @@
       ]
     },
     {
-      "id": "men-120-sekenofsky-baruch",
+      "id": "sekenofsky-baruch",
       "displayName": "Sekenofsky Baruch",
       "sex": "male",
       "countryName": "Israel",
@@ -5133,7 +5133,7 @@
       ]
     },
     {
-      "id": "men-120-due-laurits",
+      "id": "due-laurits",
       "displayName": "Due Laurits",
       "sex": "male",
       "countryName": "Denmark",
@@ -5148,7 +5148,7 @@
       ]
     },
     {
-      "id": "men-120-vogelius-jesper",
+      "id": "vogelius-jesper",
       "displayName": "Vogelius Jesper",
       "sex": "male",
       "countryName": "Denmark",
@@ -5163,7 +5163,7 @@
       ]
     },
     {
-      "id": "men-120-strubbe-jochen",
+      "id": "strubbe-jochen",
       "displayName": "Strubbe Jochen",
       "sex": "male",
       "countryName": "Belgium",
@@ -5178,7 +5178,7 @@
       ]
     },
     {
-      "id": "men-120-graham-heath",
+      "id": "graham-heath",
       "displayName": "Graham Heath",
       "sex": "male",
       "countryName": "New Zealand",
@@ -5193,7 +5193,7 @@
       ]
     },
     {
-      "id": "men-120-pola-daniele",
+      "id": "pola-daniele",
       "displayName": "Pola Daniele",
       "sex": "male",
       "countryName": "Switzerland",
@@ -5208,7 +5208,7 @@
       ]
     },
     {
-      "id": "men-120-krisztian-cseszko",
+      "id": "krisztian-cseszko",
       "displayName": "Krisztian Cseszko",
       "sex": "male",
       "countryName": "Hungary",
@@ -5223,7 +5223,7 @@
       ]
     },
     {
-      "id": "men-120-naoussi-nembot-ano",
+      "id": "naoussi-nembot-ano",
       "displayName": "Naoussi Nembot Ano",
       "sex": "male",
       "countryName": "Cameroon",
@@ -5238,7 +5238,7 @@
       ]
     },
     {
-      "id": "men-120-juzups-maris",
+      "id": "juzups-maris",
       "displayName": "Juzups Maris",
       "sex": "male",
       "countryName": "Latvia",
@@ -5253,7 +5253,7 @@
       ]
     },
     {
-      "id": "men-120-penco-joseph",
+      "id": "penco-joseph",
       "displayName": "Penco Joseph",
       "sex": "male",
       "countryName": "Ireland",
@@ -5268,7 +5268,7 @@
       ]
     },
     {
-      "id": "men-120-stell-mark",
+      "id": "stell-mark",
       "displayName": "Stell Mark",
       "sex": "male",
       "countryName": "Ireland",
@@ -5283,7 +5283,7 @@
       ]
     },
     {
-      "id": "men-120-sigurdsson-helgi",
+      "id": "sigurdsson-helgi",
       "displayName": "Sigurdsson Helgi",
       "sex": "male",
       "countryName": "Iceland",
@@ -5298,7 +5298,7 @@
       ]
     },
     {
-      "id": "men-120-motoki-ayuto",
+      "id": "motoki-ayuto",
       "displayName": "Motoki Ayuto",
       "sex": "male",
       "countryName": "Japan",
@@ -5313,7 +5313,7 @@
       ]
     },
     {
-      "id": "men-120-karkusashvili-rubeni",
+      "id": "karkusashvili-rubeni",
       "displayName": "Karkusashvili Rubeni",
       "sex": "male",
       "countryName": "Georgia",
@@ -5328,7 +5328,7 @@
       ]
     },
     {
-      "id": "men-120-thoma-thomas",
+      "id": "thoma-thomas",
       "displayName": "Thoma Thomas",
       "sex": "male",
       "countryName": "Switzerland",
@@ -5343,7 +5343,7 @@
       ]
     },
     {
-      "id": "men-120-raw-simon",
+      "id": "raw-simon",
       "displayName": "Raw Simon",
       "sex": "male",
       "countryName": "South Africa",
@@ -5358,7 +5358,7 @@
       ]
     },
     {
-      "id": "men-120plus-olivares-jesus",
+      "id": "olivares-jesus",
       "displayName": "Olivares Jesus",
       "sex": "male",
       "countryName": "United States",
@@ -5373,7 +5373,7 @@
       ]
     },
     {
-      "id": "men-120plus-sharma-ajay",
+      "id": "sharma-ajay",
       "displayName": "Sharma Ajay",
       "sex": "male",
       "countryName": "United Kingdom",
@@ -5388,7 +5388,7 @@
       ]
     },
     {
-      "id": "men-120plus-kocak-cenk",
+      "id": "kocak-cenk",
       "displayName": "Kocak Cenk",
       "sex": "male",
       "countryName": "Turkiye",
@@ -5403,7 +5403,7 @@
       ]
     },
     {
-      "id": "men-120plus-holinei-viktor",
+      "id": "holinei-viktor",
       "displayName": "Holinei Viktor",
       "sex": "male",
       "countryName": "Ukraine",
@@ -5418,7 +5418,7 @@
       ]
     },
     {
-      "id": "men-120plus-samkharadze-temur",
+      "id": "samkharadze-temur",
       "displayName": "Samkharadze Temur",
       "sex": "male",
       "countryName": "Georgia",
@@ -5433,7 +5433,7 @@
       ]
     },
     {
-      "id": "men-120plus-mansukoski-nuutti",
+      "id": "mansukoski-nuutti",
       "displayName": "Mansukoski Nuutti",
       "sex": "male",
       "countryName": "Finland",
@@ -5448,7 +5448,7 @@
       ]
     },
     {
-      "id": "men-120plus-sutterud-westbye-bjorn",
+      "id": "sutterud-westbye-bjorn",
       "displayName": "Sutterud Westbye Bjorn",
       "sex": "male",
       "countryName": "Norway",
@@ -5463,7 +5463,7 @@
       ]
     },
     {
-      "id": "men-120plus-patschke-markus",
+      "id": "patschke-markus",
       "displayName": "Patschke Markus",
       "sex": "male",
       "countryName": "Germany",
@@ -5478,7 +5478,7 @@
       ]
     },
     {
-      "id": "men-120plus-fidan-hussein",
+      "id": "fidan-hussein",
       "displayName": "Fidan Hussein",
       "sex": "male",
       "countryName": "Libya",
@@ -5493,7 +5493,7 @@
       ]
     },
     {
-      "id": "men-120plus-reinmuth-tony",
+      "id": "reinmuth-tony",
       "displayName": "Reinmuth Tony",
       "sex": "male",
       "countryName": "Australia",
@@ -5508,7 +5508,7 @@
       ]
     },
     {
-      "id": "men-120plus-wang-pei-yu",
+      "id": "wang-pei-yu",
       "displayName": "Wang Pei-Yu",
       "sex": "male",
       "countryName": "Chinese Taipei",
@@ -5523,7 +5523,7 @@
       ]
     },
     {
-      "id": "men-120plus-soares-alexis",
+      "id": "soares-alexis",
       "displayName": "Soares Alexis",
       "sex": "male",
       "countryName": "France",
@@ -5538,7 +5538,7 @@
       ]
     },
     {
-      "id": "men-120plus-simonsen-martin",
+      "id": "simonsen-martin",
       "displayName": "Simonsen Martin",
       "sex": "male",
       "countryName": "Denmark",
@@ -5553,7 +5553,7 @@
       ]
     },
     {
-      "id": "men-120plus-voigt-torben",
+      "id": "voigt-torben",
       "displayName": "Voigt Torben",
       "sex": "male",
       "countryName": "Germany",
@@ -5568,7 +5568,7 @@
       ]
     },
     {
-      "id": "men-120plus-abousinan-mohammed",
+      "id": "abousinan-mohammed",
       "displayName": "Abousinan Mohammed",
       "sex": "male",
       "countryName": "Libya",
@@ -5583,7 +5583,7 @@
       ]
     },
     {
-      "id": "men-120plus-wu-yi-chiu",
+      "id": "wu-yi-chiu",
       "displayName": "Wu Yi-Chiu",
       "sex": "male",
       "countryName": "Chinese Taipei",
@@ -5598,7 +5598,7 @@
       ]
     },
     {
-      "id": "men-120plus-lekhal-abdeslam",
+      "id": "lekhal-abdeslam",
       "displayName": "Lekhal Abdeslam",
       "sex": "male",
       "countryName": "Algeria",
@@ -5613,7 +5613,7 @@
       ]
     },
     {
-      "id": "men-120plus-hendriks-giel",
+      "id": "hendriks-giel",
       "displayName": "Hendriks Giel",
       "sex": "male",
       "countryName": "Belgium",
@@ -5628,7 +5628,7 @@
       ]
     },
     {
-      "id": "men-120plus-juszczyk-jacek",
+      "id": "juszczyk-jacek",
       "displayName": "Juszczyk Jacek",
       "sex": "male",
       "countryName": "Poland",
@@ -5643,7 +5643,7 @@
       ]
     },
     {
-      "id": "men-120plus-gecas-tadas",
+      "id": "gecas-tadas",
       "displayName": "Gecas Tadas",
       "sex": "male",
       "countryName": "Lithuania",
@@ -5658,7 +5658,7 @@
       ]
     },
     {
-      "id": "men-120plus-riudalbas-clemente-marc",
+      "id": "riudalbas-clemente-marc",
       "displayName": "Riudalbas Clemente Marc",
       "sex": "male",
       "countryName": "Spain",
@@ -5673,7 +5673,7 @@
       ]
     },
     {
-      "id": "men-120plus-mardones-meza-sergio-hernan",
+      "id": "mardones-meza-sergio-hernan",
       "displayName": "Mardones Meza Sergio Hernan",
       "sex": "male",
       "countryName": "Chile",
@@ -5688,7 +5688,7 @@
       ]
     },
     {
-      "id": "men-120plus-raw-robert",
+      "id": "raw-robert",
       "displayName": "Raw Robert",
       "sex": "male",
       "countryName": "South Africa",
@@ -5703,7 +5703,7 @@
       ]
     },
     {
-      "id": "men-120plus-berzins-didzis",
+      "id": "berzins-didzis",
       "displayName": "Berzins Didzis",
       "sex": "male",
       "countryName": "Latvia",
@@ -5718,7 +5718,7 @@
       ]
     },
     {
-      "id": "men-120plus-inoue-masaya",
+      "id": "inoue-masaya",
       "displayName": "Inoue Masaya",
       "sex": "male",
       "countryName": "Japan",
@@ -5733,7 +5733,7 @@
       ]
     },
     {
-      "id": "men-120plus-bowring-ray",
+      "id": "bowring-ray",
       "displayName": "Bowring Ray",
       "sex": "male",
       "countryName": "United Kingdom",
@@ -5755,22 +5755,22 @@
       "sex": "female",
       "weightLimitKg": 47,
       "athleteIds": [
-        "women-47-chapon-tiffany",
-        "women-47-le-leanne",
-        "women-47-picher-plante-amelie",
-        "women-47-motta-annalisa",
-        "women-47-kijumnuayporn-vicky",
-        "women-47-duno-frankmary",
-        "women-47-mikova-anezka",
-        "women-47-jones-ainsley",
-        "women-47-altamimi-alhanouf",
-        "women-47-santos-mediavilla-paula",
-        "women-47-al-jundi-nour",
-        "women-47-wedlock-sze-yee-venezia",
-        "women-47-clarke-joanne",
-        "women-47-mai-on-kotchaphan",
-        "women-47-beglarashvili-mari",
-        "women-47-idczak-karolina"
+        "chapon-tiffany",
+        "le-leanne",
+        "picher-plante-amelie",
+        "motta-annalisa",
+        "kijumnuayporn-vicky",
+        "duno-frankmary",
+        "mikova-anezka",
+        "jones-ainsley",
+        "altamimi-alhanouf",
+        "santos-mediavilla-paula",
+        "al-jundi-nour",
+        "wedlock-sze-yee-venezia",
+        "clarke-joanne",
+        "mai-on-kotchaphan",
+        "beglarashvili-mari",
+        "idczak-karolina"
       ]
     },
     {
@@ -5779,28 +5779,28 @@
       "sex": "female",
       "weightLimitKg": 52,
       "athleteIds": [
-        "women-52-smith-megan-li",
-        "women-52-dekkers-pleun",
-        "women-52-gagne-catherine",
-        "women-52-lucas-lea",
-        "women-52-farid-farhanna",
-        "women-52-pineda-vanessa",
-        "women-52-lehoczkyne-fawal-margit",
-        "women-52-gerlach-eliza",
-        "women-52-craven-elizabeth",
-        "women-52-barwari-delal",
-        "women-52-la-bella-daiana",
-        "women-52-chorianopoulou-aikaterini",
-        "women-52-varol-fatma",
-        "women-52-carvalho-giulia",
-        "women-52-sim-cristy",
-        "women-52-saana-grassham",
-        "women-52-sveinsdottir-kristrun",
-        "women-52-caldona-jackielyn",
-        "women-52-bobileva-arina",
-        "women-52-koskipaasi-jaana",
-        "women-52-verhulst-stefanie",
-        "women-52-tsetskhladze-mariam"
+        "smith-megan-li",
+        "dekkers-pleun",
+        "gagne-catherine",
+        "lucas-lea",
+        "farid-farhanna",
+        "pineda-vanessa",
+        "lehoczkyne-fawal-margit",
+        "gerlach-eliza",
+        "craven-elizabeth",
+        "barwari-delal",
+        "la-bella-daiana",
+        "chorianopoulou-aikaterini",
+        "varol-fatma",
+        "carvalho-giulia",
+        "sim-cristy",
+        "saana-grassham",
+        "sveinsdottir-kristrun",
+        "caldona-jackielyn",
+        "bobileva-arina",
+        "koskipaasi-jaana",
+        "verhulst-stefanie",
+        "tsetskhladze-mariam"
       ]
     },
     {
@@ -5809,27 +5809,27 @@
       "sex": "female",
       "weightLimitKg": 57,
       "athleteIds": [
-        "women-57-naldi-sara",
-        "women-57-nnamani-joy",
-        "women-57-pal-sovannphaktra",
-        "women-57-butters-bobbie",
-        "women-57-corrigan-evie",
-        "women-57-olin-emelie",
-        "women-57-aguila-padilla-ana",
-        "women-57-amri-miriam",
-        "women-57-henry-marthe",
-        "women-57-de-la-torre-monica",
-        "women-57-kratz-samantha",
-        "women-57-babic-katja",
-        "women-57-oestergaard-mathilde",
-        "women-57-keenan-lauren",
-        "women-57-huang-zhiyin",
-        "women-57-rummens-elise",
-        "women-57-wandeler-anouk",
-        "women-57-boukalova-anna",
-        "women-57-lee-michelle",
-        "women-57-bondy-florence",
-        "women-57-viktoria-flavia-dr"
+        "naldi-sara",
+        "nnamani-joy",
+        "pal-sovannphaktra",
+        "butters-bobbie",
+        "corrigan-evie",
+        "olin-emelie",
+        "aguila-padilla-ana",
+        "amri-miriam",
+        "henry-marthe",
+        "de-la-torre-monica",
+        "kratz-samantha",
+        "babic-katja",
+        "oestergaard-mathilde",
+        "keenan-lauren",
+        "huang-zhiyin",
+        "rummens-elise",
+        "wandeler-anouk",
+        "boukalova-anna",
+        "lee-michelle",
+        "bondy-florence",
+        "viktoria-flavia-dr"
       ]
     },
     {
@@ -5838,35 +5838,35 @@
       "sex": "female",
       "weightLimitKg": 63,
       "athleteIds": [
-        "women-63-bostrom-alba",
-        "women-63-bernardi-chiara",
-        "women-63-aborah-betty",
-        "women-63-vidal-makeda",
-        "women-63-van-vianen-romy",
-        "women-63-haeberer-clara-isabelle",
-        "women-63-mamane-leah",
-        "women-63-maguregi-rodriguez-jone",
-        "women-63-kvantchiani-sopiko",
-        "women-63-lalime-sahyuri",
-        "women-63-wolf-jana",
-        "women-63-zurinskaite-deimante",
-        "women-63-stevens-jody",
-        "women-63-visan-ana-maria",
-        "women-63-tiong-natalie",
-        "women-63-torres-judith",
-        "women-63-jansova-dominika",
-        "women-63-kalinowska-ewelina",
-        "women-63-duus-cecilie",
-        "women-63-zunic-lea",
-        "women-63-vackova-kristyna",
-        "women-63-dunning-mary",
-        "women-63-wenn-cara",
-        "women-63-ong-yi",
-        "women-63-chatzigianni-andria",
-        "women-63-zhou-yiqian",
-        "women-63-gerute-lina",
-        "women-63-meshveliani-natela",
-        "women-63-liang-yim-chee"
+        "bostrom-alba",
+        "bernardi-chiara",
+        "aborah-betty",
+        "vidal-makeda",
+        "van-vianen-romy",
+        "haeberer-clara-isabelle",
+        "mamane-leah",
+        "maguregi-rodriguez-jone",
+        "kvantchiani-sopiko",
+        "lalime-sahyuri",
+        "wolf-jana",
+        "zurinskaite-deimante",
+        "stevens-jody",
+        "visan-ana-maria",
+        "tiong-natalie",
+        "torres-judith",
+        "jansova-dominika",
+        "kalinowska-ewelina",
+        "duus-cecilie",
+        "zunic-lea",
+        "vackova-kristyna",
+        "dunning-mary",
+        "wenn-cara",
+        "ong-yi",
+        "chatzigianni-andria",
+        "zhou-yiqian",
+        "gerute-lina",
+        "meshveliani-natela",
+        "liang-yim-chee"
       ]
     },
     {
@@ -5875,33 +5875,33 @@
       "sex": "female",
       "weightLimitKg": 69,
       "athleteIds": [
-        "women-69-garra-carola",
-        "women-69-babb-chandler",
-        "women-69-kovacs-janee",
-        "women-69-scanlon-meghan",
-        "women-69-van-daal-marie-jose",
-        "women-69-nelson-annie",
-        "women-69-kjenner-marte",
-        "women-69-bright-jordan",
-        "women-69-bouchoux-andorina",
-        "women-69-huff-shannon",
-        "women-69-belden-pavlovic-signe",
-        "women-69-tavares-cicera",
-        "women-69-mabidikama-acima",
-        "women-69-goossens-kaya",
-        "women-69-altman-hannah",
-        "women-69-materek-sabina",
-        "women-69-haulot-clara",
-        "women-69-skovlind-caroline",
-        "women-69-denise-guenther",
-        "women-69-seow-amanda",
-        "women-69-jones-jayne",
-        "women-69-khwang-hayley",
-        "women-69-kairaityte-dainora",
-        "women-69-larrimore-deshawn",
-        "women-69-marina-sanja",
-        "women-69-pacce-catalina",
-        "women-69-janulcikaite-ausrine"
+        "garra-carola",
+        "babb-chandler",
+        "kovacs-janee",
+        "scanlon-meghan",
+        "van-daal-marie-jose",
+        "nelson-annie",
+        "kjenner-marte",
+        "bright-jordan",
+        "bouchoux-andorina",
+        "huff-shannon",
+        "belden-pavlovic-signe",
+        "tavares-cicera",
+        "mabidikama-acima",
+        "goossens-kaya",
+        "altman-hannah",
+        "materek-sabina",
+        "haulot-clara",
+        "skovlind-caroline",
+        "denise-guenther",
+        "seow-amanda",
+        "jones-jayne",
+        "khwang-hayley",
+        "kairaityte-dainora",
+        "larrimore-deshawn",
+        "marina-sanja",
+        "pacce-catalina",
+        "janulcikaite-ausrine"
       ]
     },
     {
@@ -5910,30 +5910,30 @@
       "sex": "female",
       "weightLimitKg": 76,
       "athleteIds": [
-        "women-76-worford-cranon",
-        "women-76-mazur-zuzanna",
-        "women-76-bisol-bruna",
-        "women-76-peyraud-clara",
-        "women-76-hames-mara",
-        "women-76-hanlon-bettina",
-        "women-76-ezeh-chisom",
-        "women-76-hunte-kezia",
-        "women-76-gronlund-ellen",
-        "women-76-tchrikishvili-nino",
-        "women-76-ophoff-tessa",
-        "women-76-govind-hema",
-        "women-76-szarek-justyna",
-        "women-76-varillas-modesta",
-        "women-76-swart-chanel",
-        "women-76-martens-mariska",
-        "women-76-reis-rafaela",
-        "women-76-muller-gaby",
-        "women-76-schvandtnerova-denisa",
-        "women-76-waldeck-danielle",
-        "women-76-wells-selina",
-        "women-76-khurtsilava-khatia",
-        "women-76-xie-thuy",
-        "women-76-marangoni-pia"
+        "worford-cranon",
+        "mazur-zuzanna",
+        "bisol-bruna",
+        "peyraud-clara",
+        "hames-mara",
+        "hanlon-bettina",
+        "ezeh-chisom",
+        "hunte-kezia",
+        "gronlund-ellen",
+        "tchrikishvili-nino",
+        "ophoff-tessa",
+        "govind-hema",
+        "szarek-justyna",
+        "varillas-modesta",
+        "swart-chanel",
+        "martens-mariska",
+        "reis-rafaela",
+        "muller-gaby",
+        "schvandtnerova-denisa",
+        "waldeck-danielle",
+        "wells-selina",
+        "khurtsilava-khatia",
+        "xie-thuy",
+        "marangoni-pia"
       ]
     },
     {
@@ -5942,32 +5942,32 @@
       "sex": "female",
       "weightLimitKg": 84,
       "athleteIds": [
-        "women-84-lawrence-amanda",
-        "women-84-tongotea-karlina",
-        "women-84-azariah-ziana",
-        "women-84-zeigler-nicolette",
-        "women-84-thorhallsdottir-kristin",
-        "women-84-almeida-marina",
-        "women-84-ieronimos-anna",
-        "women-84-buettner-jessica",
-        "women-84-mouchet-emilie",
-        "women-84-rudin-agnes",
-        "women-84-coopoosamy-nicole",
-        "women-84-lahtinen-mira",
-        "women-84-letting-regitze",
-        "women-84-bychok-liudmyla",
-        "women-84-zhao-yan-fei",
-        "women-84-sanchez-jorge-carla",
-        "women-84-joergensen-katja",
-        "women-84-alleyne-deresay",
-        "women-84-erimo-sabadell-rosa",
-        "women-84-matsuda-miyu",
-        "women-84-laitinen-jenna",
-        "women-84-abouassi-nour",
-        "women-84-adedokun-comfort",
-        "women-84-suitauloa-shaniele",
-        "women-84-rodrigues-ana",
-        "women-84-szymkowiak-magdalena"
+        "lawrence-amanda",
+        "tongotea-karlina",
+        "azariah-ziana",
+        "zeigler-nicolette",
+        "thorhallsdottir-kristin",
+        "almeida-marina",
+        "ieronimos-anna",
+        "buettner-jessica",
+        "mouchet-emilie",
+        "rudin-agnes",
+        "coopoosamy-nicole",
+        "lahtinen-mira",
+        "letting-regitze",
+        "bychok-liudmyla",
+        "zhao-yan-fei",
+        "sanchez-jorge-carla",
+        "joergensen-katja",
+        "alleyne-deresay",
+        "erimo-sabadell-rosa",
+        "matsuda-miyu",
+        "laitinen-jenna",
+        "abouassi-nour",
+        "adedokun-comfort",
+        "suitauloa-shaniele",
+        "rodrigues-ana",
+        "szymkowiak-magdalena"
       ]
     },
     {
@@ -5976,19 +5976,19 @@
       "sex": "female",
       "weightLimitKg": null,
       "athleteIds": [
-        "women-84plus-muluh-sonita",
-        "women-84plus-schlater-brittany",
-        "women-84plus-onuoha-aquinn",
-        "women-84plus-omotoso-toyosi",
-        "women-84plus-brown-bonica",
-        "women-84plus-mierger-amelie",
-        "women-84plus-padia-zahra",
-        "women-84plus-o-reilly-alison",
-        "women-84plus-sigurjonsdottir-hanna",
-        "women-84plus-matthiasdottir-thorbjorg",
-        "women-84plus-kamoto-emi",
-        "women-84plus-de-la-barra-zelaya-marcela",
-        "women-84plus-malojlo-marta"
+        "muluh-sonita",
+        "schlater-brittany",
+        "onuoha-aquinn",
+        "omotoso-toyosi",
+        "brown-bonica",
+        "mierger-amelie",
+        "padia-zahra",
+        "o-reilly-alison",
+        "sigurjonsdottir-hanna",
+        "matthiasdottir-thorbjorg",
+        "kamoto-emi",
+        "de-la-barra-zelaya-marcela",
+        "malojlo-marta"
       ]
     },
     {
@@ -5997,24 +5997,24 @@
       "sex": "male",
       "weightLimitKg": 59,
       "athleteIds": [
-        "men-59-slabic-michael",
-        "men-59-campano-diaz-ivan",
-        "men-59-garcia-antoine",
-        "men-59-takiyama-yasutaka",
-        "men-59-elhamali-mohamed",
-        "men-59-nyarko-kwaku",
-        "men-59-leon-franklin",
-        "men-59-ho-david",
-        "men-59-huang-wei-chen",
-        "men-59-you-yao-wei",
-        "men-59-cruz-angel",
-        "men-59-gelashvili-giorgi",
-        "men-59-madera-joenas",
-        "men-59-imamura-ryo",
-        "men-59-santangelo-jacopo",
-        "men-59-ergin-kemal",
-        "men-59-cancel-ivan",
-        "men-59-flores-jose"
+        "slabic-michael",
+        "campano-diaz-ivan",
+        "garcia-antoine",
+        "takiyama-yasutaka",
+        "elhamali-mohamed",
+        "nyarko-kwaku",
+        "leon-franklin",
+        "ho-david",
+        "huang-wei-chen",
+        "you-yao-wei",
+        "cruz-angel",
+        "gelashvili-giorgi",
+        "madera-joenas",
+        "imamura-ryo",
+        "santangelo-jacopo",
+        "ergin-kemal",
+        "cancel-ivan",
+        "flores-jose"
       ]
     },
     {
@@ -6023,23 +6023,23 @@
       "sex": "male",
       "weightLimitKg": 66,
       "athleteIds": [
-        "men-66-bakkelund-kjell",
-        "men-66-jordan-joseph",
-        "men-66-ushiyama-kyota",
-        "men-66-nikolai-austin",
-        "men-66-jimenez-santos",
-        "men-66-satake-yusuke",
-        "men-66-castillo-carlos",
-        "men-66-ong-wei",
-        "men-66-simonelli-mirko",
-        "men-66-catena-joel",
-        "men-66-liatsis-marios",
-        "men-66-sgro-julian",
-        "men-66-luu-joshua",
-        "men-66-zeng-wei-xiang",
-        "men-66-ghizoni-gabriel",
-        "men-66-naoussi-ezelgbo-darling-williams",
-        "men-66-lin-ching-lun"
+        "bakkelund-kjell",
+        "jordan-joseph",
+        "ushiyama-kyota",
+        "nikolai-austin",
+        "jimenez-santos",
+        "satake-yusuke",
+        "castillo-carlos",
+        "ong-wei",
+        "simonelli-mirko",
+        "catena-joel",
+        "liatsis-marios",
+        "sgro-julian",
+        "luu-joshua",
+        "zeng-wei-xiang",
+        "ghizoni-gabriel",
+        "naoussi-ezelgbo-darling-williams",
+        "lin-ching-lun"
       ]
     },
     {
@@ -6048,31 +6048,31 @@
       "sex": "male",
       "weightLimitKg": 74,
       "athleteIds": [
-        "men-74-perkins-austin",
-        "men-74-bertrand-balthazar",
-        "men-74-fan-chun-chia",
-        "men-74-lee-clinton",
-        "men-74-lavoie-jacob",
-        "men-74-homer-luke",
-        "men-74-babaei-somaghi-keyan",
-        "men-74-al-lanqawi-adel",
-        "men-74-gimorri-giacomo",
-        "men-74-konstantinou-christos",
-        "men-74-cheong-cheng",
-        "men-74-herraiz-frances-alberto",
-        "men-74-cheng-yu-jui",
-        "men-74-medjahed-yacine",
-        "men-74-ola-joshua",
-        "men-74-rada-karel",
-        "men-74-saed-awnullah",
-        "men-74-strachan-john",
-        "men-74-richards-lachlan",
-        "men-74-damlamajans-marats",
-        "men-74-marecki-mateusz",
-        "men-74-pacerinskis-marius",
-        "men-74-bledis-gintaras",
-        "men-74-cruz-leonardo",
-        "men-74-maisuradze-giorgi"
+        "perkins-austin",
+        "bertrand-balthazar",
+        "fan-chun-chia",
+        "lee-clinton",
+        "lavoie-jacob",
+        "homer-luke",
+        "babaei-somaghi-keyan",
+        "al-lanqawi-adel",
+        "gimorri-giacomo",
+        "konstantinou-christos",
+        "cheong-cheng",
+        "herraiz-frances-alberto",
+        "cheng-yu-jui",
+        "medjahed-yacine",
+        "ola-joshua",
+        "rada-karel",
+        "saed-awnullah",
+        "strachan-john",
+        "richards-lachlan",
+        "damlamajans-marats",
+        "marecki-mateusz",
+        "pacerinskis-marius",
+        "bledis-gintaras",
+        "cruz-leonardo",
+        "maisuradze-giorgi"
       ]
     },
     {
@@ -6081,42 +6081,42 @@
       "sex": "male",
       "weightLimitKg": 83,
       "athleteIds": [
-        "men-83-borenstein-joseph",
-        "men-83-kengamu-jurins",
-        "men-83-omisakin-ade",
-        "men-83-asein-enahoro",
-        "men-83-ducret-mathis",
-        "men-83-hotsonyame-kafui",
-        "men-83-fernandez-arevalo-andres",
-        "men-83-fornstam-kevin",
-        "men-83-rinaldo-marciano-saverio",
-        "men-83-ampofo-zachariah",
-        "men-83-figueroa-contreras-jose",
-        "men-83-kuerzi-patrick",
-        "men-83-castillo-jose",
-        "men-83-el-moukallif-naim",
-        "men-83-verstrepen-tuur",
-        "men-83-techap-fongang",
-        "men-83-ishikawa-aoi",
-        "men-83-nagem-mohamed",
-        "men-83-hoffmann-daniel",
-        "men-83-kloch-mathias",
-        "men-83-kraujutowicz-grzegorz",
-        "men-83-santos-matheus",
-        "men-83-alaradi-ali",
-        "men-83-menezes-guilherme",
-        "men-83-chong-kenzo",
-        "men-83-boulos-christophe",
-        "men-83-petcu-andrei",
-        "men-83-cheng-wee-herng-donovan",
-        "men-83-xiao-tianyu",
-        "men-83-hlynsson-fridbjorn",
-        "men-83-mur-urban",
-        "men-83-ruscitti-karim",
-        "men-83-arnaud-alexandre",
-        "men-83-kuzmic-marko",
-        "men-83-asmonas-arnas",
-        "men-83-henderson-samuel"
+        "borenstein-joseph",
+        "kengamu-jurins",
+        "omisakin-ade",
+        "asein-enahoro",
+        "ducret-mathis",
+        "hotsonyame-kafui",
+        "fernandez-arevalo-andres",
+        "fornstam-kevin",
+        "rinaldo-marciano-saverio",
+        "ampofo-zachariah",
+        "figueroa-contreras-jose",
+        "kuerzi-patrick",
+        "castillo-jose",
+        "el-moukallif-naim",
+        "verstrepen-tuur",
+        "techap-fongang",
+        "ishikawa-aoi",
+        "nagem-mohamed",
+        "hoffmann-daniel",
+        "kloch-mathias",
+        "kraujutowicz-grzegorz",
+        "santos-matheus",
+        "alaradi-ali",
+        "menezes-guilherme",
+        "chong-kenzo",
+        "boulos-christophe",
+        "petcu-andrei",
+        "cheng-wee-herng-donovan",
+        "xiao-tianyu",
+        "hlynsson-fridbjorn",
+        "mur-urban",
+        "ruscitti-karim",
+        "arnaud-alexandre",
+        "kuzmic-marko",
+        "asmonas-arnas",
+        "henderson-samuel"
       ]
     },
     {
@@ -6125,32 +6125,32 @@
       "sex": "male",
       "weightLimitKg": 93,
       "athleteIds": [
-        "men-93-ball-william",
-        "men-93-krastev-emil",
-        "men-93-hedlund-gustav",
-        "men-93-nouari-aimene",
-        "men-93-ayandokun-christian",
-        "men-93-antwi-kwaku",
-        "men-93-baiden-richmond",
-        "men-93-balangwe-bakinien",
-        "men-93-van-bezooijen-richard",
-        "men-93-wortel-john",
-        "men-93-tsuruya-shimon",
-        "men-93-blackmore-aaron",
-        "men-93-hermisdorf-leonardo",
-        "men-93-salim-khalleefah",
-        "men-93-zerai-elyes",
-        "men-93-gortz-guilherme",
-        "men-93-ussing-daniel",
-        "men-93-zabeau-tom",
-        "men-93-gonzalez-jose",
-        "men-93-choi-junwon",
-        "men-93-hapon-danyil",
-        "men-93-law-tak-kan-duncan",
-        "men-93-alsabri-taha",
-        "men-93-klimka-airidas",
-        "men-93-hibsfelds-ricards",
-        "men-93-khuzwayo-bandile"
+        "ball-william",
+        "krastev-emil",
+        "hedlund-gustav",
+        "nouari-aimene",
+        "ayandokun-christian",
+        "antwi-kwaku",
+        "baiden-richmond",
+        "balangwe-bakinien",
+        "van-bezooijen-richard",
+        "wortel-john",
+        "tsuruya-shimon",
+        "blackmore-aaron",
+        "hermisdorf-leonardo",
+        "salim-khalleefah",
+        "zerai-elyes",
+        "gortz-guilherme",
+        "ussing-daniel",
+        "zabeau-tom",
+        "gonzalez-jose",
+        "choi-junwon",
+        "hapon-danyil",
+        "law-tak-kan-duncan",
+        "alsabri-taha",
+        "klimka-airidas",
+        "hibsfelds-ricards",
+        "khuzwayo-bandile"
       ]
     },
     {
@@ -6159,35 +6159,35 @@
       "sex": "male",
       "weightLimitKg": 105,
       "athleteIds": [
-        "men-105-mcnaughton-anthony",
-        "men-105-novopysmennyi-anatolii",
-        "men-105-norling-emil",
-        "men-105-tchandeu-noundou-eliam",
-        "men-105-stergakis-regin",
-        "men-105-sboui-fares",
-        "men-105-massiah-nathaniel",
-        "men-105-amponsah-ezeiel",
-        "men-105-salgado-diego",
-        "men-105-bentalha-ilyes",
-        "men-105-duecker-bjarne",
-        "men-105-celis-jonathan",
-        "men-105-slump-jacob",
-        "men-105-hamich-imad",
-        "men-105-nwaezeigwe-kenneth",
-        "men-105-forsberg-samuel",
-        "men-105-karason-alexander",
-        "men-105-ibanez-pawathon-bernardo",
-        "men-105-henry-matthew",
-        "men-105-erik-mata",
-        "men-105-sant-anna-rodrigo",
-        "men-105-franek-hynek",
-        "men-105-aldirsi-mohammed",
-        "men-105-norkus-martynas",
-        "men-105-boss-dominic",
-        "men-105-jung-siwoo",
-        "men-105-choi-seungwan",
-        "men-105-de-paula-vitor",
-        "men-105-tomko-patrik"
+        "mcnaughton-anthony",
+        "novopysmennyi-anatolii",
+        "norling-emil",
+        "tchandeu-noundou-eliam",
+        "stergakis-regin",
+        "sboui-fares",
+        "massiah-nathaniel",
+        "amponsah-ezeiel",
+        "salgado-diego",
+        "bentalha-ilyes",
+        "duecker-bjarne",
+        "celis-jonathan",
+        "slump-jacob",
+        "hamich-imad",
+        "nwaezeigwe-kenneth",
+        "forsberg-samuel",
+        "karason-alexander",
+        "ibanez-pawathon-bernardo",
+        "henry-matthew",
+        "erik-mata",
+        "sant-anna-rodrigo",
+        "franek-hynek",
+        "aldirsi-mohammed",
+        "norkus-martynas",
+        "boss-dominic",
+        "jung-siwoo",
+        "choi-seungwan",
+        "de-paula-vitor",
+        "tomko-patrik"
       ]
     },
     {
@@ -6196,33 +6196,33 @@
       "sex": "male",
       "weightLimitKg": 120,
       "athleteIds": [
-        "men-120-hunte-rondel",
-        "men-120-el-chaer-etienne",
-        "men-120-rouska-ashton",
-        "men-120-mcdonald-joseph",
-        "men-120-ngoka-joshua",
-        "men-120-melnychuk-taras",
-        "men-120-wiseman-lucas",
-        "men-120-de-rohden-antoine",
-        "men-120-sulayman-abdul",
-        "men-120-sahad-mohamed",
-        "men-120-wiendieck-jonah",
-        "men-120-sekenofsky-baruch",
-        "men-120-due-laurits",
-        "men-120-vogelius-jesper",
-        "men-120-strubbe-jochen",
-        "men-120-graham-heath",
-        "men-120-pola-daniele",
-        "men-120-krisztian-cseszko",
-        "men-120-naoussi-nembot-ano",
-        "men-120-juzups-maris",
-        "men-120-penco-joseph",
-        "men-120-stell-mark",
-        "men-120-sigurdsson-helgi",
-        "men-120-motoki-ayuto",
-        "men-120-karkusashvili-rubeni",
-        "men-120-thoma-thomas",
-        "men-120-raw-simon"
+        "hunte-rondel",
+        "el-chaer-etienne",
+        "rouska-ashton",
+        "mcdonald-joseph",
+        "ngoka-joshua",
+        "melnychuk-taras",
+        "wiseman-lucas",
+        "de-rohden-antoine",
+        "sulayman-abdul",
+        "sahad-mohamed",
+        "wiendieck-jonah",
+        "sekenofsky-baruch",
+        "due-laurits",
+        "vogelius-jesper",
+        "strubbe-jochen",
+        "graham-heath",
+        "pola-daniele",
+        "krisztian-cseszko",
+        "naoussi-nembot-ano",
+        "juzups-maris",
+        "penco-joseph",
+        "stell-mark",
+        "sigurdsson-helgi",
+        "motoki-ayuto",
+        "karkusashvili-rubeni",
+        "thoma-thomas",
+        "raw-simon"
       ]
     },
     {
@@ -6231,32 +6231,32 @@
       "sex": "male",
       "weightLimitKg": null,
       "athleteIds": [
-        "men-120plus-olivares-jesus",
-        "men-120plus-sharma-ajay",
-        "men-120plus-kocak-cenk",
-        "men-120plus-holinei-viktor",
-        "men-120plus-samkharadze-temur",
-        "men-120plus-mansukoski-nuutti",
-        "men-120plus-sutterud-westbye-bjorn",
-        "men-120plus-patschke-markus",
-        "men-120plus-fidan-hussein",
-        "men-120plus-reinmuth-tony",
-        "men-120plus-wang-pei-yu",
-        "men-120plus-soares-alexis",
-        "men-120plus-simonsen-martin",
-        "men-120plus-voigt-torben",
-        "men-120plus-abousinan-mohammed",
-        "men-120plus-wu-yi-chiu",
-        "men-120plus-lekhal-abdeslam",
-        "men-120plus-hendriks-giel",
-        "men-120plus-juszczyk-jacek",
-        "men-120plus-gecas-tadas",
-        "men-120plus-riudalbas-clemente-marc",
-        "men-120plus-mardones-meza-sergio-hernan",
-        "men-120plus-raw-robert",
-        "men-120plus-berzins-didzis",
-        "men-120plus-inoue-masaya",
-        "men-120plus-bowring-ray"
+        "olivares-jesus",
+        "sharma-ajay",
+        "kocak-cenk",
+        "holinei-viktor",
+        "samkharadze-temur",
+        "mansukoski-nuutti",
+        "sutterud-westbye-bjorn",
+        "patschke-markus",
+        "fidan-hussein",
+        "reinmuth-tony",
+        "wang-pei-yu",
+        "soares-alexis",
+        "simonsen-martin",
+        "voigt-torben",
+        "abousinan-mohammed",
+        "wu-yi-chiu",
+        "lekhal-abdeslam",
+        "hendriks-giel",
+        "juszczyk-jacek",
+        "gecas-tadas",
+        "riudalbas-clemente-marc",
+        "mardones-meza-sergio-hernan",
+        "raw-robert",
+        "berzins-didzis",
+        "inoue-masaya",
+        "bowring-ray"
       ]
     }
   ],
@@ -6279,22 +6279,22 @@
           "required": true,
           "categoryId": "women-47",
           "athleteIds": [
-            "women-47-chapon-tiffany",
-            "women-47-le-leanne",
-            "women-47-picher-plante-amelie",
-            "women-47-motta-annalisa",
-            "women-47-kijumnuayporn-vicky",
-            "women-47-duno-frankmary",
-            "women-47-mikova-anezka",
-            "women-47-jones-ainsley",
-            "women-47-altamimi-alhanouf",
-            "women-47-santos-mediavilla-paula",
-            "women-47-al-jundi-nour",
-            "women-47-wedlock-sze-yee-venezia",
-            "women-47-clarke-joanne",
-            "women-47-mai-on-kotchaphan",
-            "women-47-beglarashvili-mari",
-            "women-47-idczak-karolina"
+            "chapon-tiffany",
+            "le-leanne",
+            "picher-plante-amelie",
+            "motta-annalisa",
+            "kijumnuayporn-vicky",
+            "duno-frankmary",
+            "mikova-anezka",
+            "jones-ainsley",
+            "altamimi-alhanouf",
+            "santos-mediavilla-paula",
+            "al-jundi-nour",
+            "wedlock-sze-yee-venezia",
+            "clarke-joanne",
+            "mai-on-kotchaphan",
+            "beglarashvili-mari",
+            "idczak-karolina"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6310,28 +6310,28 @@
           "required": true,
           "categoryId": "women-52",
           "athleteIds": [
-            "women-52-smith-megan-li",
-            "women-52-dekkers-pleun",
-            "women-52-gagne-catherine",
-            "women-52-lucas-lea",
-            "women-52-farid-farhanna",
-            "women-52-pineda-vanessa",
-            "women-52-lehoczkyne-fawal-margit",
-            "women-52-gerlach-eliza",
-            "women-52-craven-elizabeth",
-            "women-52-barwari-delal",
-            "women-52-la-bella-daiana",
-            "women-52-chorianopoulou-aikaterini",
-            "women-52-varol-fatma",
-            "women-52-carvalho-giulia",
-            "women-52-sim-cristy",
-            "women-52-saana-grassham",
-            "women-52-sveinsdottir-kristrun",
-            "women-52-caldona-jackielyn",
-            "women-52-bobileva-arina",
-            "women-52-koskipaasi-jaana",
-            "women-52-verhulst-stefanie",
-            "women-52-tsetskhladze-mariam"
+            "smith-megan-li",
+            "dekkers-pleun",
+            "gagne-catherine",
+            "lucas-lea",
+            "farid-farhanna",
+            "pineda-vanessa",
+            "lehoczkyne-fawal-margit",
+            "gerlach-eliza",
+            "craven-elizabeth",
+            "barwari-delal",
+            "la-bella-daiana",
+            "chorianopoulou-aikaterini",
+            "varol-fatma",
+            "carvalho-giulia",
+            "sim-cristy",
+            "saana-grassham",
+            "sveinsdottir-kristrun",
+            "caldona-jackielyn",
+            "bobileva-arina",
+            "koskipaasi-jaana",
+            "verhulst-stefanie",
+            "tsetskhladze-mariam"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6347,27 +6347,27 @@
           "required": true,
           "categoryId": "women-57",
           "athleteIds": [
-            "women-57-naldi-sara",
-            "women-57-nnamani-joy",
-            "women-57-pal-sovannphaktra",
-            "women-57-butters-bobbie",
-            "women-57-corrigan-evie",
-            "women-57-olin-emelie",
-            "women-57-aguila-padilla-ana",
-            "women-57-amri-miriam",
-            "women-57-henry-marthe",
-            "women-57-de-la-torre-monica",
-            "women-57-kratz-samantha",
-            "women-57-babic-katja",
-            "women-57-oestergaard-mathilde",
-            "women-57-keenan-lauren",
-            "women-57-huang-zhiyin",
-            "women-57-rummens-elise",
-            "women-57-wandeler-anouk",
-            "women-57-boukalova-anna",
-            "women-57-lee-michelle",
-            "women-57-bondy-florence",
-            "women-57-viktoria-flavia-dr"
+            "naldi-sara",
+            "nnamani-joy",
+            "pal-sovannphaktra",
+            "butters-bobbie",
+            "corrigan-evie",
+            "olin-emelie",
+            "aguila-padilla-ana",
+            "amri-miriam",
+            "henry-marthe",
+            "de-la-torre-monica",
+            "kratz-samantha",
+            "babic-katja",
+            "oestergaard-mathilde",
+            "keenan-lauren",
+            "huang-zhiyin",
+            "rummens-elise",
+            "wandeler-anouk",
+            "boukalova-anna",
+            "lee-michelle",
+            "bondy-florence",
+            "viktoria-flavia-dr"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6383,35 +6383,35 @@
           "required": true,
           "categoryId": "women-63",
           "athleteIds": [
-            "women-63-bostrom-alba",
-            "women-63-bernardi-chiara",
-            "women-63-aborah-betty",
-            "women-63-vidal-makeda",
-            "women-63-van-vianen-romy",
-            "women-63-haeberer-clara-isabelle",
-            "women-63-mamane-leah",
-            "women-63-maguregi-rodriguez-jone",
-            "women-63-kvantchiani-sopiko",
-            "women-63-lalime-sahyuri",
-            "women-63-wolf-jana",
-            "women-63-zurinskaite-deimante",
-            "women-63-stevens-jody",
-            "women-63-visan-ana-maria",
-            "women-63-tiong-natalie",
-            "women-63-torres-judith",
-            "women-63-jansova-dominika",
-            "women-63-kalinowska-ewelina",
-            "women-63-duus-cecilie",
-            "women-63-zunic-lea",
-            "women-63-vackova-kristyna",
-            "women-63-dunning-mary",
-            "women-63-wenn-cara",
-            "women-63-ong-yi",
-            "women-63-chatzigianni-andria",
-            "women-63-zhou-yiqian",
-            "women-63-gerute-lina",
-            "women-63-meshveliani-natela",
-            "women-63-liang-yim-chee"
+            "bostrom-alba",
+            "bernardi-chiara",
+            "aborah-betty",
+            "vidal-makeda",
+            "van-vianen-romy",
+            "haeberer-clara-isabelle",
+            "mamane-leah",
+            "maguregi-rodriguez-jone",
+            "kvantchiani-sopiko",
+            "lalime-sahyuri",
+            "wolf-jana",
+            "zurinskaite-deimante",
+            "stevens-jody",
+            "visan-ana-maria",
+            "tiong-natalie",
+            "torres-judith",
+            "jansova-dominika",
+            "kalinowska-ewelina",
+            "duus-cecilie",
+            "zunic-lea",
+            "vackova-kristyna",
+            "dunning-mary",
+            "wenn-cara",
+            "ong-yi",
+            "chatzigianni-andria",
+            "zhou-yiqian",
+            "gerute-lina",
+            "meshveliani-natela",
+            "liang-yim-chee"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6427,33 +6427,33 @@
           "required": true,
           "categoryId": "women-69",
           "athleteIds": [
-            "women-69-garra-carola",
-            "women-69-babb-chandler",
-            "women-69-kovacs-janee",
-            "women-69-scanlon-meghan",
-            "women-69-van-daal-marie-jose",
-            "women-69-nelson-annie",
-            "women-69-kjenner-marte",
-            "women-69-bright-jordan",
-            "women-69-bouchoux-andorina",
-            "women-69-huff-shannon",
-            "women-69-belden-pavlovic-signe",
-            "women-69-tavares-cicera",
-            "women-69-mabidikama-acima",
-            "women-69-goossens-kaya",
-            "women-69-altman-hannah",
-            "women-69-materek-sabina",
-            "women-69-haulot-clara",
-            "women-69-skovlind-caroline",
-            "women-69-denise-guenther",
-            "women-69-seow-amanda",
-            "women-69-jones-jayne",
-            "women-69-khwang-hayley",
-            "women-69-kairaityte-dainora",
-            "women-69-larrimore-deshawn",
-            "women-69-marina-sanja",
-            "women-69-pacce-catalina",
-            "women-69-janulcikaite-ausrine"
+            "garra-carola",
+            "babb-chandler",
+            "kovacs-janee",
+            "scanlon-meghan",
+            "van-daal-marie-jose",
+            "nelson-annie",
+            "kjenner-marte",
+            "bright-jordan",
+            "bouchoux-andorina",
+            "huff-shannon",
+            "belden-pavlovic-signe",
+            "tavares-cicera",
+            "mabidikama-acima",
+            "goossens-kaya",
+            "altman-hannah",
+            "materek-sabina",
+            "haulot-clara",
+            "skovlind-caroline",
+            "denise-guenther",
+            "seow-amanda",
+            "jones-jayne",
+            "khwang-hayley",
+            "kairaityte-dainora",
+            "larrimore-deshawn",
+            "marina-sanja",
+            "pacce-catalina",
+            "janulcikaite-ausrine"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6469,30 +6469,30 @@
           "required": true,
           "categoryId": "women-76",
           "athleteIds": [
-            "women-76-worford-cranon",
-            "women-76-mazur-zuzanna",
-            "women-76-bisol-bruna",
-            "women-76-peyraud-clara",
-            "women-76-hames-mara",
-            "women-76-hanlon-bettina",
-            "women-76-ezeh-chisom",
-            "women-76-hunte-kezia",
-            "women-76-gronlund-ellen",
-            "women-76-tchrikishvili-nino",
-            "women-76-ophoff-tessa",
-            "women-76-govind-hema",
-            "women-76-szarek-justyna",
-            "women-76-varillas-modesta",
-            "women-76-swart-chanel",
-            "women-76-martens-mariska",
-            "women-76-reis-rafaela",
-            "women-76-muller-gaby",
-            "women-76-schvandtnerova-denisa",
-            "women-76-waldeck-danielle",
-            "women-76-wells-selina",
-            "women-76-khurtsilava-khatia",
-            "women-76-xie-thuy",
-            "women-76-marangoni-pia"
+            "worford-cranon",
+            "mazur-zuzanna",
+            "bisol-bruna",
+            "peyraud-clara",
+            "hames-mara",
+            "hanlon-bettina",
+            "ezeh-chisom",
+            "hunte-kezia",
+            "gronlund-ellen",
+            "tchrikishvili-nino",
+            "ophoff-tessa",
+            "govind-hema",
+            "szarek-justyna",
+            "varillas-modesta",
+            "swart-chanel",
+            "martens-mariska",
+            "reis-rafaela",
+            "muller-gaby",
+            "schvandtnerova-denisa",
+            "waldeck-danielle",
+            "wells-selina",
+            "khurtsilava-khatia",
+            "xie-thuy",
+            "marangoni-pia"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6508,32 +6508,32 @@
           "required": true,
           "categoryId": "women-84",
           "athleteIds": [
-            "women-84-lawrence-amanda",
-            "women-84-tongotea-karlina",
-            "women-84-azariah-ziana",
-            "women-84-zeigler-nicolette",
-            "women-84-thorhallsdottir-kristin",
-            "women-84-almeida-marina",
-            "women-84-ieronimos-anna",
-            "women-84-buettner-jessica",
-            "women-84-mouchet-emilie",
-            "women-84-rudin-agnes",
-            "women-84-coopoosamy-nicole",
-            "women-84-lahtinen-mira",
-            "women-84-letting-regitze",
-            "women-84-bychok-liudmyla",
-            "women-84-zhao-yan-fei",
-            "women-84-sanchez-jorge-carla",
-            "women-84-joergensen-katja",
-            "women-84-alleyne-deresay",
-            "women-84-erimo-sabadell-rosa",
-            "women-84-matsuda-miyu",
-            "women-84-laitinen-jenna",
-            "women-84-abouassi-nour",
-            "women-84-adedokun-comfort",
-            "women-84-suitauloa-shaniele",
-            "women-84-rodrigues-ana",
-            "women-84-szymkowiak-magdalena"
+            "lawrence-amanda",
+            "tongotea-karlina",
+            "azariah-ziana",
+            "zeigler-nicolette",
+            "thorhallsdottir-kristin",
+            "almeida-marina",
+            "ieronimos-anna",
+            "buettner-jessica",
+            "mouchet-emilie",
+            "rudin-agnes",
+            "coopoosamy-nicole",
+            "lahtinen-mira",
+            "letting-regitze",
+            "bychok-liudmyla",
+            "zhao-yan-fei",
+            "sanchez-jorge-carla",
+            "joergensen-katja",
+            "alleyne-deresay",
+            "erimo-sabadell-rosa",
+            "matsuda-miyu",
+            "laitinen-jenna",
+            "abouassi-nour",
+            "adedokun-comfort",
+            "suitauloa-shaniele",
+            "rodrigues-ana",
+            "szymkowiak-magdalena"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6549,19 +6549,19 @@
           "required": true,
           "categoryId": "women-84plus",
           "athleteIds": [
-            "women-84plus-muluh-sonita",
-            "women-84plus-schlater-brittany",
-            "women-84plus-onuoha-aquinn",
-            "women-84plus-omotoso-toyosi",
-            "women-84plus-brown-bonica",
-            "women-84plus-mierger-amelie",
-            "women-84plus-padia-zahra",
-            "women-84plus-o-reilly-alison",
-            "women-84plus-sigurjonsdottir-hanna",
-            "women-84plus-matthiasdottir-thorbjorg",
-            "women-84plus-kamoto-emi",
-            "women-84plus-de-la-barra-zelaya-marcela",
-            "women-84plus-malojlo-marta"
+            "muluh-sonita",
+            "schlater-brittany",
+            "onuoha-aquinn",
+            "omotoso-toyosi",
+            "brown-bonica",
+            "mierger-amelie",
+            "padia-zahra",
+            "o-reilly-alison",
+            "sigurjonsdottir-hanna",
+            "matthiasdottir-thorbjorg",
+            "kamoto-emi",
+            "de-la-barra-zelaya-marcela",
+            "malojlo-marta"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6577,24 +6577,24 @@
           "required": true,
           "categoryId": "men-59",
           "athleteIds": [
-            "men-59-slabic-michael",
-            "men-59-campano-diaz-ivan",
-            "men-59-garcia-antoine",
-            "men-59-takiyama-yasutaka",
-            "men-59-elhamali-mohamed",
-            "men-59-nyarko-kwaku",
-            "men-59-leon-franklin",
-            "men-59-ho-david",
-            "men-59-huang-wei-chen",
-            "men-59-you-yao-wei",
-            "men-59-cruz-angel",
-            "men-59-gelashvili-giorgi",
-            "men-59-madera-joenas",
-            "men-59-imamura-ryo",
-            "men-59-santangelo-jacopo",
-            "men-59-ergin-kemal",
-            "men-59-cancel-ivan",
-            "men-59-flores-jose"
+            "slabic-michael",
+            "campano-diaz-ivan",
+            "garcia-antoine",
+            "takiyama-yasutaka",
+            "elhamali-mohamed",
+            "nyarko-kwaku",
+            "leon-franklin",
+            "ho-david",
+            "huang-wei-chen",
+            "you-yao-wei",
+            "cruz-angel",
+            "gelashvili-giorgi",
+            "madera-joenas",
+            "imamura-ryo",
+            "santangelo-jacopo",
+            "ergin-kemal",
+            "cancel-ivan",
+            "flores-jose"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6610,23 +6610,23 @@
           "required": true,
           "categoryId": "men-66",
           "athleteIds": [
-            "men-66-bakkelund-kjell",
-            "men-66-jordan-joseph",
-            "men-66-ushiyama-kyota",
-            "men-66-nikolai-austin",
-            "men-66-jimenez-santos",
-            "men-66-satake-yusuke",
-            "men-66-castillo-carlos",
-            "men-66-ong-wei",
-            "men-66-simonelli-mirko",
-            "men-66-catena-joel",
-            "men-66-liatsis-marios",
-            "men-66-sgro-julian",
-            "men-66-luu-joshua",
-            "men-66-zeng-wei-xiang",
-            "men-66-ghizoni-gabriel",
-            "men-66-naoussi-ezelgbo-darling-williams",
-            "men-66-lin-ching-lun"
+            "bakkelund-kjell",
+            "jordan-joseph",
+            "ushiyama-kyota",
+            "nikolai-austin",
+            "jimenez-santos",
+            "satake-yusuke",
+            "castillo-carlos",
+            "ong-wei",
+            "simonelli-mirko",
+            "catena-joel",
+            "liatsis-marios",
+            "sgro-julian",
+            "luu-joshua",
+            "zeng-wei-xiang",
+            "ghizoni-gabriel",
+            "naoussi-ezelgbo-darling-williams",
+            "lin-ching-lun"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6642,31 +6642,31 @@
           "required": true,
           "categoryId": "men-74",
           "athleteIds": [
-            "men-74-perkins-austin",
-            "men-74-bertrand-balthazar",
-            "men-74-fan-chun-chia",
-            "men-74-lee-clinton",
-            "men-74-lavoie-jacob",
-            "men-74-homer-luke",
-            "men-74-babaei-somaghi-keyan",
-            "men-74-al-lanqawi-adel",
-            "men-74-gimorri-giacomo",
-            "men-74-konstantinou-christos",
-            "men-74-cheong-cheng",
-            "men-74-herraiz-frances-alberto",
-            "men-74-cheng-yu-jui",
-            "men-74-medjahed-yacine",
-            "men-74-ola-joshua",
-            "men-74-rada-karel",
-            "men-74-saed-awnullah",
-            "men-74-strachan-john",
-            "men-74-richards-lachlan",
-            "men-74-damlamajans-marats",
-            "men-74-marecki-mateusz",
-            "men-74-pacerinskis-marius",
-            "men-74-bledis-gintaras",
-            "men-74-cruz-leonardo",
-            "men-74-maisuradze-giorgi"
+            "perkins-austin",
+            "bertrand-balthazar",
+            "fan-chun-chia",
+            "lee-clinton",
+            "lavoie-jacob",
+            "homer-luke",
+            "babaei-somaghi-keyan",
+            "al-lanqawi-adel",
+            "gimorri-giacomo",
+            "konstantinou-christos",
+            "cheong-cheng",
+            "herraiz-frances-alberto",
+            "cheng-yu-jui",
+            "medjahed-yacine",
+            "ola-joshua",
+            "rada-karel",
+            "saed-awnullah",
+            "strachan-john",
+            "richards-lachlan",
+            "damlamajans-marats",
+            "marecki-mateusz",
+            "pacerinskis-marius",
+            "bledis-gintaras",
+            "cruz-leonardo",
+            "maisuradze-giorgi"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6682,42 +6682,42 @@
           "required": true,
           "categoryId": "men-83",
           "athleteIds": [
-            "men-83-borenstein-joseph",
-            "men-83-kengamu-jurins",
-            "men-83-omisakin-ade",
-            "men-83-asein-enahoro",
-            "men-83-ducret-mathis",
-            "men-83-hotsonyame-kafui",
-            "men-83-fernandez-arevalo-andres",
-            "men-83-fornstam-kevin",
-            "men-83-rinaldo-marciano-saverio",
-            "men-83-ampofo-zachariah",
-            "men-83-figueroa-contreras-jose",
-            "men-83-kuerzi-patrick",
-            "men-83-castillo-jose",
-            "men-83-el-moukallif-naim",
-            "men-83-verstrepen-tuur",
-            "men-83-techap-fongang",
-            "men-83-ishikawa-aoi",
-            "men-83-nagem-mohamed",
-            "men-83-hoffmann-daniel",
-            "men-83-kloch-mathias",
-            "men-83-kraujutowicz-grzegorz",
-            "men-83-santos-matheus",
-            "men-83-alaradi-ali",
-            "men-83-menezes-guilherme",
-            "men-83-chong-kenzo",
-            "men-83-boulos-christophe",
-            "men-83-petcu-andrei",
-            "men-83-cheng-wee-herng-donovan",
-            "men-83-xiao-tianyu",
-            "men-83-hlynsson-fridbjorn",
-            "men-83-mur-urban",
-            "men-83-ruscitti-karim",
-            "men-83-arnaud-alexandre",
-            "men-83-kuzmic-marko",
-            "men-83-asmonas-arnas",
-            "men-83-henderson-samuel"
+            "borenstein-joseph",
+            "kengamu-jurins",
+            "omisakin-ade",
+            "asein-enahoro",
+            "ducret-mathis",
+            "hotsonyame-kafui",
+            "fernandez-arevalo-andres",
+            "fornstam-kevin",
+            "rinaldo-marciano-saverio",
+            "ampofo-zachariah",
+            "figueroa-contreras-jose",
+            "kuerzi-patrick",
+            "castillo-jose",
+            "el-moukallif-naim",
+            "verstrepen-tuur",
+            "techap-fongang",
+            "ishikawa-aoi",
+            "nagem-mohamed",
+            "hoffmann-daniel",
+            "kloch-mathias",
+            "kraujutowicz-grzegorz",
+            "santos-matheus",
+            "alaradi-ali",
+            "menezes-guilherme",
+            "chong-kenzo",
+            "boulos-christophe",
+            "petcu-andrei",
+            "cheng-wee-herng-donovan",
+            "xiao-tianyu",
+            "hlynsson-fridbjorn",
+            "mur-urban",
+            "ruscitti-karim",
+            "arnaud-alexandre",
+            "kuzmic-marko",
+            "asmonas-arnas",
+            "henderson-samuel"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6733,32 +6733,32 @@
           "required": true,
           "categoryId": "men-93",
           "athleteIds": [
-            "men-93-ball-william",
-            "men-93-krastev-emil",
-            "men-93-hedlund-gustav",
-            "men-93-nouari-aimene",
-            "men-93-ayandokun-christian",
-            "men-93-antwi-kwaku",
-            "men-93-baiden-richmond",
-            "men-93-balangwe-bakinien",
-            "men-93-van-bezooijen-richard",
-            "men-93-wortel-john",
-            "men-93-tsuruya-shimon",
-            "men-93-blackmore-aaron",
-            "men-93-hermisdorf-leonardo",
-            "men-93-salim-khalleefah",
-            "men-93-zerai-elyes",
-            "men-93-gortz-guilherme",
-            "men-93-ussing-daniel",
-            "men-93-zabeau-tom",
-            "men-93-gonzalez-jose",
-            "men-93-choi-junwon",
-            "men-93-hapon-danyil",
-            "men-93-law-tak-kan-duncan",
-            "men-93-alsabri-taha",
-            "men-93-klimka-airidas",
-            "men-93-hibsfelds-ricards",
-            "men-93-khuzwayo-bandile"
+            "ball-william",
+            "krastev-emil",
+            "hedlund-gustav",
+            "nouari-aimene",
+            "ayandokun-christian",
+            "antwi-kwaku",
+            "baiden-richmond",
+            "balangwe-bakinien",
+            "van-bezooijen-richard",
+            "wortel-john",
+            "tsuruya-shimon",
+            "blackmore-aaron",
+            "hermisdorf-leonardo",
+            "salim-khalleefah",
+            "zerai-elyes",
+            "gortz-guilherme",
+            "ussing-daniel",
+            "zabeau-tom",
+            "gonzalez-jose",
+            "choi-junwon",
+            "hapon-danyil",
+            "law-tak-kan-duncan",
+            "alsabri-taha",
+            "klimka-airidas",
+            "hibsfelds-ricards",
+            "khuzwayo-bandile"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6774,35 +6774,35 @@
           "required": true,
           "categoryId": "men-105",
           "athleteIds": [
-            "men-105-mcnaughton-anthony",
-            "men-105-novopysmennyi-anatolii",
-            "men-105-norling-emil",
-            "men-105-tchandeu-noundou-eliam",
-            "men-105-stergakis-regin",
-            "men-105-sboui-fares",
-            "men-105-massiah-nathaniel",
-            "men-105-amponsah-ezeiel",
-            "men-105-salgado-diego",
-            "men-105-bentalha-ilyes",
-            "men-105-duecker-bjarne",
-            "men-105-celis-jonathan",
-            "men-105-slump-jacob",
-            "men-105-hamich-imad",
-            "men-105-nwaezeigwe-kenneth",
-            "men-105-forsberg-samuel",
-            "men-105-karason-alexander",
-            "men-105-ibanez-pawathon-bernardo",
-            "men-105-henry-matthew",
-            "men-105-erik-mata",
-            "men-105-sant-anna-rodrigo",
-            "men-105-franek-hynek",
-            "men-105-aldirsi-mohammed",
-            "men-105-norkus-martynas",
-            "men-105-boss-dominic",
-            "men-105-jung-siwoo",
-            "men-105-choi-seungwan",
-            "men-105-de-paula-vitor",
-            "men-105-tomko-patrik"
+            "mcnaughton-anthony",
+            "novopysmennyi-anatolii",
+            "norling-emil",
+            "tchandeu-noundou-eliam",
+            "stergakis-regin",
+            "sboui-fares",
+            "massiah-nathaniel",
+            "amponsah-ezeiel",
+            "salgado-diego",
+            "bentalha-ilyes",
+            "duecker-bjarne",
+            "celis-jonathan",
+            "slump-jacob",
+            "hamich-imad",
+            "nwaezeigwe-kenneth",
+            "forsberg-samuel",
+            "karason-alexander",
+            "ibanez-pawathon-bernardo",
+            "henry-matthew",
+            "erik-mata",
+            "sant-anna-rodrigo",
+            "franek-hynek",
+            "aldirsi-mohammed",
+            "norkus-martynas",
+            "boss-dominic",
+            "jung-siwoo",
+            "choi-seungwan",
+            "de-paula-vitor",
+            "tomko-patrik"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6818,33 +6818,33 @@
           "required": true,
           "categoryId": "men-120",
           "athleteIds": [
-            "men-120-hunte-rondel",
-            "men-120-el-chaer-etienne",
-            "men-120-rouska-ashton",
-            "men-120-mcdonald-joseph",
-            "men-120-ngoka-joshua",
-            "men-120-melnychuk-taras",
-            "men-120-wiseman-lucas",
-            "men-120-de-rohden-antoine",
-            "men-120-sulayman-abdul",
-            "men-120-sahad-mohamed",
-            "men-120-wiendieck-jonah",
-            "men-120-sekenofsky-baruch",
-            "men-120-due-laurits",
-            "men-120-vogelius-jesper",
-            "men-120-strubbe-jochen",
-            "men-120-graham-heath",
-            "men-120-pola-daniele",
-            "men-120-krisztian-cseszko",
-            "men-120-naoussi-nembot-ano",
-            "men-120-juzups-maris",
-            "men-120-penco-joseph",
-            "men-120-stell-mark",
-            "men-120-sigurdsson-helgi",
-            "men-120-motoki-ayuto",
-            "men-120-karkusashvili-rubeni",
-            "men-120-thoma-thomas",
-            "men-120-raw-simon"
+            "hunte-rondel",
+            "el-chaer-etienne",
+            "rouska-ashton",
+            "mcdonald-joseph",
+            "ngoka-joshua",
+            "melnychuk-taras",
+            "wiseman-lucas",
+            "de-rohden-antoine",
+            "sulayman-abdul",
+            "sahad-mohamed",
+            "wiendieck-jonah",
+            "sekenofsky-baruch",
+            "due-laurits",
+            "vogelius-jesper",
+            "strubbe-jochen",
+            "graham-heath",
+            "pola-daniele",
+            "krisztian-cseszko",
+            "naoussi-nembot-ano",
+            "juzups-maris",
+            "penco-joseph",
+            "stell-mark",
+            "sigurdsson-helgi",
+            "motoki-ayuto",
+            "karkusashvili-rubeni",
+            "thoma-thomas",
+            "raw-simon"
           ],
           "constraints": {
             "exactSelections": 5,
@@ -6860,32 +6860,32 @@
           "required": true,
           "categoryId": "men-120plus",
           "athleteIds": [
-            "men-120plus-olivares-jesus",
-            "men-120plus-sharma-ajay",
-            "men-120plus-kocak-cenk",
-            "men-120plus-holinei-viktor",
-            "men-120plus-samkharadze-temur",
-            "men-120plus-mansukoski-nuutti",
-            "men-120plus-sutterud-westbye-bjorn",
-            "men-120plus-patschke-markus",
-            "men-120plus-fidan-hussein",
-            "men-120plus-reinmuth-tony",
-            "men-120plus-wang-pei-yu",
-            "men-120plus-soares-alexis",
-            "men-120plus-simonsen-martin",
-            "men-120plus-voigt-torben",
-            "men-120plus-abousinan-mohammed",
-            "men-120plus-wu-yi-chiu",
-            "men-120plus-lekhal-abdeslam",
-            "men-120plus-hendriks-giel",
-            "men-120plus-juszczyk-jacek",
-            "men-120plus-gecas-tadas",
-            "men-120plus-riudalbas-clemente-marc",
-            "men-120plus-mardones-meza-sergio-hernan",
-            "men-120plus-raw-robert",
-            "men-120plus-berzins-didzis",
-            "men-120plus-inoue-masaya",
-            "men-120plus-bowring-ray"
+            "olivares-jesus",
+            "sharma-ajay",
+            "kocak-cenk",
+            "holinei-viktor",
+            "samkharadze-temur",
+            "mansukoski-nuutti",
+            "sutterud-westbye-bjorn",
+            "patschke-markus",
+            "fidan-hussein",
+            "reinmuth-tony",
+            "wang-pei-yu",
+            "soares-alexis",
+            "simonsen-martin",
+            "voigt-torben",
+            "abousinan-mohammed",
+            "wu-yi-chiu",
+            "lekhal-abdeslam",
+            "hendriks-giel",
+            "juszczyk-jacek",
+            "gecas-tadas",
+            "riudalbas-clemente-marc",
+            "mardones-meza-sergio-hernan",
+            "raw-robert",
+            "berzins-didzis",
+            "inoue-masaya",
+            "bowring-ray"
           ],
           "constraints": {
             "exactSelections": 5,
