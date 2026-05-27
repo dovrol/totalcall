@@ -229,7 +229,8 @@ public sealed class Importer
         var url = opts.CsvUrl ?? DefaultCsvUrl(opts.Source);
         Console.WriteLine($"[info] Downloading {url}");
         var tmpZip = Path.GetTempFileName();
-        using (var http = new HttpClient { Timeout = TimeSpan.FromMinutes(30) })
+        using var http = new HttpClient { Timeout = TimeSpan.FromMinutes(30) };
+        http.DefaultRequestHeaders.UserAgent.ParseAdd("TotalCall-OplImporter/1.0");
         await using (var src = await http.GetStreamAsync(url, ct))
         await using (var dst = File.Create(tmpZip))
         {
