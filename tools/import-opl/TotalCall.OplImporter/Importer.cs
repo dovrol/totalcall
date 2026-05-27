@@ -250,8 +250,8 @@ public sealed class Importer
 
     private static string DefaultCsvUrl(string source) => source switch
     {
-        "openipf" => "https://openipf.gitlab.io/opl-csv/openipf-latest.zip",
-        "openpowerlifting" => "https://openpowerlifting.gitlab.io/opl-csv/openpowerlifting-latest.zip",
+        "openipf" => "https://openpowerlifting.gitlab.io/opl-csv/files/openipf-latest.zip",
+        "openpowerlifting" => "https://openpowerlifting.gitlab.io/opl-csv/files/openpowerlifting-latest.zip",
         _ => throw new ArgumentException($"No default CSV URL for source '{source}'. Pass --csv-url.")
     };
 
