@@ -21,4 +21,6 @@ public sealed record Athlete
     public decimal? PersonalBestTotalKg { get; init; }
 
     public decimal? WorldRecordReferenceKg { get; init; }
+
+    public IReadOnlyList<ExternalAthleteRef> ExternalAthleteRefs { get; init; } = [];
 }

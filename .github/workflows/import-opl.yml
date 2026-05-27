@@ -1,0 +1,56 @@
+name: Import OpenIPF / OpenPowerlifting data
+
+on:
+  workflow_dispatch:
+    inputs:
+      competition_json:
+        description: "Path to competition JSON"
+        required: true
+        default: "src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json"
+      source:
+        description: "Data source code"
+        required: true
+        default: "openipf"
+        type: choice
+        options:
+          - openipf
+          - openpowerlifting
+  schedule:
+    # Mondays 03:17 UTC
+    - cron: "17 3 * * 1"
+
+concurrency:
+  group: import-opl
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.x"
+
+      - name: Restore importer
+        working-directory: tools/import-opl/TotalCall.OplImporter
+        run: dotnet restore
+
+      - name: Run importer
+        working-directory: tools/import-opl/TotalCall.OplImporter
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: |
+          set -euo pipefail
+          COMPETITION_JSON="${{ github.event.inputs.competition_json || 'src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json' }}"
+          SOURCE="${{ github.event.inputs.source || 'openipf' }}"
+
+          dotnet run --configuration Release -- \
+            --competition-json "$GITHUB_WORKSPACE/$COMPETITION_JSON" \
+            --source "$SOURCE" \
+            --triggered-by github-actions
