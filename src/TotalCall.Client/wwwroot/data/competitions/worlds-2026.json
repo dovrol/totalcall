@@ -39,7 +39,13 @@
       "countryName": "United States",
       "weightCategoryId": "women-47",
       "seedTotalKg": 440.5,
-      "countryCode": "US"
+      "countryCode": "US",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Leanne Le"
+        }
+      ]
     },
     {
       "id": "women-47-picher-plante-amelie",
@@ -48,7 +54,13 @@
       "countryName": "Canada",
       "weightCategoryId": "women-47",
       "seedTotalKg": 436.5,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Amelie Picher-Plante"
+        }
+      ]
     },
     {
       "id": "women-47-motta-annalisa",
@@ -57,7 +69,13 @@
       "countryName": "Italy",
       "weightCategoryId": "women-47",
       "seedTotalKg": 408,
-      "countryCode": "IT"
+      "countryCode": "IT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Annalisa Motta"
+        }
+      ]
     },
     {
       "id": "women-47-kijumnuayporn-vicky",
@@ -66,7 +84,13 @@
       "countryName": "Australia",
       "weightCategoryId": "women-47",
       "seedTotalKg": 400,
-      "countryCode": "AU"
+      "countryCode": "AU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Vicky Kijumnuayporn"
+        }
+      ]
     },
     {
       "id": "women-47-duno-frankmary",
@@ -75,7 +99,13 @@
       "countryName": "Puerto Rico",
       "weightCategoryId": "women-47",
       "seedTotalKg": 400,
-      "countryCode": "PR"
+      "countryCode": "PR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Frankmary Duno"
+        }
+      ]
     },
     {
       "id": "women-47-mikova-anezka",
@@ -84,7 +114,13 @@
       "countryName": "Czechia",
       "weightCategoryId": "women-47",
       "seedTotalKg": 390,
-      "countryCode": "CZ"
+      "countryCode": "CZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Anezka Mikova"
+        }
+      ]
     },
     {
       "id": "women-47-jones-ainsley",
@@ -93,7 +129,13 @@
       "countryName": "Australia",
       "weightCategoryId": "women-47",
       "seedTotalKg": 386,
-      "countryCode": "AU"
+      "countryCode": "AU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ainsley Jones"
+        }
+      ]
     },
     {
       "id": "women-47-altamimi-alhanouf",
@@ -102,7 +144,13 @@
       "countryName": "Kuwait",
       "weightCategoryId": "women-47",
       "seedTotalKg": 377.5,
-      "countryCode": "KW"
+      "countryCode": "KW",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Alhanouf Altamimi"
+        }
+      ]
     },
     {
       "id": "women-47-santos-mediavilla-paula",
@@ -111,7 +159,13 @@
       "countryName": "Spain",
       "weightCategoryId": "women-47",
       "seedTotalKg": 351,
-      "countryCode": "ES"
+      "countryCode": "ES",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Paula Santos Mediavilla"
+        }
+      ]
     },
     {
       "id": "women-47-al-jundi-nour",
@@ -120,7 +174,13 @@
       "countryName": "Thailand",
       "weightCategoryId": "women-47",
       "seedTotalKg": 340,
-      "countryCode": "TH"
+      "countryCode": "TH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Nour Al Jundi"
+        }
+      ]
     },
     {
       "id": "women-47-wedlock-sze-yee-venezia",
@@ -129,7 +189,13 @@
       "countryName": "Singapore",
       "weightCategoryId": "women-47",
       "seedTotalKg": 325,
-      "countryCode": "SG"
+      "countryCode": "SG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Venezia Wedlock Sze Yee"
+        }
+      ]
     },
     {
       "id": "women-47-clarke-joanne",
@@ -138,7 +204,13 @@
       "countryName": "Ireland",
       "weightCategoryId": "women-47",
       "seedTotalKg": 325,
-      "countryCode": "IE"
+      "countryCode": "IE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Joanne Clarke"
+        }
+      ]
     },
     {
       "id": "women-47-mai-on-kotchaphan",
@@ -147,7 +219,13 @@
       "countryName": "Ireland",
       "weightCategoryId": "women-47",
       "seedTotalKg": 317.5,
-      "countryCode": "IE"
+      "countryCode": "IE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kotchaphan Mai-On"
+        }
+      ]
     },
     {
       "id": "women-47-beglarashvili-mari",
@@ -156,7 +234,13 @@
       "countryName": "Georgia",
       "weightCategoryId": "women-47",
       "seedTotalKg": 317.5,
-      "countryCode": "GE"
+      "countryCode": "GE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mari Beglarashvili"
+        }
+      ]
     },
     {
       "id": "women-47-idczak-karolina",
@@ -165,7 +249,13 @@
       "countryName": "Poland",
       "weightCategoryId": "women-47",
       "seedTotalKg": 285,
-      "countryCode": "PL"
+      "countryCode": "PL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Karolina Idczak"
+        }
+      ]
     },
     {
       "id": "women-52-smith-megan-li",
@@ -174,7 +264,13 @@
       "countryName": "New Zealand",
       "weightCategoryId": "women-52",
       "seedTotalKg": 482.5,
-      "countryCode": "NZ"
+      "countryCode": "NZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Megan-Li Smith"
+        }
+      ]
     },
     {
       "id": "women-52-dekkers-pleun",
@@ -198,7 +294,13 @@
       "countryName": "Canada",
       "weightCategoryId": "women-52",
       "seedTotalKg": 455,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Catherine Gagne"
+        }
+      ]
     },
     {
       "id": "women-52-lucas-lea",
@@ -207,7 +309,13 @@
       "countryName": "France",
       "weightCategoryId": "women-52",
       "seedTotalKg": 437.5,
-      "countryCode": "FR"
+      "countryCode": "FR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lea Lucas"
+        }
+      ]
     },
     {
       "id": "women-52-farid-farhanna",
@@ -216,7 +324,13 @@
       "countryName": "Singapore",
       "weightCategoryId": "women-52",
       "seedTotalKg": 434.5,
-      "countryCode": "SG"
+      "countryCode": "SG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Farhanna Farid"
+        }
+      ]
     },
     {
       "id": "women-52-pineda-vanessa",
@@ -225,7 +339,13 @@
       "countryName": "United States",
       "weightCategoryId": "women-52",
       "seedTotalKg": 432.5,
-      "countryCode": "US"
+      "countryCode": "US",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Vanessa Pineda"
+        }
+      ]
     },
     {
       "id": "women-52-lehoczkyne-fawal-margit",
@@ -234,7 +354,13 @@
       "countryName": "Hungary",
       "weightCategoryId": "women-52",
       "seedTotalKg": 427.5,
-      "countryCode": "HU"
+      "countryCode": "HU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Margit Lehoczkyne Fawal"
+        }
+      ]
     },
     {
       "id": "women-52-gerlach-eliza",
@@ -243,7 +369,13 @@
       "countryName": "Poland",
       "weightCategoryId": "women-52",
       "seedTotalKg": 422.5,
-      "countryCode": "PL"
+      "countryCode": "PL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Eliza Gerlach"
+        }
+      ]
     },
     {
       "id": "women-52-craven-elizabeth",
@@ -252,7 +384,13 @@
       "countryName": "Australia",
       "weightCategoryId": "women-52",
       "seedTotalKg": 420.5,
-      "countryCode": "AU"
+      "countryCode": "AU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Elizabeth Craven"
+        }
+      ]
     },
     {
       "id": "women-52-barwari-delal",
@@ -261,7 +399,13 @@
       "countryName": "Sweden",
       "weightCategoryId": "women-52",
       "seedTotalKg": 407.5,
-      "countryCode": "SE"
+      "countryCode": "SE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Delal Barwari"
+        }
+      ]
     },
     {
       "id": "women-52-la-bella-daiana",
@@ -270,7 +414,13 @@
       "countryName": "Argentina",
       "weightCategoryId": "women-52",
       "seedTotalKg": 403,
-      "countryCode": "AR"
+      "countryCode": "AR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Daiana La Bella"
+        }
+      ]
     },
     {
       "id": "women-52-chorianopoulou-aikaterini",
@@ -279,7 +429,13 @@
       "countryName": "Australia",
       "weightCategoryId": "women-52",
       "seedTotalKg": 402.5,
-      "countryCode": "AU"
+      "countryCode": "AU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Aikaterini Chorianopoulou"
+        }
+      ]
     },
     {
       "id": "women-52-varol-fatma",
@@ -288,7 +444,13 @@
       "countryName": "Turkiye",
       "weightCategoryId": "women-52",
       "seedTotalKg": 401.5,
-      "countryCode": "TR"
+      "countryCode": "TR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Fatma Varol"
+        }
+      ]
     },
     {
       "id": "women-52-carvalho-giulia",
@@ -297,7 +459,13 @@
       "countryName": "Brazil",
       "weightCategoryId": "women-52",
       "seedTotalKg": 401,
-      "countryCode": "BR"
+      "countryCode": "BR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Giulia Carvalho"
+        }
+      ]
     },
     {
       "id": "women-52-sim-cristy",
@@ -306,7 +474,13 @@
       "countryName": "Mexico",
       "weightCategoryId": "women-52",
       "seedTotalKg": 395,
-      "countryCode": "MX"
+      "countryCode": "MX",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Cristy Sim"
+        }
+      ]
     },
     {
       "id": "women-52-saana-grassham",
@@ -315,7 +489,13 @@
       "countryName": "Japan",
       "weightCategoryId": "women-52",
       "seedTotalKg": 390,
-      "countryCode": "JP"
+      "countryCode": "JP",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Grassham Saana"
+        }
+      ]
     },
     {
       "id": "women-52-sveinsdottir-kristrun",
@@ -324,7 +504,13 @@
       "countryName": "Iceland",
       "weightCategoryId": "women-52",
       "seedTotalKg": 375,
-      "countryCode": "IS"
+      "countryCode": "IS",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kristrun Sveinsdottir"
+        }
+      ]
     },
     {
       "id": "women-52-caldona-jackielyn",
@@ -333,7 +519,13 @@
       "countryName": "Philippines",
       "weightCategoryId": "women-52",
       "seedTotalKg": 366,
-      "countryCode": "PH"
+      "countryCode": "PH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jackielyn Caldona"
+        }
+      ]
     },
     {
       "id": "women-52-bobileva-arina",
@@ -342,7 +534,13 @@
       "countryName": "Latvia",
       "weightCategoryId": "women-52",
       "seedTotalKg": 362.5,
-      "countryCode": "LV"
+      "countryCode": "LV",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Arina Bobileva"
+        }
+      ]
     },
     {
       "id": "women-52-koskipaasi-jaana",
@@ -351,7 +549,13 @@
       "countryName": "Finland",
       "weightCategoryId": "women-52",
       "seedTotalKg": 360,
-      "countryCode": "FI"
+      "countryCode": "FI",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jaana Koskipaasi"
+        }
+      ]
     },
     {
       "id": "women-52-verhulst-stefanie",
@@ -360,7 +564,13 @@
       "countryName": "Belgium",
       "weightCategoryId": "women-52",
       "seedTotalKg": 357.5,
-      "countryCode": "BE"
+      "countryCode": "BE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Stefanie Verhulst"
+        }
+      ]
     },
     {
       "id": "women-52-tsetskhladze-mariam",
@@ -369,7 +579,13 @@
       "countryName": "Georgia",
       "weightCategoryId": "women-52",
       "seedTotalKg": 307.5,
-      "countryCode": "GE"
+      "countryCode": "GE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mariam Tsetskhladze"
+        }
+      ]
     },
     {
       "id": "women-57-naldi-sara",
@@ -393,7 +609,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "women-57",
       "seedTotalKg": 520.5,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Joy Nnamani"
+        }
+      ]
     },
     {
       "id": "women-57-pal-sovannphaktra",
@@ -402,7 +624,13 @@
       "countryName": "France",
       "weightCategoryId": "women-57",
       "seedTotalKg": 502.5,
-      "countryCode": "FR"
+      "countryCode": "FR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Sovannphaktra Pal"
+        }
+      ]
     },
     {
       "id": "women-57-butters-bobbie",
@@ -411,7 +639,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "women-57",
       "seedTotalKg": 492.5,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bobbie Butters"
+        }
+      ]
     },
     {
       "id": "women-57-corrigan-evie",
@@ -420,7 +654,13 @@
       "countryName": "New Zealand",
       "weightCategoryId": "women-57",
       "seedTotalKg": 490,
-      "countryCode": "NZ"
+      "countryCode": "NZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Evie Corrigan"
+        }
+      ]
     },
     {
       "id": "women-57-olin-emelie",
@@ -429,7 +669,13 @@
       "countryName": "Sweden",
       "weightCategoryId": "women-57",
       "seedTotalKg": 458.5,
-      "countryCode": "SE"
+      "countryCode": "SE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Emelie Olin"
+        }
+      ]
     },
     {
       "id": "women-57-aguila-padilla-ana",
@@ -438,7 +684,13 @@
       "countryName": "Spain",
       "weightCategoryId": "women-57",
       "seedTotalKg": 455,
-      "countryCode": "ES"
+      "countryCode": "ES",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ana Aguila Padilla"
+        }
+      ]
     },
     {
       "id": "women-57-amri-miriam",
@@ -447,7 +699,13 @@
       "countryName": "Netherlands",
       "weightCategoryId": "women-57",
       "seedTotalKg": 452.5,
-      "countryCode": "NL"
+      "countryCode": "NL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Miriam Amri"
+        }
+      ]
     },
     {
       "id": "women-57-henry-marthe",
@@ -456,7 +714,13 @@
       "countryName": "Canada",
       "weightCategoryId": "women-57",
       "seedTotalKg": 452.5,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Marthe Henry"
+        }
+      ]
     },
     {
       "id": "women-57-de-la-torre-monica",
@@ -465,7 +729,13 @@
       "countryName": "Mexico",
       "weightCategoryId": "women-57",
       "seedTotalKg": 448.5,
-      "countryCode": "MX"
+      "countryCode": "MX",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Monica de La Torre"
+        }
+      ]
     },
     {
       "id": "women-57-kratz-samantha",
@@ -474,7 +744,13 @@
       "countryName": "Australia",
       "weightCategoryId": "women-57",
       "seedTotalKg": 437.5,
-      "countryCode": "AU"
+      "countryCode": "AU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Samantha Kratz"
+        }
+      ]
     },
     {
       "id": "women-57-babic-katja",
@@ -483,7 +759,13 @@
       "countryName": "Slovenia",
       "weightCategoryId": "women-57",
       "seedTotalKg": 427.5,
-      "countryCode": "SI"
+      "countryCode": "SI",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Katja Babic"
+        }
+      ]
     },
     {
       "id": "women-57-oestergaard-mathilde",
@@ -492,7 +774,13 @@
       "countryName": "Denmark",
       "weightCategoryId": "women-57",
       "seedTotalKg": 423,
-      "countryCode": "DK"
+      "countryCode": "DK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mathilde Oestergaard"
+        }
+      ]
     },
     {
       "id": "women-57-keenan-lauren",
@@ -501,7 +789,13 @@
       "countryName": "Qatar",
       "weightCategoryId": "women-57",
       "seedTotalKg": 417.5,
-      "countryCode": "QA"
+      "countryCode": "QA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lauren Keenan"
+        }
+      ]
     },
     {
       "id": "women-57-huang-zhiyin",
@@ -510,7 +804,13 @@
       "countryName": "China",
       "weightCategoryId": "women-57",
       "seedTotalKg": 415,
-      "countryCode": "CN"
+      "countryCode": "CN",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Zhiyin Huang"
+        }
+      ]
     },
     {
       "id": "women-57-rummens-elise",
@@ -519,7 +819,13 @@
       "countryName": "Belgium",
       "weightCategoryId": "women-57",
       "seedTotalKg": 405,
-      "countryCode": "BE"
+      "countryCode": "BE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Elise Rummens"
+        }
+      ]
     },
     {
       "id": "women-57-wandeler-anouk",
@@ -528,7 +834,13 @@
       "countryName": "Switzerland",
       "weightCategoryId": "women-57",
       "seedTotalKg": 403,
-      "countryCode": "CH"
+      "countryCode": "CH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Anouk Wandeler"
+        }
+      ]
     },
     {
       "id": "women-57-boukalova-anna",
@@ -537,7 +849,13 @@
       "countryName": "Czechia",
       "weightCategoryId": "women-57",
       "seedTotalKg": 390,
-      "countryCode": "CZ"
+      "countryCode": "CZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Anna Boukalova"
+        }
+      ]
     },
     {
       "id": "women-57-lee-michelle",
@@ -546,7 +864,13 @@
       "countryName": "Singapore",
       "weightCategoryId": "women-57",
       "seedTotalKg": 375,
-      "countryCode": "SG"
+      "countryCode": "SG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Michelle Lee"
+        }
+      ]
     },
     {
       "id": "women-57-bondy-florence",
@@ -555,7 +879,13 @@
       "countryName": "Thailand",
       "weightCategoryId": "women-57",
       "seedTotalKg": 342.5,
-      "countryCode": "TH"
+      "countryCode": "TH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Florence Bondy"
+        }
+      ]
     },
     {
       "id": "women-57-viktoria-flavia-dr",
@@ -564,7 +894,13 @@
       "countryName": "Hungary",
       "weightCategoryId": "women-57",
       "seedTotalKg": 75,
-      "countryCode": "HU"
+      "countryCode": "HU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Flavia Viktoria"
+        }
+      ]
     },
     {
       "id": "women-63-bostrom-alba",
@@ -588,7 +924,13 @@
       "countryName": "Italy",
       "weightCategoryId": "women-63",
       "seedTotalKg": 542.5,
-      "countryCode": "IT"
+      "countryCode": "IT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Chiara Bernardi"
+        }
+      ]
     },
     {
       "id": "women-63-aborah-betty",
@@ -597,7 +939,13 @@
       "countryName": "Netherlands",
       "weightCategoryId": "women-63",
       "seedTotalKg": 518.5,
-      "countryCode": "NL"
+      "countryCode": "NL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Betty Aborah"
+        }
+      ]
     },
     {
       "id": "women-63-vidal-makeda",
@@ -606,7 +954,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "women-63",
       "seedTotalKg": 501,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Makeda Vidal"
+        }
+      ]
     },
     {
       "id": "women-63-van-vianen-romy",
@@ -615,7 +969,13 @@
       "countryName": "Netherlands",
       "weightCategoryId": "women-63",
       "seedTotalKg": 500,
-      "countryCode": "NL"
+      "countryCode": "NL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Romy van Vianen"
+        }
+      ]
     },
     {
       "id": "women-63-haeberer-clara-isabelle",
@@ -624,7 +984,13 @@
       "countryName": "Germany",
       "weightCategoryId": "women-63",
       "seedTotalKg": 500,
-      "countryCode": "DE"
+      "countryCode": "DE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Isabelle Haeberer Clara"
+        }
+      ]
     },
     {
       "id": "women-63-mamane-leah",
@@ -633,7 +999,13 @@
       "countryName": "Canada",
       "weightCategoryId": "women-63",
       "seedTotalKg": 494,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Leah Mamane"
+        }
+      ]
     },
     {
       "id": "women-63-maguregi-rodriguez-jone",
@@ -642,7 +1014,13 @@
       "countryName": "Spain",
       "weightCategoryId": "women-63",
       "seedTotalKg": 490,
-      "countryCode": "ES"
+      "countryCode": "ES",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jone Maguregi Rodriguez"
+        }
+      ]
     },
     {
       "id": "women-63-kvantchiani-sopiko",
@@ -651,7 +1029,13 @@
       "countryName": "Georgia",
       "weightCategoryId": "women-63",
       "seedTotalKg": 487.5,
-      "countryCode": "GE"
+      "countryCode": "GE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Sopiko Kvantchiani"
+        }
+      ]
     },
     {
       "id": "women-63-lalime-sahyuri",
@@ -660,7 +1044,13 @@
       "countryName": "Belgium",
       "weightCategoryId": "women-63",
       "seedTotalKg": 485,
-      "countryCode": "BE"
+      "countryCode": "BE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Sahyuri Lalime"
+        }
+      ]
     },
     {
       "id": "women-63-wolf-jana",
@@ -669,7 +1059,13 @@
       "countryName": "Switzerland",
       "weightCategoryId": "women-63",
       "seedTotalKg": 480,
-      "countryCode": "CH"
+      "countryCode": "CH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jana Wolf"
+        }
+      ]
     },
     {
       "id": "women-63-zurinskaite-deimante",
@@ -678,7 +1074,13 @@
       "countryName": "Lithuania",
       "weightCategoryId": "women-63",
       "seedTotalKg": 472.5,
-      "countryCode": "LT"
+      "countryCode": "LT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Deimante Zurinskaite"
+        }
+      ]
     },
     {
       "id": "women-63-stevens-jody",
@@ -687,7 +1089,13 @@
       "countryName": "Ireland",
       "weightCategoryId": "women-63",
       "seedTotalKg": 470,
-      "countryCode": "IE"
+      "countryCode": "IE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jody Stevens"
+        }
+      ]
     },
     {
       "id": "women-63-visan-ana-maria",
@@ -696,7 +1104,13 @@
       "countryName": "New Zealand",
       "weightCategoryId": "women-63",
       "seedTotalKg": 455,
-      "countryCode": "NZ"
+      "countryCode": "NZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ana-Maria Visan"
+        }
+      ]
     },
     {
       "id": "women-63-tiong-natalie",
@@ -705,7 +1119,13 @@
       "countryName": "Singapore",
       "weightCategoryId": "women-63",
       "seedTotalKg": 442.5,
-      "countryCode": "SG"
+      "countryCode": "SG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Natalie Tiong"
+        }
+      ]
     },
     {
       "id": "women-63-torres-judith",
@@ -714,7 +1134,13 @@
       "countryName": "Mexico",
       "weightCategoryId": "women-63",
       "seedTotalKg": 442.5,
-      "countryCode": "MX"
+      "countryCode": "MX",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Judith Torres"
+        }
+      ]
     },
     {
       "id": "women-63-jansova-dominika",
@@ -723,7 +1149,13 @@
       "countryName": "Czechia",
       "weightCategoryId": "women-63",
       "seedTotalKg": 430,
-      "countryCode": "CZ"
+      "countryCode": "CZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Dominika Jansova"
+        }
+      ]
     },
     {
       "id": "women-63-kalinowska-ewelina",
@@ -732,7 +1164,13 @@
       "countryName": "Poland",
       "weightCategoryId": "women-63",
       "seedTotalKg": 422.5,
-      "countryCode": "PL"
+      "countryCode": "PL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ewelina Kalinowska"
+        }
+      ]
     },
     {
       "id": "women-63-duus-cecilie",
@@ -741,7 +1179,13 @@
       "countryName": "Denmark",
       "weightCategoryId": "women-63",
       "seedTotalKg": 422.5,
-      "countryCode": "DK"
+      "countryCode": "DK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Cecilie Duus"
+        }
+      ]
     },
     {
       "id": "women-63-zunic-lea",
@@ -750,7 +1194,13 @@
       "countryName": "Croatia",
       "weightCategoryId": "women-63",
       "seedTotalKg": 405,
-      "countryCode": "HR"
+      "countryCode": "HR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lea Zunic"
+        }
+      ]
     },
     {
       "id": "women-63-vackova-kristyna",
@@ -759,7 +1209,13 @@
       "countryName": "Czechia",
       "weightCategoryId": "women-63",
       "seedTotalKg": 392.5,
-      "countryCode": "CZ"
+      "countryCode": "CZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kristyna Vackova"
+        }
+      ]
     },
     {
       "id": "women-63-dunning-mary",
@@ -768,7 +1224,13 @@
       "countryName": "Thailand",
       "weightCategoryId": "women-63",
       "seedTotalKg": 390,
-      "countryCode": "TH"
+      "countryCode": "TH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mary Dunning"
+        }
+      ]
     },
     {
       "id": "women-63-wenn-cara",
@@ -777,7 +1239,13 @@
       "countryName": "South Africa",
       "weightCategoryId": "women-63",
       "seedTotalKg": 385,
-      "countryCode": "ZA"
+      "countryCode": "ZA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Cara Wenn"
+        }
+      ]
     },
     {
       "id": "women-63-ong-yi",
@@ -786,7 +1254,13 @@
       "countryName": "Singapore",
       "weightCategoryId": "women-63",
       "seedTotalKg": 372.5,
-      "countryCode": "SG"
+      "countryCode": "SG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Yi Ong"
+        }
+      ]
     },
     {
       "id": "women-63-chatzigianni-andria",
@@ -795,7 +1269,13 @@
       "countryName": "Cyprus",
       "weightCategoryId": "women-63",
       "seedTotalKg": 367.5,
-      "countryCode": "CY"
+      "countryCode": "CY",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Andria Chatzigianni"
+        }
+      ]
     },
     {
       "id": "women-63-zhou-yiqian",
@@ -804,7 +1284,13 @@
       "countryName": "China",
       "weightCategoryId": "women-63",
       "seedTotalKg": 360,
-      "countryCode": "CN"
+      "countryCode": "CN",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Yiqian Zhou"
+        }
+      ]
     },
     {
       "id": "women-63-gerute-lina",
@@ -813,7 +1299,13 @@
       "countryName": "Lithuania",
       "weightCategoryId": "women-63",
       "seedTotalKg": 357.5,
-      "countryCode": "LT"
+      "countryCode": "LT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lina Gerute"
+        }
+      ]
     },
     {
       "id": "women-63-meshveliani-natela",
@@ -822,7 +1314,13 @@
       "countryName": "Georgia",
       "weightCategoryId": "women-63",
       "seedTotalKg": 335,
-      "countryCode": "GE"
+      "countryCode": "GE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Natela Meshveliani"
+        }
+      ]
     },
     {
       "id": "women-63-liang-yim-chee",
@@ -831,7 +1329,13 @@
       "countryName": "Hong Kong, China",
       "weightCategoryId": "women-63",
       "seedTotalKg": 325,
-      "countryCode": "HK"
+      "countryCode": "HK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Chee Liang Yim"
+        }
+      ]
     },
     {
       "id": "women-69-garra-carola",
@@ -855,7 +1359,13 @@
       "countryName": "US Virgin Islands",
       "weightCategoryId": "women-69",
       "seedTotalKg": 570,
-      "countryCode": "VI"
+      "countryCode": "VI",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Chandler Babb"
+        }
+      ]
     },
     {
       "id": "women-69-kovacs-janee",
@@ -864,7 +1374,13 @@
       "countryName": "United States",
       "weightCategoryId": "women-69",
       "seedTotalKg": 570,
-      "countryCode": "US"
+      "countryCode": "US",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Janee Kovacs"
+        }
+      ]
     },
     {
       "id": "women-69-scanlon-meghan",
@@ -873,7 +1389,13 @@
       "countryName": "United States",
       "weightCategoryId": "women-69",
       "seedTotalKg": 563.5,
-      "countryCode": "US"
+      "countryCode": "US",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Meghan Scanlon"
+        }
+      ]
     },
     {
       "id": "women-69-van-daal-marie-jose",
@@ -882,7 +1404,13 @@
       "countryName": "Netherlands",
       "weightCategoryId": "women-69",
       "seedTotalKg": 552.5,
-      "countryCode": "NL"
+      "countryCode": "NL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Marie-Jose van Daal"
+        }
+      ]
     },
     {
       "id": "women-69-nelson-annie",
@@ -891,7 +1419,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "women-69",
       "seedTotalKg": 550,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Annie Nelson"
+        }
+      ]
     },
     {
       "id": "women-69-kjenner-marte",
@@ -900,7 +1434,13 @@
       "countryName": "Norway",
       "weightCategoryId": "women-69",
       "seedTotalKg": 550,
-      "countryCode": "NO"
+      "countryCode": "NO",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Marte Kjenner"
+        }
+      ]
     },
     {
       "id": "women-69-bright-jordan",
@@ -909,7 +1449,13 @@
       "countryName": "Ireland",
       "weightCategoryId": "women-69",
       "seedTotalKg": 545,
-      "countryCode": "IE"
+      "countryCode": "IE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jordan Bright"
+        }
+      ]
     },
     {
       "id": "women-69-bouchoux-andorina",
@@ -918,7 +1464,13 @@
       "countryName": "France",
       "weightCategoryId": "women-69",
       "seedTotalKg": 540,
-      "countryCode": "FR"
+      "countryCode": "FR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Andorina Bouchoux"
+        }
+      ]
     },
     {
       "id": "women-69-huff-shannon",
@@ -927,7 +1479,13 @@
       "countryName": "Canada",
       "weightCategoryId": "women-69",
       "seedTotalKg": 533,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Shannon Huff"
+        }
+      ]
     },
     {
       "id": "women-69-belden-pavlovic-signe",
@@ -936,7 +1494,13 @@
       "countryName": "Norway",
       "weightCategoryId": "women-69",
       "seedTotalKg": 518,
-      "countryCode": "NO"
+      "countryCode": "NO",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Signe Belden Pavlovic"
+        }
+      ]
     },
     {
       "id": "women-69-tavares-cicera",
@@ -945,7 +1509,13 @@
       "countryName": "Brazil",
       "weightCategoryId": "women-69",
       "seedTotalKg": 494,
-      "countryCode": "BR"
+      "countryCode": "BR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Cicera Tavares"
+        }
+      ]
     },
     {
       "id": "women-69-mabidikama-acima",
@@ -954,7 +1524,13 @@
       "countryName": "New Zealand",
       "weightCategoryId": "women-69",
       "seedTotalKg": 494,
-      "countryCode": "NZ"
+      "countryCode": "NZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Acima Mabidikama"
+        }
+      ]
     },
     {
       "id": "women-69-goossens-kaya",
@@ -963,7 +1539,13 @@
       "countryName": "Belgium",
       "weightCategoryId": "women-69",
       "seedTotalKg": 494,
-      "countryCode": "BE"
+      "countryCode": "BE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kaya Goossens"
+        }
+      ]
     },
     {
       "id": "women-69-altman-hannah",
@@ -972,7 +1554,13 @@
       "countryName": "Australia",
       "weightCategoryId": "women-69",
       "seedTotalKg": 486,
-      "countryCode": "AU"
+      "countryCode": "AU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Hannah Altman"
+        }
+      ]
     },
     {
       "id": "women-69-materek-sabina",
@@ -981,7 +1569,13 @@
       "countryName": "Poland",
       "weightCategoryId": "women-69",
       "seedTotalKg": 480,
-      "countryCode": "PL"
+      "countryCode": "PL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Sabina Materek"
+        }
+      ]
     },
     {
       "id": "women-69-haulot-clara",
@@ -990,7 +1584,13 @@
       "countryName": "Belgium",
       "weightCategoryId": "women-69",
       "seedTotalKg": 472.5,
-      "countryCode": "BE"
+      "countryCode": "BE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Clara Haulot"
+        }
+      ]
     },
     {
       "id": "women-69-skovlind-caroline",
@@ -999,7 +1599,13 @@
       "countryName": "Denmark",
       "weightCategoryId": "women-69",
       "seedTotalKg": 470,
-      "countryCode": "DK"
+      "countryCode": "DK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Caroline Skovlind"
+        }
+      ]
     },
     {
       "id": "women-69-denise-guenther",
@@ -1008,7 +1614,13 @@
       "countryName": "Switzerland",
       "weightCategoryId": "women-69",
       "seedTotalKg": 461.5,
-      "countryCode": "CH"
+      "countryCode": "CH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Guenther Denise"
+        }
+      ]
     },
     {
       "id": "women-69-seow-amanda",
@@ -1017,7 +1629,13 @@
       "countryName": "Singapore",
       "weightCategoryId": "women-69",
       "seedTotalKg": 446,
-      "countryCode": "SG"
+      "countryCode": "SG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Amanda Seow"
+        }
+      ]
     },
     {
       "id": "women-69-jones-jayne",
@@ -1026,7 +1644,13 @@
       "countryName": "Ireland",
       "weightCategoryId": "women-69",
       "seedTotalKg": 442.5,
-      "countryCode": "IE"
+      "countryCode": "IE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jayne Jones"
+        }
+      ]
     },
     {
       "id": "women-69-khwang-hayley",
@@ -1035,7 +1659,13 @@
       "countryName": "Singapore",
       "weightCategoryId": "women-69",
       "seedTotalKg": 420,
-      "countryCode": "SG"
+      "countryCode": "SG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Hayley Khwang"
+        }
+      ]
     },
     {
       "id": "women-69-kairaityte-dainora",
@@ -1044,7 +1674,13 @@
       "countryName": "Lithuania",
       "weightCategoryId": "women-69",
       "seedTotalKg": 420,
-      "countryCode": "LT"
+      "countryCode": "LT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Dainora Kairaityte"
+        }
+      ]
     },
     {
       "id": "women-69-larrimore-deshawn",
@@ -1053,7 +1689,13 @@
       "countryName": "US Virgin Islands",
       "weightCategoryId": "women-69",
       "seedTotalKg": 415,
-      "countryCode": "VI"
+      "countryCode": "VI",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Deshawn Larrimore"
+        }
+      ]
     },
     {
       "id": "women-69-marina-sanja",
@@ -1062,7 +1704,13 @@
       "countryName": "Croatia",
       "weightCategoryId": "women-69",
       "seedTotalKg": 410,
-      "countryCode": "HR"
+      "countryCode": "HR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Sanja Marina"
+        }
+      ]
     },
     {
       "id": "women-69-pacce-catalina",
@@ -1071,7 +1719,13 @@
       "countryName": "Uruguay",
       "weightCategoryId": "women-69",
       "seedTotalKg": 400,
-      "countryCode": "UY"
+      "countryCode": "UY",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Catalina Pacce"
+        }
+      ]
     },
     {
       "id": "women-69-janulcikaite-ausrine",
@@ -1080,7 +1734,13 @@
       "countryName": "Lithuania",
       "weightCategoryId": "women-69",
       "seedTotalKg": 360,
-      "countryCode": "LT"
+      "countryCode": "LT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ausrine Janulcikaite"
+        }
+      ]
     },
     {
       "id": "women-76-worford-cranon",
@@ -1089,7 +1749,13 @@
       "countryName": "United States",
       "weightCategoryId": "women-76",
       "seedTotalKg": 629,
-      "countryCode": "US"
+      "countryCode": "US",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Cranon Worford"
+        }
+      ]
     },
     {
       "id": "women-76-mazur-zuzanna",
@@ -1098,7 +1764,13 @@
       "countryName": "Poland",
       "weightCategoryId": "women-76",
       "seedTotalKg": 586.5,
-      "countryCode": "PL"
+      "countryCode": "PL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Zuzanna Mazur"
+        }
+      ]
     },
     {
       "id": "women-76-bisol-bruna",
@@ -1107,7 +1779,13 @@
       "countryName": "Brazil",
       "weightCategoryId": "women-76",
       "seedTotalKg": 568.5,
-      "countryCode": "BR"
+      "countryCode": "BR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bruna Bisol"
+        }
+      ]
     },
     {
       "id": "women-76-peyraud-clara",
@@ -1116,7 +1794,13 @@
       "countryName": "France",
       "weightCategoryId": "women-76",
       "seedTotalKg": 567.5,
-      "countryCode": "FR"
+      "countryCode": "FR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Clara Peyraud"
+        }
+      ]
     },
     {
       "id": "women-76-hames-mara",
@@ -1125,7 +1809,13 @@
       "countryName": "Germany",
       "weightCategoryId": "women-76",
       "seedTotalKg": 565.5,
-      "countryCode": "DE"
+      "countryCode": "DE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mara Hames"
+        }
+      ]
     },
     {
       "id": "women-76-hanlon-bettina",
@@ -1134,7 +1824,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "women-76",
       "seedTotalKg": 565,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bettina Hanlon"
+        }
+      ]
     },
     {
       "id": "women-76-ezeh-chisom",
@@ -1143,7 +1839,13 @@
       "countryName": "Canada",
       "weightCategoryId": "women-76",
       "seedTotalKg": 545,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Chisom Ezeh"
+        }
+      ]
     },
     {
       "id": "women-76-hunte-kezia",
@@ -1152,7 +1854,13 @@
       "countryName": "Trinidad and Tobago",
       "weightCategoryId": "women-76",
       "seedTotalKg": 535,
-      "countryCode": "TT"
+      "countryCode": "TT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kezia Hunte"
+        }
+      ]
     },
     {
       "id": "women-76-gronlund-ellen",
@@ -1161,7 +1869,13 @@
       "countryName": "Finland",
       "weightCategoryId": "women-76",
       "seedTotalKg": 535,
-      "countryCode": "FI"
+      "countryCode": "FI",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ellen Gronlund"
+        }
+      ]
     },
     {
       "id": "women-76-tchrikishvili-nino",
@@ -1170,7 +1884,13 @@
       "countryName": "Georgia",
       "weightCategoryId": "women-76",
       "seedTotalKg": 532.5,
-      "countryCode": "GE"
+      "countryCode": "GE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Nino Tchrikishvili"
+        }
+      ]
     },
     {
       "id": "women-76-ophoff-tessa",
@@ -1179,7 +1899,13 @@
       "countryName": "Netherlands",
       "weightCategoryId": "women-76",
       "seedTotalKg": 532.5,
-      "countryCode": "NL"
+      "countryCode": "NL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Tessa Ophoff"
+        }
+      ]
     },
     {
       "id": "women-76-govind-hema",
@@ -1188,7 +1914,13 @@
       "countryName": "New Zealand",
       "weightCategoryId": "women-76",
       "seedTotalKg": 517.5,
-      "countryCode": "NZ"
+      "countryCode": "NZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Hema Govind"
+        }
+      ]
     },
     {
       "id": "women-76-szarek-justyna",
@@ -1197,7 +1929,13 @@
       "countryName": "Poland",
       "weightCategoryId": "women-76",
       "seedTotalKg": 517.5,
-      "countryCode": "PL"
+      "countryCode": "PL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Justyna Szarek"
+        }
+      ]
     },
     {
       "id": "women-76-varillas-modesta",
@@ -1206,7 +1944,13 @@
       "countryName": "Mexico",
       "weightCategoryId": "women-76",
       "seedTotalKg": 513,
-      "countryCode": "MX"
+      "countryCode": "MX",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Modesta Varillas"
+        }
+      ]
     },
     {
       "id": "women-76-swart-chanel",
@@ -1215,7 +1959,13 @@
       "countryName": "New Zealand",
       "weightCategoryId": "women-76",
       "seedTotalKg": 503,
-      "countryCode": "NZ"
+      "countryCode": "NZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Chanel Swart"
+        }
+      ]
     },
     {
       "id": "women-76-martens-mariska",
@@ -1224,7 +1974,13 @@
       "countryName": "Belgium",
       "weightCategoryId": "women-76",
       "seedTotalKg": 502.5,
-      "countryCode": "BE"
+      "countryCode": "BE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mariska Martens"
+        }
+      ]
     },
     {
       "id": "women-76-reis-rafaela",
@@ -1233,7 +1989,13 @@
       "countryName": "Portugal",
       "weightCategoryId": "women-76",
       "seedTotalKg": 490,
-      "countryCode": "PT"
+      "countryCode": "PT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Rafaela Reis"
+        }
+      ]
     },
     {
       "id": "women-76-muller-gaby",
@@ -1242,7 +2004,13 @@
       "countryName": "Belgium",
       "weightCategoryId": "women-76",
       "seedTotalKg": 470,
-      "countryCode": "BE"
+      "countryCode": "BE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Gaby Muller"
+        }
+      ]
     },
     {
       "id": "women-76-schvandtnerova-denisa",
@@ -1251,7 +2019,13 @@
       "countryName": "Czechia",
       "weightCategoryId": "women-76",
       "seedTotalKg": 465,
-      "countryCode": "CZ"
+      "countryCode": "CZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Denisa Schvandtnerova"
+        }
+      ]
     },
     {
       "id": "women-76-waldeck-danielle",
@@ -1260,7 +2034,13 @@
       "countryName": "South Africa",
       "weightCategoryId": "women-76",
       "seedTotalKg": 452.5,
-      "countryCode": "ZA"
+      "countryCode": "ZA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Danielle Waldeck"
+        }
+      ]
     },
     {
       "id": "women-76-wells-selina",
@@ -1269,7 +2049,13 @@
       "countryName": "Thailand",
       "weightCategoryId": "women-76",
       "seedTotalKg": 440,
-      "countryCode": "TH"
+      "countryCode": "TH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Selina Wells"
+        }
+      ]
     },
     {
       "id": "women-76-khurtsilava-khatia",
@@ -1278,7 +2064,13 @@
       "countryName": "Georgia",
       "weightCategoryId": "women-76",
       "seedTotalKg": 432.5,
-      "countryCode": "GE"
+      "countryCode": "GE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Khatia Khurtsilava"
+        }
+      ]
     },
     {
       "id": "women-76-xie-thuy",
@@ -1287,7 +2079,13 @@
       "countryName": "Singapore",
       "weightCategoryId": "women-76",
       "seedTotalKg": 432.5,
-      "countryCode": "SG"
+      "countryCode": "SG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Thuy Xie"
+        }
+      ]
     },
     {
       "id": "women-76-marangoni-pia",
@@ -1296,7 +2094,13 @@
       "countryName": "South Africa",
       "weightCategoryId": "women-76",
       "seedTotalKg": 410,
-      "countryCode": "ZA"
+      "countryCode": "ZA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Pia Marangoni"
+        }
+      ]
     },
     {
       "id": "women-84-lawrence-amanda",
@@ -1320,7 +2124,13 @@
       "countryName": "New Zealand",
       "weightCategoryId": "women-84",
       "seedTotalKg": 628.5,
-      "countryCode": "NZ"
+      "countryCode": "NZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Karlina Tongotea"
+        }
+      ]
     },
     {
       "id": "women-84-azariah-ziana",
@@ -1329,7 +2139,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "women-84",
       "seedTotalKg": 607,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ziana Azariah"
+        }
+      ]
     },
     {
       "id": "women-84-zeigler-nicolette",
@@ -1338,7 +2154,13 @@
       "countryName": "United States",
       "weightCategoryId": "women-84",
       "seedTotalKg": 600,
-      "countryCode": "US"
+      "countryCode": "US",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Nicolette Zeigler"
+        }
+      ]
     },
     {
       "id": "women-84-thorhallsdottir-kristin",
@@ -1347,7 +2169,13 @@
       "countryName": "Iceland",
       "weightCategoryId": "women-84",
       "seedTotalKg": 570.5,
-      "countryCode": "IS"
+      "countryCode": "IS",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kristin Thorhallsdottir"
+        }
+      ]
     },
     {
       "id": "women-84-almeida-marina",
@@ -1356,7 +2184,13 @@
       "countryName": "Brazil",
       "weightCategoryId": "women-84",
       "seedTotalKg": 565.5,
-      "countryCode": "BR"
+      "countryCode": "BR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Marina Almeida"
+        }
+      ]
     },
     {
       "id": "women-84-ieronimos-anna",
@@ -1365,7 +2199,13 @@
       "countryName": "Germany",
       "weightCategoryId": "women-84",
       "seedTotalKg": 565,
-      "countryCode": "DE"
+      "countryCode": "DE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Anna Ieronimos"
+        }
+      ]
     },
     {
       "id": "women-84-buettner-jessica",
@@ -1374,7 +2214,13 @@
       "countryName": "Canada",
       "weightCategoryId": "women-84",
       "seedTotalKg": 561,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jessica Buettner"
+        }
+      ]
     },
     {
       "id": "women-84-mouchet-emilie",
@@ -1383,7 +2229,13 @@
       "countryName": "France",
       "weightCategoryId": "women-84",
       "seedTotalKg": 555,
-      "countryCode": "FR"
+      "countryCode": "FR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Emilie Mouchet"
+        }
+      ]
     },
     {
       "id": "women-84-rudin-agnes",
@@ -1392,7 +2244,13 @@
       "countryName": "Sweden",
       "weightCategoryId": "women-84",
       "seedTotalKg": 552.5,
-      "countryCode": "SE"
+      "countryCode": "SE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Agnes Rudin"
+        }
+      ]
     },
     {
       "id": "women-84-coopoosamy-nicole",
@@ -1401,7 +2259,13 @@
       "countryName": "South Africa",
       "weightCategoryId": "women-84",
       "seedTotalKg": 550,
-      "countryCode": "ZA"
+      "countryCode": "ZA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Nicole Coopoosamy"
+        }
+      ]
     },
     {
       "id": "women-84-lahtinen-mira",
@@ -1410,7 +2274,13 @@
       "countryName": "Finland",
       "weightCategoryId": "women-84",
       "seedTotalKg": 549,
-      "countryCode": "FI"
+      "countryCode": "FI",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mira Lahtinen"
+        }
+      ]
     },
     {
       "id": "women-84-letting-regitze",
@@ -1419,7 +2289,13 @@
       "countryName": "Denmark",
       "weightCategoryId": "women-84",
       "seedTotalKg": 547.5,
-      "countryCode": "DK"
+      "countryCode": "DK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Regitze Letting"
+        }
+      ]
     },
     {
       "id": "women-84-bychok-liudmyla",
@@ -1428,7 +2304,13 @@
       "countryName": "Ukraine",
       "weightCategoryId": "women-84",
       "seedTotalKg": 547.5,
-      "countryCode": "UA"
+      "countryCode": "UA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Liudmyla Bychok"
+        }
+      ]
     },
     {
       "id": "women-84-zhao-yan-fei",
@@ -1437,7 +2319,13 @@
       "countryName": "Australia",
       "weightCategoryId": "women-84",
       "seedTotalKg": 547,
-      "countryCode": "AU"
+      "countryCode": "AU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Yan-Fei Zhao"
+        }
+      ]
     },
     {
       "id": "women-84-sanchez-jorge-carla",
@@ -1446,7 +2334,13 @@
       "countryName": "Spain",
       "weightCategoryId": "women-84",
       "seedTotalKg": 542.5,
-      "countryCode": "ES"
+      "countryCode": "ES",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Carla Sanchez Jorge"
+        }
+      ]
     },
     {
       "id": "women-84-joergensen-katja",
@@ -1455,7 +2349,13 @@
       "countryName": "Denmark",
       "weightCategoryId": "women-84",
       "seedTotalKg": 527.5,
-      "countryCode": "DK"
+      "countryCode": "DK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Katja Joergensen"
+        }
+      ]
     },
     {
       "id": "women-84-alleyne-deresay",
@@ -1464,7 +2364,13 @@
       "countryName": "Trinidad and Tobago",
       "weightCategoryId": "women-84",
       "seedTotalKg": 525.5,
-      "countryCode": "TT"
+      "countryCode": "TT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Deresay Alleyne"
+        }
+      ]
     },
     {
       "id": "women-84-erimo-sabadell-rosa",
@@ -1473,7 +2379,13 @@
       "countryName": "Spain",
       "weightCategoryId": "women-84",
       "seedTotalKg": 525,
-      "countryCode": "ES"
+      "countryCode": "ES",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Rosa Erimo Sabadell"
+        }
+      ]
     },
     {
       "id": "women-84-matsuda-miyu",
@@ -1482,7 +2394,13 @@
       "countryName": "Japan",
       "weightCategoryId": "women-84",
       "seedTotalKg": 523,
-      "countryCode": "JP"
+      "countryCode": "JP",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Miyu Matsuda"
+        }
+      ]
     },
     {
       "id": "women-84-laitinen-jenna",
@@ -1491,7 +2409,13 @@
       "countryName": "Finland",
       "weightCategoryId": "women-84",
       "seedTotalKg": 519.5,
-      "countryCode": "FI"
+      "countryCode": "FI",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jenna Laitinen"
+        }
+      ]
     },
     {
       "id": "women-84-abouassi-nour",
@@ -1500,7 +2424,13 @@
       "countryName": "Qatar",
       "weightCategoryId": "women-84",
       "seedTotalKg": 490,
-      "countryCode": "QA"
+      "countryCode": "QA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Nour Abouassi"
+        }
+      ]
     },
     {
       "id": "women-84-adedokun-comfort",
@@ -1509,7 +2439,13 @@
       "countryName": "Ireland",
       "weightCategoryId": "women-84",
       "seedTotalKg": 488,
-      "countryCode": "IE"
+      "countryCode": "IE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Comfort Adedokun"
+        }
+      ]
     },
     {
       "id": "women-84-suitauloa-shaniele",
@@ -1518,7 +2454,13 @@
       "countryName": "New Zealand",
       "weightCategoryId": "women-84",
       "seedTotalKg": 487.5,
-      "countryCode": "NZ"
+      "countryCode": "NZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Shaniele Suitauloa"
+        }
+      ]
     },
     {
       "id": "women-84-rodrigues-ana",
@@ -1527,7 +2469,13 @@
       "countryName": "Lithuania",
       "weightCategoryId": "women-84",
       "seedTotalKg": 457.2,
-      "countryCode": "LT"
+      "countryCode": "LT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ana Rodrigues"
+        }
+      ]
     },
     {
       "id": "women-84-szymkowiak-magdalena",
@@ -1536,7 +2484,13 @@
       "countryName": "Poland",
       "weightCategoryId": "women-84",
       "seedTotalKg": 420,
-      "countryCode": "PL"
+      "countryCode": "PL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Magdalena Szymkowiak"
+        }
+      ]
     },
     {
       "id": "women-84plus-muluh-sonita",
@@ -1560,7 +2514,13 @@
       "countryName": "Canada",
       "weightCategoryId": "women-84plus",
       "seedTotalKg": 732.5,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Brittany Schlater"
+        }
+      ]
     },
     {
       "id": "women-84plus-onuoha-aquinn",
@@ -1569,7 +2529,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "women-84plus",
       "seedTotalKg": 671.5,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Aquinn Onuoha"
+        }
+      ]
     },
     {
       "id": "women-84plus-omotoso-toyosi",
@@ -1578,7 +2544,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "women-84plus",
       "seedTotalKg": 662.5,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Toyosi Omotoso"
+        }
+      ]
     },
     {
       "id": "women-84plus-brown-bonica",
@@ -1587,7 +2559,13 @@
       "countryName": "United States",
       "weightCategoryId": "women-84plus",
       "seedTotalKg": 662.5,
-      "countryCode": "US"
+      "countryCode": "US",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bonica Brown"
+        }
+      ]
     },
     {
       "id": "women-84plus-mierger-amelie",
@@ -1596,7 +2574,13 @@
       "countryName": "France",
       "weightCategoryId": "women-84plus",
       "seedTotalKg": 632.5,
-      "countryCode": "FR"
+      "countryCode": "FR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Amelie Mierger"
+        }
+      ]
     },
     {
       "id": "women-84plus-padia-zahra",
@@ -1605,7 +2589,13 @@
       "countryName": "Trinidad and Tobago",
       "weightCategoryId": "women-84plus",
       "seedTotalKg": 608,
-      "countryCode": "TT"
+      "countryCode": "TT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Zahra Padia"
+        }
+      ]
     },
     {
       "id": "women-84plus-o-reilly-alison",
@@ -1614,7 +2604,13 @@
       "countryName": "Ireland",
       "weightCategoryId": "women-84plus",
       "seedTotalKg": 550,
-      "countryCode": "IE"
+      "countryCode": "IE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Alison o'Reilly"
+        }
+      ]
     },
     {
       "id": "women-84plus-sigurjonsdottir-hanna",
@@ -1623,7 +2619,13 @@
       "countryName": "Iceland",
       "weightCategoryId": "women-84plus",
       "seedTotalKg": 525,
-      "countryCode": "IS"
+      "countryCode": "IS",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Hanna Sigurjonsdottir"
+        }
+      ]
     },
     {
       "id": "women-84plus-matthiasdottir-thorbjorg",
@@ -1632,7 +2634,13 @@
       "countryName": "Iceland",
       "weightCategoryId": "women-84plus",
       "seedTotalKg": 522.5,
-      "countryCode": "IS"
+      "countryCode": "IS",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Thorbjorg Matthiasdottir"
+        }
+      ]
     },
     {
       "id": "women-84plus-kamoto-emi",
@@ -1641,7 +2649,13 @@
       "countryName": "Japan",
       "weightCategoryId": "women-84plus",
       "seedTotalKg": 486,
-      "countryCode": "JP"
+      "countryCode": "JP",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Emi Kamoto"
+        }
+      ]
     },
     {
       "id": "women-84plus-de-la-barra-zelaya-marcela",
@@ -1650,7 +2664,13 @@
       "countryName": "Chile",
       "weightCategoryId": "women-84plus",
       "seedTotalKg": 471.5,
-      "countryCode": "CL"
+      "countryCode": "CL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Marcela de La Barra Zelaya"
+        }
+      ]
     },
     {
       "id": "women-84plus-malojlo-marta",
@@ -1659,7 +2679,13 @@
       "countryName": "Latvia",
       "weightCategoryId": "women-84plus",
       "seedTotalKg": 467.5,
-      "countryCode": "LV"
+      "countryCode": "LV",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Marta Malojlo"
+        }
+      ]
     },
     {
       "id": "men-59-slabic-michael",
@@ -1683,7 +2709,13 @@
       "countryName": "Spain",
       "weightCategoryId": "men-59",
       "seedTotalKg": 642.5,
-      "countryCode": "ES"
+      "countryCode": "ES",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ivan Campano Diaz"
+        }
+      ]
     },
     {
       "id": "men-59-garcia-antoine",
@@ -1692,7 +2724,13 @@
       "countryName": "France",
       "weightCategoryId": "men-59",
       "seedTotalKg": 628,
-      "countryCode": "FR"
+      "countryCode": "FR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Antoine Garcia"
+        }
+      ]
     },
     {
       "id": "men-59-takiyama-yasutaka",
@@ -1701,7 +2739,13 @@
       "countryName": "Japan",
       "weightCategoryId": "men-59",
       "seedTotalKg": 625,
-      "countryCode": "JP"
+      "countryCode": "JP",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Yasutaka Takiyama"
+        }
+      ]
     },
     {
       "id": "men-59-elhamali-mohamed",
@@ -1710,7 +2754,13 @@
       "countryName": "Libya",
       "weightCategoryId": "men-59",
       "seedTotalKg": 615,
-      "countryCode": "LY"
+      "countryCode": "LY",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mohamed Elhamali"
+        }
+      ]
     },
     {
       "id": "men-59-nyarko-kwaku",
@@ -1719,7 +2769,13 @@
       "countryName": "Ghana",
       "weightCategoryId": "men-59",
       "seedTotalKg": 602.5,
-      "countryCode": "GH"
+      "countryCode": "GH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kwaku Nyarko"
+        }
+      ]
     },
     {
       "id": "men-59-leon-franklin",
@@ -1728,7 +2784,13 @@
       "countryName": "Ecuador",
       "weightCategoryId": "men-59",
       "seedTotalKg": 602.5,
-      "countryCode": "EC"
+      "countryCode": "EC",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Franklin Leon"
+        }
+      ]
     },
     {
       "id": "men-59-ho-david",
@@ -1737,7 +2799,13 @@
       "countryName": "Canada",
       "weightCategoryId": "men-59",
       "seedTotalKg": 600,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "David Ho"
+        }
+      ]
     },
     {
       "id": "men-59-huang-wei-chen",
@@ -1746,7 +2814,13 @@
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-59",
       "seedTotalKg": 577.5,
-      "countryCode": "TW"
+      "countryCode": "TW",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Wei-Chen Huang"
+        }
+      ]
     },
     {
       "id": "men-59-you-yao-wei",
@@ -1755,7 +2829,13 @@
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-59",
       "seedTotalKg": 570,
-      "countryCode": "TW"
+      "countryCode": "TW",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Yao-Wei You"
+        }
+      ]
     },
     {
       "id": "men-59-cruz-angel",
@@ -1764,7 +2844,13 @@
       "countryName": "Mexico",
       "weightCategoryId": "men-59",
       "seedTotalKg": 570,
-      "countryCode": "MX"
+      "countryCode": "MX",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Angel Cruz"
+        }
+      ]
     },
     {
       "id": "men-59-gelashvili-giorgi",
@@ -1773,7 +2859,13 @@
       "countryName": "Georgia",
       "weightCategoryId": "men-59",
       "seedTotalKg": 562,
-      "countryCode": "GE"
+      "countryCode": "GE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Giorgi Gelashvili"
+        }
+      ]
     },
     {
       "id": "men-59-madera-joenas",
@@ -1782,7 +2874,13 @@
       "countryName": "Australia",
       "weightCategoryId": "men-59",
       "seedTotalKg": 558,
-      "countryCode": "AU"
+      "countryCode": "AU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Joenas Madera"
+        }
+      ]
     },
     {
       "id": "men-59-imamura-ryo",
@@ -1791,7 +2889,13 @@
       "countryName": "Japan",
       "weightCategoryId": "men-59",
       "seedTotalKg": 557.5,
-      "countryCode": "JP"
+      "countryCode": "JP",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ryo Imamura"
+        }
+      ]
     },
     {
       "id": "men-59-santangelo-jacopo",
@@ -1800,7 +2904,13 @@
       "countryName": "Italy",
       "weightCategoryId": "men-59",
       "seedTotalKg": 557.5,
-      "countryCode": "IT"
+      "countryCode": "IT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jacopo Santangelo"
+        }
+      ]
     },
     {
       "id": "men-59-ergin-kemal",
@@ -1809,7 +2919,13 @@
       "countryName": "Netherlands",
       "weightCategoryId": "men-59",
       "seedTotalKg": 535,
-      "countryCode": "NL"
+      "countryCode": "NL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kemal Ergin"
+        }
+      ]
     },
     {
       "id": "men-59-cancel-ivan",
@@ -1818,7 +2934,13 @@
       "countryName": "Puerto Rico",
       "weightCategoryId": "men-59",
       "seedTotalKg": 514,
-      "countryCode": "PR"
+      "countryCode": "PR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ivan Cancel"
+        }
+      ]
     },
     {
       "id": "men-59-flores-jose",
@@ -1827,7 +2949,13 @@
       "countryName": "New Zealand",
       "weightCategoryId": "men-59",
       "seedTotalKg": 500,
-      "countryCode": "NZ"
+      "countryCode": "NZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jose Flores"
+        }
+      ]
     },
     {
       "id": "men-66-bakkelund-kjell",
@@ -1851,7 +2979,13 @@
       "countryName": "US Virgin Islands",
       "weightCategoryId": "men-66",
       "seedTotalKg": 720,
-      "countryCode": "VI"
+      "countryCode": "VI",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Joseph Jordan"
+        }
+      ]
     },
     {
       "id": "men-66-ushiyama-kyota",
@@ -1860,7 +2994,13 @@
       "countryName": "Japan",
       "weightCategoryId": "men-66",
       "seedTotalKg": 717.5,
-      "countryCode": "JP"
+      "countryCode": "JP",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kyota Ushiyama"
+        }
+      ]
     },
     {
       "id": "men-66-nikolai-austin",
@@ -1869,7 +3009,13 @@
       "countryName": "United States",
       "weightCategoryId": "men-66",
       "seedTotalKg": 710,
-      "countryCode": "US"
+      "countryCode": "US",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Austin Nikolai"
+        }
+      ]
     },
     {
       "id": "men-66-jimenez-santos",
@@ -1878,7 +3024,13 @@
       "countryName": "Mexico",
       "weightCategoryId": "men-66",
       "seedTotalKg": 685,
-      "countryCode": "MX"
+      "countryCode": "MX",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Santos Jimenez"
+        }
+      ]
     },
     {
       "id": "men-66-satake-yusuke",
@@ -1887,7 +3039,13 @@
       "countryName": "Japan",
       "weightCategoryId": "men-66",
       "seedTotalKg": 685,
-      "countryCode": "JP"
+      "countryCode": "JP",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Yusuke Satake"
+        }
+      ]
     },
     {
       "id": "men-66-castillo-carlos",
@@ -1896,7 +3054,13 @@
       "countryName": "Canada",
       "weightCategoryId": "men-66",
       "seedTotalKg": 667.5,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Carlos Castillo"
+        }
+      ]
     },
     {
       "id": "men-66-ong-wei",
@@ -1905,7 +3069,13 @@
       "countryName": "Singapore",
       "weightCategoryId": "men-66",
       "seedTotalKg": 662.5,
-      "countryCode": "SG"
+      "countryCode": "SG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Wei Ong"
+        }
+      ]
     },
     {
       "id": "men-66-simonelli-mirko",
@@ -1914,7 +3084,13 @@
       "countryName": "Italy",
       "weightCategoryId": "men-66",
       "seedTotalKg": 660.5,
-      "countryCode": "IT"
+      "countryCode": "IT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mirko Simonelli"
+        }
+      ]
     },
     {
       "id": "men-66-catena-joel",
@@ -1923,7 +3099,13 @@
       "countryName": "Austria",
       "weightCategoryId": "men-66",
       "seedTotalKg": 660,
-      "countryCode": "AT"
+      "countryCode": "AT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Joel Catena"
+        }
+      ]
     },
     {
       "id": "men-66-liatsis-marios",
@@ -1932,7 +3114,13 @@
       "countryName": "Greece",
       "weightCategoryId": "men-66",
       "seedTotalKg": 653,
-      "countryCode": "GR"
+      "countryCode": "GR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Marios Liatsis"
+        }
+      ]
     },
     {
       "id": "men-66-sgro-julian",
@@ -1941,7 +3129,13 @@
       "countryName": "Australia",
       "weightCategoryId": "men-66",
       "seedTotalKg": 627.5,
-      "countryCode": "AU"
+      "countryCode": "AU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Julian Sgro"
+        }
+      ]
     },
     {
       "id": "men-66-luu-joshua",
@@ -1950,7 +3144,13 @@
       "countryName": "Australia",
       "weightCategoryId": "men-66",
       "seedTotalKg": 625,
-      "countryCode": "AU"
+      "countryCode": "AU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Joshua Luu"
+        }
+      ]
     },
     {
       "id": "men-66-zeng-wei-xiang",
@@ -1959,7 +3159,13 @@
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-66",
       "seedTotalKg": 610,
-      "countryCode": "TW"
+      "countryCode": "TW",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Wei-Xiang Zeng"
+        }
+      ]
     },
     {
       "id": "men-66-ghizoni-gabriel",
@@ -1968,7 +3174,13 @@
       "countryName": "Brazil",
       "weightCategoryId": "men-66",
       "seedTotalKg": 600,
-      "countryCode": "BR"
+      "countryCode": "BR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Gabriel Ghizoni"
+        }
+      ]
     },
     {
       "id": "men-66-naoussi-ezelgbo-darling-williams",
@@ -1977,7 +3189,13 @@
       "countryName": "Cameroon",
       "weightCategoryId": "men-66",
       "seedTotalKg": 600,
-      "countryCode": "CM"
+      "countryCode": "CM",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Williams Naoussi Ezelgbo Darling"
+        }
+      ]
     },
     {
       "id": "men-66-lin-ching-lun",
@@ -1986,7 +3204,13 @@
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-66",
       "seedTotalKg": 600,
-      "countryCode": "TW"
+      "countryCode": "TW",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ching-Lun Lin"
+        }
+      ]
     },
     {
       "id": "men-74-perkins-austin",
@@ -2010,7 +3234,13 @@
       "countryName": "France",
       "weightCategoryId": "men-74",
       "seedTotalKg": 800.5,
-      "countryCode": "FR"
+      "countryCode": "FR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Balthazar Bertrand"
+        }
+      ]
     },
     {
       "id": "men-74-fan-chun-chia",
@@ -2019,7 +3249,13 @@
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-74",
       "seedTotalKg": 767.5,
-      "countryCode": "TW"
+      "countryCode": "TW",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Chun-Chia Fan"
+        }
+      ]
     },
     {
       "id": "men-74-lee-clinton",
@@ -2028,7 +3264,13 @@
       "countryName": "Singapore",
       "weightCategoryId": "men-74",
       "seedTotalKg": 766,
-      "countryCode": "SG"
+      "countryCode": "SG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Clinton Lee"
+        }
+      ]
     },
     {
       "id": "men-74-lavoie-jacob",
@@ -2037,7 +3279,13 @@
       "countryName": "Canada",
       "weightCategoryId": "men-74",
       "seedTotalKg": 763,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jacob Lavoie"
+        }
+      ]
     },
     {
       "id": "men-74-homer-luke",
@@ -2046,7 +3294,13 @@
       "countryName": "Canada",
       "weightCategoryId": "men-74",
       "seedTotalKg": 763,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Luke Homer"
+        }
+      ]
     },
     {
       "id": "men-74-babaei-somaghi-keyan",
@@ -2055,7 +3309,13 @@
       "countryName": "Australia",
       "weightCategoryId": "men-74",
       "seedTotalKg": 750.5,
-      "countryCode": "AU"
+      "countryCode": "AU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Keyan Babaei-Somaghi"
+        }
+      ]
     },
     {
       "id": "men-74-al-lanqawi-adel",
@@ -2064,7 +3324,13 @@
       "countryName": "Switzerland",
       "weightCategoryId": "men-74",
       "seedTotalKg": 737.5,
-      "countryCode": "CH"
+      "countryCode": "CH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Adel Al Lanqawi"
+        }
+      ]
     },
     {
       "id": "men-74-gimorri-giacomo",
@@ -2073,7 +3339,13 @@
       "countryName": "Italy",
       "weightCategoryId": "men-74",
       "seedTotalKg": 735,
-      "countryCode": "IT"
+      "countryCode": "IT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Giacomo Gimorri"
+        }
+      ]
     },
     {
       "id": "men-74-konstantinou-christos",
@@ -2082,7 +3354,13 @@
       "countryName": "Cyprus",
       "weightCategoryId": "men-74",
       "seedTotalKg": 726.5,
-      "countryCode": "CY"
+      "countryCode": "CY",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Christos Konstantinou"
+        }
+      ]
     },
     {
       "id": "men-74-cheong-cheng",
@@ -2091,7 +3369,13 @@
       "countryName": "Singapore",
       "weightCategoryId": "men-74",
       "seedTotalKg": 720,
-      "countryCode": "SG"
+      "countryCode": "SG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Cheng Cheong"
+        }
+      ]
     },
     {
       "id": "men-74-herraiz-frances-alberto",
@@ -2100,7 +3384,13 @@
       "countryName": "Spain",
       "weightCategoryId": "men-74",
       "seedTotalKg": 717.5,
-      "countryCode": "ES"
+      "countryCode": "ES",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Alberto Herraiz Frances"
+        }
+      ]
     },
     {
       "id": "men-74-cheng-yu-jui",
@@ -2109,7 +3399,13 @@
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-74",
       "seedTotalKg": 702.5,
-      "countryCode": "TW"
+      "countryCode": "TW",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Yu-Jui Cheng"
+        }
+      ]
     },
     {
       "id": "men-74-medjahed-yacine",
@@ -2118,7 +3414,13 @@
       "countryName": "Algeria",
       "weightCategoryId": "men-74",
       "seedTotalKg": 700,
-      "countryCode": "DZ"
+      "countryCode": "DZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Yacine Medjahed"
+        }
+      ]
     },
     {
       "id": "men-74-ola-joshua",
@@ -2127,7 +3429,13 @@
       "countryName": "Ireland",
       "weightCategoryId": "men-74",
       "seedTotalKg": 695,
-      "countryCode": "IE"
+      "countryCode": "IE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Joshua Ola"
+        }
+      ]
     },
     {
       "id": "men-74-rada-karel",
@@ -2136,7 +3444,13 @@
       "countryName": "Czechia",
       "weightCategoryId": "men-74",
       "seedTotalKg": 685,
-      "countryCode": "CZ"
+      "countryCode": "CZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Karel Rada"
+        }
+      ]
     },
     {
       "id": "men-74-saed-awnullah",
@@ -2145,7 +3459,13 @@
       "countryName": "Libya",
       "weightCategoryId": "men-74",
       "seedTotalKg": 685,
-      "countryCode": "LY"
+      "countryCode": "LY",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Awnullah Saed"
+        }
+      ]
     },
     {
       "id": "men-74-strachan-john",
@@ -2154,7 +3474,13 @@
       "countryName": "New Zealand",
       "weightCategoryId": "men-74",
       "seedTotalKg": 650,
-      "countryCode": "NZ"
+      "countryCode": "NZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "John Strachan"
+        }
+      ]
     },
     {
       "id": "men-74-richards-lachlan",
@@ -2163,7 +3489,13 @@
       "countryName": "New Zealand",
       "weightCategoryId": "men-74",
       "seedTotalKg": 642.5,
-      "countryCode": "NZ"
+      "countryCode": "NZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lachlan Richards"
+        }
+      ]
     },
     {
       "id": "men-74-damlamajans-marats",
@@ -2172,7 +3504,13 @@
       "countryName": "Latvia",
       "weightCategoryId": "men-74",
       "seedTotalKg": 625,
-      "countryCode": "LV"
+      "countryCode": "LV",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Marats Damlamajans"
+        }
+      ]
     },
     {
       "id": "men-74-marecki-mateusz",
@@ -2181,7 +3519,13 @@
       "countryName": "Poland",
       "weightCategoryId": "men-74",
       "seedTotalKg": 620,
-      "countryCode": "PL"
+      "countryCode": "PL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mateusz Marecki"
+        }
+      ]
     },
     {
       "id": "men-74-pacerinskis-marius",
@@ -2190,7 +3534,13 @@
       "countryName": "Lithuania",
       "weightCategoryId": "men-74",
       "seedTotalKg": 617.5,
-      "countryCode": "LT"
+      "countryCode": "LT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Marius Pacerinskis"
+        }
+      ]
     },
     {
       "id": "men-74-bledis-gintaras",
@@ -2199,7 +3549,13 @@
       "countryName": "Lithuania",
       "weightCategoryId": "men-74",
       "seedTotalKg": 601,
-      "countryCode": "LT"
+      "countryCode": "LT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Gintaras Bledis"
+        }
+      ]
     },
     {
       "id": "men-74-cruz-leonardo",
@@ -2208,7 +3564,13 @@
       "countryName": "Portugal",
       "weightCategoryId": "men-74",
       "seedTotalKg": 592.5,
-      "countryCode": "PT"
+      "countryCode": "PT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Leonardo Cruz"
+        }
+      ]
     },
     {
       "id": "men-74-maisuradze-giorgi",
@@ -2217,7 +3579,13 @@
       "countryName": "Georgia",
       "weightCategoryId": "men-74",
       "seedTotalKg": 590,
-      "countryCode": "GE"
+      "countryCode": "GE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Giorgi Maisuradze"
+        }
+      ]
     },
     {
       "id": "men-83-borenstein-joseph",
@@ -2241,7 +3609,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "men-83",
       "seedTotalKg": 872.5,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jurins Kengamu"
+        }
+      ]
     },
     {
       "id": "men-83-omisakin-ade",
@@ -2250,7 +3624,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "men-83",
       "seedTotalKg": 842.5,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ade Omisakin"
+        }
+      ]
     },
     {
       "id": "men-83-asein-enahoro",
@@ -2259,7 +3639,13 @@
       "countryName": "Hungary",
       "weightCategoryId": "men-83",
       "seedTotalKg": 832.5,
-      "countryCode": "HU"
+      "countryCode": "HU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Enahoro Asein"
+        }
+      ]
     },
     {
       "id": "men-83-ducret-mathis",
@@ -2268,7 +3654,13 @@
       "countryName": "France",
       "weightCategoryId": "men-83",
       "seedTotalKg": 822.5,
-      "countryCode": "FR"
+      "countryCode": "FR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mathis Ducret"
+        }
+      ]
     },
     {
       "id": "men-83-hotsonyame-kafui",
@@ -2277,7 +3669,13 @@
       "countryName": "Canada",
       "weightCategoryId": "men-83",
       "seedTotalKg": 815,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kafui Hotsonyame"
+        }
+      ]
     },
     {
       "id": "men-83-fernandez-arevalo-andres",
@@ -2286,7 +3684,13 @@
       "countryName": "Spain",
       "weightCategoryId": "men-83",
       "seedTotalKg": 797.5,
-      "countryCode": "ES"
+      "countryCode": "ES",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Andres Fernandez Arevalo"
+        }
+      ]
     },
     {
       "id": "men-83-fornstam-kevin",
@@ -2295,7 +3699,13 @@
       "countryName": "Sweden",
       "weightCategoryId": "men-83",
       "seedTotalKg": 785,
-      "countryCode": "SE"
+      "countryCode": "SE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kevin Fornstam"
+        }
+      ]
     },
     {
       "id": "men-83-rinaldo-marciano-saverio",
@@ -2304,7 +3714,13 @@
       "countryName": "Italy",
       "weightCategoryId": "men-83",
       "seedTotalKg": 780,
-      "countryCode": "IT"
+      "countryCode": "IT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Saverio Rinaldo Marciano"
+        }
+      ]
     },
     {
       "id": "men-83-ampofo-zachariah",
@@ -2313,7 +3729,13 @@
       "countryName": "Germany",
       "weightCategoryId": "men-83",
       "seedTotalKg": 777.5,
-      "countryCode": "DE"
+      "countryCode": "DE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Zachariah Ampofo"
+        }
+      ]
     },
     {
       "id": "men-83-figueroa-contreras-jose",
@@ -2322,7 +3744,13 @@
       "countryName": "Chile",
       "weightCategoryId": "men-83",
       "seedTotalKg": 775.5,
-      "countryCode": "CL"
+      "countryCode": "CL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jose Figueroa Contreras"
+        }
+      ]
     },
     {
       "id": "men-83-kuerzi-patrick",
@@ -2331,7 +3759,13 @@
       "countryName": "Switzerland",
       "weightCategoryId": "men-83",
       "seedTotalKg": 772.5,
-      "countryCode": "CH"
+      "countryCode": "CH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Patrick Kuerzi"
+        }
+      ]
     },
     {
       "id": "men-83-castillo-jose",
@@ -2340,7 +3774,13 @@
       "countryName": "Ecuador",
       "weightCategoryId": "men-83",
       "seedTotalKg": 770,
-      "countryCode": "EC"
+      "countryCode": "EC",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jose Castillo"
+        }
+      ]
     },
     {
       "id": "men-83-el-moukallif-naim",
@@ -2349,7 +3789,13 @@
       "countryName": "Spain",
       "weightCategoryId": "men-83",
       "seedTotalKg": 760,
-      "countryCode": "ES"
+      "countryCode": "ES",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Naim El Moukallif"
+        }
+      ]
     },
     {
       "id": "men-83-verstrepen-tuur",
@@ -2358,7 +3804,13 @@
       "countryName": "Belgium",
       "weightCategoryId": "men-83",
       "seedTotalKg": 752.5,
-      "countryCode": "BE"
+      "countryCode": "BE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Tuur Verstrepen"
+        }
+      ]
     },
     {
       "id": "men-83-techap-fongang",
@@ -2367,7 +3819,13 @@
       "countryName": "Cameroon",
       "weightCategoryId": "men-83",
       "seedTotalKg": 752.5,
-      "countryCode": "CM"
+      "countryCode": "CM",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Fongang Techap"
+        }
+      ]
     },
     {
       "id": "men-83-ishikawa-aoi",
@@ -2376,7 +3834,13 @@
       "countryName": "Japan",
       "weightCategoryId": "men-83",
       "seedTotalKg": 752.5,
-      "countryCode": "JP"
+      "countryCode": "JP",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Aoi Ishikawa"
+        }
+      ]
     },
     {
       "id": "men-83-nagem-mohamed",
@@ -2385,7 +3849,13 @@
       "countryName": "Libya",
       "weightCategoryId": "men-83",
       "seedTotalKg": 750,
-      "countryCode": "LY"
+      "countryCode": "LY",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mohamed Nagem"
+        }
+      ]
     },
     {
       "id": "men-83-hoffmann-daniel",
@@ -2394,7 +3864,13 @@
       "countryName": "Czechia",
       "weightCategoryId": "men-83",
       "seedTotalKg": 745.5,
-      "countryCode": "CZ"
+      "countryCode": "CZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Daniel Hoffmann"
+        }
+      ]
     },
     {
       "id": "men-83-kloch-mathias",
@@ -2403,7 +3879,13 @@
       "countryName": "Denmark",
       "weightCategoryId": "men-83",
       "seedTotalKg": 740,
-      "countryCode": "DK"
+      "countryCode": "DK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mathias Kloch"
+        }
+      ]
     },
     {
       "id": "men-83-kraujutowicz-grzegorz",
@@ -2412,7 +3894,13 @@
       "countryName": "Poland",
       "weightCategoryId": "men-83",
       "seedTotalKg": 735,
-      "countryCode": "PL"
+      "countryCode": "PL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Grzegorz Kraujutowicz"
+        }
+      ]
     },
     {
       "id": "men-83-santos-matheus",
@@ -2421,7 +3909,13 @@
       "countryName": "Brazil",
       "weightCategoryId": "men-83",
       "seedTotalKg": 734,
-      "countryCode": "BR"
+      "countryCode": "BR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Matheus Santos"
+        }
+      ]
     },
     {
       "id": "men-83-alaradi-ali",
@@ -2430,7 +3924,13 @@
       "countryName": "Kuwait",
       "weightCategoryId": "men-83",
       "seedTotalKg": 734,
-      "countryCode": "KW"
+      "countryCode": "KW",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ali Alaradi"
+        }
+      ]
     },
     {
       "id": "men-83-menezes-guilherme",
@@ -2439,7 +3939,13 @@
       "countryName": "Brazil",
       "weightCategoryId": "men-83",
       "seedTotalKg": 732.5,
-      "countryCode": "BR"
+      "countryCode": "BR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Guilherme Menezes"
+        }
+      ]
     },
     {
       "id": "men-83-chong-kenzo",
@@ -2448,7 +3954,13 @@
       "countryName": "Singapore",
       "weightCategoryId": "men-83",
       "seedTotalKg": 730,
-      "countryCode": "SG"
+      "countryCode": "SG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kenzo Chong"
+        }
+      ]
     },
     {
       "id": "men-83-boulos-christophe",
@@ -2457,7 +3969,13 @@
       "countryName": "Qatar",
       "weightCategoryId": "men-83",
       "seedTotalKg": 722.5,
-      "countryCode": "QA"
+      "countryCode": "QA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Christophe Boulos"
+        }
+      ]
     },
     {
       "id": "men-83-petcu-andrei",
@@ -2466,7 +3984,13 @@
       "countryName": "Romania",
       "weightCategoryId": "men-83",
       "seedTotalKg": 720,
-      "countryCode": "RO"
+      "countryCode": "RO",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Andrei Petcu"
+        }
+      ]
     },
     {
       "id": "men-83-cheng-wee-herng-donovan",
@@ -2475,7 +3999,13 @@
       "countryName": "Singapore",
       "weightCategoryId": "men-83",
       "seedTotalKg": 712.5,
-      "countryCode": "SG"
+      "countryCode": "SG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Donovan Cheng Wee Herng"
+        }
+      ]
     },
     {
       "id": "men-83-xiao-tianyu",
@@ -2484,7 +4014,13 @@
       "countryName": "China",
       "weightCategoryId": "men-83",
       "seedTotalKg": 710,
-      "countryCode": "CN"
+      "countryCode": "CN",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Tianyu Xiao"
+        }
+      ]
     },
     {
       "id": "men-83-hlynsson-fridbjorn",
@@ -2493,7 +4029,13 @@
       "countryName": "Iceland",
       "weightCategoryId": "men-83",
       "seedTotalKg": 707.5,
-      "countryCode": "IS"
+      "countryCode": "IS",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Fridbjorn Hlynsson"
+        }
+      ]
     },
     {
       "id": "men-83-mur-urban",
@@ -2502,7 +4044,13 @@
       "countryName": "Slovenia",
       "weightCategoryId": "men-83",
       "seedTotalKg": 705,
-      "countryCode": "SI"
+      "countryCode": "SI",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Urban Mur"
+        }
+      ]
     },
     {
       "id": "men-83-ruscitti-karim",
@@ -2511,7 +4059,13 @@
       "countryName": "Qatar",
       "weightCategoryId": "men-83",
       "seedTotalKg": 700,
-      "countryCode": "QA"
+      "countryCode": "QA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Karim Ruscitti"
+        }
+      ]
     },
     {
       "id": "men-83-arnaud-alexandre",
@@ -2520,7 +4074,13 @@
       "countryName": "Switzerland",
       "weightCategoryId": "men-83",
       "seedTotalKg": 695,
-      "countryCode": "CH"
+      "countryCode": "CH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Alexandre Arnaud"
+        }
+      ]
     },
     {
       "id": "men-83-kuzmic-marko",
@@ -2529,7 +4089,13 @@
       "countryName": "Croatia",
       "weightCategoryId": "men-83",
       "seedTotalKg": 687.5,
-      "countryCode": "HR"
+      "countryCode": "HR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Marko Kuzmic"
+        }
+      ]
     },
     {
       "id": "men-83-asmonas-arnas",
@@ -2538,7 +4104,13 @@
       "countryName": "Lithuania",
       "weightCategoryId": "men-83",
       "seedTotalKg": 677.5,
-      "countryCode": "LT"
+      "countryCode": "LT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Arnas Asmonas"
+        }
+      ]
     },
     {
       "id": "men-83-henderson-samuel",
@@ -2547,7 +4119,13 @@
       "countryName": "New Zealand",
       "weightCategoryId": "men-83",
       "seedTotalKg": 677.5,
-      "countryCode": "NZ"
+      "countryCode": "NZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Samuel Henderson"
+        }
+      ]
     },
     {
       "id": "men-93-ball-william",
@@ -2556,7 +4134,13 @@
       "countryName": "United States",
       "weightCategoryId": "men-93",
       "seedTotalKg": 930,
-      "countryCode": "US"
+      "countryCode": "US",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "William Ball"
+        }
+      ]
     },
     {
       "id": "men-93-krastev-emil",
@@ -2565,7 +4149,13 @@
       "countryName": "Bulgaria",
       "weightCategoryId": "men-93",
       "seedTotalKg": 920,
-      "countryCode": "BG"
+      "countryCode": "BG",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Emil Krastev"
+        }
+      ]
     },
     {
       "id": "men-93-hedlund-gustav",
@@ -2574,7 +4164,13 @@
       "countryName": "Sweden",
       "weightCategoryId": "men-93",
       "seedTotalKg": 910,
-      "countryCode": "SE"
+      "countryCode": "SE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Gustav Hedlund"
+        }
+      ]
     },
     {
       "id": "men-93-nouari-aimene",
@@ -2583,7 +4179,13 @@
       "countryName": "Algeria",
       "weightCategoryId": "men-93",
       "seedTotalKg": 900,
-      "countryCode": "DZ"
+      "countryCode": "DZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Aimene Nouari"
+        }
+      ]
     },
     {
       "id": "men-93-ayandokun-christian",
@@ -2592,7 +4194,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "men-93",
       "seedTotalKg": 882.5,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Christian Ayandokun"
+        }
+      ]
     },
     {
       "id": "men-93-antwi-kwaku",
@@ -2601,7 +4209,13 @@
       "countryName": "Canada",
       "weightCategoryId": "men-93",
       "seedTotalKg": 865,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kwaku Antwi"
+        }
+      ]
     },
     {
       "id": "men-93-baiden-richmond",
@@ -2610,7 +4224,13 @@
       "countryName": "France",
       "weightCategoryId": "men-93",
       "seedTotalKg": 840.5,
-      "countryCode": "FR"
+      "countryCode": "FR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Richmond Baiden"
+        }
+      ]
     },
     {
       "id": "men-93-balangwe-bakinien",
@@ -2619,7 +4239,13 @@
       "countryName": "Cameroon",
       "weightCategoryId": "men-93",
       "seedTotalKg": 837.5,
-      "countryCode": "CM"
+      "countryCode": "CM",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bakinien Balangwe"
+        }
+      ]
     },
     {
       "id": "men-93-van-bezooijen-richard",
@@ -2628,7 +4254,13 @@
       "countryName": "Netherlands",
       "weightCategoryId": "men-93",
       "seedTotalKg": 815,
-      "countryCode": "NL"
+      "countryCode": "NL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Richard van Bezooijen"
+        }
+      ]
     },
     {
       "id": "men-93-wortel-john",
@@ -2637,7 +4269,13 @@
       "countryName": "Netherlands",
       "weightCategoryId": "men-93",
       "seedTotalKg": 805,
-      "countryCode": "NL"
+      "countryCode": "NL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "John Wortel"
+        }
+      ]
     },
     {
       "id": "men-93-tsuruya-shimon",
@@ -2646,7 +4284,13 @@
       "countryName": "Japan",
       "weightCategoryId": "men-93",
       "seedTotalKg": 802.5,
-      "countryCode": "JP"
+      "countryCode": "JP",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Shimon Tsuruya"
+        }
+      ]
     },
     {
       "id": "men-93-blackmore-aaron",
@@ -2655,7 +4299,13 @@
       "countryName": "Ireland",
       "weightCategoryId": "men-93",
       "seedTotalKg": 802.5,
-      "countryCode": "IE"
+      "countryCode": "IE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Aaron Blackmore"
+        }
+      ]
     },
     {
       "id": "men-93-hermisdorf-leonardo",
@@ -2664,7 +4314,13 @@
       "countryName": "Brazil",
       "weightCategoryId": "men-93",
       "seedTotalKg": 800,
-      "countryCode": "BR"
+      "countryCode": "BR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Leonardo Hermisdorf"
+        }
+      ]
     },
     {
       "id": "men-93-salim-khalleefah",
@@ -2673,7 +4329,13 @@
       "countryName": "Libya",
       "weightCategoryId": "men-93",
       "seedTotalKg": 790,
-      "countryCode": "LY"
+      "countryCode": "LY",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Khalleefah Salim"
+        }
+      ]
     },
     {
       "id": "men-93-zerai-elyes",
@@ -2682,7 +4344,13 @@
       "countryName": "Tunisia",
       "weightCategoryId": "men-93",
       "seedTotalKg": 780,
-      "countryCode": "TN"
+      "countryCode": "TN",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Elyes Zerai"
+        }
+      ]
     },
     {
       "id": "men-93-gortz-guilherme",
@@ -2691,7 +4359,13 @@
       "countryName": "Brazil",
       "weightCategoryId": "men-93",
       "seedTotalKg": 777.5,
-      "countryCode": "BR"
+      "countryCode": "BR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Guilherme Gortz"
+        }
+      ]
     },
     {
       "id": "men-93-ussing-daniel",
@@ -2700,7 +4374,13 @@
       "countryName": "Denmark",
       "weightCategoryId": "men-93",
       "seedTotalKg": 770,
-      "countryCode": "DK"
+      "countryCode": "DK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Daniel Ussing"
+        }
+      ]
     },
     {
       "id": "men-93-zabeau-tom",
@@ -2709,7 +4389,13 @@
       "countryName": "Belgium",
       "weightCategoryId": "men-93",
       "seedTotalKg": 740,
-      "countryCode": "BE"
+      "countryCode": "BE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Tom Zabeau"
+        }
+      ]
     },
     {
       "id": "men-93-gonzalez-jose",
@@ -2718,7 +4404,13 @@
       "countryName": "Mexico",
       "weightCategoryId": "men-93",
       "seedTotalKg": 740,
-      "countryCode": "MX"
+      "countryCode": "MX",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jose Gonzalez"
+        }
+      ]
     },
     {
       "id": "men-93-choi-junwon",
@@ -2727,7 +4419,13 @@
       "countryName": "South Korea",
       "weightCategoryId": "men-93",
       "seedTotalKg": 739,
-      "countryCode": "KR"
+      "countryCode": "KR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Junwon Choi"
+        }
+      ]
     },
     {
       "id": "men-93-hapon-danyil",
@@ -2736,7 +4434,13 @@
       "countryName": "Poland",
       "weightCategoryId": "men-93",
       "seedTotalKg": 712.5,
-      "countryCode": "PL"
+      "countryCode": "PL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Danyil Hapon"
+        }
+      ]
     },
     {
       "id": "men-93-law-tak-kan-duncan",
@@ -2745,7 +4449,13 @@
       "countryName": "Hong Kong, China",
       "weightCategoryId": "men-93",
       "seedTotalKg": 710,
-      "countryCode": "HK"
+      "countryCode": "HK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Duncan Law Tak Kan"
+        }
+      ]
     },
     {
       "id": "men-93-alsabri-taha",
@@ -2754,7 +4464,13 @@
       "countryName": "Libya",
       "weightCategoryId": "men-93",
       "seedTotalKg": 705,
-      "countryCode": "LY"
+      "countryCode": "LY",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Taha Alsabri"
+        }
+      ]
     },
     {
       "id": "men-93-klimka-airidas",
@@ -2763,7 +4479,13 @@
       "countryName": "Lithuania",
       "weightCategoryId": "men-93",
       "seedTotalKg": 695,
-      "countryCode": "LT"
+      "countryCode": "LT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Airidas Klimka"
+        }
+      ]
     },
     {
       "id": "men-93-hibsfelds-ricards",
@@ -2772,7 +4494,13 @@
       "countryName": "Latvia",
       "weightCategoryId": "men-93",
       "seedTotalKg": 685,
-      "countryCode": "LV"
+      "countryCode": "LV",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ricards Hibsfelds"
+        }
+      ]
     },
     {
       "id": "men-93-khuzwayo-bandile",
@@ -2781,7 +4509,13 @@
       "countryName": "South Africa",
       "weightCategoryId": "men-93",
       "seedTotalKg": 675,
-      "countryCode": "ZA"
+      "countryCode": "ZA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bandile Khuzwayo"
+        }
+      ]
     },
     {
       "id": "men-105-mcnaughton-anthony",
@@ -2805,7 +4539,13 @@
       "countryName": "Ukraine",
       "weightCategoryId": "men-105",
       "seedTotalKg": 940.5,
-      "countryCode": "UA"
+      "countryCode": "UA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Anatolii Novopysmennyi"
+        }
+      ]
     },
     {
       "id": "men-105-norling-emil",
@@ -2814,7 +4554,13 @@
       "countryName": "Sweden",
       "weightCategoryId": "men-105",
       "seedTotalKg": 935,
-      "countryCode": "SE"
+      "countryCode": "SE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Emil Norling"
+        }
+      ]
     },
     {
       "id": "men-105-tchandeu-noundou-eliam",
@@ -2823,7 +4569,13 @@
       "countryName": "France",
       "weightCategoryId": "men-105",
       "seedTotalKg": 927,
-      "countryCode": "FR"
+      "countryCode": "FR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Eliam Tchandeu Noundou"
+        }
+      ]
     },
     {
       "id": "men-105-stergakis-regin",
@@ -2832,7 +4584,13 @@
       "countryName": "Denmark",
       "weightCategoryId": "men-105",
       "seedTotalKg": 922.5,
-      "countryCode": "DK"
+      "countryCode": "DK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Regin Stergakis"
+        }
+      ]
     },
     {
       "id": "men-105-sboui-fares",
@@ -2841,7 +4599,13 @@
       "countryName": "Tunisia",
       "weightCategoryId": "men-105",
       "seedTotalKg": 917.5,
-      "countryCode": "TN"
+      "countryCode": "TN",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Fares Sboui"
+        }
+      ]
     },
     {
       "id": "men-105-massiah-nathaniel",
@@ -2850,7 +4614,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "men-105",
       "seedTotalKg": 915,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Nathaniel Massiah"
+        }
+      ]
     },
     {
       "id": "men-105-amponsah-ezeiel",
@@ -2859,7 +4629,13 @@
       "countryName": "Canada",
       "weightCategoryId": "men-105",
       "seedTotalKg": 885,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ezeiel Amponsah"
+        }
+      ]
     },
     {
       "id": "men-105-salgado-diego",
@@ -2868,7 +4644,13 @@
       "countryName": "Mexico",
       "weightCategoryId": "men-105",
       "seedTotalKg": 878.5,
-      "countryCode": "MX"
+      "countryCode": "MX",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Diego Salgado"
+        }
+      ]
     },
     {
       "id": "men-105-bentalha-ilyes",
@@ -2877,7 +4659,13 @@
       "countryName": "Algeria",
       "weightCategoryId": "men-105",
       "seedTotalKg": 867.5,
-      "countryCode": "DZ"
+      "countryCode": "DZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ilyes Bentalha"
+        }
+      ]
     },
     {
       "id": "men-105-duecker-bjarne",
@@ -2886,7 +4674,13 @@
       "countryName": "Germany",
       "weightCategoryId": "men-105",
       "seedTotalKg": 865,
-      "countryCode": "DE"
+      "countryCode": "DE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bjarne Duecker"
+        }
+      ]
     },
     {
       "id": "men-105-celis-jonathan",
@@ -2895,7 +4689,13 @@
       "countryName": "Belgium",
       "weightCategoryId": "men-105",
       "seedTotalKg": 852.5,
-      "countryCode": "BE"
+      "countryCode": "BE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jonathan Celis"
+        }
+      ]
     },
     {
       "id": "men-105-slump-jacob",
@@ -2904,7 +4704,13 @@
       "countryName": "Netherlands",
       "weightCategoryId": "men-105",
       "seedTotalKg": 847.5,
-      "countryCode": "NL"
+      "countryCode": "NL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jacob Slump"
+        }
+      ]
     },
     {
       "id": "men-105-hamich-imad",
@@ -2913,7 +4719,13 @@
       "countryName": "Belgium",
       "weightCategoryId": "men-105",
       "seedTotalKg": 837.5,
-      "countryCode": "BE"
+      "countryCode": "BE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Imad Hamich"
+        }
+      ]
     },
     {
       "id": "men-105-nwaezeigwe-kenneth",
@@ -2922,7 +4734,13 @@
       "countryName": "Ireland",
       "weightCategoryId": "men-105",
       "seedTotalKg": 832.5,
-      "countryCode": "IE"
+      "countryCode": "IE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kenneth Nwaezeigwe"
+        }
+      ]
     },
     {
       "id": "men-105-forsberg-samuel",
@@ -2931,7 +4749,13 @@
       "countryName": "Australia",
       "weightCategoryId": "men-105",
       "seedTotalKg": 827.5,
-      "countryCode": "AU"
+      "countryCode": "AU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Samuel Forsberg"
+        }
+      ]
     },
     {
       "id": "men-105-karason-alexander",
@@ -2940,7 +4764,13 @@
       "countryName": "Iceland",
       "weightCategoryId": "men-105",
       "seedTotalKg": 820,
-      "countryCode": "IS"
+      "countryCode": "IS",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Alexander Karason"
+        }
+      ]
     },
     {
       "id": "men-105-ibanez-pawathon-bernardo",
@@ -2949,7 +4779,13 @@
       "countryName": "Chile",
       "weightCategoryId": "men-105",
       "seedTotalKg": 817.5,
-      "countryCode": "CL"
+      "countryCode": "CL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bernardo Ibanez Pawathon"
+        }
+      ]
     },
     {
       "id": "men-105-henry-matthew",
@@ -2958,7 +4794,13 @@
       "countryName": "Ireland",
       "weightCategoryId": "men-105",
       "seedTotalKg": 810,
-      "countryCode": "IE"
+      "countryCode": "IE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Matthew Henry"
+        }
+      ]
     },
     {
       "id": "men-105-erik-mata",
@@ -2967,7 +4809,13 @@
       "countryName": "Hungary",
       "weightCategoryId": "men-105",
       "seedTotalKg": 802.5,
-      "countryCode": "HU"
+      "countryCode": "HU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mata Erik"
+        }
+      ]
     },
     {
       "id": "men-105-sant-anna-rodrigo",
@@ -2976,7 +4824,13 @@
       "countryName": "Brazil",
       "weightCategoryId": "men-105",
       "seedTotalKg": 802.5,
-      "countryCode": "BR"
+      "countryCode": "BR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Rodrigo Sant'anna"
+        }
+      ]
     },
     {
       "id": "men-105-franek-hynek",
@@ -2985,7 +4839,13 @@
       "countryName": "Czechia",
       "weightCategoryId": "men-105",
       "seedTotalKg": 795,
-      "countryCode": "CZ"
+      "countryCode": "CZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Hynek Franek"
+        }
+      ]
     },
     {
       "id": "men-105-aldirsi-mohammed",
@@ -2994,7 +4854,13 @@
       "countryName": "Libya",
       "weightCategoryId": "men-105",
       "seedTotalKg": 790,
-      "countryCode": "LY"
+      "countryCode": "LY",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mohammed Aldirsi"
+        }
+      ]
     },
     {
       "id": "men-105-norkus-martynas",
@@ -3003,7 +4869,13 @@
       "countryName": "Lithuania",
       "weightCategoryId": "men-105",
       "seedTotalKg": 770,
-      "countryCode": "LT"
+      "countryCode": "LT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Martynas Norkus"
+        }
+      ]
     },
     {
       "id": "men-105-boss-dominic",
@@ -3012,7 +4884,13 @@
       "countryName": "Switzerland",
       "weightCategoryId": "men-105",
       "seedTotalKg": 735,
-      "countryCode": "CH"
+      "countryCode": "CH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Dominic Boss"
+        }
+      ]
     },
     {
       "id": "men-105-jung-siwoo",
@@ -3021,7 +4899,13 @@
       "countryName": "South Korea",
       "weightCategoryId": "men-105",
       "seedTotalKg": 667.5,
-      "countryCode": "KR"
+      "countryCode": "KR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Siwoo Jung"
+        }
+      ]
     },
     {
       "id": "men-105-choi-seungwan",
@@ -3030,7 +4914,13 @@
       "countryName": "South Korea",
       "weightCategoryId": "men-105",
       "seedTotalKg": 632.5,
-      "countryCode": "KR"
+      "countryCode": "KR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Seungwan Choi"
+        }
+      ]
     },
     {
       "id": "men-105-de-paula-vitor",
@@ -3039,7 +4929,13 @@
       "countryName": "Brazil",
       "weightCategoryId": "men-105",
       "seedTotalKg": 75,
-      "countryCode": "BR"
+      "countryCode": "BR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Vitor de Paula"
+        }
+      ]
     },
     {
       "id": "men-105-tomko-patrik",
@@ -3048,7 +4944,13 @@
       "countryName": "Slovakia",
       "weightCategoryId": "men-105",
       "seedTotalKg": 75,
-      "countryCode": "SK"
+      "countryCode": "SK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Patrik Tomko"
+        }
+      ]
     },
     {
       "id": "men-120-hunte-rondel",
@@ -3072,7 +4974,13 @@
       "countryName": "Lebanon",
       "weightCategoryId": "men-120",
       "seedTotalKg": 984,
-      "countryCode": "LB"
+      "countryCode": "LB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Etienne El Chaer"
+        }
+      ]
     },
     {
       "id": "men-120-rouska-ashton",
@@ -3081,7 +4989,13 @@
       "countryName": "United States",
       "weightCategoryId": "men-120",
       "seedTotalKg": 983,
-      "countryCode": "US"
+      "countryCode": "US",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ashton Rouska"
+        }
+      ]
     },
     {
       "id": "men-120-mcdonald-joseph",
@@ -3090,7 +5004,13 @@
       "countryName": "Trinidad and Tobago",
       "weightCategoryId": "men-120",
       "seedTotalKg": 975,
-      "countryCode": "TT"
+      "countryCode": "TT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Joseph McDonald"
+        }
+      ]
     },
     {
       "id": "men-120-ngoka-joshua",
@@ -3099,7 +5019,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "men-120",
       "seedTotalKg": 965.5,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Joshua Ngoka"
+        }
+      ]
     },
     {
       "id": "men-120-melnychuk-taras",
@@ -3108,7 +5034,13 @@
       "countryName": "Ukraine",
       "weightCategoryId": "men-120",
       "seedTotalKg": 957.5,
-      "countryCode": "UA"
+      "countryCode": "UA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Taras Melnychuk"
+        }
+      ]
     },
     {
       "id": "men-120-wiseman-lucas",
@@ -3117,7 +5049,13 @@
       "countryName": "Canada",
       "weightCategoryId": "men-120",
       "seedTotalKg": 951.5,
-      "countryCode": "CA"
+      "countryCode": "CA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lucas Wiseman"
+        }
+      ]
     },
     {
       "id": "men-120-de-rohden-antoine",
@@ -3126,7 +5064,13 @@
       "countryName": "France",
       "weightCategoryId": "men-120",
       "seedTotalKg": 947.5,
-      "countryCode": "FR"
+      "countryCode": "FR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Antoine de Rohden"
+        }
+      ]
     },
     {
       "id": "men-120-sulayman-abdul",
@@ -3135,7 +5079,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "men-120",
       "seedTotalKg": 945,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Abdul Sulayman"
+        }
+      ]
     },
     {
       "id": "men-120-sahad-mohamed",
@@ -3144,7 +5094,13 @@
       "countryName": "Algeria",
       "weightCategoryId": "men-120",
       "seedTotalKg": 945,
-      "countryCode": "DZ"
+      "countryCode": "DZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mohamed Sahad"
+        }
+      ]
     },
     {
       "id": "men-120-wiendieck-jonah",
@@ -3153,7 +5109,13 @@
       "countryName": "Germany",
       "weightCategoryId": "men-120",
       "seedTotalKg": 938,
-      "countryCode": "DE"
+      "countryCode": "DE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jonah Wiendieck"
+        }
+      ]
     },
     {
       "id": "men-120-sekenofsky-baruch",
@@ -3162,7 +5124,13 @@
       "countryName": "Israel",
       "weightCategoryId": "men-120",
       "seedTotalKg": 925,
-      "countryCode": "IL"
+      "countryCode": "IL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Baruch Sekenofsky"
+        }
+      ]
     },
     {
       "id": "men-120-due-laurits",
@@ -3171,7 +5139,13 @@
       "countryName": "Denmark",
       "weightCategoryId": "men-120",
       "seedTotalKg": 867.5,
-      "countryCode": "DK"
+      "countryCode": "DK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Laurits Due"
+        }
+      ]
     },
     {
       "id": "men-120-vogelius-jesper",
@@ -3180,7 +5154,13 @@
       "countryName": "Denmark",
       "weightCategoryId": "men-120",
       "seedTotalKg": 862.5,
-      "countryCode": "DK"
+      "countryCode": "DK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jesper Vogelius"
+        }
+      ]
     },
     {
       "id": "men-120-strubbe-jochen",
@@ -3189,7 +5169,13 @@
       "countryName": "Belgium",
       "weightCategoryId": "men-120",
       "seedTotalKg": 852.5,
-      "countryCode": "BE"
+      "countryCode": "BE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jochen Strubbe"
+        }
+      ]
     },
     {
       "id": "men-120-graham-heath",
@@ -3198,7 +5184,13 @@
       "countryName": "New Zealand",
       "weightCategoryId": "men-120",
       "seedTotalKg": 850,
-      "countryCode": "NZ"
+      "countryCode": "NZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Heath Graham"
+        }
+      ]
     },
     {
       "id": "men-120-pola-daniele",
@@ -3207,7 +5199,13 @@
       "countryName": "Switzerland",
       "weightCategoryId": "men-120",
       "seedTotalKg": 850,
-      "countryCode": "CH"
+      "countryCode": "CH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Daniele Pola"
+        }
+      ]
     },
     {
       "id": "men-120-krisztian-cseszko",
@@ -3216,7 +5214,13 @@
       "countryName": "Hungary",
       "weightCategoryId": "men-120",
       "seedTotalKg": 840,
-      "countryCode": "HU"
+      "countryCode": "HU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Cseszko Krisztian"
+        }
+      ]
     },
     {
       "id": "men-120-naoussi-nembot-ano",
@@ -3225,7 +5229,13 @@
       "countryName": "Cameroon",
       "weightCategoryId": "men-120",
       "seedTotalKg": 835,
-      "countryCode": "CM"
+      "countryCode": "CM",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ano Naoussi Nembot"
+        }
+      ]
     },
     {
       "id": "men-120-juzups-maris",
@@ -3234,7 +5244,13 @@
       "countryName": "Latvia",
       "weightCategoryId": "men-120",
       "seedTotalKg": 832.5,
-      "countryCode": "LV"
+      "countryCode": "LV",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Maris Juzups"
+        }
+      ]
     },
     {
       "id": "men-120-penco-joseph",
@@ -3243,7 +5259,13 @@
       "countryName": "Ireland",
       "weightCategoryId": "men-120",
       "seedTotalKg": 825.5,
-      "countryCode": "IE"
+      "countryCode": "IE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Joseph Penco"
+        }
+      ]
     },
     {
       "id": "men-120-stell-mark",
@@ -3252,7 +5274,13 @@
       "countryName": "Ireland",
       "weightCategoryId": "men-120",
       "seedTotalKg": 825,
-      "countryCode": "IE"
+      "countryCode": "IE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mark Stell"
+        }
+      ]
     },
     {
       "id": "men-120-sigurdsson-helgi",
@@ -3261,7 +5289,13 @@
       "countryName": "Iceland",
       "weightCategoryId": "men-120",
       "seedTotalKg": 812.5,
-      "countryCode": "IS"
+      "countryCode": "IS",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Helgi Sigurdsson"
+        }
+      ]
     },
     {
       "id": "men-120-motoki-ayuto",
@@ -3270,7 +5304,13 @@
       "countryName": "Japan",
       "weightCategoryId": "men-120",
       "seedTotalKg": 800,
-      "countryCode": "JP"
+      "countryCode": "JP",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ayuto Motoki"
+        }
+      ]
     },
     {
       "id": "men-120-karkusashvili-rubeni",
@@ -3279,7 +5319,13 @@
       "countryName": "Georgia",
       "weightCategoryId": "men-120",
       "seedTotalKg": 782.5,
-      "countryCode": "GE"
+      "countryCode": "GE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Rubeni Karkusashvili"
+        }
+      ]
     },
     {
       "id": "men-120-thoma-thomas",
@@ -3288,7 +5334,13 @@
       "countryName": "Switzerland",
       "weightCategoryId": "men-120",
       "seedTotalKg": 765,
-      "countryCode": "CH"
+      "countryCode": "CH",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Thomas Thoma"
+        }
+      ]
     },
     {
       "id": "men-120-raw-simon",
@@ -3297,7 +5349,13 @@
       "countryName": "South Africa",
       "weightCategoryId": "men-120",
       "seedTotalKg": 762.5,
-      "countryCode": "ZA"
+      "countryCode": "ZA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Simon Raw"
+        }
+      ]
     },
     {
       "id": "men-120plus-olivares-jesus",
@@ -3321,7 +5379,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 1032.5,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ajay Sharma"
+        }
+      ]
     },
     {
       "id": "men-120plus-kocak-cenk",
@@ -3330,7 +5394,13 @@
       "countryName": "Turkiye",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 1015,
-      "countryCode": "TR"
+      "countryCode": "TR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Cenk Kocak"
+        }
+      ]
     },
     {
       "id": "men-120plus-holinei-viktor",
@@ -3339,7 +5409,13 @@
       "countryName": "Ukraine",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 993.5,
-      "countryCode": "UA"
+      "countryCode": "UA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Viktor Holinei"
+        }
+      ]
     },
     {
       "id": "men-120plus-samkharadze-temur",
@@ -3348,7 +5424,13 @@
       "countryName": "Georgia",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 985,
-      "countryCode": "GE"
+      "countryCode": "GE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Temur Samkharadze"
+        }
+      ]
     },
     {
       "id": "men-120plus-mansukoski-nuutti",
@@ -3357,7 +5439,13 @@
       "countryName": "Finland",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 967.5,
-      "countryCode": "FI"
+      "countryCode": "FI",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Nuutti Mansukoski"
+        }
+      ]
     },
     {
       "id": "men-120plus-sutterud-westbye-bjorn",
@@ -3366,7 +5454,13 @@
       "countryName": "Norway",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 967.5,
-      "countryCode": "NO"
+      "countryCode": "NO",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bjorn Sutterud Westbye"
+        }
+      ]
     },
     {
       "id": "men-120plus-patschke-markus",
@@ -3375,7 +5469,13 @@
       "countryName": "Germany",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 965,
-      "countryCode": "DE"
+      "countryCode": "DE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Markus Patschke"
+        }
+      ]
     },
     {
       "id": "men-120plus-fidan-hussein",
@@ -3384,7 +5484,13 @@
       "countryName": "Libya",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 955,
-      "countryCode": "LY"
+      "countryCode": "LY",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Hussein Fidan"
+        }
+      ]
     },
     {
       "id": "men-120plus-reinmuth-tony",
@@ -3393,7 +5499,13 @@
       "countryName": "Australia",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 950.5,
-      "countryCode": "AU"
+      "countryCode": "AU",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Tony Reinmuth"
+        }
+      ]
     },
     {
       "id": "men-120plus-wang-pei-yu",
@@ -3402,7 +5514,13 @@
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 950,
-      "countryCode": "TW"
+      "countryCode": "TW",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Pei-Yu Wang"
+        }
+      ]
     },
     {
       "id": "men-120plus-soares-alexis",
@@ -3411,7 +5529,13 @@
       "countryName": "France",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 927.5,
-      "countryCode": "FR"
+      "countryCode": "FR",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Alexis Soares"
+        }
+      ]
     },
     {
       "id": "men-120plus-simonsen-martin",
@@ -3420,7 +5544,13 @@
       "countryName": "Denmark",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 927.5,
-      "countryCode": "DK"
+      "countryCode": "DK",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Martin Simonsen"
+        }
+      ]
     },
     {
       "id": "men-120plus-voigt-torben",
@@ -3429,7 +5559,13 @@
       "countryName": "Germany",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 920.5,
-      "countryCode": "DE"
+      "countryCode": "DE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Torben Voigt"
+        }
+      ]
     },
     {
       "id": "men-120plus-abousinan-mohammed",
@@ -3438,7 +5574,13 @@
       "countryName": "Libya",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 915,
-      "countryCode": "LY"
+      "countryCode": "LY",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mohammed Abousinan"
+        }
+      ]
     },
     {
       "id": "men-120plus-wu-yi-chiu",
@@ -3447,7 +5589,13 @@
       "countryName": "Chinese Taipei",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 905,
-      "countryCode": "TW"
+      "countryCode": "TW",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Yi-Chiu Wu"
+        }
+      ]
     },
     {
       "id": "men-120plus-lekhal-abdeslam",
@@ -3456,7 +5604,13 @@
       "countryName": "Algeria",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 903,
-      "countryCode": "DZ"
+      "countryCode": "DZ",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Abdeslam Lekhal"
+        }
+      ]
     },
     {
       "id": "men-120plus-hendriks-giel",
@@ -3465,7 +5619,13 @@
       "countryName": "Belgium",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 887.5,
-      "countryCode": "BE"
+      "countryCode": "BE",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Giel Hendriks"
+        }
+      ]
     },
     {
       "id": "men-120plus-juszczyk-jacek",
@@ -3474,7 +5634,13 @@
       "countryName": "Poland",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 880,
-      "countryCode": "PL"
+      "countryCode": "PL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jacek Juszczyk"
+        }
+      ]
     },
     {
       "id": "men-120plus-gecas-tadas",
@@ -3483,7 +5649,13 @@
       "countryName": "Lithuania",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 870,
-      "countryCode": "LT"
+      "countryCode": "LT",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Tadas Gecas"
+        }
+      ]
     },
     {
       "id": "men-120plus-riudalbas-clemente-marc",
@@ -3492,7 +5664,13 @@
       "countryName": "Spain",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 860,
-      "countryCode": "ES"
+      "countryCode": "ES",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Marc Riudalbas Clemente"
+        }
+      ]
     },
     {
       "id": "men-120plus-mardones-meza-sergio-hernan",
@@ -3501,7 +5679,13 @@
       "countryName": "Chile",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 860,
-      "countryCode": "CL"
+      "countryCode": "CL",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Sergio Hernan Mardones Meza"
+        }
+      ]
     },
     {
       "id": "men-120plus-raw-robert",
@@ -3510,7 +5694,13 @@
       "countryName": "South Africa",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 785,
-      "countryCode": "ZA"
+      "countryCode": "ZA",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Robert Raw"
+        }
+      ]
     },
     {
       "id": "men-120plus-berzins-didzis",
@@ -3519,7 +5709,13 @@
       "countryName": "Latvia",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 770,
-      "countryCode": "LV"
+      "countryCode": "LV",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Didzis Berzins"
+        }
+      ]
     },
     {
       "id": "men-120plus-inoue-masaya",
@@ -3528,7 +5724,13 @@
       "countryName": "Japan",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 740,
-      "countryCode": "JP"
+      "countryCode": "JP",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Masaya Inoue"
+        }
+      ]
     },
     {
       "id": "men-120plus-bowring-ray",
@@ -3537,7 +5739,13 @@
       "countryName": "United Kingdom",
       "weightCategoryId": "men-120plus",
       "seedTotalKg": 75,
-      "countryCode": "GB"
+      "countryCode": "GB",
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ray Bowring"
+        }
+      ]
     }
   ],
   "categories": [
