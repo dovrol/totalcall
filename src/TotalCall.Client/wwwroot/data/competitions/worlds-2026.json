@@ -58,7 +58,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Amelie Picher-Plante"
+          "name": "Amélie Picher-Plante"
         }
       ]
     },
@@ -118,7 +118,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Anezka Mikova"
+          "name": "Anežka Miková"
         }
       ]
     },
@@ -193,7 +193,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Venezia Wedlock Sze Yee"
+          "name": "Venezia Wedlock"
         }
       ]
     },
@@ -298,7 +298,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Catherine Gagne"
+          "name": "Catherine Gagné"
         }
       ]
     },
@@ -313,7 +313,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Lea Lucas"
+          "name": "Léa Lucas"
         }
       ]
     },
@@ -358,7 +358,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Margit Lehoczkyne Fawal"
+          "name": "Margit Lehóczkyné Fawal"
         }
       ]
     },
@@ -493,7 +493,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Grassham Saana"
+          "name": "Sayana Glatham"
         }
       ]
     },
@@ -508,7 +508,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Kristrun Sveinsdottir"
+          "name": "Kristrún Sveinsdóttir"
         }
       ]
     },
@@ -523,7 +523,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Jackielyn Caldona"
+          "name": "Jackie Caldona"
         }
       ]
     },
@@ -688,7 +688,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Ana Aguila Padilla"
+          "name": "Ana Maria Aguila Padilla"
         }
       ]
     },
@@ -733,7 +733,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Monica de La Torre"
+          "name": "Mónica Mercedes De La Torre Velasco"
         }
       ]
     },
@@ -763,7 +763,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Katja Babic"
+          "name": "Katja Babič"
         }
       ]
     },
@@ -778,7 +778,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Mathilde Oestergaard"
+          "name": "Mathilde Østergaard"
         }
       ]
     },
@@ -853,7 +853,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Anna Boukalova"
+          "name": "Anna Boukalová"
         }
       ]
     },
@@ -898,7 +898,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Flavia Viktoria"
+          "name": "Viktória Flávia Tóth"
         }
       ]
     },
@@ -913,7 +913,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Alba Bostrom"
+          "name": "Alba Boström"
         }
       ]
     },
@@ -988,7 +988,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Isabelle Haeberer Clara"
+          "name": "Clara Isabelle Häberer"
         }
       ]
     },
@@ -1078,7 +1078,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Deimante Zurinskaite"
+          "name": "Deimantė Žurinskaitė"
         }
       ]
     },
@@ -1138,7 +1138,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Judith Torres"
+          "name": "Judith Guadalupe Torres Toledo"
         }
       ]
     },
@@ -1153,7 +1153,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Dominika Jansova"
+          "name": "Dominika Jansová"
         }
       ]
     },
@@ -1198,7 +1198,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Lea Zunic"
+          "name": "Lea Žunić"
         }
       ]
     },
@@ -1213,7 +1213,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Kristyna Vackova"
+          "name": "Kristýna Vacková"
         }
       ]
     },
@@ -1258,7 +1258,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Yi Ong"
+          "name": "Yi Syuen Ong"
         }
       ]
     },
@@ -1303,7 +1303,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Lina Gerute"
+          "name": "Lina Gerutė"
         }
       ]
     },
@@ -1331,6 +1331,10 @@
       "seedTotalKg": 325,
       "countryCode": "HK",
       "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Yim Chee Liang"
+        },
         {
           "source": "openipf",
           "name": "Chee Liang Yim"
@@ -1393,7 +1397,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Meghan Scanlon"
+          "name": "Meghan Scanlon #1"
         }
       ]
     },
@@ -1408,7 +1412,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Marie-Jose van Daal"
+          "name": "Marie-José van Daal"
         }
       ]
     },
@@ -1498,7 +1502,11 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Signe Belden Pavlovic"
+          "name": "Signe Elisabeth Belden"
+        },
+        {
+          "source": "openipf",
+          "name": "Signe Elisabeth Belden Pavlovic"
         }
       ]
     },
@@ -1513,7 +1521,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Cicera Tavares"
+          "name": "Cícera Tavares"
         }
       ]
     },
@@ -1618,7 +1626,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Guenther Denise"
+          "name": "Denise Günther"
         }
       ]
     },
@@ -1678,7 +1686,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Dainora Kairaityte"
+          "name": "Dainora Kairaitytė"
         }
       ]
     },
@@ -1738,7 +1746,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Ausrine Janulcikaite"
+          "name": "Aušrinė Janulčikaitė"
         }
       ]
     },
@@ -1873,7 +1881,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Ellen Gronlund"
+          "name": "Ellen Grönlund"
         }
       ]
     },
@@ -1948,7 +1956,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Modesta Varillas"
+          "name": "Modesta Varillas Maceda"
         }
       ]
     },
@@ -2023,7 +2031,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Denisa Schvandtnerova"
+          "name": "Denisa Schvandtnerová"
         }
       ]
     },
@@ -2083,7 +2091,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Thuy Xie"
+          "name": "Xie Thuy Tien"
         }
       ]
     },
@@ -2113,7 +2121,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Amanda Lawrence"
+          "name": "Amanda Lawrence #1"
         }
       ]
     },
@@ -2173,7 +2181,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Kristin Thorhallsdottir"
+          "name": "Kristín Þórhallsdóttir"
         }
       ]
     },
@@ -2188,7 +2196,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Marina Almeida"
+          "name": "Marina Garcia de Almeida"
         }
       ]
     },
@@ -2353,7 +2361,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Katja Joergensen"
+          "name": "Katja Jørgensen"
         }
       ]
     },
@@ -2578,7 +2586,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Amelie Mierger"
+          "name": "Amélie Mierger"
         }
       ]
     },
@@ -2608,7 +2616,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Alison o'Reilly"
+          "name": "Alison O'Reilly"
         }
       ]
     },
@@ -2638,7 +2646,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Thorbjorg Matthiasdottir"
+          "name": "Þorbjörg Matthíasdóttir"
         }
       ]
     },
@@ -2668,7 +2676,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Marcela de La Barra Zelaya"
+          "name": "Marcela De la Barra Zelaya"
         }
       ]
     },
@@ -2713,7 +2721,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Ivan Campano Diaz"
+          "name": "Iván Campano Díaz"
         }
       ]
     },
@@ -2788,7 +2796,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Franklin Leon"
+          "name": "Franklin León"
         }
       ]
     },
@@ -2848,7 +2856,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Angel Cruz"
+          "name": "Ángel Cruz"
         }
       ]
     },
@@ -2938,7 +2946,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Ivan Cancel"
+          "name": "Iván Cancel"
         }
       ]
     },
@@ -2953,7 +2961,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Jose Flores"
+          "name": "Jose Flores #1"
         }
       ]
     },
@@ -2968,7 +2976,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Kjell Bakkelund"
+          "name": "Kjell Egil Bakkelund"
         }
       ]
     },
@@ -2983,7 +2991,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Joseph Jordan"
+          "name": "Joseph Jordan #2"
         }
       ]
     },
@@ -3073,7 +3081,11 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Wei Ong"
+          "name": "Ong Wei Chaai"
+        },
+        {
+          "source": "openipf",
+          "name": "Chaai Ong Wei"
         }
       ]
     },
@@ -3103,7 +3115,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Joel Catena"
+          "name": "Joel Christopher Catena"
         }
       ]
     },
@@ -3223,7 +3235,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Austin Perkins"
+          "name": "Austin Perkins #1"
         }
       ]
     },
@@ -3268,7 +3280,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Clinton Lee"
+          "name": "Clinton Lee #1"
         }
       ]
     },
@@ -3373,7 +3385,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Cheng Cheong"
+          "name": "Cheong Cheng Wen"
         }
       ]
     },
@@ -3388,7 +3400,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Alberto Herraiz Frances"
+          "name": "Alberto Herraiz Francés"
         }
       ]
     },
@@ -3448,7 +3460,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Karel Rada"
+          "name": "Karel Rada #2"
         }
       ]
     },
@@ -3493,7 +3505,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Lachlan Richards"
+          "name": "Lachlan Rickards"
         }
       ]
     },
@@ -3538,7 +3550,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Marius Pacerinskis"
+          "name": "Marius Pačerinskis"
         }
       ]
     },
@@ -3553,7 +3565,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Gintaras Bledis"
+          "name": "Gintaras Blėdis"
         }
       ]
     },
@@ -3568,7 +3580,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Leonardo Cruz"
+          "name": "Leonardo Cruz #1"
         }
       ]
     },
@@ -3688,7 +3700,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Andres Fernandez Arevalo"
+          "name": "Andres Fernández Arévalo"
         }
       ]
     },
@@ -3748,7 +3760,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Jose Figueroa Contreras"
+          "name": "Jose Matias Figueroa Contreras"
         }
       ]
     },
@@ -3763,7 +3775,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Patrick Kuerzi"
+          "name": "Patrick Kürzi"
         }
       ]
     },
@@ -3778,7 +3790,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Jose Castillo"
+          "name": "José Castillo #1"
         }
       ]
     },
@@ -3793,7 +3805,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Naim El Moukallif"
+          "name": "Naim Ali El Moukallif"
         }
       ]
     },
@@ -3913,7 +3925,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Matheus Santos"
+          "name": "Matheus dos Santos"
         }
       ]
     },
@@ -3928,7 +3940,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Ali Alaradi"
+          "name": "Ali Al Aradi"
         }
       ]
     },
@@ -4033,7 +4045,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Fridbjorn Hlynsson"
+          "name": "Friðbjörn Bragi Hlynsson"
         }
       ]
     },
@@ -4093,7 +4105,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Marko Kuzmic"
+          "name": "Marko Kuzmić"
         }
       ]
     },
@@ -4108,7 +4120,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Arnas Asmonas"
+          "name": "Arnas Ašmonas"
         }
       ]
     },
@@ -4138,7 +4150,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "William Ball"
+          "name": "William Ball #2"
         }
       ]
     },
@@ -4183,7 +4195,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Aimene Nouari"
+          "name": "Aimene Ibrahim El Khalil Nouari"
         }
       ]
     },
@@ -4243,7 +4255,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Bakinien Balangwe"
+          "name": "Julien Balangwe Bakinien"
         }
       ]
     },
@@ -4378,7 +4390,11 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Daniel Ussing"
+          "name": "Daniel E Ussing"
+        },
+        {
+          "source": "openipf",
+          "name": "Daniel Emil Ussing"
         }
       ]
     },
@@ -4408,7 +4424,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Jose Gonzalez"
+          "name": "José González Barba"
         }
       ]
     },
@@ -4423,7 +4439,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Junwon Choi"
+          "name": "Jun Won Choi"
         }
       ]
     },
@@ -4453,7 +4469,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Duncan Law Tak Kan"
+          "name": "Tak Kan Law"
         }
       ]
     },
@@ -4468,7 +4484,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Taha Alsabri"
+          "name": "Taha Essabri"
         }
       ]
     },
@@ -4543,7 +4559,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Anatolii Novopysmennyi"
+          "name": "Anatolii Novopismennyi"
         }
       ]
     },
@@ -4588,7 +4604,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Regin Stergakis"
+          "name": "Regin SGA Stergakis"
         }
       ]
     },
@@ -4678,7 +4694,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Bjarne Duecker"
+          "name": "Bjarne Dücker"
         }
       ]
     },
@@ -4768,7 +4784,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Alexander Karason"
+          "name": "Alexander Örn Kárason"
         }
       ]
     },
@@ -4783,7 +4799,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Bernardo Ibanez Pawathon"
+          "name": "Bernardo Ibañez Pawahton"
         }
       ]
     },
@@ -4798,7 +4814,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Matthew Henry"
+          "name": "Matthew Henry #1"
         }
       ]
     },
@@ -4813,7 +4829,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Mata Erik"
+          "name": "Erik Mata"
         }
       ]
     },
@@ -4828,7 +4844,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Rodrigo Sant'anna"
+          "name": "Rodrigo Jamar Santanna"
         }
       ]
     },
@@ -4843,7 +4859,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Hynek Franek"
+          "name": "Hynek Fránek"
         }
       ]
     },
@@ -5008,7 +5024,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Joseph McDonald"
+          "name": "Joseph McDonald #1"
         }
       ]
     },
@@ -5038,7 +5054,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Taras Melnychuk"
+          "name": "Taras Melnichuk"
         }
       ]
     },
@@ -5083,7 +5099,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Abdul Sulayman"
+          "name": "Abdul Majeed Sulayman"
         }
       ]
     },
@@ -5143,7 +5159,11 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Laurits Due"
+          "name": "Laurits Enemark Due"
+        },
+        {
+          "source": "openipf",
+          "name": "Laurits E Due"
         }
       ]
     },
@@ -5218,7 +5238,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Cseszko Krisztian"
+          "name": "Cseszkó Krisztián"
         }
       ]
     },
@@ -5248,7 +5268,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Maris Juzups"
+          "name": "Māris Juzups"
         }
       ]
     },
@@ -5293,7 +5313,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Helgi Sigurdsson"
+          "name": "Helgi Sigurðsson"
         }
       ]
     },
@@ -5338,7 +5358,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Thomas Thoma"
+          "name": "Tom Thoma"
         }
       ]
     },
@@ -5383,7 +5403,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Ajay Sharma"
+          "name": "Ajay Sharma #1"
         }
       ]
     },
@@ -5398,7 +5418,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Cenk Kocak"
+          "name": "Cenk Koçak"
         }
       ]
     },
@@ -5413,7 +5433,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Viktor Holinei"
+          "name": "Viktor Golinei"
         }
       ]
     },
@@ -5458,7 +5478,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Bjorn Sutterud Westbye"
+          "name": "Bjorn Andre Sutterud Westbye"
         }
       ]
     },
@@ -5608,7 +5628,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Abdeslam Lekhal"
+          "name": "Abdeslam Lakhal"
         }
       ]
     },
@@ -5653,7 +5673,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Tadas Gecas"
+          "name": "Tadas Gečas"
         }
       ]
     },
@@ -5683,7 +5703,7 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
-          "name": "Sergio Hernan Mardones Meza"
+          "name": "Sergio Mardones Meza"
         }
       ]
     },
