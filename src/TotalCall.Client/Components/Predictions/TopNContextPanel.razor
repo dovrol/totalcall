@@ -249,6 +249,10 @@
                 {
                     <p class="prediction-context-panel__empty">@Localizer["Predictions.LoadingHistory"]</p>
                 }
+                else if (isHistoryError)
+                {
+                    <p class="prediction-context-panel__empty">@Localizer["Predictions.HistoryLoadError"]</p>
+                }
                 else if (RecentStarts.Count > 0)
                 {
                     <ol class="prediction-context-panel__recent-list">
@@ -325,11 +329,10 @@
     [Parameter]
     public EventCallback CompareAthletesRequested { get; set; }
 
-    private AthleteHistoryDataset? historyDataset;
     private AthleteHistoryEntry? SelectedAthleteHistory;
-    private string? loadedCompetitionId;
     private string? loadedAthleteId;
     private bool isLoadingHistory;
+    private bool isHistoryError;
     private bool showAllNominated;
     private string selectorSearchTerm = string.Empty;
     private string selectorSortMode = "nominated-desc";
@@ -486,16 +489,8 @@
         {
             SelectedAthleteHistory = null;
             loadedAthleteId = null;
+            isHistoryError = false;
             return;
-        }
-
-        if (!string.Equals(loadedCompetitionId, Competition.Id, StringComparison.OrdinalIgnoreCase))
-        {
-            isLoadingHistory = true;
-            historyDataset = await AthleteHistoryService.GetCompetitionHistoryAsync(Competition.Id);
-            loadedCompetitionId = Competition.Id;
-            loadedAthleteId = null;
-            isLoadingHistory = false;
         }
 
         if (string.Equals(loadedAthleteId, SelectedAthlete.Id, StringComparison.OrdinalIgnoreCase))
@@ -504,11 +499,17 @@
         }
 
         isLoadingHistory = true;
+        isHistoryError = false;
 
-        SelectedAthleteHistory = historyDataset is not null &&
-                                historyDataset.Athletes.TryGetValue(SelectedAthlete.Id, out var history)
-            ? history
-            : null;
+        try
+        {
+            SelectedAthleteHistory = await AthleteHistoryService.GetAthleteHistoryAsync(SelectedAthlete.Id);
+        }
+        catch
+        {
+            SelectedAthleteHistory = null;
+            isHistoryError = true;
+        }
 
         loadedAthleteId = SelectedAthlete.Id;
         isLoadingHistory = false;

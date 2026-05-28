@@ -10,6 +10,7 @@ using TotalCall.Client.Application.Services.Review;
 using TotalCall.Client.Application.Theme;
 using TotalCall.Client.Infrastructure.Browser;
 using TotalCall.Client.Infrastructure.Json;
+using TotalCall.Client.Infrastructure.Supabase;
 using TotalCall.Client.Scoring;
 using TotalCall.Client.Storage;
 
@@ -37,7 +38,26 @@ builder.Services.AddScoped<IPredictionModuleExporter, DefaultPredictionModuleExp
 builder.Services.AddScoped<PredictionModuleExporterRegistry>();
 builder.Services.AddScoped<PredictionExportService>();
 builder.Services.AddScoped<ToastService>();
-builder.Services.AddScoped<AthleteHistoryService>();
+builder.Services.AddScoped(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var url = config[$"{SupabaseSettings.SectionName}:Url"];
+    var key = config[$"{SupabaseSettings.SectionName}:PublishableKey"];
+
+    if (string.IsNullOrWhiteSpace(url) || string.IsNullOrWhiteSpace(key))
+    {
+        Console.Error.WriteLine(
+            "[TotalCall] Supabase not configured. " +
+            "Set Supabase:Url and Supabase:PublishableKey in wwwroot/appsettings.json. " +
+            "Athlete history will be unavailable.");
+        return new AthleteHistoryService(null);
+    }
+
+    var http = new HttpClient { BaseAddress = new Uri(url.TrimEnd('/') + "/") };
+    http.DefaultRequestHeaders.Add("apikey", key);
+    http.DefaultRequestHeaders.Add("Authorization", $"Bearer {key}");
+    return new AthleteHistoryService(http);
+});
 builder.Services.AddScoped<WindowManager>();
 builder.Services.AddScoped<IPredictionScoringService, PredictionScoringService>();
 

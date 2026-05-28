@@ -1,24 +1,5 @@
 namespace TotalCall.Client.Domain.Athletes;
 
-public sealed record AthleteHistoryDataset
-{
-    public required string CompetitionId { get; init; }
-
-    public AthleteHistorySource? Source { get; init; }
-
-    public IReadOnlyDictionary<string, AthleteHistoryEntry> Athletes { get; init; } =
-        new Dictionary<string, AthleteHistoryEntry>(StringComparer.OrdinalIgnoreCase);
-}
-
-public sealed record AthleteHistorySource
-{
-    public string? Name { get; init; }
-
-    public string? Attribution { get; init; }
-
-    public string? DownloadedAt { get; init; }
-}
-
 public sealed record AthleteHistoryEntry
 {
     public string? DisplayName { get; init; }

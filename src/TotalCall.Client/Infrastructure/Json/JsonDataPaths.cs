@@ -11,8 +11,4 @@ public static class JsonDataPaths
         return $"data/competitions/{slug}.json";
     }
 
-    public static string AthleteHistory(string competitionId)
-    {
-        return $"data/athlete-history/{competitionId}.json";
-    }
 }

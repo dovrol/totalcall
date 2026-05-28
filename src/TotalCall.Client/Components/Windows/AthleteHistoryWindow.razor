@@ -76,6 +76,10 @@
         {
             <p class="athlete-history-window__empty">@Localizer["Predictions.LoadingHistory"]</p>
         }
+        else if (isError)
+        {
+            <p class="athlete-history-window__empty">@Localizer["Predictions.HistoryLoadError"]</p>
+        }
         else if (History is null)
         {
             <p class="athlete-history-window__empty">@Localizer["Predictions.NoAthleteHistory"]</p>
@@ -175,19 +179,9 @@
                 }
             </section>
 
-            @if (HasSourceInfo)
-            {
-                <footer class="athlete-history-window__source">
-                    @if (!string.IsNullOrWhiteSpace(SourceAttribution))
-                    {
-                        <p>@SourceAttribution</p>
-                    }
-                    @if (!string.IsNullOrWhiteSpace(SourceDownloadedAt))
-                    {
-                        <p>@string.Format(Localizer["Predictions.SourceUpdatedAt"].Value, FormatDate(SourceDownloadedAt))</p>
-                    }
-                </footer>
-            }
+            <footer class="athlete-history-window__source">
+                <p>@Localizer["Predictions.SourceAttribution"]</p>
+            </footer>
         }
     </section>
 </FloatingWindow>
@@ -196,11 +190,10 @@
     [Parameter, EditorRequired]
     public AthleteHistoryWindowDescriptor Descriptor { get; set; } = default!;
 
-    private AthleteHistoryDataset? dataset;
     private AthleteHistoryEntry? History;
-    private string? loadedCompetitionId;
     private string? loadedAthleteId;
     private bool isLoading;
+    private bool isError;
 
     private AthleteHistorySlotContext? Slot => Descriptor.SlotContext;
 
@@ -211,13 +204,6 @@
     private bool CanUseBest => Slot is { CanUseBest: true } && History?.Bests?.TotalKg is not null;
 
     private bool CanUseNominated => Slot is { CanUseNominated: true } && Descriptor.NominatedTotalKg is not null;
-
-    private string? SourceAttribution => dataset?.Source?.Attribution;
-
-    private string? SourceDownloadedAt => dataset?.Source?.DownloadedAt;
-
-    private bool HasSourceInfo => !string.IsNullOrWhiteSpace(SourceAttribution) ||
-                                  !string.IsNullOrWhiteSpace(SourceDownloadedAt);
 
     private IReadOnlyList<AthleteRecentResult> RecentResults => History?.RecentResults ?? [];
 
@@ -237,25 +223,25 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        if (!string.Equals(loadedCompetitionId, Descriptor.CompetitionId, StringComparison.OrdinalIgnoreCase))
-        {
-            isLoading = true;
-            dataset = await AthleteHistoryService.GetCompetitionHistoryAsync(Descriptor.CompetitionId);
-            loadedCompetitionId = Descriptor.CompetitionId;
-            loadedAthleteId = null;
-            isLoading = false;
-        }
-
         if (string.Equals(loadedAthleteId, Descriptor.AthleteId, StringComparison.OrdinalIgnoreCase))
         {
             return;
         }
 
         isLoading = true;
-        History = dataset is not null &&
-                  dataset.Athletes.TryGetValue(Descriptor.AthleteId, out var entry)
-            ? entry
-            : null;
+        isError = false;
+        StateHasChanged();
+
+        try
+        {
+            History = await AthleteHistoryService.GetAthleteHistoryAsync(Descriptor.AthleteId);
+        }
+        catch
+        {
+            History = null;
+            isError = true;
+        }
+
         loadedAthleteId = Descriptor.AthleteId;
         isLoading = false;
     }

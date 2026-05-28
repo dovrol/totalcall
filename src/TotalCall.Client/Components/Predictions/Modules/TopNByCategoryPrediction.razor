@@ -259,9 +259,7 @@ else
     private string predictionBenchInput = string.Empty;
     private string predictionDeadliftInput = string.Empty;
     private string? predictionEditorError;
-    private AthleteHistoryDataset? predictionHistoryDataset;
     private AthleteHistoryEntry? predictionHistory;
-    private string? loadedPredictionHistoryCompetitionId;
     private string? loadedPredictionHistoryAthleteId;
     private bool isPredictionHistoryLoading;
     private int? pendingRemovalPosition;
@@ -1046,15 +1044,6 @@ else
             return;
         }
 
-        if (!string.Equals(loadedPredictionHistoryCompetitionId, Competition.Id, StringComparison.OrdinalIgnoreCase))
-        {
-            isPredictionHistoryLoading = true;
-            predictionHistoryDataset = await AthleteHistoryService.GetCompetitionHistoryAsync(Competition.Id);
-            loadedPredictionHistoryCompetitionId = Competition.Id;
-            loadedPredictionHistoryAthleteId = null;
-            isPredictionHistoryLoading = false;
-        }
-
         if (!forceReloadAthlete &&
             string.Equals(loadedPredictionHistoryAthleteId, athlete.Id, StringComparison.OrdinalIgnoreCase))
         {
@@ -1062,10 +1051,16 @@ else
         }
 
         isPredictionHistoryLoading = true;
-        predictionHistory = predictionHistoryDataset is not null &&
-                            predictionHistoryDataset.Athletes.TryGetValue(athlete.Id, out var history)
-            ? history
-            : null;
+
+        try
+        {
+            predictionHistory = await AthleteHistoryService.GetAthleteHistoryAsync(athlete.Id);
+        }
+        catch
+        {
+            predictionHistory = null;
+        }
+
         loadedPredictionHistoryAthleteId = athlete.Id;
         isPredictionHistoryLoading = false;
     }

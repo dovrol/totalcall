@@ -1,44 +1,129 @@
-using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using TotalCall.Client.Domain.Athletes;
-using TotalCall.Client.Infrastructure.Json;
 
 namespace TotalCall.Client.Application.Services;
 
-public sealed class AthleteHistoryService(HttpClient httpClient)
+public sealed class AthleteHistoryService(HttpClient? httpClient)
 {
-    private readonly Dictionary<string, AthleteHistoryDataset?> cacheByCompetitionId =
-        new(StringComparer.OrdinalIgnoreCase);
+    private static readonly JsonSerializerOptions SupabaseJsonOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+        PropertyNameCaseInsensitive = true
+    };
 
-    public async Task<AthleteHistoryDataset?> GetCompetitionHistoryAsync(
-        string competitionId,
+    private readonly Dictionary<string, AthleteHistoryEntry?> _cache = new(StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Fetch athlete competition history from Supabase by slug.
+    /// Returns null when the athlete has no results.
+    /// Throws <see cref="InvalidOperationException"/> when Supabase is not configured.
+    /// Throws <see cref="HttpRequestException"/> on network/API errors.
+    /// </summary>
+    public async Task<AthleteHistoryEntry?> GetAthleteHistoryAsync(
+        string athleteSlug,
         CancellationToken cancellationToken = default)
     {
-        if (cacheByCompetitionId.TryGetValue(competitionId, out var cached))
+        if (httpClient is null)
+        {
+            throw new InvalidOperationException(
+                "Supabase is not configured. Set Supabase:Url and Supabase:PublishableKey in wwwroot/appsettings.json.");
+        }
+
+        if (_cache.TryGetValue(athleteSlug, out var cached))
         {
             return cached;
         }
 
-        try
-        {
-            var dataset = await httpClient.GetFromJsonAsync<AthleteHistoryDataset>(
-                JsonDataPaths.AthleteHistory(competitionId),
-                JsonDataOptions.SerializerOptions,
-                cancellationToken);
+        var url = "rest/v1/athlete_history_view"
+                  + $"?athlete_slug=eq.{Uri.EscapeDataString(athleteSlug)}"
+                  + "&order=meet_date.desc"
+                  + "&select=athlete_display_name,athlete_country_code,"
+                  + "meet_date,meet_name,federation,equipment,bodyweight_kg,"
+                  + "best_squat_kg,best_bench_kg,best_deadlift_kg,total_kg,place";
 
-            cacheByCompetitionId[competitionId] = dataset;
-            return dataset;
-        }
-        catch (HttpRequestException exception) when (exception.StatusCode is HttpStatusCode.NotFound)
+        var rows = await httpClient.GetFromJsonAsync<List<HistoryRow>>(
+            url, SupabaseJsonOptions, cancellationToken);
+
+        var entry = rows is null || rows.Count == 0
+            ? null
+            : MapToEntry(rows);
+
+        _cache[athleteSlug] = entry;
+        return entry;
+    }
+
+    private static AthleteHistoryEntry MapToEntry(List<HistoryRow> rows)
+    {
+        var recentResults = rows
+            .Select(row => new AthleteRecentResult
+            {
+                Date = row.MeetDate,
+                MeetName = row.MeetName,
+                Federation = row.Federation,
+                Equipment = row.Equipment,
+                BodyweightKg = row.BodyweightKg,
+                SquatKg = row.BestSquatKg,
+                BenchKg = row.BestBenchKg,
+                DeadliftKg = row.BestDeadliftKg,
+                TotalKg = row.TotalKg,
+                Placing = row.Place
+            })
+            .ToList();
+
+        var first = rows[0];
+
+        return new AthleteHistoryEntry
         {
-            cacheByCompetitionId[competitionId] = null;
-            return null;
-        }
-        catch (JsonException)
-        {
-            cacheByCompetitionId[competitionId] = null;
-            return null;
-        }
+            DisplayName = first.AthleteDisplayName,
+            CountryCode = first.AthleteCountryCode,
+            RecentResults = recentResults,
+            Bests = new AthleteLiftBests
+            {
+                SquatKg = MaxPositive(recentResults, r => r.SquatKg),
+                BenchKg = MaxPositive(recentResults, r => r.BenchKg),
+                DeadliftKg = MaxPositive(recentResults, r => r.DeadliftKg),
+                TotalKg = MaxPositive(recentResults, r => r.TotalKg)
+            },
+            LastResult = new AthleteLastResult
+            {
+                Date = first.MeetDate,
+                MeetName = first.MeetName,
+                SquatKg = first.BestSquatKg,
+                BenchKg = first.BestBenchKg,
+                DeadliftKg = first.BestDeadliftKg,
+                TotalKg = first.TotalKg,
+                BodyweightKg = first.BodyweightKg
+            }
+        };
+    }
+
+    private static decimal? MaxPositive(
+        IEnumerable<AthleteRecentResult> results,
+        Func<AthleteRecentResult, decimal?> selector)
+    {
+        var values = results
+            .Select(selector)
+            .Where(v => v is > 0)
+            .ToList();
+
+        return values.Count == 0 ? null : values.Max();
+    }
+
+    /// <summary>PostgREST row from athlete_history_view.</summary>
+    private sealed record HistoryRow
+    {
+        public string? AthleteDisplayName { get; init; }
+        public string? AthleteCountryCode { get; init; }
+        public string? MeetDate { get; init; }
+        public string? MeetName { get; init; }
+        public string? Federation { get; init; }
+        public string? Equipment { get; init; }
+        public decimal? BodyweightKg { get; init; }
+        public decimal? BestSquatKg { get; init; }
+        public decimal? BestBenchKg { get; init; }
+        public decimal? BestDeadliftKg { get; init; }
+        public decimal? TotalKg { get; init; }
+        public string? Place { get; init; }
     }
 }
