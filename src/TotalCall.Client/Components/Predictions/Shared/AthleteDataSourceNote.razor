@@ -1,0 +1,41 @@
+@using System.Globalization
+@using TotalCall.Client.Application.Services
+@using TotalCall.Client.Domain.Athletes
+@inject AthleteHistoryService AthleteHistoryService
+@inject IStringLocalizer<SharedResource> Localizer
+
+<p class="@CssClass">@Text</p>
+
+@code {
+    [Parameter]
+    public string? AdditionalClass { get; set; }
+
+    private AthleteDataImportStatus? status;
+    private const string FallbackSourceLabel = "OpenIPF";
+
+    private string CssClass => string.Join(
+        " ",
+        "athlete-data-source-note",
+        AdditionalClass);
+
+    private string SourceLabel => string.IsNullOrWhiteSpace(status?.SourceLabel)
+        ? FallbackSourceLabel
+        : status.SourceLabel;
+
+    private string Text => status?.LastSuccessfulImportAt is null
+        ? Localizer["Predictions.SourceOnly", SourceLabel].Value
+        : Localizer[
+            "Predictions.SourceWithImportDate",
+            SourceLabel,
+            FormatImportDate(status.LastSuccessfulImportAt.Value)].Value;
+
+    protected override async Task OnInitializedAsync()
+    {
+        status = await AthleteHistoryService.GetImportStatusAsync();
+    }
+
+    private static string FormatImportDate(DateTimeOffset value)
+    {
+        return value.ToLocalTime().ToString("dd.MM.yyyy, HH:mm", CultureInfo.CurrentCulture);
+    }
+}

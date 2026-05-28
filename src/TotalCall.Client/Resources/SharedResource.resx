@@ -260,6 +260,8 @@
   <data name="Predictions.NoAthleteHistory" xml:space="preserve"><value>Brak historii startów dla tego zawodnika.</value></data>
   <data name="Predictions.HistoryLoadError" xml:space="preserve"><value>Nie udało się pobrać historii startów.</value></data>
   <data name="Predictions.SourceAttribution" xml:space="preserve"><value>Dane z projektu OpenIPF / OpenPowerlifting, https://www.openpowerlifting.org.</value></data>
+  <data name="Predictions.SourceOnly" xml:space="preserve"><value>Źródło: {0}</value></data>
+  <data name="Predictions.SourceWithImportDate" xml:space="preserve"><value>Źródło: {0} · Ostatnio zaktualizowano: {1}</value></data>
   <data name="Predictions.BestResult" xml:space="preserve"><value>Najlepszy total</value></data>
   <data name="Predictions.LastResult" xml:space="preserve"><value>Ostatni wynik</value></data>
   <data name="Predictions.UseNominatedTotal" xml:space="preserve"><value>Użyj nominated total</value></data>

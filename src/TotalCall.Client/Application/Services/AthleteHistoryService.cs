@@ -6,6 +6,8 @@ namespace TotalCall.Client.Application.Services;
 
 public sealed class AthleteHistoryService(HttpClient? httpClient)
 {
+    private const string DefaultImportStatusSource = ExternalAthleteSources.OpenIpf;
+
     private static readonly JsonSerializerOptions SupabaseJsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
@@ -13,6 +15,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
     };
 
     private readonly Dictionary<string, AthleteHistoryEntry?> _cache = new(StringComparer.OrdinalIgnoreCase);
+    private Task<AthleteDataImportStatus?>? _importStatusTask;
 
     /// <summary>
     /// Fetch athlete competition history from Supabase by slug.
@@ -51,6 +54,55 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
 
         _cache[athleteSlug] = entry;
         return entry;
+    }
+
+    /// <summary>
+    /// Fetch public import status metadata for the athlete-history source.
+    /// Returns null when Supabase is unavailable or the RPC cannot be read.
+    /// </summary>
+    public Task<AthleteDataImportStatus?> GetImportStatusAsync(
+        CancellationToken cancellationToken = default)
+    {
+        if (httpClient is null)
+        {
+            return Task.FromResult<AthleteDataImportStatus?>(null);
+        }
+
+        return _importStatusTask ??= FetchImportStatusAsync(cancellationToken);
+    }
+
+    private async Task<AthleteDataImportStatus?> FetchImportStatusAsync(CancellationToken cancellationToken)
+    {
+        if (httpClient is null)
+        {
+            return null;
+        }
+
+        try
+        {
+            var url = "rest/v1/rpc/get_athlete_data_import_status"
+                      + $"?p_source={Uri.EscapeDataString(DefaultImportStatusSource)}";
+
+            var rows = await httpClient.GetFromJsonAsync<List<ImportStatusRow>>(
+                url, SupabaseJsonOptions, cancellationToken);
+
+            var row = rows?.FirstOrDefault();
+            if (row is null || string.IsNullOrWhiteSpace(row.SourceLabel))
+            {
+                return null;
+            }
+
+            return new AthleteDataImportStatus
+            {
+                Source = row.Source,
+                SourceLabel = row.SourceLabel,
+                LastSuccessfulImportAt = row.LastSuccessfulImportAt
+            };
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     private static AthleteHistoryEntry MapToEntry(List<HistoryRow> rows)
@@ -125,5 +177,13 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         public decimal? BestDeadliftKg { get; init; }
         public decimal? TotalKg { get; init; }
         public string? Place { get; init; }
+    }
+
+    /// <summary>PostgREST row from get_athlete_data_import_status().</summary>
+    private sealed record ImportStatusRow
+    {
+        public string? Source { get; init; }
+        public string? SourceLabel { get; init; }
+        public DateTimeOffset? LastSuccessfulImportAt { get; init; }
     }
 }

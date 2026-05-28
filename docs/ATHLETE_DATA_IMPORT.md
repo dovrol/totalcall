@@ -4,7 +4,8 @@ This document describes how TotalCall imports athlete history from
 OpenIPF / OpenPowerlifting into Supabase.
 
 It complements:
-- `supabase/migrations/20260526120000_create_athlete_data_backend.sql` — the database schema.
+- `supabase/migrations/20260527180000_create_athlete_data_backend.sql` — the database schema.
+- `supabase/migrations/20260528110000_add_public_import_status_rpc.sql` — public import-status RPC for the frontend.
 - `tools/import-opl/TotalCall.OplImporter` — the importer console app.
 - `.github/workflows/import-opl.yml` — the GitHub Actions workflow.
 
@@ -213,6 +214,39 @@ The importer writes via PostgREST using the `service_role` key. service_role
 bypasses RLS, so it can read and write the admin tables despite the deny rules
 above. The frontend uses the `anon` key and can only see the public-data tables.
 
+### 7.1 Public import status for the UI
+
+The frontend shows a small source/update line next to athlete history, for
+example:
+
+```
+Źródło: OpenIPF · Ostatnio zaktualizowano: 27.05.2026, 03:17
+```
+
+It does **not** read `public.import_runs` directly. The table stays admin-only.
+Instead, the frontend calls this stable, security-definer RPC through the
+publishable key:
+
+```http
+GET /rest/v1/rpc/get_athlete_data_import_status?p_source=openipf
+```
+
+The RPC returns only:
+
+| Field | Meaning |
+|---|---|
+| `source` | Source code, e.g. `openipf`. |
+| `source_label` | Public display label, e.g. `OpenIPF`. |
+| `last_successful_import_at` | Latest `finished_at` timestamp for a successful import of that source, or `null`. |
+
+If the RPC fails or Supabase is not configured, athlete history still loads.
+The UI falls back to a source-only label (`Źródło: OpenIPF`) and does not expose
+errors to the user.
+
+The Blazor app must use `Supabase:PublishableKey` only. Never put
+`SUPABASE_SECRET_KEY` / the `service_role` key in `wwwroot/appsettings.json` or
+any frontend-visible configuration.
+
 ## 8. Verifying data after an import
 
 In the SQL editor:
@@ -246,6 +280,10 @@ from public.import_errors e
 join public.import_runs r on r.id = e.run_id
 where r.id = (select id from public.import_runs order by started_at desc limit 1)
 order by e.row_index;
+
+-- Public status exposed to the frontend
+select source, source_label, last_successful_import_at
+from public.get_athlete_data_import_status('openipf');
 ```
 
 ## 9. Limitations of v1

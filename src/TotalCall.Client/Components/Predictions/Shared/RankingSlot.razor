@@ -223,6 +223,8 @@
                     <p class="ranking-slot__prediction-empty">@Localizer["Predictions.NoAthleteHistoryInline"]</p>
                 }
 
+                <AthleteDataSourceNote AdditionalClass="ranking-slot__prediction-source" />
+
                 @if (!string.IsNullOrWhiteSpace(PredictionEditorError))
                 {
                     <p class="ranking-slot__prediction-error">@PredictionEditorError</p>

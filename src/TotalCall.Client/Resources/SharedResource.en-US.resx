@@ -260,6 +260,8 @@
   <data name="Predictions.NoAthleteHistory" xml:space="preserve"><value>No recent results available yet.</value></data>
   <data name="Predictions.HistoryLoadError" xml:space="preserve"><value>Failed to load competition history.</value></data>
   <data name="Predictions.SourceAttribution" xml:space="preserve"><value>Data from the OpenIPF / OpenPowerlifting project, https://www.openpowerlifting.org.</value></data>
+  <data name="Predictions.SourceOnly" xml:space="preserve"><value>Source: {0}</value></data>
+  <data name="Predictions.SourceWithImportDate" xml:space="preserve"><value>Source: {0} · Last updated: {1}</value></data>
   <data name="Predictions.BestResult" xml:space="preserve"><value>Best total</value></data>
   <data name="Predictions.LastResult" xml:space="preserve"><value>Last result</value></data>
   <data name="Predictions.UseNominatedTotal" xml:space="preserve"><value>Use nominated total</value></data>
