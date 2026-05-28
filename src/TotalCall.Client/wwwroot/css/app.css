@@ -4657,12 +4657,14 @@ textarea {
 }
 
 .prediction-context-panel__recent-card,
-.prediction-context-panel__best-card {
+.prediction-context-panel__best-card,
+.prediction-context-panel__analytics-card {
     gap: 0.5rem;
 }
 
 .prediction-context-panel__recent-card h3,
-.prediction-context-panel__best-card h3 {
+.prediction-context-panel__best-card h3,
+.prediction-context-panel__analytics-card h3 {
     font-size: 0.92rem;
 }
 
@@ -5006,6 +5008,44 @@ textarea {
 .prediction-context-panel__history-link span {
     min-width: 0;
     overflow-wrap: anywhere;
+}
+
+.prediction-context-panel__analytics-grid {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.38rem;
+}
+
+.prediction-context-panel__analytics-grid div {
+    min-width: 0;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: color-mix(in srgb, var(--bg-surface) 86%, transparent);
+    padding: 0.44rem 0.5rem;
+    display: grid;
+    gap: 0.1rem;
+}
+
+.prediction-context-panel__analytics-grid dt {
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    font-weight: 800;
+    line-height: 1.15;
+    text-transform: uppercase;
+    letter-spacing: 0;
+}
+
+.prediction-context-panel__analytics-grid dd {
+    margin: 0;
+    font-size: 0.88rem;
+    font-weight: 800;
+    line-height: 1.18;
+    overflow-wrap: anywhere;
+}
+
+.prediction-context-panel__analytics-item--wide {
+    grid-column: 1 / -1;
 }
 
 .prediction-context-panel__best-lifts {
@@ -5634,6 +5674,7 @@ textarea {
     font-weight: 700;
 }
 
+.athlete-history-window__analytics,
 .athlete-history-window__trend,
 .athlete-history-window__bests,
 .athlete-history-window__starts {
@@ -5643,6 +5684,71 @@ textarea {
     padding: 0.62rem 0.7rem;
     display: grid;
     gap: 0.55rem;
+}
+
+.athlete-history-window__analytics-note {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    line-height: 1.35;
+}
+
+.athlete-history-window__analytics-grid,
+.athlete-history-window__attempts-grid {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.4rem;
+}
+
+.athlete-history-window__analytics-grid div,
+.athlete-history-window__attempts-grid div {
+    min-width: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--bg-surface) 88%, transparent);
+    padding: 0.44rem 0.5rem;
+    display: grid;
+    gap: 0.1rem;
+}
+
+.athlete-history-window__analytics-grid dt,
+.athlete-history-window__attempts-grid dt {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0;
+}
+
+.athlete-history-window__analytics-grid dd,
+.athlete-history-window__attempts-grid dd {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 800;
+    line-height: 1.18;
+}
+
+.athlete-history-window__attempts-grid small {
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    line-height: 1.18;
+}
+
+.athlete-history-window__trend-value--up {
+    color: color-mix(in srgb, var(--success) 82%, var(--text-primary));
+}
+
+.athlete-history-window__trend-value--down {
+    color: color-mix(in srgb, var(--danger) 84%, var(--text-primary));
+}
+
+@media (max-width: 520px) {
+    .athlete-history-window__analytics-grid,
+    .athlete-history-window__attempts-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .athlete-history-window__bests-list {

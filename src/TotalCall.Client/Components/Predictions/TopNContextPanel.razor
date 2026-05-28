@@ -208,6 +208,44 @@
                 </div>
             </section>
 
+            <section class="prediction-context-panel__block prediction-context-panel__analytics-card">
+                <h3>@Localizer["Predictions.Analytics"]</h3>
+
+                @if (isLoadingHistory)
+                {
+                    <p class="prediction-context-panel__empty">@Localizer["Predictions.LoadingHistory"]</p>
+                }
+                else if (SelectedAthleteAnalytics is { } analytics)
+                {
+                    <dl class="prediction-context-panel__analytics-grid">
+                        <div>
+                            <dt>@Localizer["Predictions.BestResult"]</dt>
+                            <dd>@FormatKg(analytics.BestTotalKg)</dd>
+                        </div>
+                        <div>
+                            <dt>@Localizer["Predictions.LastResult"]</dt>
+                            <dd>@FormatKg(analytics.LastTotalKg)</dd>
+                        </div>
+                        <div>
+                            <dt>@Localizer["Predictions.Analytics.Last3Avg"]</dt>
+                            <dd>@FormatKg(analytics.Last3AvgTotalKg)</dd>
+                        </div>
+                        <div>
+                            <dt>@Localizer["Predictions.Analytics.AttemptSuccessOverall"]</dt>
+                            <dd>@FormatAttemptRate(analytics.OverallAttempts)</dd>
+                        </div>
+                        <div class="prediction-context-panel__analytics-item--wide">
+                            <dt>@Localizer["Predictions.Analytics.BestScore"]</dt>
+                            <dd>@FormatBestScoreSummary(analytics)</dd>
+                        </div>
+                    </dl>
+                }
+                else
+                {
+                    <p class="prediction-context-panel__empty">@Localizer["Predictions.AnalyticsUnavailable"]</p>
+                }
+            </section>
+
             @if (ContextTrendChartPoints.Count > 1)
             {
                 <section class="prediction-context-panel__block prediction-context-panel__trend-card">
@@ -430,6 +468,8 @@
     private IReadOnlyList<AthleteRecentResult> RecentStarts => SelectedAthleteHistory?.RecentResults
         .Take(3)
         .ToArray() ?? [];
+
+    private AthleteAnalytics? SelectedAthleteAnalytics => SelectedAthleteHistory?.Analytics;
 
     private decimal? BestSquatKg => SelectedAthleteHistory?.Bests?.SquatKg ??
                                     SelectedAthleteHistory?.RecentResults.Max(result => result.SquatKg);
@@ -738,6 +778,37 @@
         return value is null
             ? "--"
             : value.Value.ToString("0.#", CultureInfo.CurrentCulture);
+    }
+
+    private string FormatScore(decimal? value)
+    {
+        return value is null
+            ? "--"
+            : value.Value.ToString("0.#", CultureInfo.CurrentCulture);
+    }
+
+    private string FormatAttemptRate(AthleteAttemptSuccessRate attempts)
+    {
+        return attempts.RatePercent is null
+            ? "--"
+            : $"{attempts.RatePercent.Value.ToString("0.#", CultureInfo.CurrentCulture)}%";
+    }
+
+    private string FormatBestScoreSummary(AthleteAnalytics analytics)
+    {
+        var parts = new List<string>();
+
+        if (analytics.BestGoodliftPoints is not null)
+        {
+            parts.Add($"GL {FormatScore(analytics.BestGoodliftPoints)}");
+        }
+
+        if (analytics.BestDotsPoints is not null)
+        {
+            parts.Add($"DOTS {FormatScore(analytics.BestDotsPoints)}");
+        }
+
+        return parts.Count == 0 ? "--" : string.Join(" · ", parts);
     }
 
     private string FormatBodyweight(decimal? value)

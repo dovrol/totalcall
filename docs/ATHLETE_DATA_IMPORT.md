@@ -247,6 +247,23 @@ The Blazor app must use `Supabase:PublishableKey` only. Never put
 `SUPABASE_SECRET_KEY` / the `service_role` key in `wwwroot/appsettings.json` or
 any frontend-visible configuration.
 
+### 7.2 Public athlete analytics for the UI
+
+Athlete form analytics are calculated in Supabase, not from local JSON. The
+frontend calls this public RPC through the publishable key:
+
+```http
+GET /rest/v1/rpc/get_athlete_analytics?p_athlete_slug=women-47-chapon-tiffany
+```
+
+The RPC returns one aggregate row for the athlete, including start count, best
+and latest total, last-3/last-5 total averages, total trend, best lift/score
+metrics, and attempt success rates.
+
+Attempt success follows the OpenPowerlifting convention imported into
+`athlete_results`: positive attempt value = made lift, negative value = missed
+lift, and `NULL`/`0` = no attempt, excluded from the denominator.
+
 ## 8. Verifying data after an import
 
 In the SQL editor:
@@ -284,6 +301,10 @@ order by e.row_index;
 -- Public status exposed to the frontend
 select source, source_label, last_successful_import_at
 from public.get_athlete_data_import_status('openipf');
+
+-- Public analytics exposed to the frontend
+select *
+from public.get_athlete_analytics('women-47-chapon-tiffany');
 ```
 
 ## 9. Limitations of v1

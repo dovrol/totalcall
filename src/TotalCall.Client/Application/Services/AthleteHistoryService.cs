@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using TotalCall.Client.Domain.Athletes;
 
 namespace TotalCall.Client.Application.Services;
@@ -48,9 +49,14 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         var rows = await httpClient.GetFromJsonAsync<List<HistoryRow>>(
             url, SupabaseJsonOptions, cancellationToken);
 
-        var entry = rows is null || rows.Count == 0
-            ? null
-            : MapToEntry(rows);
+        if (rows is null || rows.Count == 0)
+        {
+            _cache[athleteSlug] = null;
+            return null;
+        }
+
+        var analytics = await FetchAthleteAnalyticsAsync(athleteSlug, cancellationToken);
+        var entry = MapToEntry(rows, analytics);
 
         _cache[athleteSlug] = entry;
         return entry;
@@ -105,7 +111,33 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         }
     }
 
-    private static AthleteHistoryEntry MapToEntry(List<HistoryRow> rows)
+    private async Task<AthleteAnalytics?> FetchAthleteAnalyticsAsync(
+        string athleteSlug,
+        CancellationToken cancellationToken)
+    {
+        if (httpClient is null)
+        {
+            return null;
+        }
+
+        try
+        {
+            var url = "rest/v1/rpc/get_athlete_analytics"
+                      + $"?p_athlete_slug={Uri.EscapeDataString(athleteSlug)}";
+
+            var rows = await httpClient.GetFromJsonAsync<List<AnalyticsRow>>(
+                url, SupabaseJsonOptions, cancellationToken);
+
+            var row = rows?.FirstOrDefault();
+            return row is null ? null : MapToAnalytics(row);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private static AthleteHistoryEntry MapToEntry(List<HistoryRow> rows, AthleteAnalytics? analytics)
     {
         var recentResults = rows
             .Select(row => new AthleteRecentResult
@@ -146,7 +178,59 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
                 DeadliftKg = first.BestDeadliftKg,
                 TotalKg = first.TotalKg,
                 BodyweightKg = first.BodyweightKg
-            }
+            },
+            Analytics = analytics
+        };
+    }
+
+    private static AthleteAnalytics MapToAnalytics(AnalyticsRow row)
+    {
+        return new AthleteAnalytics
+        {
+            StartsCount = row.StartsCount,
+            BestTotalKg = row.BestTotalKg,
+            LastTotalKg = row.LastTotalKg,
+            Last3AvgTotalKg = row.Last3AvgTotalKg,
+            Last5AvgTotalKg = row.Last5AvgTotalKg,
+            TotalTrendKg = row.TotalTrendKg,
+            BestSquatKg = row.BestSquatKg,
+            BestBenchKg = row.BestBenchKg,
+            BestDeadliftKg = row.BestDeadliftKg,
+            BestDotsPoints = row.BestDotsPoints,
+            BestGoodliftPoints = row.BestGoodliftPoints,
+            SquatAttempts = ToAttemptSuccessRate(
+                row.SquatSuccessRate,
+                row.SquatSuccessfulAttempts,
+                row.SquatCountedAttempts),
+            BenchAttempts = ToAttemptSuccessRate(
+                row.BenchSuccessRate,
+                row.BenchSuccessfulAttempts,
+                row.BenchCountedAttempts),
+            DeadliftAttempts = ToAttemptSuccessRate(
+                row.DeadliftSuccessRate,
+                row.DeadliftSuccessfulAttempts,
+                row.DeadliftCountedAttempts),
+            OverallAttempts = ToAttemptSuccessRate(
+                row.OverallSuccessRate,
+                row.OverallSuccessfulAttempts,
+                row.OverallCountedAttempts),
+            ThirdAttempts = ToAttemptSuccessRate(
+                row.ThirdAttemptSuccessRate,
+                row.ThirdAttemptSuccessfulAttempts,
+                row.ThirdAttemptCountedAttempts)
+        };
+    }
+
+    private static AthleteAttemptSuccessRate ToAttemptSuccessRate(
+        decimal? ratePercent,
+        int successfulAttempts,
+        int countedAttempts)
+    {
+        return new AthleteAttemptSuccessRate
+        {
+            RatePercent = ratePercent,
+            SuccessfulAttempts = successfulAttempts,
+            CountedAttempts = countedAttempts
         };
     }
 
@@ -177,6 +261,43 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         public decimal? BestDeadliftKg { get; init; }
         public decimal? TotalKg { get; init; }
         public string? Place { get; init; }
+    }
+
+    /// <summary>PostgREST row from get_athlete_analytics().</summary>
+    private sealed record AnalyticsRow
+    {
+        public string? AthleteSlug { get; init; }
+        public int StartsCount { get; init; }
+        public decimal? BestTotalKg { get; init; }
+        public decimal? LastTotalKg { get; init; }
+
+        [JsonPropertyName("last3_avg_total_kg")]
+        public decimal? Last3AvgTotalKg { get; init; }
+
+        [JsonPropertyName("last5_avg_total_kg")]
+        public decimal? Last5AvgTotalKg { get; init; }
+
+        public decimal? TotalTrendKg { get; init; }
+        public decimal? BestSquatKg { get; init; }
+        public decimal? BestBenchKg { get; init; }
+        public decimal? BestDeadliftKg { get; init; }
+        public decimal? BestDotsPoints { get; init; }
+        public decimal? BestGoodliftPoints { get; init; }
+        public decimal? SquatSuccessRate { get; init; }
+        public int SquatSuccessfulAttempts { get; init; }
+        public int SquatCountedAttempts { get; init; }
+        public decimal? BenchSuccessRate { get; init; }
+        public int BenchSuccessfulAttempts { get; init; }
+        public int BenchCountedAttempts { get; init; }
+        public decimal? DeadliftSuccessRate { get; init; }
+        public int DeadliftSuccessfulAttempts { get; init; }
+        public int DeadliftCountedAttempts { get; init; }
+        public decimal? OverallSuccessRate { get; init; }
+        public int OverallSuccessfulAttempts { get; init; }
+        public int OverallCountedAttempts { get; init; }
+        public decimal? ThirdAttemptSuccessRate { get; init; }
+        public int ThirdAttemptSuccessfulAttempts { get; init; }
+        public int ThirdAttemptCountedAttempts { get; init; }
     }
 
     /// <summary>PostgREST row from get_athlete_data_import_status().</summary>

@@ -256,6 +256,20 @@
   <data name="Predictions.BestLiftsPr" xml:space="preserve"><value>Best lifts (PR)</value></data>
   <data name="Predictions.TotalTrend" xml:space="preserve"><value>Total trend (last {0} starts)</value></data>
   <data name="Predictions.TotalTrendShort" xml:space="preserve"><value>Total trend</value></data>
+  <data name="Predictions.Analytics" xml:space="preserve"><value>Analytics</value></data>
+  <data name="Predictions.AnalyticsUnavailable" xml:space="preserve"><value>Not enough data for analytics.</value></data>
+  <data name="Predictions.AnalyticsPartial" xml:space="preserve"><value>Some metrics are unavailable for this athlete.</value></data>
+  <data name="Predictions.AnalyticsLimitedSample" xml:space="preserve"><value>Too few starts to calculate reliable averages and trend.</value></data>
+  <data name="Predictions.Analytics.StartsCount" xml:space="preserve"><value>Starts</value></data>
+  <data name="Predictions.Analytics.Last3Avg" xml:space="preserve"><value>Last 3 avg</value></data>
+  <data name="Predictions.Analytics.Last5Avg" xml:space="preserve"><value>Last 5 avg</value></data>
+  <data name="Predictions.Analytics.AttemptSuccessOverall" xml:space="preserve"><value>Attempt success</value></data>
+  <data name="Predictions.Analytics.ThirdAttempts" xml:space="preserve"><value>Third attempts</value></data>
+  <data name="Predictions.Analytics.BestDots" xml:space="preserve"><value>Best DOTS</value></data>
+  <data name="Predictions.Analytics.BestGoodlift" xml:space="preserve"><value>Best GL</value></data>
+  <data name="Predictions.Analytics.BestScore" xml:space="preserve"><value>Best GL / DOTS</value></data>
+  <data name="Predictions.Analytics.AttemptsMade" xml:space="preserve"><value>{0}/{1} made</value></data>
+  <data name="Predictions.Analytics.NoCountedAttempts" xml:space="preserve"><value>no counted attempts</value></data>
   <data name="Predictions.LoadingHistory" xml:space="preserve"><value>Loading history...</value></data>
   <data name="Predictions.NoAthleteHistory" xml:space="preserve"><value>No recent results available yet.</value></data>
   <data name="Predictions.HistoryLoadError" xml:space="preserve"><value>Failed to load competition history.</value></data>

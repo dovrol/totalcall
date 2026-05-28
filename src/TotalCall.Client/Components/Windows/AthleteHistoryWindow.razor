@@ -86,6 +86,92 @@
         }
         else
         {
+            @if (Analytics is { } analytics)
+            {
+                <section class="athlete-history-window__analytics">
+                    <header class="athlete-history-window__section-head">
+                        <h3>@Localizer["Predictions.Analytics"]</h3>
+                        <span class="athlete-history-window__pill">
+                            <AppIcon Name="AppIconName.TrendUp" Size="13" />
+                            @Localizer["Predictions.Analytics.StartsCount"]: @analytics.StartsCount
+                        </span>
+                    </header>
+
+                    @if (!string.IsNullOrWhiteSpace(GetAnalyticsNotice(analytics)))
+                    {
+                        <p class="athlete-history-window__analytics-note">@GetAnalyticsNotice(analytics)</p>
+                    }
+
+                    <dl class="athlete-history-window__analytics-grid">
+                        <div>
+                            <dt>@Localizer["Predictions.BestResult"]</dt>
+                            <dd>@FormatKg(analytics.BestTotalKg)</dd>
+                        </div>
+                        <div>
+                            <dt>@Localizer["Predictions.LastResult"]</dt>
+                            <dd>@FormatKg(analytics.LastTotalKg)</dd>
+                        </div>
+                        <div>
+                            <dt>@Localizer["Predictions.Analytics.Last3Avg"]</dt>
+                            <dd>@FormatKg(analytics.Last3AvgTotalKg)</dd>
+                        </div>
+                        <div>
+                            <dt>@Localizer["Predictions.Analytics.Last5Avg"]</dt>
+                            <dd>@FormatKg(analytics.Last5AvgTotalKg)</dd>
+                        </div>
+                        <div>
+                            <dt>@Localizer["Predictions.TotalTrendShort"]</dt>
+                            <dd class="@GetTrendValueClass(analytics.TotalTrendKg)">@FormatSignedKg(analytics.TotalTrendKg)</dd>
+                        </div>
+                        <div>
+                            <dt>@Localizer["Predictions.Analytics.BestGoodlift"]</dt>
+                            <dd>@FormatScore(analytics.BestGoodliftPoints)</dd>
+                        </div>
+                        <div>
+                            <dt>@Localizer["Predictions.Analytics.BestDots"]</dt>
+                            <dd>@FormatScore(analytics.BestDotsPoints)</dd>
+                        </div>
+                    </dl>
+
+                    <dl class="athlete-history-window__attempts-grid">
+                        <div>
+                            <dt>SQ</dt>
+                            <dd>@FormatAttemptRate(analytics.SquatAttempts)</dd>
+                            <small>@FormatAttemptCount(analytics.SquatAttempts)</small>
+                        </div>
+                        <div>
+                            <dt>BP</dt>
+                            <dd>@FormatAttemptRate(analytics.BenchAttempts)</dd>
+                            <small>@FormatAttemptCount(analytics.BenchAttempts)</small>
+                        </div>
+                        <div>
+                            <dt>DL</dt>
+                            <dd>@FormatAttemptRate(analytics.DeadliftAttempts)</dd>
+                            <small>@FormatAttemptCount(analytics.DeadliftAttempts)</small>
+                        </div>
+                        <div>
+                            <dt>@Localizer["Predictions.Analytics.AttemptSuccessOverall"]</dt>
+                            <dd>@FormatAttemptRate(analytics.OverallAttempts)</dd>
+                            <small>@FormatAttemptCount(analytics.OverallAttempts)</small>
+                        </div>
+                        <div>
+                            <dt>@Localizer["Predictions.Analytics.ThirdAttempts"]</dt>
+                            <dd>@FormatAttemptRate(analytics.ThirdAttempts)</dd>
+                            <small>@FormatAttemptCount(analytics.ThirdAttempts)</small>
+                        </div>
+                    </dl>
+                </section>
+            }
+            else
+            {
+                <section class="athlete-history-window__analytics">
+                    <header class="athlete-history-window__section-head">
+                        <h3>@Localizer["Predictions.Analytics"]</h3>
+                    </header>
+                    <p class="athlete-history-window__empty">@Localizer["Predictions.AnalyticsUnavailable"]</p>
+                </section>
+            }
+
             @if (TrendPoints.Count > 1)
             {
                 <section class="athlete-history-window__trend">
@@ -207,6 +293,8 @@
 
     private IReadOnlyList<AthleteRecentResult> RecentResults => History?.RecentResults ?? [];
 
+    private AthleteAnalytics? Analytics => History?.Analytics;
+
     private decimal? BestSquatKg => History?.Bests?.SquatKg ??
                                     History?.RecentResults.Max(result => result.SquatKg);
 
@@ -303,6 +391,70 @@
         return value is null
             ? "--"
             : value.Value.ToString("0.#", CultureInfo.CurrentCulture);
+    }
+
+    private string FormatSignedKg(decimal? value)
+    {
+        if (value is null)
+        {
+            return "--";
+        }
+
+        var prefix = value.Value > 0 ? "+" : string.Empty;
+        return $"{prefix}{FormatKg(value)}";
+    }
+
+    private string FormatScore(decimal? value)
+    {
+        return value is null
+            ? "--"
+            : value.Value.ToString("0.#", CultureInfo.CurrentCulture);
+    }
+
+    private string FormatAttemptRate(AthleteAttemptSuccessRate attempts)
+    {
+        return attempts.RatePercent is null
+            ? "--"
+            : $"{attempts.RatePercent.Value.ToString("0.#", CultureInfo.CurrentCulture)}%";
+    }
+
+    private string FormatAttemptCount(AthleteAttemptSuccessRate attempts)
+    {
+        return attempts.CountedAttempts == 0
+            ? Localizer["Predictions.Analytics.NoCountedAttempts"].Value
+            : string.Format(
+                CultureInfo.CurrentCulture,
+                Localizer["Predictions.Analytics.AttemptsMade"].Value,
+                attempts.SuccessfulAttempts,
+                attempts.CountedAttempts);
+    }
+
+    private string GetTrendValueClass(decimal? value)
+    {
+        return value switch
+        {
+            > 0 => "athlete-history-window__trend-value athlete-history-window__trend-value--up",
+            < 0 => "athlete-history-window__trend-value athlete-history-window__trend-value--down",
+            _ => "athlete-history-window__trend-value"
+        };
+    }
+
+    private string? GetAnalyticsNotice(AthleteAnalytics analytics)
+    {
+        if (analytics.StartsCount < 3)
+        {
+            return Localizer["Predictions.AnalyticsLimitedSample"].Value;
+        }
+
+        return analytics.Last3AvgTotalKg is null ||
+               analytics.Last5AvgTotalKg is null ||
+               analytics.TotalTrendKg is null ||
+               analytics.BestDotsPoints is null ||
+               analytics.BestGoodliftPoints is null ||
+               analytics.OverallAttempts.RatePercent is null ||
+               analytics.ThirdAttempts.RatePercent is null
+            ? Localizer["Predictions.AnalyticsPartial"].Value
+            : null;
     }
 
     private string FormatBodyweightValue(decimal? value)
