@@ -2,6 +2,58 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.4.0-beta.1",
+      "releasedAt": "2026-05-28",
+      "title": {
+        "pl": "Dane zawodników z Supabase i analityka",
+        "en": "Athlete data from Supabase and analytics"
+      },
+      "items": [
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Historia startów zawodników pobierana z Supabase — bez lokalnych plików JSON, zawsze aktualne dane bez potrzeby przebudowy aplikacji.",
+            "en": "Athlete start history fetched from Supabase — no local JSON files, always up-to-date without rebuilding the app."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Nowy importer danych OPL — automatyczny pipeline CI/CD pobiera dane z OpenPowerlifting i aktualizuje bazę zawodników.",
+            "en": "New OPL data importer — automated CI/CD pipeline fetches data from OpenPowerlifting and keeps the athlete database current."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Panel analityczny zawodnika — wyniki z ostatnich zawodów, trendy i kontekst wyświetlane bezpośrednio przy typowaniu.",
+            "en": "Athlete analytics panel — recent competition results, performance trends and context shown directly in the prediction flow."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Wskaźnik źródła danych i statusu ostatniej aktualizacji w oknie historii zawodnika.",
+            "en": "Data source and last-update status indicator in the athlete history window."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Cache w pamięci na zawodnika — historia pobierana z Supabase tylko raz na sesję, bez zbędnych zapytań.",
+            "en": "Per-athlete in-memory cache — history fetched from Supabase only once per session, no redundant requests."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Obsługa stanów ładowania, braku danych i błędów przy pobieraniu historii z API.",
+            "en": "Proper loading, empty-state and error handling when fetching athlete history from the API."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.3.0-beta.1",
       "releasedAt": "2026-05-26",
       "title": {
