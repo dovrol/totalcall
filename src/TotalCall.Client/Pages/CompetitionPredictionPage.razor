@@ -5,6 +5,7 @@
 @inject IPredictionValidationService PredictionValidationService
 @inject CompetitionReviewBuilder ReviewBuilder
 @inject IStringLocalizer<SharedResource> Localizer
+@inject ToastService Toasts
 
 <PageTitle>@(competition is null ? Localizer["Predictions.PageTitle"] : $"{competition.Name} - {Localizer["Predictions.PageTitle"]}")</PageTitle>
 
@@ -151,11 +152,19 @@ else
         }
 
         saveStatus = null;
-        await PredictionService.SaveAsync(predictionSet);
+        try
+        {
+            await PredictionService.SaveAsync(predictionSet);
 
-        saveStatus = validationResult.IsValid
-            ? Localizer["Predictions.SavedLocally"]
-            : Localizer["Predictions.DraftSaved"];
+            saveStatus = validationResult.IsValid
+                ? Localizer["Predictions.SavedLocally"]
+                : Localizer["Predictions.DraftSaved"];
+        }
+        catch
+        {
+            saveStatus = Localizer["Predictions.Toast.Save.Error"];
+            Toasts.ShowError(Localizer["Predictions.Toast.Save.Error"]);
+        }
     }
 
     private Task SelectGroup(string groupId)

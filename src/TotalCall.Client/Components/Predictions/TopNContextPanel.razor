@@ -2,6 +2,7 @@
 @inject IStringLocalizer<SharedResource> Localizer
 @inject AthleteHistoryService AthleteHistoryService
 @inject WindowManager Windows
+@inject ToastService Toasts
 
 <aside class="prediction-context-panel" aria-label="@Localizer["Predictions.ContextPanel"]">
     <header class="prediction-context-panel__head">
@@ -48,7 +49,7 @@
 
                 <label class="prediction-context-panel__selector-sort">
                     <span>@Localizer["Predictions.SortBy"]:</span>
-                    <select class="control prediction-context-panel__selector-sort-select" @bind="selectorSortMode">
+                    <select class="control prediction-context-panel__selector-sort-select" value="@selectorSortMode" @onchange="OnSelectorSortModeChanged">
                         <option value="nominated-desc">@Localizer["Predictions.SortNominatedDesc"]</option>
                         <option value="nominated-asc">@Localizer["Predictions.SortNominatedAsc"]</option>
                         <option value="name-asc">@Localizer["Predictions.SortNameAsc"]</option>
@@ -587,6 +588,19 @@
         return SelectorAthletePicked.InvokeAsync(athleteId);
     }
 
+    private Task OnSelectorSortModeChanged(ChangeEventArgs args)
+    {
+        var nextSortMode = args.Value?.ToString();
+        if (string.IsNullOrWhiteSpace(nextSortMode) || string.Equals(selectorSortMode, nextSortMode, StringComparison.Ordinal))
+        {
+            return Task.CompletedTask;
+        }
+
+        selectorSortMode = nextSortMode;
+        Toasts.ShowInfo(Localizer["Predictions.Toast.SortList.Success", GetSelectorSortLabel(selectorSortMode)]);
+        return Task.CompletedTask;
+    }
+
     private Task OnShowHistoryWindowClicked(MouseEventArgs _)
     {
         if (SelectedAthlete is null)
@@ -929,5 +943,15 @@
         }
 
         return string.Concat(parts).ToUpper(CultureInfo.CurrentCulture);
+    }
+
+    private string GetSelectorSortLabel(string mode)
+    {
+        return mode switch
+        {
+            "nominated-asc" => Localizer["Predictions.SortNominatedAsc"].Value,
+            "name-asc" => Localizer["Predictions.SortNameAsc"].Value,
+            _ => Localizer["Predictions.SortNominatedDesc"].Value
+        };
     }
 }

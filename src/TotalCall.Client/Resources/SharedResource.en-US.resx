@@ -177,6 +177,21 @@
   <data name="Share.Toast.ExportCsv.Success" xml:space="preserve"><value>CSV file downloaded.</value></data>
   <data name="Share.Toast.CopyLink.Success" xml:space="preserve"><value>App link copied.</value></data>
   <data name="Share.Toast.Generic.Error" xml:space="preserve"><value>Something went wrong. Please try again.</value></data>
+  <data name="Predictions.Toast.AutoFill.Success" xml:space="preserve"><value>Category auto-filled by nominated total.</value></data>
+  <data name="Predictions.Toast.AutoFill.Empty" xml:space="preserve"><value>No athletes available for auto-fill in this category.</value></data>
+  <data name="Predictions.Toast.SortPredicted.Success" xml:space="preserve"><value>Ranking sorted by predicted total.</value></data>
+  <data name="Predictions.Toast.SortPredicted.Empty" xml:space="preserve"><value>Add picks with predicted totals before sorting by PRED.</value></data>
+  <data name="Predictions.Toast.Clear.Success" xml:space="preserve"><value>Category cleared.</value></data>
+  <data name="Predictions.Toast.Clear.Empty" xml:space="preserve"><value>This category is already empty.</value></data>
+  <data name="Predictions.Toast.AthletePicked.Success" xml:space="preserve"><value>Picked {0} for slot #{1}.</value></data>
+  <data name="Predictions.Toast.AthleteRemoved.Success" xml:space="preserve"><value>Removed {0} from the ranking.</value></data>
+  <data name="Predictions.Toast.AthleteMoved.Success" xml:space="preserve"><value>Moved {0} to slot #{1}.</value></data>
+  <data name="Predictions.Toast.PredictionSaved.Success" xml:space="preserve"><value>Saved predicted total for {0}.</value></data>
+  <data name="Predictions.Toast.QuickFill.Nominated" xml:space="preserve"><value>Inserted nominated total for {0}.</value></data>
+  <data name="Predictions.Toast.QuickFill.Last" xml:space="preserve"><value>Inserted last result for {0}.</value></data>
+  <data name="Predictions.Toast.QuickFill.Best" xml:space="preserve"><value>Inserted best result for {0}.</value></data>
+  <data name="Predictions.Toast.SortList.Success" xml:space="preserve"><value>List sorted: {0}.</value></data>
+  <data name="Predictions.Toast.Save.Error" xml:space="preserve"><value>Could not save the local draft.</value></data>
   <data name="Share.Clipboard.FallbackTitle" xml:space="preserve"><value>Copy manually</value></data>
   <data name="Share.Clipboard.FallbackBody" xml:space="preserve"><value>The browser blocked automatic copy. Select the text below and copy it manually (Cmd/Ctrl + C).</value></data>
   <data name="Predictions.ActionBarAria" xml:space="preserve"><value>Pick actions</value></data>

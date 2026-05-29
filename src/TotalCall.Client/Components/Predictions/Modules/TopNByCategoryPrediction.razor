@@ -5,6 +5,7 @@
 @inject PredictionTextService Text
 @inject AthleteHistoryService AthleteHistoryService
 @inject WindowManager Windows
+@inject ToastService Toasts
 
 @if (OrderedQuestions.Count == 0 || ActiveQuestion is null)
 {
@@ -655,11 +656,11 @@ else
         return MoveSlot(position, position + 1);
     }
 
-    private Task RemoveFromPosition(int position)
+    private async Task RemoveFromPosition(int position)
     {
         if (!CanEditPredictions || ActiveQuestion is null)
         {
-            return Task.CompletedTask;
+            return;
         }
 
         var placement = GetPlacements(ActiveQuestion.Id)
@@ -669,9 +670,10 @@ else
         if (requiresConfirmation && pendingRemovalPosition != position)
         {
             pendingRemovalPosition = position;
-            return Task.CompletedTask;
+            return;
         }
 
+        var athleteName = GetSelectedAthlete(position)?.DisplayName;
         pendingRemovalPosition = null;
 
         if (predictionEditorPosition == position)
@@ -683,26 +685,38 @@ else
             .Where(placement => placement.Position != position)
             .ToArray();
 
-        return EmitAnswer(placements);
+        await EmitAnswer(placements);
+
+        if (!string.IsNullOrWhiteSpace(athleteName))
+        {
+            Toasts.ShowSuccess(Localizer["Predictions.Toast.AthleteRemoved.Success", athleteName]);
+        }
     }
 
-    private Task ClearCategory()
+    private async Task ClearCategory()
     {
         if (!CanEditPredictions || ActiveQuestion is null)
         {
-            return Task.CompletedTask;
+            return;
+        }
+
+        if (GetPlacements(ActiveQuestion.Id).Count == 0)
+        {
+            Toasts.ShowInfo(Localizer["Predictions.Toast.Clear.Empty"]);
+            return;
         }
 
         pendingRemovalPosition = null;
         ClosePredictionEditor();
-        return EmitAnswer([]);
+        await EmitAnswer([]);
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.Clear.Success"]);
     }
 
-    private Task AutoFillByNominatedTotal()
+    private async Task AutoFillByNominatedTotal()
     {
         if (!CanEditPredictions || ActiveQuestion is null)
         {
-            return Task.CompletedTask;
+            return;
         }
 
         pendingRemovalPosition = null;
@@ -720,19 +734,33 @@ else
             })
             .ToArray();
 
-        return EmitAnswer(placements);
+        if (placements.Length == 0)
+        {
+            Toasts.ShowInfo(Localizer["Predictions.Toast.AutoFill.Empty"]);
+            return;
+        }
+
+        await EmitAnswer(placements);
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.AutoFill.Success"]);
     }
 
-    private Task SortByPredictedTotal()
+    private async Task SortByPredictedTotal()
     {
         if (!CanEditPredictions || ActiveQuestion is null)
         {
-            return Task.CompletedTask;
+            return;
         }
 
         pendingRemovalPosition = null;
         ClosePredictionEditor();
-        var sortedPlacements = GetPlacements(ActiveQuestion.Id)
+        var placements = GetPlacements(ActiveQuestion.Id);
+        if (placements.Count == 0 || placements.All(placement => placement.PredictedTotalKg is null))
+        {
+            Toasts.ShowInfo(Localizer["Predictions.Toast.SortPredicted.Empty"]);
+            return;
+        }
+
+        var sortedPlacements = placements
             .Select((placement, index) => new { Placement = placement, Index = index })
             .OrderBy(item => item.Placement.PredictedTotalKg is null ? 1 : 0)
             .ThenByDescending(item => item.Placement.PredictedTotalKg ?? 0m)
@@ -740,7 +768,8 @@ else
             .Select((item, index) => item.Placement with { Position = index + 1 })
             .ToArray();
 
-        return EmitAnswer(sortedPlacements);
+        await EmitAnswer(sortedPlacements);
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.SortPredicted.Success"]);
     }
 
     private Task MoveSlot(int fromPosition, int toPosition)
@@ -765,16 +794,16 @@ else
         return SetAthleteAtPosition(toPosition, sourceAthlete.Id, fromPosition);
     }
 
-    private Task SetAthleteAtPosition(int targetPosition, string athleteId, int? sourcePosition = null)
+    private async Task SetAthleteAtPosition(int targetPosition, string athleteId, int? sourcePosition = null)
     {
         if (!CanEditPredictions || ActiveQuestion is null || targetPosition < 1 || targetPosition > SlotsCount)
         {
-            return Task.CompletedTask;
+            return;
         }
 
         if (sourcePosition.HasValue && sourcePosition.Value == targetPosition)
         {
-            return Task.CompletedTask;
+            return;
         }
 
         if (predictionEditorPosition == targetPosition || predictionEditorPosition == sourcePosition)
@@ -784,6 +813,9 @@ else
         pendingRemovalPosition = null;
 
         var placements = GetPlacements(ActiveQuestion.Id).ToList();
+        var existingPosition = placements
+            .FirstOrDefault(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase))
+            ?.Position;
         var targetAthleteId = placements.FirstOrDefault(placement => placement.Position == targetPosition)?.AthleteId;
 
         placements.RemoveAll(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase));
@@ -819,7 +851,21 @@ else
             });
         }
 
-        return EmitAnswer(placements);
+        await EmitAnswer(placements);
+
+        var athlete = Competition.Athletes.FirstOrDefault(item => string.Equals(item.Id, athleteId, StringComparison.OrdinalIgnoreCase));
+        if (athlete is null)
+        {
+            return;
+        }
+
+        if (existingPosition is not null && existingPosition != targetPosition)
+        {
+            Toasts.ShowSuccess(Localizer["Predictions.Toast.AthleteMoved.Success", athlete.DisplayName, targetPosition]);
+            return;
+        }
+
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.AthletePicked.Success", athlete.DisplayName, targetPosition]);
     }
 
     private async Task OpenPredictionEditor(int position)
@@ -893,11 +939,11 @@ else
         return Task.CompletedTask;
     }
 
-    private Task SavePredictionEditor()
+    private async Task SavePredictionEditor()
     {
         if (!CanEditPredictions || ActiveQuestion is null || predictionEditorPosition is null)
         {
-            return Task.CompletedTask;
+            return;
         }
 
         var placement = GetPlacements(ActiveQuestion.Id)
@@ -906,7 +952,7 @@ else
         if (placement is null)
         {
             ClosePredictionEditor();
-            return Task.CompletedTask;
+            return;
         }
 
         decimal? squat = null;
@@ -921,7 +967,7 @@ else
                 !TryReadOptionalPositiveDecimal(predictionDeadliftInput, out deadlift))
             {
                 predictionEditorError = Localizer["Predictions.PredictionValueInvalid"];
-                return Task.CompletedTask;
+                return;
             }
 
             total = squat is not null || bench is not null || deadlift is not null
@@ -933,10 +979,11 @@ else
             if (!TryReadOptionalPositiveDecimal(predictionTotalInput, out total))
             {
                 predictionEditorError = Localizer["Predictions.PredictionValueInvalid"];
-                return Task.CompletedTask;
+                return;
             }
         }
 
+        var athleteName = GetSelectedAthlete(placement.Position)?.DisplayName;
         var placements = GetPlacements(ActiveQuestion.Id)
             .Select(item => item.Position == placement.Position
                 ? item with
@@ -951,7 +998,12 @@ else
 
         ClosePredictionEditor();
         pendingRemovalPosition = null;
-        return EmitAnswer(placements);
+        await EmitAnswer(placements);
+
+        if (!string.IsNullOrWhiteSpace(athleteName))
+        {
+            Toasts.ShowSuccess(Localizer["Predictions.Toast.PredictionSaved.Success", athleteName]);
+        }
     }
 
     private Task CancelPredictionEditor()
@@ -973,6 +1025,7 @@ else
         predictionTotalInput = FormatInputValue(athlete.SeedTotalKg);
         predictionEditorError = null;
         pendingRemovalPosition = null;
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.QuickFill.Nominated", athlete.DisplayName]);
         return Task.CompletedTask;
     }
 
@@ -990,6 +1043,7 @@ else
             predictionHistory.LastResult.TotalKg);
 
         pendingRemovalPosition = null;
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.QuickFill.Last", GetEditorAthlete()?.DisplayName ?? Localizer["Common.Tbd"].Value]);
         return Task.CompletedTask;
     }
 
@@ -1007,6 +1061,7 @@ else
             predictionHistory.Bests.TotalKg);
 
         pendingRemovalPosition = null;
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.QuickFill.Best", GetEditorAthlete()?.DisplayName ?? Localizer["Common.Tbd"].Value]);
         return Task.CompletedTask;
     }
 

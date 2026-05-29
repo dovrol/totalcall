@@ -177,6 +177,21 @@
   <data name="Share.Toast.ExportCsv.Success" xml:space="preserve"><value>Pobrano plik CSV z typami.</value></data>
   <data name="Share.Toast.CopyLink.Success" xml:space="preserve"><value>Skopiowano link do aplikacji.</value></data>
   <data name="Share.Toast.Generic.Error" xml:space="preserve"><value>Coś poszło nie tak. Spróbuj ponownie.</value></data>
+  <data name="Predictions.Toast.AutoFill.Success" xml:space="preserve"><value>Uzupełniono kategorię wg nominated total.</value></data>
+  <data name="Predictions.Toast.AutoFill.Empty" xml:space="preserve"><value>Brak zawodników do auto-fill w tej kategorii.</value></data>
+  <data name="Predictions.Toast.SortPredicted.Success" xml:space="preserve"><value>Posortowano ranking wg predicted total.</value></data>
+  <data name="Predictions.Toast.SortPredicted.Empty" xml:space="preserve"><value>Dodaj typy z predicted total, żeby sortować wg PRED.</value></data>
+  <data name="Predictions.Toast.Clear.Success" xml:space="preserve"><value>Wyczyszczono kategorię.</value></data>
+  <data name="Predictions.Toast.Clear.Empty" xml:space="preserve"><value>Ta kategoria jest już pusta.</value></data>
+  <data name="Predictions.Toast.AthletePicked.Success" xml:space="preserve"><value>Wybrano {0} na miejsce #{1}.</value></data>
+  <data name="Predictions.Toast.AthleteRemoved.Success" xml:space="preserve"><value>Usunięto {0} z rankingu.</value></data>
+  <data name="Predictions.Toast.AthleteMoved.Success" xml:space="preserve"><value>Przesunięto {0} na miejsce #{1}.</value></data>
+  <data name="Predictions.Toast.PredictionSaved.Success" xml:space="preserve"><value>Zapisano predicted total dla {0}.</value></data>
+  <data name="Predictions.Toast.QuickFill.Nominated" xml:space="preserve"><value>Wstawiono nominated total dla {0}.</value></data>
+  <data name="Predictions.Toast.QuickFill.Last" xml:space="preserve"><value>Wstawiono ostatni wynik dla {0}.</value></data>
+  <data name="Predictions.Toast.QuickFill.Best" xml:space="preserve"><value>Wstawiono najlepszy wynik dla {0}.</value></data>
+  <data name="Predictions.Toast.SortList.Success" xml:space="preserve"><value>Posortowano listę: {0}.</value></data>
+  <data name="Predictions.Toast.Save.Error" xml:space="preserve"><value>Nie udało się zapisać szkicu lokalnie.</value></data>
   <data name="Share.Clipboard.FallbackTitle" xml:space="preserve"><value>Skopiuj ręcznie</value></data>
   <data name="Share.Clipboard.FallbackBody" xml:space="preserve"><value>Przeglądarka zablokowała automatyczne kopiowanie. Zaznacz tekst poniżej i skopiuj go ręcznie (Cmd/Ctrl + C).</value></data>
   <data name="Predictions.ActionBarAria" xml:space="preserve"><value>Akcje typów</value></data>
