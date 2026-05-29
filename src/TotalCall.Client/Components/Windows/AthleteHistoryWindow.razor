@@ -88,7 +88,7 @@
         {
             @if (Analytics is { } analytics)
             {
-                <section class="athlete-history-window__analytics">
+                <section class="athlete-history-window__analytics athlete-history-window__analytics--insight">
                     <header class="athlete-history-window__section-head">
                         <h3>@Localizer["Predictions.Analytics"]</h3>
                         <span class="athlete-history-window__pill">
@@ -102,64 +102,69 @@
                         <p class="athlete-history-window__analytics-note">@GetAnalyticsNotice(analytics)</p>
                     }
 
-                    <dl class="athlete-history-window__analytics-grid">
-                        <div>
+                    <div class="athlete-history-window__analytics-hero">
+                        <div class="athlete-history-window__analytics-hero-main">
+                            <span class="athlete-history-window__eyebrow">@Localizer["Predictions.Analytics.CurrentShape"]</span>
+                            <strong>@FormatKg(analytics.LastTotalKg)</strong>
+                            <span>@GetLastVsBestText(analytics)</span>
+                        </div>
+                        <div class="@GetMomentumCardClass(analytics.TotalTrendKg)">
+                            <span class="athlete-history-window__analytics-hero-icon">
+                                <AppIcon Name="AppIconName.TrendUp" Size="18" />
+                            </span>
+                            <span class="athlete-history-window__eyebrow">@Localizer["Predictions.TotalTrendShort"]</span>
+                            <strong>@FormatSignedKg(analytics.TotalTrendKg)</strong>
+                            <small>@GetTrendSummary(analytics.TotalTrendKg)</small>
+                        </div>
+                    </div>
+
+                    <dl class="athlete-history-window__analytics-kpis">
+                        <div class="athlete-history-window__analytics-kpi athlete-history-window__analytics-kpi--accent">
                             <dt>@Localizer["Predictions.BestResult"]</dt>
                             <dd>@FormatKg(analytics.BestTotalKg)</dd>
+                            <small>@Localizer["Predictions.Analytics.PrTotal"]</small>
                         </div>
-                        <div>
-                            <dt>@Localizer["Predictions.LastResult"]</dt>
-                            <dd>@FormatKg(analytics.LastTotalKg)</dd>
-                        </div>
-                        <div>
+                        <div class="athlete-history-window__analytics-kpi">
                             <dt>@Localizer["Predictions.Analytics.Last3Avg"]</dt>
                             <dd>@FormatKg(analytics.Last3AvgTotalKg)</dd>
+                            <small>@GetAverageVsLastText(analytics.Last3AvgTotalKg, analytics.LastTotalKg)</small>
                         </div>
-                        <div>
+                        <div class="athlete-history-window__analytics-kpi">
                             <dt>@Localizer["Predictions.Analytics.Last5Avg"]</dt>
                             <dd>@FormatKg(analytics.Last5AvgTotalKg)</dd>
+                            <small>@GetAverageVsLastText(analytics.Last5AvgTotalKg, analytics.LastTotalKg)</small>
                         </div>
-                        <div>
-                            <dt>@Localizer["Predictions.TotalTrendShort"]</dt>
-                            <dd class="@GetTrendValueClass(analytics.TotalTrendKg)">@FormatSignedKg(analytics.TotalTrendKg)</dd>
-                        </div>
-                        <div>
-                            <dt>@Localizer["Predictions.Analytics.BestGoodlift"]</dt>
-                            <dd>@FormatScore(analytics.BestGoodliftPoints)</dd>
-                        </div>
-                        <div>
-                            <dt>@Localizer["Predictions.Analytics.BestDots"]</dt>
-                            <dd>@FormatScore(analytics.BestDotsPoints)</dd>
+                        <div class="athlete-history-window__analytics-kpi">
+                            <dt>@Localizer["Predictions.Analytics.BestScore"]</dt>
+                            <dd>GL @FormatScore(analytics.BestGoodliftPoints)</dd>
+                            <small>DOTS @FormatScore(analytics.BestDotsPoints)</small>
                         </div>
                     </dl>
 
-                    <dl class="athlete-history-window__attempts-grid">
+                    <section class="athlete-history-window__attempts-panel" aria-label="@Localizer["Predictions.Analytics.AttemptsReliability"]">
                         <div>
-                            <dt>SQ</dt>
-                            <dd>@FormatAttemptRate(analytics.SquatAttempts)</dd>
-                            <small>@FormatAttemptCount(analytics.SquatAttempts)</small>
-                        </div>
-                        <div>
-                            <dt>BP</dt>
-                            <dd>@FormatAttemptRate(analytics.BenchAttempts)</dd>
-                            <small>@FormatAttemptCount(analytics.BenchAttempts)</small>
-                        </div>
-                        <div>
-                            <dt>DL</dt>
-                            <dd>@FormatAttemptRate(analytics.DeadliftAttempts)</dd>
-                            <small>@FormatAttemptCount(analytics.DeadliftAttempts)</small>
-                        </div>
-                        <div>
-                            <dt>@Localizer["Predictions.Analytics.AttemptSuccessOverall"]</dt>
-                            <dd>@FormatAttemptRate(analytics.OverallAttempts)</dd>
+                            <span class="athlete-history-window__eyebrow">@Localizer["Predictions.Analytics.AttemptsReliability"]</span>
+                            <strong>@FormatAttemptRate(analytics.OverallAttempts)</strong>
                             <small>@FormatAttemptCount(analytics.OverallAttempts)</small>
                         </div>
-                        <div>
-                            <dt>@Localizer["Predictions.Analytics.ThirdAttempts"]</dt>
-                            <dd>@FormatAttemptRate(analytics.ThirdAttempts)</dd>
-                            <small>@FormatAttemptCount(analytics.ThirdAttempts)</small>
-                        </div>
-                    </dl>
+                        <dl class="athlete-history-window__attempt-bars">
+                            @foreach (var attempt in BuildAttemptSummaries(analytics))
+                            {
+                                <div>
+                                    <dt>
+                                        <span>@attempt.Label</span>
+                                        <strong>@attempt.Rate</strong>
+                                    </dt>
+                                    <dd>
+                                        <span class="athlete-history-window__attempt-track">
+                                            <span class="@attempt.BarClass" style="width: @attempt.Width;"></span>
+                                        </span>
+                                        <small>@attempt.Count</small>
+                                    </dd>
+                                </div>
+                            }
+                        </dl>
+                    </section>
                 </section>
             }
             else
@@ -379,6 +384,102 @@
             .ToArray();
     }
 
+
+    private IReadOnlyList<AttemptSummary> BuildAttemptSummaries(AthleteAnalytics analytics)
+    {
+        return
+        [
+            BuildAttemptSummary("SQ", analytics.SquatAttempts),
+            BuildAttemptSummary("BP", analytics.BenchAttempts),
+            BuildAttemptSummary("DL", analytics.DeadliftAttempts),
+            BuildAttemptSummary(Localizer["Predictions.Analytics.ThirdAttempts"].Value, analytics.ThirdAttempts, true)
+        ];
+    }
+
+    private AttemptSummary BuildAttemptSummary(
+        string label,
+        AthleteAttemptSuccessRate attempts,
+        bool isHighPressure = false)
+    {
+        var rate = attempts.RatePercent;
+        var width = rate is null
+            ? "0%"
+            : $"{Math.Clamp(rate.Value, 0m, 100m).ToString("0.##", CultureInfo.InvariantCulture)}%";
+
+        var barClass = string.Join(
+            " ",
+            "athlete-history-window__attempt-fill",
+            isHighPressure ? "athlete-history-window__attempt-fill--pressure" : null,
+            rate is >= 80m ? "athlete-history-window__attempt-fill--strong" : null,
+            rate is > 0m and < 60m ? "athlete-history-window__attempt-fill--risk" : null);
+
+        return new AttemptSummary(
+            label,
+            FormatAttemptRate(attempts),
+            FormatAttemptCount(attempts),
+            width,
+            barClass);
+    }
+
+    private string GetLastVsBestText(AthleteAnalytics analytics)
+    {
+        if (analytics.LastTotalKg is null || analytics.BestTotalKg is null)
+        {
+            return Localizer["Predictions.Analytics.NoComparison"].Value;
+        }
+
+        var gap = analytics.LastTotalKg.Value - analytics.BestTotalKg.Value;
+
+        if (gap == 0m)
+        {
+            return Localizer["Predictions.Analytics.AtPr"].Value;
+        }
+
+        var formattedGap = FormatKg(Math.Abs(gap));
+        return gap > 0m
+            ? string.Format(CultureInfo.CurrentCulture, Localizer["Predictions.Analytics.AbovePr"].Value, formattedGap)
+            : string.Format(CultureInfo.CurrentCulture, Localizer["Predictions.Analytics.BelowPr"].Value, formattedGap);
+    }
+
+    private string GetAverageVsLastText(decimal? average, decimal? lastTotal)
+    {
+        if (average is null || lastTotal is null)
+        {
+            return Localizer["Predictions.Analytics.NoComparison"].Value;
+        }
+
+        var diff = lastTotal.Value - average.Value;
+        if (diff == 0m)
+        {
+            return Localizer["Predictions.Analytics.EqualLast"].Value;
+        }
+
+        return diff > 0m
+            ? string.Format(CultureInfo.CurrentCulture, Localizer["Predictions.Analytics.LastAboveAverage"].Value, FormatKg(diff))
+            : string.Format(CultureInfo.CurrentCulture, Localizer["Predictions.Analytics.LastBelowAverage"].Value, FormatKg(Math.Abs(diff)));
+    }
+
+    private string GetTrendSummary(decimal? value)
+    {
+        return value switch
+        {
+            > 0m => Localizer["Predictions.Analytics.TrendUp"].Value,
+            < 0m => Localizer["Predictions.Analytics.TrendDown"].Value,
+            0m => Localizer["Predictions.Analytics.TrendStable"].Value,
+            _ => Localizer["Predictions.Analytics.TrendUnknown"].Value
+        };
+    }
+
+    private string GetMomentumCardClass(decimal? value)
+    {
+        return value switch
+        {
+            > 0m => "athlete-history-window__analytics-hero-trend athlete-history-window__analytics-hero-trend--up",
+            < 0m => "athlete-history-window__analytics-hero-trend athlete-history-window__analytics-hero-trend--down",
+            _ => "athlete-history-window__analytics-hero-trend"
+        };
+    }
+
     private string FormatKg(decimal? value)
     {
         return value is null
@@ -548,4 +649,5 @@
             ? "--"
             : string.Concat(parts).ToUpper(CultureInfo.CurrentCulture);
     }
+    private sealed record AttemptSummary(string Label, string Rate, string Count, string Width, string BarClass);
 }
