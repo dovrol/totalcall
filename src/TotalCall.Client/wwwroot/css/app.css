@@ -5744,6 +5744,249 @@ textarea {
     color: color-mix(in srgb, var(--danger) 84%, var(--text-primary));
 }
 
+.athlete-history-window__analytics--insight {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 18%, transparent), transparent 36%),
+        color-mix(in srgb, var(--bg-surface-muted) 88%, transparent);
+}
+
+.athlete-history-window__analytics-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.28fr) minmax(11rem, 0.72fr);
+    gap: 0.55rem;
+}
+
+.athlete-history-window__analytics-hero-main,
+.athlete-history-window__analytics-hero-trend,
+.athlete-history-window__analytics-kpi,
+.athlete-history-window__attempts-panel {
+    border: 1px solid color-mix(in srgb, var(--border-strong) 70%, transparent);
+    border-radius: calc(var(--radius-sm) + 0.15rem);
+    background: color-mix(in srgb, var(--bg-surface) 88%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 8%, transparent);
+}
+
+.athlete-history-window__analytics-hero-main {
+    min-height: 8rem;
+    padding: 0.82rem 0.92rem;
+    display: grid;
+    align-content: center;
+    gap: 0.2rem;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, transparent), transparent 54%),
+        color-mix(in srgb, var(--bg-surface) 91%, transparent);
+}
+
+.athlete-history-window__analytics-hero-main strong {
+    font-size: clamp(2rem, 7vw, 3.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+}
+
+.athlete-history-window__analytics-hero-main span:last-child {
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.athlete-history-window__eyebrow {
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.athlete-history-window__analytics-hero-trend {
+    padding: 0.72rem;
+    display: grid;
+    gap: 0.18rem;
+    align-content: center;
+}
+
+.athlete-history-window__analytics-hero-trend--up {
+    border-color: color-mix(in srgb, var(--success) 42%, var(--border));
+    background: linear-gradient(135deg, color-mix(in srgb, var(--success) 14%, transparent), transparent 60%), color-mix(in srgb, var(--bg-surface) 90%, transparent);
+}
+
+.athlete-history-window__analytics-hero-trend--down {
+    border-color: color-mix(in srgb, var(--danger) 42%, var(--border));
+    background: linear-gradient(135deg, color-mix(in srgb, var(--danger) 13%, transparent), transparent 60%), color-mix(in srgb, var(--bg-surface) 90%, transparent);
+}
+
+.athlete-history-window__analytics-hero-icon {
+    width: 2.15rem;
+    aspect-ratio: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    color: var(--accent-strong);
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.athlete-history-window__analytics-hero-trend--up .athlete-history-window__analytics-hero-icon {
+    color: var(--success);
+    background: color-mix(in srgb, var(--success) 14%, transparent);
+}
+
+.athlete-history-window__analytics-hero-trend--down .athlete-history-window__analytics-hero-icon {
+    color: var(--danger);
+    background: color-mix(in srgb, var(--danger) 14%, transparent);
+}
+
+.athlete-history-window__analytics-hero-trend strong {
+    font-size: 1.36rem;
+    line-height: 1;
+}
+
+.athlete-history-window__analytics-hero-trend small {
+    color: var(--text-secondary);
+    font-size: 0.74rem;
+    line-height: 1.25;
+}
+
+.athlete-history-window__analytics-kpis {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.45rem;
+}
+
+.athlete-history-window__analytics-kpi {
+    min-width: 0;
+    padding: 0.58rem 0.62rem;
+    display: grid;
+    gap: 0.12rem;
+}
+
+.athlete-history-window__analytics-kpi--accent {
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--border-strong));
+}
+
+.athlete-history-window__analytics-kpi dt {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.athlete-history-window__analytics-kpi dd {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 850;
+    line-height: 1.12;
+}
+
+.athlete-history-window__analytics-kpi small {
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    line-height: 1.18;
+}
+
+.athlete-history-window__attempts-panel {
+    padding: 0.65rem;
+    display: grid;
+    grid-template-columns: minmax(7.4rem, 0.32fr) minmax(0, 1fr);
+    gap: 0.7rem;
+    align-items: center;
+}
+
+.athlete-history-window__attempts-panel > div:first-child {
+    display: grid;
+    gap: 0.12rem;
+}
+
+.athlete-history-window__attempts-panel > div:first-child strong {
+    font-size: 1.55rem;
+    line-height: 1;
+}
+
+.athlete-history-window__attempts-panel > div:first-child small {
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+}
+
+.athlete-history-window__attempt-bars {
+    margin: 0;
+    display: grid;
+    gap: 0.42rem;
+}
+
+.athlete-history-window__attempt-bars div,
+.athlete-history-window__attempt-bars dt,
+.athlete-history-window__attempt-bars dd {
+    margin: 0;
+}
+
+.athlete-history-window__attempt-bars dt {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.55rem;
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.athlete-history-window__attempt-bars dt strong {
+    color: var(--text-primary);
+}
+
+.athlete-history-window__attempt-bars dd {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.athlete-history-window__attempt-bars dd small {
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    white-space: nowrap;
+}
+
+.athlete-history-window__attempt-track {
+    height: 0.44rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--border) 70%, transparent);
+}
+
+.athlete-history-window__attempt-fill {
+    display: block;
+    height: 100%;
+    min-width: 0.25rem;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+}
+
+.athlete-history-window__attempt-fill--strong {
+    background: linear-gradient(90deg, var(--success), color-mix(in srgb, var(--success) 72%, white));
+}
+
+.athlete-history-window__attempt-fill--risk {
+    background: linear-gradient(90deg, var(--danger), color-mix(in srgb, var(--danger) 72%, white));
+}
+
+.athlete-history-window__attempt-fill--pressure {
+    opacity: 0.86;
+}
+
+@media (max-width: 720px) {
+    .athlete-history-window__analytics-hero,
+    .athlete-history-window__attempts-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .athlete-history-window__analytics-kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 @media (max-width: 520px) {
     .athlete-history-window__analytics-grid,
     .athlete-history-window__attempts-grid {

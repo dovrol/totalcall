@@ -270,6 +270,20 @@
   <data name="Predictions.Analytics.BestScore" xml:space="preserve"><value>Najlepsze GL / DOTS</value></data>
   <data name="Predictions.Analytics.AttemptsMade" xml:space="preserve"><value>{0}/{1} udanych</value></data>
   <data name="Predictions.Analytics.NoCountedAttempts" xml:space="preserve"><value>brak liczonych prób</value></data>
+  <data name="Predictions.Analytics.PrTotal" xml:space="preserve"><value>Total PR</value></data>
+  <data name="Predictions.Analytics.CurrentShape" xml:space="preserve"><value>Aktualna forma</value></data>
+  <data name="Predictions.Analytics.AttemptsReliability" xml:space="preserve"><value>Pewność prób</value></data>
+  <data name="Predictions.Analytics.NoComparison" xml:space="preserve"><value>brak porównania</value></data>
+  <data name="Predictions.Analytics.AtPr" xml:space="preserve"><value>ostatni start na poziomie PR</value></data>
+  <data name="Predictions.Analytics.AbovePr" xml:space="preserve"><value>{0} powyżej PR</value></data>
+  <data name="Predictions.Analytics.BelowPr" xml:space="preserve"><value>{0} do najlepszego totalu</value></data>
+  <data name="Predictions.Analytics.EqualLast" xml:space="preserve"><value>równo z ostatnim wynikiem</value></data>
+  <data name="Predictions.Analytics.LastAboveAverage" xml:space="preserve"><value>ostatni +{0} vs średnia</value></data>
+  <data name="Predictions.Analytics.LastBelowAverage" xml:space="preserve"><value>ostatni -{0} vs średnia</value></data>
+  <data name="Predictions.Analytics.TrendUp" xml:space="preserve"><value>forma idzie w górę</value></data>
+  <data name="Predictions.Analytics.TrendDown" xml:space="preserve"><value>ostatnie wyniki spadają</value></data>
+  <data name="Predictions.Analytics.TrendStable" xml:space="preserve"><value>stabilny poziom</value></data>
+  <data name="Predictions.Analytics.TrendUnknown" xml:space="preserve"><value>za mało danych na trend</value></data>
   <data name="Predictions.LoadingHistory" xml:space="preserve"><value>Ładowanie historii...</value></data>
   <data name="Predictions.NoAthleteHistory" xml:space="preserve"><value>Brak historii startów dla tego zawodnika.</value></data>
   <data name="Predictions.HistoryLoadError" xml:space="preserve"><value>Nie udało się pobrać historii startów.</value></data>

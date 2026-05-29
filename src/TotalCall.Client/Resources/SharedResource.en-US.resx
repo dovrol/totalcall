@@ -270,6 +270,20 @@
   <data name="Predictions.Analytics.BestScore" xml:space="preserve"><value>Best GL / DOTS</value></data>
   <data name="Predictions.Analytics.AttemptsMade" xml:space="preserve"><value>{0}/{1} made</value></data>
   <data name="Predictions.Analytics.NoCountedAttempts" xml:space="preserve"><value>no counted attempts</value></data>
+  <data name="Predictions.Analytics.PrTotal" xml:space="preserve"><value>Total PR</value></data>
+  <data name="Predictions.Analytics.CurrentShape" xml:space="preserve"><value>Current shape</value></data>
+  <data name="Predictions.Analytics.AttemptsReliability" xml:space="preserve"><value>Attempt reliability</value></data>
+  <data name="Predictions.Analytics.NoComparison" xml:space="preserve"><value>no comparison</value></data>
+  <data name="Predictions.Analytics.AtPr" xml:space="preserve"><value>last start matched PR</value></data>
+  <data name="Predictions.Analytics.AbovePr" xml:space="preserve"><value>{0} above PR</value></data>
+  <data name="Predictions.Analytics.BelowPr" xml:space="preserve"><value>{0} below best total</value></data>
+  <data name="Predictions.Analytics.EqualLast" xml:space="preserve"><value>equal to last result</value></data>
+  <data name="Predictions.Analytics.LastAboveAverage" xml:space="preserve"><value>last +{0} vs avg</value></data>
+  <data name="Predictions.Analytics.LastBelowAverage" xml:space="preserve"><value>last -{0} vs avg</value></data>
+  <data name="Predictions.Analytics.TrendUp" xml:space="preserve"><value>shape is trending up</value></data>
+  <data name="Predictions.Analytics.TrendDown" xml:space="preserve"><value>recent results are dipping</value></data>
+  <data name="Predictions.Analytics.TrendStable" xml:space="preserve"><value>stable level</value></data>
+  <data name="Predictions.Analytics.TrendUnknown" xml:space="preserve"><value>not enough data for trend</value></data>
   <data name="Predictions.LoadingHistory" xml:space="preserve"><value>Loading history...</value></data>
   <data name="Predictions.NoAthleteHistory" xml:space="preserve"><value>No recent results available yet.</value></data>
   <data name="Predictions.HistoryLoadError" xml:space="preserve"><value>Failed to load competition history.</value></data>
