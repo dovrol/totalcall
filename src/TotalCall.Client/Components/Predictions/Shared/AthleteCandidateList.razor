@@ -1,4 +1,5 @@
 @inject IStringLocalizer<SharedResource> Localizer
+@inject ToastService Toasts
 
 <section class="athlete-candidate-list">
     <div class="athlete-candidate-list__head">
@@ -19,7 +20,7 @@
 
         <label class="field">
             <span>@Localizer["Predictions.SortBy"]</span>
-            <select class="control" @bind="sortMode">
+            <select class="control" value="@sortMode" @onchange="OnSortModeChanged">
                 <option value="nominated-desc">@Localizer["Predictions.SortNominatedDesc"]</option>
                 <option value="nominated-asc">@Localizer["Predictions.SortNominatedAsc"]</option>
                 <option value="name-asc">@Localizer["Predictions.SortNameAsc"]</option>
@@ -134,5 +135,28 @@
     {
         return !string.IsNullOrWhiteSpace(ContextAthleteId) &&
                string.Equals(athlete.Id, ContextAthleteId, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private Task OnSortModeChanged(ChangeEventArgs args)
+    {
+        var nextSortMode = args.Value?.ToString();
+        if (string.IsNullOrWhiteSpace(nextSortMode) || string.Equals(sortMode, nextSortMode, StringComparison.Ordinal))
+        {
+            return Task.CompletedTask;
+        }
+
+        sortMode = nextSortMode;
+        Toasts.ShowInfo(Localizer["Predictions.Toast.SortList.Success", GetSortLabel(sortMode)]);
+        return Task.CompletedTask;
+    }
+
+    private string GetSortLabel(string mode)
+    {
+        return mode switch
+        {
+            "nominated-asc" => Localizer["Predictions.SortNominatedAsc"].Value,
+            "name-asc" => Localizer["Predictions.SortNameAsc"].Value,
+            _ => Localizer["Predictions.SortNominatedDesc"].Value
+        };
     }
 }

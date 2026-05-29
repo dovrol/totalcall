@@ -1,5 +1,6 @@
 @inject IStringLocalizer<SharedResource> Localizer
 @inject PredictionTextService Text
+@inject ToastService Toasts
 
 <section class="prediction-shell">
     <div class="prediction-shell__frame">
@@ -374,27 +375,34 @@
         return Task.CompletedTask;
     }
 
-    private Task OnTopNSelectorAthletePicked(string athleteId)
+    private async Task OnTopNSelectorAthletePicked(string athleteId)
     {
         if (!CanEditPredictions ||
             CurrentTopNQuestion is null ||
             topNSelectorSlotPosition is null ||
             string.IsNullOrWhiteSpace(athleteId))
         {
-            return Task.CompletedTask;
+            return;
         }
+
+        var targetPosition = topNSelectorSlotPosition.Value;
+        var existingPosition = CurrentTopNPlacements
+            .FirstOrDefault(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase))
+            ?.Position;
+        var athlete = Competition.Athletes.FirstOrDefault(item =>
+            string.Equals(item.Id, athleteId, StringComparison.OrdinalIgnoreCase));
 
         var placements = SetAthleteAtPosition(
             CurrentTopNPlacements,
             CurrentTopNSlotsCount,
-            topNSelectorSlotPosition.Value,
+            targetPosition,
             athleteId);
 
         selectedTopNAthleteId = null;
         topNSelectorSlotPosition = null;
         isSummaryDrawerOpen = false;
 
-        return AnswerChanged.InvokeAsync(new PredictionAnswer
+        await AnswerChanged.InvokeAsync(new PredictionAnswer
         {
             GroupId = ActiveGroup.Id,
             QuestionId = CurrentTopNQuestion.Id,
@@ -405,6 +413,19 @@
             },
             UpdatedAt = DateTimeOffset.UtcNow
         });
+
+        if (athlete is null)
+        {
+            return;
+        }
+
+        if (existingPosition is not null && existingPosition != targetPosition)
+        {
+            Toasts.ShowSuccess(Localizer["Predictions.Toast.AthleteMoved.Success", athlete.DisplayName, targetPosition]);
+            return;
+        }
+
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.AthletePicked.Success", athlete.DisplayName, targetPosition]);
     }
 
     private Task OnTopNCompareAthletesRequested()
@@ -413,11 +434,11 @@
         return Task.CompletedTask;
     }
 
-    private Task OnTopNUseNominatedTotalRequested()
+    private async Task OnTopNUseNominatedTotalRequested()
     {
         if (!CanEditPredictions || CurrentTopNQuestion is null)
         {
-            return Task.CompletedTask;
+            return;
         }
 
         var slotsCount = CurrentTopNQuestion.Constraints.ExactSelections ??
@@ -445,7 +466,13 @@
             })
             .ToArray();
 
-        return AnswerChanged.InvokeAsync(new PredictionAnswer
+        if (placements.Length == 0)
+        {
+            Toasts.ShowInfo(Localizer["Predictions.Toast.AutoFill.Empty"]);
+            return;
+        }
+
+        await AnswerChanged.InvokeAsync(new PredictionAnswer
         {
             GroupId = ActiveGroup.Id,
             QuestionId = CurrentTopNQuestion.Id,
@@ -456,6 +483,8 @@
             },
             UpdatedAt = DateTimeOffset.UtcNow
         });
+
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.AutoFill.Success"]);
     }
 
     private string GetTopNCategoryName(PredictionQuestion question)

@@ -9,7 +9,10 @@ public sealed class ToastService
     public event Action? OnChanged;
 
     public IReadOnlyList<ToastMessage> Messages =>
-        messages.Values.OrderBy(message => message.Id).ToArray();
+        messages.Values
+            .OrderBy(message => message.CreatedAt)
+            .ThenBy(message => message.Id)
+            .ToArray();
 
     public ToastMessage ShowSuccess(string text) =>
         Show(new ToastMessage { Id = Guid.NewGuid(), Kind = ToastKind.Success, Text = text });
