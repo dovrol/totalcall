@@ -243,7 +243,7 @@
   <data name="Predictions.NominatedTotal" xml:space="preserve"><value>Nominowany total</value></data>
   <data name="Predictions.CurrentProjection" xml:space="preserve"><value>Obecna predykcja</value></data>
   <data name="Predictions.RecentLifts" xml:space="preserve"><value>Ostatni rozkład bojów</value></data>
-  <data name="Predictions.RecentStarts" xml:space="preserve"><value>Historia startów</value></data>
+  <data name="Predictions.RecentStarts" xml:space="preserve"><value>Ostatnie starty</value></data>
   <data name="Predictions.RecentStartsShort" xml:space="preserve"><value>Ostatnie starty</value></data>
   <data name="Predictions.ViewFullHistory" xml:space="preserve"><value>Zobacz pełną historię</value></data>
   <data name="Predictions.ShowStartHistory" xml:space="preserve"><value>Pokaż historię startów</value></data>
@@ -269,16 +269,21 @@
   <data name="Predictions.SourceUpdatedAt" xml:space="preserve"><value>Ostatnia aktualizacja: {0}</value></data>
   <data name="Predictions.BestLifts" xml:space="preserve"><value>Najlepsze wyniki</value></data>
   <data name="Predictions.BestLiftsPr" xml:space="preserve"><value>Najlepsze boje (PR)</value></data>
+  <data name="Predictions.LifetimePrs" xml:space="preserve"><value>Rekordy życiowe (PR)</value></data>
   <data name="Predictions.TotalTrend" xml:space="preserve"><value>Trend totalu (ostatnie {0} startów)</value></data>
   <data name="Predictions.TotalTrendShort" xml:space="preserve"><value>Trend totalu</value></data>
   <data name="Predictions.Analytics" xml:space="preserve"><value>Analityka</value></data>
+  <data name="Predictions.Analytics.AthleteDashboard" xml:space="preserve"><value>Analityka zawodnika</value></data>
   <data name="Predictions.AnalyticsUnavailable" xml:space="preserve"><value>Brak wystarczających danych do analityki.</value></data>
   <data name="Predictions.AnalyticsPartial" xml:space="preserve"><value>Część metryk jest niedostępna dla tego zawodnika.</value></data>
-  <data name="Predictions.AnalyticsLimitedSample" xml:space="preserve"><value>Za mało startów, by wiarygodnie policzyć średnie i trend.</value></data>
+  <data name="Predictions.AnalyticsLimitedSample" xml:space="preserve"><value>Mało danych historycznych — traktuj statystyki ostrożnie.</value></data>
   <data name="Predictions.Analytics.StartsCount" xml:space="preserve"><value>Liczba startów</value></data>
+  <data name="Predictions.StartsCount" xml:space="preserve"><value>{0} startów</value></data>
+  <data name="Predictions.LastTotal" xml:space="preserve"><value>Ostatni total</value></data>
   <data name="Predictions.Analytics.Last3Avg" xml:space="preserve"><value>Śr. ostatnie 3</value></data>
   <data name="Predictions.Analytics.Last5Avg" xml:space="preserve"><value>Śr. ostatnie 5</value></data>
   <data name="Predictions.Analytics.AttemptSuccessOverall" xml:space="preserve"><value>Skuteczność prób</value></data>
+  <data name="Predictions.Analytics.LiftAttemptSuccess" xml:space="preserve"><value>Skuteczność w bojach</value></data>
   <data name="Predictions.Analytics.ThirdAttempts" xml:space="preserve"><value>Trzecie próby</value></data>
   <data name="Predictions.Analytics.BestDots" xml:space="preserve"><value>Najlepsze DOTS</value></data>
   <data name="Predictions.Analytics.BestGoodlift" xml:space="preserve"><value>Najlepsze GL</value></data>
@@ -286,7 +291,7 @@
   <data name="Predictions.Analytics.AttemptsMade" xml:space="preserve"><value>{0}/{1} udanych</value></data>
   <data name="Predictions.Analytics.NoCountedAttempts" xml:space="preserve"><value>brak liczonych prób</value></data>
   <data name="Predictions.Analytics.PrTotal" xml:space="preserve"><value>Total PR</value></data>
-  <data name="Predictions.Analytics.CurrentShape" xml:space="preserve"><value>Aktualna forma</value></data>
+  <data name="Predictions.Analytics.CurrentShape" xml:space="preserve"><value>Ostatni total</value></data>
   <data name="Predictions.Analytics.AttemptsReliability" xml:space="preserve"><value>Pewność prób</value></data>
   <data name="Predictions.Analytics.NoComparison" xml:space="preserve"><value>brak porównania</value></data>
   <data name="Predictions.Analytics.AtPr" xml:space="preserve"><value>ostatni start na poziomie PR</value></data>
@@ -299,6 +304,19 @@
   <data name="Predictions.Analytics.TrendDown" xml:space="preserve"><value>ostatnie wyniki spadają</value></data>
   <data name="Predictions.Analytics.TrendStable" xml:space="preserve"><value>stabilny poziom</value></data>
   <data name="Predictions.Analytics.TrendUnknown" xml:space="preserve"><value>za mało danych na trend</value></data>
+  <data name="Predictions.Analytics.TrendStarts" xml:space="preserve"><value>Trend {0} starty</value></data>
+  <data name="Predictions.Analytics.PrPercent" xml:space="preserve"><value>{0}% PR</value></data>
+  <data name="Predictions.Analytics.Best12M" xml:space="preserve"><value>Best 12M: {0}</value></data>
+  <data name="Predictions.Analytics.NoRecent12M" xml:space="preserve"><value>Brak wyniku z ostatnich 12 miesięcy</value></data>
+  <data name="Predictions.Analytics.StabilitySummary" xml:space="preserve"><value>Stabilność: ±{0} · ostatnie {1} startów</value></data>
+  <data name="Predictions.Analytics.StabilityUnavailable" xml:space="preserve"><value>Za mało danych na stabilność.</value></data>
+  <data name="Predictions.Analytics.TrendUnavailable" xml:space="preserve"><value>Za mało danych na trend.</value></data>
+  <data name="Predictions.Analytics.PercentagePointDelta" xml:space="preserve"><value>{0} p.p.</value></data>
+  <data name="Predictions.Analytics.BenchmarkCategory" xml:space="preserve"><value>vs kategoria</value></data>
+  <data name="Predictions.Analytics.BenchmarkWomen" xml:space="preserve"><value>vs kobiety</value></data>
+  <data name="Predictions.Analytics.BenchmarkMen" xml:space="preserve"><value>vs mężczyźni</value></data>
+  <data name="Predictions.Analytics.BenchmarkSex" xml:space="preserve"><value>vs płeć</value></data>
+  <data name="Predictions.Analytics.BenchmarkField" xml:space="preserve"><value>vs stawka</value></data>
   <data name="Predictions.LoadingHistory" xml:space="preserve"><value>Ładowanie historii...</value></data>
   <data name="Predictions.NoAthleteHistory" xml:space="preserve"><value>Brak historii startów dla tego zawodnika.</value></data>
   <data name="Predictions.HistoryLoadError" xml:space="preserve"><value>Nie udało się pobrać historii startów.</value></data>

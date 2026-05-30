@@ -269,16 +269,21 @@
   <data name="Predictions.SourceUpdatedAt" xml:space="preserve"><value>Last updated: {0}</value></data>
   <data name="Predictions.BestLifts" xml:space="preserve"><value>Best lifts</value></data>
   <data name="Predictions.BestLiftsPr" xml:space="preserve"><value>Best lifts (PR)</value></data>
+  <data name="Predictions.LifetimePrs" xml:space="preserve"><value>Lifetime records (PR)</value></data>
   <data name="Predictions.TotalTrend" xml:space="preserve"><value>Total trend (last {0} starts)</value></data>
   <data name="Predictions.TotalTrendShort" xml:space="preserve"><value>Total trend</value></data>
   <data name="Predictions.Analytics" xml:space="preserve"><value>Analytics</value></data>
+  <data name="Predictions.Analytics.AthleteDashboard" xml:space="preserve"><value>Athlete analytics</value></data>
   <data name="Predictions.AnalyticsUnavailable" xml:space="preserve"><value>Not enough data for analytics.</value></data>
   <data name="Predictions.AnalyticsPartial" xml:space="preserve"><value>Some metrics are unavailable for this athlete.</value></data>
-  <data name="Predictions.AnalyticsLimitedSample" xml:space="preserve"><value>Too few starts to calculate reliable averages and trend.</value></data>
+  <data name="Predictions.AnalyticsLimitedSample" xml:space="preserve"><value>Limited history — treat these stats cautiously.</value></data>
   <data name="Predictions.Analytics.StartsCount" xml:space="preserve"><value>Starts</value></data>
+  <data name="Predictions.StartsCount" xml:space="preserve"><value>{0} starts</value></data>
+  <data name="Predictions.LastTotal" xml:space="preserve"><value>Last total</value></data>
   <data name="Predictions.Analytics.Last3Avg" xml:space="preserve"><value>Last 3 avg</value></data>
   <data name="Predictions.Analytics.Last5Avg" xml:space="preserve"><value>Last 5 avg</value></data>
   <data name="Predictions.Analytics.AttemptSuccessOverall" xml:space="preserve"><value>Attempt success</value></data>
+  <data name="Predictions.Analytics.LiftAttemptSuccess" xml:space="preserve"><value>Lift attempt success</value></data>
   <data name="Predictions.Analytics.ThirdAttempts" xml:space="preserve"><value>Third attempts</value></data>
   <data name="Predictions.Analytics.BestDots" xml:space="preserve"><value>Best DOTS</value></data>
   <data name="Predictions.Analytics.BestGoodlift" xml:space="preserve"><value>Best GL</value></data>
@@ -286,7 +291,7 @@
   <data name="Predictions.Analytics.AttemptsMade" xml:space="preserve"><value>{0}/{1} made</value></data>
   <data name="Predictions.Analytics.NoCountedAttempts" xml:space="preserve"><value>no counted attempts</value></data>
   <data name="Predictions.Analytics.PrTotal" xml:space="preserve"><value>Total PR</value></data>
-  <data name="Predictions.Analytics.CurrentShape" xml:space="preserve"><value>Current shape</value></data>
+  <data name="Predictions.Analytics.CurrentShape" xml:space="preserve"><value>Last total</value></data>
   <data name="Predictions.Analytics.AttemptsReliability" xml:space="preserve"><value>Attempt reliability</value></data>
   <data name="Predictions.Analytics.NoComparison" xml:space="preserve"><value>no comparison</value></data>
   <data name="Predictions.Analytics.AtPr" xml:space="preserve"><value>last start matched PR</value></data>
@@ -299,6 +304,19 @@
   <data name="Predictions.Analytics.TrendDown" xml:space="preserve"><value>recent results are dipping</value></data>
   <data name="Predictions.Analytics.TrendStable" xml:space="preserve"><value>stable level</value></data>
   <data name="Predictions.Analytics.TrendUnknown" xml:space="preserve"><value>not enough data for trend</value></data>
+  <data name="Predictions.Analytics.TrendStarts" xml:space="preserve"><value>Trend {0} starts</value></data>
+  <data name="Predictions.Analytics.PrPercent" xml:space="preserve"><value>{0}% PR</value></data>
+  <data name="Predictions.Analytics.Best12M" xml:space="preserve"><value>Best 12M: {0}</value></data>
+  <data name="Predictions.Analytics.NoRecent12M" xml:space="preserve"><value>No result in the last 12 months</value></data>
+  <data name="Predictions.Analytics.StabilitySummary" xml:space="preserve"><value>Stability: ±{0} · last {1} starts</value></data>
+  <data name="Predictions.Analytics.StabilityUnavailable" xml:space="preserve"><value>Not enough data for stability.</value></data>
+  <data name="Predictions.Analytics.TrendUnavailable" xml:space="preserve"><value>Not enough data for trend.</value></data>
+  <data name="Predictions.Analytics.PercentagePointDelta" xml:space="preserve"><value>{0} pp</value></data>
+  <data name="Predictions.Analytics.BenchmarkCategory" xml:space="preserve"><value>vs category</value></data>
+  <data name="Predictions.Analytics.BenchmarkWomen" xml:space="preserve"><value>vs women</value></data>
+  <data name="Predictions.Analytics.BenchmarkMen" xml:space="preserve"><value>vs men</value></data>
+  <data name="Predictions.Analytics.BenchmarkSex" xml:space="preserve"><value>vs sex</value></data>
+  <data name="Predictions.Analytics.BenchmarkField" xml:space="preserve"><value>vs field</value></data>
   <data name="Predictions.LoadingHistory" xml:space="preserve"><value>Loading history...</value></data>
   <data name="Predictions.NoAthleteHistory" xml:space="preserve"><value>No recent results available yet.</value></data>
   <data name="Predictions.HistoryLoadError" xml:space="preserve"><value>Failed to load competition history.</value></data>

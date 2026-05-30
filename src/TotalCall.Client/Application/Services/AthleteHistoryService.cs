@@ -1,13 +1,16 @@
+using System.Globalization;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TotalCall.Client.Domain.Athletes;
+using TotalCall.Client.Domain.Competitions;
 
 namespace TotalCall.Client.Application.Services;
 
 public sealed class AthleteHistoryService(HttpClient? httpClient)
 {
     private const string DefaultImportStatusSource = ExternalAthleteSources.OpenIpf;
+    private const int MinimumBenchmarkCountedAttempts = 30;
 
     private static readonly JsonSerializerOptions SupabaseJsonOptions = new()
     {
@@ -16,6 +19,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
     };
 
     private readonly Dictionary<string, AthleteHistoryEntry?> _cache = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, AthleteAnalytics?> _analyticsCache = new(StringComparer.OrdinalIgnoreCase);
     private Task<AthleteDataImportStatus?>? _importStatusTask;
 
     /// <summary>
@@ -24,7 +28,72 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
     /// Throws <see cref="InvalidOperationException"/> when Supabase is not configured.
     /// Throws <see cref="HttpRequestException"/> on network/API errors.
     /// </summary>
+    public Task<AthleteHistoryEntry?> GetAthleteHistoryAsync(
+        string athleteSlug,
+        CancellationToken cancellationToken = default)
+    {
+        return GetAthleteHistoryAsync(athleteSlug, (DateOnly?)null, cancellationToken);
+    }
+
+    public Task<AthleteHistoryEntry?> GetAthleteHistoryAsync(
+        string athleteSlug,
+        Competition? competition,
+        CancellationToken cancellationToken = default)
+    {
+        return GetAthleteHistoryAsync(
+            athleteSlug,
+            ResolveTotalMetricReferenceDate(competition),
+            cancellationToken);
+    }
+
     public async Task<AthleteHistoryEntry?> GetAthleteHistoryAsync(
+        string athleteSlug,
+        DateOnly? totalMetricReferenceDate,
+        CancellationToken cancellationToken = default)
+    {
+        if (httpClient is null)
+        {
+            throw new InvalidOperationException(
+                "Supabase is not configured. Set Supabase:Url and Supabase:PublishableKey in wwwroot/appsettings.json.");
+        }
+
+        var referenceDate = totalMetricReferenceDate ?? DateOnly.FromDateTime(DateTime.UtcNow);
+        var cacheKey = $"{athleteSlug}|{referenceDate:yyyyMMdd}";
+
+        if (_cache.TryGetValue(cacheKey, out var cached))
+        {
+            return cached;
+        }
+
+        var url = "rest/v1/athlete_history_view"
+                  + $"?athlete_slug=eq.{Uri.EscapeDataString(athleteSlug)}"
+                  + "&order=meet_date.desc"
+                  + "&select=athlete_display_name,athlete_country_code,"
+                  + "meet_date,meet_name,federation,equipment,event,bodyweight_kg,"
+                  + "best_squat_kg,best_bench_kg,best_deadlift_kg,total_kg,"
+                  + "dots_points,goodlift_points,place";
+
+        var rows = await httpClient.GetFromJsonAsync<List<HistoryRow>>(
+            url, SupabaseJsonOptions, cancellationToken);
+
+        if (rows is null || rows.Count == 0)
+        {
+            _cache[cacheKey] = null;
+            return null;
+        }
+
+        var analytics = await GetAthleteAnalyticsAsync(athleteSlug, cancellationToken);
+        var entry = MapToEntry(rows, analytics, referenceDate);
+
+        _cache[cacheKey] = entry;
+        return entry;
+    }
+
+    /// <summary>
+    /// Fetch aggregate public analytics for one athlete without loading full result history.
+    /// Returns null when Supabase is unavailable or no analytics row exists.
+    /// </summary>
+    public async Task<AthleteAnalytics?> GetAthleteAnalyticsAsync(
         string athleteSlug,
         CancellationToken cancellationToken = default)
     {
@@ -34,32 +103,129 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
                 "Supabase is not configured. Set Supabase:Url and Supabase:PublishableKey in wwwroot/appsettings.json.");
         }
 
-        if (_cache.TryGetValue(athleteSlug, out var cached))
+        if (_analyticsCache.TryGetValue(athleteSlug, out var cached))
         {
             return cached;
         }
 
-        var url = "rest/v1/athlete_history_view"
-                  + $"?athlete_slug=eq.{Uri.EscapeDataString(athleteSlug)}"
-                  + "&order=meet_date.desc"
-                  + "&select=athlete_display_name,athlete_country_code,"
-                  + "meet_date,meet_name,federation,equipment,bodyweight_kg,"
-                  + "best_squat_kg,best_bench_kg,best_deadlift_kg,total_kg,place";
+        var analytics = await FetchAthleteAnalyticsAsync(athleteSlug, cancellationToken);
+        _analyticsCache[athleteSlug] = analytics;
+        return analytics;
+    }
 
-        var rows = await httpClient.GetFromJsonAsync<List<HistoryRow>>(
-            url, SupabaseJsonOptions, cancellationToken);
+    public async Task<AthleteAttemptBenchmark?> GetAttemptBenchmarkAsync(
+        Competition competition,
+        Athlete athlete,
+        CancellationToken cancellationToken = default)
+    {
+        var categoryAthleteIds = GetCategoryAthleteIds(competition, athlete);
+        var sexAthleteIds = athlete.Sex == AthleteSex.Unspecified
+            ? Array.Empty<string>()
+            : competition.Athletes
+                .Where(item => item.Sex == athlete.Sex)
+                .Select(item => item.Id)
+                .ToArray();
+        var fieldAthleteIds = competition.Athletes
+            .Select(item => item.Id)
+            .ToArray();
 
-        if (rows is null || rows.Count == 0)
+        return await GetAttemptBenchmarkAsync(
+            athlete.Id,
+            athlete.Sex,
+            categoryAthleteIds,
+            sexAthleteIds,
+            fieldAthleteIds,
+            cancellationToken);
+    }
+
+    public static bool IsFullPowerSbdTotal(AthleteRecentResult result)
+    {
+        return result.TotalKg is > 0 && IsFullPowerSbdEvent(result.Event);
+    }
+
+    public async Task<AthleteAttemptBenchmark?> GetAttemptBenchmarkAsync(
+        string athleteSlug,
+        AthleteSex athleteSex,
+        IReadOnlyCollection<string> categoryAthleteIds,
+        IReadOnlyCollection<string> sexAthleteIds,
+        IReadOnlyCollection<string> fieldAthleteIds,
+        CancellationToken cancellationToken = default)
+    {
+        if (httpClient is null)
         {
-            _cache[athleteSlug] = null;
             return null;
         }
 
-        var analytics = await FetchAthleteAnalyticsAsync(athleteSlug, cancellationToken);
-        var entry = MapToEntry(rows, analytics);
+        var scopes = new[]
+        {
+            new BenchmarkScopeRequest(AthleteAttemptBenchmarkScope.Category, athleteSex, categoryAthleteIds),
+            new BenchmarkScopeRequest(AthleteAttemptBenchmarkScope.Sex, athleteSex, sexAthleteIds),
+            new BenchmarkScopeRequest(AthleteAttemptBenchmarkScope.Field, AthleteSex.Unspecified, fieldAthleteIds)
+        };
 
-        _cache[athleteSlug] = entry;
-        return entry;
+        foreach (var scope in scopes)
+        {
+            var benchmark = await BuildAttemptBenchmarkAsync(
+                athleteSlug,
+                scope.Scope,
+                scope.Sex,
+                scope.AthleteIds,
+                cancellationToken);
+
+            if (benchmark?.OverallAttempts.CountedAttempts >= MinimumBenchmarkCountedAttempts)
+            {
+                return benchmark;
+            }
+        }
+
+        return null;
+    }
+
+    private static IReadOnlyCollection<string> GetCategoryAthleteIds(
+        Competition competition,
+        Athlete athlete)
+    {
+        if (string.IsNullOrWhiteSpace(athlete.WeightCategoryId))
+        {
+            return [];
+        }
+
+        var category = competition.Categories.FirstOrDefault(item =>
+            string.Equals(item.Id, athlete.WeightCategoryId, StringComparison.OrdinalIgnoreCase));
+
+        if (category?.AthleteIds.Count > 0)
+        {
+            return category.AthleteIds;
+        }
+
+        return competition.Athletes
+            .Where(item => string.Equals(item.WeightCategoryId, athlete.WeightCategoryId, StringComparison.OrdinalIgnoreCase))
+            .Select(item => item.Id)
+            .ToArray();
+    }
+
+    private static DateOnly ResolveTotalMetricReferenceDate(Competition? competition)
+    {
+        var reference = competition?.PredictionLockAt ??
+                        competition?.StartDate ??
+                        DateTimeOffset.UtcNow;
+
+        return DateOnly.FromDateTime(reference.UtcDateTime);
+    }
+
+    private static bool IsFullPowerSbdEvent(string? eventName)
+    {
+        if (string.IsNullOrWhiteSpace(eventName))
+        {
+            return true;
+        }
+
+        var normalized = eventName
+            .Replace(" ", string.Empty, StringComparison.Ordinal)
+            .Replace("-", string.Empty, StringComparison.Ordinal)
+            .ToUpperInvariant();
+
+        return string.Equals(normalized, "SBD", StringComparison.Ordinal);
     }
 
     /// <summary>
@@ -137,7 +303,10 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         }
     }
 
-    private static AthleteHistoryEntry MapToEntry(List<HistoryRow> rows, AthleteAnalytics? analytics)
+    private static AthleteHistoryEntry MapToEntry(
+        List<HistoryRow> rows,
+        AthleteAnalytics? analytics,
+        DateOnly totalMetricReferenceDate)
     {
         var recentResults = rows
             .Select(row => new AthleteRecentResult
@@ -146,16 +315,26 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
                 MeetName = row.MeetName,
                 Federation = row.Federation,
                 Equipment = row.Equipment,
+                Event = row.Event,
                 BodyweightKg = row.BodyweightKg,
                 SquatKg = row.BestSquatKg,
                 BenchKg = row.BestBenchKg,
                 DeadliftKg = row.BestDeadliftKg,
                 TotalKg = row.TotalKg,
+                DotsPoints = row.DotsPoints,
+                GoodliftPoints = row.GoodliftPoints,
                 Placing = row.Place
             })
             .ToList();
 
         var first = rows[0];
+        var fullPowerTotalResults = recentResults
+            .Where(IsFullPowerSbdTotal)
+            .ToArray();
+        var latestFullPowerTotal = fullPowerTotalResults.FirstOrDefault();
+        var enrichedAnalytics = analytics is null
+            ? null
+            : EnrichAnalytics(analytics, recentResults, fullPowerTotalResults, totalMetricReferenceDate);
 
         return new AthleteHistoryEntry
         {
@@ -167,19 +346,21 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
                 SquatKg = MaxPositive(recentResults, r => r.SquatKg),
                 BenchKg = MaxPositive(recentResults, r => r.BenchKg),
                 DeadliftKg = MaxPositive(recentResults, r => r.DeadliftKg),
-                TotalKg = MaxPositive(recentResults, r => r.TotalKg)
+                TotalKg = MaxPositive(fullPowerTotalResults, r => r.TotalKg)
             },
-            LastResult = new AthleteLastResult
+            LastResult = latestFullPowerTotal is null
+                ? null
+                : new AthleteLastResult
             {
-                Date = first.MeetDate,
-                MeetName = first.MeetName,
-                SquatKg = first.BestSquatKg,
-                BenchKg = first.BestBenchKg,
-                DeadliftKg = first.BestDeadliftKg,
-                TotalKg = first.TotalKg,
-                BodyweightKg = first.BodyweightKg
+                Date = latestFullPowerTotal.Date,
+                MeetName = latestFullPowerTotal.MeetName,
+                SquatKg = latestFullPowerTotal.SquatKg,
+                BenchKg = latestFullPowerTotal.BenchKg,
+                DeadliftKg = latestFullPowerTotal.DeadliftKg,
+                TotalKg = latestFullPowerTotal.TotalKg,
+                BodyweightKg = latestFullPowerTotal.BodyweightKg
             },
-            Analytics = analytics
+            Analytics = enrichedAnalytics
         };
     }
 
@@ -221,6 +402,190 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         };
     }
 
+    private async Task<AthleteAttemptBenchmark?> BuildAttemptBenchmarkAsync(
+        string athleteSlug,
+        AthleteAttemptBenchmarkScope scope,
+        AthleteSex scopeSex,
+        IReadOnlyCollection<string> athleteIds,
+        CancellationToken cancellationToken)
+    {
+        var comparisonAthleteIds = athleteIds
+            .Where(id => !string.IsNullOrWhiteSpace(id))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .Where(id => !string.Equals(id, athleteSlug, StringComparison.OrdinalIgnoreCase))
+            .ToArray();
+
+        if (comparisonAthleteIds.Length == 0)
+        {
+            return null;
+        }
+
+        var analyticsTasks = comparisonAthleteIds
+            .Select(id => GetAthleteAnalyticsAsync(id, cancellationToken))
+            .ToArray();
+
+        var analyticsRows = (await Task.WhenAll(analyticsTasks))
+            .OfType<AthleteAnalytics>()
+            .ToArray();
+
+        if (analyticsRows.Length == 0)
+        {
+            return null;
+        }
+
+        return new AthleteAttemptBenchmark
+        {
+            Scope = scope,
+            Sex = scopeSex,
+            ComparedAthleteCount = analyticsRows.Length,
+            SquatAttempts = AggregateAttempts(analyticsRows.Select(row => row.SquatAttempts)),
+            BenchAttempts = AggregateAttempts(analyticsRows.Select(row => row.BenchAttempts)),
+            DeadliftAttempts = AggregateAttempts(analyticsRows.Select(row => row.DeadliftAttempts)),
+            OverallAttempts = AggregateAttempts(analyticsRows.Select(row => row.OverallAttempts)),
+            ThirdAttempts = AggregateAttempts(analyticsRows.Select(row => row.ThirdAttempts))
+        };
+    }
+
+    private static AthleteAnalytics EnrichAnalytics(
+        AthleteAnalytics analytics,
+        IReadOnlyList<AthleteRecentResult> recentResults,
+        IReadOnlyList<AthleteRecentResult> fullPowerTotalResults,
+        DateOnly totalMetricReferenceDate)
+    {
+        var datedResults = recentResults
+            .Select(result => new
+            {
+                Result = result,
+                Date = TryParseDate(result.Date)
+            })
+            .Where(item => item.Date is not null)
+            .ToArray();
+
+        var years = datedResults
+            .Select(item => item.Date!.Value.Year)
+            .ToArray();
+
+        var totalValues = fullPowerTotalResults
+            .Select(result => result.TotalKg!.Value)
+            .ToArray();
+
+        var bestTotal = totalValues.Length == 0 ? (decimal?)null : totalValues.Max();
+        var lastTotal = totalValues.Length == 0 ? (decimal?)null : totalValues[0];
+        var lastToBestPercent = lastTotal is > 0 && bestTotal is > 0
+            ? Math.Round(100m * lastTotal.Value / bestTotal.Value, 1)
+            : (decimal?)null;
+
+        var twelveMonthsAgo = totalMetricReferenceDate.AddYears(-1);
+        var best12MonthTotal = fullPowerTotalResults
+            .Select(result => new
+            {
+                Result = result,
+                Date = TryParseDate(result.Date)
+            })
+            .Where(item => item.Date is not null &&
+                           item.Date >= twelveMonthsAgo &&
+                           item.Date <= totalMetricReferenceDate)
+            .Select(item => item.Result.TotalKg)
+            .Where(total => total is > 0)
+            .DefaultIfEmpty()
+            .Max();
+
+        var trend = BuildRecentTotalTrend(totalValues);
+        var stability = BuildTotalStability(totalValues);
+
+        return analytics with
+        {
+            StartsCount = recentResults.Count,
+            FirstStartYear = years.Length == 0 ? null : years.Min(),
+            LastStartYear = years.Length == 0 ? null : years.Max(),
+            BestTotalKg = bestTotal,
+            LastTotalKg = lastTotal,
+            LastTotalToBestPercent = lastToBestPercent,
+            Best12MonthTotalKg = best12MonthTotal,
+            Last3AvgTotalKg = BuildRecentAverage(totalValues, 3),
+            Last5AvgTotalKg = BuildRecentAverage(totalValues, 5),
+            TotalTrendKg = trend.TrendKg,
+            RecentTotalTrendKg = trend.TrendKg,
+            RecentTotalTrendStarts = trend.Starts,
+            TotalStabilityKg = stability.StabilityKg,
+            TotalStabilityStarts = stability.Starts,
+            TotalMetricStartsCount = totalValues.Length,
+            BestDotsPoints = MaxPositive(fullPowerTotalResults, result => result.DotsPoints),
+            BestGoodliftPoints = MaxPositive(fullPowerTotalResults, result => result.GoodliftPoints)
+        };
+    }
+
+    private static (decimal? TrendKg, int? Starts) BuildRecentTotalTrend(
+        IReadOnlyList<decimal> totalValues)
+    {
+        var totals = totalValues.Take(3).ToArray();
+
+        if (totals.Length < 2)
+        {
+            return (null, null);
+        }
+
+        return (totals[0] - totals[^1], totals.Length);
+    }
+
+    private static (decimal? StabilityKg, int Starts) BuildTotalStability(
+        IReadOnlyList<decimal> totalValues)
+    {
+        var totals = totalValues.Take(5).ToArray();
+
+        if (totals.Length < 3)
+        {
+            return (null, totals.Length);
+        }
+
+        var average = totals.Average();
+        var meanAbsoluteDeviation = totals
+            .Select(total => Math.Abs(total - average))
+            .Average();
+
+        return (Math.Round(meanAbsoluteDeviation, 1), totals.Length);
+    }
+
+    private static decimal? BuildRecentAverage(
+        IReadOnlyList<decimal> totalValues,
+        int count)
+    {
+        if (totalValues.Count < count)
+        {
+            return null;
+        }
+
+        return Math.Round(totalValues.Take(count).Average(), 1);
+    }
+
+    private static AthleteAttemptSuccessRate AggregateAttempts(IEnumerable<AthleteAttemptSuccessRate> attempts)
+    {
+        var successful = 0;
+        var counted = 0;
+
+        foreach (var attempt in attempts)
+        {
+            successful += attempt.SuccessfulAttempts;
+            counted += attempt.CountedAttempts;
+        }
+
+        return new AthleteAttemptSuccessRate
+        {
+            SuccessfulAttempts = successful,
+            CountedAttempts = counted,
+            RatePercent = counted == 0
+                ? null
+                : Math.Round(100m * successful / counted, 1)
+        };
+    }
+
+    private static DateOnly? TryParseDate(string? value)
+    {
+        return DateOnly.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsed)
+            ? parsed
+            : null;
+    }
+
     private static AthleteAttemptSuccessRate ToAttemptSuccessRate(
         decimal? ratePercent,
         int successfulAttempts,
@@ -255,11 +620,14 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         public string? MeetName { get; init; }
         public string? Federation { get; init; }
         public string? Equipment { get; init; }
+        public string? Event { get; init; }
         public decimal? BodyweightKg { get; init; }
         public decimal? BestSquatKg { get; init; }
         public decimal? BestBenchKg { get; init; }
         public decimal? BestDeadliftKg { get; init; }
         public decimal? TotalKg { get; init; }
+        public decimal? DotsPoints { get; init; }
+        public decimal? GoodliftPoints { get; init; }
         public string? Place { get; init; }
     }
 
@@ -307,4 +675,9 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         public string? SourceLabel { get; init; }
         public DateTimeOffset? LastSuccessfulImportAt { get; init; }
     }
+
+    private sealed record BenchmarkScopeRequest(
+        AthleteAttemptBenchmarkScope Scope,
+        AthleteSex Sex,
+        IReadOnlyCollection<string> AthleteIds);
 }

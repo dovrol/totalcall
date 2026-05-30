@@ -25,6 +25,8 @@ public sealed record AthleteRecentResult
 
     public string? Equipment { get; init; }
 
+    public string? Event { get; init; }
+
     public decimal? BodyweightKg { get; init; }
 
     public decimal? SquatKg { get; init; }
@@ -34,6 +36,10 @@ public sealed record AthleteRecentResult
     public decimal? DeadliftKg { get; init; }
 
     public decimal? TotalKg { get; init; }
+
+    public decimal? DotsPoints { get; init; }
+
+    public decimal? GoodliftPoints { get; init; }
 
     public string? Placing { get; init; }
 }
@@ -70,15 +76,33 @@ public sealed record AthleteAnalytics
 {
     public int StartsCount { get; init; }
 
+    public int? FirstStartYear { get; init; }
+
+    public int? LastStartYear { get; init; }
+
     public decimal? BestTotalKg { get; init; }
 
     public decimal? LastTotalKg { get; init; }
+
+    public decimal? LastTotalToBestPercent { get; init; }
+
+    public decimal? Best12MonthTotalKg { get; init; }
 
     public decimal? Last3AvgTotalKg { get; init; }
 
     public decimal? Last5AvgTotalKg { get; init; }
 
     public decimal? TotalTrendKg { get; init; }
+
+    public decimal? RecentTotalTrendKg { get; init; }
+
+    public int? RecentTotalTrendStarts { get; init; }
+
+    public decimal? TotalStabilityKg { get; init; }
+
+    public int TotalStabilityStarts { get; init; }
+
+    public int TotalMetricStartsCount { get; init; }
 
     public decimal? BestSquatKg { get; init; }
 
@@ -108,4 +132,30 @@ public sealed record AthleteAttemptSuccessRate
     public int SuccessfulAttempts { get; init; }
 
     public int CountedAttempts { get; init; }
+}
+
+public enum AthleteAttemptBenchmarkScope
+{
+    Category,
+    Sex,
+    Field
+}
+
+public sealed record AthleteAttemptBenchmark
+{
+    public AthleteAttemptBenchmarkScope Scope { get; init; }
+
+    public AthleteSex Sex { get; init; } = AthleteSex.Unspecified;
+
+    public int ComparedAthleteCount { get; init; }
+
+    public AthleteAttemptSuccessRate SquatAttempts { get; init; } = new();
+
+    public AthleteAttemptSuccessRate BenchAttempts { get; init; } = new();
+
+    public AthleteAttemptSuccessRate DeadliftAttempts { get; init; } = new();
+
+    public AthleteAttemptSuccessRate OverallAttempts { get; init; } = new();
+
+    public AthleteAttemptSuccessRate ThirdAttempts { get; init; } = new();
 }

@@ -219,25 +219,34 @@
                 else if (SelectedAthleteAnalytics is { } analytics)
                 {
                     <dl class="prediction-context-panel__analytics-grid">
-                        <div>
+                        <div class="prediction-context-panel__analytics-tile prediction-context-panel__analytics-tile--pr">
                             <dt>@Localizer["Predictions.BestResult"]</dt>
                             <dd>@FormatKg(analytics.BestTotalKg)</dd>
                         </div>
-                        <div>
+                        <div class="prediction-context-panel__analytics-tile prediction-context-panel__analytics-tile--recent">
                             <dt>@Localizer["Predictions.LastResult"]</dt>
                             <dd>@FormatKg(analytics.LastTotalKg)</dd>
+                            <small>@FormatPrClosenessText(analytics)</small>
                         </div>
-                        <div>
+                        <div class="prediction-context-panel__analytics-tile prediction-context-panel__analytics-tile--average">
                             <dt>@Localizer["Predictions.Analytics.Last3Avg"]</dt>
                             <dd>@FormatKg(analytics.Last3AvgTotalKg)</dd>
                         </div>
-                        <div>
+                        <div class="prediction-context-panel__analytics-tile @GetContextTrendTileClass(analytics)">
+                            <dt>@GetTrendPeriodLabel(analytics)</dt>
+                            <dd>@FormatTrendValue(analytics)</dd>
+                        </div>
+                        <div class="prediction-context-panel__analytics-tile prediction-context-panel__analytics-tile--attempts">
                             <dt>@Localizer["Predictions.Analytics.AttemptSuccessOverall"]</dt>
                             <dd>@FormatAttemptRate(analytics.OverallAttempts)</dd>
+                            <small>@FormatAttemptComparisonContext(analytics.OverallAttempts, SelectedAthleteBenchmark?.OverallAttempts)</small>
                         </div>
-                        <div class="prediction-context-panel__analytics-item--wide">
+                        <div class="prediction-context-panel__analytics-tile prediction-context-panel__analytics-tile--score">
                             <dt>@Localizer["Predictions.Analytics.BestScore"]</dt>
-                            <dd>@FormatBestScoreSummary(analytics)</dd>
+                            <dd class="prediction-context-panel__score-pair">
+                                <span>GL @FormatScore(analytics.BestGoodliftPoints)</span>
+                                <span>DOTS @FormatScore(analytics.BestDotsPoints)</span>
+                            </dd>
                         </div>
                     </dl>
                 }
@@ -250,7 +259,7 @@
             @if (ContextTrendChartPoints.Count > 1)
             {
                 <section class="prediction-context-panel__block prediction-context-panel__trend-card">
-                    <h3>@Localizer["Predictions.TotalTrendShort"]</h3>
+                    <h3>@string.Format(Localizer["Predictions.TotalTrend"].Value, ContextTrendChartPoints.Count)</h3>
                     <AppTrendChart
                         Points="@ContextTrendChartPoints"
                         Variant="AppTrendChartVariant.Compact"
@@ -260,7 +269,7 @@
             }
 
             <section class="prediction-context-panel__block prediction-context-panel__best-card">
-                <h3>@Localizer["Predictions.BestLiftsPr"]</h3>
+                <h3>@Localizer["Predictions.LifetimePrs"]</h3>
                 <dl class="prediction-context-panel__best-lifts">
                     <div class="prediction-context-panel__best-lift">
                         <dt>SQ</dt>
@@ -279,45 +288,6 @@
                         <dd>@FormatKg(BestTotalKg)</dd>
                     </div>
                 </dl>
-            </section>
-
-            <section class="prediction-context-panel__block prediction-context-panel__recent-card">
-                <h3>@Localizer["Predictions.RecentStartsShort"]</h3>
-
-                @if (isLoadingHistory)
-                {
-                    <p class="prediction-context-panel__empty">@Localizer["Predictions.LoadingHistory"]</p>
-                }
-                else if (isHistoryError)
-                {
-                    <p class="prediction-context-panel__empty">@Localizer["Predictions.HistoryLoadError"]</p>
-                }
-                else if (RecentStarts.Count > 0)
-                {
-                    <ol class="prediction-context-panel__recent-list">
-                        @foreach (var entry in RecentStarts.Select((result, index) => new { Result = result, Index = index }))
-                        {
-                            <li class="prediction-context-panel__recent-item">
-                                <span class="prediction-context-panel__recent-rank">@(entry.Index + 1)</span>
-                                <div class="prediction-context-panel__recent-item-main">
-                                    <strong>@FormatRecentStartTitle(entry.Result)</strong>
-                                    <span class="prediction-context-panel__recent-item-lifts">@FormatRecentStartMeta(entry.Result)</span>
-                                </div>
-                                <div class="prediction-context-panel__recent-item-result">
-                                    <strong class="@GetRecentStartTotalClass(entry.Result)">@FormatKg(entry.Result.TotalKg)</strong>
-                                    @if (entry.Result.BodyweightKg is not null)
-                                    {
-                                        <span>@FormatBodyweightInline(entry.Result.BodyweightKg)</span>
-                                    }
-                                </div>
-                            </li>
-                        }
-                    </ol>
-                }
-                else
-                {
-                    <p class="prediction-context-panel__empty">@Localizer["Predictions.NoAthleteHistory"]</p>
-                }
             </section>
 
             <AthleteDataSourceNote AdditionalClass="prediction-context-panel__source" />
@@ -371,15 +341,16 @@
     public EventCallback CompareAthletesRequested { get; set; }
 
     private AthleteHistoryEntry? SelectedAthleteHistory;
+    private AthleteAttemptBenchmark? SelectedAthleteBenchmark;
     private string? loadedAthleteId;
     private bool isLoadingHistory;
-    private bool isHistoryError;
     private bool showAllNominated;
     private string selectorSearchTerm = string.Empty;
     private string selectorSortMode = "nominated-desc";
     private int? previousSelectorSlotPosition;
     private string? previousActiveQuestionId;
     private const int NominatedPreviewCount = 5;
+    private const int MinimumBenchmarkCountedAttempts = 30;
 
     private Athlete? SelectedAthlete => string.IsNullOrWhiteSpace(SelectedAthleteId)
         ? null
@@ -466,10 +437,6 @@
         }
     }
 
-    private IReadOnlyList<AthleteRecentResult> RecentStarts => SelectedAthleteHistory?.RecentResults
-        .Take(3)
-        .ToArray() ?? [];
-
     private AthleteAnalytics? SelectedAthleteAnalytics => SelectedAthleteHistory?.Analytics;
 
     private decimal? BestSquatKg => SelectedAthleteHistory?.Bests?.SquatKg ??
@@ -482,7 +449,9 @@
                                        SelectedAthleteHistory?.RecentResults.Max(result => result.DeadliftKg);
 
     private decimal? BestTotalKg => SelectedAthleteHistory?.Bests?.TotalKg ??
-                                    SelectedAthleteHistory?.RecentResults.Max(result => result.TotalKg);
+                                    SelectedAthleteHistory?.RecentResults
+                                        .Where(AthleteHistoryService.IsFullPowerSbdTotal)
+                                        .Max(result => result.TotalKg);
 
     private IReadOnlyList<AppTrendChartPoint> ContextTrendChartPoints => BuildTrendChartPoints(4);
 
@@ -531,8 +500,8 @@
         if (SelectedAthlete is null)
         {
             SelectedAthleteHistory = null;
+            SelectedAthleteBenchmark = null;
             loadedAthleteId = null;
-            isHistoryError = false;
             return;
         }
 
@@ -542,16 +511,19 @@
         }
 
         isLoadingHistory = true;
-        isHistoryError = false;
 
         try
         {
-            SelectedAthleteHistory = await AthleteHistoryService.GetAthleteHistoryAsync(SelectedAthlete.Id);
+            var historyTask = AthleteHistoryService.GetAthleteHistoryAsync(SelectedAthlete.Id, Competition);
+            var benchmarkTask = AthleteHistoryService.GetAttemptBenchmarkAsync(Competition, SelectedAthlete);
+
+            SelectedAthleteHistory = await historyTask;
+            SelectedAthleteBenchmark = await benchmarkTask;
         }
         catch
         {
             SelectedAthleteHistory = null;
-            isHistoryError = true;
+            SelectedAthleteBenchmark = null;
         }
 
         loadedAthleteId = SelectedAthlete.Id;
@@ -741,52 +713,6 @@
         return Localizer[key, CategoryAthleteCount].Value;
     }
 
-    private string FormatRecentStartTitle(AthleteRecentResult result)
-    {
-        var meet = string.IsNullOrWhiteSpace(result.MeetName)
-            ? Localizer["Common.Tbd"].Value
-            : result.MeetName.Trim();
-
-        if (!DateOnly.TryParse(result.Date, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate))
-        {
-            return meet;
-        }
-
-        var year = parsedDate.Year.ToString(CultureInfo.CurrentCulture);
-        return meet.Contains(year, StringComparison.Ordinal)
-            ? meet
-            : $"{meet} {year}";
-    }
-
-    private string FormatLiftTriplet(AthleteRecentResult result)
-    {
-        return $"{FormatKgValue(result.SquatKg)} / {FormatKgValue(result.BenchKg)} / {FormatKgValue(result.DeadliftKg)}";
-    }
-
-    private string FormatRecentStartMeta(AthleteRecentResult result)
-    {
-        var parts = new List<string>();
-
-        if (!string.IsNullOrWhiteSpace(result.Federation))
-        {
-            parts.Add(result.Federation.Trim());
-        }
-
-        if (!string.IsNullOrWhiteSpace(result.Equipment))
-        {
-            parts.Add(result.Equipment.Trim());
-        }
-
-        if (result.BodyweightKg is not null)
-        {
-            parts.Add(FormatBodyweightInline(result.BodyweightKg));
-        }
-
-        return parts.Count == 0
-            ? FormatLiftTriplet(result)
-            : string.Join(" · ", parts);
-    }
-
     private string FormatKgValue(decimal? value)
     {
         return value is null
@@ -808,21 +734,122 @@
             : $"{attempts.RatePercent.Value.ToString("0.#", CultureInfo.CurrentCulture)}%";
     }
 
-    private string FormatBestScoreSummary(AthleteAnalytics analytics)
+    private string FormatSignedKg(decimal? value)
     {
-        var parts = new List<string>();
-
-        if (analytics.BestGoodliftPoints is not null)
+        if (value is null)
         {
-            parts.Add($"GL {FormatScore(analytics.BestGoodliftPoints)}");
+            return "--";
         }
 
-        if (analytics.BestDotsPoints is not null)
+        var prefix = value.Value > 0 ? "+" : string.Empty;
+        return $"{prefix}{FormatKg(value)}";
+    }
+
+    private decimal? GetDisplayTrendKg(AthleteAnalytics analytics)
+    {
+        return analytics.RecentTotalTrendKg ?? analytics.TotalTrendKg;
+    }
+
+    private string GetTrendPeriodLabel(AthleteAnalytics analytics)
+    {
+        return analytics.RecentTotalTrendStarts is null
+            ? Localizer["Predictions.TotalTrendShort"].Value
+            : string.Format(
+                CultureInfo.CurrentCulture,
+                Localizer["Predictions.Analytics.TrendStarts"].Value,
+                analytics.RecentTotalTrendStarts.Value);
+    }
+
+    private string FormatTrendValue(AthleteAnalytics analytics)
+    {
+        var trend = GetDisplayTrendKg(analytics);
+
+        return trend is null
+            ? Localizer["Predictions.Analytics.TrendUnavailable"].Value
+            : FormatSignedKg(trend);
+    }
+
+    private string GetContextTrendTileClass(AthleteAnalytics analytics)
+    {
+        return GetDisplayTrendKg(analytics) switch
         {
-            parts.Add($"DOTS {FormatScore(analytics.BestDotsPoints)}");
+            > 0m => "prediction-context-panel__analytics-tile--trend-up",
+            < 0m => "prediction-context-panel__analytics-tile--trend-down",
+            _ => "prediction-context-panel__analytics-tile--trend"
+        };
+    }
+
+    private string FormatPrClosenessText(AthleteAnalytics analytics)
+    {
+        if (analytics.LastTotalKg is null || analytics.BestTotalKg is null)
+        {
+            return Localizer["Predictions.Analytics.NoComparison"].Value;
         }
 
-        return parts.Count == 0 ? "--" : string.Join(" · ", parts);
+        var gap = analytics.LastTotalKg.Value - analytics.BestTotalKg.Value;
+        var gapText = gap == 0m
+            ? Localizer["Predictions.Analytics.AtPr"].Value
+            : gap > 0m
+                ? string.Format(CultureInfo.CurrentCulture, Localizer["Predictions.Analytics.AbovePr"].Value, FormatKg(Math.Abs(gap)))
+                : string.Format(CultureInfo.CurrentCulture, Localizer["Predictions.Analytics.BelowPr"].Value, FormatKg(Math.Abs(gap)));
+
+        if (analytics.LastTotalToBestPercent is null)
+        {
+            return gapText;
+        }
+
+        return $"{gapText} · {string.Format(
+            CultureInfo.CurrentCulture,
+            Localizer["Predictions.Analytics.PrPercent"].Value,
+            analytics.LastTotalToBestPercent.Value.ToString("0.#", CultureInfo.CurrentCulture))}";
+    }
+
+    private string FormatAttemptComparisonContext(
+        AthleteAttemptSuccessRate attempts,
+        AthleteAttemptSuccessRate? benchmarkAttempts)
+    {
+        if (attempts.RatePercent is null ||
+            benchmarkAttempts?.RatePercent is null ||
+            benchmarkAttempts.CountedAttempts < MinimumBenchmarkCountedAttempts ||
+            SelectedAthleteBenchmark is null)
+        {
+            return FormatAttemptCount(attempts);
+        }
+
+        var delta = attempts.RatePercent.Value - benchmarkAttempts.RatePercent.Value;
+        return $"{FormatSignedPercentagePoints(delta)} {GetBenchmarkScopeLabel(SelectedAthleteBenchmark)}";
+    }
+
+    private string FormatAttemptCount(AthleteAttemptSuccessRate attempts)
+    {
+        return attempts.CountedAttempts == 0
+            ? Localizer["Predictions.Analytics.NoCountedAttempts"].Value
+            : string.Format(
+                CultureInfo.CurrentCulture,
+                Localizer["Predictions.Analytics.AttemptsMade"].Value,
+                attempts.SuccessfulAttempts,
+                attempts.CountedAttempts);
+    }
+
+    private string FormatSignedPercentagePoints(decimal value)
+    {
+        var prefix = value > 0 ? "+" : string.Empty;
+        return string.Format(
+            CultureInfo.CurrentCulture,
+            Localizer["Predictions.Analytics.PercentagePointDelta"].Value,
+            $"{prefix}{value.ToString("0.#", CultureInfo.CurrentCulture)}");
+    }
+
+    private string GetBenchmarkScopeLabel(AthleteAttemptBenchmark benchmark)
+    {
+        return benchmark.Scope switch
+        {
+            AthleteAttemptBenchmarkScope.Category => Localizer["Predictions.Analytics.BenchmarkCategory"],
+            AthleteAttemptBenchmarkScope.Sex when benchmark.Sex == AthleteSex.Female => Localizer["Predictions.Analytics.BenchmarkWomen"],
+            AthleteAttemptBenchmarkScope.Sex when benchmark.Sex == AthleteSex.Male => Localizer["Predictions.Analytics.BenchmarkMen"],
+            AthleteAttemptBenchmarkScope.Sex => Localizer["Predictions.Analytics.BenchmarkSex"],
+            _ => Localizer["Predictions.Analytics.BenchmarkField"]
+        };
     }
 
     private string FormatBodyweight(decimal? value)
@@ -835,13 +862,6 @@
     private string FormatBodyweightInline(decimal? value)
     {
         return $"{Localizer["Predictions.BodyweightShort"]}: {FormatBodyweight(value)}";
-    }
-
-    private string GetRecentStartTotalClass(AthleteRecentResult result)
-    {
-        return IsPersonalBest(result.TotalKg, SelectedAthleteHistory?.Bests?.TotalKg)
-            ? "prediction-context-panel__recent-item-total prediction-context-panel__recent-item-total--best"
-            : "prediction-context-panel__recent-item-total";
     }
 
     private string GetStatusLabel(PredictionCompletionStatus status)
@@ -867,16 +887,6 @@
             });
     }
 
-    private bool IsPersonalBest(decimal? value, decimal? bestValue)
-    {
-        if (value is null || bestValue is null)
-        {
-            return false;
-        }
-
-        return value.Value == bestValue.Value;
-    }
-
     private IReadOnlyList<AppTrendChartPoint> BuildTrendChartPoints(int maxResults)
     {
         if (SelectedAthleteHistory?.RecentResults.Count is null or 0)
@@ -885,8 +895,8 @@
         }
 
         var sample = SelectedAthleteHistory.RecentResults
+            .Where(AthleteHistoryService.IsFullPowerSbdTotal)
             .Take(maxResults)
-            .Where(result => result.TotalKg is not null)
             .ToList();
 
         if (sample.Count == 0)

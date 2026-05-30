@@ -18,6 +18,8 @@
     --success: #1fb775;
     --warning: #d5a03a;
     --danger: #ff645d;
+    --info: #3f8cff;
+    --score: #9b7cff;
     --shadow-card: 0 12px 32px rgb(2 7 13 / 0.38);
     --radius-sm: 0.625rem;
     --radius-md: 0.875rem;
@@ -40,6 +42,8 @@
     --success: #198a58;
     --warning: #b6811a;
     --danger: #d53b33;
+    --info: #256fcd;
+    --score: #7557d8;
     --shadow-card: 0 8px 26px rgb(14 28 53 / 0.12);
 }
 
@@ -5027,6 +5031,34 @@ textarea {
     gap: 0.1rem;
 }
 
+.prediction-context-panel__analytics-tile--pr {
+    border-color: color-mix(in srgb, var(--success) 34%, var(--border-strong)) !important;
+}
+
+.prediction-context-panel__analytics-tile--recent {
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--border-strong)) !important;
+}
+
+.prediction-context-panel__analytics-tile--average {
+    border-color: color-mix(in srgb, var(--info) 30%, var(--border-strong)) !important;
+}
+
+.prediction-context-panel__analytics-tile--attempts {
+    border-color: color-mix(in srgb, var(--success) 26%, var(--border-strong)) !important;
+}
+
+.prediction-context-panel__analytics-tile--score {
+    border-color: color-mix(in srgb, var(--score) 34%, var(--border-strong)) !important;
+}
+
+.prediction-context-panel__analytics-tile--trend-up {
+    border-color: color-mix(in srgb, var(--success) 34%, var(--border-strong)) !important;
+}
+
+.prediction-context-panel__analytics-tile--trend-down {
+    border-color: color-mix(in srgb, var(--danger) 34%, var(--border-strong)) !important;
+}
+
 .prediction-context-panel__analytics-grid dt {
     color: var(--text-secondary);
     font-size: 0.68rem;
@@ -5042,6 +5074,22 @@ textarea {
     font-weight: 800;
     line-height: 1.18;
     overflow-wrap: anywhere;
+}
+
+.prediction-context-panel__analytics-grid small {
+    color: var(--text-muted);
+    font-size: 0.66rem;
+    line-height: 1.16;
+}
+
+.prediction-context-panel__score-pair {
+    display: grid;
+    gap: 0.12rem;
+}
+
+.prediction-context-panel__score-pair span {
+    color: color-mix(in srgb, var(--score) 82%, var(--text-primary));
+    font-size: 0.78rem;
 }
 
 .prediction-context-panel__analytics-item--wide {
@@ -5349,6 +5397,11 @@ textarea {
     box-shadow:
         0 0 0 1px color-mix(in srgb, var(--accent) 26%, transparent),
         0 26px 64px rgb(0 0 0 / 0.5);
+}
+
+.floating-window--athlete-history {
+    width: min(62rem, calc(100vw - 2rem));
+    max-height: min(84vh, 52rem);
 }
 
 .floating-window.is-dragging {
@@ -5675,6 +5728,7 @@ textarea {
 }
 
 .athlete-history-window__analytics,
+.athlete-history-window__attempts,
 .athlete-history-window__trend,
 .athlete-history-window__bests,
 .athlete-history-window__starts {
@@ -5748,8 +5802,110 @@ textarea {
     position: relative;
     overflow: hidden;
     background:
-        radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 18%, transparent), transparent 36%),
+        linear-gradient(135deg, color-mix(in srgb, var(--info) 9%, transparent), transparent 52%),
         color-mix(in srgb, var(--bg-surface-muted) 88%, transparent);
+}
+
+.athlete-history-window__summary-grid {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0.45rem;
+}
+
+.athlete-history-window__summary-card {
+    min-width: 0;
+    min-height: 6.2rem;
+    border: 1px solid color-mix(in srgb, var(--border-strong) 70%, transparent);
+    border-radius: calc(var(--radius-sm) + 0.1rem);
+    background: color-mix(in srgb, var(--bg-surface) 88%, transparent);
+    padding: 0.58rem 0.62rem;
+    display: grid;
+    align-content: space-between;
+    gap: 0.2rem;
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 6%, transparent);
+}
+
+.athlete-history-window__summary-card dt {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.66rem;
+    font-weight: 850;
+    letter-spacing: 0.04em;
+    line-height: 1.12;
+    text-transform: uppercase;
+}
+
+.athlete-history-window__summary-card dd {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 850;
+    line-height: 1.12;
+}
+
+.athlete-history-window__summary-card small {
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    line-height: 1.18;
+}
+
+.athlete-history-window__summary-card--pr {
+    border-color: color-mix(in srgb, var(--success) 38%, var(--border-strong));
+}
+
+.athlete-history-window__summary-card--pr dd {
+    color: color-mix(in srgb, var(--success) 84%, var(--text-primary));
+}
+
+.athlete-history-window__summary-card--recent {
+    border-color: color-mix(in srgb, var(--accent) 34%, var(--border-strong));
+}
+
+.athlete-history-window__summary-card--average {
+    border-color: color-mix(in srgb, var(--info) 30%, var(--border-strong));
+}
+
+.athlete-history-window__summary-card--score {
+    border-color: color-mix(in srgb, var(--score) 38%, var(--border-strong));
+}
+
+.athlete-history-window__summary-card--attempts {
+    border-color: color-mix(in srgb, var(--success) 26%, var(--border-strong));
+}
+
+.athlete-history-window__score-pair {
+    display: grid;
+    gap: 0.22rem;
+}
+
+.athlete-history-window__score-pair > span {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.45rem;
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+}
+
+.athlete-history-window__score-pair strong {
+    color: color-mix(in srgb, var(--score) 82%, var(--text-primary));
+}
+
+.athlete-history-window__insight-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.38rem;
+    align-items: center;
+}
+
+.athlete-history-window__insight-strip span {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--bg-surface) 82%, transparent);
+    color: var(--text-secondary);
+    padding: 0.32rem 0.52rem;
+    font-size: 0.7rem;
+    font-weight: 750;
+    line-height: 1.1;
 }
 
 .athlete-history-window__analytics-hero {
@@ -5938,7 +6094,7 @@ textarea {
 
 .athlete-history-window__attempt-bars dd {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 0.5rem;
     align-items: center;
 }
@@ -5947,6 +6103,18 @@ textarea {
     color: var(--text-muted);
     font-size: 0.68rem;
     white-space: nowrap;
+}
+
+.athlete-history-window__attempt-delta {
+    color: var(--text-muted) !important;
+}
+
+.athlete-history-window__attempt-delta--up {
+    color: color-mix(in srgb, var(--success) 86%, var(--text-primary)) !important;
+}
+
+.athlete-history-window__attempt-delta--down {
+    color: color-mix(in srgb, var(--danger) 86%, var(--text-primary)) !important;
 }
 
 .athlete-history-window__attempt-track {
@@ -5976,6 +6144,12 @@ textarea {
     opacity: 0.86;
 }
 
+@media (max-width: 900px) {
+    .athlete-history-window__summary-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
 @media (max-width: 720px) {
     .athlete-history-window__analytics-hero,
     .athlete-history-window__attempts-panel {
@@ -5985,12 +6159,20 @@ textarea {
     .athlete-history-window__analytics-kpis {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .athlete-history-window__summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 520px) {
     .athlete-history-window__analytics-grid,
     .athlete-history-window__attempts-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .athlete-history-window__summary-grid {
+        grid-template-columns: 1fr;
     }
 }
 
