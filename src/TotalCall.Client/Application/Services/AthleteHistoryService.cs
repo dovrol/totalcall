@@ -9,7 +9,7 @@ namespace TotalCall.Client.Application.Services;
 
 public sealed class AthleteHistoryService(HttpClient? httpClient)
 {
-    private const string DefaultImportStatusSource = ExternalAthleteSources.OpenIpf;
+    private const string DefaultHistorySource = ExternalAthleteSources.OpenIpf;
     private const int MinimumBenchmarkCountedAttempts = 30;
 
     private static readonly JsonSerializerOptions SupabaseJsonOptions = new()
@@ -20,7 +20,8 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
 
     private readonly Dictionary<string, AthleteHistoryEntry?> _cache = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<string, AthleteAnalytics?> _analyticsCache = new(StringComparer.OrdinalIgnoreCase);
-    private Task<AthleteDataImportStatus?>? _importStatusTask;
+    private readonly Dictionary<string, Task<AthleteDataImportStatus?>> _importStatusTasks =
+        new(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
     /// Fetch athlete competition history from Supabase by slug.
@@ -32,7 +33,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         string athleteSlug,
         CancellationToken cancellationToken = default)
     {
-        return GetAthleteHistoryAsync(athleteSlug, (DateOnly?)null, cancellationToken);
+        return GetAthleteHistoryAsync(athleteSlug, (DateOnly?)null, DefaultHistorySource, cancellationToken);
     }
 
     public Task<AthleteHistoryEntry?> GetAthleteHistoryAsync(
@@ -40,15 +41,26 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         Competition? competition,
         CancellationToken cancellationToken = default)
     {
+        return GetAthleteHistoryAsync(athleteSlug, competition, DefaultHistorySource, cancellationToken);
+    }
+
+    public Task<AthleteHistoryEntry?> GetAthleteHistoryAsync(
+        string athleteSlug,
+        Competition? competition,
+        string source,
+        CancellationToken cancellationToken = default)
+    {
         return GetAthleteHistoryAsync(
             athleteSlug,
             ResolveTotalMetricReferenceDate(competition),
+            source,
             cancellationToken);
     }
 
     public async Task<AthleteHistoryEntry?> GetAthleteHistoryAsync(
         string athleteSlug,
         DateOnly? totalMetricReferenceDate,
+        string source,
         CancellationToken cancellationToken = default)
     {
         if (httpClient is null)
@@ -58,7 +70,8 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         }
 
         var referenceDate = totalMetricReferenceDate ?? DateOnly.FromDateTime(DateTime.UtcNow);
-        var cacheKey = $"{athleteSlug}|{referenceDate:yyyyMMdd}";
+        var normalizedSource = AthleteDataSourcePreferenceService.NormalizeRequiredSource(source);
+        var cacheKey = $"{athleteSlug}|{normalizedSource}|{referenceDate:yyyyMMdd}";
 
         if (_cache.TryGetValue(cacheKey, out var cached))
         {
@@ -67,8 +80,9 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
 
         var url = "rest/v1/athlete_history_view"
                   + $"?athlete_slug=eq.{Uri.EscapeDataString(athleteSlug)}"
+                  + $"&source_code=eq.{Uri.EscapeDataString(normalizedSource)}"
                   + "&order=meet_date.desc"
-                  + "&select=athlete_display_name,athlete_country_code,"
+                  + "&select=athlete_display_name,athlete_country_code,source_code,"
                   + "meet_date,meet_name,federation,equipment,event,bodyweight_kg,"
                   + "best_squat_kg,best_bench_kg,best_deadlift_kg,total_kg,"
                   + "dots_points,goodlift_points,place";
@@ -82,7 +96,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
             return null;
         }
 
-        var analytics = await GetAthleteAnalyticsAsync(athleteSlug, cancellationToken);
+        var analytics = await GetAthleteAnalyticsAsync(athleteSlug, normalizedSource, cancellationToken);
         var entry = MapToEntry(rows, analytics, referenceDate);
 
         _cache[cacheKey] = entry;
@@ -95,6 +109,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
     /// </summary>
     public async Task<AthleteAnalytics?> GetAthleteAnalyticsAsync(
         string athleteSlug,
+        string source,
         CancellationToken cancellationToken = default)
     {
         if (httpClient is null)
@@ -103,19 +118,38 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
                 "Supabase is not configured. Set Supabase:Url and Supabase:PublishableKey in wwwroot/appsettings.json.");
         }
 
-        if (_analyticsCache.TryGetValue(athleteSlug, out var cached))
+        var normalizedSource = AthleteDataSourcePreferenceService.NormalizeRequiredSource(source);
+        var cacheKey = $"{athleteSlug}|{normalizedSource}";
+
+        if (_analyticsCache.TryGetValue(cacheKey, out var cached))
         {
             return cached;
         }
 
-        var analytics = await FetchAthleteAnalyticsAsync(athleteSlug, cancellationToken);
-        _analyticsCache[athleteSlug] = analytics;
+        var analytics = await FetchAthleteAnalyticsAsync(athleteSlug, normalizedSource, cancellationToken);
+        _analyticsCache[cacheKey] = analytics;
         return analytics;
+    }
+
+    public Task<AthleteAnalytics?> GetAthleteAnalyticsAsync(
+        string athleteSlug,
+        CancellationToken cancellationToken = default)
+    {
+        return GetAthleteAnalyticsAsync(athleteSlug, DefaultHistorySource, cancellationToken);
     }
 
     public async Task<AthleteAttemptBenchmark?> GetAttemptBenchmarkAsync(
         Competition competition,
         Athlete athlete,
+        CancellationToken cancellationToken = default)
+    {
+        return await GetAttemptBenchmarkAsync(competition, athlete, DefaultHistorySource, cancellationToken);
+    }
+
+    public async Task<AthleteAttemptBenchmark?> GetAttemptBenchmarkAsync(
+        Competition competition,
+        Athlete athlete,
+        string source,
         CancellationToken cancellationToken = default)
     {
         var categoryAthleteIds = GetCategoryAthleteIds(competition, athlete);
@@ -135,6 +169,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
             categoryAthleteIds,
             sexAthleteIds,
             fieldAthleteIds,
+            source,
             cancellationToken);
     }
 
@@ -149,6 +184,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         IReadOnlyCollection<string> categoryAthleteIds,
         IReadOnlyCollection<string> sexAthleteIds,
         IReadOnlyCollection<string> fieldAthleteIds,
+        string source,
         CancellationToken cancellationToken = default)
     {
         if (httpClient is null)
@@ -170,6 +206,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
                 scope.Scope,
                 scope.Sex,
                 scope.AthleteIds,
+                source,
                 cancellationToken);
 
             if (benchmark?.OverallAttempts.CountedAttempts >= MinimumBenchmarkCountedAttempts)
@@ -233,6 +270,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
     /// Returns null when Supabase is unavailable or the RPC cannot be read.
     /// </summary>
     public Task<AthleteDataImportStatus?> GetImportStatusAsync(
+        string source = DefaultHistorySource,
         CancellationToken cancellationToken = default)
     {
         if (httpClient is null)
@@ -240,10 +278,21 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
             return Task.FromResult<AthleteDataImportStatus?>(null);
         }
 
-        return _importStatusTask ??= FetchImportStatusAsync(cancellationToken);
+        var normalizedSource = AthleteDataSourcePreferenceService.NormalizeRequiredSource(source);
+
+        if (_importStatusTasks.TryGetValue(normalizedSource, out var cached))
+        {
+            return cached;
+        }
+
+        var statusTask = FetchImportStatusAsync(normalizedSource, cancellationToken);
+        _importStatusTasks[normalizedSource] = statusTask;
+        return statusTask;
     }
 
-    private async Task<AthleteDataImportStatus?> FetchImportStatusAsync(CancellationToken cancellationToken)
+    private async Task<AthleteDataImportStatus?> FetchImportStatusAsync(
+        string source,
+        CancellationToken cancellationToken)
     {
         if (httpClient is null)
         {
@@ -253,7 +302,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         try
         {
             var url = "rest/v1/rpc/get_athlete_data_import_status"
-                      + $"?p_source={Uri.EscapeDataString(DefaultImportStatusSource)}";
+                      + $"?p_source={Uri.EscapeDataString(source)}";
 
             var rows = await httpClient.GetFromJsonAsync<List<ImportStatusRow>>(
                 url, SupabaseJsonOptions, cancellationToken);
@@ -279,6 +328,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
 
     private async Task<AthleteAnalytics?> FetchAthleteAnalyticsAsync(
         string athleteSlug,
+        string source,
         CancellationToken cancellationToken)
     {
         if (httpClient is null)
@@ -289,7 +339,8 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         try
         {
             var url = "rest/v1/rpc/get_athlete_analytics"
-                      + $"?p_athlete_slug={Uri.EscapeDataString(athleteSlug)}";
+                      + $"?p_athlete_slug={Uri.EscapeDataString(athleteSlug)}"
+                      + $"&p_source={Uri.EscapeDataString(source)}";
 
             var rows = await httpClient.GetFromJsonAsync<List<AnalyticsRow>>(
                 url, SupabaseJsonOptions, cancellationToken);
@@ -340,6 +391,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         {
             DisplayName = first.AthleteDisplayName,
             CountryCode = first.AthleteCountryCode,
+            SourceCode = first.SourceCode,
             RecentResults = recentResults,
             Bests = new AthleteLiftBests
             {
@@ -407,6 +459,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         AthleteAttemptBenchmarkScope scope,
         AthleteSex scopeSex,
         IReadOnlyCollection<string> athleteIds,
+        string source,
         CancellationToken cancellationToken)
     {
         var comparisonAthleteIds = athleteIds
@@ -421,7 +474,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         }
 
         var analyticsTasks = comparisonAthleteIds
-            .Select(id => GetAthleteAnalyticsAsync(id, cancellationToken))
+            .Select(id => GetAthleteAnalyticsAsync(id, source, cancellationToken))
             .ToArray();
 
         var analyticsRows = (await Task.WhenAll(analyticsTasks))
@@ -616,6 +669,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
     {
         public string? AthleteDisplayName { get; init; }
         public string? AthleteCountryCode { get; init; }
+        public string? SourceCode { get; init; }
         public string? MeetDate { get; init; }
         public string? MeetName { get; init; }
         public string? Federation { get; init; }

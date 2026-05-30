@@ -319,6 +319,9 @@
   <data name="Predictions.Analytics.BenchmarkField" xml:space="preserve"><value>vs stawka</value></data>
   <data name="Predictions.LoadingHistory" xml:space="preserve"><value>Ładowanie historii...</value></data>
   <data name="Predictions.NoAthleteHistory" xml:space="preserve"><value>Brak historii startów dla tego zawodnika.</value></data>
+  <data name="Predictions.NoAthleteHistoryForSource" xml:space="preserve"><value>Brak historii w {0}.</value></data>
+  <data name="Predictions.TryDataSource" xml:space="preserve"><value>Spróbuj {0}</value></data>
+  <data name="Predictions.DataSource" xml:space="preserve"><value>Źródło danych</value></data>
   <data name="Predictions.HistoryLoadError" xml:space="preserve"><value>Nie udało się pobrać historii startów.</value></data>
   <data name="Predictions.SourceAttribution" xml:space="preserve"><value>Dane z projektu OpenIPF / OpenPowerlifting, https://www.openpowerlifting.org.</value></data>
   <data name="Predictions.SourceOnly" xml:space="preserve"><value>Źródło: {0}</value></data>

@@ -3,6 +3,7 @@
 @using TotalCall.Client.Application.Windows
 @using TotalCall.Client.Domain.Athletes
 @inject AthleteHistoryService AthleteHistoryService
+@inject AthleteDataSourcePreferenceService AthleteDataSources
 @inject CompetitionService CompetitionService
 @inject WindowManager Windows
 @inject IStringLocalizer<SharedResource> Localizer
@@ -30,6 +31,25 @@
                 <dd class="athlete-history-window__meta-value--accent">@FormatKg(Descriptor.NominatedTotalKg)</dd>
             </div>
         </dl>
+
+        @if (availableSources.Count > 1)
+        {
+            <section class="athlete-history-window__source-picker" aria-label="@Localizer["Predictions.DataSource"]">
+                <span>@Localizer["Predictions.DataSource"]</span>
+                <div class="segmented athlete-history-window__source-segmented">
+                    @foreach (var source in availableSources)
+                    {
+                        <button
+                            type="button"
+                            class="@GetSourceButtonClass(source)"
+                            disabled="@isLoading"
+                            @onclick="() => OnSourceChangedAsync(source)">
+                            @AthleteDataSourcePreferenceService.GetSourceLabel(source)
+                        </button>
+                    }
+                </div>
+            </section>
+        }
 
         @if (HasActiveSlotActions)
         {
@@ -83,7 +103,20 @@
         }
         else if (History is null)
         {
-            <p class="athlete-history-window__empty">@Localizer["Predictions.NoAthleteHistory"]</p>
+            <div class="athlete-history-window__empty-state">
+                <p class="athlete-history-window__empty">
+                    @Localizer["Predictions.NoAthleteHistoryForSource", CurrentSourceLabel]
+                </p>
+                @if (AlternateSource is { } alternateSource)
+                {
+                    <button
+                        type="button"
+                        class="app-button app-button--secondary app-button--sm"
+                        @onclick="() => OnSourceChangedAsync(alternateSource)">
+                        @Localizer["Predictions.TryDataSource", AthleteDataSourcePreferenceService.GetSourceLabel(alternateSource)]
+                    </button>
+                }
+            </div>
         }
         else
         {
@@ -291,7 +324,7 @@
         }
 
         <footer class="athlete-history-window__source">
-            <AthleteDataSourceNote />
+            <AthleteDataSourceNote SourceCode="@currentSource" />
         </footer>
     </section>
 </FloatingWindow>
@@ -302,7 +335,11 @@
 
     private AthleteHistoryEntry? History;
     private AthleteAttemptBenchmark? AttemptBenchmark;
+    private Competition? competition;
+    private IReadOnlyList<string> availableSources = [];
+    private string currentSource = ExternalAthleteSources.OpenIpf;
     private string? loadedAthleteId;
+    private string? loadedSourceCode;
     private bool isLoading;
     private bool isError;
     private const int MinimumBenchmarkCountedAttempts = 30;
@@ -320,6 +357,11 @@
     private IReadOnlyList<AthleteRecentResult> RecentResults => History?.RecentResults ?? [];
 
     private AthleteAnalytics? Analytics => History?.Analytics;
+
+    private string CurrentSourceLabel => AthleteDataSourcePreferenceService.GetSourceLabel(currentSource);
+
+    private string? AlternateSource => availableSources.FirstOrDefault(source =>
+        !string.Equals(source, currentSource, StringComparison.OrdinalIgnoreCase));
 
     private decimal? BestSquatKg => History?.Bests?.SquatKg ??
                                     History?.RecentResults.Max(result => result.SquatKg);
@@ -339,24 +381,38 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        if (string.Equals(loadedAthleteId, Descriptor.AthleteId, StringComparison.OrdinalIgnoreCase))
+        competition = await CompetitionService.GetCompetitionAsync(Descriptor.CompetitionId);
+        availableSources = competition is null
+            ? [ExternalAthleteSources.OpenIpf]
+            : AthleteDataSources.GetAvailableSources(competition);
+        var source = competition is null
+            ? ExternalAthleteSources.OpenIpf
+            : await AthleteDataSources.GetSourceAsync(competition);
+
+        if (string.Equals(loadedAthleteId, Descriptor.AthleteId, StringComparison.OrdinalIgnoreCase) &&
+            string.Equals(loadedSourceCode, source, StringComparison.OrdinalIgnoreCase))
         {
             return;
         }
 
+        await LoadHistoryAsync(source);
+    }
+
+    private async Task LoadHistoryAsync(string source)
+    {
+        currentSource = source;
         isLoading = true;
         isError = false;
         StateHasChanged();
 
         try
         {
-            var competition = await CompetitionService.GetCompetitionAsync(Descriptor.CompetitionId);
             var athlete = competition?.Athletes.FirstOrDefault(item =>
                 string.Equals(item.Id, Descriptor.AthleteId, StringComparison.OrdinalIgnoreCase));
-            var historyTask = AthleteHistoryService.GetAthleteHistoryAsync(Descriptor.AthleteId, competition);
+            var historyTask = AthleteHistoryService.GetAthleteHistoryAsync(Descriptor.AthleteId, competition, source);
             var benchmarkTask = competition is null || athlete is null
                 ? Task.FromResult<AthleteAttemptBenchmark?>(null)
-                : AthleteHistoryService.GetAttemptBenchmarkAsync(competition, athlete);
+                : AthleteHistoryService.GetAttemptBenchmarkAsync(competition, athlete, source);
 
             History = await historyTask;
             AttemptBenchmark = await benchmarkTask;
@@ -369,7 +425,30 @@
         }
 
         loadedAthleteId = Descriptor.AthleteId;
+        loadedSourceCode = source;
         isLoading = false;
+    }
+
+    private async Task OnSourceChangedAsync(string source)
+    {
+        if (competition is null ||
+            string.Equals(source, currentSource, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        await AthleteDataSources.SetSourceAsync(competition, source);
+        await LoadHistoryAsync(source);
+    }
+
+    private string GetSourceButtonClass(string source)
+    {
+        return string.Join(
+            " ",
+            "segmented__button",
+            string.Equals(source, currentSource, StringComparison.OrdinalIgnoreCase)
+                ? "segmented__button--active"
+                : null);
     }
 
     private Task OnUseLast()

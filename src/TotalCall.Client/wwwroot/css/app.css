@@ -5666,6 +5666,34 @@ textarea {
     color: color-mix(in srgb, var(--accent-strong) 80%, var(--text-primary));
 }
 
+.athlete-history-window__source-picker {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.72rem;
+    padding: 0.58rem 0.66rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--bg-surface-muted) 72%, transparent);
+}
+
+.athlete-history-window__source-picker > span {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.athlete-history-window__source-segmented {
+    flex: 0 1 auto;
+}
+
+.athlete-history-window__source-segmented .segmented__button {
+    min-height: 2rem;
+    padding-inline: 0.62rem;
+    font-size: 0.75rem;
+}
+
 .athlete-history-window__actions {
     display: grid;
     gap: 0.42rem;
@@ -6261,6 +6289,17 @@ textarea {
     margin: 0;
     color: var(--text-secondary);
     font-size: 0.82rem;
+}
+
+.athlete-history-window__empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.7rem;
+    padding: 0.76rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--bg-surface-muted) 64%, transparent);
 }
 
 .athlete-history-window__source {

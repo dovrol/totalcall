@@ -4,6 +4,7 @@
 @inject IStringLocalizer<SharedResource> Localizer
 @inject PredictionTextService Text
 @inject AthleteHistoryService AthleteHistoryService
+@inject AthleteDataSourcePreferenceService AthleteDataSources
 @inject WindowManager Windows
 @inject ToastService Toasts
 
@@ -143,6 +144,7 @@ else
                         PredictionEditorError="@predictionEditorError"
                         IsPredictionHistoryLoading="@isPredictionHistoryLoading"
                         PredictionHistory="@predictionHistory"
+                        HistorySourceCode="@historySourceCode"
                         PredictionEditRequested="OpenPredictionEditor"
                         PredictionEditorModeChanged="OnPredictionEditorModeChanged"
                         PredictionTotalInputChanged="OnPredictionTotalInputChanged"
@@ -261,6 +263,7 @@ else
     private string predictionDeadliftInput = string.Empty;
     private string? predictionEditorError;
     private AthleteHistoryEntry? predictionHistory;
+    private string historySourceCode = ExternalAthleteSources.OpenIpf;
     private string? loadedPredictionHistoryAthleteId;
     private bool isPredictionHistoryLoading;
     private int? pendingRemovalPosition;
@@ -464,10 +467,18 @@ else
     protected override void OnInitialized()
     {
         Windows.AthleteHistoryActionRequested += HandleAthleteHistoryActionRequested;
+        AthleteDataSources.SourceChanged += HandleDataSourceChanged;
     }
 
     protected override async Task OnParametersSetAsync()
     {
+        var source = await AthleteDataSources.GetSourceAsync(Competition);
+        if (!string.Equals(historySourceCode, source, StringComparison.OrdinalIgnoreCase))
+        {
+            historySourceCode = source;
+            loadedPredictionHistoryAthleteId = null;
+        }
+
         if (!string.IsNullOrWhiteSpace(ActiveQuestionId) &&
             OrderedQuestions.Any(question => string.Equals(question.Id, ActiveQuestionId, StringComparison.OrdinalIgnoreCase)))
         {
@@ -1109,7 +1120,7 @@ else
 
         try
         {
-            predictionHistory = await AthleteHistoryService.GetAthleteHistoryAsync(athlete.Id);
+            predictionHistory = await AthleteHistoryService.GetAthleteHistoryAsync(athlete.Id, Competition, historySourceCode);
         }
         catch
         {
@@ -1382,6 +1393,23 @@ else
     public void Dispose()
     {
         Windows.AthleteHistoryActionRequested -= HandleAthleteHistoryActionRequested;
+        AthleteDataSources.SourceChanged -= HandleDataSourceChanged;
+    }
+
+    private async void HandleDataSourceChanged(string competitionId, string source)
+    {
+        if (!string.Equals(competitionId, Competition.Id, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        await InvokeAsync(async () =>
+        {
+            historySourceCode = source;
+            loadedPredictionHistoryAthleteId = null;
+            await LoadPredictionHistoryAsync(forceReloadAthlete: true);
+            StateHasChanged();
+        });
     }
 
     private Task OpenHistoryWindowForSlot(int position)

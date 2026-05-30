@@ -319,6 +319,9 @@
   <data name="Predictions.Analytics.BenchmarkField" xml:space="preserve"><value>vs field</value></data>
   <data name="Predictions.LoadingHistory" xml:space="preserve"><value>Loading history...</value></data>
   <data name="Predictions.NoAthleteHistory" xml:space="preserve"><value>No recent results available yet.</value></data>
+  <data name="Predictions.NoAthleteHistoryForSource" xml:space="preserve"><value>No history in {0}.</value></data>
+  <data name="Predictions.TryDataSource" xml:space="preserve"><value>Try {0}</value></data>
+  <data name="Predictions.DataSource" xml:space="preserve"><value>Data source</value></data>
   <data name="Predictions.HistoryLoadError" xml:space="preserve"><value>Failed to load competition history.</value></data>
   <data name="Predictions.SourceAttribution" xml:space="preserve"><value>Data from the OpenIPF / OpenPowerlifting project, https://www.openpowerlifting.org.</value></data>
   <data name="Predictions.SourceOnly" xml:space="preserve"><value>Source: {0}</value></data>

@@ -223,7 +223,7 @@
                     <p class="ranking-slot__prediction-empty">@Localizer["Predictions.NoAthleteHistoryInline"]</p>
                 }
 
-                <AthleteDataSourceNote AdditionalClass="ranking-slot__prediction-source" />
+                <AthleteDataSourceNote AdditionalClass="ranking-slot__prediction-source" SourceCode="@HistorySourceCode" />
 
                 @if (!string.IsNullOrWhiteSpace(PredictionEditorError))
                 {
@@ -293,6 +293,9 @@
 
     [Parameter]
     public AthleteHistoryEntry? PredictionHistory { get; set; }
+
+    [Parameter]
+    public string HistorySourceCode { get; set; } = ExternalAthleteSources.OpenIpf;
 
     [Parameter]
     public bool CanMoveUp { get; set; }

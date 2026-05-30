@@ -1,6 +1,8 @@
 @using System.Globalization
+@implements IDisposable
 @inject IStringLocalizer<SharedResource> Localizer
 @inject AthleteHistoryService AthleteHistoryService
+@inject AthleteDataSourcePreferenceService AthleteDataSources
 @inject WindowManager Windows
 @inject ToastService Toasts
 
@@ -290,7 +292,7 @@
                 </dl>
             </section>
 
-            <AthleteDataSourceNote AdditionalClass="prediction-context-panel__source" />
+            <AthleteDataSourceNote AdditionalClass="prediction-context-panel__source" SourceCode="@currentSource" />
         </div>
 
     }
@@ -342,7 +344,9 @@
 
     private AthleteHistoryEntry? SelectedAthleteHistory;
     private AthleteAttemptBenchmark? SelectedAthleteBenchmark;
+    private string currentSource = ExternalAthleteSources.OpenIpf;
     private string? loadedAthleteId;
+    private string? loadedSourceCode;
     private bool isLoadingHistory;
     private bool showAllNominated;
     private string selectorSearchTerm = string.Empty;
@@ -482,6 +486,11 @@
         }
     }
 
+    protected override void OnInitialized()
+    {
+        AthleteDataSources.SourceChanged += HandleDataSourceChanged;
+    }
+
     protected override async Task OnParametersSetAsync()
     {
         if (!string.Equals(previousActiveQuestionId, ActiveQuestion?.Id, StringComparison.OrdinalIgnoreCase))
@@ -502,20 +511,30 @@
             SelectedAthleteHistory = null;
             SelectedAthleteBenchmark = null;
             loadedAthleteId = null;
+            loadedSourceCode = null;
             return;
         }
 
-        if (string.Equals(loadedAthleteId, SelectedAthlete.Id, StringComparison.OrdinalIgnoreCase))
+        var source = await AthleteDataSources.GetSourceAsync(Competition);
+
+        if (string.Equals(loadedAthleteId, SelectedAthlete.Id, StringComparison.OrdinalIgnoreCase) &&
+            string.Equals(loadedSourceCode, source, StringComparison.OrdinalIgnoreCase))
         {
             return;
         }
 
+        await LoadSelectedAthleteHistoryAsync(SelectedAthlete, source);
+    }
+
+    private async Task LoadSelectedAthleteHistoryAsync(Athlete athlete, string source)
+    {
+        currentSource = source;
         isLoadingHistory = true;
 
         try
         {
-            var historyTask = AthleteHistoryService.GetAthleteHistoryAsync(SelectedAthlete.Id, Competition);
-            var benchmarkTask = AthleteHistoryService.GetAttemptBenchmarkAsync(Competition, SelectedAthlete);
+            var historyTask = AthleteHistoryService.GetAthleteHistoryAsync(athlete.Id, Competition, source);
+            var benchmarkTask = AthleteHistoryService.GetAttemptBenchmarkAsync(Competition, athlete, source);
 
             SelectedAthleteHistory = await historyTask;
             SelectedAthleteBenchmark = await benchmarkTask;
@@ -526,8 +545,36 @@
             SelectedAthleteBenchmark = null;
         }
 
-        loadedAthleteId = SelectedAthlete.Id;
+        loadedAthleteId = athlete.Id;
+        loadedSourceCode = source;
         isLoadingHistory = false;
+    }
+
+    private async void HandleDataSourceChanged(string competitionId, string source)
+    {
+        if (!string.Equals(competitionId, Competition.Id, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        await InvokeAsync(async () =>
+        {
+            currentSource = source;
+            loadedAthleteId = null;
+            loadedSourceCode = null;
+
+            if (SelectedAthlete is { } athlete)
+            {
+                await LoadSelectedAthleteHistoryAsync(athlete, source);
+            }
+
+            StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        AthleteDataSources.SourceChanged -= HandleDataSourceChanged;
     }
 
     private Task OnDismissClicked(MouseEventArgs _)

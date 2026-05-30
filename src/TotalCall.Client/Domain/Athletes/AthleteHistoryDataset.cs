@@ -6,6 +6,8 @@ public sealed record AthleteHistoryEntry
 
     public string? CountryCode { get; init; }
 
+    public string? SourceCode { get; init; }
+
     public IReadOnlyList<AthleteRecentResult> RecentResults { get; init; } = [];
 
     public AthleteLiftBests? Bests { get; init; }

@@ -19,6 +19,7 @@
                 PredictionEditorError="@PredictionEditorError"
                 IsPredictionHistoryLoading="@IsPredictionHistoryLoading"
                 PredictionHistory="@PredictionHistory"
+                HistorySourceCode="@HistorySourceCode"
                 IsSelectorTarget="@(SelectorSlotPosition == position)"
                 CanMoveUp="@(position > 1)"
                 CanMoveDown="@(position < SlotsCount)"
@@ -97,6 +98,9 @@
 
     [Parameter]
     public AthleteHistoryEntry? PredictionHistory { get; set; }
+
+    [Parameter]
+    public string HistorySourceCode { get; set; } = ExternalAthleteSources.OpenIpf;
 
     [Parameter]
     public EventCallback<int> PredictionEditRequested { get; set; }

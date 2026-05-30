@@ -24,6 +24,7 @@ builder.Services.AddScoped<ICompetitionProvider, JsonCompetitionProvider>();
 builder.Services.AddScoped<CompetitionService>();
 builder.Services.AddScoped<BrowserLocalStorage>();
 builder.Services.AddScoped<BrowserFileActions>();
+builder.Services.AddScoped<AthleteDataSourcePreferenceService>();
 builder.Services.AddScoped<CultureService>();
 builder.Services.AddScoped<ThemeService>();
 builder.Services.AddSingleton<AppInfoService>();

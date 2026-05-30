@@ -14,4 +14,9 @@ public static class LocalStorageKeys
     {
         return $"totalcall:predictions:{competitionId}";
     }
+
+    public static string AthleteDataSource(string competitionId)
+    {
+        return $"totalcall:athlete-data-source:{competitionId}";
+    }
 }

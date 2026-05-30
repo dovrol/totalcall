@@ -35,9 +35,18 @@ public sealed record Competition
 
     public required string ConfigVersion { get; init; }
 
+    public AthleteDataConfiguration? AthleteData { get; init; }
+
     public IReadOnlyList<Athlete> Athletes { get; init; } = [];
 
     public IReadOnlyList<WeightCategory> Categories { get; init; } = [];
 
     public IReadOnlyList<PredictionGroup> PredictionGroups { get; init; } = [];
+}
+
+public sealed record AthleteDataConfiguration
+{
+    public string? DefaultSource { get; init; }
+
+    public IReadOnlyList<string> AvailableSources { get; init; } = [];
 }

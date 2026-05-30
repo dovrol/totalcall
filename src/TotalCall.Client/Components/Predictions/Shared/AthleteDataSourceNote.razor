@@ -10,8 +10,11 @@
     [Parameter]
     public string? AdditionalClass { get; set; }
 
+    [Parameter]
+    public string SourceCode { get; set; } = ExternalAthleteSources.OpenIpf;
+
     private AthleteDataImportStatus? status;
-    private const string FallbackSourceLabel = "OpenIPF";
+    private string? loadedSourceCode;
 
     private string CssClass => string.Join(
         " ",
@@ -19,7 +22,7 @@
         AdditionalClass);
 
     private string SourceLabel => string.IsNullOrWhiteSpace(status?.SourceLabel)
-        ? FallbackSourceLabel
+        ? AthleteDataSourcePreferenceService.GetSourceLabel(SourceCode)
         : status.SourceLabel;
 
     private string Text => status?.LastSuccessfulImportAt is null
@@ -29,9 +32,15 @@
             SourceLabel,
             FormatImportDate(status.LastSuccessfulImportAt.Value)].Value;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        status = await AthleteHistoryService.GetImportStatusAsync();
+        if (string.Equals(loadedSourceCode, SourceCode, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        status = await AthleteHistoryService.GetImportStatusAsync(SourceCode);
+        loadedSourceCode = SourceCode;
     }
 
     private static string FormatImportDate(DateTimeOffset value)
