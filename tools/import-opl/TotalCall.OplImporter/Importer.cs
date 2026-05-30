@@ -701,10 +701,18 @@ public sealed class Importer
             if (!string.Equals(existingHash, candidateHash, StringComparison.Ordinal))
             {
                 counters.RowsConflictingDuplicates++;
-                if (string.Compare(candidateHash, existingHash, StringComparison.Ordinal) < 0)
+                var useCandidate = string.Compare(candidateHash, existingHash, StringComparison.Ordinal) < 0;
+                if (useCandidate)
                 {
                     resultsByKey[key] = result;
                 }
+
+                Console.WriteLine(
+                    $"[warn] Conflicting duplicate source_record_key={JsonSerializer.Serialize(key)} " +
+                    $"existing_hash={existingHash} candidate_hash={candidateHash} " +
+                    $"selected_hash={(useCandidate ? candidateHash : existingHash)}");
+                Console.WriteLine($"[warn] Conflicting duplicate existing={existing.ToJsonString()}");
+                Console.WriteLine($"[warn] Conflicting duplicate candidate={result.ToJsonString()}");
             }
         }
 
