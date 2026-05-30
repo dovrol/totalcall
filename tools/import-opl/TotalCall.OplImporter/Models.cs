@@ -90,5 +90,7 @@ public sealed record ImportCounters
     public int RowsInserted;
     public int RowsUpdated;
     public int RowsSkipped;
+    public int RowsDeduplicated;
+    public int RowsConflictingDuplicates;
     public int RowsFailed;
 }

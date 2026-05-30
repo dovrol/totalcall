@@ -193,14 +193,14 @@ public sealed class Importer
                 await WriteErrorsAsync(supabase, errors, opts.BatchSize, ct);
             }
 
-            await FinishImportRunAsync(supabase, importRunId, "success", counters, null, ct);
-            Console.WriteLine($"[done] inserted={counters.RowsInserted} updated={counters.RowsUpdated} skipped={counters.RowsSkipped} failed={counters.RowsFailed}");
+            await FinishImportRunAsync(supabase, importRunId, "success", counters, opts, null, ct);
+            Console.WriteLine($"[done] inserted={counters.RowsInserted} updated={counters.RowsUpdated} skipped={counters.RowsSkipped} deduplicated={counters.RowsDeduplicated} conflicting_duplicates={counters.RowsConflictingDuplicates} failed={counters.RowsFailed}");
             return 0;
         }
         catch (Exception ex)
         {
             Console.Error.WriteLine($"[fatal] {ex}");
-            await FinishImportRunAsync(supabase, importRunId, "failed", counters, ex.Message, ct);
+            await FinishImportRunAsync(supabase, importRunId, "failed", counters, opts, ex.Message, ct);
             return 10;
         }
     }
@@ -632,9 +632,11 @@ public sealed class Importer
     {
         if (results.Count == 0) return;
 
+        var uniqueResults = DeduplicateResults(results, counters);
+
         // Pre-fetch existing (source_record_key -> source_row_hash) in lookup chunks
         var existing = new Dictionary<string, string>(StringComparer.Ordinal);
-        var keys = results.Select(r => r["source_record_key"]!.ToString()).ToList();
+        var keys = uniqueResults.Select(r => r["source_record_key"]!.ToString()).ToList();
         foreach (var chunk in keys.Chunk(LookupBatchSize))
         {
             var list = string.Join(",", chunk.Select(k => $"\"{k.Replace("\"", "\\\"")}\""));
@@ -647,8 +649,8 @@ public sealed class Importer
             }
         }
 
-        var toWrite = new List<JsonObject>(results.Count);
-        foreach (var r in results)
+        var toWrite = new List<JsonObject>(uniqueResults.Count);
+        foreach (var r in uniqueResults)
         {
             var key = r["source_record_key"]!.ToString();
             var hash = r["source_row_hash"]!.ToString();
@@ -674,7 +676,46 @@ public sealed class Importer
             foreach (var r in chunk) arr.Add(r.DeepClone());
             await supa.UpsertAsync("public", "athlete_results", "source_id,source_record_key", arr, ct);
         }
-        Console.WriteLine($"[info] Results written: inserted={counters.RowsInserted} updated={counters.RowsUpdated} skipped={counters.RowsSkipped}");
+        Console.WriteLine($"[info] Results written: inserted={counters.RowsInserted} updated={counters.RowsUpdated} skipped={counters.RowsSkipped} deduplicated={counters.RowsDeduplicated} conflicting_duplicates={counters.RowsConflictingDuplicates}");
+    }
+
+    private static IReadOnlyList<JsonObject> DeduplicateResults(
+        IReadOnlyList<JsonObject> results,
+        ImportCounters counters)
+    {
+        var resultsByKey = new Dictionary<string, JsonObject>(StringComparer.Ordinal);
+
+        foreach (var result in results)
+        {
+            var key = result["source_record_key"]!.ToString();
+            if (!resultsByKey.TryGetValue(key, out var existing))
+            {
+                resultsByKey[key] = result;
+                continue;
+            }
+
+            counters.RowsDeduplicated++;
+
+            var existingHash = existing["source_row_hash"]!.ToString();
+            var candidateHash = result["source_row_hash"]!.ToString();
+            if (!string.Equals(existingHash, candidateHash, StringComparison.Ordinal))
+            {
+                counters.RowsConflictingDuplicates++;
+                if (string.Compare(candidateHash, existingHash, StringComparison.Ordinal) < 0)
+                {
+                    resultsByKey[key] = result;
+                }
+            }
+        }
+
+        if (counters.RowsDeduplicated > 0)
+        {
+            Console.WriteLine(
+                $"[warn] Deduplicated {counters.RowsDeduplicated} result rows with repeated source_record_key values; " +
+                $"{counters.RowsConflictingDuplicates} collisions had different row contents.");
+        }
+
+        return resultsByKey.Values.ToArray();
     }
 
     // ============================================================
@@ -709,6 +750,7 @@ public sealed class Importer
         string runId,
         string status,
         ImportCounters c,
+        ImporterOptions opts,
         string? errorMessage,
         CancellationToken ct)
     {
@@ -721,7 +763,13 @@ public sealed class Importer
             ["rows_updated"] = c.RowsUpdated,
             ["rows_skipped"] = c.RowsSkipped,
             ["rows_failed"] = c.RowsFailed,
-            ["error_message"] = errorMessage
+            ["error_message"] = errorMessage,
+            ["notes"] = new JsonObject
+            {
+                ["competition_json"] = opts.CompetitionJsonPath,
+                ["deduplicated_rows"] = c.RowsDeduplicated,
+                ["conflicting_duplicate_rows"] = c.RowsConflictingDuplicates
+            }
         };
         await supa.PatchAsync("public", "import_runs", $"id=eq.{runId}", patch, ct);
     }
