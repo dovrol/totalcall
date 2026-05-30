@@ -12,6 +12,13 @@
   "predictionLockAt": "2026-06-07T08:00:00Z",
   "status": "upcoming",
   "configVersion": "2026.2",
+  "athleteData": {
+    "defaultSource": "openipf",
+    "availableSources": [
+      "openipf",
+      "openpowerlifting"
+    ]
+  },
   "athletes": [
     {
       "id": "chapon-tiffany",
@@ -44,6 +51,10 @@
         {
           "source": "openipf",
           "name": "Leanne Le"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Leanne Le"
         }
       ]
     },
@@ -58,6 +69,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Amélie Picher-Plante"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Amélie Picher-Plante"
         }
       ]
@@ -74,6 +89,10 @@
         {
           "source": "openipf",
           "name": "Annalisa Motta"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Annalisa Motta"
         }
       ]
     },
@@ -88,6 +107,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Vicky Kijumnuayporn"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Vicky Kijumnuayporn"
         }
       ]
@@ -104,6 +127,10 @@
         {
           "source": "openipf",
           "name": "Frankmary Duno"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Frankmary Duno"
         }
       ]
     },
@@ -118,6 +145,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Anežka Miková"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Anežka Miková"
         }
       ]
@@ -134,6 +165,10 @@
         {
           "source": "openipf",
           "name": "Ainsley Jones"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ainsley Jones"
         }
       ]
     },
@@ -148,6 +183,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Alhanouf Altamimi"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Alhanouf Altamimi"
         }
       ]
@@ -164,6 +203,10 @@
         {
           "source": "openipf",
           "name": "Paula Santos Mediavilla"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Paula Santos Mediavilla"
         }
       ]
     },
@@ -178,6 +221,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Nour Al Jundi"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Nour Al Jundi"
         }
       ]
@@ -194,6 +241,10 @@
         {
           "source": "openipf",
           "name": "Venezia Wedlock"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Venezia Wedlock"
         }
       ]
     },
@@ -208,6 +259,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Joanne Clarke"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Joanne Clarke"
         }
       ]
@@ -224,6 +279,10 @@
         {
           "source": "openipf",
           "name": "Kotchaphan Mai-On"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kotchaphan Mai-On"
         }
       ]
     },
@@ -238,6 +297,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Mari Beglarashvili"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Mari Beglarashvili"
         }
       ]
@@ -254,6 +317,10 @@
         {
           "source": "openipf",
           "name": "Karolina Idczak"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Karolina Idczak"
         }
       ]
     },
@@ -268,6 +335,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Megan-Li Smith"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Megan-Li Smith"
         }
       ]
@@ -284,6 +355,10 @@
         {
           "source": "openipf",
           "name": "Pleun Dekkers"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Pleun Dekkers"
         }
       ]
     },
@@ -298,6 +373,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Catherine Gagné"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Catherine Gagné"
         }
       ]
@@ -314,6 +393,10 @@
         {
           "source": "openipf",
           "name": "Léa Lucas"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Léa Lucas"
         }
       ]
     },
@@ -328,6 +411,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Farhanna Farid"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Farhanna Farid"
         }
       ]
@@ -344,6 +431,10 @@
         {
           "source": "openipf",
           "name": "Vanessa Pineda"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Vanessa Pineda"
         }
       ]
     },
@@ -358,6 +449,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Margit Lehóczkyné Fawal"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Margit Lehóczkyné Fawal"
         }
       ]
@@ -374,6 +469,10 @@
         {
           "source": "openipf",
           "name": "Eliza Gerlach"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Eliza Gerlach"
         }
       ]
     },
@@ -388,6 +487,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Elizabeth Craven"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Elizabeth Craven"
         }
       ]
@@ -404,6 +507,10 @@
         {
           "source": "openipf",
           "name": "Delal Barwari"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Delal Barwari"
         }
       ]
     },
@@ -418,6 +525,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Daiana La Bella"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Daiana La Bella"
         }
       ]
@@ -434,6 +545,10 @@
         {
           "source": "openipf",
           "name": "Aikaterini Chorianopoulou"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Aikaterini Chorianopoulou"
         }
       ]
     },
@@ -448,6 +563,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Fatma Varol"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Fatma Varol"
         }
       ]
@@ -464,6 +583,10 @@
         {
           "source": "openipf",
           "name": "Giulia Carvalho"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Giulia Carvalho"
         }
       ]
     },
@@ -478,6 +601,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Cristy Sim"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Cristy Sim"
         }
       ]
@@ -494,6 +621,10 @@
         {
           "source": "openipf",
           "name": "Sayana Glatham"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Sayana Glatham"
         }
       ]
     },
@@ -508,6 +639,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Kristrún Sveinsdóttir"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Kristrún Sveinsdóttir"
         }
       ]
@@ -524,6 +659,10 @@
         {
           "source": "openipf",
           "name": "Jackie Caldona"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jackie Caldona"
         }
       ]
     },
@@ -538,6 +677,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Arina Bobileva"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Arina Bobileva"
         }
       ]
@@ -554,6 +697,10 @@
         {
           "source": "openipf",
           "name": "Jaana Koskipaasi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jaana Koskipaasi"
         }
       ]
     },
@@ -568,6 +715,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Stefanie Verhulst"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Stefanie Verhulst"
         }
       ]
@@ -584,6 +735,10 @@
         {
           "source": "openipf",
           "name": "Mariam Tsetskhladze"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mariam Tsetskhladze"
         }
       ]
     },
@@ -598,6 +753,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Sara Naldi"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Sara Naldi"
         }
       ]
@@ -614,6 +773,10 @@
         {
           "source": "openipf",
           "name": "Joy Nnamani"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Joy Nnamani"
         }
       ]
     },
@@ -628,6 +791,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Sovannphaktra Pal"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Sovannphaktra Pal"
         }
       ]
@@ -644,6 +811,10 @@
         {
           "source": "openipf",
           "name": "Bobbie Butters"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bobbie Butters"
         }
       ]
     },
@@ -658,6 +829,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Evie Corrigan"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Evie Corrigan"
         }
       ]
@@ -674,6 +849,10 @@
         {
           "source": "openipf",
           "name": "Emelie Olin"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Emelie Olin"
         }
       ]
     },
@@ -688,6 +867,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ana Maria Aguila Padilla"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ana Maria Aguila Padilla"
         }
       ]
@@ -704,6 +887,10 @@
         {
           "source": "openipf",
           "name": "Miriam Amri"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Miriam Amri"
         }
       ]
     },
@@ -718,6 +905,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Marthe Henry"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Marthe Henry"
         }
       ]
@@ -734,6 +925,10 @@
         {
           "source": "openipf",
           "name": "Mónica Mercedes De La Torre Velasco"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mónica Mercedes De La Torre Velasco"
         }
       ]
     },
@@ -748,6 +943,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Samantha Kratz"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Samantha Kratz"
         }
       ]
@@ -764,6 +963,10 @@
         {
           "source": "openipf",
           "name": "Katja Babič"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Katja Babič"
         }
       ]
     },
@@ -778,6 +981,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Mathilde Østergaard"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Mathilde Østergaard"
         }
       ]
@@ -794,6 +1001,10 @@
         {
           "source": "openipf",
           "name": "Lauren Keenan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lauren Keenan"
         }
       ]
     },
@@ -808,6 +1019,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Zhiyin Huang"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Zhiyin Huang"
         }
       ]
@@ -824,6 +1039,10 @@
         {
           "source": "openipf",
           "name": "Elise Rummens"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Elise Rummens"
         }
       ]
     },
@@ -838,6 +1057,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Anouk Wandeler"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Anouk Wandeler"
         }
       ]
@@ -854,6 +1077,10 @@
         {
           "source": "openipf",
           "name": "Anna Boukalová"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Anna Boukalová"
         }
       ]
     },
@@ -868,6 +1095,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Michelle Lee"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Michelle Lee"
         }
       ]
@@ -884,6 +1115,10 @@
         {
           "source": "openipf",
           "name": "Florence Bondy"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Florence Bondy"
         }
       ]
     },
@@ -898,6 +1133,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Viktória Flávia Tóth"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Viktória Flávia Tóth"
         }
       ]
@@ -914,6 +1153,10 @@
         {
           "source": "openipf",
           "name": "Alba Boström"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Alba Boström"
         }
       ]
     },
@@ -928,6 +1171,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Chiara Bernardi"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Chiara Bernardi"
         }
       ]
@@ -944,6 +1191,10 @@
         {
           "source": "openipf",
           "name": "Betty Aborah"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Betty Aborah"
         }
       ]
     },
@@ -958,6 +1209,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Makeda Vidal"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Makeda Vidal"
         }
       ]
@@ -974,6 +1229,10 @@
         {
           "source": "openipf",
           "name": "Romy van Vianen"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Romy van Vianen"
         }
       ]
     },
@@ -988,6 +1247,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Clara Isabelle Häberer"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Clara Isabelle Häberer"
         }
       ]
@@ -1004,6 +1267,10 @@
         {
           "source": "openipf",
           "name": "Leah Mamane"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Leah Mamane"
         }
       ]
     },
@@ -1018,6 +1285,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Jone Maguregi Rodriguez"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Jone Maguregi Rodriguez"
         }
       ]
@@ -1034,6 +1305,10 @@
         {
           "source": "openipf",
           "name": "Sopiko Kvantchiani"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Sopiko Kvantchiani"
         }
       ]
     },
@@ -1048,6 +1323,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Sahyuri Lalime"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Sahyuri Lalime"
         }
       ]
@@ -1064,6 +1343,10 @@
         {
           "source": "openipf",
           "name": "Jana Wolf"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jana Wolf"
         }
       ]
     },
@@ -1078,6 +1361,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Deimantė Žurinskaitė"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Deimantė Žurinskaitė"
         }
       ]
@@ -1094,6 +1381,10 @@
         {
           "source": "openipf",
           "name": "Jody Stevens"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jody Stevens"
         }
       ]
     },
@@ -1108,6 +1399,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ana-Maria Visan"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ana-Maria Visan"
         }
       ]
@@ -1124,6 +1419,10 @@
         {
           "source": "openipf",
           "name": "Natalie Tiong"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Natalie Tiong"
         }
       ]
     },
@@ -1138,6 +1437,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Judith Guadalupe Torres Toledo"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Judith Guadalupe Torres Toledo"
         }
       ]
@@ -1154,6 +1457,10 @@
         {
           "source": "openipf",
           "name": "Dominika Jansová"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dominika Jansová"
         }
       ]
     },
@@ -1168,6 +1475,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ewelina Kalinowska"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ewelina Kalinowska"
         }
       ]
@@ -1184,6 +1495,10 @@
         {
           "source": "openipf",
           "name": "Cecilie Duus"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Cecilie Duus"
         }
       ]
     },
@@ -1198,6 +1513,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Lea Žunić"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Lea Žunić"
         }
       ]
@@ -1214,6 +1533,10 @@
         {
           "source": "openipf",
           "name": "Kristýna Vacková"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kristýna Vacková"
         }
       ]
     },
@@ -1228,6 +1551,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Mary Dunning"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Mary Dunning"
         }
       ]
@@ -1244,6 +1571,10 @@
         {
           "source": "openipf",
           "name": "Cara Wenn"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Cara Wenn"
         }
       ]
     },
@@ -1258,6 +1589,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Yi Syuen Ong"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Yi Syuen Ong"
         }
       ]
@@ -1274,6 +1609,10 @@
         {
           "source": "openipf",
           "name": "Andria Chatzigianni"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Andria Chatzigianni"
         }
       ]
     },
@@ -1288,6 +1627,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Yiqian Zhou"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Yiqian Zhou"
         }
       ]
@@ -1304,6 +1647,10 @@
         {
           "source": "openipf",
           "name": "Lina Gerutė"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lina Gerutė"
         }
       ]
     },
@@ -1318,6 +1665,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Natela Meshveliani"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Natela Meshveliani"
         }
       ]
@@ -1338,6 +1689,14 @@
         {
           "source": "openipf",
           "name": "Chee Liang Yim"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Yim Chee Liang"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Chee Liang Yim"
         }
       ]
     },
@@ -1352,6 +1711,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Carola Garra"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Carola Garra"
         }
       ]
@@ -1368,6 +1731,10 @@
         {
           "source": "openipf",
           "name": "Chandler Babb"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Chandler Babb"
         }
       ]
     },
@@ -1382,6 +1749,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Janee Kovacs"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Janee Kovacs"
         }
       ]
@@ -1398,6 +1769,10 @@
         {
           "source": "openipf",
           "name": "Meghan Scanlon #1"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Meghan Scanlon #1"
         }
       ]
     },
@@ -1412,6 +1787,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Marie-José van Daal"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Marie-José van Daal"
         }
       ]
@@ -1428,6 +1807,10 @@
         {
           "source": "openipf",
           "name": "Annie Nelson"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Annie Nelson"
         }
       ]
     },
@@ -1442,6 +1825,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Marte Kjenner"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Marte Kjenner"
         }
       ]
@@ -1458,6 +1845,10 @@
         {
           "source": "openipf",
           "name": "Jordan Bright"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jordan Bright"
         }
       ]
     },
@@ -1473,6 +1864,10 @@
         {
           "source": "openipf",
           "name": "Andorina Bouchoux"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Andorina Bouchoux"
         }
       ]
     },
@@ -1487,6 +1882,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Shannon Huff"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Shannon Huff"
         }
       ]
@@ -1507,6 +1906,14 @@
         {
           "source": "openipf",
           "name": "Signe Elisabeth Belden Pavlovic"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Signe Elisabeth Belden"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Signe Elisabeth Belden Pavlovic"
         }
       ]
     },
@@ -1521,6 +1928,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Cícera Tavares"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Cícera Tavares"
         }
       ]
@@ -1537,6 +1948,10 @@
         {
           "source": "openipf",
           "name": "Acima Mabidikama"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Acima Mabidikama"
         }
       ]
     },
@@ -1551,6 +1966,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Kaya Goossens"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Kaya Goossens"
         }
       ]
@@ -1567,6 +1986,10 @@
         {
           "source": "openipf",
           "name": "Hannah Altman"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Hannah Altman"
         }
       ]
     },
@@ -1581,6 +2004,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Sabina Materek"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Sabina Materek"
         }
       ]
@@ -1597,6 +2024,10 @@
         {
           "source": "openipf",
           "name": "Clara Haulot"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Clara Haulot"
         }
       ]
     },
@@ -1611,6 +2042,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Caroline Skovlind"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Caroline Skovlind"
         }
       ]
@@ -1627,6 +2062,10 @@
         {
           "source": "openipf",
           "name": "Denise Günther"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Denise Günther"
         }
       ]
     },
@@ -1641,6 +2080,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Amanda Seow"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Amanda Seow"
         }
       ]
@@ -1657,6 +2100,10 @@
         {
           "source": "openipf",
           "name": "Jayne Jones"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jayne Jones"
         }
       ]
     },
@@ -1671,6 +2118,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Hayley Khwang"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Hayley Khwang"
         }
       ]
@@ -1687,6 +2138,10 @@
         {
           "source": "openipf",
           "name": "Dainora Kairaitytė"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dainora Kairaitytė"
         }
       ]
     },
@@ -1701,6 +2156,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Deshawn Larrimore"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Deshawn Larrimore"
         }
       ]
@@ -1717,6 +2176,10 @@
         {
           "source": "openipf",
           "name": "Sanja Marina"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Sanja Marina"
         }
       ]
     },
@@ -1731,6 +2194,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Catalina Pacce"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Catalina Pacce"
         }
       ]
@@ -1747,6 +2214,10 @@
         {
           "source": "openipf",
           "name": "Aušrinė Janulčikaitė"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Aušrinė Janulčikaitė"
         }
       ]
     },
@@ -1761,6 +2232,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Cranon Worford"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Cranon Worford"
         }
       ]
@@ -1777,6 +2252,10 @@
         {
           "source": "openipf",
           "name": "Zuzanna Mazur"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Zuzanna Mazur"
         }
       ]
     },
@@ -1791,6 +2270,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Bruna Bisol"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Bruna Bisol"
         }
       ]
@@ -1807,6 +2290,10 @@
         {
           "source": "openipf",
           "name": "Clara Peyraud"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Clara Peyraud"
         }
       ]
     },
@@ -1821,6 +2308,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Mara Hames"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Mara Hames"
         }
       ]
@@ -1837,6 +2328,10 @@
         {
           "source": "openipf",
           "name": "Bettina Hanlon"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bettina Hanlon"
         }
       ]
     },
@@ -1851,6 +2346,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Chisom Ezeh"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Chisom Ezeh"
         }
       ]
@@ -1867,6 +2366,10 @@
         {
           "source": "openipf",
           "name": "Kezia Hunte"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kezia Hunte"
         }
       ]
     },
@@ -1881,6 +2384,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ellen Grönlund"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ellen Grönlund"
         }
       ]
@@ -1897,6 +2404,10 @@
         {
           "source": "openipf",
           "name": "Nino Tchrikishvili"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Nino Tchrikishvili"
         }
       ]
     },
@@ -1911,6 +2422,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Tessa Ophoff"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Tessa Ophoff"
         }
       ]
@@ -1927,6 +2442,10 @@
         {
           "source": "openipf",
           "name": "Hema Govind"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Hema Govind"
         }
       ]
     },
@@ -1941,6 +2460,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Justyna Szarek"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Justyna Szarek"
         }
       ]
@@ -1957,6 +2480,10 @@
         {
           "source": "openipf",
           "name": "Modesta Varillas Maceda"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Modesta Varillas Maceda"
         }
       ]
     },
@@ -1971,6 +2498,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Chanel Swart"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Chanel Swart"
         }
       ]
@@ -1987,6 +2518,10 @@
         {
           "source": "openipf",
           "name": "Mariska Martens"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mariska Martens"
         }
       ]
     },
@@ -2001,6 +2536,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Rafaela Reis"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Rafaela Reis"
         }
       ]
@@ -2017,6 +2556,10 @@
         {
           "source": "openipf",
           "name": "Gaby Muller"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gaby Muller"
         }
       ]
     },
@@ -2031,6 +2574,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Denisa Schvandtnerová"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Denisa Schvandtnerová"
         }
       ]
@@ -2047,6 +2594,10 @@
         {
           "source": "openipf",
           "name": "Danielle Waldeck"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Danielle Waldeck"
         }
       ]
     },
@@ -2061,6 +2612,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Selina Wells"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Selina Wells"
         }
       ]
@@ -2077,6 +2632,10 @@
         {
           "source": "openipf",
           "name": "Khatia Khurtsilava"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Khatia Khurtsilava"
         }
       ]
     },
@@ -2091,6 +2650,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Xie Thuy Tien"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Xie Thuy Tien"
         }
       ]
@@ -2107,6 +2670,10 @@
         {
           "source": "openipf",
           "name": "Pia Marangoni"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Pia Marangoni"
         }
       ]
     },
@@ -2121,6 +2688,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Amanda Lawrence #1"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Amanda Lawrence #1"
         }
       ]
@@ -2137,6 +2708,10 @@
         {
           "source": "openipf",
           "name": "Karlina Tongotea"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Karlina Tongotea"
         }
       ]
     },
@@ -2151,6 +2726,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ziana Azariah"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ziana Azariah"
         }
       ]
@@ -2167,6 +2746,10 @@
         {
           "source": "openipf",
           "name": "Nicolette Zeigler"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Nicolette Zeigler"
         }
       ]
     },
@@ -2181,6 +2764,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Kristín Þórhallsdóttir"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Kristín Þórhallsdóttir"
         }
       ]
@@ -2197,6 +2784,10 @@
         {
           "source": "openipf",
           "name": "Marina Garcia de Almeida"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Marina Garcia de Almeida"
         }
       ]
     },
@@ -2211,6 +2802,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Anna Ieronimos"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Anna Ieronimos"
         }
       ]
@@ -2227,6 +2822,10 @@
         {
           "source": "openipf",
           "name": "Jessica Buettner"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jessica Buettner"
         }
       ]
     },
@@ -2241,6 +2840,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Emilie Mouchet"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Emilie Mouchet"
         }
       ]
@@ -2257,6 +2860,10 @@
         {
           "source": "openipf",
           "name": "Agnes Rudin"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Agnes Rudin"
         }
       ]
     },
@@ -2271,6 +2878,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Nicole Coopoosamy"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Nicole Coopoosamy"
         }
       ]
@@ -2287,6 +2898,10 @@
         {
           "source": "openipf",
           "name": "Mira Lahtinen"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mira Lahtinen"
         }
       ]
     },
@@ -2301,6 +2916,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Regitze Letting"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Regitze Letting"
         }
       ]
@@ -2317,6 +2936,10 @@
         {
           "source": "openipf",
           "name": "Liudmyla Bychok"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Liudmyla Bychok"
         }
       ]
     },
@@ -2331,6 +2954,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Yan-Fei Zhao"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Yan-Fei Zhao"
         }
       ]
@@ -2347,6 +2974,10 @@
         {
           "source": "openipf",
           "name": "Carla Sanchez Jorge"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Carla Sanchez Jorge"
         }
       ]
     },
@@ -2361,6 +2992,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Katja Jørgensen"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Katja Jørgensen"
         }
       ]
@@ -2377,6 +3012,10 @@
         {
           "source": "openipf",
           "name": "Deresay Alleyne"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Deresay Alleyne"
         }
       ]
     },
@@ -2391,6 +3030,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Rosa Erimo Sabadell"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Rosa Erimo Sabadell"
         }
       ]
@@ -2407,6 +3050,10 @@
         {
           "source": "openipf",
           "name": "Miyu Matsuda"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Miyu Matsuda"
         }
       ]
     },
@@ -2421,6 +3068,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Jenna Laitinen"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Jenna Laitinen"
         }
       ]
@@ -2437,6 +3088,10 @@
         {
           "source": "openipf",
           "name": "Nour Abouassi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Nour Abouassi"
         }
       ]
     },
@@ -2451,6 +3106,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Comfort Adedokun"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Comfort Adedokun"
         }
       ]
@@ -2467,6 +3126,10 @@
         {
           "source": "openipf",
           "name": "Shaniele Suitauloa"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Shaniele Suitauloa"
         }
       ]
     },
@@ -2481,6 +3144,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ana Rodrigues"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ana Rodrigues"
         }
       ]
@@ -2497,6 +3164,10 @@
         {
           "source": "openipf",
           "name": "Magdalena Szymkowiak"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Magdalena Szymkowiak"
         }
       ]
     },
@@ -2511,6 +3182,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Sonita Muluh"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Sonita Muluh"
         }
       ]
@@ -2527,6 +3202,10 @@
         {
           "source": "openipf",
           "name": "Brittany Schlater"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Brittany Schlater"
         }
       ]
     },
@@ -2541,6 +3220,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Aquinn Onuoha"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Aquinn Onuoha"
         }
       ]
@@ -2557,6 +3240,10 @@
         {
           "source": "openipf",
           "name": "Toyosi Omotoso"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Toyosi Omotoso"
         }
       ]
     },
@@ -2571,6 +3258,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Bonica Brown"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Bonica Brown"
         }
       ]
@@ -2587,6 +3278,10 @@
         {
           "source": "openipf",
           "name": "Amélie Mierger"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Amélie Mierger"
         }
       ]
     },
@@ -2601,6 +3296,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Zahra Padia"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Zahra Padia"
         }
       ]
@@ -2617,6 +3316,10 @@
         {
           "source": "openipf",
           "name": "Alison O'Reilly"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Alison O'Reilly"
         }
       ]
     },
@@ -2631,6 +3334,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Hanna Sigurjonsdottir"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Hanna Sigurjonsdottir"
         }
       ]
@@ -2647,6 +3354,10 @@
         {
           "source": "openipf",
           "name": "Þorbjörg Matthíasdóttir"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Þorbjörg Matthíasdóttir"
         }
       ]
     },
@@ -2661,6 +3372,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Emi Kamoto"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Emi Kamoto"
         }
       ]
@@ -2677,6 +3392,10 @@
         {
           "source": "openipf",
           "name": "Marcela De la Barra Zelaya"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Marcela De la Barra Zelaya"
         }
       ]
     },
@@ -2691,6 +3410,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Marta Malojlo"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Marta Malojlo"
         }
       ]
@@ -2707,6 +3430,10 @@
         {
           "source": "openipf",
           "name": "Michael Slabic"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Michael Slabic"
         }
       ]
     },
@@ -2721,6 +3448,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Iván Campano Díaz"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Iván Campano Díaz"
         }
       ]
@@ -2737,6 +3468,10 @@
         {
           "source": "openipf",
           "name": "Antoine Garcia"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Antoine Garcia"
         }
       ]
     },
@@ -2751,6 +3486,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Yasutaka Takiyama"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Yasutaka Takiyama"
         }
       ]
@@ -2767,6 +3506,10 @@
         {
           "source": "openipf",
           "name": "Mohamed Elhamali"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mohamed Elhamali"
         }
       ]
     },
@@ -2781,6 +3524,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Kwaku Nyarko"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Kwaku Nyarko"
         }
       ]
@@ -2797,6 +3544,10 @@
         {
           "source": "openipf",
           "name": "Franklin León"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Franklin León"
         }
       ]
     },
@@ -2811,6 +3562,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "David Ho"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "David Ho"
         }
       ]
@@ -2827,6 +3582,10 @@
         {
           "source": "openipf",
           "name": "Wei-Chen Huang"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Wei-Chen Huang"
         }
       ]
     },
@@ -2841,6 +3600,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Yao-Wei You"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Yao-Wei You"
         }
       ]
@@ -2857,6 +3620,10 @@
         {
           "source": "openipf",
           "name": "Ángel Cruz"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ángel Cruz"
         }
       ]
     },
@@ -2871,6 +3638,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Giorgi Gelashvili"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Giorgi Gelashvili"
         }
       ]
@@ -2887,6 +3658,10 @@
         {
           "source": "openipf",
           "name": "Joenas Madera"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Joenas Madera"
         }
       ]
     },
@@ -2901,6 +3676,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ryo Imamura"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ryo Imamura"
         }
       ]
@@ -2917,6 +3696,10 @@
         {
           "source": "openipf",
           "name": "Jacopo Santangelo"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jacopo Santangelo"
         }
       ]
     },
@@ -2931,6 +3714,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Kemal Ergin"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Kemal Ergin"
         }
       ]
@@ -2947,6 +3734,10 @@
         {
           "source": "openipf",
           "name": "Iván Cancel"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Iván Cancel"
         }
       ]
     },
@@ -2961,6 +3752,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Jose Flores #1"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Jose Flores #1"
         }
       ]
@@ -2977,6 +3772,10 @@
         {
           "source": "openipf",
           "name": "Kjell Egil Bakkelund"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kjell Egil Bakkelund"
         }
       ]
     },
@@ -2991,6 +3790,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Joseph Jordan #2"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Joseph Jordan #2"
         }
       ]
@@ -3007,6 +3810,10 @@
         {
           "source": "openipf",
           "name": "Kyota Ushiyama"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kyota Ushiyama"
         }
       ]
     },
@@ -3021,6 +3828,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Austin Nikolai"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Austin Nikolai"
         }
       ]
@@ -3037,6 +3848,10 @@
         {
           "source": "openipf",
           "name": "Santos Jimenez"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Santos Jimenez"
         }
       ]
     },
@@ -3052,6 +3867,10 @@
         {
           "source": "openipf",
           "name": "Yusuke Satake"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Yusuke Satake"
         }
       ]
     },
@@ -3066,6 +3885,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Carlos Castillo"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Carlos Castillo"
         }
       ]
@@ -3086,6 +3909,14 @@
         {
           "source": "openipf",
           "name": "Chaai Ong Wei"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ong Wei Chaai"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Chaai Ong Wei"
         }
       ]
     },
@@ -3100,6 +3931,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Mirko Simonelli"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Mirko Simonelli"
         }
       ]
@@ -3116,6 +3951,10 @@
         {
           "source": "openipf",
           "name": "Joel Christopher Catena"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Joel Christopher Catena"
         }
       ]
     },
@@ -3130,6 +3969,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Marios Liatsis"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Marios Liatsis"
         }
       ]
@@ -3146,6 +3989,10 @@
         {
           "source": "openipf",
           "name": "Julian Sgro"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Julian Sgro"
         }
       ]
     },
@@ -3160,6 +4007,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Joshua Luu"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Joshua Luu"
         }
       ]
@@ -3176,6 +4027,10 @@
         {
           "source": "openipf",
           "name": "Wei-Xiang Zeng"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Wei-Xiang Zeng"
         }
       ]
     },
@@ -3190,6 +4045,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Gabriel Ghizoni"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Gabriel Ghizoni"
         }
       ]
@@ -3206,6 +4065,10 @@
         {
           "source": "openipf",
           "name": "Williams Naoussi Ezelgbo Darling"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Williams Naoussi Ezelgbo Darling"
         }
       ]
     },
@@ -3220,6 +4083,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ching-Lun Lin"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ching-Lun Lin"
         }
       ]
@@ -3236,6 +4103,10 @@
         {
           "source": "openipf",
           "name": "Austin Perkins #1"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Austin Perkins #1"
         }
       ]
     },
@@ -3250,6 +4121,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Balthazar Bertrand"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Balthazar Bertrand"
         }
       ]
@@ -3266,6 +4141,10 @@
         {
           "source": "openipf",
           "name": "Chun-Chia Fan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Chun-Chia Fan"
         }
       ]
     },
@@ -3280,6 +4159,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Clinton Lee #1"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Clinton Lee #1"
         }
       ]
@@ -3296,6 +4179,10 @@
         {
           "source": "openipf",
           "name": "Jacob Lavoie"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jacob Lavoie"
         }
       ]
     },
@@ -3310,6 +4197,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Luke Homer"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Luke Homer"
         }
       ]
@@ -3326,6 +4217,10 @@
         {
           "source": "openipf",
           "name": "Keyan Babaei-Somaghi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Keyan Babaei-Somaghi"
         }
       ]
     },
@@ -3340,6 +4235,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Adel Al Lanqawi"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Adel Al Lanqawi"
         }
       ]
@@ -3356,6 +4255,10 @@
         {
           "source": "openipf",
           "name": "Giacomo Gimorri"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Giacomo Gimorri"
         }
       ]
     },
@@ -3370,6 +4273,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Christos Konstantinou"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Christos Konstantinou"
         }
       ]
@@ -3386,6 +4293,10 @@
         {
           "source": "openipf",
           "name": "Cheong Cheng Wen"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Cheong Cheng Wen"
         }
       ]
     },
@@ -3400,6 +4311,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Alberto Herraiz Francés"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Alberto Herraiz Francés"
         }
       ]
@@ -3416,6 +4331,10 @@
         {
           "source": "openipf",
           "name": "Yu-Jui Cheng"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Yu-Jui Cheng"
         }
       ]
     },
@@ -3430,6 +4349,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Yacine Medjahed"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Yacine Medjahed"
         }
       ]
@@ -3446,6 +4369,10 @@
         {
           "source": "openipf",
           "name": "Joshua Ola"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Joshua Ola"
         }
       ]
     },
@@ -3460,6 +4387,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Karel Rada #2"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Karel Rada #2"
         }
       ]
@@ -3476,6 +4407,10 @@
         {
           "source": "openipf",
           "name": "Awnullah Saed"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Awnullah Saed"
         }
       ]
     },
@@ -3490,6 +4425,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "John Strachan"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "John Strachan"
         }
       ]
@@ -3506,6 +4445,10 @@
         {
           "source": "openipf",
           "name": "Lachlan Rickards"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lachlan Rickards"
         }
       ]
     },
@@ -3520,6 +4463,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Marats Damlamajans"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Marats Damlamajans"
         }
       ]
@@ -3536,6 +4483,10 @@
         {
           "source": "openipf",
           "name": "Mateusz Marecki"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mateusz Marecki"
         }
       ]
     },
@@ -3550,6 +4501,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Marius Pačerinskis"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Marius Pačerinskis"
         }
       ]
@@ -3566,6 +4521,10 @@
         {
           "source": "openipf",
           "name": "Gintaras Blėdis"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gintaras Blėdis"
         }
       ]
     },
@@ -3580,6 +4539,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Leonardo Cruz #1"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Leonardo Cruz #1"
         }
       ]
@@ -3596,6 +4559,10 @@
         {
           "source": "openipf",
           "name": "Giorgi Maisuradze"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Giorgi Maisuradze"
         }
       ]
     },
@@ -3610,6 +4577,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Joseph Borenstein"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Joseph Borenstein"
         }
       ]
@@ -3626,6 +4597,10 @@
         {
           "source": "openipf",
           "name": "Jurins Kengamu"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jurins Kengamu"
         }
       ]
     },
@@ -3640,6 +4615,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ade Omisakin"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ade Omisakin"
         }
       ]
@@ -3656,6 +4635,10 @@
         {
           "source": "openipf",
           "name": "Enahoro Asein"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Enahoro Asein"
         }
       ]
     },
@@ -3670,6 +4653,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Mathis Ducret"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Mathis Ducret"
         }
       ]
@@ -3686,6 +4673,10 @@
         {
           "source": "openipf",
           "name": "Kafui Hotsonyame"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kafui Hotsonyame"
         }
       ]
     },
@@ -3700,6 +4691,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Andres Fernández Arévalo"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Andres Fernández Arévalo"
         }
       ]
@@ -3716,6 +4711,10 @@
         {
           "source": "openipf",
           "name": "Kevin Fornstam"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kevin Fornstam"
         }
       ]
     },
@@ -3730,6 +4729,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Saverio Rinaldo Marciano"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Saverio Rinaldo Marciano"
         }
       ]
@@ -3746,6 +4749,10 @@
         {
           "source": "openipf",
           "name": "Zachariah Ampofo"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Zachariah Ampofo"
         }
       ]
     },
@@ -3760,6 +4767,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Jose Matias Figueroa Contreras"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Jose Matias Figueroa Contreras"
         }
       ]
@@ -3776,6 +4787,10 @@
         {
           "source": "openipf",
           "name": "Patrick Kürzi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Patrick Kürzi"
         }
       ]
     },
@@ -3790,6 +4805,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "José Castillo #1"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "José Castillo #1"
         }
       ]
@@ -3806,6 +4825,10 @@
         {
           "source": "openipf",
           "name": "Naim Ali El Moukallif"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Naim Ali El Moukallif"
         }
       ]
     },
@@ -3820,6 +4843,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Tuur Verstrepen"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Tuur Verstrepen"
         }
       ]
@@ -3836,6 +4863,10 @@
         {
           "source": "openipf",
           "name": "Fongang Techap"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Fongang Techap"
         }
       ]
     },
@@ -3850,6 +4881,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Aoi Ishikawa"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Aoi Ishikawa"
         }
       ]
@@ -3866,6 +4901,10 @@
         {
           "source": "openipf",
           "name": "Mohamed Nagem"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mohamed Nagem"
         }
       ]
     },
@@ -3880,6 +4919,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Daniel Hoffmann"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Daniel Hoffmann"
         }
       ]
@@ -3896,6 +4939,10 @@
         {
           "source": "openipf",
           "name": "Mathias Kloch"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mathias Kloch"
         }
       ]
     },
@@ -3910,6 +4957,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Grzegorz Kraujutowicz"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Grzegorz Kraujutowicz"
         }
       ]
@@ -3926,6 +4977,10 @@
         {
           "source": "openipf",
           "name": "Matheus dos Santos"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Matheus dos Santos"
         }
       ]
     },
@@ -3940,6 +4995,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ali Al Aradi"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ali Al Aradi"
         }
       ]
@@ -3956,6 +5015,10 @@
         {
           "source": "openipf",
           "name": "Guilherme Menezes"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Guilherme Menezes"
         }
       ]
     },
@@ -3970,6 +5033,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Kenzo Chong"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Kenzo Chong"
         }
       ]
@@ -3986,6 +5053,10 @@
         {
           "source": "openipf",
           "name": "Christophe Boulos"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Christophe Boulos"
         }
       ]
     },
@@ -4000,6 +5071,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Andrei Petcu"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Andrei Petcu"
         }
       ]
@@ -4016,6 +5091,10 @@
         {
           "source": "openipf",
           "name": "Donovan Cheng Wee Herng"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Donovan Cheng Wee Herng"
         }
       ]
     },
@@ -4030,6 +5109,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Tianyu Xiao"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Tianyu Xiao"
         }
       ]
@@ -4046,6 +5129,10 @@
         {
           "source": "openipf",
           "name": "Friðbjörn Bragi Hlynsson"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Friðbjörn Bragi Hlynsson"
         }
       ]
     },
@@ -4060,6 +5147,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Urban Mur"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Urban Mur"
         }
       ]
@@ -4076,6 +5167,10 @@
         {
           "source": "openipf",
           "name": "Karim Ruscitti"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Karim Ruscitti"
         }
       ]
     },
@@ -4090,6 +5185,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Alexandre Arnaud"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Alexandre Arnaud"
         }
       ]
@@ -4106,6 +5205,10 @@
         {
           "source": "openipf",
           "name": "Marko Kuzmić"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Marko Kuzmić"
         }
       ]
     },
@@ -4120,6 +5223,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Arnas Ašmonas"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Arnas Ašmonas"
         }
       ]
@@ -4136,6 +5243,10 @@
         {
           "source": "openipf",
           "name": "Samuel Henderson"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Samuel Henderson"
         }
       ]
     },
@@ -4150,6 +5261,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "William Ball #2"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "William Ball #2"
         }
       ]
@@ -4166,6 +5281,10 @@
         {
           "source": "openipf",
           "name": "Emil Krastev"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Emil Krastev"
         }
       ]
     },
@@ -4180,6 +5299,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Gustav Hedlund"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Gustav Hedlund"
         }
       ]
@@ -4196,6 +5319,10 @@
         {
           "source": "openipf",
           "name": "Aimene Ibrahim El Khalil Nouari"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Aimene Ibrahim El Khalil Nouari"
         }
       ]
     },
@@ -4210,6 +5337,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Christian Ayandokun"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Christian Ayandokun"
         }
       ]
@@ -4226,6 +5357,10 @@
         {
           "source": "openipf",
           "name": "Kwaku Antwi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kwaku Antwi"
         }
       ]
     },
@@ -4240,6 +5375,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Richmond Baiden"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Richmond Baiden"
         }
       ]
@@ -4256,6 +5395,10 @@
         {
           "source": "openipf",
           "name": "Julien Balangwe Bakinien"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Julien Balangwe Bakinien"
         }
       ]
     },
@@ -4270,6 +5413,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Richard van Bezooijen"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Richard van Bezooijen"
         }
       ]
@@ -4286,6 +5433,10 @@
         {
           "source": "openipf",
           "name": "John Wortel"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "John Wortel"
         }
       ]
     },
@@ -4300,6 +5451,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Shimon Tsuruya"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Shimon Tsuruya"
         }
       ]
@@ -4316,6 +5471,10 @@
         {
           "source": "openipf",
           "name": "Aaron Blackmore"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Aaron Blackmore"
         }
       ]
     },
@@ -4330,6 +5489,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Leonardo Hermisdorf"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Leonardo Hermisdorf"
         }
       ]
@@ -4346,6 +5509,10 @@
         {
           "source": "openipf",
           "name": "Khalleefah Salim"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Khalleefah Salim"
         }
       ]
     },
@@ -4361,6 +5528,10 @@
         {
           "source": "openipf",
           "name": "Elyes Zerai"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Elyes Zerai"
         }
       ]
     },
@@ -4375,6 +5546,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Guilherme Gortz"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Guilherme Gortz"
         }
       ]
@@ -4395,6 +5570,14 @@
         {
           "source": "openipf",
           "name": "Daniel Emil Ussing"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Daniel E Ussing"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Daniel Emil Ussing"
         }
       ]
     },
@@ -4409,6 +5592,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Tom Zabeau"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Tom Zabeau"
         }
       ]
@@ -4425,6 +5612,10 @@
         {
           "source": "openipf",
           "name": "José González Barba"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "José González Barba"
         }
       ]
     },
@@ -4439,6 +5630,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Jun Won Choi"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Jun Won Choi"
         }
       ]
@@ -4455,6 +5650,10 @@
         {
           "source": "openipf",
           "name": "Danyil Hapon"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Danyil Hapon"
         }
       ]
     },
@@ -4469,6 +5668,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Tak Kan Law"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Tak Kan Law"
         }
       ]
@@ -4485,6 +5688,10 @@
         {
           "source": "openipf",
           "name": "Taha Essabri"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Taha Essabri"
         }
       ]
     },
@@ -4499,6 +5706,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Airidas Klimka"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Airidas Klimka"
         }
       ]
@@ -4515,6 +5726,10 @@
         {
           "source": "openipf",
           "name": "Ricards Hibsfelds"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ricards Hibsfelds"
         }
       ]
     },
@@ -4529,6 +5744,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Bandile Khuzwayo"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Bandile Khuzwayo"
         }
       ]
@@ -4545,6 +5764,10 @@
         {
           "source": "openipf",
           "name": "Anthony McNaughton"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Anthony McNaughton"
         }
       ]
     },
@@ -4559,6 +5782,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Anatolii Novopismennyi"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Anatolii Novopismennyi"
         }
       ]
@@ -4575,6 +5802,10 @@
         {
           "source": "openipf",
           "name": "Emil Norling"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Emil Norling"
         }
       ]
     },
@@ -4589,6 +5820,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Eliam Tchandeu Noundou"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Eliam Tchandeu Noundou"
         }
       ]
@@ -4605,6 +5840,10 @@
         {
           "source": "openipf",
           "name": "Regin SGA Stergakis"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Regin SGA Stergakis"
         }
       ]
     },
@@ -4619,6 +5858,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Fares Sboui"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Fares Sboui"
         }
       ]
@@ -4635,6 +5878,10 @@
         {
           "source": "openipf",
           "name": "Nathaniel Massiah"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Nathaniel Massiah"
         }
       ]
     },
@@ -4649,6 +5896,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ezeiel Amponsah"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ezeiel Amponsah"
         }
       ]
@@ -4665,6 +5916,10 @@
         {
           "source": "openipf",
           "name": "Diego Salgado"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Diego Salgado"
         }
       ]
     },
@@ -4679,6 +5934,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ilyes Bentalha"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ilyes Bentalha"
         }
       ]
@@ -4695,6 +5954,10 @@
         {
           "source": "openipf",
           "name": "Bjarne Dücker"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bjarne Dücker"
         }
       ]
     },
@@ -4709,6 +5972,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Jonathan Celis"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Jonathan Celis"
         }
       ]
@@ -4725,6 +5992,10 @@
         {
           "source": "openipf",
           "name": "Jacob Slump"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jacob Slump"
         }
       ]
     },
@@ -4739,6 +6010,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Imad Hamich"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Imad Hamich"
         }
       ]
@@ -4755,6 +6030,10 @@
         {
           "source": "openipf",
           "name": "Kenneth Nwaezeigwe"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kenneth Nwaezeigwe"
         }
       ]
     },
@@ -4769,6 +6048,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Samuel Forsberg"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Samuel Forsberg"
         }
       ]
@@ -4785,6 +6068,10 @@
         {
           "source": "openipf",
           "name": "Alexander Örn Kárason"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Alexander Örn Kárason"
         }
       ]
     },
@@ -4799,6 +6086,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Bernardo Ibañez Pawahton"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Bernardo Ibañez Pawahton"
         }
       ]
@@ -4815,6 +6106,10 @@
         {
           "source": "openipf",
           "name": "Matthew Henry #1"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Matthew Henry #1"
         }
       ]
     },
@@ -4829,6 +6124,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Erik Mata"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Erik Mata"
         }
       ]
@@ -4845,6 +6144,10 @@
         {
           "source": "openipf",
           "name": "Rodrigo Jamar Santanna"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Rodrigo Jamar Santanna"
         }
       ]
     },
@@ -4859,6 +6162,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Hynek Fránek"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Hynek Fránek"
         }
       ]
@@ -4875,6 +6182,10 @@
         {
           "source": "openipf",
           "name": "Mohammed Aldirsi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mohammed Aldirsi"
         }
       ]
     },
@@ -4889,6 +6200,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Martynas Norkus"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Martynas Norkus"
         }
       ]
@@ -4905,6 +6220,10 @@
         {
           "source": "openipf",
           "name": "Dominic Boss"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dominic Boss"
         }
       ]
     },
@@ -4919,6 +6238,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Siwoo Jung"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Siwoo Jung"
         }
       ]
@@ -4935,6 +6258,10 @@
         {
           "source": "openipf",
           "name": "Seungwan Choi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Seungwan Choi"
         }
       ]
     },
@@ -4949,6 +6276,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Vitor de Paula"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Vitor de Paula"
         }
       ]
@@ -4965,6 +6296,10 @@
         {
           "source": "openipf",
           "name": "Patrik Tomko"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Patrik Tomko"
         }
       ]
     },
@@ -4979,6 +6314,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Rondel Hunte"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Rondel Hunte"
         }
       ]
@@ -4995,6 +6334,10 @@
         {
           "source": "openipf",
           "name": "Etienne El Chaer"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Etienne El Chaer"
         }
       ]
     },
@@ -5009,6 +6352,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ashton Rouska"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ashton Rouska"
         }
       ]
@@ -5025,6 +6372,10 @@
         {
           "source": "openipf",
           "name": "Joseph McDonald #1"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Joseph McDonald #1"
         }
       ]
     },
@@ -5039,6 +6390,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Joshua Ngoka"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Joshua Ngoka"
         }
       ]
@@ -5055,6 +6410,10 @@
         {
           "source": "openipf",
           "name": "Taras Melnichuk"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Taras Melnichuk"
         }
       ]
     },
@@ -5069,6 +6428,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Lucas Wiseman"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Lucas Wiseman"
         }
       ]
@@ -5085,6 +6448,10 @@
         {
           "source": "openipf",
           "name": "Antoine de Rohden"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Antoine de Rohden"
         }
       ]
     },
@@ -5099,6 +6466,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Abdul Majeed Sulayman"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Abdul Majeed Sulayman"
         }
       ]
@@ -5115,6 +6486,10 @@
         {
           "source": "openipf",
           "name": "Mohamed Sahad"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mohamed Sahad"
         }
       ]
     },
@@ -5130,6 +6505,10 @@
         {
           "source": "openipf",
           "name": "Jonah Wiendieck"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jonah Wiendieck"
         }
       ]
     },
@@ -5144,6 +6523,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Baruch Sekenofsky"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Baruch Sekenofsky"
         }
       ]
@@ -5164,6 +6547,14 @@
         {
           "source": "openipf",
           "name": "Laurits E Due"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Laurits Enemark Due"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Laurits E Due"
         }
       ]
     },
@@ -5178,6 +6569,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Jesper Vogelius"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Jesper Vogelius"
         }
       ]
@@ -5194,6 +6589,10 @@
         {
           "source": "openipf",
           "name": "Jochen Strubbe"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jochen Strubbe"
         }
       ]
     },
@@ -5208,6 +6607,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Heath Graham"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Heath Graham"
         }
       ]
@@ -5224,6 +6627,10 @@
         {
           "source": "openipf",
           "name": "Daniele Pola"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Daniele Pola"
         }
       ]
     },
@@ -5238,6 +6645,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Cseszkó Krisztián"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Cseszkó Krisztián"
         }
       ]
@@ -5254,6 +6665,10 @@
         {
           "source": "openipf",
           "name": "Ano Naoussi Nembot"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ano Naoussi Nembot"
         }
       ]
     },
@@ -5268,6 +6683,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Māris Juzups"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Māris Juzups"
         }
       ]
@@ -5284,6 +6703,10 @@
         {
           "source": "openipf",
           "name": "Joseph Penco"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Joseph Penco"
         }
       ]
     },
@@ -5298,6 +6721,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Mark Stell"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Mark Stell"
         }
       ]
@@ -5314,6 +6741,10 @@
         {
           "source": "openipf",
           "name": "Helgi Sigurðsson"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Helgi Sigurðsson"
         }
       ]
     },
@@ -5328,6 +6759,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ayuto Motoki"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ayuto Motoki"
         }
       ]
@@ -5344,6 +6779,10 @@
         {
           "source": "openipf",
           "name": "Rubeni Karkusashvili"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Rubeni Karkusashvili"
         }
       ]
     },
@@ -5358,6 +6797,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Tom Thoma"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Tom Thoma"
         }
       ]
@@ -5374,6 +6817,10 @@
         {
           "source": "openipf",
           "name": "Simon Raw"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Simon Raw"
         }
       ]
     },
@@ -5388,6 +6835,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Jesus Olivares"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Jesus Olivares"
         }
       ]
@@ -5404,6 +6855,10 @@
         {
           "source": "openipf",
           "name": "Ajay Sharma #1"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ajay Sharma #1"
         }
       ]
     },
@@ -5418,6 +6873,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Cenk Koçak"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Cenk Koçak"
         }
       ]
@@ -5434,6 +6893,10 @@
         {
           "source": "openipf",
           "name": "Viktor Golinei"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Viktor Golinei"
         }
       ]
     },
@@ -5448,6 +6911,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Temur Samkharadze"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Temur Samkharadze"
         }
       ]
@@ -5464,6 +6931,10 @@
         {
           "source": "openipf",
           "name": "Nuutti Mansukoski"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Nuutti Mansukoski"
         }
       ]
     },
@@ -5478,6 +6949,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Bjorn Andre Sutterud Westbye"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Bjorn Andre Sutterud Westbye"
         }
       ]
@@ -5494,6 +6969,10 @@
         {
           "source": "openipf",
           "name": "Markus Patschke"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Markus Patschke"
         }
       ]
     },
@@ -5508,6 +6987,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Hussein Fidan"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Hussein Fidan"
         }
       ]
@@ -5524,6 +7007,10 @@
         {
           "source": "openipf",
           "name": "Tony Reinmuth"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Tony Reinmuth"
         }
       ]
     },
@@ -5538,6 +7025,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Pei-Yu Wang"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Pei-Yu Wang"
         }
       ]
@@ -5554,6 +7045,10 @@
         {
           "source": "openipf",
           "name": "Alexis Soares"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Alexis Soares"
         }
       ]
     },
@@ -5568,6 +7063,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Martin Simonsen"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Martin Simonsen"
         }
       ]
@@ -5584,6 +7083,10 @@
         {
           "source": "openipf",
           "name": "Torben Voigt"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Torben Voigt"
         }
       ]
     },
@@ -5598,6 +7101,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Mohammed Abousinan"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Mohammed Abousinan"
         }
       ]
@@ -5614,6 +7121,10 @@
         {
           "source": "openipf",
           "name": "Yi-Chiu Wu"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Yi-Chiu Wu"
         }
       ]
     },
@@ -5628,6 +7139,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Abdeslam Lakhal"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Abdeslam Lakhal"
         }
       ]
@@ -5644,6 +7159,10 @@
         {
           "source": "openipf",
           "name": "Giel Hendriks"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Giel Hendriks"
         }
       ]
     },
@@ -5658,6 +7177,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Jacek Juszczyk"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Jacek Juszczyk"
         }
       ]
@@ -5674,6 +7197,10 @@
         {
           "source": "openipf",
           "name": "Tadas Gečas"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Tadas Gečas"
         }
       ]
     },
@@ -5688,6 +7215,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Marc Riudalbas Clemente"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Marc Riudalbas Clemente"
         }
       ]
@@ -5704,6 +7235,10 @@
         {
           "source": "openipf",
           "name": "Sergio Mardones Meza"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Sergio Mardones Meza"
         }
       ]
     },
@@ -5718,6 +7253,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Robert Raw"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Robert Raw"
         }
       ]
@@ -5734,6 +7273,10 @@
         {
           "source": "openipf",
           "name": "Didzis Berzins"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Didzis Berzins"
         }
       ]
     },
@@ -5749,6 +7292,10 @@
         {
           "source": "openipf",
           "name": "Masaya Inoue"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Masaya Inoue"
         }
       ]
     },
@@ -5763,6 +7310,10 @@
       "externalAthleteRefs": [
         {
           "source": "openipf",
+          "name": "Ray Bowring"
+        },
+        {
+          "source": "openpowerlifting",
           "name": "Ray Bowring"
         }
       ]
