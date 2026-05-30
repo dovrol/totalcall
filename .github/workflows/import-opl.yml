@@ -10,9 +10,10 @@ on:
       source:
         description: "Data source code"
         required: true
-        default: "openipf"
+        default: "both"
         type: choice
         options:
+          - both
           - openipf
           - openpowerlifting
   schedule:
@@ -26,7 +27,7 @@ concurrency:
 jobs:
   import:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -48,9 +49,17 @@ jobs:
         run: |
           set -euo pipefail
           COMPETITION_JSON="${{ github.event.inputs.competition_json || 'src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json' }}"
-          SOURCE="${{ github.event.inputs.source || 'openipf' }}"
+          SOURCE="${{ github.event.inputs.source || 'both' }}"
 
-          dotnet run --configuration Release -- \
-            --competition-json "$GITHUB_WORKSPACE/$COMPETITION_JSON" \
-            --source "$SOURCE" \
-            --triggered-by github-actions
+          if [ "$SOURCE" = "both" ]; then
+            SOURCES=(openipf openpowerlifting)
+          else
+            SOURCES=("$SOURCE")
+          fi
+
+          for DATA_SOURCE in "${SOURCES[@]}"; do
+            dotnet run --configuration Release -- \
+              --competition-json "$GITHUB_WORKSPACE/$COMPETITION_JSON" \
+              --source "$DATA_SOURCE" \
+              --triggered-by github-actions
+          done
