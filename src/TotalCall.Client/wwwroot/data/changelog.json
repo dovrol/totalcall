@@ -2,6 +2,58 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.5.0-beta.1",
+      "releasedAt": "2026-05-31",
+      "title": {
+        "pl": "Wybór źródła danych i rozszerzona analityka zawodników",
+        "en": "Data source selection and expanded athlete analytics"
+      },
+      "items": [
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Przełącznik źródła danych zawodników — podczas typowania możesz porównywać historię i analitykę z OpenIPF oraz OpenPowerlifting.",
+            "en": "Athlete data source switcher — compare history and analytics from OpenIPF and OpenPowerlifting while making predictions."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Nowy profil zawodnika przy typowaniu — ocena aktualnej formy, wskaźnik realizacji nominowanego wyniku oraz czytelne sygnały wspierające wybór.",
+            "en": "New athlete profile in the prediction flow — current form verdict, nominated-total realization meter and clear signals to support your pick."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Rozszerzone statystyki formy — trend ostatnich startów, wynik względem rekordu życiowego, skuteczność podejść, stabilność totalu oraz najlepsze wyniki DOTS i GL Points.",
+            "en": "Expanded form statistics — recent performance trend, result versus lifetime best, attempt success rate, total stability, and best DOTS and GL Points scores."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Benchmark skuteczności podejść — profil pokazuje porównanie zawodnika z odpowiednią grupą startujących, gdy dostępna jest wystarczająca liczba danych.",
+            "en": "Attempt success benchmark — the profile compares an athlete with a relevant group of competitors when enough data is available."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Wybrane źródło danych jest zapamiętywane osobno dla każdych zawodów, a historia, analityka i status aktualizacji przełączają się razem.",
+            "en": "The selected data source is remembered per competition, with history, analytics and update status switching together."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Automatyczny importer aktualizuje teraz dane z obu źródeł i bezpiecznie obsługuje zduplikowane wyniki OPL.",
+            "en": "The automated importer now updates both data sources and safely handles duplicated OPL results."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.4.0-beta.1",
       "releasedAt": "2026-05-28",
       "title": {
