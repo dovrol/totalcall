@@ -9985,3 +9985,1234 @@ textarea {
         padding: 0.7rem 0.8rem;
     }
 }
+
+/* ============================================================
+   Athlete profile — deep-dive window (Variant A) + lean context panel
+   Design: redesign/athlete-profile.html (ap-styles.css). Tokens mapped
+   onto the app's CSS variables so light/dark themes both work.
+   ============================================================ */
+.ap,
+.prediction-context-panel .sp-content {
+    --c-green: var(--success);
+    --c-green-bg: color-mix(in srgb, var(--success) 14%, transparent);
+    --c-green-bd: color-mix(in srgb, var(--success) 36%, transparent);
+    --c-amber: var(--warning);
+    --c-amber-bg: color-mix(in srgb, var(--warning) 13%, transparent);
+    --c-amber-bd: color-mix(in srgb, var(--warning) 34%, transparent);
+    --c-violet: var(--score);
+    --c-violet-bg: color-mix(in srgb, var(--score) 15%, transparent);
+    --c-violet-bd: color-mix(in srgb, var(--score) 34%, transparent);
+    --c-accent-bg: color-mix(in srgb, var(--accent) 13%, transparent);
+    --c-accent-bd: color-mix(in srgb, var(--accent) 34%, transparent);
+    --c-gold: #e8b64a;
+    --c-gold-bg: rgb(232 182 74 / 0.13);
+    --c-gold-bd: rgb(232 182 74 / 0.32);
+    --c-card: var(--bg-surface-strong);
+    --c-inset: var(--bg-surface-muted);
+}
+
+/* ---------- window shell ---------- */
+.ap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    container-type: inline-size;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--text-primary);
+}
+
+/* ---------- identity row ---------- */
+.ap-id {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.ap-id .ph {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    flex: none;
+    display: grid;
+    place-items: center;
+    background: var(--c-accent-bg);
+    border: 1px solid var(--c-accent-bd);
+    color: var(--accent-strong);
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.ap-id__meta {
+    min-width: 0;
+}
+
+.ap-id .nm {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+.ap-id .ct {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.ap-id .id-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+.ap .pill {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.ap .pill.cat {
+    color: var(--text-secondary);
+    background: var(--c-card);
+    border: 1px solid var(--border);
+}
+
+.ap .seg {
+    display: inline-flex;
+    background: var(--c-card);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    overflow: hidden;
+}
+
+.ap .seg button {
+    border: 0;
+    background: transparent;
+    color: var(--text-secondary);
+    font-weight: 700;
+    font-size: 12px;
+    padding: 7px 13px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.ap .seg button.on {
+    background: var(--accent);
+    color: #fff;
+}
+
+.ap .seg button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+/* ---------- slot quick-actions (only when opened from a slot editor) ---------- */
+.ap-quick {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: var(--c-inset);
+    border: 1px solid var(--border);
+}
+
+.ap-quick__hint {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.ap-quick__row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.ap-empty {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 22px 4px;
+}
+
+.ap-empty-state {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 14px 4px;
+}
+
+/* ---------- verdict banner ---------- */
+.ap .verdict {
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+    margin-top: 12px;
+    padding: 18px 20px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--c-green-bg), transparent);
+    border: 1px solid var(--c-green-bd);
+}
+
+.ap .verdict.warn {
+    background: linear-gradient(135deg, var(--c-amber-bg), transparent);
+    border-color: var(--c-amber-bd);
+}
+
+.ap .verdict .vd-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.ap .verdict .vd-flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-green);
+}
+
+.ap .verdict.warn .vd-flag {
+    color: var(--c-amber);
+}
+
+.ap .verdict .vd-flag .pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--c-green);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--success) 18%, transparent);
+}
+
+.ap .verdict.warn .vd-flag .pulse {
+    background: var(--c-amber);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--warning) 18%, transparent);
+}
+
+.ap .verdict h2 {
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 8px 0 4px;
+}
+
+.ap .verdict .vd-line {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.ap .verdict .vd-line b {
+    color: var(--text-primary);
+}
+
+.ap .verdict .vd-sep {
+    color: var(--text-muted);
+}
+
+.ap .verdict .vd-meter {
+    margin-top: 14px;
+    max-width: 340px;
+}
+
+.ap .meter {
+    display: flex;
+    gap: 4px;
+}
+
+.ap .meter i {
+    flex: 1;
+    height: 7px;
+    border-radius: 20px;
+    background: var(--c-card);
+}
+
+.ap .meter i.on {
+    background: linear-gradient(90deg, var(--c-green), color-mix(in srgb, var(--c-green) 55%, #7af0d0));
+}
+
+.ap .verdict.warn .meter i.on {
+    background: linear-gradient(90deg, var(--c-amber), color-mix(in srgb, var(--c-amber) 55%, #ffe08a));
+}
+
+.ap .meter-lbl {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.ap .meter-lbl b {
+    color: var(--c-green);
+}
+
+.ap .verdict.warn .meter-lbl b {
+    color: var(--c-amber);
+}
+
+/* NOM -> PROGNOZA hero */
+.ap .vd-dual {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-left: 20px;
+    border-left: 1px solid var(--border);
+}
+
+.ap .verdict > .vd-dual:first-child {
+    border-left: 0;
+    padding-left: 0;
+    margin-left: auto;
+}
+
+.ap .vd-dual .dual-col {
+    text-align: right;
+}
+
+.ap .vd-dual .dual-col .k {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+.ap .vd-dual .dual-col .v {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-top: 3px;
+}
+
+.ap .vd-dual .dual-col.pred .v {
+    color: var(--c-green);
+}
+
+.ap .dual-delta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.ap .dual-delta .arr {
+    font-size: 18px;
+    color: var(--c-green);
+}
+
+.ap .dual-delta .d {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--c-green);
+}
+
+.ap .dual-delta.down .arr,
+.ap .dual-delta.down .d {
+    color: var(--c-amber);
+}
+
+.ap .dual-delta.flat .arr,
+.ap .dual-delta.flat .d {
+    color: var(--text-muted);
+}
+
+/* ---------- section heading ---------- */
+.ap .sec-h {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0 12px;
+}
+
+.ap .sec-h .t {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.ap .sec-h .ln {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.ap .sec-h .note {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+/* ---------- signal chips ---------- */
+.ap .signals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.ap .sig {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    background: var(--c-card);
+    border: 1px solid var(--border);
+    flex: 1 1 0;
+    min-width: 170px;
+}
+
+.ap .sig .si {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    font-size: 15px;
+    background: var(--c-inset);
+    border: 1px solid var(--border);
+}
+
+.ap .sig.up .si {
+    background: var(--c-green-bg);
+    border-color: var(--c-green-bd);
+    color: var(--c-green);
+}
+
+.ap .sig.acc .si {
+    background: var(--c-accent-bg);
+    border-color: var(--c-accent-bd);
+    color: var(--accent-strong);
+}
+
+.ap .sig.vio .si {
+    background: var(--c-violet-bg);
+    border-color: var(--c-violet-bd);
+    color: var(--c-violet);
+}
+
+.ap .sig.down .si {
+    background: var(--c-amber-bg);
+    border-color: var(--c-amber-bd);
+    color: var(--c-amber);
+}
+
+.ap .sig .sk {
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.ap .sig .sv {
+    font-size: 16px;
+    font-weight: 800;
+    margin-top: 2px;
+}
+
+.ap .sig .sv small {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+/* ---------- metric minis ---------- */
+.ap .metrics {
+    display: grid;
+    gap: 10px;
+}
+
+.ap .metrics.c1 { grid-template-columns: repeat(1, 1fr); }
+.ap .metrics.c2 { grid-template-columns: repeat(2, 1fr); }
+.ap .metrics.c3 { grid-template-columns: repeat(3, 1fr); }
+.ap .metrics.c4 { grid-template-columns: repeat(4, 1fr); }
+
+.ap .mc {
+    background: var(--c-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 15px;
+}
+
+.ap .mc .k {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.ap .mc .v {
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin-top: 4px;
+}
+
+.ap .mc .s {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-top: 3px;
+}
+
+.ap .mc.accent {
+    background: linear-gradient(180deg, var(--c-accent-bg), transparent);
+    border-color: var(--c-accent-bd);
+}
+
+.ap .mc.accent .v {
+    color: var(--accent-strong);
+}
+
+.ap .mc.good .v {
+    color: var(--c-green);
+}
+
+.ap .mc .dots-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 800;
+    margin-top: 4px;
+    color: var(--c-violet);
+}
+
+.ap .mc .dots-row .lab {
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    margin-right: 3px;
+}
+
+/* ---------- trend chart wrapper ---------- */
+.ap .chart-card {
+    background: var(--c-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+}
+
+/* ---------- attempt success ---------- */
+.ap .att {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.ap .att-row .att-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.ap .att-row .att-lift {
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary);
+}
+
+.ap .att-row .att-pct {
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.ap .att-bar {
+    height: 8px;
+    border-radius: 20px;
+    background: var(--c-card);
+    overflow: hidden;
+    position: relative;
+}
+
+.ap .att-bar i {
+    display: block;
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--c-green) 60%, #0a8060), var(--c-green));
+}
+
+.ap .att-bar.partial i {
+    background: linear-gradient(90deg, color-mix(in srgb, var(--c-green) 42%, var(--bg-surface-muted)), color-mix(in srgb, var(--c-green) 78%, #ffffff));
+}
+
+.ap .att-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.ap .att-meta .vs {
+    font-weight: 800;
+    color: var(--text-secondary);
+}
+
+.ap .att-meta .att-delta--up {
+    color: var(--c-green);
+}
+
+.ap .att-meta .att-delta--down {
+    color: var(--c-amber);
+}
+
+/* ---------- recent starts table ---------- */
+.ap .ap-starts--cards {
+    display: none;
+}
+
+.ap .tbl {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.ap .tbl th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    padding: 0 12px 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.ap .tbl td {
+    padding: 13px 12px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.ap .tbl tr:last-child td {
+    border-bottom: 0;
+}
+
+.ap .tbl td.meet {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.ap .tbl td.meet small {
+    display: block;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 11px;
+    margin-top: 1px;
+}
+
+.ap .tbl th.num,
+.ap .tbl td.num {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+.ap .tbl td.total {
+    color: var(--accent-strong);
+    font-weight: 800;
+}
+
+.ap .tbl tr.best td {
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+.ap .tbl .plc {
+    display: inline-grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    font-weight: 800;
+    font-size: 12px;
+    background: var(--c-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.ap .tbl .plc.p1 {
+    background: var(--c-gold-bg);
+    border-color: var(--c-gold-bd);
+    color: var(--c-gold);
+}
+
+/* ---------- recent starts as cards (narrow window) ---------- */
+.ap .mstart {
+    background: var(--c-card);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 12px 13px;
+    margin-bottom: 9px;
+}
+
+.ap .mstart:last-child {
+    margin-bottom: 0;
+}
+
+.ap .mstart.best {
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+    border-color: var(--c-accent-bd);
+}
+
+.ap .mstart .ms-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ap .mstart .ms-meet-wrap {
+    min-width: 0;
+}
+
+.ap .mstart .plc {
+    display: inline-grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 12px;
+    background: var(--c-inset);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    flex: none;
+}
+
+.ap .mstart .plc.p1 {
+    background: var(--c-gold-bg);
+    border-color: var(--c-gold-bd);
+    color: var(--c-gold);
+}
+
+.ap .mstart .ms-meet {
+    font-size: 13.5px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ap .mstart .ms-date {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-top: 1px;
+}
+
+.ap .mstart .ms-bw {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 700;
+    flex: none;
+}
+
+.ap .mstart .ms-lifts {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 7px;
+    margin-top: 11px;
+}
+
+.ap .mstart .ms-l {
+    background: var(--c-inset);
+    border-radius: 8px;
+    padding: 8px 6px;
+    text-align: center;
+}
+
+.ap .mstart .ms-l .k {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+
+.ap .mstart .ms-l .v {
+    font-size: 13px;
+    font-weight: 800;
+    margin-top: 2px;
+}
+
+.ap .mstart .ms-l.tot .v {
+    color: var(--accent-strong);
+}
+
+.ap .ap-foot {
+    margin-top: 18px;
+}
+
+/* ---------- narrow-window reflow (in-app equivalent of the mobile sheet) ---------- */
+@container (max-width: 640px) {
+    .ap .verdict {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .ap .verdict .vd-meter {
+        max-width: none;
+    }
+
+    .ap .vd-dual {
+        padding: 14px 0 2px;
+        margin-top: 14px;
+        border-left: 0;
+        border-top: 1px solid var(--c-green-bd);
+        justify-content: space-between;
+    }
+
+    .ap .verdict.warn .vd-dual {
+        border-top-color: var(--c-amber-bd);
+    }
+
+    .ap .vd-dual .dual-col {
+        text-align: left;
+    }
+
+    .ap .vd-dual .dual-col.pred {
+        text-align: right;
+    }
+
+    .ap .verdict h2 {
+        font-size: 19px;
+        line-height: 1.25;
+    }
+
+    .ap .signals .sig {
+        flex: 1 1 calc(50% - 5px);
+        min-width: 0;
+    }
+
+    .ap .metrics.c3,
+    .ap .metrics.c4 {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .ap .ap-starts--table {
+        display: none;
+    }
+
+    .ap .ap-starts--cards {
+        display: block;
+    }
+}
+
+/* ============================================================
+   Side panel — lean athlete context (complements the window)
+   ============================================================ */
+.prediction-context-panel .sp-content {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.prediction-context-panel .sp-card {
+    background: var(--c-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 15px;
+}
+
+.prediction-context-panel .sp-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.prediction-context-panel .sp-ph {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    flex: none;
+    display: grid;
+    place-items: center;
+    background: var(--c-accent-bg);
+    border: 1px solid var(--c-accent-bd);
+    color: var(--accent-strong);
+    font-weight: 800;
+    font-size: 15px;
+}
+
+.prediction-context-panel .sp-top__meta {
+    min-width: 0;
+}
+
+.prediction-context-panel .sp-nm {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+.prediction-context-panel .sp-ct {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-top: 1px;
+}
+
+.prediction-context-panel .sp-rk {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--c-gold);
+    background: var(--c-gold-bg);
+    border: 1px solid var(--c-gold-bd);
+    padding: 5px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.prediction-context-panel .sp-verdict {
+    margin-top: 13px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 12px 13px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--c-green-bg), transparent);
+    border: 1px solid var(--c-green-bd);
+}
+
+.prediction-context-panel .sp-verdict.warn {
+    background: linear-gradient(135deg, var(--c-amber-bg), transparent);
+    border-color: var(--c-amber-bd);
+}
+
+.prediction-context-panel .sp-verdict .vdot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--c-green);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--success) 18%, transparent);
+    flex: none;
+}
+
+.prediction-context-panel .sp-verdict.warn .vdot {
+    background: var(--c-amber);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--warning) 18%, transparent);
+}
+
+.prediction-context-panel .sp-verdict .vt {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-primary);
+    min-width: 0;
+}
+
+.prediction-context-panel .sp-verdict .vt small {
+    display: block;
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-top: 1px;
+}
+
+.prediction-context-panel .sp-verdict .vmeter {
+    margin-left: auto;
+    display: flex;
+    gap: 3px;
+    flex: none;
+}
+
+.prediction-context-panel .sp-verdict .vmeter i {
+    width: 5px;
+    height: 15px;
+    border-radius: 3px;
+    background: var(--c-inset);
+}
+
+.prediction-context-panel .sp-verdict .vmeter i.on {
+    background: var(--c-green);
+}
+
+.prediction-context-panel .sp-verdict.warn .vmeter i.on {
+    background: var(--c-amber);
+}
+
+.prediction-context-panel .sp-hero {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 11px;
+    padding: 13px 15px;
+    border-radius: 12px;
+    background: var(--c-inset);
+    border: 1px solid var(--border);
+}
+
+.prediction-context-panel .sp-hero .hc {
+    flex: 1;
+    min-width: 0;
+}
+
+.prediction-context-panel .sp-hero .hc.r {
+    text-align: right;
+}
+
+.prediction-context-panel .sp-hero .k {
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.prediction-context-panel .sp-hero .v {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-top: 2px;
+}
+
+.prediction-context-panel .sp-hero .hc.r .v {
+    color: var(--c-green);
+}
+
+.prediction-context-panel .sp-hero .mid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    flex: none;
+    padding: 0 4px;
+}
+
+.prediction-context-panel .sp-hero .mid .arr {
+    font-size: 15px;
+    color: var(--c-green);
+}
+
+.prediction-context-panel .sp-hero .mid .d {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--c-green);
+}
+
+.prediction-context-panel .sp-hero .mid.down .arr,
+.prediction-context-panel .sp-hero .mid.down .d {
+    color: var(--c-amber);
+}
+
+.prediction-context-panel .sp-hero .mid.flat .arr,
+.prediction-context-panel .sp-hero .mid.flat .d {
+    color: var(--text-muted);
+}
+
+.prediction-context-panel .sp-lbl {
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin: 4px 2px -2px;
+}
+
+.prediction-context-panel .sp-sigs {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.prediction-context-panel .sp-sig {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 11px 13px;
+    background: var(--c-card);
+    border: 1px solid var(--border);
+}
+
+.prediction-context-panel .sp-sig .si {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    background: var(--c-inset);
+    border: 1px solid var(--border);
+}
+
+.prediction-context-panel .sp-sig.up .si {
+    background: var(--c-green-bg);
+    border-color: var(--c-green-bd);
+    color: var(--c-green);
+}
+
+.prediction-context-panel .sp-sig.acc .si {
+    background: var(--c-accent-bg);
+    border-color: var(--c-accent-bd);
+    color: var(--accent-strong);
+}
+
+.prediction-context-panel .sp-sig.vio .si {
+    background: var(--c-violet-bg);
+    border-color: var(--c-violet-bd);
+    color: var(--c-violet);
+}
+
+.prediction-context-panel .sp-sig.down .si {
+    background: var(--c-amber-bg);
+    border-color: var(--c-amber-bd);
+    color: var(--c-amber);
+}
+
+.prediction-context-panel .sp-sig .sk {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    flex: 1;
+    min-width: 0;
+}
+
+.prediction-context-panel .sp-sig .sv {
+    font-size: 14px;
+    font-weight: 800;
+    text-align: right;
+}
+
+.prediction-context-panel .sp-sig .sv small {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+.prediction-context-panel .sp-spark {
+    background: var(--c-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px;
+}
+
+.prediction-context-panel .sp-spark .sh {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.prediction-context-panel .sp-spark .sh b {
+    color: var(--c-green);
+}
+
+.prediction-context-panel .sp-pr {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.prediction-context-panel .sp-pr .cell {
+    background: var(--c-card);
+    border: 1px solid var(--border);
+    padding: 11px 6px;
+    text-align: center;
+}
+
+.prediction-context-panel .sp-pr .cell.tot {
+    background: linear-gradient(180deg, var(--c-accent-bg), transparent);
+    border-color: var(--c-accent-bd);
+}
+
+.prediction-context-panel .sp-pr .k {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.prediction-context-panel .sp-pr .v {
+    font-size: 14px;
+    font-weight: 800;
+    margin-top: 3px;
+}
+
+.prediction-context-panel .sp-pr .cell.tot .v {
+    color: var(--accent-strong);
+}
+
+.prediction-context-panel .sp-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-top: 3px;
+}
+
+.prediction-context-panel .sp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.prediction-context-panel .sp-btn--go {
+    background: linear-gradient(135deg, var(--accent-strong), var(--accent));
+    color: #fff;
+}
+
+.prediction-context-panel .sp-btn--go:hover {
+    filter: brightness(1.06);
+}
+
+.prediction-context-panel .sp-btn--compare {
+    background: var(--c-violet-bg);
+    border-color: var(--c-violet-bd);
+    color: var(--c-violet);
+}
+
+.prediction-context-panel .sp-btn--compare:hover {
+    background: color-mix(in srgb, var(--score) 22%, transparent);
+}
+
+.prediction-context-panel .sp-source {
+    margin-top: 2px;
+}

@@ -257,7 +257,31 @@
   <data name="FloatingWindow.HistoryActionsLabel" xml:space="preserve"><value>Szybkie akcje dla edytowanego zawodnika</value></data>
   <data name="FloatingWindow.NoSlotContextHint" xml:space="preserve"><value>Otwórz edycję predicted total dla tego zawodnika, aby zastosować wartości jednym kliknięciem.</value></data>
   <data name="FloatingWindow.Resize" xml:space="preserve"><value>Przeciągnij, aby zmienić rozmiar okna</value></data>
-  <data name="Predictions.HistoryDialogTitle" xml:space="preserve"><value>Historia startów — {0}</value></data>
+  <data name="Predictions.HistoryDialogTitle" xml:space="preserve"><value>Profil zawodnika — {0}</value></data>
+  <data name="Predictions.Profile.Nomination" xml:space="preserve"><value>Nominacja</value></data>
+  <data name="Predictions.Profile.Projection" xml:space="preserve"><value>Prognoza</value></data>
+  <data name="Predictions.Profile.KeySignals" xml:space="preserve"><value>Kluczowe sygnały</value></data>
+  <data name="Predictions.Profile.Metrics" xml:space="preserve"><value>Metryki</value></data>
+  <data name="Predictions.Profile.WhyThisPick" xml:space="preserve"><value>Dlaczego ten typ</value></data>
+  <data name="Predictions.Profile.ShowDetails" xml:space="preserve"><value>Pokaż szczegóły</value></data>
+  <data name="Predictions.Profile.NominationChance" xml:space="preserve"><value>Realizacja nominacji</value></data>
+  <data name="Predictions.Profile.RealizationLine" xml:space="preserve"><value>Realizacja nominacji: {0}</value></data>
+  <data name="Predictions.Profile.LevelHigh" xml:space="preserve"><value>Wysoka</value></data>
+  <data name="Predictions.Profile.LevelModerate" xml:space="preserve"><value>Umiarkowana</value></data>
+  <data name="Predictions.Profile.LevelLow" xml:space="preserve"><value>Niska</value></data>
+  <data name="Predictions.Profile.FormPeak" xml:space="preserve"><value>Forma szczytowa</value></data>
+  <data name="Predictions.Profile.FormRising" xml:space="preserve"><value>Forma rosnąca</value></data>
+  <data name="Predictions.Profile.FormStable" xml:space="preserve"><value>Forma stabilna</value></data>
+  <data name="Predictions.Profile.FormDeclining" xml:space="preserve"><value>Forma spadkowa</value></data>
+  <data name="Predictions.Profile.VerdictHigh" xml:space="preserve"><value>Bardzo prawdopodobna realizacja nominacji</value></data>
+  <data name="Predictions.Profile.VerdictModerate" xml:space="preserve"><value>Realizacja nominacji prawdopodobna</value></data>
+  <data name="Predictions.Profile.VerdictLow" xml:space="preserve"><value>Realizacja nominacji niepewna</value></data>
+  <data name="Predictions.Profile.VerdictForm" xml:space="preserve"><value>Bieżąca forma zawodnika</value></data>
+  <data name="Predictions.Signal.LastStart" xml:space="preserve"><value>Ostatni start</value></data>
+  <data name="Predictions.Signal.AtPr" xml:space="preserve"><value>= PR</value></data>
+  <data name="Predictions.Signal.Stability" xml:space="preserve"><value>Stabilność</value></data>
+  <data name="Predictions.Signal.NominationPct" xml:space="preserve"><value>{0}% nominacji</value></data>
+  <data name="Predictions.Metric.GlDots" xml:space="preserve"><value>GL / DOTS</value></data>
   <data name="Predictions.HistoryDialogClose" xml:space="preserve"><value>Zamknij</value></data>
   <data name="Predictions.BackToContext" xml:space="preserve"><value>Wróć do kontekstu</value></data>
   <data name="Predictions.History.Date" xml:space="preserve"><value>Data</value></data>

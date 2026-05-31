@@ -34,7 +34,8 @@ public sealed class WindowManager
         string? categoryName,
         decimal? nominatedTotalKg,
         string title,
-        AthleteHistorySlotContext? slotContext = null)
+        AthleteHistorySlotContext? slotContext = null,
+        decimal? predictedTotalKg = null)
     {
         var existing = windows
             .OfType<AthleteHistoryWindowDescriptor>()
@@ -49,6 +50,7 @@ public sealed class WindowManager
                 existing.SlotContext = slotContext;
             }
 
+            existing.PredictedTotalKg = predictedTotalKg;
             existing.IsMinimized = false;
             BringToFront(existing.Id);
             return existing;
@@ -62,6 +64,7 @@ public sealed class WindowManager
             countryName,
             categoryName,
             nominatedTotalKg,
+            predictedTotalKg,
             slotContext,
             NextCascadePosition(),
             title)

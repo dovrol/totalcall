@@ -257,7 +257,31 @@
   <data name="FloatingWindow.HistoryActionsLabel" xml:space="preserve"><value>Quick actions for the edited athlete</value></data>
   <data name="FloatingWindow.NoSlotContextHint" xml:space="preserve"><value>Open the predicted total editor for this athlete to apply values with one click.</value></data>
   <data name="FloatingWindow.Resize" xml:space="preserve"><value>Drag to resize window</value></data>
-  <data name="Predictions.HistoryDialogTitle" xml:space="preserve"><value>Start history — {0}</value></data>
+  <data name="Predictions.HistoryDialogTitle" xml:space="preserve"><value>Athlete profile — {0}</value></data>
+  <data name="Predictions.Profile.Nomination" xml:space="preserve"><value>Nomination</value></data>
+  <data name="Predictions.Profile.Projection" xml:space="preserve"><value>Projection</value></data>
+  <data name="Predictions.Profile.KeySignals" xml:space="preserve"><value>Key signals</value></data>
+  <data name="Predictions.Profile.Metrics" xml:space="preserve"><value>Metrics</value></data>
+  <data name="Predictions.Profile.WhyThisPick" xml:space="preserve"><value>Why this pick</value></data>
+  <data name="Predictions.Profile.ShowDetails" xml:space="preserve"><value>Show details</value></data>
+  <data name="Predictions.Profile.NominationChance" xml:space="preserve"><value>Nomination chance</value></data>
+  <data name="Predictions.Profile.RealizationLine" xml:space="preserve"><value>Nomination chance: {0}</value></data>
+  <data name="Predictions.Profile.LevelHigh" xml:space="preserve"><value>High</value></data>
+  <data name="Predictions.Profile.LevelModerate" xml:space="preserve"><value>Moderate</value></data>
+  <data name="Predictions.Profile.LevelLow" xml:space="preserve"><value>Low</value></data>
+  <data name="Predictions.Profile.FormPeak" xml:space="preserve"><value>Peak form</value></data>
+  <data name="Predictions.Profile.FormRising" xml:space="preserve"><value>Rising form</value></data>
+  <data name="Predictions.Profile.FormStable" xml:space="preserve"><value>Stable form</value></data>
+  <data name="Predictions.Profile.FormDeclining" xml:space="preserve"><value>Declining form</value></data>
+  <data name="Predictions.Profile.VerdictHigh" xml:space="preserve"><value>Nomination very likely to be met</value></data>
+  <data name="Predictions.Profile.VerdictModerate" xml:space="preserve"><value>Nomination likely to be met</value></data>
+  <data name="Predictions.Profile.VerdictLow" xml:space="preserve"><value>Nomination uncertain</value></data>
+  <data name="Predictions.Profile.VerdictForm" xml:space="preserve"><value>Current athlete form</value></data>
+  <data name="Predictions.Signal.LastStart" xml:space="preserve"><value>Last start</value></data>
+  <data name="Predictions.Signal.AtPr" xml:space="preserve"><value>= PR</value></data>
+  <data name="Predictions.Signal.Stability" xml:space="preserve"><value>Stability</value></data>
+  <data name="Predictions.Signal.NominationPct" xml:space="preserve"><value>{0}% of nomination</value></data>
+  <data name="Predictions.Metric.GlDots" xml:space="preserve"><value>GL / DOTS</value></data>
   <data name="Predictions.HistoryDialogClose" xml:space="preserve"><value>Close</value></data>
   <data name="Predictions.BackToContext" xml:space="preserve"><value>Back to context</value></data>
   <data name="Predictions.History.Date" xml:space="preserve"><value>Date</value></data>

@@ -179,6 +179,7 @@ else
                         ActiveQuestionStatus="@ActiveQuestionStatus"
                         SelectedAthleteId="@EffectiveSelectedAthleteId"
                         SelectedAthleteRank="@SelectedAthleteRank"
+                        SelectedAthletePredictedTotalKg="@SelectedAthletePredictedTotal"
                         CanEditPredictions="CanEditPredictions"
                         SelectorSlotPosition="@EffectiveSelectorSlotPosition"
                         SelectedAthletesByPosition="SelectedAthletesByPosition"
@@ -1266,6 +1267,20 @@ else
             ?.Position;
     }
 
+    private decimal? SelectedAthletePredictedTotal => GetSelectedAthletePredictedTotal(EffectiveSelectedAthleteId);
+
+    private decimal? GetSelectedAthletePredictedTotal(string? athleteId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteId) || ActiveQuestion is null)
+        {
+            return null;
+        }
+
+        return GetPlacements(ActiveQuestion.Id)
+            .FirstOrDefault(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase))
+            ?.PredictedTotalKg;
+    }
+
     private int? GetFirstAvailableSlotPosition()
     {
         for (var position = 1; position <= SlotsCount; position++)
@@ -1436,7 +1451,8 @@ else
             categoryName: ResolveCategoryNameForAthlete(athlete),
             nominatedTotalKg: athlete.SeedTotalKg,
             title: Localizer["Predictions.HistoryDialogTitle", athlete.DisplayName],
-            slotContext: slotContext);
+            slotContext: slotContext,
+            predictedTotalKg: GetPlacementByAthleteId(athlete.Id)?.PredictedTotalKg);
 
         return Task.CompletedTask;
     }

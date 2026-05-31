@@ -16,6 +16,9 @@ public sealed class AthleteHistoryWindowDescriptor : FloatingWindowDescriptor
 
     public decimal? NominatedTotalKg { get; }
 
+    /// <summary>The user's predicted total for this athlete's ranking slot (the PROGNOZA), when set.</summary>
+    public decimal? PredictedTotalKg { get; set; }
+
     public AthleteHistorySlotContext? SlotContext { get; set; }
 
     public AthleteHistoryWindowDescriptor(
@@ -26,6 +29,7 @@ public sealed class AthleteHistoryWindowDescriptor : FloatingWindowDescriptor
         string? countryName,
         string? categoryName,
         decimal? nominatedTotalKg,
+        decimal? predictedTotalKg,
         AthleteHistorySlotContext? slotContext,
         WindowPosition position,
         string title)
@@ -38,6 +42,7 @@ public sealed class AthleteHistoryWindowDescriptor : FloatingWindowDescriptor
         CountryName = countryName;
         CategoryName = categoryName;
         NominatedTotalKg = nominatedTotalKg;
+        PredictedTotalKg = predictedTotalKg;
         SlotContext = slotContext;
     }
 

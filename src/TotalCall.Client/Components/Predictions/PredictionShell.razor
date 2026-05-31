@@ -78,6 +78,7 @@
                                     ActiveQuestionStatus="@CurrentTopNQuestionStatus"
                                     SelectedAthleteId="@selectedTopNAthleteId"
                                     SelectedAthleteRank="@SelectedTopNAthleteRank"
+                                    SelectedAthletePredictedTotalKg="@SelectedTopNAthletePredictedTotal"
                                     CanEditPredictions="@CanEditPredictions"
                                     SelectorSlotPosition="@topNSelectorSlotPosition"
                                     SelectedAthletesByPosition="SelectedTopNAthletesByPosition"
@@ -240,6 +241,8 @@
             : null;
 
     private int? SelectedTopNAthleteRank => GetSelectedAthleteRank(selectedTopNAthleteId);
+
+    private decimal? SelectedTopNAthletePredictedTotal => GetSelectedAthletePredictedTotal(selectedTopNAthleteId);
 
     private int CurrentTopNSlotsCount => CurrentTopNQuestion?.Constraints.ExactSelections ??
                                          CurrentTopNQuestion?.Constraints.MaxSelections ??
@@ -533,6 +536,18 @@
         return placements
             .FirstOrDefault(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase))
             ?.Position;
+    }
+
+    private decimal? GetSelectedAthletePredictedTotal(string? athleteId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteId) || CurrentTopNQuestion is null)
+        {
+            return null;
+        }
+
+        return GetPlacements(ActiveGroup.Id, CurrentTopNQuestion.Id)
+            .FirstOrDefault(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase))
+            ?.PredictedTotalKg;
     }
 
     private IReadOnlyList<AthletePlacementPick> GetPlacements(string groupId, string questionId)
