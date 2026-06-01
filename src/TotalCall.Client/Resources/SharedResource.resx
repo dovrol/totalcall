@@ -550,12 +550,24 @@
   <data name="Predictions.TopN.ModeTotalShort" xml:space="preserve"><value>Tylko total</value></data>
   <data name="Predictions.TopN.ModeLiftsShort" xml:space="preserve"><value>SQ · BP · DL</value></data>
   <data name="Predictions.TopN.KgUnit" xml:space="preserve"><value>kg</value></data>
-  <data name="Predictions.TopN.QuickFillLabel" xml:space="preserve"><value>Szybkie wypełnienie:</value></data>
-  <data name="Predictions.TopN.QuickFillOr" xml:space="preserve"><value>— lub wpisz ręcznie w polach powyżej ↑</value></data>
   <data name="Predictions.TopN.PickerTitle" xml:space="preserve"><value>Wybierz zawodnika na slot #{0}</value></data>
-  <data name="Predictions.TopN.EntryHint" xml:space="preserve"><value>Wpisuj &lt;b&gt;SQ → BP → DL&lt;/b&gt; (total liczy się sam) albo przełącz wiersz na &lt;b&gt;tylko total&lt;/b&gt;. &lt;kbd&gt;Tab&lt;/kbd&gt; przechodzi dalej, &lt;kbd&gt;Enter&lt;/kbd&gt; zatwierdza.</value></data>
-  <data name="Predictions.TopN.DefaultModeLabel" xml:space="preserve"><value>Domyślny tryb wpisywania:</value></data>
-  <data name="Predictions.TopN.DefaultModeHint" xml:space="preserve"><value>— możesz zmienić per zawodnik (klik w plakietkę pod nazwiskiem)</value></data>
+  <data name="Predictions.TopN.EntryHint" xml:space="preserve"><value>Wpisuj &lt;b&gt;SQ → BP → DL&lt;/b&gt; (total liczy się sam) lub przełącz wiersz na &lt;b&gt;tylko total&lt;/b&gt; plakietką pod nazwiskiem. Przeciągnij &lt;b&gt;⠿&lt;/b&gt;, by zmienić pozycję w Top 5.</value></data>
   <data name="Predictions.TopN.FooterCount" xml:space="preserve"><value>{0} / {1} wybranych · {2} puste sloty</value></data>
   <data name="Predictions.TopN.CompareSoon" xml:space="preserve"><value>Porównywanie zawodników będzie dostępne wkrótce.</value></data>
+  <data name="Predictions.TopN.DragHint" xml:space="preserve"><value>Przeciągnij, by zmienić pozycję</value></data>
+  <data name="Predictions.TopN.DropTo" xml:space="preserve"><value>Upuść na pozycję {0}</value></data>
+  <data name="Predictions.TopN.FromData" xml:space="preserve"><value>z danych</value></data>
+  <data name="Predictions.TopN.FillFromData" xml:space="preserve"><value>Wypełnij z danych zawodniczki</value></data>
+  <data name="Predictions.TopN.FillFromHeading" xml:space="preserve"><value>Wypełnij predicted z:</value></data>
+  <data name="Predictions.TopN.FillManualNote" xml:space="preserve"><value>Możesz też wpisać ręcznie w polach SQ/BP/DL ↑</value></data>
+  <data name="Predictions.TopN.FillEmpty" xml:space="preserve"><value>Wypełnij puste</value></data>
+  <data name="Predictions.TopN.FillEmptyHeading" xml:space="preserve"><value>Wypełnij {0} puste wg:</value></data>
+  <data name="Predictions.TopN.NoEmptySlots" xml:space="preserve"><value>Brak pustych slotów do wypełnienia.</value></data>
+  <data name="Predictions.TopN.MobileCatPos" xml:space="preserve"><value>Kategoria {0} z {1} · {2}/{1} ukończone</value></data>
+  <data name="Predictions.TopN.SearchCategory" xml:space="preserve"><value>Szukaj kategorii…</value></data>
+  <data name="Predictions.TopN.MobileTapToEnter" xml:space="preserve"><value>Dotknij, aby wpisać predicted</value></data>
+  <data name="Predictions.TopN.MobileTotalManual" xml:space="preserve"><value>Total wpisany ręcznie</value></data>
+  <data name="Predictions.TopN.MobileSquat" xml:space="preserve"><value>Przysiad (SQ)</value></data>
+  <data name="Predictions.TopN.MobileBench" xml:space="preserve"><value>Wyciskanie (BP)</value></data>
+  <data name="Predictions.TopN.MobileDeadlift" xml:space="preserve"><value>Martwy ciąg (DL)</value></data>
 </root>

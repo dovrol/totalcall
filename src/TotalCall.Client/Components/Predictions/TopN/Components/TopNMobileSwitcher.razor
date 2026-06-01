@@ -1,0 +1,205 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="ms-scrim" @onclick="() => Dismissed.InvokeAsync()"></div>
+<div class="ms-bottomsheet" role="dialog" aria-modal="true">
+    <div class="ms-handle" aria-hidden="true"></div>
+
+    @if (CanSwitchModule)
+    {
+        <div class="ms-bs-sec">@Localizer["Predictions.TopN.ModuleMenuTitle", CompetitionName]</div>
+        @foreach (var module in Modules)
+        {
+            <button type="button" class="@ModuleClass(module)" @onclick="() => OnModule(module.GroupId)">
+                <span class="ms-bs-mod__ic"><AppIcon Name="@module.Icon" Size="16" /></span>
+                <span class="ms-bs-mod__t">
+                    <span class="ms-bs-mod__name">@module.Title</span>
+                    @if (!string.IsNullOrWhiteSpace(module.Description))
+                    {
+                        <span class="ms-bs-mod__desc">@module.Description</span>
+                    }
+                </span>
+                @if (module.IsActive)
+                {
+                    <AppIcon Name="AppIconName.Check" Size="15" Class="ms-bs-mod__ck" />
+                }
+            </button>
+        }
+        <div class="ms-bs-divider" aria-hidden="true"></div>
+    }
+
+    <div class="ms-bs-sec">@Localizer["Predictions.Category"]</div>
+    <div class="ms-bs-search">
+        <AppIcon Name="AppIconName.Search" Size="15" Class="ms-bs-search__k" />
+        <input type="text" value="@_query" @oninput="OnQueryInput" placeholder="@Localizer["Predictions.TopN.SearchCategory"]" aria-label="@Localizer["Predictions.TopN.SearchCategory"]" />
+    </div>
+
+    @foreach (var section in Sections)
+    {
+        <div class="ms-bs-grouplbl">@section.Label · @section.Completed/@section.Total</div>
+        <div class="ms-bs-grid">
+            @foreach (var question in section.Questions)
+            {
+                var status = GetStatus(question.Id);
+                var isActive = string.Equals(question.Id, ActiveQuestionId, StringComparison.OrdinalIgnoreCase);
+                <button type="button" class="@ChipClass(isActive, status)" @onclick="() => CategoryChanged.InvokeAsync(question.Id)">
+                    <span class="ms-bs-chip__w">@ShortLabelSelector(question)</span>
+                    <span class="ms-bs-chip__b">
+                        @if (status.Status == PredictionCompletionStatus.Complete)
+                        {
+                            <AppIcon Name="AppIconName.Check" Size="12" StrokeWidth="3" />
+                        }
+                        else
+                        {
+                            @ChipBadge(status)
+                        }
+                    </span>
+                </button>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string CompetitionName { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<PredictionGroup> Groups { get; set; } = [];
+
+    [Parameter]
+    public string? ActiveGroupId { get; set; }
+
+    [Parameter, EditorRequired]
+    public Func<PredictionGroup, string> ModuleTitleSelector { get; set; } = default!;
+
+    [Parameter]
+    public IReadOnlyDictionary<string, PredictionModuleValidationResult> ModuleValidationByGroupId { get; set; } =
+        new Dictionary<string, PredictionModuleValidationResult>(StringComparer.OrdinalIgnoreCase);
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<PredictionQuestion> Questions { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public IReadOnlyDictionary<string, PredictionQuestionCompletionResult> StatusByQuestionId { get; set; } =
+        new Dictionary<string, PredictionQuestionCompletionResult>(StringComparer.OrdinalIgnoreCase);
+
+    [Parameter]
+    public string? ActiveQuestionId { get; set; }
+
+    [Parameter, EditorRequired]
+    public Func<PredictionQuestion, string> ShortLabelSelector { get; set; } = default!;
+
+    [Parameter]
+    public Func<PredictionQuestion, string?>? SectionSelector { get; set; }
+
+    [Parameter]
+    public bool CanSwitchModule { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ModuleChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> CategoryChanged { get; set; }
+
+    [Parameter]
+    public EventCallback Dismissed { get; set; }
+
+    private string _query = string.Empty;
+
+    private void OnQueryInput(ChangeEventArgs args) => _query = args.Value?.ToString() ?? string.Empty;
+
+    private Task OnModule(string groupId)
+    {
+        return string.Equals(groupId, ActiveGroupId, StringComparison.OrdinalIgnoreCase)
+            ? Dismissed.InvokeAsync()
+            : ModuleChanged.InvokeAsync(groupId);
+    }
+
+    private IReadOnlyList<ModuleItem> Modules => Groups
+        .OrderBy(group => group.Order)
+        .Select(group => new ModuleItem(
+            group.Id,
+            ModuleTitleSelector(group),
+            string.IsNullOrWhiteSpace(group.Description) ? null : group.Description,
+            string.Equals(group.Id, ActiveGroupId, StringComparison.OrdinalIgnoreCase),
+            ResolveIcon(group)))
+        .ToArray();
+
+    private IReadOnlyList<SwitcherSection> Sections
+    {
+        get
+        {
+            var filtered = Questions.Where(Matches).ToArray();
+
+            if (SectionSelector is null)
+            {
+                return [new SwitcherSection(Localizer["Predictions.Category"], filtered, CompletedCount(filtered), filtered.Length)];
+            }
+
+            return filtered
+                .GroupBy(question => SectionSelector(question) ?? Localizer["Predictions.Category"].Value)
+                .Select(group =>
+                {
+                    var items = group.ToArray();
+                    return new SwitcherSection(group.Key, items, CompletedCount(items), items.Length);
+                })
+                .ToArray();
+        }
+    }
+
+    private bool Matches(PredictionQuestion question)
+    {
+        if (string.IsNullOrWhiteSpace(_query))
+        {
+            return true;
+        }
+
+        return ShortLabelSelector(question).Contains(_query, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private int CompletedCount(IEnumerable<PredictionQuestion> questions) => questions
+        .Count(question => GetStatus(question.Id).Status == PredictionCompletionStatus.Complete);
+
+    private PredictionQuestionCompletionResult GetStatus(string questionId) =>
+        StatusByQuestionId.TryGetValue(questionId, out var status)
+            ? status
+            : new PredictionQuestionCompletionResult(questionId, PredictionCompletionStatus.NotStarted, 0, 0);
+
+    private static string ModuleClass(ModuleItem module) => string.Join(
+        " ",
+        "ms-bs-mod",
+        module.IsActive ? "ms-bs-mod--on" : null);
+
+    private static string ChipClass(bool isActive, PredictionQuestionCompletionResult status) => string.Join(
+        " ",
+        "ms-bs-chip",
+        isActive
+            ? "ms-bs-chip--active"
+            : status.Status == PredictionCompletionStatus.Complete
+                ? "ms-bs-chip--done"
+                : status.Status == PredictionCompletionStatus.InProgress || status.SelectedCount > 0
+                    ? "ms-bs-chip--prog"
+                    : null);
+
+    private static string ChipBadge(PredictionQuestionCompletionResult status)
+    {
+        return status.SelectedCount > 0 ? $"{status.SelectedCount}/{Math.Max(1, status.RequiredCount)}" : "–";
+    }
+
+    private static AppIconName ResolveIcon(PredictionGroup group)
+    {
+        var normalizedType = PredictionModuleType.Normalize(group.Type);
+
+        return normalizedType switch
+        {
+            PredictionModuleType.TopNByCategory => AppIconName.Medal,
+            PredictionModuleType.CategoryPodium => AppIconName.Trophy,
+            PredictionModuleType.AthleteRanking => AppIconName.Users,
+            _ => AppIconName.Target
+        };
+    }
+
+    private sealed record ModuleItem(string GroupId, string Title, string? Description, bool IsActive, AppIconName Icon);
+
+    private sealed record SwitcherSection(string Label, IReadOnlyList<PredictionQuestion> Questions, int Completed, int Total);
+}

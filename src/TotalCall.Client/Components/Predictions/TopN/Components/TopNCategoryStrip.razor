@@ -36,7 +36,16 @@
                         aria-selected="@isActive"
                         @onclick="() => CategoryChanged.InvokeAsync(question.Id)">
                         <span class="topn-cat__label">@ShortLabelSelector(question)</span>
-                        <span class="topn-cat__badge">@((MarkupString)GetBadge(isActive, status))</span>
+                        <span class="topn-cat__badge">
+                            @if (status.Status == PredictionCompletionStatus.Complete)
+                            {
+                                <AppIcon Name="AppIconName.Check" Size="12" StrokeWidth="3" Class="topn-cat__check" />
+                            }
+                            else
+                            {
+                                @GetBadgeText(isActive, status)
+                            }
+                        </span>
                     </button>
                 }
             </div>
@@ -124,13 +133,8 @@
         return $"topn-cat {stateClass}";
     }
 
-    private string GetBadge(bool isActive, PredictionQuestionCompletionResult status)
+    private string GetBadgeText(bool isActive, PredictionQuestionCompletionResult status)
     {
-        if (status.Status == PredictionCompletionStatus.Complete)
-        {
-            return "<span class=\"topn-cat__check\">✓</span>";
-        }
-
         if (status.SelectedCount > 0 || isActive)
         {
             var required = Math.Max(1, status.RequiredCount);

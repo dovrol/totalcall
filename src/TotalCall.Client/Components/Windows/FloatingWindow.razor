@@ -20,9 +20,7 @@
         class="floating-window__header"
         data-window-handle
         title="@Localizer["FloatingWindow.DragHint"]">
-        <span class="floating-window__grab" aria-hidden="true">
-            <span></span><span></span><span></span>
-        </span>
+        <AppIcon Name="AppIconName.GripVertical" Size="14" Class="floating-window__grab" />
 
         <div class="floating-window__title-wrap">
             <strong id="@TitleElementId" class="floating-window__title">@Descriptor.Title</strong>
@@ -41,7 +39,7 @@
                 title="@Localizer["FloatingWindow.Minimize"]"
                 @onclick="OnMinimizeClicked"
                 @onclick:stopPropagation="true">
-                <span aria-hidden="true">—</span>
+                <AppIcon Name="AppIconName.Minus" Size="14" />
             </button>
             <button
                 type="button"

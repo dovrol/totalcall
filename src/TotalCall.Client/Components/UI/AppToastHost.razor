@@ -6,13 +6,15 @@
     @foreach (var message in Toasts.Messages)
     {
         <div class="@ClassFor(message)" role="@RoleFor(message)">
-            <span class="app-toast__icon" aria-hidden="true">@IconFor(message)</span>
+            <span class="app-toast__icon"><AppIcon Name="@IconFor(message)" Size="14" /></span>
             <span class="app-toast__text">@message.Text</span>
             <button
                 type="button"
                 class="app-toast__close"
                 aria-label="Close"
-                @onclick="() => Toasts.Dismiss(message.Id)">&#xD7;</button>
+                @onclick="() => Toasts.Dismiss(message.Id)">
+                <AppIcon Name="AppIconName.X" Size="14" />
+            </button>
         </div>
     }
 </div>
@@ -85,10 +87,10 @@
     private static string RoleFor(ToastMessage message) =>
         message.Kind == ToastKind.Error ? "alert" : "status";
 
-    private static string IconFor(ToastMessage message) => message.Kind switch
+    private static AppIconName IconFor(ToastMessage message) => message.Kind switch
     {
-        ToastKind.Success => "✓",
-        ToastKind.Error => "⚠",
-        _ => "ℹ"
+        ToastKind.Success => AppIconName.Check,
+        ToastKind.Error => AppIconName.TriangleAlert,
+        _ => AppIconName.Info
     };
 }

@@ -1,7 +1,8 @@
 @using System.Globalization
 @using System.Text.RegularExpressions
-@implements IDisposable
+@implements IAsyncDisposable
 @inject IStringLocalizer<SharedResource> Localizer
+@inject IJSRuntime JS
 @inject PredictionTextService Text
 @inject AthleteHistoryService AthleteHistoryService
 @inject AthleteDataSourcePreferenceService AthleteDataSources
@@ -17,76 +18,100 @@
 else
 {
     <section class="topn-workspace">
-        <TopNHeaderBar
-            CompetitionName="@Competition.Name"
-            ModuleTitle="@Text.GroupTitle(Competition, ActiveGroup)"
-            ActiveCategoryName="@GetCategoryName(ActiveQuestion)"
-            StatusLine="@ActiveStatusLine"
-            StatusKind="@ActiveStatusKind"
-            CompletedCategories="@CompletedCategoriesCount"
-            TotalCategories="@OrderedQuestions.Count"
-            LockLabel="@LockLabel"
-            LockDistance="@LockDistance"
-            CanSwitchModule="@CanSwitchModule"
-            IsModuleMenuOpen="@isModuleMenuOpen"
-            ModuleSwitchRequested="ToggleModuleMenu" />
+        @* ---------------- DESKTOP ---------------- *@
+        <div class="topn-desktop">
+            <TopNHeaderBar
+                CompetitionName="@Competition.Name"
+                ModuleTitle="@Text.GroupTitle(Competition, ActiveGroup)"
+                ActiveCategoryName="@GetCategoryName(ActiveQuestion)"
+                StatusLine="@ActiveStatusLine"
+                StatusKind="@ActiveStatusKind"
+                CompletedCategories="@CompletedCategoriesCount"
+                TotalCategories="@OrderedQuestions.Count"
+                LockLabel="@LockLabel"
+                LockDistance="@LockDistance"
+                CanSwitchModule="@CanSwitchModule"
+                IsModuleMenuOpen="@isModuleMenuOpen"
+                ModuleSwitchRequested="ToggleModuleMenu" />
 
-        <TopNCategoryStrip
-            Questions="OrderedQuestions"
-            StatusByQuestionId="StatusByQuestionId"
-            ActiveQuestionId="@ActiveQuestion.Id"
-            ShortLabelSelector="ShortCategoryLabel"
-            SectionSelector="GetCategorySectionName"
-            CategoryChanged="OnCategoryChanged"
-            StepRequested="StepCategory"
-            JumpRequested="OpenPalette" />
+            <TopNCategoryStrip
+                Questions="OrderedQuestions"
+                StatusByQuestionId="StatusByQuestionId"
+                ActiveQuestionId="@ActiveQuestion.Id"
+                ShortLabelSelector="ShortCategoryLabel"
+                SectionSelector="GetCategorySectionName"
+                CategoryChanged="OnCategoryChanged"
+                StepRequested="StepCategory"
+                JumpRequested="OpenPalette" />
 
-        <div class="topn-workspace__body">
-            <div class="topn-hint">
-                <AppIcon Name="AppIconName.Sparkles" Size="14" Class="topn-hint__icon" />
-                <span>@((MarkupString)Localizer["Predictions.TopN.EntryHint"].Value)</span>
-            </div>
-
-            <div class="topn-modebar">
-                <span class="topn-modebar__label">@Localizer["Predictions.TopN.DefaultModeLabel"]</span>
-                <div class="topn-seg" role="radiogroup" aria-label="@Localizer["Predictions.PredictionMode"]">
-                    <button
-                        type="button"
-                        class="@DefaultModeButtonClass(TopNEntryMode.Lifts)"
-                        @onclick="() => SetDefaultMode(TopNEntryMode.Lifts)">
-                        @Localizer["Predictions.PredictionModeLifts"]
-                    </button>
-                    <button
-                        type="button"
-                        class="@DefaultModeButtonClass(TopNEntryMode.Total)"
-                        @onclick="() => SetDefaultMode(TopNEntryMode.Total)">
-                        @Localizer["Predictions.PredictionModeTotal"]
-                    </button>
+            <div class="topn-workspace__body">
+                <div class="topn-hint">
+                    <AppIcon Name="AppIconName.Sparkles" Size="14" Class="topn-hint__icon" />
+                    <span>@((MarkupString)Localizer["Predictions.TopN.EntryHint"].Value)</span>
                 </div>
-                <span class="topn-modebar__hint">@Localizer["Predictions.TopN.DefaultModeHint"]</span>
-            </div>
 
-            <TopNSheet
+                <TopNSheet
+                    Slots="SlotViews"
+                    CanEditPredictions="CanEditPredictions"
+                    PickCta="@EmptySlotCta"
+                    FillPopPosition="@fillPopPosition"
+                    DraggingPosition="@draggingPosition"
+                    DragOverPosition="@dragOverPosition"
+                    EmptySlotClicked="OpenPicker"
+                    AthleteContextRequested="OpenContext"
+                    RemoveRequested="RemoveFromPosition"
+                    ModeToggled="ToggleRowMode"
+                    CellEdited="OnCellEdited"
+                    FillPopToggled="ToggleFillPop"
+                    QuickFillRequested="OnQuickFill"
+                    DragStarted="OnDragStart"
+                    DragEntered="OnDragEnter"
+                    Dropped="OnDrop"
+                    DragEnded="OnDragEnd" />
+
+                <TopNFooterTools
+                    CanEditPredictions="CanEditPredictions"
+                    SelectedCount="@ActiveSelectedCount"
+                    RequiredCount="@ActiveRequiredCount"
+                    EmptyCount="@EmptySlotCount"
+                    IsBulkMenuOpen="@isBulkMenuOpen"
+                    BulkMenuToggled="ToggleBulkMenu"
+                    BulkFillRequested="FillEmptyFromSource"
+                    SortRequested="SortByPredictedTotal"
+                    ClearRequested="ClearCategory" />
+            </div>
+        </div>
+
+        @* ---------------- MOBILE ---------------- *@
+        <div class="topn-mobile">
+            <TopNMobileHeader
+                ActiveCategoryName="@GetCategoryName(ActiveQuestion)"
+                CategoryIndex="@(ActiveQuestionIndex + 1)"
+                TotalCategories="@OrderedQuestions.Count"
+                CompletedCategories="@CompletedCategoriesCount"
+                ModuleTitle="@Text.GroupTitle(Competition, ActiveGroup)"
+                LockDistance="@LockDistance"
+                StatusLine="@MobileStatusLine"
+                StatusKind="@ActiveStatusKind"
+                SwitcherRequested="OpenMobileSwitcher" />
+
+            <TopNMobileList
                 Slots="SlotViews"
                 CanEditPredictions="CanEditPredictions"
                 PickCta="@EmptySlotCta"
+                ExpandedPosition="@expandedMobilePosition"
                 EmptySlotClicked="OpenPicker"
-                AthleteContextRequested="OpenContext"
-                RemoveRequested="RemoveFromPosition"
+                CardToggled="ToggleMobileCard"
+                MoveRequested="MoveByOffset"
                 ModeToggled="ToggleRowMode"
                 CellEdited="OnCellEdited"
-                QuickFillRequested="OnQuickFill" />
-
-            <TopNFooterTools
-                CanEditPredictions="CanEditPredictions"
-                SelectedCount="@ActiveSelectedCount"
-                RequiredCount="@ActiveRequiredCount"
-                EmptyCount="@EmptySlotCount"
-                AutoFillRequested="AutoFillByNominatedTotal"
-                SortRequested="SortByPredictedTotal"
-                ClearRequested="ClearCategory" />
+                NudgeRequested="NudgeCell"
+                QuickFillRequested="OnQuickFill"
+                AthleteContextRequested="OpenContext"
+                RemoveRequested="RemoveFromPosition" />
         </div>
 
+        @* ---------------- OVERLAYS ---------------- *@
         @if (isModuleMenuOpen && CanSwitchModule)
         {
             <TopNModuleMenu
@@ -109,6 +134,25 @@ else
                 ShortLabelSelector="ShortCategoryLabel"
                 CategoryChosen="OnPaletteCategoryChosen"
                 Dismissed="ClosePalette" />
+        }
+
+        @if (isMobileSwitcherOpen)
+        {
+            <TopNMobileSwitcher
+                CompetitionName="@Competition.Name"
+                Groups="Groups"
+                ActiveGroupId="@ActiveGroup.Id"
+                ModuleTitleSelector="GetModuleTitle"
+                ModuleValidationByGroupId="ModuleValidationByGroupId"
+                Questions="OrderedQuestions"
+                StatusByQuestionId="StatusByQuestionId"
+                ActiveQuestionId="@ActiveQuestion.Id"
+                ShortLabelSelector="ShortCategoryLabel"
+                SectionSelector="GetCategorySectionName"
+                CanSwitchModule="@CanSwitchModule"
+                ModuleChanged="OnModuleChanged"
+                CategoryChanged="OnSwitcherCategoryChosen"
+                Dismissed="CloseMobileSwitcher" />
         }
 
         @if (pickerSlotPosition is not null)
@@ -135,6 +179,7 @@ else
         <aside class="@ContextDrawerClass" aria-hidden="@(!IsContextOpen)">
             @if (IsContextOpen)
             {
+                <div class="topn-drawer__handle" aria-hidden="true"></div>
                 <button
                     type="button"
                     class="topn-drawer__close"
@@ -155,7 +200,7 @@ else
                     SelectedAthletesByPosition="SelectedAthletesByPosition"
                     AthleteContextRequested="OpenContext"
                     AthleteSelectionCleared="CloseContext"
-                    UseNominatedTotalRequested="AutoFillByNominatedTotal"
+                    UseNominatedTotalRequested="OnUseNominatedFromContext"
                     CompareAthletesRequested="OnCompareAthletesRequested" />
             }
         </aside>
@@ -212,9 +257,17 @@ else
     private int? pickerSlotPosition;
     private bool isModuleMenuOpen;
     private bool isPaletteOpen;
+    private bool isMobileSwitcherOpen;
+    private bool isBulkMenuOpen;
+    private int? fillPopPosition;
+    private int? expandedMobilePosition;
+    private int? draggingPosition;
+    private int? dragOverPosition;
     private string defaultMode = TopNEntryMode.Lifts;
     private int? pendingRemovalPosition;
     private string historySourceCode = ExternalAthleteSources.OpenIpf;
+    private DotNetObjectReference<TopNWorkspace>? selfRef;
+    private bool shortcutsAttached;
 
     private readonly Dictionary<int, string> modeByPosition = [];
     private readonly Dictionary<string, AthleteHistoryEntry?> historyByAthleteId = new(StringComparer.OrdinalIgnoreCase);
@@ -248,24 +301,38 @@ else
 
     private int EmptySlotCount => Math.Max(0, SlotsCount - CurrentPlacements.Count);
 
+    private int ActiveQuestionIndex
+    {
+        get
+        {
+            if (ActiveQuestion is null)
+            {
+                return 0;
+            }
+
+            for (var index = 0; index < OrderedQuestions.Count; index++)
+            {
+                if (OrderedQuestions[index].Id == ActiveQuestion.Id)
+                {
+                    return index;
+                }
+            }
+
+            return 0;
+        }
+    }
+
     private int CompletedCategoriesCount => OrderedQuestions
         .Count(question => StatusByQuestionId.TryGetValue(question.Id, out var status) &&
                            status.Status == PredictionCompletionStatus.Complete);
 
     private PredictionCompletionStatus ActiveStatusKind => ActiveQuestionStatus?.Status ?? PredictionCompletionStatus.NotStarted;
 
-    private string? ActiveStatusLine
-    {
-        get
-        {
-            if (ActiveQuestionStatus is null)
-            {
-                return null;
-            }
+    private string? ActiveStatusLine => ActiveQuestionStatus is null
+        ? null
+        : $"{ActiveQuestionStatus.SelectedCount} / {Math.Max(1, ActiveQuestionStatus.RequiredCount)} · {GetStatusLabel(ActiveQuestionStatus.Status)}";
 
-            return $"{ActiveQuestionStatus.SelectedCount} / {Math.Max(1, ActiveQuestionStatus.RequiredCount)} · {GetStatusLabel(ActiveQuestionStatus.Status)}";
-        }
-    }
+    private string MobileStatusLine => $"{ActiveSelectedCount} / {ActiveRequiredCount}";
 
     private IReadOnlyList<AthletePlacementPick> CurrentPlacements => ActiveQuestion is null
         ? []
@@ -322,6 +389,9 @@ else
         get
         {
             var placementsByPosition = CurrentPlacements.ToDictionary(placement => placement.Position);
+            var filledPositions = CurrentPlacements.Select(placement => placement.Position).ToArray();
+            var minFilled = filledPositions.Length == 0 ? 0 : filledPositions.Min();
+            var maxFilled = filledPositions.Length == 0 ? 0 : filledPositions.Max();
             var views = new List<TopNSlotView>(SlotsCount);
 
             for (var position = 1; position <= SlotsCount; position++)
@@ -347,6 +417,8 @@ else
                     IsContextActive = athlete is not null &&
                                       string.Equals(athlete.Id, selectedAthleteId, StringComparison.OrdinalIgnoreCase),
                     IsRemovePending = pendingRemovalPosition == position,
+                    CanMoveUp = athlete is not null && position > minFilled,
+                    CanMoveDown = athlete is not null && position < maxFilled,
                     Trend = BuildTrend(history),
                     TrendDeltaKg = history?.Analytics?.RecentTotalTrendKg,
                     CanUseNominated = athlete?.SeedTotalKg is not null,
@@ -439,16 +511,60 @@ else
         {
             pickerSlotPosition = null;
         }
+
+        if (expandedMobilePosition is not null &&
+            (expandedMobilePosition < 1 || expandedMobilePosition > SlotsCount ||
+             CurrentPlacements.All(placement => placement.Position != expandedMobilePosition)))
+        {
+            expandedMobilePosition = null;
+        }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (firstRender)
+        {
+            selfRef = DotNetObjectReference.Create(this);
+
+            try
+            {
+                await JS.InvokeVoidAsync("totalCallTopN.attachShortcuts", selfRef);
+                shortcutsAttached = true;
+            }
+            catch (JSException)
+            {
+                // The optional shortcut script may not be available yet.
+            }
+            catch (JSDisconnectedException)
+            {
+                // The app is already tearing down.
+            }
+        }
+
         await LoadMissingHistoriesAsync();
     }
 
-    public void Dispose()
+    public async ValueTask DisposeAsync()
     {
         AthleteDataSources.SourceChanged -= HandleDataSourceChanged;
+
+        if (shortcutsAttached)
+        {
+            try
+            {
+                await JS.InvokeVoidAsync("totalCallTopN.detachShortcuts");
+            }
+            catch (JSException)
+            {
+                // The script is already unavailable.
+            }
+            catch (JSDisconnectedException)
+            {
+                // The app is already tearing down.
+            }
+        }
+
+        selfRef?.Dispose();
     }
 
     // ---------- category + module navigation ----------
@@ -465,6 +581,10 @@ else
         pickerSlotPosition = null;
         pendingRemovalPosition = null;
         isPaletteOpen = false;
+        isMobileSwitcherOpen = false;
+        fillPopPosition = null;
+        isBulkMenuOpen = false;
+        expandedMobilePosition = null;
         modeByPosition.Clear();
         await LoadMissingHistoriesAsync();
     }
@@ -476,16 +596,7 @@ else
             return Task.CompletedTask;
         }
 
-        var index = -1;
-        for (var i = 0; i < OrderedQuestions.Count; i++)
-        {
-            if (OrderedQuestions[i].Id == ActiveQuestion.Id)
-            {
-                index = i;
-                break;
-            }
-        }
-
+        var index = ActiveQuestionIndex;
         var target = Math.Clamp(index + direction, 0, OrderedQuestions.Count - 1);
         return target == index ? Task.CompletedTask : OnCategoryChanged(OrderedQuestions[target].Id);
     }
@@ -497,6 +608,7 @@ else
     private async Task OnModuleChanged(string groupId)
     {
         isModuleMenuOpen = false;
+        isMobileSwitcherOpen = false;
         selectedAthleteId = null;
         pickerSlotPosition = null;
         if (GroupChanged.HasDelegate)
@@ -505,9 +617,32 @@ else
         }
     }
 
-    private void OpenPalette() => isPaletteOpen = true;
+    private void OpenPalette()
+    {
+        isPaletteOpen = true;
+        fillPopPosition = null;
+        isBulkMenuOpen = false;
+    }
 
     private void ClosePalette() => isPaletteOpen = false;
+
+    [JSInvokable]
+    public Task ToggleCommandPalette()
+    {
+        return InvokeAsync(() =>
+        {
+            if (isPaletteOpen)
+            {
+                ClosePalette();
+            }
+            else
+            {
+                OpenPalette();
+            }
+
+            StateHasChanged();
+        });
+    }
 
     private Task OnPaletteCategoryChosen(string questionId)
     {
@@ -515,7 +650,15 @@ else
         return OnCategoryChanged(questionId);
     }
 
-    private void SetDefaultMode(string mode) => defaultMode = TopNEntryMode.Normalize(mode);
+    private void OpenMobileSwitcher() => isMobileSwitcherOpen = true;
+
+    private void CloseMobileSwitcher() => isMobileSwitcherOpen = false;
+
+    private Task OnSwitcherCategoryChosen(string questionId)
+    {
+        isMobileSwitcherOpen = false;
+        return OnCategoryChanged(questionId);
+    }
 
     // ---------- athlete picker ----------
 
@@ -561,13 +704,18 @@ else
 
     private void CloseContext() => selectedAthleteId = null;
 
+    private Task OnUseNominatedFromContext()
+    {
+        return FillEmptyFromSource(TopNQuickFillKind.Nominated);
+    }
+
     private Task OnCompareAthletesRequested()
     {
         Toasts.ShowInfo(Localizer["Predictions.TopN.CompareSoon"]);
         return Task.CompletedTask;
     }
 
-    // ---------- placements: edit, mode, quick fill ----------
+    // ---------- per-row mode + edits ----------
 
     private string EffectiveMode(int position, AthletePlacementPick? placement)
     {
@@ -615,6 +763,47 @@ else
         return EmitAnswer(placements);
     }
 
+    private Task NudgeCell(TopNSheetEdit edit)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        if (!decimal.TryParse(edit.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out var delta))
+        {
+            return Task.CompletedTask;
+        }
+
+        var placement = CurrentPlacements.FirstOrDefault(item => item.Position == edit.Position);
+        if (placement is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var current = edit.Field switch
+        {
+            TopNSheetField.Squat => placement.PredictedSquatKg,
+            TopNSheetField.Bench => placement.PredictedBenchKg,
+            TopNSheetField.Deadlift => placement.PredictedDeadliftKg,
+            _ => placement.PredictedTotalKg
+        } ?? 0m;
+
+        var next = Math.Clamp(current + delta, 0m, 1500m);
+        if (next <= 0m)
+        {
+            next = Math.Max(0m, delta > 0 ? delta : 0m);
+        }
+
+        var updated = CurrentPlacements
+            .Select(item => item.Position == edit.Position
+                ? ApplyEdit(item, edit.Field, next == 0m ? null : next)
+                : item)
+            .ToArray();
+
+        return EmitAnswer(updated);
+    }
+
     private AthletePlacementPick ApplyEdit(AthletePlacementPick placement, string field, decimal? value)
     {
         if (string.Equals(field, TopNSheetField.Total, StringComparison.OrdinalIgnoreCase))
@@ -645,8 +834,22 @@ else
         };
     }
 
+    // ---------- fill (per-row popover + bulk) ----------
+
+    private void ToggleFillPop(int position)
+    {
+        fillPopPosition = fillPopPosition == position ? null : position;
+    }
+
+    private void ToggleBulkMenu()
+    {
+        isBulkMenuOpen = !isBulkMenuOpen;
+    }
+
     private async Task OnQuickFill(TopNQuickFill request)
     {
+        fillPopPosition = null;
+
         if (!CanEditPredictions || ActiveQuestion is null)
         {
             return;
@@ -665,9 +868,90 @@ else
             return;
         }
 
+        await EnsureHistoryAsync(athlete.Id);
         historyByAthleteId.TryGetValue(athlete.Id, out var history);
 
-        AthletePlacementPick? updated = request.Kind switch
+        var updated = BuildFromSource(placement, athlete, history, request.Kind);
+        if (updated is null)
+        {
+            return;
+        }
+
+        modeByPosition[request.Position] = HasLiftValues(updated) ? TopNEntryMode.Lifts : TopNEntryMode.Total;
+
+        var placements = CurrentPlacements
+            .Select(item => item.Position == request.Position ? updated : item)
+            .ToArray();
+
+        await EmitAnswer(placements);
+        Toasts.ShowSuccess(QuickFillToast(request.Kind, athlete.DisplayName));
+    }
+
+    private async Task FillEmptyFromSource(string kind)
+    {
+        isBulkMenuOpen = false;
+
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return;
+        }
+
+        var placements = CurrentPlacements.ToList();
+        var pickedIds = placements.Select(item => item.AthleteId).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var emptyPositions = Enumerable.Range(1, SlotsCount)
+            .Where(position => placements.All(placement => placement.Position != position))
+            .ToList();
+
+        if (emptyPositions.Count == 0)
+        {
+            Toasts.ShowInfo(Localizer["Predictions.TopN.NoEmptySlots"]);
+            return;
+        }
+
+        var candidates = EligibleAthletes
+            .Where(athlete => !pickedIds.Contains(athlete.Id))
+            .Take(emptyPositions.Count)
+            .ToList();
+
+        if (candidates.Count == 0)
+        {
+            Toasts.ShowInfo(Localizer["Predictions.Toast.AutoFill.Empty"]);
+            return;
+        }
+
+        if (kind != TopNQuickFillKind.Nominated)
+        {
+            foreach (var candidate in candidates)
+            {
+                await EnsureHistoryAsync(candidate.Id);
+            }
+        }
+
+        for (var index = 0; index < emptyPositions.Count && index < candidates.Count; index++)
+        {
+            var athlete = candidates[index];
+            var position = emptyPositions[index];
+            historyByAthleteId.TryGetValue(athlete.Id, out var history);
+
+            var seeded = new AthletePlacementPick { Position = position, AthleteId = athlete.Id };
+            var filled = BuildFromSource(seeded, athlete, history, kind) ?? seeded with { PredictedTotalKg = athlete.SeedTotalKg };
+
+            placements.Add(filled);
+            modeByPosition[position] = HasLiftValues(filled) ? TopNEntryMode.Lifts : TopNEntryMode.Total;
+        }
+
+        await EmitAnswer(placements);
+        await LoadMissingHistoriesAsync();
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.AutoFill.Success"]);
+    }
+
+    private static AthletePlacementPick? BuildFromSource(
+        AthletePlacementPick placement,
+        Athlete athlete,
+        AthleteHistoryEntry? history,
+        string kind)
+    {
+        return kind switch
         {
             TopNQuickFillKind.Nominated when athlete.SeedTotalKg is not null => placement with
             {
@@ -690,28 +974,14 @@ else
                 history.Bests.TotalKg),
             _ => null
         };
-
-        if (updated is null)
-        {
-            return;
-        }
-
-        modeByPosition[request.Position] = HasLiftValues(updated) ? TopNEntryMode.Lifts : TopNEntryMode.Total;
-
-        var placements = CurrentPlacements
-            .Select(item => item.Position == request.Position ? updated : item)
-            .ToArray();
-
-        await EmitAnswer(placements);
-
-        var message = request.Kind switch
-        {
-            TopNQuickFillKind.Nominated => Localizer["Predictions.Toast.QuickFill.Nominated", athlete.DisplayName].Value,
-            TopNQuickFillKind.Last => Localizer["Predictions.Toast.QuickFill.Last", athlete.DisplayName].Value,
-            _ => Localizer["Predictions.Toast.QuickFill.Best", athlete.DisplayName].Value
-        };
-        Toasts.ShowSuccess(message);
     }
+
+    private string QuickFillToast(string kind, string athleteName) => kind switch
+    {
+        TopNQuickFillKind.Nominated => Localizer["Predictions.Toast.QuickFill.Nominated", athleteName].Value,
+        TopNQuickFillKind.Last => Localizer["Predictions.Toast.QuickFill.Last", athleteName].Value,
+        _ => Localizer["Predictions.Toast.QuickFill.Best", athleteName].Value
+    };
 
     private static AthletePlacementPick FromResult(
         AthletePlacementPick placement,
@@ -738,6 +1008,128 @@ else
             PredictedDeadliftKg = null,
             PredictedTotalKg = total
         };
+    }
+
+    // ---------- reorder ----------
+
+    private void OnDragStart(int position)
+    {
+        if (!CanEditPredictions || CurrentPlacements.All(placement => placement.Position != position))
+        {
+            return;
+        }
+
+        draggingPosition = position;
+        dragOverPosition = position;
+    }
+
+    private void OnDragEnter(int position)
+    {
+        if (draggingPosition is not null)
+        {
+            dragOverPosition = position;
+        }
+    }
+
+    private Task OnDrop(int position)
+    {
+        if (draggingPosition is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var from = draggingPosition.Value;
+        draggingPosition = null;
+        dragOverPosition = null;
+        return MoveToPosition(from, position);
+    }
+
+    private void OnDragEnd()
+    {
+        draggingPosition = null;
+        dragOverPosition = null;
+    }
+
+    private Task MoveByOffset(TopNMove move)
+    {
+        return MoveToPosition(move.Position, move.Position + move.Delta);
+    }
+
+    private async Task MoveToPosition(int from, int to)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return;
+        }
+
+        to = Math.Clamp(to, 1, SlotsCount);
+        if (from == to)
+        {
+            return;
+        }
+
+        var ordered = CurrentPlacements.OrderBy(placement => placement.Position).ToList();
+        var source = ordered.FirstOrDefault(placement => placement.Position == from);
+        if (source is null)
+        {
+            return;
+        }
+
+        ordered.Remove(source);
+
+        // After removing the source the list is renumbered contiguously, so the
+        // target position maps directly to the insert index. This works for both
+        // upward and downward moves (the old "first placement with position >= to"
+        // logic left downward moves a no-op).
+        var insertIndex = Math.Clamp(to - 1, 0, ordered.Count);
+        ordered.Insert(insertIndex, source);
+
+        var renumbered = ordered
+            .Select((placement, index) => placement with { Position = index + 1 })
+            .ToArray();
+
+        RemapModesAfterReorder(ordered, renumbered);
+        pendingRemovalPosition = null;
+        if (expandedMobilePosition == from)
+        {
+            expandedMobilePosition = null;
+        }
+
+        await EmitAnswer(renumbered);
+    }
+
+    private void RemapModesAfterReorder(IReadOnlyList<AthletePlacementPick> beforeOrder, IReadOnlyList<AthletePlacementPick> afterOrder)
+    {
+        if (modeByPosition.Count == 0)
+        {
+            return;
+        }
+
+        var modeByAthlete = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var placement in beforeOrder)
+        {
+            if (modeByPosition.TryGetValue(placement.Position, out var mode))
+            {
+                modeByAthlete[placement.AthleteId] = mode;
+            }
+        }
+
+        modeByPosition.Clear();
+        foreach (var placement in afterOrder)
+        {
+            if (modeByAthlete.TryGetValue(placement.AthleteId, out var mode))
+            {
+                modeByPosition[placement.Position] = mode;
+            }
+        }
+    }
+
+    // ---------- mobile card expand ----------
+
+    private void ToggleMobileCard(int position)
+    {
+        expandedMobilePosition = expandedMobilePosition == position ? null : position;
+        pendingRemovalPosition = null;
     }
 
     // ---------- bulk actions ----------
@@ -809,6 +1201,10 @@ else
 
         pendingRemovalPosition = null;
         modeByPosition.Remove(position);
+        if (expandedMobilePosition == position)
+        {
+            expandedMobilePosition = null;
+        }
 
         if (string.Equals(selectedAthleteId, placement.AthleteId, StringComparison.OrdinalIgnoreCase))
         {
@@ -822,45 +1218,6 @@ else
         {
             Toasts.ShowSuccess(Localizer["Predictions.Toast.AthleteRemoved.Success", athleteName]);
         }
-    }
-
-    private async Task AutoFillByNominatedTotal()
-    {
-        if (!CanEditPredictions || ActiveQuestion is null)
-        {
-            return;
-        }
-
-        pendingRemovalPosition = null;
-        var placements = EligibleAthletes
-            .Take(SlotsCount)
-            .Select((athlete, index) =>
-            {
-                var existing = CurrentPlacements.FirstOrDefault(placement =>
-                    string.Equals(placement.AthleteId, athlete.Id, StringComparison.OrdinalIgnoreCase));
-
-                return new AthletePlacementPick
-                {
-                    Position = index + 1,
-                    AthleteId = athlete.Id,
-                    PredictedSquatKg = existing?.PredictedSquatKg,
-                    PredictedBenchKg = existing?.PredictedBenchKg,
-                    PredictedDeadliftKg = existing?.PredictedDeadliftKg,
-                    PredictedTotalKg = existing?.PredictedTotalKg
-                };
-            })
-            .ToArray();
-
-        if (placements.Length == 0)
-        {
-            Toasts.ShowInfo(Localizer["Predictions.Toast.AutoFill.Empty"]);
-            return;
-        }
-
-        modeByPosition.Clear();
-        await EmitAnswer(placements);
-        await LoadMissingHistoriesAsync();
-        Toasts.ShowSuccess(Localizer["Predictions.Toast.AutoFill.Success"]);
     }
 
     private async Task SortByPredictedTotal()
@@ -906,12 +1263,30 @@ else
 
         pendingRemovalPosition = null;
         selectedAthleteId = null;
+        expandedMobilePosition = null;
         modeByPosition.Clear();
         await EmitAnswer([]);
         Toasts.ShowSuccess(Localizer["Predictions.Toast.Clear.Success"]);
     }
 
     // ---------- history / trend ----------
+
+    private async Task EnsureHistoryAsync(string athleteId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteId) || historyByAthleteId.ContainsKey(athleteId))
+        {
+            return;
+        }
+
+        try
+        {
+            historyByAthleteId[athleteId] = await AthleteHistoryService.GetAthleteHistoryAsync(athleteId, Competition, historySourceCode);
+        }
+        catch
+        {
+            historyByAthleteId[athleteId] = null;
+        }
+    }
 
     private async Task LoadMissingHistoriesAsync()
     {
@@ -964,15 +1339,13 @@ else
             return [];
         }
 
-        var totals = history.RecentResults
+        return history.RecentResults
             .Select(result => result.TotalKg)
             .Where(total => total is not null)
             .Select(total => total!.Value)
             .Take(6)
             .Reverse()
             .ToArray();
-
-        return totals;
     }
 
     private async void HandleDataSourceChanged(string competitionId, string source)
@@ -1081,11 +1454,6 @@ else
         PredictionCompletionStatus.InProgress => Localizer["Predictions.Status.InProgress"],
         _ => Localizer["Predictions.Status.NotStarted"]
     };
-
-    private string DefaultModeButtonClass(string mode) => string.Join(
-        " ",
-        "topn-seg__btn",
-        string.Equals(defaultMode, mode, StringComparison.OrdinalIgnoreCase) ? "topn-seg__btn--on" : null);
 
     private static bool HasLiftValues(AthletePlacementPick? placement) =>
         placement?.PredictedSquatKg is not null ||

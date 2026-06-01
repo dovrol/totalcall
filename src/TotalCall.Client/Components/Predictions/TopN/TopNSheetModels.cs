@@ -45,6 +45,10 @@ public sealed record TopNSlotView
 
     public bool IsRemovePending { get; init; }
 
+    public bool CanMoveUp { get; init; }
+
+    public bool CanMoveDown { get; init; }
+
     public IReadOnlyList<decimal> Trend { get; init; } = [];
 
     public decimal? TrendDeltaKg { get; init; }
@@ -67,3 +71,6 @@ public sealed record TopNSheetEdit(int Position, string Field, string Value);
 
 /// <summary>A quick-fill request emitted by a pending sheet row.</summary>
 public sealed record TopNQuickFill(int Position, string Kind);
+
+/// <summary>A reorder request: move the slot at <see cref="Position"/> by <see cref="Delta"/> places.</summary>
+public sealed record TopNMove(int Position, int Delta);

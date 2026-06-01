@@ -1,0 +1,305 @@
+@using System.Globalization
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="ms-list">
+    @foreach (var slot in Slots)
+    {
+        @if (slot.Athlete is null)
+        {
+            <button type="button" class="ms-card ms-card--empty" disabled="@(!CanEditPredictions)" @onclick="() => EmptySlotClicked.InvokeAsync(slot.Position)">
+                <span class="ms-card__rk">@slot.Position</span>
+                <span class="ms-card__addt">@PickCtaLabel</span>
+                <span class="ms-card__plus"><AppIcon Name="AppIconName.Plus" Size="16" /></span>
+            </button>
+        }
+        else
+        {
+            var isExpanded = ExpandedPosition == slot.Position;
+            var isTotal = string.Equals(slot.Mode, TopNEntryMode.Total, StringComparison.OrdinalIgnoreCase);
+            var isPending = IsPending(slot);
+
+            <div class="@CardClass(slot, isExpanded)">
+                <div class="ms-ctop">
+                    @if (!isExpanded)
+                    {
+                        <div class="ms-move">
+                            <button type="button" aria-label="@Localizer["Predictions.MoveUp"]" disabled="@(!CanEditPredictions || !slot.CanMoveUp)" @onclick="() => MoveRequested.InvokeAsync(new TopNMove(slot.Position, -1))"><AppIcon Name="AppIconName.ChevronRight" Size="12" Class="ms-chevron--up" /></button>
+                            <button type="button" aria-label="@Localizer["Predictions.MoveDown"]" disabled="@(!CanEditPredictions || !slot.CanMoveDown)" @onclick="() => MoveRequested.InvokeAsync(new TopNMove(slot.Position, 1))"><AppIcon Name="AppIconName.ChevronRight" Size="12" Class="ms-chevron--down" /></button>
+                        </div>
+                    }
+                    <div class="ms-card__rk">@slot.Position</div>
+                    <div class="ms-card__av">@Initials(slot.Athlete)</div>
+                    <div class="ms-card__who">
+                        <div class="ms-card__n">@slot.Athlete.DisplayName <CountryFlag Code="@slot.Athlete.CountryCode" CountryName="@slot.Athlete.CountryName" Class="ms-card__flag" /></div>
+                        <div class="ms-card__c">@CountryLine(slot.Athlete)</div>
+                    </div>
+                    @if (!isExpanded)
+                    {
+                        <div class="ms-card__pred">
+                            <div class="ms-card__pred-k">@Localizer["Predictions.PredictedShort"]</div>
+                            <div class="ms-card__pred-v">@FormatPred(slot.Placement?.PredictedTotalKg)</div>
+                            @if (!string.IsNullOrWhiteSpace(FormatDelta(slot.TrendDeltaKg)))
+                            {
+                                <div class="ms-card__pred-d">@FormatDelta(slot.TrendDeltaKg)</div>
+                            }
+                        </div>
+                    }
+                    <button type="button" class="ms-card__chev" @onclick="() => CardToggled.InvokeAsync(slot.Position)" aria-label="@Localizer["Predictions.EditPredictedTotal"]">
+                        <AppIcon Name="AppIconName.ChevronRight" Size="16" Class="@ChevronClass(isExpanded)" />
+                    </button>
+                </div>
+
+                @if (!isExpanded)
+                {
+                    <button type="button" class="ms-clifts" @onclick="() => CardToggled.InvokeAsync(slot.Position)">
+                        @if (isPending)
+                        {
+                            <span class="ms-clifts__muted">@Localizer["Predictions.TopN.MobileTapToEnter"]</span>
+                        }
+                        else if (isTotal)
+                        {
+                            <span>@Localizer["Predictions.TopN.MobileTotalManual"]</span>
+                        }
+                        else
+                        {
+                            <span>SQ <b>@FormatPred(slot.Placement?.PredictedSquatKg)</b> <span class="ms-clifts__sep">·</span> BP <b>@FormatPred(slot.Placement?.PredictedBenchKg)</b> <span class="ms-clifts__sep">·</span> DL <b>@FormatPred(slot.Placement?.PredictedDeadliftKg)</b></span>
+                        }
+                        <span class="@PillClass(isTotal)">@(isTotal ? Localizer["Predictions.TopN.ModeTotalShort"] : Localizer["Predictions.TopN.ModeLiftsShort"])</span>
+                    </button>
+                }
+                <div class="@EditRegionClass(isExpanded)" aria-hidden="@(!isExpanded)" inert="@(isExpanded ? null : string.Empty)">
+                    <div class="ms-edit-region__inner">
+                        <div class="ms-edit">
+                        @if (CanEditPredictions)
+                        {
+                            <div class="ms-edit__seg" role="radiogroup">
+                                <button type="button" class="@EsegClass(isTotal)" @onclick="() => SetMode(slot, TopNEntryMode.Total, isTotal)">@Localizer["Predictions.TopN.ModeTotalShort"]</button>
+                                <button type="button" class="@EsegClass(!isTotal)" @onclick="() => SetMode(slot, TopNEntryMode.Lifts, isTotal)">@Localizer["Predictions.TopN.ModeLiftsShort"]</button>
+                            </div>
+                        }
+
+                        @if (isTotal)
+                        {
+                            <div class="ms-field">
+                                <label>@Localizer["Predictions.PredictedTotal"]</label>
+                                <div class="ms-field__inp ms-field__inp--total">
+                                    <input type="text" inputmode="decimal" value="@FormatCell(slot.Placement?.PredictedTotalKg)" disabled="@(!CanEditPredictions)" @onchange="args => EmitEdit(slot.Position, TopNSheetField.Total, args)" />
+                                    <span class="ms-field__u">@Localizer["Predictions.TopN.KgUnit"]</span>
+                                    @if (CanEditPredictions)
+                                    {
+                                        <span class="ms-field__step">
+                                            <button type="button" @onclick="() => Nudge(slot.Position, TopNSheetField.Total, 2.5m)" aria-label="+2,5"><AppIcon Name="AppIconName.ChevronRight" Size="11" Class="ms-chevron--up" /></button>
+                                            <button type="button" @onclick="() => Nudge(slot.Position, TopNSheetField.Total, -2.5m)" aria-label="-2,5"><AppIcon Name="AppIconName.ChevronRight" Size="11" Class="ms-chevron--down" /></button>
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            @foreach (var lift in Lifts)
+                            {
+                                <div class="ms-field">
+                                    <label>@lift.Label</label>
+                                    <div class="ms-field__inp">
+                                        <input type="text" inputmode="decimal" value="@FormatCell(lift.Value(slot.Placement))" disabled="@(!CanEditPredictions)" @onchange="args => EmitEdit(slot.Position, lift.Field, args)" />
+                                        <span class="ms-field__u">@Localizer["Predictions.TopN.KgUnit"]</span>
+                                        @if (CanEditPredictions)
+                                        {
+                                            <span class="ms-field__step">
+                                                <button type="button" @onclick="() => Nudge(slot.Position, lift.Field, 2.5m)" aria-label="+2,5"><AppIcon Name="AppIconName.ChevronRight" Size="11" Class="ms-chevron--up" /></button>
+                                                <button type="button" @onclick="() => Nudge(slot.Position, lift.Field, -2.5m)" aria-label="-2,5"><AppIcon Name="AppIconName.ChevronRight" Size="11" Class="ms-chevron--down" /></button>
+                                            </span>
+                                        }
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="ms-etotal">
+                                <span class="ms-etotal__k">@Localizer["Predictions.PredictedTotal"]</span>
+                                <span class="ms-etotal__v">@FormatPred(slot.Placement?.PredictedTotalKg) @Localizer["Predictions.TopN.KgUnit"]</span>
+                            </div>
+                        }
+
+                        @if (CanEditPredictions && HasAnyQuickFill(slot))
+                        {
+                            <div class="ms-equick">
+                                @if (slot.CanUseNominated)
+                                {
+                                    <button type="button" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Nominated))"><span class="ms-equick__ic"><AppIcon Name="AppIconName.Target" Size="12" /></span> @Localizer["Predictions.Profile.Nomination"]</button>
+                                }
+                                @if (slot.CanUseLast)
+                                {
+                                    <button type="button" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Last))"><span class="ms-equick__ic"><AppIcon Name="AppIconName.Clock" Size="12" /></span> @Localizer["Predictions.LastResult"]</button>
+                                }
+                                @if (slot.CanUseBest)
+                                {
+                                    <button type="button" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Best))"><span class="ms-equick__ic"><AppIcon Name="AppIconName.Trophy" Size="12" /></span> @Localizer["Predictions.BestResult"]</button>
+                                }
+                                <button type="button" @onclick="() => AthleteContextRequested.InvokeAsync(slot.Athlete.Id)"><span class="ms-equick__ic"><AppIcon Name="AppIconName.BarChart" Size="12" /></span> @Localizer["Predictions.Analytics"]</button>
+                            </div>
+                        }
+
+                        <div class="ms-eacts">
+                            <button type="button" class="ms-eacts__del" disabled="@(!CanEditPredictions)" @onclick="() => RemoveRequested.InvokeAsync(slot.Position)" aria-label="@Localizer["Predictions.RemoveAthlete"]">
+                                <AppIcon Name="AppIconName.Trash2" Size="15" />
+                            </button>
+                            <button type="button" class="ms-eacts__save" @onclick="() => CardToggled.InvokeAsync(slot.Position)">@Localizer["Predictions.SaveAndNext"]</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<TopNSlotView> Slots { get; set; } = [];
+
+    [Parameter]
+    public bool CanEditPredictions { get; set; }
+
+    [Parameter]
+    public string PickCta { get; set; } = string.Empty;
+
+    [Parameter]
+    public int? ExpandedPosition { get; set; }
+
+    [Parameter]
+    public EventCallback<int> EmptySlotClicked { get; set; }
+
+    [Parameter]
+    public EventCallback<int> CardToggled { get; set; }
+
+    [Parameter]
+    public EventCallback<TopNMove> MoveRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> ModeToggled { get; set; }
+
+    [Parameter]
+    public EventCallback<TopNSheetEdit> CellEdited { get; set; }
+
+    [Parameter]
+    public EventCallback<TopNSheetEdit> NudgeRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<TopNQuickFill> QuickFillRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<string> AthleteContextRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> RemoveRequested { get; set; }
+
+    private sealed record LiftField(string Label, string Field, Func<AthletePlacementPick?, decimal?> Value);
+
+    private IReadOnlyList<LiftField> Lifts =>
+    [
+        new(Localizer["Predictions.TopN.MobileSquat"], TopNSheetField.Squat, p => p?.PredictedSquatKg),
+        new(Localizer["Predictions.TopN.MobileBench"], TopNSheetField.Bench, p => p?.PredictedBenchKg),
+        new(Localizer["Predictions.TopN.MobileDeadlift"], TopNSheetField.Deadlift, p => p?.PredictedDeadliftKg),
+    ];
+
+    private string PickCtaLabel => string.IsNullOrWhiteSpace(PickCta)
+        ? Localizer["Predictions.PickAthleteCta"]
+        : PickCta;
+
+    private static bool IsPending(TopNSlotView slot) =>
+        slot.Placement?.PredictedTotalKg is null &&
+        slot.Placement?.PredictedSquatKg is null &&
+        slot.Placement?.PredictedBenchKg is null &&
+        slot.Placement?.PredictedDeadliftKg is null;
+
+    private static bool HasAnyQuickFill(TopNSlotView slot) =>
+        slot.CanUseNominated || slot.CanUseLast || slot.CanUseBest;
+
+    private Task SetMode(TopNSlotView slot, string mode, bool isTotal)
+    {
+        var currentlyTotal = isTotal;
+        var wantTotal = string.Equals(mode, TopNEntryMode.Total, StringComparison.OrdinalIgnoreCase);
+        return currentlyTotal == wantTotal ? Task.CompletedTask : ModeToggled.InvokeAsync(slot.Position);
+    }
+
+    private Task EmitEdit(int position, string field, ChangeEventArgs args) =>
+        CellEdited.InvokeAsync(new TopNSheetEdit(position, field, args.Value?.ToString() ?? string.Empty));
+
+    private Task Nudge(int position, string field, decimal delta) =>
+        NudgeRequested.InvokeAsync(new TopNSheetEdit(position, field, delta.ToString(CultureInfo.InvariantCulture)));
+
+    private string CardClass(TopNSlotView slot, bool expanded) => string.Join(
+        " ",
+        "ms-card",
+        slot.Position == 1 ? "ms-card--lead" : null,
+        expanded ? "ms-card--editing" : null,
+        slot.IsContextActive ? "ms-card--context" : null);
+
+    private static string PillClass(bool isTotal) => string.Join(
+        " ",
+        "ms-clifts__pill",
+        isTotal ? "ms-clifts__pill--total" : null);
+
+    private static string EsegClass(bool on) => string.Join(
+        " ",
+        "ms-edit__seg-btn",
+        on ? "ms-edit__seg-btn--on" : null);
+
+    private static string ChevronClass(bool expanded) => string.Join(
+        " ",
+        "ms-card__chev-icon",
+        expanded ? "ms-card__chev-icon--expanded" : null);
+
+    private static string EditRegionClass(bool expanded) => string.Join(
+        " ",
+        "ms-edit-region",
+        expanded ? "ms-edit-region--open" : null);
+
+    private string CountryLine(Athlete athlete)
+    {
+        var country = athlete.CountryName ?? athlete.CountryCode ?? string.Empty;
+        if (athlete.SeedTotalKg is null)
+        {
+            return country;
+        }
+
+        var nom = $"{Localizer["Predictions.NominatedShort"]} {athlete.SeedTotalKg.Value.ToString("0.#", CultureInfo.CurrentCulture)}";
+        return string.IsNullOrWhiteSpace(country) ? nom : $"{country} · {nom}";
+    }
+
+    private static string Initials(Athlete athlete)
+    {
+        var parts = athlete.DisplayName
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        if (parts.Length == 0)
+        {
+            return "?";
+        }
+
+        if (parts.Length == 1)
+        {
+            return parts[0][..Math.Min(2, parts[0].Length)].ToUpperInvariant();
+        }
+
+        return $"{parts[0][0]}{parts[1][0]}".ToUpperInvariant();
+    }
+
+    private static string FormatPred(decimal? value) => value is null
+        ? "—"
+        : value.Value.ToString("0.#", CultureInfo.CurrentCulture);
+
+    private static string FormatCell(decimal? value) => value?.ToString("0.###", CultureInfo.CurrentCulture) ?? string.Empty;
+
+    private static string FormatDelta(decimal? value)
+    {
+        if (value is null || value.Value == 0m)
+        {
+            return string.Empty;
+        }
+
+        var sign = value.Value > 0 ? "+" : string.Empty;
+        return $"{sign}{value.Value.ToString("0.#", CultureInfo.CurrentCulture)}";
+    }
+}

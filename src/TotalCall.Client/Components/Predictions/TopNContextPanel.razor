@@ -227,7 +227,7 @@
                             @if (SelectedAthletePredictedTotalKg is not null)
                             {
                                 <div class="mid @DeltaClass">
-                                    <span class="arr">→</span>
+                                    <AppIcon Name="AppIconName.ArrowRight" Size="15" Class="arr" />
                                     <span class="d">@DeltaText</span>
                                 </div>
                                 <div class="hc r">
@@ -248,7 +248,7 @@
                     {
                         var described = DescribeSignal(signal);
                         <div class="sp-sig @described.Tone">
-                            <div class="si" aria-hidden="true">@SignalIcon(signal)</div>
+                            <div class="si"><AppIcon Name="@SignalIcon(signal)" Size="15" /></div>
                             <div class="sk">@described.Label</div>
                             <div class="sv">
                                 @described.Value
@@ -543,13 +543,17 @@
         _ => Localizer["Predictions.Profile.LevelLow"]
     };
 
-    private string SignalIcon(AthleteSignal signal) => signal.Kind switch
+    private static AppIconName SignalIcon(AthleteSignal signal) => signal.Kind switch
     {
-        AthleteSignalKind.Trend => signal.Tone == AthleteSignalTone.Down ? "↘" : signal.Tone == AthleteSignalTone.Up ? "↗" : "→",
-        AthleteSignalKind.LastStart => "◎",
-        AthleteSignalKind.AttemptSuccess => "✓",
-        AthleteSignalKind.Stability => "∿",
-        _ => "•"
+        AthleteSignalKind.Trend => signal.Tone == AthleteSignalTone.Down
+            ? AppIconName.TrendDown
+            : signal.Tone == AthleteSignalTone.Up
+                ? AppIconName.TrendUp
+                : AppIconName.ArrowRight,
+        AthleteSignalKind.LastStart => AppIconName.CircleDot,
+        AthleteSignalKind.AttemptSuccess => AppIconName.Check,
+        AthleteSignalKind.Stability => AppIconName.Waves,
+        _ => AppIconName.MoreHorizontal
     };
 
     private (string Label, string Value, string? Sub, string Tone) DescribeSignal(AthleteSignal signal)
@@ -780,7 +784,7 @@
             title: Localizer["Predictions.HistoryDialogTitle", SelectedAthlete.DisplayName],
             predictedTotalKg: SelectedAthletePredictedTotalKg);
 
-        return Task.CompletedTask;
+        return AthleteSelectionCleared.InvokeAsync();
     }
 
     private void ToggleShowAllNominated()

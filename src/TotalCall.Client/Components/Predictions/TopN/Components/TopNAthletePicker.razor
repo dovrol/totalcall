@@ -18,7 +18,6 @@
             <div class="topn-picker__search">
                 <AppIcon Name="AppIconName.Search" Size="15" Class="topn-picker__search-icon" />
                 <input
-                    @ref="_searchInput"
                     type="text"
                     value="@_query"
                     @oninput="OnQueryInput"
@@ -105,7 +104,6 @@
     [Parameter]
     public EventCallback Dismissed { get; set; }
 
-    private ElementReference _searchInput;
     private string _query = string.Empty;
     private string _sort = "nom-desc";
     private IReadOnlyDictionary<string, int> _seedRanks = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
@@ -121,21 +119,6 @@
             .ThenBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
             .Select((athlete, index) => (athlete.Id, Rank: index + 1))
             .ToDictionary(item => item.Id, item => item.Rank, StringComparer.OrdinalIgnoreCase);
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            try
-            {
-                await _searchInput.FocusAsync();
-            }
-            catch
-            {
-                // focus best-effort
-            }
-        }
     }
 
     private void OnQueryInput(ChangeEventArgs args) => _query = args.Value?.ToString() ?? string.Empty;

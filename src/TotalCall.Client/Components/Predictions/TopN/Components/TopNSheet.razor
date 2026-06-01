@@ -16,6 +16,11 @@
     <div class="topn-sheet__body">
         @foreach (var slot in Slots)
         {
+            @if (ShowDropLine(slot.Position))
+            {
+                <div class="topn-dropline"><span class="topn-dropline__label">@Localizer["Predictions.TopN.DropTo", slot.Position]</span></div>
+            }
+
             @if (slot.Athlete is null)
             {
                 <button
@@ -23,10 +28,10 @@
                     class="topn-row topn-row--empty"
                     disabled="@(!CanEditPredictions)"
                     @onclick="() => EmptySlotClicked.InvokeAsync(slot.Position)">
-                    <span class="topn-cell"><span class="topn-row__rank">@slot.Position</span></span>
+                    <span class="topn-cell"><span class="topn-pos"><span class="topn-grip"></span><span class="topn-row__rank">@slot.Position</span></span></span>
                     <span class="topn-cell">
                         <span class="topn-who">
-                            <span class="topn-who__av topn-who__av--add">+</span>
+                            <span class="topn-who__av topn-who__av--add"><AppIcon Name="AppIconName.Plus" Size="16" /></span>
                             <span class="topn-who__name topn-who__name--muted">@PickCtaLabel</span>
                         </span>
                     </span>
@@ -41,11 +46,24 @@
             else
             {
                 var isPending = IsPending(slot);
-                var isTotal = string.Equals(slot.Mode, TopNEntryMode.Total, StringComparison.OrdinalIgnoreCase);
+                var isTotal = !isPending && string.Equals(slot.Mode, TopNEntryMode.Total, StringComparison.OrdinalIgnoreCase);
 
                 <div class="@RowGroupClass(slot)">
-                    <div class="@RowClass(slot)">
-                        <div class="topn-cell"><span class="topn-row__rank">@slot.Position</span></div>
+                    <div
+                        class="@RowClass(slot)"
+                        @ondragover:preventDefault="true"
+                        @ondragenter="() => DragEntered.InvokeAsync(slot.Position)"
+                        @ondrop="() => Dropped.InvokeAsync(slot.Position)">
+                        <div class="topn-cell">
+                            <div
+                                class="topn-pos"
+                                draggable="@DraggableValue"
+                                @ondragstart="() => DragStarted.InvokeAsync(slot.Position)"
+                                @ondragend="() => DragEnded.InvokeAsync()">
+                                <span class="topn-grip" title="@Localizer["Predictions.TopN.DragHint"]"><AppIcon Name="AppIconName.GripVertical" Size="14" /></span>
+                                <span class="topn-row__rank">@slot.Position</span>
+                            </div>
+                        </div>
 
                         <div class="topn-cell">
                             <div class="topn-who">
@@ -65,7 +83,7 @@
                                             <span>@Localizer["Predictions.NominatedShort"] <strong>@Localizer["Common.Tbd"]</strong></span>
                                         }
                                     </div>
-                                    @if (CanEditPredictions)
+                                    @if (CanEditPredictions && !isPending)
                                     {
                                         <button
                                             type="button"
@@ -73,7 +91,7 @@
                                             @onclick="() => ModeToggled.InvokeAsync(slot.Position)"
                                             title="@Localizer["Predictions.TopN.ToggleMode"]">
                                             <span>@(isTotal ? Localizer["Predictions.TopN.ModeTotalShort"] : Localizer["Predictions.TopN.ModeLiftsShort"])</span>
-                                            <span class="topn-modepill__swap" aria-hidden="true">⇄</span>
+                                            <AppIcon Name="AppIconName.ArrowLeftRight" Size="10" Class="topn-modepill__swap" />
                                         </button>
                                     }
                                 </div>
@@ -132,9 +150,58 @@
                                     @onchange="args => EmitEdit(slot.Position, TopNSheetField.Deadlift, args)" />
                             </div>
                             <div class="topn-cell topn-cell--num">
-                                <span class="@PredClass(slot.Placement?.PredictedTotalKg)">
-                                    <small>@Localizer["Predictions.PredictedShort"]</small>@FormatPred(slot.Placement?.PredictedTotalKg)
-                                </span>
+                                @if (isPending && CanEditPredictions && HasAnyQuickFill(slot))
+                                {
+                                    <div class="topn-fillwrap">
+                                        <button
+                                            type="button"
+                                            class="@FillMiniClass(slot.Position)"
+                                            title="@Localizer["Predictions.TopN.FillFromData"]"
+                                            @onclick="() => FillPopToggled.InvokeAsync(slot.Position)">
+                                            <AppIcon Name="AppIconName.Download" Size="12" Class="topn-fillmini__ic" />
+                                            <span>@Localizer["Predictions.TopN.FromData"]</span>
+                                            <AppIcon Name="AppIconName.ChevronRight" Size="10" Class="topn-fillmini__ch" />
+                                        </button>
+
+                                        @if (FillPopPosition == slot.Position)
+                                        {
+                                            <div class="topn-fillpop">
+                                                <div class="topn-fillpop__head">@Localizer["Predictions.TopN.FillFromHeading"]</div>
+                                                @if (slot.CanUseNominated)
+                                                {
+                                                    <button type="button" class="topn-fill-opt" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Nominated))">
+                                                        <span class="topn-fill-opt__ic"><AppIcon Name="AppIconName.Target" Size="13" /></span>
+                                                        <span class="topn-fill-opt__t">@Localizer["Predictions.NominatedTotal"]</span>
+                                                        <span class="topn-fill-opt__v">@FormatPred(slot.NominatedTotalKg)</span>
+                                                    </button>
+                                                }
+                                                @if (slot.CanUseLast)
+                                                {
+                                                    <button type="button" class="topn-fill-opt" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Last))">
+                                                        <span class="topn-fill-opt__ic"><AppIcon Name="AppIconName.Clock" Size="13" /></span>
+                                                        <span class="topn-fill-opt__t">@Localizer["Predictions.LastResult"]</span>
+                                                        <span class="topn-fill-opt__v">@FormatPred(slot.LastTotalKg)</span>
+                                                    </button>
+                                                }
+                                                @if (slot.CanUseBest)
+                                                {
+                                                    <button type="button" class="topn-fill-opt" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Best))">
+                                                        <span class="topn-fill-opt__ic"><AppIcon Name="AppIconName.Trophy" Size="13" /></span>
+                                                        <span class="topn-fill-opt__t">@Localizer["Predictions.BestResult"]</span>
+                                                        <span class="topn-fill-opt__v">@FormatPred(slot.BestTotalKg)</span>
+                                                    </button>
+                                                }
+                                                <div class="topn-fillpop__note">@Localizer["Predictions.TopN.FillManualNote"]</div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="@PredClass(slot.Placement?.PredictedTotalKg)">
+                                        <small>@Localizer["Predictions.PredictedShort"]</small>@FormatPred(slot.Placement?.PredictedTotalKg)
+                                    </span>
+                                }
                             </div>
                         }
 
@@ -174,37 +241,6 @@
                         </div>
                     </div>
 
-                    @if (isPending && CanEditPredictions && HasAnyQuickFill(slot))
-                    {
-                        <div class="topn-fill">
-                            <span class="topn-fill__label">@Localizer["Predictions.TopN.QuickFillLabel"]</span>
-                            @if (slot.CanUseNominated)
-                            {
-                                <button type="button" class="topn-fill__chip" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Nominated))">
-                                    <AppIcon Name="AppIconName.Target" Size="13" Class="topn-fill__chip-icon" />
-                                    <span>@Localizer["Predictions.UseNominatedTotal"]</span>
-                                    <strong>@FormatKg(slot.NominatedTotalKg)</strong>
-                                </button>
-                            }
-                            @if (slot.CanUseLast)
-                            {
-                                <button type="button" class="topn-fill__chip" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Last))">
-                                    <AppIcon Name="AppIconName.Clock" Size="13" Class="topn-fill__chip-icon" />
-                                    <span>@Localizer["Predictions.UseLastResult"]</span>
-                                    <strong>@FormatKg(slot.LastTotalKg)</strong>
-                                </button>
-                            }
-                            @if (slot.CanUseBest)
-                            {
-                                <button type="button" class="topn-fill__chip" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Best))">
-                                    <AppIcon Name="AppIconName.Trophy" Size="13" Class="topn-fill__chip-icon" />
-                                    <span>@Localizer["Predictions.UseBestResult"]</span>
-                                    <strong>@FormatKg(slot.BestTotalKg)</strong>
-                                </button>
-                            }
-                            <span class="topn-fill__or">@Localizer["Predictions.TopN.QuickFillOr"]</span>
-                        </div>
-                    }
                 </div>
             }
         }
@@ -222,6 +258,15 @@
     public string PickCta { get; set; } = string.Empty;
 
     [Parameter]
+    public int? FillPopPosition { get; set; }
+
+    [Parameter]
+    public int? DraggingPosition { get; set; }
+
+    [Parameter]
+    public int? DragOverPosition { get; set; }
+
+    [Parameter]
     public EventCallback<int> EmptySlotClicked { get; set; }
 
     [Parameter]
@@ -237,7 +282,24 @@
     public EventCallback<TopNSheetEdit> CellEdited { get; set; }
 
     [Parameter]
+    public EventCallback<int> FillPopToggled { get; set; }
+
+    [Parameter]
     public EventCallback<TopNQuickFill> QuickFillRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> DragStarted { get; set; }
+
+    [Parameter]
+    public EventCallback<int> DragEntered { get; set; }
+
+    [Parameter]
+    public EventCallback<int> Dropped { get; set; }
+
+    [Parameter]
+    public EventCallback DragEnded { get; set; }
+
+    private string DraggableValue => CanEditPredictions ? "true" : "false";
 
     private string PickCtaLabel => string.IsNullOrWhiteSpace(PickCta)
         ? Localizer["Predictions.PickAthleteCta"]
@@ -252,6 +314,11 @@
     private static bool HasAnyQuickFill(TopNSlotView slot) =>
         slot.CanUseNominated || slot.CanUseLast || slot.CanUseBest;
 
+    private bool ShowDropLine(int position) =>
+        DraggingPosition is not null &&
+        DragOverPosition == position &&
+        DraggingPosition != position;
+
     private Task EmitEdit(int position, string field, ChangeEventArgs args) =>
         CellEdited.InvokeAsync(new TopNSheetEdit(position, field, args.Value?.ToString() ?? string.Empty));
 
@@ -265,12 +332,19 @@
         " ",
         "topn-row",
         slot.Position == 1 ? "topn-row--lead" : null,
-        slot.IsContextActive ? "topn-row--context" : null);
+        slot.IsContextActive ? "topn-row--context" : null,
+        DraggingPosition == slot.Position ? "topn-row--dragging" : null,
+        DraggingPosition is not null && DraggingPosition != slot.Position ? "topn-row--shifted" : null);
 
     private string ModePillClass(bool isTotal) => string.Join(
         " ",
         "topn-modepill",
         isTotal ? "topn-modepill--total" : null);
+
+    private string FillMiniClass(int position) => string.Join(
+        " ",
+        "topn-fillmini",
+        FillPopPosition == position ? "topn-fillmini--on" : null);
 
     private static string PredClass(decimal? total) => string.Join(
         " ",

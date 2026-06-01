@@ -5427,15 +5427,8 @@ textarea {
 }
 
 .floating-window__grab {
-    display: inline-grid;
-    gap: 2px;
-    width: 0.7rem;
-}
-
-.floating-window__grab span {
-    height: 2px;
-    background: color-mix(in srgb, var(--text-secondary) 70%, transparent);
-    border-radius: 2px;
+    color: color-mix(in srgb, var(--text-secondary) 70%, transparent);
+    flex: none;
 }
 
 .floating-window__title-wrap {
@@ -6690,6 +6683,10 @@ textarea {
     cursor: pointer;
 }
 
+#blazor-error-ui .dismiss-icon {
+    display: block;
+}
+
 @media (max-width: 1023.98px) {
     input,
     select,
@@ -7332,8 +7329,6 @@ textarea {
     border-radius: 0.56rem;
     background: color-mix(in srgb, var(--bg-surface) 90%, transparent);
     color: var(--text-secondary);
-    font-size: 1.2rem;
-    line-height: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -7536,8 +7531,6 @@ textarea {
     border-radius: 0.56rem;
     background: color-mix(in srgb, var(--bg-surface) 90%, transparent);
     color: var(--text-secondary);
-    font-size: 1.2rem;
-    line-height: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -8426,8 +8419,6 @@ textarea {
     align-items: center;
     justify-content: center;
     border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 700;
 }
 
 .app-toast--success .app-toast__icon {
@@ -8456,8 +8447,7 @@ textarea {
     color: var(--text-muted);
     cursor: pointer;
     padding: 0.15rem 0.4rem;
-    font-size: 1.1rem;
-    line-height: 1;
+    display: inline-flex;
 }
 
 .app-toast__close:hover {
@@ -8543,8 +8533,6 @@ textarea {
     border-radius: 0.56rem;
     background: color-mix(in srgb, var(--bg-surface) 90%, transparent);
     color: var(--text-secondary);
-    font-size: 1.2rem;
-    line-height: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;

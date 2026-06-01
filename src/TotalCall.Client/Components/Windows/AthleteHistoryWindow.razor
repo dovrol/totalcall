@@ -148,7 +148,7 @@
                             @if (Descriptor.PredictedTotalKg is not null)
                             {
                                 <div class="dual-delta @DeltaClass">
-                                    <span class="arr">→</span>
+                                    <AppIcon Name="AppIconName.ArrowRight" Size="18" Class="arr" />
                                     <span class="d">@DeltaText</span>
                                 </div>
                                 <div class="dual-col pred">
@@ -169,7 +169,7 @@
                     {
                         var described = DescribeSignal(signal);
                         <div class="sig @described.Tone">
-                            <div class="si" aria-hidden="true">@SignalIcon(signal)</div>
+                            <div class="si"><AppIcon Name="@SignalIcon(signal)" Size="15" /></div>
                             <div>
                                 <div class="sk">@described.Label</div>
                                 <div class="sv">
@@ -491,13 +491,17 @@
         _ => Localizer["Predictions.Profile.LevelLow"]
     };
 
-    private string SignalIcon(AthleteSignal signal) => signal.Kind switch
+    private static AppIconName SignalIcon(AthleteSignal signal) => signal.Kind switch
     {
-        AthleteSignalKind.Trend => signal.Tone == AthleteSignalTone.Down ? "↘" : signal.Tone == AthleteSignalTone.Up ? "↗" : "→",
-        AthleteSignalKind.LastStart => "◎",
-        AthleteSignalKind.AttemptSuccess => "✓",
-        AthleteSignalKind.Stability => "∿",
-        _ => "•"
+        AthleteSignalKind.Trend => signal.Tone == AthleteSignalTone.Down
+            ? AppIconName.TrendDown
+            : signal.Tone == AthleteSignalTone.Up
+                ? AppIconName.TrendUp
+                : AppIconName.ArrowRight,
+        AthleteSignalKind.LastStart => AppIconName.CircleDot,
+        AthleteSignalKind.AttemptSuccess => AppIconName.Check,
+        AthleteSignalKind.Stability => AppIconName.Waves,
+        _ => AppIconName.MoreHorizontal
     };
 
     private (string Label, string Value, string? Sub, string Tone) DescribeSignal(AthleteSignal signal)

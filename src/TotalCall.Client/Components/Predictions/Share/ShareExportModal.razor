@@ -31,7 +31,9 @@
                     type="button"
                     class="share-dialog__close"
                     aria-label="@Localizer["Share.Close"]"
-                    @onclick="HandleClose">&#xD7;</button>
+                    @onclick="HandleClose">
+                    <AppIcon Name="AppIconName.X" Size="16" />
+                </button>
             </header>
 
             @if (fallbackOpen)

@@ -1,0 +1,72 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="ms-bar">
+    <a class="ms-bar__ic" href="/" aria-label="@Localizer["Common.Back"]">
+        <AppIcon Name="AppIconName.ChevronRight" Size="16" Class="ms-bar__ic-back" />
+    </a>
+    <button type="button" class="ms-catbtn" @onclick="() => SwitcherRequested.InvokeAsync()">
+        <span class="ms-catbtn__nm">@ActiveCategoryName <AppIcon Name="AppIconName.ChevronRight" Size="12" Class="ms-catbtn__ch" /></span>
+        <span class="ms-catbtn__pos">@Localizer["Predictions.TopN.MobileCatPos", CategoryIndex, TotalCategories, CompletedCategories]</span>
+    </button>
+    <button type="button" class="ms-bar__ic" aria-label="@Localizer["Predictions.TopN.QuickJump"]" @onclick="() => SwitcherRequested.InvokeAsync()">
+        <AppIcon Name="AppIconName.Search" Size="16" />
+    </button>
+</div>
+
+<div class="ms-sub">
+    <button type="button" class="ms-modpill" @onclick="() => SwitcherRequested.InvokeAsync()">
+        <AppIcon Name="AppIconName.Medal" Size="12" Class="ms-modpill__mi" />
+        <span>@ModuleTitle</span>
+        <AppIcon Name="AppIconName.ChevronRight" Size="11" Class="ms-modpill__ch" />
+    </button>
+    @if (!string.IsNullOrWhiteSpace(LockDistance))
+    {
+        <span class="ms-sub__prog">
+            <AppIcon Name="AppIconName.Lock" Size="11" />
+            @LockDistance
+        </span>
+    }
+    @if (!string.IsNullOrWhiteSpace(StatusLine))
+    {
+        <span class="@StatusPillClass">@StatusLine</span>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string ActiveCategoryName { get; set; } = string.Empty;
+
+    [Parameter]
+    public int CategoryIndex { get; set; }
+
+    [Parameter]
+    public int TotalCategories { get; set; }
+
+    [Parameter]
+    public int CompletedCategories { get; set; }
+
+    [Parameter, EditorRequired]
+    public string ModuleTitle { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? LockDistance { get; set; }
+
+    [Parameter]
+    public string? StatusLine { get; set; }
+
+    [Parameter]
+    public PredictionCompletionStatus StatusKind { get; set; } = PredictionCompletionStatus.NotStarted;
+
+    [Parameter]
+    public EventCallback SwitcherRequested { get; set; }
+
+    private string StatusPillClass => string.Join(
+        " ",
+        "ms-sub__st",
+        StatusKind switch
+        {
+            PredictionCompletionStatus.Complete => "ms-sub__st--done",
+            PredictionCompletionStatus.InProgress => "ms-sub__st--prog",
+            _ => "ms-sub__st--todo"
+        });
+}
