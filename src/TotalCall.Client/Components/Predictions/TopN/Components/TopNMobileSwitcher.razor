@@ -4,7 +4,7 @@
 <div class="ms-bottomsheet" role="dialog" aria-modal="true">
     <div class="ms-handle" aria-hidden="true"></div>
 
-    @if (CanSwitchModule)
+    @if (Groups.Count > 0)
     {
         <div class="ms-bs-sec">@Localizer["Predictions.TopN.ModuleMenuTitle", CompetitionName]</div>
         @foreach (var module in Modules)
@@ -91,9 +91,6 @@
 
     [Parameter]
     public Func<PredictionQuestion, string?>? SectionSelector { get; set; }
-
-    [Parameter]
-    public bool CanSwitchModule { get; set; }
 
     [Parameter]
     public EventCallback<string> ModuleChanged { get; set; }

@@ -7,6 +7,9 @@
    ============================================================ */
 
 .topn-workspace {
+    --prediction-action-bar-offset: calc(var(--app-mobile-nav-height) - 1px);
+    --prediction-bottom-bar-space: calc(var(--app-mobile-nav-height) + 5.4rem);
+
     /* design palette mapped to app theme tokens */
     --tn-bg: var(--bg-page);
     --tn-panel: var(--bg-surface);
@@ -37,7 +40,7 @@
     position: relative;
     min-width: 0;
     color: var(--tn-txt);
-    padding-bottom: calc(var(--app-mobile-nav-height) + 5.4rem);
+    padding-bottom: var(--prediction-bottom-bar-space);
     font-variant-numeric: tabular-nums;
 }
 
@@ -74,6 +77,12 @@
         padding-bottom: 0;
         display: grid;
         grid-template-rows: minmax(0, 1fr) auto;
+    }
+
+    .app-shell__content:has(.topn-workspace) .app-shell__meta {
+        margin-top: 0.25rem;
+        padding-top: 0.45rem;
+        padding-bottom: 0.45rem;
     }
 
     .app-shell__article:has(.topn-workspace) {
@@ -1889,6 +1898,13 @@ body:has(.topn-drawer.is-open) {
     .topn-header__meta {
         width: 100%;
         margin-left: 0;
+    }
+}
+
+@media (max-width: 899.98px) {
+    .app-shell--no-mobile-tabs .topn-workspace {
+        --prediction-action-bar-offset: calc(env(safe-area-inset-bottom) + 0.6rem);
+        --prediction-bottom-bar-space: calc(env(safe-area-inset-bottom) + 4.4rem);
     }
 }
 

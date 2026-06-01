@@ -7,14 +7,14 @@
         <button
             type="button"
             class="topn-modswitch"
-            disabled="@(!CanSwitchModule)"
+            disabled="@(!CanOpenModuleMenu)"
             aria-haspopup="true"
             aria-expanded="@IsModuleMenuOpen"
             title="@Localizer["Predictions.TopN.ChangeModule"]"
             @onclick="() => ModuleSwitchRequested.InvokeAsync()">
             <AppIcon Name="AppIconName.Medal" Size="13" Class="topn-modswitch__icon" />
             <span class="topn-modswitch__label">@ModuleTitle</span>
-            @if (CanSwitchModule)
+            @if (CanOpenModuleMenu)
             {
                 <AppIcon Name="AppIconName.ChevronRight" Size="11" Class="topn-modswitch__chevron" />
             }
@@ -81,7 +81,7 @@
     public string? LockDistance { get; set; }
 
     [Parameter]
-    public bool CanSwitchModule { get; set; }
+    public bool CanOpenModuleMenu { get; set; }
 
     [Parameter]
     public bool IsModuleMenuOpen { get; set; }

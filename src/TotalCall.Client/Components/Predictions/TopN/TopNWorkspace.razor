@@ -30,7 +30,7 @@ else
                 TotalCategories="@OrderedQuestions.Count"
                 LockLabel="@LockLabel"
                 LockDistance="@LockDistance"
-                CanSwitchModule="@CanSwitchModule"
+                CanOpenModuleMenu="@CanOpenModuleMenu"
                 IsModuleMenuOpen="@isModuleMenuOpen"
                 ModuleSwitchRequested="ToggleModuleMenu" />
 
@@ -112,7 +112,7 @@ else
         </div>
 
         @* ---------------- OVERLAYS ---------------- *@
-        @if (isModuleMenuOpen && CanSwitchModule)
+        @if (isModuleMenuOpen && CanOpenModuleMenu)
         {
             <TopNModuleMenu
                 Groups="Groups"
@@ -149,7 +149,6 @@ else
                 ActiveQuestionId="@ActiveQuestion.Id"
                 ShortLabelSelector="ShortCategoryLabel"
                 SectionSelector="GetCategorySectionName"
-                CanSwitchModule="@CanSwitchModule"
                 ModuleChanged="OnModuleChanged"
                 CategoryChanged="OnSwitcherCategoryChosen"
                 Dismissed="CloseMobileSwitcher" />
@@ -281,7 +280,7 @@ else
         .FirstOrDefault(question => string.Equals(question.Id, activeQuestionId, StringComparison.OrdinalIgnoreCase)) ??
         OrderedQuestions.FirstOrDefault();
 
-    private bool CanSwitchModule => Groups.Count > 1;
+    private bool CanOpenModuleMenu => Groups.Count > 0;
 
     private IReadOnlyDictionary<string, PredictionQuestionCompletionResult> StatusByQuestionId => ActiveModuleValidation.Questions
         .ToDictionary(result => result.QuestionId, StringComparer.OrdinalIgnoreCase);

@@ -21,14 +21,16 @@
                         class="app-shell__version-btn"
                         title="@Localizer["WhatsNew.HistoryButtonTitle"]"
                         @onclick="HandleOpenHistoryAsync">
-                        @Localizer["App.VersionLine", AppInfo.FullDisplayVersion]
+                        <AppIcon Name="AppIconName.Info" Size="13" />
+                        <span>@AppInfo.DisplayVersion</span>
                     </button>
                     <span class="app-shell__meta-sep" aria-hidden="true">·</span>
                     <button
                         type="button"
                         class="app-shell__version-btn"
                         @onclick="HandleOpenPrivacy">
-                        @Localizer["Privacy.FooterLink"]
+                        <AppIcon Name="AppIconName.Lock" Size="13" />
+                        <span>@Localizer["Privacy.FooterLink"]</span>
                     </button>
                 </div>
             </footer>
