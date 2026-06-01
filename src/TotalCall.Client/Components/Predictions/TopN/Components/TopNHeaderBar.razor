@@ -1,0 +1,105 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="topn-header">
+    <div class="topn-header__bc">
+        <strong>@CompetitionName</strong>
+        <span class="topn-header__bc-sep" aria-hidden="true">›</span>
+        <button
+            type="button"
+            class="topn-modswitch"
+            disabled="@(!CanSwitchModule)"
+            aria-haspopup="true"
+            aria-expanded="@IsModuleMenuOpen"
+            title="@Localizer["Predictions.TopN.ChangeModule"]"
+            @onclick="() => ModuleSwitchRequested.InvokeAsync()">
+            <AppIcon Name="AppIconName.Medal" Size="13" Class="topn-modswitch__icon" />
+            <span class="topn-modswitch__label">@ModuleTitle</span>
+            @if (CanSwitchModule)
+            {
+                <AppIcon Name="AppIconName.ChevronRight" Size="11" Class="topn-modswitch__chevron" />
+            }
+        </button>
+    </div>
+
+    <h2 class="topn-header__title">
+        <span>@ActiveCategoryName</span>
+        @if (!string.IsNullOrWhiteSpace(StatusLine))
+        {
+            <span class="@StatusPillClass">@StatusLine</span>
+        }
+    </h2>
+
+    <div class="topn-header__meta">
+        <div class="topn-header__progress">
+            <span class="topn-header__progress-label">@Localizer["Predictions.TopN.Completed"]</span>
+            <div class="topn-header__progress-track" aria-hidden="true">
+                <i style="@($"width: {CompletionPercent}%")"></i>
+            </div>
+            <strong>@CompletedCategories/@TotalCategories</strong>
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(LockLabel))
+        {
+            <span class="topn-header__lock">
+                <AppIcon Name="AppIconName.Lock" Size="13" />
+                <strong>@LockLabel</strong>
+                @if (!string.IsNullOrWhiteSpace(LockDistance))
+                {
+                    <span class="topn-header__lock-distance">· @LockDistance</span>
+                }
+            </span>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string CompetitionName { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string ModuleTitle { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string ActiveCategoryName { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? StatusLine { get; set; }
+
+    [Parameter]
+    public PredictionCompletionStatus StatusKind { get; set; } = PredictionCompletionStatus.NotStarted;
+
+    [Parameter]
+    public int CompletedCategories { get; set; }
+
+    [Parameter]
+    public int TotalCategories { get; set; }
+
+    [Parameter]
+    public string? LockLabel { get; set; }
+
+    [Parameter]
+    public string? LockDistance { get; set; }
+
+    [Parameter]
+    public bool CanSwitchModule { get; set; }
+
+    [Parameter]
+    public bool IsModuleMenuOpen { get; set; }
+
+    [Parameter]
+    public EventCallback ModuleSwitchRequested { get; set; }
+
+    private int CompletionPercent => TotalCategories == 0
+        ? 0
+        : Math.Clamp((int)Math.Round((double)CompletedCategories / TotalCategories * 100), 0, 100);
+
+    private string StatusPillClass => string.Join(
+        " ",
+        "topn-header__status",
+        StatusKind switch
+        {
+            PredictionCompletionStatus.Complete => "topn-header__status--done",
+            PredictionCompletionStatus.InProgress => "topn-header__status--prog",
+            _ => "topn-header__status--todo"
+        });
+}

@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "totalcall",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": [
+        "run",
+        "--project",
+        "src/TotalCall.Client/TotalCall.Client.csproj",
+        "--no-launch-profile",
+        "--urls",
+        "http://127.0.0.1:5010"
+      ],
+      "port": 5010
+    }
+  ]
+}

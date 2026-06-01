@@ -525,4 +525,37 @@
   <data name="Privacy.Beta.Title" xml:space="preserve"><value>Beta version</value></data>
   <data name="Privacy.Beta.Body" xml:space="preserve"><value>This is a beta version of the app. Features and data format may change, so it is worth exporting your picks before major updates.</value></data>
   <data name="Privacy.Footer.Short" xml:space="preserve"><value>Picks are stored locally in this browser. Analytics without prediction content.</value></data>
+  <data name="Predictions.TopN.CategoryStripAria" xml:space="preserve"><value>Weight categories</value></data>
+  <data name="Predictions.TopN.PreviousCategory" xml:space="preserve"><value>Previous category</value></data>
+  <data name="Predictions.TopN.NextCategory" xml:space="preserve"><value>Next category</value></data>
+  <data name="Predictions.TopN.QuickJump" xml:space="preserve"><value>Quick jump</value></data>
+  <data name="Predictions.TopN.ChangeModule" xml:space="preserve"><value>Change prediction module</value></data>
+  <data name="Predictions.TopN.Completed" xml:space="preserve"><value>Completed</value></data>
+  <data name="Predictions.TopN.ModuleMenuTitle" xml:space="preserve"><value>Prediction module · {0}</value></data>
+  <data name="Predictions.TopN.ModuleMenuNote" xml:space="preserve"><value>Switching modules rebuilds the whole screen for a different prediction type — your picks in each module are saved separately.</value></data>
+  <data name="Predictions.TopN.PalettePlaceholder" xml:space="preserve"><value>Jump to a category…  (e.g. “men 93”)</value></data>
+  <data name="Predictions.TopN.PaletteNoResults" xml:space="preserve"><value>No results</value></data>
+  <data name="Predictions.TopN.PaletteNavigate" xml:space="preserve"><value>navigate</value></data>
+  <data name="Predictions.TopN.PaletteOpen" xml:space="preserve"><value>open</value></data>
+  <data name="Predictions.TopN.PaletteClose" xml:space="preserve"><value>close</value></data>
+  <data name="Predictions.TopN.PaletteSuggested" xml:space="preserve"><value>Suggested</value></data>
+  <data name="Predictions.TopN.PaletteAll" xml:space="preserve"><value>All categories</value></data>
+  <data name="Predictions.TopN.PaletteInProgress" xml:space="preserve"><value>{0}/{1} picked</value></data>
+  <data name="Predictions.TopN.PaletteNext" xml:space="preserve"><value>Next to do</value></data>
+  <data name="Predictions.TopN.PaletteEditing" xml:space="preserve"><value>Editing</value></data>
+  <data name="Predictions.TopN.PaletteEmpty" xml:space="preserve"><value>Empty</value></data>
+  <data name="Predictions.TopN.ColAthlete" xml:space="preserve"><value>Athlete</value></data>
+  <data name="Predictions.TopN.ColForm" xml:space="preserve"><value>Form</value></data>
+  <data name="Predictions.TopN.ToggleMode" xml:space="preserve"><value>Switch total / lifts</value></data>
+  <data name="Predictions.TopN.ModeTotalShort" xml:space="preserve"><value>Total only</value></data>
+  <data name="Predictions.TopN.ModeLiftsShort" xml:space="preserve"><value>SQ · BP · DL</value></data>
+  <data name="Predictions.TopN.KgUnit" xml:space="preserve"><value>kg</value></data>
+  <data name="Predictions.TopN.QuickFillLabel" xml:space="preserve"><value>Quick fill:</value></data>
+  <data name="Predictions.TopN.QuickFillOr" xml:space="preserve"><value>— or type manually in the fields above ↑</value></data>
+  <data name="Predictions.TopN.PickerTitle" xml:space="preserve"><value>Pick an athlete for slot #{0}</value></data>
+  <data name="Predictions.TopN.EntryHint" xml:space="preserve"><value>Enter &lt;b&gt;SQ → BP → DL&lt;/b&gt; (total adds up automatically) or switch a row to &lt;b&gt;total only&lt;/b&gt;. &lt;kbd&gt;Tab&lt;/kbd&gt; moves on, &lt;kbd&gt;Enter&lt;/kbd&gt; confirms.</value></data>
+  <data name="Predictions.TopN.DefaultModeLabel" xml:space="preserve"><value>Default entry mode:</value></data>
+  <data name="Predictions.TopN.DefaultModeHint" xml:space="preserve"><value>— you can change it per athlete (click the badge under the name)</value></data>
+  <data name="Predictions.TopN.FooterCount" xml:space="preserve"><value>{0} / {1} picked · {2} empty slots</value></data>
+  <data name="Predictions.TopN.CompareSoon" xml:space="preserve"><value>Athlete comparison is coming soon.</value></data>
 </root>

@@ -1,0 +1,74 @@
+@using System.Globalization
+
+@if (HasShape)
+{
+    <svg class="topn-spark" viewBox="@ViewBox" width="@Width" height="@Height" aria-hidden="true" preserveAspectRatio="none">
+        <path d="@PathData" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        @for (var index = 0; index < _points.Count; index++)
+        {
+            var point = _points[index];
+            <circle cx="@Format(point.X)" cy="@Format(point.Y)" r="@(index == _points.Count - 1 ? "2.6" : "1.8")" fill="currentColor" />
+        }
+    </svg>
+}
+
+@code {
+    [Parameter]
+    public IReadOnlyList<decimal> Points { get; set; } = [];
+
+    [Parameter]
+    public int Width { get; set; } = 64;
+
+    [Parameter]
+    public int Height { get; set; } = 26;
+
+    private readonly List<(double X, double Y)> _points = [];
+
+    private bool HasShape => _points.Count > 0;
+
+    private string ViewBox => $"0 0 {Width} {Height}";
+
+    protected override void OnParametersSet()
+    {
+        _points.Clear();
+
+        var values = Points
+            .Select(value => (double)value)
+            .ToArray();
+
+        if (values.Length == 0)
+        {
+            return;
+        }
+
+        const double pad = 3d;
+        var low = values.Min();
+        var high = values.Max();
+        var span = high - low == 0 ? 1d : high - low;
+
+        for (var index = 0; index < values.Length; index++)
+        {
+            var x = values.Length == 1
+                ? pad
+                : pad + (double)index / (values.Length - 1) * (Width - pad * 2);
+            var y = pad + (1d - (values[index] - low) / span) * (Height - pad * 2);
+            _points.Add((x, y));
+        }
+    }
+
+    private string PathData
+    {
+        get
+        {
+            var segments = _points
+                .Select((point, index) => $"{(index == 0 ? "M" : "L")}{Format(point.X)},{Format(point.Y)}");
+
+            return string.Join(" ", segments);
+        }
+    }
+
+    private static string Format(double value)
+    {
+        return value.ToString("0.#", CultureInfo.InvariantCulture);
+    }
+}

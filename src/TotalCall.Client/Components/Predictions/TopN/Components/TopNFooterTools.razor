@@ -1,0 +1,61 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="topn-foottools">
+    <button
+        type="button"
+        class="topn-tool topn-tool--accent"
+        disabled="@(!CanEditPredictions)"
+        @onclick="() => AutoFillRequested.InvokeAsync()">
+        <AppIcon Name="AppIconName.Sparkles" Size="14" />
+        <span>@Localizer["Predictions.AutoFillByNominated"]</span>
+    </button>
+
+    <button
+        type="button"
+        class="topn-tool"
+        disabled="@(!CanEditPredictions)"
+        @onclick="() => SortRequested.InvokeAsync()">
+        <AppIcon Name="AppIconName.ArrowUpDown" Size="14" />
+        <span>@Localizer["Predictions.SortByPredictedTotal"]</span>
+    </button>
+
+    <button
+        type="button"
+        class="topn-tool topn-tool--ghost"
+        disabled="@(!CanEditPredictions)"
+        @onclick="() => ClearRequested.InvokeAsync()">
+        <AppIcon Name="AppIconName.Trash2" Size="14" />
+        <span>@Localizer["Predictions.ClearCategory"]</span>
+    </button>
+
+    <span class="topn-foottools__count">@CountSummary</span>
+</div>
+
+@code {
+    [Parameter]
+    public bool CanEditPredictions { get; set; }
+
+    [Parameter]
+    public int SelectedCount { get; set; }
+
+    [Parameter]
+    public int RequiredCount { get; set; }
+
+    [Parameter]
+    public int EmptyCount { get; set; }
+
+    [Parameter]
+    public EventCallback AutoFillRequested { get; set; }
+
+    [Parameter]
+    public EventCallback SortRequested { get; set; }
+
+    [Parameter]
+    public EventCallback ClearRequested { get; set; }
+
+    private string CountSummary => Localizer[
+        "Predictions.TopN.FooterCount",
+        SelectedCount,
+        Math.Max(1, RequiredCount),
+        EmptyCount];
+}

@@ -1,0 +1,144 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="topn-strip" role="tablist" aria-label="@Localizer["Predictions.TopN.CategoryStripAria"]">
+    <button
+        type="button"
+        class="topn-strip__edge"
+        @onclick="() => StepRequested.InvokeAsync(-1)"
+        aria-label="@Localizer["Predictions.TopN.PreviousCategory"]"
+        title="@Localizer["Predictions.TopN.PreviousCategory"]">
+        <AppIcon Name="AppIconName.ChevronRight" Size="16" Class="topn-strip__edge-icon topn-strip__edge-icon--prev" />
+    </button>
+
+    <div class="topn-strip__scroll">
+        @foreach (var section in GetSections())
+        {
+            @if (section.Index > 0)
+            {
+                <span class="topn-strip__divider" aria-hidden="true"></span>
+            }
+
+            <div class="topn-strip__group">
+                @if (!string.IsNullOrWhiteSpace(section.Label))
+                {
+                    <span class="topn-strip__group-label">@section.Label</span>
+                }
+
+                @foreach (var question in section.Questions)
+                {
+                    var status = GetStatus(question.Id);
+                    var isActive = string.Equals(question.Id, ActiveQuestionId, StringComparison.OrdinalIgnoreCase);
+
+                    <button
+                        type="button"
+                        class="@GetCatClass(isActive, status)"
+                        role="tab"
+                        aria-selected="@isActive"
+                        @onclick="() => CategoryChanged.InvokeAsync(question.Id)">
+                        <span class="topn-cat__label">@ShortLabelSelector(question)</span>
+                        <span class="topn-cat__badge">@((MarkupString)GetBadge(isActive, status))</span>
+                    </button>
+                }
+            </div>
+        }
+    </div>
+
+    <button
+        type="button"
+        class="topn-strip__edge"
+        @onclick="() => StepRequested.InvokeAsync(1)"
+        aria-label="@Localizer["Predictions.TopN.NextCategory"]"
+        title="@Localizer["Predictions.TopN.NextCategory"]">
+        <AppIcon Name="AppIconName.ChevronRight" Size="16" Class="topn-strip__edge-icon" />
+    </button>
+
+    <button type="button" class="topn-strip__jump" @onclick="() => JumpRequested.InvokeAsync()">
+        <AppIcon Name="AppIconName.Search" Size="14" />
+        <span>@Localizer["Predictions.TopN.QuickJump"]</span>
+        <kbd>@JumpShortcut</kbd>
+    </button>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<PredictionQuestion> Questions { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public IReadOnlyDictionary<string, PredictionQuestionCompletionResult> StatusByQuestionId { get; set; } =
+        new Dictionary<string, PredictionQuestionCompletionResult>(StringComparer.OrdinalIgnoreCase);
+
+    [Parameter]
+    public string? ActiveQuestionId { get; set; }
+
+    [Parameter, EditorRequired]
+    public Func<PredictionQuestion, string> ShortLabelSelector { get; set; } = default!;
+
+    [Parameter]
+    public Func<PredictionQuestion, string?>? SectionSelector { get; set; }
+
+    [Parameter]
+    public string JumpShortcut { get; set; } = "⌘K";
+
+    [Parameter]
+    public EventCallback<string> CategoryChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<int> StepRequested { get; set; }
+
+    [Parameter]
+    public EventCallback JumpRequested { get; set; }
+
+    private PredictionQuestionCompletionResult GetStatus(string questionId)
+    {
+        return StatusByQuestionId.TryGetValue(questionId, out var status)
+            ? status
+            : new PredictionQuestionCompletionResult(questionId, PredictionCompletionStatus.NotStarted, 0, 0);
+    }
+
+    private IReadOnlyList<StripSection> GetSections()
+    {
+        if (SectionSelector is null)
+        {
+            return [new StripSection(0, null, Questions)];
+        }
+
+        return Questions
+            .GroupBy(question => SectionSelector(question) ?? string.Empty)
+            .Select((group, index) => new StripSection(
+                index,
+                string.IsNullOrWhiteSpace(group.Key) ? null : group.Key,
+                group.ToArray()))
+            .ToArray();
+    }
+
+    private string GetCatClass(bool isActive, PredictionQuestionCompletionResult status)
+    {
+        var stateClass = isActive
+            ? "topn-cat--active"
+            : status.Status == PredictionCompletionStatus.Complete
+                ? "topn-cat--done"
+                : status.Status == PredictionCompletionStatus.InProgress || status.SelectedCount > 0
+                    ? "topn-cat--prog"
+                    : "topn-cat--todo";
+
+        return $"topn-cat {stateClass}";
+    }
+
+    private string GetBadge(bool isActive, PredictionQuestionCompletionResult status)
+    {
+        if (status.Status == PredictionCompletionStatus.Complete)
+        {
+            return "<span class=\"topn-cat__check\">✓</span>";
+        }
+
+        if (status.SelectedCount > 0 || isActive)
+        {
+            var required = Math.Max(1, status.RequiredCount);
+            return $"{status.SelectedCount}/{required}";
+        }
+
+        return string.Empty;
+    }
+
+    private sealed record StripSection(int Index, string? Label, IReadOnlyList<PredictionQuestion> Questions);
+}

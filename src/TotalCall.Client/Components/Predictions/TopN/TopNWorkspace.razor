@@ -1,0 +1,1118 @@
+@using System.Globalization
+@using System.Text.RegularExpressions
+@implements IDisposable
+@inject IStringLocalizer<SharedResource> Localizer
+@inject PredictionTextService Text
+@inject AthleteHistoryService AthleteHistoryService
+@inject AthleteDataSourcePreferenceService AthleteDataSources
+@inject WindowManager Windows
+@inject ToastService Toasts
+
+@if (ActiveQuestion is null)
+{
+    <PredictionEmptyState
+        Title="@Localizer["Predictions.NoCategoriesTitle"]"
+        Description="@Localizer["Predictions.NoCategoriesDescription"]" />
+}
+else
+{
+    <section class="topn-workspace">
+        <TopNHeaderBar
+            CompetitionName="@Competition.Name"
+            ModuleTitle="@Text.GroupTitle(Competition, ActiveGroup)"
+            ActiveCategoryName="@GetCategoryName(ActiveQuestion)"
+            StatusLine="@ActiveStatusLine"
+            StatusKind="@ActiveStatusKind"
+            CompletedCategories="@CompletedCategoriesCount"
+            TotalCategories="@OrderedQuestions.Count"
+            LockLabel="@LockLabel"
+            LockDistance="@LockDistance"
+            CanSwitchModule="@CanSwitchModule"
+            IsModuleMenuOpen="@isModuleMenuOpen"
+            ModuleSwitchRequested="ToggleModuleMenu" />
+
+        <TopNCategoryStrip
+            Questions="OrderedQuestions"
+            StatusByQuestionId="StatusByQuestionId"
+            ActiveQuestionId="@ActiveQuestion.Id"
+            ShortLabelSelector="ShortCategoryLabel"
+            SectionSelector="GetCategorySectionName"
+            CategoryChanged="OnCategoryChanged"
+            StepRequested="StepCategory"
+            JumpRequested="OpenPalette" />
+
+        <div class="topn-workspace__body">
+            <div class="topn-hint">
+                <AppIcon Name="AppIconName.Sparkles" Size="14" Class="topn-hint__icon" />
+                <span>@((MarkupString)Localizer["Predictions.TopN.EntryHint"].Value)</span>
+            </div>
+
+            <div class="topn-modebar">
+                <span class="topn-modebar__label">@Localizer["Predictions.TopN.DefaultModeLabel"]</span>
+                <div class="topn-seg" role="radiogroup" aria-label="@Localizer["Predictions.PredictionMode"]">
+                    <button
+                        type="button"
+                        class="@DefaultModeButtonClass(TopNEntryMode.Lifts)"
+                        @onclick="() => SetDefaultMode(TopNEntryMode.Lifts)">
+                        @Localizer["Predictions.PredictionModeLifts"]
+                    </button>
+                    <button
+                        type="button"
+                        class="@DefaultModeButtonClass(TopNEntryMode.Total)"
+                        @onclick="() => SetDefaultMode(TopNEntryMode.Total)">
+                        @Localizer["Predictions.PredictionModeTotal"]
+                    </button>
+                </div>
+                <span class="topn-modebar__hint">@Localizer["Predictions.TopN.DefaultModeHint"]</span>
+            </div>
+
+            <TopNSheet
+                Slots="SlotViews"
+                CanEditPredictions="CanEditPredictions"
+                PickCta="@EmptySlotCta"
+                EmptySlotClicked="OpenPicker"
+                AthleteContextRequested="OpenContext"
+                RemoveRequested="RemoveFromPosition"
+                ModeToggled="ToggleRowMode"
+                CellEdited="OnCellEdited"
+                QuickFillRequested="OnQuickFill" />
+
+            <TopNFooterTools
+                CanEditPredictions="CanEditPredictions"
+                SelectedCount="@ActiveSelectedCount"
+                RequiredCount="@ActiveRequiredCount"
+                EmptyCount="@EmptySlotCount"
+                AutoFillRequested="AutoFillByNominatedTotal"
+                SortRequested="SortByPredictedTotal"
+                ClearRequested="ClearCategory" />
+        </div>
+
+        @if (isModuleMenuOpen && CanSwitchModule)
+        {
+            <TopNModuleMenu
+                Groups="Groups"
+                ActiveGroupId="@ActiveGroup.Id"
+                CompetitionName="@Competition.Name"
+                ModuleTitleSelector="GetModuleTitle"
+                ModuleValidationByGroupId="ModuleValidationByGroupId"
+                ModuleChanged="OnModuleChanged"
+                Dismissed="CloseModuleMenu" />
+        }
+
+        @if (isPaletteOpen)
+        {
+            <TopNCommandPalette
+                Questions="OrderedQuestions"
+                StatusByQuestionId="StatusByQuestionId"
+                ActiveQuestionId="@ActiveQuestion.Id"
+                CategoryLabelSelector="GetCategoryName"
+                ShortLabelSelector="ShortCategoryLabel"
+                CategoryChosen="OnPaletteCategoryChosen"
+                Dismissed="ClosePalette" />
+        }
+
+        @if (pickerSlotPosition is not null)
+        {
+            <TopNAthletePicker
+                SlotPosition="pickerSlotPosition.Value"
+                CategoryName="@GetCategoryName(ActiveQuestion)"
+                CompetitionName="@Competition.Name"
+                Athletes="EligibleAthletes"
+                PickedAthleteIds="PickedAthleteIds"
+                PickButtonLabel="@Localizer["Predictions.Pick"]"
+                AthletePicked="OnPickerAthletePicked"
+                Dismissed="ClosePicker" />
+        }
+
+        <button
+            type="button"
+            class="@ContextScrimClass"
+            tabindex="-1"
+            aria-hidden="@(!IsContextOpen)"
+            @onclick="CloseContext">
+        </button>
+
+        <aside class="@ContextDrawerClass" aria-hidden="@(!IsContextOpen)">
+            @if (IsContextOpen)
+            {
+                <button
+                    type="button"
+                    class="topn-drawer__close"
+                    aria-label="@Localizer["Predictions.CloseContext"]"
+                    @onclick="CloseContext">
+                    <AppIcon Name="AppIconName.X" Size="14" />
+                </button>
+
+                <TopNContextPanel
+                    Competition="@Competition"
+                    ActiveQuestion="@ActiveQuestion"
+                    ActiveQuestionStatus="@ActiveQuestionStatus"
+                    SelectedAthleteId="@selectedAthleteId"
+                    SelectedAthleteRank="@SelectedAthleteRank"
+                    SelectedAthletePredictedTotalKg="@SelectedAthletePredictedTotal"
+                    CanEditPredictions="@CanEditPredictions"
+                    SelectorSlotPosition="null"
+                    SelectedAthletesByPosition="SelectedAthletesByPosition"
+                    AthleteContextRequested="OpenContext"
+                    AthleteSelectionCleared="CloseContext"
+                    UseNominatedTotalRequested="AutoFillByNominatedTotal"
+                    CompareAthletesRequested="OnCompareAthletesRequested" />
+            }
+        </aside>
+
+        <PredictionActionBar
+            CompetitionSlug="@Competition.Slug"
+            LastSavedAt="@LastSavedAt"
+            ShareRequested="@ShareRequested" />
+    </section>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<PredictionGroup> Groups { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public PredictionGroup ActiveGroup { get; set; } = default!;
+
+    [Parameter]
+    public IReadOnlyList<PredictionAnswer> Answers { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public PredictionModuleValidationResult ActiveModuleValidation { get; set; } = default!;
+
+    [Parameter]
+    public IReadOnlyDictionary<string, PredictionModuleValidationResult> ModuleValidationByGroupId { get; set; } =
+        new Dictionary<string, PredictionModuleValidationResult>(StringComparer.OrdinalIgnoreCase);
+
+    [Parameter]
+    public bool CanEditPredictions { get; set; }
+
+    [Parameter]
+    public string? SaveStatus { get; set; }
+
+    [Parameter]
+    public DateTimeOffset? LastSavedAt { get; set; }
+
+    [Parameter]
+    public EventCallback<string> GroupChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> ShareRequested { get; set; }
+
+    private static readonly Regex ShortCategoryRegex = new(@"(\d+\+?)\s*kg", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+    private string? activeQuestionId;
+    private string? selectedAthleteId;
+    private int? pickerSlotPosition;
+    private bool isModuleMenuOpen;
+    private bool isPaletteOpen;
+    private string defaultMode = TopNEntryMode.Lifts;
+    private int? pendingRemovalPosition;
+    private string historySourceCode = ExternalAthleteSources.OpenIpf;
+
+    private readonly Dictionary<int, string> modeByPosition = [];
+    private readonly Dictionary<string, AthleteHistoryEntry?> historyByAthleteId = new(StringComparer.OrdinalIgnoreCase);
+    private readonly HashSet<string> loadingAthleteIds = new(StringComparer.OrdinalIgnoreCase);
+
+    private IReadOnlyList<PredictionQuestion> OrderedQuestions => ActiveGroup.Questions
+        .OrderBy(question => question.Order)
+        .ToArray();
+
+    private PredictionQuestion? ActiveQuestion => OrderedQuestions
+        .FirstOrDefault(question => string.Equals(question.Id, activeQuestionId, StringComparison.OrdinalIgnoreCase)) ??
+        OrderedQuestions.FirstOrDefault();
+
+    private bool CanSwitchModule => Groups.Count > 1;
+
+    private IReadOnlyDictionary<string, PredictionQuestionCompletionResult> StatusByQuestionId => ActiveModuleValidation.Questions
+        .ToDictionary(result => result.QuestionId, StringComparer.OrdinalIgnoreCase);
+
+    private PredictionQuestionCompletionResult? ActiveQuestionStatus => ActiveQuestion is not null &&
+        StatusByQuestionId.TryGetValue(ActiveQuestion.Id, out var status)
+            ? status
+            : null;
+
+    private int SlotsCount => ActiveQuestion?.Constraints.ExactSelections ??
+                              ActiveQuestion?.Constraints.MaxSelections ??
+                              5;
+
+    private int ActiveSelectedCount => ActiveQuestionStatus?.SelectedCount ?? CurrentPlacements.Count;
+
+    private int ActiveRequiredCount => Math.Max(1, ActiveQuestionStatus?.RequiredCount ?? SlotsCount);
+
+    private int EmptySlotCount => Math.Max(0, SlotsCount - CurrentPlacements.Count);
+
+    private int CompletedCategoriesCount => OrderedQuestions
+        .Count(question => StatusByQuestionId.TryGetValue(question.Id, out var status) &&
+                           status.Status == PredictionCompletionStatus.Complete);
+
+    private PredictionCompletionStatus ActiveStatusKind => ActiveQuestionStatus?.Status ?? PredictionCompletionStatus.NotStarted;
+
+    private string? ActiveStatusLine
+    {
+        get
+        {
+            if (ActiveQuestionStatus is null)
+            {
+                return null;
+            }
+
+            return $"{ActiveQuestionStatus.SelectedCount} / {Math.Max(1, ActiveQuestionStatus.RequiredCount)} · {GetStatusLabel(ActiveQuestionStatus.Status)}";
+        }
+    }
+
+    private IReadOnlyList<AthletePlacementPick> CurrentPlacements => ActiveQuestion is null
+        ? []
+        : GetPlacements(ActiveQuestion.Id);
+
+    private IReadOnlyList<Athlete> EligibleAthletes
+    {
+        get
+        {
+            if (ActiveQuestion is null)
+            {
+                return [];
+            }
+
+            var athletes = ActiveQuestion.AthleteIds.Count == 0
+                ? Competition.Athletes
+                : Competition.Athletes
+                    .Where(athlete => ActiveQuestion.AthleteIds.Contains(athlete.Id))
+                    .ToArray();
+
+            return athletes
+                .OrderByDescending(athlete => athlete.SeedTotalKg ?? 0m)
+                .ThenBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+        }
+    }
+
+    private IReadOnlyCollection<string> PickedAthleteIds => CurrentPlacements
+        .Select(placement => placement.AthleteId)
+        .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+    private IReadOnlyDictionary<int, Athlete> SelectedAthletesByPosition => CurrentPlacements
+        .Select(placement => new
+        {
+            placement.Position,
+            Athlete = Competition.Athletes.FirstOrDefault(athlete =>
+                string.Equals(athlete.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase))
+        })
+        .Where(item => item.Athlete is not null)
+        .ToDictionary(item => item.Position, item => item.Athlete!, EqualityComparer<int>.Default);
+
+    private bool IsContextOpen => !string.IsNullOrWhiteSpace(selectedAthleteId);
+
+    private int? SelectedAthleteRank => CurrentPlacements
+        .FirstOrDefault(placement => string.Equals(placement.AthleteId, selectedAthleteId, StringComparison.OrdinalIgnoreCase))
+        ?.Position;
+
+    private decimal? SelectedAthletePredictedTotal => CurrentPlacements
+        .FirstOrDefault(placement => string.Equals(placement.AthleteId, selectedAthleteId, StringComparison.OrdinalIgnoreCase))
+        ?.PredictedTotalKg;
+
+    private IReadOnlyList<TopNSlotView> SlotViews
+    {
+        get
+        {
+            var placementsByPosition = CurrentPlacements.ToDictionary(placement => placement.Position);
+            var views = new List<TopNSlotView>(SlotsCount);
+
+            for (var position = 1; position <= SlotsCount; position++)
+            {
+                placementsByPosition.TryGetValue(position, out var placement);
+                var athlete = placement is null
+                    ? null
+                    : Competition.Athletes.FirstOrDefault(item =>
+                        string.Equals(item.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase));
+
+                AthleteHistoryEntry? history = null;
+                if (athlete is not null)
+                {
+                    historyByAthleteId.TryGetValue(athlete.Id, out history);
+                }
+
+                views.Add(new TopNSlotView
+                {
+                    Position = position,
+                    Athlete = athlete,
+                    Placement = placement,
+                    Mode = athlete is null ? defaultMode : EffectiveMode(position, placement),
+                    IsContextActive = athlete is not null &&
+                                      string.Equals(athlete.Id, selectedAthleteId, StringComparison.OrdinalIgnoreCase),
+                    IsRemovePending = pendingRemovalPosition == position,
+                    Trend = BuildTrend(history),
+                    TrendDeltaKg = history?.Analytics?.RecentTotalTrendKg,
+                    CanUseNominated = athlete?.SeedTotalKg is not null,
+                    CanUseLast = history?.LastResult?.TotalKg is not null,
+                    CanUseBest = history?.Bests?.TotalKg is not null,
+                    NominatedTotalKg = athlete?.SeedTotalKg,
+                    LastTotalKg = history?.LastResult?.TotalKg,
+                    BestTotalKg = history?.Bests?.TotalKg
+                });
+            }
+
+            return views;
+        }
+    }
+
+    private string EmptySlotCta => ActiveQuestionSex == AthleteSex.Male
+        ? Localizer["Predictions.PickAthleteCtaMale"]
+        : Localizer["Predictions.PickAthleteCta"];
+
+    private AthleteSex ActiveQuestionSex
+    {
+        get
+        {
+            var sexes = EligibleAthletes
+                .Select(athlete => athlete.Sex)
+                .Where(sex => sex != AthleteSex.Unspecified)
+                .Distinct()
+                .ToArray();
+
+            return sexes.Length == 1 ? sexes[0] : AthleteSex.Unspecified;
+        }
+    }
+
+    private string? LockLabel => Competition.PredictionLockAt is null
+        ? null
+        : Competition.PredictionLockAt.Value.ToLocalTime().ToString("d MMM, HH:mm", CultureInfo.CurrentCulture);
+
+    private string? LockDistance
+    {
+        get
+        {
+            if (Competition.PredictionLockAt is null)
+            {
+                return null;
+            }
+
+            var days = (Competition.PredictionLockAt.Value.ToLocalTime().Date - DateTimeOffset.Now.ToLocalTime().Date).Days;
+
+            return days switch
+            {
+                < 0 => null,
+                0 => Localizer["Common.Today"].Value,
+                1 => Localizer["Common.Tomorrow"].Value,
+                _ => Localizer["Predictions.DaysUntil", days].Value
+            };
+        }
+    }
+
+    private string ContextScrimClass => string.Join(" ", "topn-drawer-scrim", IsContextOpen ? "is-open" : null);
+
+    private string ContextDrawerClass => string.Join(" ", "topn-drawer", IsContextOpen ? "is-open" : null);
+
+    protected override void OnInitialized()
+    {
+        AthleteDataSources.SourceChanged += HandleDataSourceChanged;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var source = await AthleteDataSources.GetSourceAsync(Competition);
+        if (!string.Equals(historySourceCode, source, StringComparison.OrdinalIgnoreCase))
+        {
+            historySourceCode = source;
+            historyByAthleteId.Clear();
+            loadingAthleteIds.Clear();
+        }
+
+        if (ActiveQuestion is null ||
+            OrderedQuestions.All(question => !string.Equals(question.Id, activeQuestionId, StringComparison.OrdinalIgnoreCase)))
+        {
+            activeQuestionId = OrderedQuestions.FirstOrDefault()?.Id;
+        }
+
+        if (!IsAthleteInActiveQuestion(selectedAthleteId))
+        {
+            selectedAthleteId = null;
+        }
+
+        if (pickerSlotPosition is not null && (pickerSlotPosition < 1 || pickerSlotPosition > SlotsCount))
+        {
+            pickerSlotPosition = null;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await LoadMissingHistoriesAsync();
+    }
+
+    public void Dispose()
+    {
+        AthleteDataSources.SourceChanged -= HandleDataSourceChanged;
+    }
+
+    // ---------- category + module navigation ----------
+
+    private async Task OnCategoryChanged(string questionId)
+    {
+        if (!OrderedQuestions.Any(question => string.Equals(question.Id, questionId, StringComparison.OrdinalIgnoreCase)))
+        {
+            return;
+        }
+
+        activeQuestionId = questionId;
+        selectedAthleteId = null;
+        pickerSlotPosition = null;
+        pendingRemovalPosition = null;
+        isPaletteOpen = false;
+        modeByPosition.Clear();
+        await LoadMissingHistoriesAsync();
+    }
+
+    private Task StepCategory(int direction)
+    {
+        if (ActiveQuestion is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var index = -1;
+        for (var i = 0; i < OrderedQuestions.Count; i++)
+        {
+            if (OrderedQuestions[i].Id == ActiveQuestion.Id)
+            {
+                index = i;
+                break;
+            }
+        }
+
+        var target = Math.Clamp(index + direction, 0, OrderedQuestions.Count - 1);
+        return target == index ? Task.CompletedTask : OnCategoryChanged(OrderedQuestions[target].Id);
+    }
+
+    private void ToggleModuleMenu() => isModuleMenuOpen = !isModuleMenuOpen;
+
+    private void CloseModuleMenu() => isModuleMenuOpen = false;
+
+    private async Task OnModuleChanged(string groupId)
+    {
+        isModuleMenuOpen = false;
+        selectedAthleteId = null;
+        pickerSlotPosition = null;
+        if (GroupChanged.HasDelegate)
+        {
+            await GroupChanged.InvokeAsync(groupId);
+        }
+    }
+
+    private void OpenPalette() => isPaletteOpen = true;
+
+    private void ClosePalette() => isPaletteOpen = false;
+
+    private Task OnPaletteCategoryChosen(string questionId)
+    {
+        isPaletteOpen = false;
+        return OnCategoryChanged(questionId);
+    }
+
+    private void SetDefaultMode(string mode) => defaultMode = TopNEntryMode.Normalize(mode);
+
+    // ---------- athlete picker ----------
+
+    private void OpenPicker(int position)
+    {
+        if (!CanEditPredictions || position < 1 || position > SlotsCount)
+        {
+            return;
+        }
+
+        pendingRemovalPosition = null;
+        pickerSlotPosition = position;
+    }
+
+    private void ClosePicker() => pickerSlotPosition = null;
+
+    private async Task OnPickerAthletePicked(string athleteId)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null || pickerSlotPosition is null)
+        {
+            return;
+        }
+
+        var position = pickerSlotPosition.Value;
+        pickerSlotPosition = null;
+        await SetAthleteAtPosition(position, athleteId);
+        await LoadMissingHistoriesAsync();
+    }
+
+    // ---------- context drawer ----------
+
+    private void OpenContext(string athleteId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteId))
+        {
+            selectedAthleteId = null;
+            return;
+        }
+
+        pendingRemovalPosition = null;
+        selectedAthleteId = athleteId;
+    }
+
+    private void CloseContext() => selectedAthleteId = null;
+
+    private Task OnCompareAthletesRequested()
+    {
+        Toasts.ShowInfo(Localizer["Predictions.TopN.CompareSoon"]);
+        return Task.CompletedTask;
+    }
+
+    // ---------- placements: edit, mode, quick fill ----------
+
+    private string EffectiveMode(int position, AthletePlacementPick? placement)
+    {
+        if (modeByPosition.TryGetValue(position, out var mode))
+        {
+            return mode;
+        }
+
+        return HasLiftValues(placement) ? TopNEntryMode.Lifts : defaultMode;
+    }
+
+    private void ToggleRowMode(int position)
+    {
+        if (!CanEditPredictions)
+        {
+            return;
+        }
+
+        var placement = CurrentPlacements.FirstOrDefault(item => item.Position == position);
+        var current = EffectiveMode(position, placement);
+        modeByPosition[position] = current == TopNEntryMode.Total ? TopNEntryMode.Lifts : TopNEntryMode.Total;
+        pendingRemovalPosition = null;
+    }
+
+    private Task OnCellEdited(TopNSheetEdit edit)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        if (!TryReadOptionalPositiveDecimal(edit.Value, out var parsed))
+        {
+            Toasts.ShowError(Localizer["Predictions.PredictionValueInvalid"]);
+            return Task.CompletedTask;
+        }
+
+        var placements = CurrentPlacements
+            .Select(placement => placement.Position == edit.Position
+                ? ApplyEdit(placement, edit.Field, parsed)
+                : placement)
+            .ToArray();
+
+        pendingRemovalPosition = null;
+        return EmitAnswer(placements);
+    }
+
+    private AthletePlacementPick ApplyEdit(AthletePlacementPick placement, string field, decimal? value)
+    {
+        if (string.Equals(field, TopNSheetField.Total, StringComparison.OrdinalIgnoreCase))
+        {
+            return placement with
+            {
+                PredictedSquatKg = null,
+                PredictedBenchKg = null,
+                PredictedDeadliftKg = null,
+                PredictedTotalKg = value
+            };
+        }
+
+        var squat = string.Equals(field, TopNSheetField.Squat, StringComparison.OrdinalIgnoreCase) ? value : placement.PredictedSquatKg;
+        var bench = string.Equals(field, TopNSheetField.Bench, StringComparison.OrdinalIgnoreCase) ? value : placement.PredictedBenchKg;
+        var deadlift = string.Equals(field, TopNSheetField.Deadlift, StringComparison.OrdinalIgnoreCase) ? value : placement.PredictedDeadliftKg;
+
+        var total = squat is not null || bench is not null || deadlift is not null
+            ? (squat ?? 0m) + (bench ?? 0m) + (deadlift ?? 0m)
+            : (decimal?)null;
+
+        return placement with
+        {
+            PredictedSquatKg = squat,
+            PredictedBenchKg = bench,
+            PredictedDeadliftKg = deadlift,
+            PredictedTotalKg = total
+        };
+    }
+
+    private async Task OnQuickFill(TopNQuickFill request)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return;
+        }
+
+        var placement = CurrentPlacements.FirstOrDefault(item => item.Position == request.Position);
+        if (placement is null)
+        {
+            return;
+        }
+
+        var athlete = Competition.Athletes.FirstOrDefault(item =>
+            string.Equals(item.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase));
+        if (athlete is null)
+        {
+            return;
+        }
+
+        historyByAthleteId.TryGetValue(athlete.Id, out var history);
+
+        AthletePlacementPick? updated = request.Kind switch
+        {
+            TopNQuickFillKind.Nominated when athlete.SeedTotalKg is not null => placement with
+            {
+                PredictedSquatKg = null,
+                PredictedBenchKg = null,
+                PredictedDeadliftKg = null,
+                PredictedTotalKg = athlete.SeedTotalKg
+            },
+            TopNQuickFillKind.Last when history?.LastResult?.TotalKg is not null => FromResult(
+                placement,
+                history.LastResult.SquatKg,
+                history.LastResult.BenchKg,
+                history.LastResult.DeadliftKg,
+                history.LastResult.TotalKg),
+            TopNQuickFillKind.Best when history?.Bests?.TotalKg is not null => FromResult(
+                placement,
+                history.Bests.SquatKg,
+                history.Bests.BenchKg,
+                history.Bests.DeadliftKg,
+                history.Bests.TotalKg),
+            _ => null
+        };
+
+        if (updated is null)
+        {
+            return;
+        }
+
+        modeByPosition[request.Position] = HasLiftValues(updated) ? TopNEntryMode.Lifts : TopNEntryMode.Total;
+
+        var placements = CurrentPlacements
+            .Select(item => item.Position == request.Position ? updated : item)
+            .ToArray();
+
+        await EmitAnswer(placements);
+
+        var message = request.Kind switch
+        {
+            TopNQuickFillKind.Nominated => Localizer["Predictions.Toast.QuickFill.Nominated", athlete.DisplayName].Value,
+            TopNQuickFillKind.Last => Localizer["Predictions.Toast.QuickFill.Last", athlete.DisplayName].Value,
+            _ => Localizer["Predictions.Toast.QuickFill.Best", athlete.DisplayName].Value
+        };
+        Toasts.ShowSuccess(message);
+    }
+
+    private static AthletePlacementPick FromResult(
+        AthletePlacementPick placement,
+        decimal? squat,
+        decimal? bench,
+        decimal? deadlift,
+        decimal? total)
+    {
+        if (squat is not null || bench is not null || deadlift is not null)
+        {
+            return placement with
+            {
+                PredictedSquatKg = squat,
+                PredictedBenchKg = bench,
+                PredictedDeadliftKg = deadlift,
+                PredictedTotalKg = total ?? (squat ?? 0m) + (bench ?? 0m) + (deadlift ?? 0m)
+            };
+        }
+
+        return placement with
+        {
+            PredictedSquatKg = null,
+            PredictedBenchKg = null,
+            PredictedDeadliftKg = null,
+            PredictedTotalKg = total
+        };
+    }
+
+    // ---------- bulk actions ----------
+
+    private async Task SetAthleteAtPosition(int targetPosition, string athleteId)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null || targetPosition < 1 || targetPosition > SlotsCount)
+        {
+            return;
+        }
+
+        var placements = CurrentPlacements.ToList();
+        var existing = placements.FirstOrDefault(placement =>
+            string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase));
+
+        placements.RemoveAll(placement => string.Equals(placement.AthleteId, athleteId, StringComparison.OrdinalIgnoreCase));
+        placements.RemoveAll(placement => placement.Position == targetPosition);
+
+        placements.Add(new AthletePlacementPick
+        {
+            Position = targetPosition,
+            AthleteId = athleteId,
+            PredictedSquatKg = existing?.PredictedSquatKg,
+            PredictedBenchKg = existing?.PredictedBenchKg,
+            PredictedDeadliftKg = existing?.PredictedDeadliftKg,
+            PredictedTotalKg = existing?.PredictedTotalKg
+        });
+
+        pendingRemovalPosition = null;
+        await EmitAnswer(placements);
+
+        var athlete = Competition.Athletes.FirstOrDefault(item =>
+            string.Equals(item.Id, athleteId, StringComparison.OrdinalIgnoreCase));
+        if (athlete is not null)
+        {
+            if (existing is not null && existing.Position != targetPosition)
+            {
+                Toasts.ShowSuccess(Localizer["Predictions.Toast.AthleteMoved.Success", athlete.DisplayName, targetPosition]);
+            }
+            else
+            {
+                Toasts.ShowSuccess(Localizer["Predictions.Toast.AthletePicked.Success", athlete.DisplayName, targetPosition]);
+            }
+        }
+    }
+
+    private async Task RemoveFromPosition(int position)
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return;
+        }
+
+        var placement = CurrentPlacements.FirstOrDefault(item => item.Position == position);
+        if (placement is null)
+        {
+            return;
+        }
+
+        if (HasAnyPredictionValues(placement) && pendingRemovalPosition != position)
+        {
+            pendingRemovalPosition = position;
+            return;
+        }
+
+        var athleteName = Competition.Athletes
+            .FirstOrDefault(item => string.Equals(item.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase))
+            ?.DisplayName;
+
+        pendingRemovalPosition = null;
+        modeByPosition.Remove(position);
+
+        if (string.Equals(selectedAthleteId, placement.AthleteId, StringComparison.OrdinalIgnoreCase))
+        {
+            selectedAthleteId = null;
+        }
+
+        var placements = CurrentPlacements.Where(item => item.Position != position).ToArray();
+        await EmitAnswer(placements);
+
+        if (!string.IsNullOrWhiteSpace(athleteName))
+        {
+            Toasts.ShowSuccess(Localizer["Predictions.Toast.AthleteRemoved.Success", athleteName]);
+        }
+    }
+
+    private async Task AutoFillByNominatedTotal()
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return;
+        }
+
+        pendingRemovalPosition = null;
+        var placements = EligibleAthletes
+            .Take(SlotsCount)
+            .Select((athlete, index) =>
+            {
+                var existing = CurrentPlacements.FirstOrDefault(placement =>
+                    string.Equals(placement.AthleteId, athlete.Id, StringComparison.OrdinalIgnoreCase));
+
+                return new AthletePlacementPick
+                {
+                    Position = index + 1,
+                    AthleteId = athlete.Id,
+                    PredictedSquatKg = existing?.PredictedSquatKg,
+                    PredictedBenchKg = existing?.PredictedBenchKg,
+                    PredictedDeadliftKg = existing?.PredictedDeadliftKg,
+                    PredictedTotalKg = existing?.PredictedTotalKg
+                };
+            })
+            .ToArray();
+
+        if (placements.Length == 0)
+        {
+            Toasts.ShowInfo(Localizer["Predictions.Toast.AutoFill.Empty"]);
+            return;
+        }
+
+        modeByPosition.Clear();
+        await EmitAnswer(placements);
+        await LoadMissingHistoriesAsync();
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.AutoFill.Success"]);
+    }
+
+    private async Task SortByPredictedTotal()
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return;
+        }
+
+        var placements = CurrentPlacements;
+        if (placements.Count == 0 || placements.All(placement => placement.PredictedTotalKg is null))
+        {
+            Toasts.ShowInfo(Localizer["Predictions.Toast.SortPredicted.Empty"]);
+            return;
+        }
+
+        var sorted = placements
+            .Select((placement, index) => new { placement, index })
+            .OrderBy(item => item.placement.PredictedTotalKg is null ? 1 : 0)
+            .ThenByDescending(item => item.placement.PredictedTotalKg ?? 0m)
+            .ThenBy(item => item.index)
+            .Select((item, index) => item.placement with { Position = index + 1 })
+            .ToArray();
+
+        pendingRemovalPosition = null;
+        modeByPosition.Clear();
+        await EmitAnswer(sorted);
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.SortPredicted.Success"]);
+    }
+
+    private async Task ClearCategory()
+    {
+        if (!CanEditPredictions || ActiveQuestion is null)
+        {
+            return;
+        }
+
+        if (CurrentPlacements.Count == 0)
+        {
+            Toasts.ShowInfo(Localizer["Predictions.Toast.Clear.Empty"]);
+            return;
+        }
+
+        pendingRemovalPosition = null;
+        selectedAthleteId = null;
+        modeByPosition.Clear();
+        await EmitAnswer([]);
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.Clear.Success"]);
+    }
+
+    // ---------- history / trend ----------
+
+    private async Task LoadMissingHistoriesAsync()
+    {
+        var athleteIds = CurrentPlacements
+            .Select(placement => placement.AthleteId)
+            .Where(id => !string.IsNullOrWhiteSpace(id))
+            .Where(id => !historyByAthleteId.ContainsKey(id) && !loadingAthleteIds.Contains(id))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+        if (athleteIds.Length == 0)
+        {
+            return;
+        }
+
+        foreach (var id in athleteIds)
+        {
+            loadingAthleteIds.Add(id);
+        }
+
+        var loaded = false;
+        foreach (var id in athleteIds)
+        {
+            try
+            {
+                historyByAthleteId[id] = await AthleteHistoryService.GetAthleteHistoryAsync(id, Competition, historySourceCode);
+            }
+            catch
+            {
+                historyByAthleteId[id] = null;
+            }
+            finally
+            {
+                loadingAthleteIds.Remove(id);
+            }
+
+            loaded = true;
+        }
+
+        if (loaded)
+        {
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private static IReadOnlyList<decimal> BuildTrend(AthleteHistoryEntry? history)
+    {
+        if (history?.RecentResults is null || history.RecentResults.Count == 0)
+        {
+            return [];
+        }
+
+        var totals = history.RecentResults
+            .Select(result => result.TotalKg)
+            .Where(total => total is not null)
+            .Select(total => total!.Value)
+            .Take(6)
+            .Reverse()
+            .ToArray();
+
+        return totals;
+    }
+
+    private async void HandleDataSourceChanged(string competitionId, string source)
+    {
+        if (!string.Equals(competitionId, Competition.Id, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        await InvokeAsync(async () =>
+        {
+            historySourceCode = source;
+            historyByAthleteId.Clear();
+            loadingAthleteIds.Clear();
+            await LoadMissingHistoriesAsync();
+            StateHasChanged();
+        });
+    }
+
+    // ---------- helpers ----------
+
+    private Task EmitAnswer(IEnumerable<AthletePlacementPick> placements)
+    {
+        if (ActiveQuestion is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var sanitized = placements
+            .Where(placement => placement.Position >= 1 &&
+                                placement.Position <= SlotsCount &&
+                                !string.IsNullOrWhiteSpace(placement.AthleteId))
+            .GroupBy(placement => placement.Position)
+            .Select(group => group.First())
+            .OrderBy(placement => placement.Position)
+            .ToArray();
+
+        return AnswerChanged.InvokeAsync(new PredictionAnswer
+        {
+            GroupId = ActiveGroup.Id,
+            QuestionId = ActiveQuestion.Id,
+            QuestionType = ActiveQuestion.Type,
+            Value = new PredictionAnswerValue { AthletePlacements = sanitized },
+            UpdatedAt = DateTimeOffset.UtcNow
+        });
+    }
+
+    private IReadOnlyList<AthletePlacementPick> GetPlacements(string questionId)
+    {
+        return Answers
+            .FirstOrDefault(answer =>
+                string.Equals(answer.GroupId, ActiveGroup.Id, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(answer.QuestionId, questionId, StringComparison.OrdinalIgnoreCase))
+            ?.Value.AthletePlacements
+            .Where(placement => !string.IsNullOrWhiteSpace(placement.AthleteId))
+            .OrderBy(placement => placement.Position)
+            .ToArray() ?? [];
+    }
+
+    private bool IsAthleteInActiveQuestion(string? athleteId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteId) || ActiveQuestion is null)
+        {
+            return false;
+        }
+
+        if (ActiveQuestion.AthleteIds.Count == 0)
+        {
+            return Competition.Athletes.Any(athlete =>
+                string.Equals(athlete.Id, athleteId, StringComparison.OrdinalIgnoreCase));
+        }
+
+        return ActiveQuestion.AthleteIds.Contains(athleteId, StringComparer.OrdinalIgnoreCase);
+    }
+
+    private string GetCategoryName(PredictionQuestion question)
+    {
+        var category = Competition.Categories.FirstOrDefault(item => item.Id == question.CategoryId);
+        return category?.Name ?? Text.QuestionTitle(Competition, question);
+    }
+
+    private string ShortCategoryLabel(PredictionQuestion question)
+    {
+        var name = GetCategoryName(question);
+        var match = ShortCategoryRegex.Match(name);
+        return match.Success ? match.Groups[1].Value : name;
+    }
+
+    private string? GetCategorySectionName(PredictionQuestion question)
+    {
+        var category = Competition.Categories.FirstOrDefault(item => item.Id == question.CategoryId);
+
+        return category?.Sex switch
+        {
+            AthleteSex.Female => Localizer["Predictions.Sidebar.WomenSection"].Value,
+            AthleteSex.Male => Localizer["Predictions.Sidebar.MenSection"].Value,
+            _ => null
+        };
+    }
+
+    private string GetModuleTitle(PredictionGroup group) => Text.GroupTitle(Competition, group);
+
+    private string GetStatusLabel(PredictionCompletionStatus status) => status switch
+    {
+        PredictionCompletionStatus.Complete => Localizer["Predictions.Status.Complete"],
+        PredictionCompletionStatus.InProgress => Localizer["Predictions.Status.InProgress"],
+        _ => Localizer["Predictions.Status.NotStarted"]
+    };
+
+    private string DefaultModeButtonClass(string mode) => string.Join(
+        " ",
+        "topn-seg__btn",
+        string.Equals(defaultMode, mode, StringComparison.OrdinalIgnoreCase) ? "topn-seg__btn--on" : null);
+
+    private static bool HasLiftValues(AthletePlacementPick? placement) =>
+        placement?.PredictedSquatKg is not null ||
+        placement?.PredictedBenchKg is not null ||
+        placement?.PredictedDeadliftKg is not null;
+
+    private static bool HasAnyPredictionValues(AthletePlacementPick placement) =>
+        placement.PredictedTotalKg is not null || HasLiftValues(placement);
+
+    private static bool TryReadOptionalPositiveDecimal(string value, out decimal? parsed)
+    {
+        parsed = null;
+
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return true;
+        }
+
+        if ((!decimal.TryParse(value, NumberStyles.Number, CultureInfo.CurrentCulture, out var number) &&
+             !decimal.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out number)) ||
+            number <= 0 ||
+            number > 1500m)
+        {
+            return false;
+        }
+
+        parsed = number;
+        return true;
+    }
+}

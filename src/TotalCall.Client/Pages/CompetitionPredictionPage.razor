@@ -25,6 +25,22 @@ else if (ActiveGroup is null)
         Title="@Localizer["Predictions.NoModulesTitle"]"
         Description="@Localizer["Predictions.NoModulesDescription"]" />
 }
+else if (IsTopNGroup(ActiveGroup))
+{
+    <TopNWorkspace
+        Competition="@competition"
+        Groups="@OrderedGroups"
+        ActiveGroup="@ActiveGroup"
+        Answers="@predictionSet.Answers"
+        ActiveModuleValidation="@GetModuleValidation(ActiveGroup.Id)"
+        ModuleValidationByGroupId="@moduleValidationByGroupId"
+        CanEditPredictions="@canEditPredictions"
+        SaveStatus="@saveStatus"
+        LastSavedAt="@predictionSet.SavedAt"
+        GroupChanged="@SelectGroup"
+        AnswerChanged="@OnAnswerChanged"
+        ShareRequested="@OnShareRequested" />
+}
 else
 {
     <PredictionShell
@@ -73,6 +89,25 @@ else
     private PredictionGroup? ActiveGroup => OrderedGroups
         .FirstOrDefault(group => group.Id == activeGroupId) ??
         OrderedGroups.FirstOrDefault();
+
+    private static bool IsTopNGroup(PredictionGroup group)
+    {
+        var normalizedType = PredictionModuleType.Normalize(group.Type);
+        if (!string.IsNullOrWhiteSpace(normalizedType))
+        {
+            return normalizedType == PredictionModuleType.TopNByCategory;
+        }
+
+        var questionTypes = group.Questions
+            .Select(question => question.Type)
+            .Distinct()
+            .ToArray();
+
+        return questionTypes.Length == 1 &&
+               questionTypes[0] == PredictionQuestionType.AthleteRanking &&
+               group.Questions.Count > 1 &&
+               group.Questions.All(question => !string.IsNullOrWhiteSpace(question.CategoryId));
+    }
 
     protected override async Task OnParametersSetAsync()
     {

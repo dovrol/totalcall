@@ -1,0 +1,239 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="topn-palette-scrim" @onclick="() => Dismissed.InvokeAsync()">
+    <div class="topn-palette" @onclick:stopPropagation="true" role="dialog" aria-modal="true">
+        <div class="topn-palette__search">
+            <AppIcon Name="AppIconName.Search" Size="17" Class="topn-palette__search-icon" />
+            <input
+                @ref="_searchInput"
+                type="text"
+                value="@_query"
+                @oninput="OnQueryInput"
+                @onkeydown="OnKeyDown"
+                placeholder="@Localizer["Predictions.TopN.PalettePlaceholder"]"
+                aria-label="@Localizer["Predictions.TopN.PalettePlaceholder"]" />
+            <span class="topn-palette__esc">ESC</span>
+        </div>
+
+        <div class="topn-palette__list">
+            @if (_rows.Count == 0)
+            {
+                <div class="topn-palette__empty">@Localizer["Predictions.TopN.PaletteNoResults"]</div>
+            }
+            else
+            {
+                var renderIndex = 0;
+                foreach (var section in _rows)
+                {
+                    <div class="topn-palette__section">@section.Label</div>
+
+                    foreach (var row in section.Rows)
+                    {
+                        var index = renderIndex++;
+                        var isSelected = index == _highlight;
+
+                        <button
+                            type="button"
+                            class="@GetRowClass(isSelected)"
+                            @onclick="() => Choose(row.Question.Id)"
+                            @onmouseenter="() => _highlight = index">
+                            <span class="topn-palette__chip">@ShortLabelSelector(row.Question)</span>
+                            <span class="topn-palette__name">@CategoryLabelSelector(row.Question)</span>
+                            <span class="topn-palette__meta">
+                                <span class="@GetNoteClass(row.Status)">@row.Note</span>
+                                @if (isSelected)
+                                {
+                                    <span class="topn-palette__enter">↵</span>
+                                }
+                            </span>
+                        </button>
+                    }
+                }
+            }
+        </div>
+
+        <div class="topn-palette__foot">
+            <span class="topn-palette__key"><kbd>↑</kbd><kbd>↓</kbd> @Localizer["Predictions.TopN.PaletteNavigate"]</span>
+            <span class="topn-palette__key"><kbd>↵</kbd> @Localizer["Predictions.TopN.PaletteOpen"]</span>
+            <span class="topn-palette__key"><kbd>esc</kbd> @Localizer["Predictions.TopN.PaletteClose"]</span>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<PredictionQuestion> Questions { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public IReadOnlyDictionary<string, PredictionQuestionCompletionResult> StatusByQuestionId { get; set; } =
+        new Dictionary<string, PredictionQuestionCompletionResult>(StringComparer.OrdinalIgnoreCase);
+
+    [Parameter]
+    public string? ActiveQuestionId { get; set; }
+
+    [Parameter, EditorRequired]
+    public Func<PredictionQuestion, string> CategoryLabelSelector { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public Func<PredictionQuestion, string> ShortLabelSelector { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<string> CategoryChosen { get; set; }
+
+    [Parameter]
+    public EventCallback Dismissed { get; set; }
+
+    private ElementReference _searchInput;
+    private string _query = string.Empty;
+    private int _highlight;
+    private List<PaletteSection> _rows = [];
+
+    protected override void OnParametersSet()
+    {
+        RebuildRows();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                await _searchInput.FocusAsync();
+            }
+            catch
+            {
+                // focus best-effort
+            }
+        }
+    }
+
+    private void OnQueryInput(ChangeEventArgs args)
+    {
+        _query = args.Value?.ToString() ?? string.Empty;
+        RebuildRows();
+    }
+
+    private async Task OnKeyDown(KeyboardEventArgs args)
+    {
+        switch (args.Key)
+        {
+            case "ArrowDown":
+                _highlight = Math.Min(_highlight + 1, FlatRows.Count - 1);
+                break;
+            case "ArrowUp":
+                _highlight = Math.Max(_highlight - 1, 0);
+                break;
+            case "Enter":
+                var selected = FlatRows.ElementAtOrDefault(_highlight);
+                if (selected is not null)
+                {
+                    await Choose(selected.Question.Id);
+                }
+                break;
+            case "Escape":
+                await Dismissed.InvokeAsync();
+                break;
+        }
+    }
+
+    private Task Choose(string questionId)
+    {
+        return CategoryChosen.InvokeAsync(questionId);
+    }
+
+    private void RebuildRows()
+    {
+        var matches = Questions
+            .Where(Matches)
+            .Select(question => new PaletteRow(question, GetStatus(question.Id)))
+            .ToArray();
+
+        var sections = new List<PaletteSection>();
+
+        var suggested = matches
+            .Where(row => !string.Equals(row.Question.Id, ActiveQuestionId, StringComparison.OrdinalIgnoreCase))
+            .Where(row => row.Status.Status != PredictionCompletionStatus.Complete)
+            .OrderByDescending(row => row.Status.Status == PredictionCompletionStatus.InProgress)
+            .Take(3)
+            .Select(row => row with { Note = SuggestionNote(row.Status) })
+            .ToArray();
+
+        if (suggested.Length > 0)
+        {
+            sections.Add(new PaletteSection(Localizer["Predictions.TopN.PaletteSuggested"], suggested));
+        }
+
+        var all = matches
+            .Select(row => row with { Note = AllNote(row.Question.Id, row.Status) })
+            .ToArray();
+
+        if (all.Length > 0)
+        {
+            sections.Add(new PaletteSection(Localizer["Predictions.TopN.PaletteAll"], all));
+        }
+
+        _rows = sections;
+        _highlight = Math.Clamp(_highlight, 0, Math.Max(0, FlatRows.Count - 1));
+    }
+
+    private List<PaletteRow> FlatRows => _rows.SelectMany(section => section.Rows).ToList();
+
+    private bool Matches(PredictionQuestion question)
+    {
+        if (string.IsNullOrWhiteSpace(_query))
+        {
+            return true;
+        }
+
+        return CategoryLabelSelector(question).Contains(_query, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private PredictionQuestionCompletionResult GetStatus(string questionId)
+    {
+        return StatusByQuestionId.TryGetValue(questionId, out var status)
+            ? status
+            : new PredictionQuestionCompletionResult(questionId, PredictionCompletionStatus.NotStarted, 0, 0);
+    }
+
+    private string GetRowClass(bool isSelected) => string.Join(
+        " ",
+        "topn-palette__row",
+        isSelected ? "topn-palette__row--selected" : null);
+
+    private static string GetNoteClass(PredictionQuestionCompletionResult status) => string.Join(
+        " ",
+        "topn-palette__note",
+        status.Status switch
+        {
+            PredictionCompletionStatus.Complete => "topn-palette__note--done",
+            PredictionCompletionStatus.InProgress => "topn-palette__note--prog",
+            _ => "topn-palette__note--todo"
+        });
+
+    private string SuggestionNote(PredictionQuestionCompletionResult status)
+    {
+        return status.Status == PredictionCompletionStatus.InProgress
+            ? Localizer["Predictions.TopN.PaletteInProgress", status.SelectedCount, Math.Max(1, status.RequiredCount)]
+            : Localizer["Predictions.TopN.PaletteNext"];
+    }
+
+    private string AllNote(string questionId, PredictionQuestionCompletionResult status)
+    {
+        if (string.Equals(questionId, ActiveQuestionId, StringComparison.OrdinalIgnoreCase))
+        {
+            return Localizer["Predictions.TopN.PaletteEditing"];
+        }
+
+        return status.Status switch
+        {
+            PredictionCompletionStatus.Complete => Localizer["Predictions.Status.Complete"],
+            PredictionCompletionStatus.InProgress => Localizer["Predictions.TopN.PaletteInProgress", status.SelectedCount, Math.Max(1, status.RequiredCount)],
+            _ => Localizer["Predictions.TopN.PaletteEmpty"]
+        };
+    }
+
+    private sealed record PaletteRow(PredictionQuestion Question, PredictionQuestionCompletionResult Status, string Note = "");
+
+    private sealed record PaletteSection(string Label, IReadOnlyList<PaletteRow> Rows);
+}

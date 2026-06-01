@@ -3,27 +3,6 @@
 
 @switch (ResolvedModuleType)
 {
-    case PredictionModuleType.TopNByCategory:
-        <TopNByCategoryPrediction
-            Competition="Competition"
-            Group="Group"
-            Answers="Answers"
-            ModuleValidation="ModuleValidation"
-            CanEditPredictions="CanEditPredictions"
-            SaveStatus="@SaveStatus"
-            LastSavedAt="LastSavedAt"
-            ShowSummaryAction="ShowSummaryAction"
-            ShowCompactModuleInfo="ShowCompactModuleInfo"
-            UseExternalSidebar="UseExternalTopNSidebar"
-            ActiveQuestionId="@ActiveTopNQuestionId"
-            SelectedAthleteId="@ActiveTopNAthleteId"
-            SelectorSlotPosition="@ActiveTopNSelectorSlotPosition"
-            ActiveQuestionChanged="TopNQuestionChanged"
-            AthleteContextRequested="TopNAthleteContextRequested"
-            SelectorSlotPositionChanged="TopNSelectorSlotPositionChanged"
-            SummaryRequested="SummaryRequested"
-            AnswerChanged="AnswerChanged" />
-        break;
     case PredictionModuleType.AthleteRanking:
         <AthleteRankingPrediction Competition="Competition" Group="Group" />
         break;
@@ -62,54 +41,6 @@
     [Parameter, EditorRequired]
     public PredictionGroup Group { get; set; } = default!;
 
-    [Parameter]
-    public IReadOnlyList<PredictionAnswer> Answers { get; set; } = [];
-
-    [Parameter, EditorRequired]
-    public PredictionModuleValidationResult ModuleValidation { get; set; } = default!;
-
-    [Parameter]
-    public bool CanEditPredictions { get; set; }
-
-    [Parameter]
-    public string? SaveStatus { get; set; }
-
-    [Parameter]
-    public DateTimeOffset? LastSavedAt { get; set; }
-
-    [Parameter]
-    public bool ShowSummaryAction { get; set; } = true;
-
-    [Parameter]
-    public bool ShowCompactModuleInfo { get; set; } = true;
-
-    [Parameter]
-    public bool UseExternalTopNSidebar { get; set; }
-
-    [Parameter]
-    public string? ActiveTopNQuestionId { get; set; }
-
-    [Parameter]
-    public string? ActiveTopNAthleteId { get; set; }
-
-    [Parameter]
-    public int? ActiveTopNSelectorSlotPosition { get; set; }
-
-    [Parameter]
-    public EventCallback<string> TopNQuestionChanged { get; set; }
-
-    [Parameter]
-    public EventCallback<string> TopNAthleteContextRequested { get; set; }
-
-    [Parameter]
-    public EventCallback<int?> TopNSelectorSlotPositionChanged { get; set; }
-
-    [Parameter]
-    public EventCallback SummaryRequested { get; set; }
-
-    [Parameter]
-    public EventCallback<PredictionAnswer> AnswerChanged { get; set; }
-
     private string ResolvedModuleType => ResolveModuleType(Group);
 
     private static string ResolveModuleType(PredictionGroup group)
@@ -127,13 +58,6 @@
 
         if (questionTypes.Length == 1)
         {
-            if (questionTypes[0] == PredictionQuestionType.AthleteRanking &&
-                group.Questions.Count > 1 &&
-                group.Questions.All(question => !string.IsNullOrWhiteSpace(question.CategoryId)))
-            {
-                return PredictionModuleType.TopNByCategory;
-            }
-
             return questionTypes[0] switch
             {
                 PredictionQuestionType.AthleteRanking => PredictionModuleType.AthleteRanking,

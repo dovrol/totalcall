@@ -1,0 +1,130 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="topn-modmenu-layer">
+    <button
+        type="button"
+        class="topn-modmenu__scrim"
+        tabindex="-1"
+        aria-label="@Localizer["Common.Cancel"]"
+        @onclick="() => Dismissed.InvokeAsync()">
+    </button>
+
+    <div class="topn-modmenu" role="menu">
+        <div class="topn-modmenu__head">@Localizer["Predictions.TopN.ModuleMenuTitle", CompetitionName]</div>
+
+        @foreach (var module in Modules)
+        {
+            <button
+                type="button"
+                class="@GetItemClass(module)"
+                role="menuitemradio"
+                aria-checked="@module.IsActive"
+                @onclick="() => OnModuleChosen(module.GroupId)">
+                <span class="topn-modmenu__icon">
+                    <AppIcon Name="@module.Icon" Size="17" />
+                </span>
+                <span class="topn-modmenu__text">
+                    <span class="topn-modmenu__name">@module.Title</span>
+                    @if (!string.IsNullOrWhiteSpace(module.Description))
+                    {
+                        <span class="topn-modmenu__desc">@module.Description</span>
+                    }
+                </span>
+                @if (module.IsActive)
+                {
+                    <AppIcon Name="AppIconName.Check" Size="15" Class="topn-modmenu__check" />
+                }
+                else
+                {
+                    <span class="topn-modmenu__progress">@module.ProgressLabel</span>
+                }
+            </button>
+        }
+
+        <div class="topn-modmenu__note">
+            <AppIcon Name="AppIconName.AlertCircle" Size="13" Class="topn-modmenu__note-icon" />
+            <span>@Localizer["Predictions.TopN.ModuleMenuNote"]</span>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<PredictionGroup> Groups { get; set; } = [];
+
+    [Parameter]
+    public string? ActiveGroupId { get; set; }
+
+    [Parameter, EditorRequired]
+    public string CompetitionName { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public Func<PredictionGroup, string> ModuleTitleSelector { get; set; } = default!;
+
+    [Parameter]
+    public IReadOnlyDictionary<string, PredictionModuleValidationResult> ModuleValidationByGroupId { get; set; } =
+        new Dictionary<string, PredictionModuleValidationResult>(StringComparer.OrdinalIgnoreCase);
+
+    [Parameter]
+    public EventCallback<string> ModuleChanged { get; set; }
+
+    [Parameter]
+    public EventCallback Dismissed { get; set; }
+
+    private IReadOnlyList<ModuleItem> Modules => Groups
+        .OrderBy(group => group.Order)
+        .Select(group => new ModuleItem(
+            group.Id,
+            ModuleTitleSelector(group),
+            string.IsNullOrWhiteSpace(group.Description) ? null : group.Description,
+            string.Equals(group.Id, ActiveGroupId, StringComparison.OrdinalIgnoreCase),
+            ResolveIcon(group),
+            ResolveProgressLabel(group.Id)))
+        .ToArray();
+
+    private string GetItemClass(ModuleItem module) => string.Join(
+        " ",
+        "topn-modmenu__item",
+        module.IsActive ? "topn-modmenu__item--active" : null);
+
+    private Task OnModuleChosen(string groupId)
+    {
+        if (string.Equals(groupId, ActiveGroupId, StringComparison.OrdinalIgnoreCase))
+        {
+            return Dismissed.InvokeAsync();
+        }
+
+        return ModuleChanged.InvokeAsync(groupId);
+    }
+
+    private string ResolveProgressLabel(string groupId)
+    {
+        if (!ModuleValidationByGroupId.TryGetValue(groupId, out var validation) || validation.TotalItems == 0)
+        {
+            return string.Empty;
+        }
+
+        return $"{validation.CompletedItems}/{validation.TotalItems}";
+    }
+
+    private static AppIconName ResolveIcon(PredictionGroup group)
+    {
+        var normalizedType = PredictionModuleType.Normalize(group.Type);
+
+        return normalizedType switch
+        {
+            PredictionModuleType.TopNByCategory => AppIconName.Medal,
+            PredictionModuleType.CategoryPodium => AppIconName.Trophy,
+            PredictionModuleType.AthleteRanking => AppIconName.Users,
+            _ => AppIconName.Target
+        };
+    }
+
+    private sealed record ModuleItem(
+        string GroupId,
+        string Title,
+        string? Description,
+        bool IsActive,
+        AppIconName Icon,
+        string ProgressLabel);
+}

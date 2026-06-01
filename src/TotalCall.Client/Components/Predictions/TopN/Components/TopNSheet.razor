@@ -1,0 +1,329 @@
+@using System.Globalization
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="topn-sheet">
+    <div class="topn-sheet__head" aria-hidden="true">
+        <span class="topn-sheet__th"></span>
+        <span class="topn-sheet__th">@Localizer["Predictions.TopN.ColAthlete"]</span>
+        <span class="topn-sheet__th topn-sheet__th--num">SQ</span>
+        <span class="topn-sheet__th topn-sheet__th--num">BP</span>
+        <span class="topn-sheet__th topn-sheet__th--num">DL</span>
+        <span class="topn-sheet__th topn-sheet__th--num">@Localizer["Predictions.PredictedShort"]</span>
+        <span class="topn-sheet__th">@Localizer["Predictions.TopN.ColForm"]</span>
+        <span class="topn-sheet__th"></span>
+    </div>
+
+    <div class="topn-sheet__body">
+        @foreach (var slot in Slots)
+        {
+            @if (slot.Athlete is null)
+            {
+                <button
+                    type="button"
+                    class="topn-row topn-row--empty"
+                    disabled="@(!CanEditPredictions)"
+                    @onclick="() => EmptySlotClicked.InvokeAsync(slot.Position)">
+                    <span class="topn-cell"><span class="topn-row__rank">@slot.Position</span></span>
+                    <span class="topn-cell">
+                        <span class="topn-who">
+                            <span class="topn-who__av topn-who__av--add">+</span>
+                            <span class="topn-who__name topn-who__name--muted">@PickCtaLabel</span>
+                        </span>
+                    </span>
+                    <span class="topn-cell topn-cell--num"><span class="topn-input topn-input--ghost">—</span></span>
+                    <span class="topn-cell topn-cell--num"><span class="topn-input topn-input--ghost">—</span></span>
+                    <span class="topn-cell topn-cell--num"><span class="topn-input topn-input--ghost">—</span></span>
+                    <span class="topn-cell topn-cell--num"><span class="topn-pred topn-pred--muted"><small>@Localizer["Predictions.PredictedShort"]</small>—</span></span>
+                    <span class="topn-cell"></span>
+                    <span class="topn-cell"></span>
+                </button>
+            }
+            else
+            {
+                var isPending = IsPending(slot);
+                var isTotal = string.Equals(slot.Mode, TopNEntryMode.Total, StringComparison.OrdinalIgnoreCase);
+
+                <div class="@RowGroupClass(slot)">
+                    <div class="@RowClass(slot)">
+                        <div class="topn-cell"><span class="topn-row__rank">@slot.Position</span></div>
+
+                        <div class="topn-cell">
+                            <div class="topn-who">
+                                <span class="topn-who__av">@Initials(slot.Athlete)</span>
+                                <div class="topn-who__text">
+                                    <div class="topn-who__name">
+                                        <span>@slot.Athlete.DisplayName</span>
+                                        <CountryFlag Code="@slot.Athlete.CountryCode" CountryName="@slot.Athlete.CountryName" Class="topn-who__flag" />
+                                    </div>
+                                    <div class="topn-who__nom">
+                                        @if (slot.Athlete.SeedTotalKg is not null)
+                                        {
+                                            <span>@Localizer["Predictions.NominatedShort"] <strong>@FormatKg(slot.Athlete.SeedTotalKg)</strong></span>
+                                        }
+                                        else
+                                        {
+                                            <span>@Localizer["Predictions.NominatedShort"] <strong>@Localizer["Common.Tbd"]</strong></span>
+                                        }
+                                    </div>
+                                    @if (CanEditPredictions)
+                                    {
+                                        <button
+                                            type="button"
+                                            class="@ModePillClass(isTotal)"
+                                            @onclick="() => ModeToggled.InvokeAsync(slot.Position)"
+                                            title="@Localizer["Predictions.TopN.ToggleMode"]">
+                                            <span>@(isTotal ? Localizer["Predictions.TopN.ModeTotalShort"] : Localizer["Predictions.TopN.ModeLiftsShort"])</span>
+                                            <span class="topn-modepill__swap" aria-hidden="true">⇄</span>
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (isTotal)
+                        {
+                            <div class="topn-cell topn-cell--num"><span class="topn-input topn-input--locked">—</span></div>
+                            <div class="topn-cell topn-cell--num"><span class="topn-input topn-input--locked">—</span></div>
+                            <div class="topn-cell topn-cell--num"><span class="topn-input topn-input--locked">—</span></div>
+                            <div class="topn-cell topn-cell--num">
+                                <div class="topn-total-edit">
+                                    <input
+                                        class="topn-total-edit__input"
+                                        type="text"
+                                        inputmode="decimal"
+                                        value="@FormatCell(slot.Placement?.PredictedTotalKg)"
+                                        placeholder="@Localizer["Predictions.PredictedShort"]"
+                                        disabled="@(!CanEditPredictions)"
+                                        @onchange="args => EmitEdit(slot.Position, TopNSheetField.Total, args)" />
+                                    <span class="topn-total-edit__unit">@Localizer["Predictions.TopN.KgUnit"]</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="topn-cell topn-cell--num">
+                                <input
+                                    class="topn-input"
+                                    type="text"
+                                    inputmode="decimal"
+                                    value="@FormatCell(slot.Placement?.PredictedSquatKg)"
+                                    placeholder="SQ"
+                                    disabled="@(!CanEditPredictions)"
+                                    @onchange="args => EmitEdit(slot.Position, TopNSheetField.Squat, args)" />
+                            </div>
+                            <div class="topn-cell topn-cell--num">
+                                <input
+                                    class="topn-input"
+                                    type="text"
+                                    inputmode="decimal"
+                                    value="@FormatCell(slot.Placement?.PredictedBenchKg)"
+                                    placeholder="BP"
+                                    disabled="@(!CanEditPredictions)"
+                                    @onchange="args => EmitEdit(slot.Position, TopNSheetField.Bench, args)" />
+                            </div>
+                            <div class="topn-cell topn-cell--num">
+                                <input
+                                    class="topn-input"
+                                    type="text"
+                                    inputmode="decimal"
+                                    value="@FormatCell(slot.Placement?.PredictedDeadliftKg)"
+                                    placeholder="DL"
+                                    disabled="@(!CanEditPredictions)"
+                                    @onchange="args => EmitEdit(slot.Position, TopNSheetField.Deadlift, args)" />
+                            </div>
+                            <div class="topn-cell topn-cell--num">
+                                <span class="@PredClass(slot.Placement?.PredictedTotalKg)">
+                                    <small>@Localizer["Predictions.PredictedShort"]</small>@FormatPred(slot.Placement?.PredictedTotalKg)
+                                </span>
+                            </div>
+                        }
+
+                        <div class="topn-cell">
+                            @if (slot.Trend.Count > 1)
+                            {
+                                <div class="@TrendClass(slot.TrendDeltaKg)">
+                                    <TopNSparkline Points="slot.Trend" />
+                                    @if (!string.IsNullOrWhiteSpace(FormatDelta(slot.TrendDeltaKg)))
+                                    {
+                                        <span class="topn-trend__delta">@FormatDelta(slot.TrendDeltaKg)</span>
+                                    }
+                                </div>
+                            }
+                        </div>
+
+                        <div class="topn-cell">
+                            <div class="topn-row__acts">
+                                <button
+                                    type="button"
+                                    class="topn-row__act topn-row__act--ctx"
+                                    title="@Localizer["Predictions.Tab.Context"]"
+                                    aria-label="@Localizer["Predictions.Tab.Context"]"
+                                    @onclick="() => AthleteContextRequested.InvokeAsync(slot.Athlete.Id)">
+                                    <AppIcon Name="AppIconName.BarChart" Size="13" />
+                                </button>
+                                <button
+                                    type="button"
+                                    class="@RemoveClass(slot.IsRemovePending)"
+                                    title="@(slot.IsRemovePending ? Localizer["Predictions.RemoveConfirm"] : Localizer["Predictions.RemoveAthlete"])"
+                                    aria-label="@(slot.IsRemovePending ? Localizer["Predictions.RemoveConfirm"] : Localizer["Predictions.RemoveAthlete"])"
+                                    disabled="@(!CanEditPredictions)"
+                                    @onclick="() => RemoveRequested.InvokeAsync(slot.Position)">
+                                    <AppIcon Name="AppIconName.Trash2" Size="13" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (isPending && CanEditPredictions && HasAnyQuickFill(slot))
+                    {
+                        <div class="topn-fill">
+                            <span class="topn-fill__label">@Localizer["Predictions.TopN.QuickFillLabel"]</span>
+                            @if (slot.CanUseNominated)
+                            {
+                                <button type="button" class="topn-fill__chip" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Nominated))">
+                                    <AppIcon Name="AppIconName.Target" Size="13" Class="topn-fill__chip-icon" />
+                                    <span>@Localizer["Predictions.UseNominatedTotal"]</span>
+                                    <strong>@FormatKg(slot.NominatedTotalKg)</strong>
+                                </button>
+                            }
+                            @if (slot.CanUseLast)
+                            {
+                                <button type="button" class="topn-fill__chip" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Last))">
+                                    <AppIcon Name="AppIconName.Clock" Size="13" Class="topn-fill__chip-icon" />
+                                    <span>@Localizer["Predictions.UseLastResult"]</span>
+                                    <strong>@FormatKg(slot.LastTotalKg)</strong>
+                                </button>
+                            }
+                            @if (slot.CanUseBest)
+                            {
+                                <button type="button" class="topn-fill__chip" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Best))">
+                                    <AppIcon Name="AppIconName.Trophy" Size="13" Class="topn-fill__chip-icon" />
+                                    <span>@Localizer["Predictions.UseBestResult"]</span>
+                                    <strong>@FormatKg(slot.BestTotalKg)</strong>
+                                </button>
+                            }
+                            <span class="topn-fill__or">@Localizer["Predictions.TopN.QuickFillOr"]</span>
+                        </div>
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<TopNSlotView> Slots { get; set; } = [];
+
+    [Parameter]
+    public bool CanEditPredictions { get; set; }
+
+    [Parameter]
+    public string PickCta { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback<int> EmptySlotClicked { get; set; }
+
+    [Parameter]
+    public EventCallback<string> AthleteContextRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> RemoveRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<int> ModeToggled { get; set; }
+
+    [Parameter]
+    public EventCallback<TopNSheetEdit> CellEdited { get; set; }
+
+    [Parameter]
+    public EventCallback<TopNQuickFill> QuickFillRequested { get; set; }
+
+    private string PickCtaLabel => string.IsNullOrWhiteSpace(PickCta)
+        ? Localizer["Predictions.PickAthleteCta"]
+        : PickCta;
+
+    private static bool IsPending(TopNSlotView slot) =>
+        slot.Placement?.PredictedTotalKg is null &&
+        slot.Placement?.PredictedSquatKg is null &&
+        slot.Placement?.PredictedBenchKg is null &&
+        slot.Placement?.PredictedDeadliftKg is null;
+
+    private static bool HasAnyQuickFill(TopNSlotView slot) =>
+        slot.CanUseNominated || slot.CanUseLast || slot.CanUseBest;
+
+    private Task EmitEdit(int position, string field, ChangeEventArgs args) =>
+        CellEdited.InvokeAsync(new TopNSheetEdit(position, field, args.Value?.ToString() ?? string.Empty));
+
+    private string RowGroupClass(TopNSlotView slot) => string.Join(
+        " ",
+        "topn-rowgroup",
+        IsPending(slot) ? "topn-rowgroup--pending" : null,
+        slot.IsContextActive ? "topn-rowgroup--context" : null);
+
+    private string RowClass(TopNSlotView slot) => string.Join(
+        " ",
+        "topn-row",
+        slot.Position == 1 ? "topn-row--lead" : null,
+        slot.IsContextActive ? "topn-row--context" : null);
+
+    private string ModePillClass(bool isTotal) => string.Join(
+        " ",
+        "topn-modepill",
+        isTotal ? "topn-modepill--total" : null);
+
+    private static string PredClass(decimal? total) => string.Join(
+        " ",
+        "topn-pred",
+        total is null ? "topn-pred--muted" : null);
+
+    private static string TrendClass(decimal? delta) => string.Join(
+        " ",
+        "topn-trend",
+        delta is < 0 ? "topn-trend--down" : "topn-trend--up");
+
+    private string RemoveClass(bool pending) => string.Join(
+        " ",
+        "topn-row__act",
+        "topn-row__act--danger",
+        pending ? "topn-row__act--danger-pending" : null);
+
+    private static string Initials(Athlete athlete)
+    {
+        var parts = athlete.DisplayName
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        if (parts.Length == 0)
+        {
+            return "?";
+        }
+
+        if (parts.Length == 1)
+        {
+            return parts[0][..Math.Min(2, parts[0].Length)].ToUpperInvariant();
+        }
+
+        return $"{parts[0][0]}{parts[1][0]}".ToUpperInvariant();
+    }
+
+    private string FormatKg(decimal? value) => value is null
+        ? Localizer["Common.Tbd"].Value
+        : $"{value.Value.ToString("0.#", CultureInfo.CurrentCulture)} {Localizer["Predictions.TopN.KgUnit"]}";
+
+    private static string FormatPred(decimal? value) => value is null
+        ? "—"
+        : value.Value.ToString("0.#", CultureInfo.CurrentCulture);
+
+    private static string FormatCell(decimal? value) => value?.ToString("0.###", CultureInfo.CurrentCulture) ?? string.Empty;
+
+    private static string FormatDelta(decimal? value)
+    {
+        if (value is null || value.Value == 0m)
+        {
+            return string.Empty;
+        }
+
+        var sign = value.Value > 0 ? "+" : string.Empty;
+        return $"{sign}{value.Value.ToString("0.#", CultureInfo.CurrentCulture)}";
+    }
+}
