@@ -30,7 +30,7 @@ public static class TopNSheetField
     public const string Total = "total";
 }
 
-/// <summary>A single Top N ranking slot rendered as a sheet row.</summary>
+/// <summary>A single athlete in the ranked field rendered as a sheet row.</summary>
 public sealed record TopNSlotView
 {
     public required int Position { get; init; }
@@ -43,15 +43,13 @@ public sealed record TopNSlotView
 
     public bool IsContextActive { get; init; }
 
-    public bool IsRemovePending { get; init; }
+    public bool IsScored { get; init; }
+
+    public bool IsAutoSeeded { get; init; }
 
     public bool CanMoveUp { get; init; }
 
     public bool CanMoveDown { get; init; }
-
-    public IReadOnlyList<decimal> Trend { get; init; } = [];
-
-    public decimal? TrendDeltaKg { get; init; }
 
     public bool CanUseNominated { get; init; }
 

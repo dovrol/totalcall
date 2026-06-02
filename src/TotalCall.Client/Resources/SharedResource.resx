@@ -181,11 +181,6 @@
   <data name="Predictions.Toast.AutoFill.Empty" xml:space="preserve"><value>Brak zawodników do auto-fill w tej kategorii.</value></data>
   <data name="Predictions.Toast.SortPredicted.Success" xml:space="preserve"><value>Posortowano ranking wg predicted total.</value></data>
   <data name="Predictions.Toast.SortPredicted.Empty" xml:space="preserve"><value>Dodaj typy z predicted total, żeby sortować wg PRED.</value></data>
-  <data name="Predictions.Toast.Clear.Success" xml:space="preserve"><value>Wyczyszczono kategorię.</value></data>
-  <data name="Predictions.Toast.Clear.Empty" xml:space="preserve"><value>Ta kategoria jest już pusta.</value></data>
-  <data name="Predictions.Toast.AthletePicked.Success" xml:space="preserve"><value>Wybrano {0} na miejsce #{1}.</value></data>
-  <data name="Predictions.Toast.AthleteRemoved.Success" xml:space="preserve"><value>Usunięto {0} z rankingu.</value></data>
-  <data name="Predictions.Toast.AthleteMoved.Success" xml:space="preserve"><value>Przesunięto {0} na miejsce #{1}.</value></data>
   <data name="Predictions.Toast.PredictionSaved.Success" xml:space="preserve"><value>Zapisano predicted total dla {0}.</value></data>
   <data name="Predictions.Toast.QuickFill.Nominated" xml:space="preserve"><value>Wstawiono nominated total dla {0}.</value></data>
   <data name="Predictions.Toast.QuickFill.Last" xml:space="preserve"><value>Wstawiono ostatni wynik dla {0}.</value></data>
@@ -545,29 +540,45 @@
   <data name="Predictions.TopN.PaletteEditing" xml:space="preserve"><value>Edytujesz</value></data>
   <data name="Predictions.TopN.PaletteEmpty" xml:space="preserve"><value>Puste</value></data>
   <data name="Predictions.TopN.ColAthlete" xml:space="preserve"><value>Zawodnik</value></data>
-  <data name="Predictions.TopN.ColForm" xml:space="preserve"><value>Forma</value></data>
   <data name="Predictions.TopN.ToggleMode" xml:space="preserve"><value>Przełącz total / boje</value></data>
   <data name="Predictions.TopN.ModeTotalShort" xml:space="preserve"><value>Tylko total</value></data>
   <data name="Predictions.TopN.ModeLiftsShort" xml:space="preserve"><value>SQ · BP · DL</value></data>
   <data name="Predictions.TopN.KgUnit" xml:space="preserve"><value>kg</value></data>
-  <data name="Predictions.TopN.PickerTitle" xml:space="preserve"><value>Wybierz zawodnika na slot #{0}</value></data>
-  <data name="Predictions.TopN.EntryHint" xml:space="preserve"><value>Wpisuj &lt;b&gt;SQ → BP → DL&lt;/b&gt; (total liczy się sam) lub przełącz wiersz na &lt;b&gt;tylko total&lt;/b&gt; plakietką pod nazwiskiem. Przeciągnij &lt;b&gt;⠿&lt;/b&gt;, by zmienić pozycję w Top 5.</value></data>
-  <data name="Predictions.TopN.FooterCount" xml:space="preserve"><value>{0} / {1} wybranych · {2} puste sloty</value></data>
+  <data name="Predictions.TopN.FooterCount" xml:space="preserve"><value>Liczone: miejsca 1–{0} · doprecyzowano {1} z {2}</value></data>
+  <data name="Predictions.TopN.DeltaNom" xml:space="preserve"><value>Δ NOM</value></data>
+  <data name="Predictions.TopN.ByNomination" xml:space="preserve"><value>wg nominacji</value></data>
+  <data name="Predictions.TopN.ByNominationShort" xml:space="preserve"><value>wg NOM</value></data>
+  <data name="Predictions.TopN.YourPick" xml:space="preserve"><value>Twój typ</value></data>
+  <data name="Predictions.TopN.VsNom" xml:space="preserve"><value>vs NOM</value></data>
+  <data name="Predictions.TopN.CutoffLabel" xml:space="preserve"><value>Granica podium · Top {0} liczone</value></data>
+  <data name="Predictions.TopN.CutoffHint" xml:space="preserve"><value>poniżej = strefa porównania · przeciągnij lub użyj strzałek, by zmienić miejsce</value></data>
+  <data name="Predictions.TopN.CollapseField" xml:space="preserve"><value>Zwiń stawkę</value></data>
+  <data name="Predictions.TopN.ExpandField" xml:space="preserve"><value>Pokaż całą stawkę · pozostałych {0}</value></data>
+  <data name="Predictions.TopN.FieldCount" xml:space="preserve"><value>{0} zawodników</value></data>
+  <data name="Predictions.TopN.ResetAthlete" xml:space="preserve"><value>Przywróć zawodnika do nominacji</value></data>
+  <data name="Predictions.TopN.ResetAthleteShort" xml:space="preserve"><value>Resetuj do NOM</value></data>
+  <data name="Predictions.TopN.PodiumScored" xml:space="preserve"><value>Top 3 punktowane</value></data>
+  <data name="Predictions.TopN.CutoffMobile" xml:space="preserve"><value>Granica podium</value></data>
+  <data name="Predictions.TopN.ComparisonZone" xml:space="preserve"><value>poniżej: strefa porównania</value></data>
+  <data name="Predictions.TopN.MobileTapToRefine" xml:space="preserve"><value>Dotknij, aby doprecyzować wynik</value></data>
+  <data name="Predictions.TopN.EqualNom" xml:space="preserve"><value>= NOM</value></data>
   <data name="Predictions.TopN.CompareSoon" xml:space="preserve"><value>Porównywanie zawodników będzie dostępne wkrótce.</value></data>
   <data name="Predictions.TopN.DragHint" xml:space="preserve"><value>Przeciągnij, by zmienić pozycję</value></data>
   <data name="Predictions.TopN.DropTo" xml:space="preserve"><value>Upuść na pozycję {0}</value></data>
   <data name="Predictions.TopN.FromData" xml:space="preserve"><value>z danych</value></data>
-  <data name="Predictions.TopN.FillFromData" xml:space="preserve"><value>Wypełnij z danych zawodniczki</value></data>
+  <data name="Predictions.TopN.FillFromData" xml:space="preserve"><value>Uzupełnij predicted z danych</value></data>
   <data name="Predictions.TopN.FillFromHeading" xml:space="preserve"><value>Wypełnij predicted z:</value></data>
   <data name="Predictions.TopN.FillManualNote" xml:space="preserve"><value>Możesz też wpisać ręcznie w polach SQ/BP/DL ↑</value></data>
-  <data name="Predictions.TopN.FillEmpty" xml:space="preserve"><value>Wypełnij puste</value></data>
-  <data name="Predictions.TopN.FillEmptyHeading" xml:space="preserve"><value>Wypełnij {0} puste wg:</value></data>
-  <data name="Predictions.TopN.NoEmptySlots" xml:space="preserve"><value>Brak pustych slotów do wypełnienia.</value></data>
+  <data name="Predictions.TopN.FillDefaults" xml:space="preserve"><value>Uzupełnij domyślne</value></data>
+  <data name="Predictions.TopN.FillDefaultsHeading" xml:space="preserve"><value>Uzupełnij {0} domyślne wg:</value></data>
+  <data name="Predictions.TopN.NoDefaultRows" xml:space="preserve"><value>Brak domyślnych wierszy do uzupełnienia.</value></data>
+  <data name="Predictions.TopN.ResetField" xml:space="preserve"><value>Resetuj stawkę</value></data>
   <data name="Predictions.TopN.MobileCatPos" xml:space="preserve"><value>Kategoria {0} z {1} · {2}/{1} ukończone</value></data>
   <data name="Predictions.TopN.SearchCategory" xml:space="preserve"><value>Szukaj kategorii…</value></data>
-  <data name="Predictions.TopN.MobileTapToEnter" xml:space="preserve"><value>Dotknij, aby wpisać predicted</value></data>
   <data name="Predictions.TopN.MobileTotalManual" xml:space="preserve"><value>Total wpisany ręcznie</value></data>
   <data name="Predictions.TopN.MobileSquat" xml:space="preserve"><value>Przysiad (SQ)</value></data>
   <data name="Predictions.TopN.MobileBench" xml:space="preserve"><value>Wyciskanie (BP)</value></data>
   <data name="Predictions.TopN.MobileDeadlift" xml:space="preserve"><value>Martwy ciąg (DL)</value></data>
+  <data name="Predictions.Toast.ResetAthlete.Success" xml:space="preserve"><value>Przywrócono {0} do nominacji.</value></data>
+  <data name="Predictions.Toast.ResetField.Success" xml:space="preserve"><value>Przywrócono stawkę wg nominacji.</value></data>
 </root>

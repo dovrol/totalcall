@@ -86,6 +86,7 @@ public sealed class PredictionAnswerDisplayService(
         return string.Join(
             ", ",
             answer.Value.AthletePlacements
+                .Where(placement => placement.IsScored)
                 .OrderBy(placement => placement.Position)
                 .Select(placement => $"{FormatPosition(placement.Position, useMedalLabels)} {FormatAthlete(competition, placement.AthleteId)}{FormatPlacementPrediction(placement)}"));
     }

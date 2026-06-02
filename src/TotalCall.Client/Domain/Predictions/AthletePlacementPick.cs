@@ -6,6 +6,10 @@ public sealed record AthletePlacementPick
 
     public required string AthleteId { get; init; }
 
+    public bool IsScored { get; init; } = true;
+
+    public bool IsAutoSeeded { get; init; }
+
     public decimal? PredictedSquatKg { get; init; }
 
     public decimal? PredictedBenchKg { get; init; }

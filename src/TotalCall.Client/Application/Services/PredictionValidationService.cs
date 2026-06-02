@@ -178,7 +178,9 @@ public sealed class PredictionValidationService : IPredictionValidationService
             PredictionQuestionType.MultiAthleteChoice => answer.Value.SelectedAthleteIds.Count,
             PredictionQuestionType.MultipleChoice => string.IsNullOrWhiteSpace(answer.Value.SelectedOptionId) ? 0 : 1,
             PredictionQuestionType.AthleteRanking or PredictionQuestionType.CategoryPodium =>
-                answer.Value.AthletePlacements.Count(placement => !string.IsNullOrWhiteSpace(placement.AthleteId)),
+                answer.Value.AthletePlacements.Count(placement =>
+                    placement.IsScored &&
+                    !string.IsNullOrWhiteSpace(placement.AthleteId)),
             _ => 0
         };
     }
@@ -216,7 +218,9 @@ public sealed class PredictionValidationService : IPredictionValidationService
         {
             PredictionQuestionType.MultiAthleteChoice => answer.Value.SelectedAthleteIds.Count,
             PredictionQuestionType.AthleteRanking or PredictionQuestionType.CategoryPodium =>
-                answer.Value.AthletePlacements.Count(placement => !string.IsNullOrWhiteSpace(placement.AthleteId)),
+                answer.Value.AthletePlacements.Count(placement =>
+                    placement.IsScored &&
+                    !string.IsNullOrWhiteSpace(placement.AthleteId)),
             _ => (int?)null
         };
 

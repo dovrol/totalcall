@@ -2,74 +2,66 @@
 @inject IStringLocalizer<SharedResource> Localizer
 
 <div class="ms-list">
-    @foreach (var slot in Slots)
+    <div class="ms-podium-head">
+        <span>@Localizer["Predictions.TopN.PodiumScored"]</span>
+        <span class="ms-podium-head__line"></span>
+    </div>
+
+    @foreach (var slot in VisibleSlots)
     {
-        @if (slot.Athlete is null)
-        {
-            <button type="button" class="ms-card ms-card--empty" disabled="@(!CanEditPredictions)" @onclick="() => EmptySlotClicked.InvokeAsync(slot.Position)">
-                <span class="ms-card__rk">@slot.Position</span>
-                <span class="ms-card__addt">@PickCtaLabel</span>
-                <span class="ms-card__plus"><AppIcon Name="AppIconName.Plus" Size="16" /></span>
-            </button>
-        }
-        else
-        {
-            var isExpanded = ExpandedPosition == slot.Position;
-            var isTotal = string.Equals(slot.Mode, TopNEntryMode.Total, StringComparison.OrdinalIgnoreCase);
-            var isPending = IsPending(slot);
+        var isExpanded = ExpandedPosition == slot.Position;
+        var isTotal = string.Equals(slot.Mode, TopNEntryMode.Total, StringComparison.OrdinalIgnoreCase);
 
-            <div class="@CardClass(slot, isExpanded)">
-                <div class="ms-ctop">
-                    @if (!isExpanded)
-                    {
-                        <div class="ms-move">
-                            <button type="button" aria-label="@Localizer["Predictions.MoveUp"]" disabled="@(!CanEditPredictions || !slot.CanMoveUp)" @onclick="() => MoveRequested.InvokeAsync(new TopNMove(slot.Position, -1))"><AppIcon Name="AppIconName.ChevronRight" Size="12" Class="ms-chevron--up" /></button>
-                            <button type="button" aria-label="@Localizer["Predictions.MoveDown"]" disabled="@(!CanEditPredictions || !slot.CanMoveDown)" @onclick="() => MoveRequested.InvokeAsync(new TopNMove(slot.Position, 1))"><AppIcon Name="AppIconName.ChevronRight" Size="12" Class="ms-chevron--down" /></button>
-                        </div>
-                    }
-                    <div class="ms-card__rk">@slot.Position</div>
-                    <div class="ms-card__av">@Initials(slot.Athlete)</div>
-                    <div class="ms-card__who">
-                        <div class="ms-card__n">@slot.Athlete.DisplayName <CountryFlag Code="@slot.Athlete.CountryCode" CountryName="@slot.Athlete.CountryName" Class="ms-card__flag" /></div>
-                        <div class="ms-card__c">@CountryLine(slot.Athlete)</div>
-                    </div>
-                    @if (!isExpanded)
-                    {
-                        <div class="ms-card__pred">
-                            <div class="ms-card__pred-k">@Localizer["Predictions.PredictedShort"]</div>
-                            <div class="ms-card__pred-v">@FormatPred(slot.Placement?.PredictedTotalKg)</div>
-                            @if (!string.IsNullOrWhiteSpace(FormatDelta(slot.TrendDeltaKg)))
-                            {
-                                <div class="ms-card__pred-d">@FormatDelta(slot.TrendDeltaKg)</div>
-                            }
-                        </div>
-                    }
-                    <button type="button" class="ms-card__chev" @onclick="() => CardToggled.InvokeAsync(slot.Position)" aria-label="@Localizer["Predictions.EditPredictedTotal"]">
-                        <AppIcon Name="AppIconName.ChevronRight" Size="16" Class="@ChevronClass(isExpanded)" />
-                    </button>
-                </div>
-
+        <div @key="slot.Athlete!.Id" class="@CardClass(slot, isExpanded)" data-topn-athlete-id="@slot.Athlete!.Id">
+            <div class="ms-ctop">
                 @if (!isExpanded)
                 {
-                    <button type="button" class="ms-clifts" @onclick="() => CardToggled.InvokeAsync(slot.Position)">
-                        @if (isPending)
-                        {
-                            <span class="ms-clifts__muted">@Localizer["Predictions.TopN.MobileTapToEnter"]</span>
-                        }
-                        else if (isTotal)
-                        {
-                            <span>@Localizer["Predictions.TopN.MobileTotalManual"]</span>
-                        }
-                        else
-                        {
-                            <span>SQ <b>@FormatPred(slot.Placement?.PredictedSquatKg)</b> <span class="ms-clifts__sep">·</span> BP <b>@FormatPred(slot.Placement?.PredictedBenchKg)</b> <span class="ms-clifts__sep">·</span> DL <b>@FormatPred(slot.Placement?.PredictedDeadliftKg)</b></span>
-                        }
-                        <span class="@PillClass(isTotal)">@(isTotal ? Localizer["Predictions.TopN.ModeTotalShort"] : Localizer["Predictions.TopN.ModeLiftsShort"])</span>
-                    </button>
+                    <div class="ms-move">
+                        <button type="button" aria-label="@Localizer["Predictions.MoveUp"]" disabled="@(!CanEditPredictions || !slot.CanMoveUp)" @onclick="() => MoveRequested.InvokeAsync(new TopNMove(slot.Position, -1))"><AppIcon Name="AppIconName.ChevronRight" Size="12" Class="ms-chevron--up" /></button>
+                        <button type="button" aria-label="@Localizer["Predictions.MoveDown"]" disabled="@(!CanEditPredictions || !slot.CanMoveDown)" @onclick="() => MoveRequested.InvokeAsync(new TopNMove(slot.Position, 1))"><AppIcon Name="AppIconName.ChevronRight" Size="12" Class="ms-chevron--down" /></button>
+                    </div>
                 }
-                <div class="@EditRegionClass(isExpanded)" aria-hidden="@(!isExpanded)" inert="@(isExpanded ? null : string.Empty)">
-                    <div class="ms-edit-region__inner">
-                        <div class="ms-edit">
+                <div class="@RankClass(slot.Position)">@slot.Position</div>
+                <div class="ms-card__av">@Initials(slot.Athlete!)</div>
+                <div class="ms-card__who">
+                    <div class="ms-card__n">@slot.Athlete!.DisplayName <CountryFlag Code="@slot.Athlete.CountryCode" CountryName="@slot.Athlete.CountryName" Class="ms-card__flag" /></div>
+                    <div class="ms-card__c">@CountryLine(slot.Athlete)</div>
+                </div>
+                @if (!isExpanded)
+                {
+                    <div class="ms-card__pred">
+                        <div class="ms-card__pred-k">@Localizer["Predictions.PredictedShort"]</div>
+                        <div class="@PredValueClass(slot.IsAutoSeeded)">@FormatPred(slot.Placement?.PredictedTotalKg)</div>
+                        <div class="@SourceClass(slot.IsAutoSeeded)">@SourceText(slot)</div>
+                    </div>
+                }
+                <button type="button" class="ms-card__chev" @onclick="() => CardToggled.InvokeAsync(slot.Position)" aria-label="@Localizer["Predictions.EditPredictedTotal"]">
+                    <AppIcon Name="AppIconName.ChevronRight" Size="16" Class="@ChevronClass(isExpanded)" />
+                </button>
+            </div>
+
+            @if (!isExpanded)
+            {
+                <button type="button" class="ms-clifts" @onclick="() => CardToggled.InvokeAsync(slot.Position)">
+                    @if (slot.IsAutoSeeded)
+                    {
+                        <span class="ms-clifts__muted">@Localizer["Predictions.TopN.MobileTapToRefine"]</span>
+                    }
+                    else if (isTotal)
+                    {
+                        <span>@Localizer["Predictions.TopN.MobileTotalManual"]</span>
+                    }
+                    else
+                    {
+                        <span>SQ <b>@FormatPred(slot.Placement?.PredictedSquatKg)</b> <span class="ms-clifts__sep">·</span> BP <b>@FormatPred(slot.Placement?.PredictedBenchKg)</b> <span class="ms-clifts__sep">·</span> DL <b>@FormatPred(slot.Placement?.PredictedDeadliftKg)</b></span>
+                    }
+                    <span class="@PillClass(isTotal)">@(isTotal ? Localizer["Predictions.TopN.ModeTotalShort"] : Localizer["Predictions.TopN.ModeLiftsShort"])</span>
+                </button>
+            }
+
+            <div class="@EditRegionClass(isExpanded)" aria-hidden="@(!isExpanded)" inert="@(isExpanded ? null : string.Empty)">
+                <div class="ms-edit-region__inner">
+                    <div class="ms-edit">
                         @if (CanEditPredictions)
                         {
                             <div class="ms-edit__seg" role="radiogroup">
@@ -141,16 +133,37 @@
                         }
 
                         <div class="ms-eacts">
-                            <button type="button" class="ms-eacts__del" disabled="@(!CanEditPredictions)" @onclick="() => RemoveRequested.InvokeAsync(slot.Position)" aria-label="@Localizer["Predictions.RemoveAthlete"]">
-                                <AppIcon Name="AppIconName.Trash2" Size="15" />
-                            </button>
+                            @if (!slot.IsAutoSeeded && CanEditPredictions)
+                            {
+                                <button type="button" class="ms-eacts__reset" @onclick="() => ResetRequested.InvokeAsync(slot.Position)">
+                                    <AppIcon Name="AppIconName.RotateCcw" Size="14" />
+                                    <span>@Localizer["Predictions.TopN.ResetAthleteShort"]</span>
+                                </button>
+                            }
                             <button type="button" class="ms-eacts__save" @onclick="() => CardToggled.InvokeAsync(slot.Position)">@Localizer["Predictions.SaveAndNext"]</button>
-                        </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        @if (slot.Position == ScoredCount)
+        {
+            <div class="ms-cutoff">
+                <span>@Localizer["Predictions.TopN.CutoffMobile"]</span>
+                <span class="ms-cutoff__line"></span>
+                <span>@Localizer["Predictions.TopN.ComparisonZone"]</span>
+            </div>
         }
+    }
+
+    @if (HiddenCount > 0)
+    {
+        <button type="button" class="ms-expander" @onclick="ToggleExpanded">
+            <span>@(isExpanded ? Localizer["Predictions.TopN.CollapseField"] : Localizer["Predictions.TopN.ExpandField", HiddenCount])</span>
+            <AppIcon Name="AppIconName.ChevronRight" Size="14" Class="@ExpanderIconClass" />
+            <strong>@Slots.Count</strong>
+        </button>
     }
 </div>
 
@@ -159,16 +172,13 @@
     public IReadOnlyList<TopNSlotView> Slots { get; set; } = [];
 
     [Parameter]
+    public int ScoredCount { get; set; } = 3;
+
+    [Parameter]
     public bool CanEditPredictions { get; set; }
 
     [Parameter]
-    public string PickCta { get; set; } = string.Empty;
-
-    [Parameter]
     public int? ExpandedPosition { get; set; }
-
-    [Parameter]
-    public EventCallback<int> EmptySlotClicked { get; set; }
 
     [Parameter]
     public EventCallback<int> CardToggled { get; set; }
@@ -192,7 +202,17 @@
     public EventCallback<string> AthleteContextRequested { get; set; }
 
     [Parameter]
-    public EventCallback<int> RemoveRequested { get; set; }
+    public EventCallback<int> ResetRequested { get; set; }
+
+    private bool isExpanded;
+
+    private int PreviewCount => Math.Max(ScoredCount + 2, 5);
+
+    private int HiddenCount => Math.Max(0, Slots.Count - PreviewCount);
+
+    private IReadOnlyList<TopNSlotView> VisibleSlots => isExpanded
+        ? Slots
+        : Slots.Take(PreviewCount).ToArray();
 
     private sealed record LiftField(string Label, string Field, Func<AthletePlacementPick?, decimal?> Value);
 
@@ -203,24 +223,15 @@
         new(Localizer["Predictions.TopN.MobileDeadlift"], TopNSheetField.Deadlift, p => p?.PredictedDeadliftKg),
     ];
 
-    private string PickCtaLabel => string.IsNullOrWhiteSpace(PickCta)
-        ? Localizer["Predictions.PickAthleteCta"]
-        : PickCta;
-
-    private static bool IsPending(TopNSlotView slot) =>
-        slot.Placement?.PredictedTotalKg is null &&
-        slot.Placement?.PredictedSquatKg is null &&
-        slot.Placement?.PredictedBenchKg is null &&
-        slot.Placement?.PredictedDeadliftKg is null;
+    private void ToggleExpanded() => isExpanded = !isExpanded;
 
     private static bool HasAnyQuickFill(TopNSlotView slot) =>
         slot.CanUseNominated || slot.CanUseLast || slot.CanUseBest;
 
     private Task SetMode(TopNSlotView slot, string mode, bool isTotal)
     {
-        var currentlyTotal = isTotal;
         var wantTotal = string.Equals(mode, TopNEntryMode.Total, StringComparison.OrdinalIgnoreCase);
-        return currentlyTotal == wantTotal ? Task.CompletedTask : ModeToggled.InvokeAsync(slot.Position);
+        return isTotal == wantTotal ? Task.CompletedTask : ModeToggled.InvokeAsync(slot.Position);
     }
 
     private Task EmitEdit(int position, string field, ChangeEventArgs args) =>
@@ -233,28 +244,48 @@
         " ",
         "ms-card",
         slot.Position == 1 ? "ms-card--lead" : null,
+        slot.Position > PreviewCount ? "ms-card--tail" : null,
+        !slot.IsAutoSeeded ? "ms-card--authored" : null,
         expanded ? "ms-card--editing" : null,
         slot.IsContextActive ? "ms-card--context" : null);
 
-    private static string PillClass(bool isTotal) => string.Join(
+    private static string RankClass(int position) => string.Join(
         " ",
-        "ms-clifts__pill",
-        isTotal ? "ms-clifts__pill--total" : null);
+        "ms-card__rk",
+        position is >= 1 and <= 3 ? $"ms-card__rk--p{position}" : null);
 
-    private static string EsegClass(bool on) => string.Join(
-        " ",
-        "ms-edit__seg-btn",
-        on ? "ms-edit__seg-btn--on" : null);
+    private static string PredValueClass(bool isAutoSeeded) =>
+        isAutoSeeded ? "ms-card__pred-v ms-card__pred-v--default" : "ms-card__pred-v";
 
-    private static string ChevronClass(bool expanded) => string.Join(
-        " ",
-        "ms-card__chev-icon",
-        expanded ? "ms-card__chev-icon--expanded" : null);
+    private static string SourceClass(bool isAutoSeeded) =>
+        isAutoSeeded ? "ms-card__pred-src" : "ms-card__pred-src ms-card__pred-src--mine";
 
-    private static string EditRegionClass(bool expanded) => string.Join(
-        " ",
-        "ms-edit-region",
-        expanded ? "ms-edit-region--open" : null);
+    private string SourceText(TopNSlotView slot)
+    {
+        if (slot.IsAutoSeeded)
+        {
+            return Localizer["Predictions.TopN.ByNomination"];
+        }
+
+        var delta = (slot.Placement?.PredictedTotalKg ?? slot.NominatedTotalKg ?? 0m) - (slot.NominatedTotalKg ?? 0m);
+        return delta == 0
+            ? Localizer["Predictions.TopN.EqualNom"].Value
+            : $"{(delta > 0 ? "+" : string.Empty)}{delta.ToString("0.#", CultureInfo.CurrentCulture)}";
+    }
+
+    private static string PillClass(bool isTotal) =>
+        isTotal ? "ms-clifts__pill ms-clifts__pill--total" : "ms-clifts__pill";
+
+    private static string EsegClass(bool on) =>
+        on ? "ms-edit__seg-btn ms-edit__seg-btn--on" : "ms-edit__seg-btn";
+
+    private static string ChevronClass(bool expanded) =>
+        expanded ? "ms-card__chev-icon ms-card__chev-icon--expanded" : "ms-card__chev-icon";
+
+    private static string EditRegionClass(bool expanded) =>
+        expanded ? "ms-edit-region ms-edit-region--open" : "ms-edit-region";
+
+    private string ExpanderIconClass => isExpanded ? "ms-expander__icon ms-expander__icon--up" : "ms-expander__icon";
 
     private string CountryLine(Athlete athlete)
     {
@@ -264,42 +295,22 @@
             return country;
         }
 
-        var nom = $"{Localizer["Predictions.NominatedShort"]} {athlete.SeedTotalKg.Value.ToString("0.#", CultureInfo.CurrentCulture)}";
-        return string.IsNullOrWhiteSpace(country) ? nom : $"{country} · {nom}";
+        var nomination = $"{Localizer["Predictions.NominatedShort"]} {athlete.SeedTotalKg.Value.ToString("0.#", CultureInfo.CurrentCulture)}";
+        return string.IsNullOrWhiteSpace(country) ? nomination : $"{country} · {nomination}";
     }
 
     private static string Initials(Athlete athlete)
     {
-        var parts = athlete.DisplayName
-            .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-
-        if (parts.Length == 0)
+        var parts = athlete.DisplayName.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        return parts.Length switch
         {
-            return "?";
-        }
-
-        if (parts.Length == 1)
-        {
-            return parts[0][..Math.Min(2, parts[0].Length)].ToUpperInvariant();
-        }
-
-        return $"{parts[0][0]}{parts[1][0]}".ToUpperInvariant();
+            0 => "?",
+            1 => parts[0][..Math.Min(2, parts[0].Length)].ToUpperInvariant(),
+            _ => $"{parts[0][0]}{parts[1][0]}".ToUpperInvariant()
+        };
     }
 
-    private static string FormatPred(decimal? value) => value is null
-        ? "—"
-        : value.Value.ToString("0.#", CultureInfo.CurrentCulture);
+    private static string FormatPred(decimal? value) => value?.ToString("0.#", CultureInfo.CurrentCulture) ?? "—";
 
     private static string FormatCell(decimal? value) => value?.ToString("0.###", CultureInfo.CurrentCulture) ?? string.Empty;
-
-    private static string FormatDelta(decimal? value)
-    {
-        if (value is null || value.Value == 0m)
-        {
-            return string.Empty;
-        }
-
-        var sign = value.Value > 0 ? "+" : string.Empty;
-        return $"{sign}{value.Value.ToString("0.#", CultureInfo.CurrentCulture)}";
-    }
 }

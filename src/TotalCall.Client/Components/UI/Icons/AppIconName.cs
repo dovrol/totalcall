@@ -41,5 +41,6 @@ public enum AppIconName
     ArrowUpDown,
     PencilLine,
     Calculator,
+    RotateCcw,
     ExternalLink
 }

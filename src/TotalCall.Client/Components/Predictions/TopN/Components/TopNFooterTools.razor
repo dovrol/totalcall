@@ -10,14 +10,14 @@
             aria-expanded="@IsBulkMenuOpen"
             @onclick="() => BulkMenuToggled.InvokeAsync()">
             <AppIcon Name="AppIconName.Sparkles" Size="14" />
-            <span>@Localizer["Predictions.TopN.FillEmpty"]</span>
+            <span>@Localizer["Predictions.TopN.FillDefaults"]</span>
             <AppIcon Name="AppIconName.ChevronRight" Size="10" Class="topn-bulk__ch" />
         </button>
 
         @if (IsBulkMenuOpen)
         {
             <div class="topn-bulkmenu">
-                <div class="topn-fillpop__head">@Localizer["Predictions.TopN.FillEmptyHeading", EmptyCount]</div>
+                <div class="topn-fillpop__head">@Localizer["Predictions.TopN.FillDefaultsHeading", DefaultCount]</div>
                 <button type="button" class="topn-fill-opt" @onclick="() => BulkFillRequested.InvokeAsync(TopNQuickFillKind.Nominated)">
                     <span class="topn-fill-opt__ic"><AppIcon Name="AppIconName.Target" Size="13" /></span>
                     <span class="topn-fill-opt__t">@Localizer["Predictions.NominatedTotal"]</span>
@@ -48,8 +48,8 @@
         class="topn-tool topn-tool--ghost"
         disabled="@(!CanEditPredictions)"
         @onclick="() => ClearRequested.InvokeAsync()">
-        <AppIcon Name="AppIconName.Trash2" Size="14" />
-        <span>@Localizer["Predictions.ClearCategory"]</span>
+        <AppIcon Name="AppIconName.RotateCcw" Size="14" />
+        <span>@Localizer["Predictions.TopN.ResetField"]</span>
     </button>
 
     <span class="topn-foottools__count">@CountSummary</span>
@@ -60,13 +60,16 @@
     public bool CanEditPredictions { get; set; }
 
     [Parameter]
-    public int SelectedCount { get; set; }
+    public int RefinedCount { get; set; }
 
     [Parameter]
-    public int RequiredCount { get; set; }
+    public int FieldCount { get; set; }
 
     [Parameter]
-    public int EmptyCount { get; set; }
+    public int ScoredCount { get; set; } = 3;
+
+    [Parameter]
+    public int DefaultCount { get; set; }
 
     [Parameter]
     public bool IsBulkMenuOpen { get; set; }
@@ -91,7 +94,7 @@
 
     private string CountSummary => Localizer[
         "Predictions.TopN.FooterCount",
-        SelectedCount,
-        Math.Max(1, RequiredCount),
-        EmptyCount];
+        ScoredCount,
+        RefinedCount,
+        FieldCount];
 }

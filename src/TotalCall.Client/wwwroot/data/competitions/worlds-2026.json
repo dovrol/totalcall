@@ -11,7 +11,7 @@
   "predictionOpenAt": "2026-05-01T09:00:00Z",
   "predictionLockAt": "2026-06-07T08:00:00Z",
   "status": "upcoming",
-  "configVersion": "2026.2",
+  "configVersion": "2026.3",
   "athleteData": {
     "defaultSource": "openipf",
     "availableSources": [
@@ -7835,8 +7835,8 @@
     {
       "id": "category-top5",
       "type": "top-n-by-category",
-      "title": "Top 5 by category",
-      "description": "Pick Top 5 lifters in every weight class.",
+      "title": "Top 3 by category",
+      "description": "Rank the full field and score the Top 3 in every weight class.",
       "mode": "full",
       "order": 10,
       "required": true,
@@ -7844,8 +7844,8 @@
         {
           "id": "top5-women-47",
           "type": "athlete-ranking",
-          "title": "Top 5 Women 47 kg",
-          "description": "Pick top 5 lifters in Women 47 kg.",
+          "title": "Top 3 Women 47 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 47 kg.",
           "order": 10,
           "required": true,
           "categoryId": "women-47",
@@ -7868,15 +7868,15 @@
             "idczak-karolina"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-women-52",
           "type": "athlete-ranking",
-          "title": "Top 5 Women 52 kg",
-          "description": "Pick top 5 lifters in Women 52 kg.",
+          "title": "Top 3 Women 52 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 52 kg.",
           "order": 20,
           "required": true,
           "categoryId": "women-52",
@@ -7905,15 +7905,15 @@
             "tsetskhladze-mariam"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-women-57",
           "type": "athlete-ranking",
-          "title": "Top 5 Women 57 kg",
-          "description": "Pick top 5 lifters in Women 57 kg.",
+          "title": "Top 3 Women 57 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 57 kg.",
           "order": 30,
           "required": true,
           "categoryId": "women-57",
@@ -7941,15 +7941,15 @@
             "viktoria-flavia-dr"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-women-63",
           "type": "athlete-ranking",
-          "title": "Top 5 Women 63 kg",
-          "description": "Pick top 5 lifters in Women 63 kg.",
+          "title": "Top 3 Women 63 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 63 kg.",
           "order": 40,
           "required": true,
           "categoryId": "women-63",
@@ -7985,15 +7985,15 @@
             "liang-yim-chee"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-women-69",
           "type": "athlete-ranking",
-          "title": "Top 5 Women 69 kg",
-          "description": "Pick top 5 lifters in Women 69 kg.",
+          "title": "Top 3 Women 69 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 69 kg.",
           "order": 50,
           "required": true,
           "categoryId": "women-69",
@@ -8027,15 +8027,15 @@
             "janulcikaite-ausrine"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-women-76",
           "type": "athlete-ranking",
-          "title": "Top 5 Women 76 kg",
-          "description": "Pick top 5 lifters in Women 76 kg.",
+          "title": "Top 3 Women 76 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 76 kg.",
           "order": 60,
           "required": true,
           "categoryId": "women-76",
@@ -8066,15 +8066,15 @@
             "marangoni-pia"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-women-84",
           "type": "athlete-ranking",
-          "title": "Top 5 Women 84 kg",
-          "description": "Pick top 5 lifters in Women 84 kg.",
+          "title": "Top 3 Women 84 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 84 kg.",
           "order": 70,
           "required": true,
           "categoryId": "women-84",
@@ -8107,15 +8107,15 @@
             "szymkowiak-magdalena"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-women-84plus",
           "type": "athlete-ranking",
-          "title": "Top 5 Women 84+ kg",
-          "description": "Pick top 5 lifters in Women 84+ kg.",
+          "title": "Top 3 Women 84+ kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 84+ kg.",
           "order": 80,
           "required": true,
           "categoryId": "women-84plus",
@@ -8135,15 +8135,15 @@
             "malojlo-marta"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-men-59",
           "type": "athlete-ranking",
-          "title": "Top 5 Men 59 kg",
-          "description": "Pick top 5 lifters in Men 59 kg.",
+          "title": "Top 3 Men 59 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 59 kg.",
           "order": 90,
           "required": true,
           "categoryId": "men-59",
@@ -8168,15 +8168,15 @@
             "flores-jose"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-men-66",
           "type": "athlete-ranking",
-          "title": "Top 5 Men 66 kg",
-          "description": "Pick top 5 lifters in Men 66 kg.",
+          "title": "Top 3 Men 66 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 66 kg.",
           "order": 100,
           "required": true,
           "categoryId": "men-66",
@@ -8200,15 +8200,15 @@
             "lin-ching-lun"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-men-74",
           "type": "athlete-ranking",
-          "title": "Top 5 Men 74 kg",
-          "description": "Pick top 5 lifters in Men 74 kg.",
+          "title": "Top 3 Men 74 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 74 kg.",
           "order": 110,
           "required": true,
           "categoryId": "men-74",
@@ -8240,15 +8240,15 @@
             "maisuradze-giorgi"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-men-83",
           "type": "athlete-ranking",
-          "title": "Top 5 Men 83 kg",
-          "description": "Pick top 5 lifters in Men 83 kg.",
+          "title": "Top 3 Men 83 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 83 kg.",
           "order": 120,
           "required": true,
           "categoryId": "men-83",
@@ -8291,15 +8291,15 @@
             "henderson-samuel"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-men-93",
           "type": "athlete-ranking",
-          "title": "Top 5 Men 93 kg",
-          "description": "Pick top 5 lifters in Men 93 kg.",
+          "title": "Top 3 Men 93 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 93 kg.",
           "order": 130,
           "required": true,
           "categoryId": "men-93",
@@ -8332,15 +8332,15 @@
             "khuzwayo-bandile"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-men-105",
           "type": "athlete-ranking",
-          "title": "Top 5 Men 105 kg",
-          "description": "Pick top 5 lifters in Men 105 kg.",
+          "title": "Top 3 Men 105 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 105 kg.",
           "order": 140,
           "required": true,
           "categoryId": "men-105",
@@ -8376,15 +8376,15 @@
             "tomko-patrik"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-men-120",
           "type": "athlete-ranking",
-          "title": "Top 5 Men 120 kg",
-          "description": "Pick top 5 lifters in Men 120 kg.",
+          "title": "Top 3 Men 120 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 120 kg.",
           "order": 150,
           "required": true,
           "categoryId": "men-120",
@@ -8418,15 +8418,15 @@
             "raw-simon"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         },
         {
           "id": "top5-men-120plus",
           "type": "athlete-ranking",
-          "title": "Top 5 Men 120+ kg",
-          "description": "Pick top 5 lifters in Men 120+ kg.",
+          "title": "Top 3 Men 120+ kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 120+ kg.",
           "order": 160,
           "required": true,
           "categoryId": "men-120plus",
@@ -8459,7 +8459,7 @@
             "bowring-ray"
           ],
           "constraints": {
-            "exactSelections": 5,
+            "exactSelections": 3,
             "disallowDuplicateAthletes": true
           }
         }

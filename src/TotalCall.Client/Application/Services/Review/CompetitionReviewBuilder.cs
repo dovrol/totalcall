@@ -181,7 +181,7 @@ public sealed class CompetitionReviewBuilder(
             ?? Math.Max(answer?.Value.AthletePlacements.Count ?? 0, 1);
 
         var placementsByPosition = (answer?.Value.AthletePlacements ?? [])
-            .Where(placement => placement.Position >= 1)
+            .Where(placement => placement.IsScored && placement.Position >= 1)
             .GroupBy(placement => placement.Position)
             .ToDictionary(group => group.Key, group => group.First());
 

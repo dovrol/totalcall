@@ -65,6 +65,46 @@ public sealed class PredictionValidationServiceTests
     }
 
     [Fact]
+    public void Validate_counts_only_scored_athletes_from_full_field()
+    {
+        var competition = CreateCompetition(new PredictionQuestion
+        {
+            Id = "podium",
+            Type = PredictionQuestionType.CategoryPodium,
+            Title = "Podium",
+            Required = true,
+            Constraints = new PredictionQuestionConstraints
+            {
+                ExactSelections = 3,
+                DisallowDuplicateAthletes = true
+            }
+        });
+
+        var predictionSet = CreatePredictionSet(new PredictionAnswer
+        {
+            GroupId = "group",
+            QuestionId = "podium",
+            QuestionType = PredictionQuestionType.CategoryPodium,
+            Value = new PredictionAnswerValue
+            {
+                AthletePlacements =
+                [
+                    new AthletePlacementPick { Position = 1, AthleteId = "athlete-1" },
+                    new AthletePlacementPick { Position = 2, AthleteId = "athlete-2" },
+                    new AthletePlacementPick { Position = 3, AthleteId = "athlete-3" },
+                    new AthletePlacementPick { Position = 4, AthleteId = "athlete-4", IsScored = false }
+                ]
+            }
+        });
+
+        var result = validator.ValidateModule(competition, competition.PredictionGroups.Single(), predictionSet);
+
+        Assert.Empty(result.ValidationErrors);
+        Assert.Equal(PredictionCompletionStatus.Complete, result.Status);
+        Assert.Equal(3, Assert.Single(result.Questions).SelectedCount);
+    }
+
+    [Fact]
     public void Validate_rejects_numeric_value_outside_configured_range()
     {
         var competition = CreateCompetition(new PredictionQuestion
