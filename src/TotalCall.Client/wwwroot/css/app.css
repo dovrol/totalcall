@@ -9589,6 +9589,458 @@ textarea {
 }
 
 /* ============================================================
+   Athlete comparison — non-modal floating window.
+   Design source: redesign/Porownanie zawodnikow.html.
+   ============================================================ */
+.floating-window--athlete-compare {
+    width: min(58rem, calc(100vw - 2rem));
+    max-height: min(84vh, 50rem);
+}
+
+.acmp {
+    --acmp-green: var(--success);
+    --acmp-green-bg: color-mix(in srgb, var(--success) 13%, transparent);
+    --acmp-green-bd: color-mix(in srgb, var(--success) 36%, transparent);
+    --acmp-violet: var(--score);
+    --acmp-violet-bg: color-mix(in srgb, var(--score) 14%, transparent);
+    --acmp-violet-bd: color-mix(in srgb, var(--score) 36%, transparent);
+    --acmp-red: var(--accent-strong);
+    --acmp-red-bg: color-mix(in srgb, var(--accent) 12%, transparent);
+    --acmp-red-bd: color-mix(in srgb, var(--accent) 34%, transparent);
+    --acmp-amber: var(--warning);
+    --acmp-amber-bg: color-mix(in srgb, var(--warning) 13%, transparent);
+    --acmp-amber-bd: color-mix(in srgb, var(--warning) 34%, transparent);
+    --acmp-card: var(--bg-surface-strong);
+    --acmp-inset: var(--bg-surface-muted);
+
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    color: var(--text-primary);
+}
+
+.acmp-ath--1 {
+    --acmp-accent: var(--acmp-red);
+    --acmp-accent-bg: var(--acmp-red-bg);
+    --acmp-accent-bd: var(--acmp-red-bd);
+}
+
+.acmp-ath--2 {
+    --acmp-accent: var(--acmp-violet);
+    --acmp-accent-bg: var(--acmp-violet-bg);
+    --acmp-accent-bd: var(--acmp-violet-bd);
+}
+
+.acmp-ath--3 {
+    --acmp-accent: var(--acmp-amber);
+    --acmp-accent-bg: var(--acmp-amber-bg);
+    --acmp-accent-bd: var(--acmp-amber-bd);
+}
+
+.acmp-source {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.acmp-source__seg {
+    display: inline-flex;
+    border: 1px solid var(--border);
+    border-radius: 0.55rem;
+    background: var(--acmp-card);
+    overflow: hidden;
+}
+
+.acmp-source__seg button {
+    border: 0;
+    background: transparent;
+    color: var(--text-secondary);
+    font: inherit;
+    letter-spacing: 0;
+    text-transform: none;
+    padding: 0.42rem 0.7rem;
+    cursor: pointer;
+}
+
+.acmp-source__seg button.on {
+    color: #fff;
+    background: var(--accent);
+}
+
+.acmp-empty {
+    margin: 0;
+    padding: 1.35rem 0.3rem;
+    color: var(--text-secondary);
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.acmp-matrix {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.acmp-mhead,
+.acmp-row {
+    display: grid;
+    gap: 0.5rem;
+    align-items: stretch;
+}
+
+.acmp-matrix--c2 .acmp-mhead,
+.acmp-matrix--c2 .acmp-row {
+    grid-template-columns: 10.25rem repeat(2, minmax(0, 1fr));
+}
+
+.acmp-matrix--c3 .acmp-mhead,
+.acmp-matrix--c3 .acmp-row {
+    grid-template-columns: 10.25rem repeat(3, minmax(0, 1fr));
+}
+
+.acmp-corner {
+    display: flex;
+    align-items: flex-end;
+    padding: 0 0.25rem 0.55rem;
+    color: var(--text-muted);
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.acmp-card {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.7rem 0.75rem;
+    border: 1px solid var(--acmp-accent-bd);
+    border-top: 3px solid var(--acmp-accent);
+    border-radius: 0.8rem;
+    background: var(--acmp-card);
+}
+
+.acmp-card__rank {
+    color: var(--acmp-accent);
+    font-size: 0.66rem;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.acmp-card__av,
+.acmp-dot {
+    display: inline-grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--acmp-accent);
+    color: #fff;
+    font-weight: 900;
+}
+
+.acmp-card__av {
+    width: 1.95rem;
+    height: 1.95rem;
+    font-size: 0.68rem;
+}
+
+.acmp-card__meta {
+    min-width: 0;
+}
+
+.acmp-card__meta strong {
+    display: block;
+    overflow: hidden;
+    color: var(--text-primary);
+    font-size: 0.82rem;
+    font-weight: 900;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.acmp-card__meta small {
+    display: flex;
+    align-items: center;
+    gap: 0.32rem;
+    overflow: hidden;
+    color: var(--text-secondary);
+    font-size: 0.67rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.acmp-grp {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 1rem 0.1rem 0.45rem;
+    color: var(--text-muted);
+    font-size: 0.66rem;
+    font-weight: 900;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+}
+
+.acmp-grp:first-of-type {
+    margin-top: 0.85rem;
+}
+
+.acmp-grp--spaced {
+    margin-top: 1.15rem;
+}
+
+.acmp-grp span {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.acmp-row {
+    padding: 0.28rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.acmp-lbl {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    padding: 0 0.25rem;
+}
+
+.acmp-lbl span {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.acmp-lbl small {
+    color: var(--text-muted);
+    font-size: 0.66rem;
+    font-weight: 800;
+    margin-top: 0.05rem;
+}
+
+.acmp-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.55rem;
+    min-width: 0;
+    padding: 0.58rem 0.72rem;
+    border: 1px solid var(--border);
+    border-radius: 0.65rem;
+    background: var(--acmp-card);
+}
+
+.acmp-cell--hero {
+    padding-block: 0.68rem;
+}
+
+.acmp-cell--lead {
+    border-color: var(--acmp-green-bd);
+    background: var(--acmp-green-bg);
+}
+
+.acmp-cell__v {
+    color: var(--text-primary);
+    font-size: 0.98rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+.acmp-cell--hero .acmp-cell__v {
+    font-size: 1.15rem;
+}
+
+.acmp-cell--lead .acmp-cell__v {
+    color: var(--acmp-green);
+}
+
+.acmp-cell__bar {
+    flex: 1;
+    max-width: 4.6rem;
+    height: 0.32rem;
+    border-radius: 999px;
+    background: var(--acmp-inset);
+    overflow: hidden;
+}
+
+.acmp-cell__bar i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--acmp-accent);
+}
+
+.acmp-cell--lead .acmp-cell__bar i {
+    background: var(--acmp-green);
+}
+
+.acmp-h2h {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
+}
+
+.acmp-h2h__card {
+    min-width: 0;
+    padding: 0.72rem 0.82rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: var(--acmp-card);
+}
+
+.acmp-h2h__vs {
+    display: flex;
+    align-items: center;
+    gap: 0.36rem;
+    min-width: 0;
+    color: var(--text-primary);
+    font-size: 0.72rem;
+    font-weight: 900;
+}
+
+.acmp-h2h__vs > span:not(.acmp-dot) {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.acmp-h2h__vs small {
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.acmp-dot {
+    width: 1.35rem;
+    height: 1.35rem;
+    flex: none;
+    font-size: 0.5rem;
+}
+
+.acmp-h2h__score {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-top: 0.55rem;
+}
+
+.acmp-h2h__score strong {
+    color: var(--text-primary);
+    font-size: 1.15rem;
+    font-weight: 900;
+}
+
+.acmp-h2h__score span,
+.acmp-h2h__card p,
+.acmp-h2h__empty {
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.acmp-h2h__card p {
+    margin: 0.35rem 0 0;
+}
+
+.acmp-h2h__empty {
+    margin-top: 0.65rem;
+}
+
+.acmp-verdict {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.82rem 0.92rem;
+    border: 1px solid var(--acmp-violet-bd);
+    border-radius: 0.85rem;
+    background: linear-gradient(135deg, var(--acmp-violet-bg), transparent);
+}
+
+.acmp-verdict__ic {
+    width: 2rem;
+    height: 2rem;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--acmp-violet-bd);
+    border-radius: 0.62rem;
+    background: var(--acmp-violet-bg);
+    color: var(--acmp-violet);
+}
+
+.acmp-verdict p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.acmp-foot {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+.acmp-foot__dot {
+    width: 0.2rem;
+    height: 0.2rem;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+@container (max-width: 640px) {
+    .acmp-source {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .acmp-matrix--c2 {
+        min-width: 30rem;
+    }
+
+    .acmp-matrix--c3 {
+        min-width: 40rem;
+    }
+
+    .acmp-matrix--c2 .acmp-mhead,
+    .acmp-matrix--c2 .acmp-row {
+        grid-template-columns: 8rem repeat(2, minmax(9rem, 1fr));
+    }
+
+    .acmp-matrix--c3 .acmp-mhead,
+    .acmp-matrix--c3 .acmp-row {
+        grid-template-columns: 8rem repeat(3, minmax(9rem, 1fr));
+    }
+
+    .acmp-h2h {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================================
    Side panel — lean athlete context (complements the window)
    ============================================================ */
 .prediction-context-panel .sp-content {

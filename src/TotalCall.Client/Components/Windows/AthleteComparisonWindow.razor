@@ -1,0 +1,564 @@
+@using System.Globalization
+@using TotalCall.Client.Application.Services
+@using TotalCall.Client.Application.Windows
+@using TotalCall.Client.Domain.Athletes
+@using TotalCall.Client.Domain.Competitions
+@implements IDisposable
+@inject AthleteHistoryService AthleteHistoryService
+@inject AthleteDataSourcePreferenceService AthleteDataSources
+@inject CompetitionService CompetitionService
+@inject IStringLocalizer<SharedResource> Localizer
+
+<FloatingWindow Descriptor="Descriptor" AdditionalClass="floating-window--athlete-compare">
+    <section class="acmp">
+        @if (availableSources.Count > 1)
+        {
+            <div class="acmp-source">
+                <span>@Localizer["Predictions.DataSource"]</span>
+                <div class="acmp-source__seg" role="group" aria-label="@Localizer["Predictions.DataSource"]">
+                    @foreach (var source in availableSources)
+                    {
+                        <button
+                            type="button"
+                            class="@(IsCurrentSource(source) ? "on" : null)"
+                            disabled="@isLoading"
+                            @onclick="() => OnSourceChangedAsync(source)">
+                            @AthleteDataSourcePreferenceService.GetSourceLabel(source)
+                        </button>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (isLoading)
+        {
+            <p class="acmp-empty">@Localizer["Predictions.Compare.Loading"]</p>
+        }
+        else if (isError)
+        {
+            <p class="acmp-empty">@Localizer["Predictions.Compare.LoadError"]</p>
+        }
+        else if (Models.Count < 2)
+        {
+            <p class="acmp-empty">@Localizer["Predictions.TopN.CompareNotEnough"]</p>
+        }
+        else
+        {
+            <div class="@MatrixClass">
+                <div class="acmp-mhead">
+                    <div class="acmp-corner">@Localizer["Predictions.Compare.Metric"]</div>
+                    @for (var index = 0; index < Models.Count; index++)
+                    {
+                        var model = Models[index];
+                        <div class="@AthleteCardClass(index)">
+                            <span class="acmp-card__rank">@Localizer["Predictions.RankingBadge", model.Slot.Position]</span>
+                            <span class="acmp-card__av">@Initials(model.Slot.AthleteName)</span>
+                            <span class="acmp-card__meta">
+                                <strong>@ShortName(model.Slot.AthleteName)</strong>
+                                <small>
+                                    <CountryFlag Code="@model.Slot.CountryCode" CountryName="@model.Slot.CountryName" />
+                                    <span>@(model.Slot.CountryName ?? Localizer["Common.Tbd"].Value)</span>
+                                </small>
+                            </span>
+                        </div>
+                    }
+                </div>
+
+                @foreach (var group in MetricRows.GroupBy(metric => metric.Group))
+                {
+                    <div class="acmp-grp">@group.Key<span></span></div>
+
+                    @foreach (var metric in group)
+                    {
+                        var leaderIndexes = GetLeaderIndexes(metric);
+                        <div class="acmp-row">
+                            <div class="acmp-lbl">
+                                <span>@metric.Label</span>
+                                @if (!string.IsNullOrWhiteSpace(metric.Unit))
+                                {
+                                    <small>@metric.Unit</small>
+                                }
+                            </div>
+
+                            @for (var index = 0; index < Models.Count; index++)
+                            {
+                                var model = Models[index];
+                                var isLeader = leaderIndexes.Contains(index);
+                                <div class="@MetricCellClass(index, metric, isLeader)">
+                                    <span class="acmp-cell__v">@FormatMetricValue(metric.Value(model), metric.Format)</span>
+                                    <span class="acmp-cell__bar"><i style="@BarStyle(metric, model)"></i></span>
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="acmp-grp acmp-grp--spaced">@Localizer["Predictions.Compare.HeadToHead"]<span></span></div>
+            <div class="acmp-h2h">
+                @foreach (var pair in HeadToHeadResults)
+                {
+                    <div class="acmp-h2h__card">
+                        <div class="acmp-h2h__vs">
+                            <span class="@AthleteDotClass(pair.LeftIndex)">@Initials(pair.Left.Slot.AthleteName)</span>
+                            <span>@ShortName(pair.Left.Slot.AthleteName)</span>
+                            <small>vs</small>
+                            <span class="@AthleteDotClass(pair.RightIndex)">@Initials(pair.Right.Slot.AthleteName)</span>
+                            <span>@ShortName(pair.Right.Slot.AthleteName)</span>
+                        </div>
+                        @if (pair.CommonStarts == 0)
+                        {
+                            <div class="acmp-h2h__empty">@Localizer["Predictions.Compare.NoCommonStarts"]</div>
+                        }
+                        else
+                        {
+                            <div class="acmp-h2h__score">
+                                <strong>@pair.LeftWins-@pair.RightWins</strong>
+                                <span>@CommonStartsLabel(pair.CommonStarts)</span>
+                            </div>
+                            <p>@pair.LatestNote</p>
+                        }
+                    </div>
+                }
+            </div>
+
+            <div class="acmp-verdict">
+                <span class="acmp-verdict__ic"><AppIcon Name="AppIconName.Info" Size="16" /></span>
+                <p>@VerdictText</p>
+            </div>
+
+            <div class="acmp-foot">
+                <AppIcon Name="AppIconName.Lock" Size="13" />
+                <span>@Localizer["Predictions.Compare.ReadOnly"]</span>
+                <span class="acmp-foot__dot"></span>
+                <span>@Localizer["Predictions.Compare.Source", CurrentSourceLabel]</span>
+            </div>
+        }
+    </section>
+</FloatingWindow>
+
+@code {
+    [Parameter, EditorRequired]
+    public AthleteComparisonWindowDescriptor Descriptor { get; set; } = default!;
+
+    private readonly Dictionary<string, AthleteHistoryEntry?> historyByAthleteId = new(StringComparer.OrdinalIgnoreCase);
+    private Competition? competition;
+    private IReadOnlyList<string> availableSources = [];
+    private string currentSource = ExternalAthleteSources.OpenIpf;
+    private string? loadedSignature;
+    private bool isLoading;
+    private bool isError;
+
+    private IReadOnlyList<CompareAthleteModel> Models => Descriptor.Slots
+        .Select(slot =>
+        {
+            historyByAthleteId.TryGetValue(slot.AthleteId, out var history);
+            return new CompareAthleteModel(slot, history);
+        })
+        .ToArray();
+
+    private IReadOnlyList<CompareMetric> MetricRows =>
+    [
+        new(Localizer["Predictions.Compare.GroupPaper"].Value, Localizer["Predictions.Profile.Nomination"].Value, "kg", "kg", model => model.Slot.NominatedTotalKg),
+        new(Localizer["Predictions.Compare.GroupPaper"].Value, Localizer["Predictions.Profile.Projection"].Value, "kg", "kg", model => model.Slot.PredictedTotalKg, true),
+        new(Localizer["Predictions.Compare.GroupPaper"].Value, Localizer["Predictions.BestResult"].Value, "kg", "kg", model => BestTotal(model)),
+        new(Localizer["Predictions.Compare.GroupLifts"].Value, "SQ", "kg", "kg", model => model.Slot.PredictedSquatKg ?? BestSquat(model)),
+        new(Localizer["Predictions.Compare.GroupLifts"].Value, "BP", "kg", "kg", model => model.Slot.PredictedBenchKg ?? BestBench(model)),
+        new(Localizer["Predictions.Compare.GroupLifts"].Value, "DL", "kg", "kg", model => model.Slot.PredictedDeadliftKg ?? BestDeadlift(model)),
+        new(Localizer["Predictions.Compare.GroupForm"].Value, Localizer["Predictions.Analytics.Last3Avg"].Value, "kg", "kg", model => model.History?.Analytics?.Last3AvgTotalKg),
+        new(Localizer["Predictions.Compare.GroupForm"].Value, Localizer["Predictions.TotalTrendShort"].Value, "kg", "delta", model => Trend(model), AllowNegativeBase: true),
+        new(Localizer["Predictions.Compare.GroupForm"].Value, Localizer["Predictions.Analytics.AttemptSuccessOverall"].Value, "%", "pct", model => model.History?.Analytics?.OverallAttempts.RatePercent),
+        new(Localizer["Predictions.Compare.GroupForm"].Value, "DOTS", null, "raw", model => model.History?.Analytics?.BestDotsPoints)
+    ];
+
+    private string CurrentSourceLabel => AthleteDataSourcePreferenceService.GetSourceLabel(currentSource);
+
+    private string MatrixClass => $"acmp-matrix acmp-matrix--c{Models.Count}";
+
+    private IReadOnlyList<HeadToHeadResult> HeadToHeadResults => BuildHeadToHeadResults();
+
+    private string VerdictText
+    {
+        get
+        {
+            var leadCounts = new Dictionary<int, int>();
+            var countedMetrics = 0;
+
+            foreach (var metric in MetricRows)
+            {
+                var leaders = GetLeaderIndexes(metric);
+                if (leaders.Count == 0)
+                {
+                    continue;
+                }
+
+                countedMetrics++;
+                foreach (var leader in leaders)
+                {
+                    leadCounts[leader] = leadCounts.GetValueOrDefault(leader) + 1;
+                }
+            }
+
+            if (countedMetrics == 0 || leadCounts.Count == 0)
+            {
+                return Localizer["Predictions.Compare.VerdictNoData"].Value;
+            }
+
+            var best = leadCounts
+                .OrderByDescending(item => item.Value)
+                .ThenBy(item => item.Key)
+                .First();
+            var leaderName = ShortName(Models[best.Key].Slot.AthleteName);
+
+            return Localizer["Predictions.Compare.VerdictLead", leaderName, best.Value, countedMetrics].Value;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        AthleteDataSources.SourceChanged += HandleDataSourceChanged;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        competition = await CompetitionService.GetCompetitionAsync(Descriptor.CompetitionId);
+        availableSources = competition is null
+            ? [ExternalAthleteSources.OpenIpf]
+            : AthleteDataSources.GetAvailableSources(competition);
+
+        var source = competition is null
+            ? ExternalAthleteSources.OpenIpf
+            : await AthleteDataSources.GetSourceAsync(competition);
+
+        var signature = $"{source}|{string.Join(",", Descriptor.Slots.Select(slot => slot.AthleteId))}";
+        if (string.Equals(loadedSignature, signature, StringComparison.Ordinal))
+        {
+            return;
+        }
+
+        await LoadHistoriesAsync(source, signature);
+    }
+
+    private async Task LoadHistoriesAsync(string source, string signature)
+    {
+        currentSource = source;
+        isLoading = true;
+        isError = false;
+        StateHasChanged();
+
+        var results = new List<(string AthleteId, AthleteHistoryEntry? History, bool Error)>();
+
+        foreach (var slot in Descriptor.Slots)
+        {
+            try
+            {
+                var history = await AthleteHistoryService.GetAthleteHistoryAsync(slot.AthleteId, competition, source);
+                results.Add((slot.AthleteId, history, false));
+            }
+            catch
+            {
+                results.Add((slot.AthleteId, null, true));
+            }
+        }
+
+        foreach (var result in results)
+        {
+            historyByAthleteId[result.AthleteId] = result.History;
+        }
+
+        isError = results.Count > 0 && results.All(result => result.Error);
+        isLoading = false;
+        loadedSignature = signature;
+    }
+
+    private async Task OnSourceChangedAsync(string source)
+    {
+        if (competition is null ||
+            string.Equals(source, currentSource, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        await AthleteDataSources.SetSourceAsync(competition, source);
+        var signature = $"{source}|{string.Join(",", Descriptor.Slots.Select(slot => slot.AthleteId))}";
+        await LoadHistoriesAsync(source, signature);
+    }
+
+    private async void HandleDataSourceChanged(string competitionId, string source)
+    {
+        if (!string.Equals(competitionId, Descriptor.CompetitionId, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        await InvokeAsync(async () =>
+        {
+            var signature = $"{source}|{string.Join(",", Descriptor.Slots.Select(slot => slot.AthleteId))}";
+            await LoadHistoriesAsync(source, signature);
+            StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        AthleteDataSources.SourceChanged -= HandleDataSourceChanged;
+    }
+
+    private bool IsCurrentSource(string source) =>
+        string.Equals(source, currentSource, StringComparison.OrdinalIgnoreCase);
+
+    private IReadOnlyList<int> GetLeaderIndexes(CompareMetric metric)
+    {
+        var values = Models
+            .Select((model, index) => new { Index = index, Value = metric.Value(model) })
+            .Where(item => item.Value is not null)
+            .ToArray();
+
+        if (values.Length == 0)
+        {
+            return [];
+        }
+
+        var best = values.Max(item => item.Value!.Value);
+        return values
+            .Where(item => item.Value!.Value == best)
+            .Select(item => item.Index)
+            .ToArray();
+    }
+
+    private string BarStyle(CompareMetric metric, CompareAthleteModel model)
+    {
+        var value = metric.Value(model);
+        if (value is null)
+        {
+            return "width:0%";
+        }
+
+        var values = Models
+            .Select(metric.Value)
+            .OfType<decimal>()
+            .ToArray();
+
+        if (values.Length == 0)
+        {
+            return "width:0%";
+        }
+
+        var min = values.Min();
+        var max = values.Max();
+        if (metric.AllowNegativeBase)
+        {
+            min = Math.Min(min, 0m);
+            max = Math.Max(max, 0m);
+        }
+
+        var span = max - min;
+        var fraction = span == 0m
+            ? 1m
+            : 0.18m + 0.82m * ((value.Value - min) / span);
+        var width = Math.Clamp(fraction * 100m, 0m, 100m);
+
+        return $"width:{width.ToString("0.##", CultureInfo.InvariantCulture)}%";
+    }
+
+    private IReadOnlyList<HeadToHeadResult> BuildHeadToHeadResults()
+    {
+        var results = new List<HeadToHeadResult>();
+
+        for (var left = 0; left < Models.Count; left++)
+        {
+            for (var right = left + 1; right < Models.Count; right++)
+            {
+                results.Add(BuildHeadToHead(left, right));
+            }
+        }
+
+        return results;
+    }
+
+    private HeadToHeadResult BuildHeadToHead(int leftIndex, int rightIndex)
+    {
+        var left = Models[leftIndex];
+        var right = Models[rightIndex];
+        var leftStarts = BuildStartMap(left.History);
+        var rightStarts = BuildStartMap(right.History);
+        var common = new List<CommonStart>();
+
+        foreach (var pair in leftStarts)
+        {
+            if (!rightStarts.TryGetValue(pair.Key, out var rightStart))
+            {
+                continue;
+            }
+
+            common.Add(new CommonStart(pair.Value, rightStart));
+        }
+
+        var leftWins = common.Count(start => (start.Left.TotalKg ?? 0m) > (start.Right.TotalKg ?? 0m));
+        var rightWins = common.Count(start => (start.Right.TotalKg ?? 0m) > (start.Left.TotalKg ?? 0m));
+        var latest = common
+            .OrderByDescending(start => ParseDate(start.Left.Date))
+            .FirstOrDefault();
+
+        return new HeadToHeadResult(
+            leftIndex,
+            rightIndex,
+            left,
+            right,
+            common.Count,
+            leftWins,
+            rightWins,
+            latest is null ? string.Empty : FormatLatestHeadToHead(latest, left, right));
+    }
+
+    private static Dictionary<string, AthleteRecentResult> BuildStartMap(AthleteHistoryEntry? history)
+    {
+        return history?.RecentResults
+            .Where(result => result.TotalKg is not null)
+            .Select(result => new { Key = StartKey(result), Result = result })
+            .Where(item => item.Key is not null)
+            .GroupBy(item => item.Key!, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(group => group.Key, group => group.First().Result, StringComparer.OrdinalIgnoreCase)
+            ?? new Dictionary<string, AthleteRecentResult>(StringComparer.OrdinalIgnoreCase);
+    }
+
+    private string FormatLatestHeadToHead(CommonStart start, CompareAthleteModel left, CompareAthleteModel right)
+    {
+        var diff = (start.Left.TotalKg ?? 0m) - (start.Right.TotalKg ?? 0m);
+        var winner = diff switch
+        {
+            > 0m => ShortName(left.Slot.AthleteName),
+            < 0m => ShortName(right.Slot.AthleteName),
+            _ => Localizer["Predictions.Compare.Tie"].Value
+        };
+        var absoluteDiff = Math.Abs(diff);
+        var diffText = diff == 0m
+            ? "="
+            : $"+{FormatKgValue(absoluteDiff)} kg";
+        var meet = string.IsNullOrWhiteSpace(start.Left.MeetName)
+            ? Localizer["Common.Tbd"].Value
+            : start.Left.MeetName.Trim();
+
+        return Localizer["Predictions.Compare.LatestCommonStart", winner, diffText, FormatDate(start.Left.Date), meet].Value;
+    }
+
+    private string CommonStartsLabel(int count) => count == 1
+        ? Localizer["Predictions.Compare.CommonStart"].Value
+        : Localizer["Predictions.Compare.CommonStarts", count].Value;
+
+    private static string? StartKey(AthleteRecentResult result)
+    {
+        if (string.IsNullOrWhiteSpace(result.Date) || string.IsNullOrWhiteSpace(result.MeetName))
+        {
+            return null;
+        }
+
+        return $"{result.Date.Trim()}|{NormalizeMeetName(result.MeetName)}";
+    }
+
+    private static string NormalizeMeetName(string meetName) =>
+        string.Join(" ", meetName.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            .ToUpperInvariant();
+
+    private static DateOnly ParseDate(string? value) =>
+        DateOnly.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsed)
+            ? parsed
+            : DateOnly.MinValue;
+
+    private static decimal? BestTotal(CompareAthleteModel model) =>
+        model.History?.Bests?.TotalKg ?? model.History?.Analytics?.BestTotalKg;
+
+    private static decimal? BestSquat(CompareAthleteModel model) =>
+        model.History?.Bests?.SquatKg ?? model.History?.Analytics?.BestSquatKg;
+
+    private static decimal? BestBench(CompareAthleteModel model) =>
+        model.History?.Bests?.BenchKg ?? model.History?.Analytics?.BestBenchKg;
+
+    private static decimal? BestDeadlift(CompareAthleteModel model) =>
+        model.History?.Bests?.DeadliftKg ?? model.History?.Analytics?.BestDeadliftKg;
+
+    private static decimal? Trend(CompareAthleteModel model) =>
+        model.History?.Analytics?.RecentTotalTrendKg ?? model.History?.Analytics?.TotalTrendKg;
+
+    private string AthleteCardClass(int index) => $"acmp-card acmp-ath--{index + 1}";
+
+    private string AthleteDotClass(int index) => $"acmp-dot acmp-ath--{index + 1}";
+
+    private string MetricCellClass(int index, CompareMetric metric, bool isLeader) => string.Join(
+        " ",
+        $"acmp-cell acmp-ath--{index + 1}",
+        metric.Emphasis ? "acmp-cell--hero" : null,
+        isLeader ? "acmp-cell--lead" : null);
+
+    private string FormatMetricValue(decimal? value, string format)
+    {
+        if (value is null)
+        {
+            return "—";
+        }
+
+        return format switch
+        {
+            "pct" => $"{FormatKgValue(value.Value)}%",
+            "delta" => $"{(value > 0 ? "+" : string.Empty)}{FormatKgValue(value.Value)}",
+            _ => FormatKgValue(value.Value)
+        };
+    }
+
+    private string FormatKgValue(decimal value) =>
+        value.ToString("0.#", CultureInfo.CurrentCulture);
+
+    private string FormatDate(string? value)
+    {
+        if (DateOnly.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsed))
+        {
+            return parsed.ToString("d MMM yyyy", CultureInfo.CurrentCulture);
+        }
+
+        return string.IsNullOrWhiteSpace(value)
+            ? Localizer["Common.Tbd"].Value
+            : value;
+    }
+
+    private static string Initials(string name)
+    {
+        var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        return parts.Length switch
+        {
+            0 => "?",
+            1 => parts[0][..Math.Min(2, parts[0].Length)].ToUpperInvariant(),
+            _ => $"{parts[0][0]}{parts[1][0]}".ToUpperInvariant()
+        };
+    }
+
+    private static string ShortName(string name)
+    {
+        var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        return parts.Length <= 1
+            ? name
+            : parts[0];
+    }
+
+    private sealed record CompareAthleteModel(AthleteComparisonWindowSlot Slot, AthleteHistoryEntry? History);
+
+    private sealed record CompareMetric(
+        string Group,
+        string Label,
+        string? Unit,
+        string Format,
+        Func<CompareAthleteModel, decimal?> Value,
+        bool Emphasis = false,
+        bool AllowNegativeBase = false);
+
+    private sealed record CommonStart(AthleteRecentResult Left, AthleteRecentResult Right);
+
+    private sealed record HeadToHeadResult(
+        int LeftIndex,
+        int RightIndex,
+        CompareAthleteModel Left,
+        CompareAthleteModel Right,
+        int CommonStarts,
+        int LeftWins,
+        int RightWins,
+        string LatestNote);
+}

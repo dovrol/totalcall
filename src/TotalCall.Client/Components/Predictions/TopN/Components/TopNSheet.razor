@@ -31,16 +31,33 @@
                     @ondrop="() => Dropped.InvokeAsync(slot.Position)">
                     <div class="topn-cell">
                         <div class="topn-pos">
-                            <span
-                                class="topn-grip"
-                                draggable="@DraggableValue"
-                                title="@Localizer["Predictions.TopN.DragHint"]"
-                                @ondragstart="() => DragStarted.InvokeAsync(slot.Position)"
-                                @ondragend="() => DragEnded.InvokeAsync()">
-                                <AppIcon Name="AppIconName.GripVertical" Size="14" />
-                            </span>
+                            @if (ComparisonSelectionActive)
+                            {
+                                <button
+                                    type="button"
+                                    class="@ComparePickClass(slot)"
+                                    aria-label="@Localizer["Predictions.Compare.ToggleAthlete", slot.Athlete.DisplayName]"
+                                    aria-pressed="@CompareAriaPressed(slot)"
+                                    @onclick="() => CompareSelectionToggled.InvokeAsync(slot.Athlete.Id)">
+                                    @if (IsCompareSelected(slot))
+                                    {
+                                        <AppIcon Name="AppIconName.Check" Size="14" />
+                                    }
+                                </button>
+                            }
+                            else
+                            {
+                                <span
+                                    class="topn-grip"
+                                    draggable="@DraggableValue"
+                                    title="@Localizer["Predictions.TopN.DragHint"]"
+                                    @ondragstart="() => DragStarted.InvokeAsync(slot.Position)"
+                                    @ondragend="() => DragEnded.InvokeAsync()">
+                                    <AppIcon Name="AppIconName.GripVertical" Size="14" />
+                                </span>
+                            }
                             <span class="@RankClass(slot.Position)">@slot.Position</span>
-                            @if (CanEditPredictions)
+                            @if (CanEditPredictions && !ComparisonSelectionActive)
                             {
                                 <span class="topn-pos__move">
                                     <button
@@ -232,6 +249,12 @@
     public bool CanEditPredictions { get; set; }
 
     [Parameter]
+    public bool ComparisonSelectionActive { get; set; }
+
+    [Parameter]
+    public IReadOnlyCollection<string> ComparisonSelectedAthleteIds { get; set; } = [];
+
+    [Parameter]
     public int? FillPopPosition { get; set; }
 
     [Parameter]
@@ -245,6 +268,9 @@
 
     [Parameter]
     public EventCallback<string> AthleteContextRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<string> CompareSelectionToggled { get; set; }
 
     [Parameter]
     public EventCallback<int> ResetRequested { get; set; }
@@ -279,7 +305,7 @@
 
     private int HiddenCount => Math.Max(0, Slots.Count - PreviewCount);
 
-    private string DraggableValue => CanEditPredictions ? "true" : "false";
+    private string DraggableValue => CanEditPredictions && !ComparisonSelectionActive ? "true" : "false";
 
     private IReadOnlyList<TopNSlotView> VisibleSlots => isExpanded
         ? Slots
@@ -295,6 +321,10 @@
         DragOverPosition == position &&
         DraggingPosition != position;
 
+    private bool IsCompareSelected(TopNSlotView slot) =>
+        slot.Athlete is not null &&
+        ComparisonSelectedAthleteIds.Contains(slot.Athlete.Id, StringComparer.OrdinalIgnoreCase);
+
     private string RowGroupClass(TopNSlotView slot) => string.Join(
         " ",
         "topn-rowgroup",
@@ -309,6 +339,7 @@
         "topn-row",
         slot.Position == 1 ? "topn-row--lead" : null,
         slot.IsContextActive ? "topn-row--context" : null,
+        IsCompareSelected(slot) ? "topn-row--compare-selected" : null,
         DraggingPosition == slot.Position ? "topn-row--dragging" : null,
         DraggingPosition is not null && DraggingPosition != slot.Position ? "topn-row--shifted" : null);
 
@@ -319,6 +350,14 @@
 
     private static string SourceBadgeClass(bool isAutoSeeded) =>
         isAutoSeeded ? "topn-source-badge topn-source-badge--default" : "topn-source-badge topn-source-badge--mine";
+
+    private string ComparePickClass(TopNSlotView slot) => string.Join(
+        " ",
+        "topn-compare-pick",
+        IsCompareSelected(slot) ? "topn-compare-pick--on" : null);
+
+    private string CompareAriaPressed(TopNSlotView slot) =>
+        IsCompareSelected(slot) ? "true" : "false";
 
     private static string ModePillClass(bool isTotal) =>
         isTotal ? "topn-modepill topn-modepill--total" : "topn-modepill";

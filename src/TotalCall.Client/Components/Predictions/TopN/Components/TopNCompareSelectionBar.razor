@@ -1,0 +1,56 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<div class="topn-comparebar">
+    <div class="topn-comparebar__avatars" aria-hidden="true">
+        @if (Slots.Count == 0)
+        {
+            <span class="topn-comparebar__empty-dot"></span>
+            <span class="topn-comparebar__empty-dot"></span>
+            <span class="topn-comparebar__empty-dot"></span>
+        }
+        else
+        {
+            @foreach (var slot in Slots)
+            {
+                <span class="topn-comparebar__avatar">@Initials(slot.AthleteName)</span>
+            }
+        }
+    </div>
+
+    <div class="topn-comparebar__text">
+        <strong>@Localizer["Predictions.Compare.SelectionTitle"]</strong>
+        <span>@Localizer["Predictions.Compare.SelectionHint", Slots.Count]</span>
+    </div>
+
+    <div class="topn-comparebar__actions">
+        <button type="button" class="topn-comparebar__cancel" @onclick="() => CancelRequested.InvokeAsync()">
+            @Localizer["Common.Cancel"]
+        </button>
+        <button type="button" class="topn-comparebar__go" disabled="@(Slots.Count < 2)" @onclick="() => CompareRequested.InvokeAsync()">
+            <AppIcon Name="AppIconName.Users" Size="14" />
+            <span>@Localizer["Predictions.Compare.OpenSelected"]</span>
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public IReadOnlyList<AthleteComparisonWindowSlot> Slots { get; set; } = [];
+
+    [Parameter]
+    public EventCallback CancelRequested { get; set; }
+
+    [Parameter]
+    public EventCallback CompareRequested { get; set; }
+
+    private static string Initials(string name)
+    {
+        var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        return parts.Length switch
+        {
+            0 => "?",
+            1 => parts[0][..Math.Min(2, parts[0].Length)].ToUpperInvariant(),
+            _ => $"{parts[0][0]}{parts[1][0]}".ToUpperInvariant()
+        };
+    }
+}

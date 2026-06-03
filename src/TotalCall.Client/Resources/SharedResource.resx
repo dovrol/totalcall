@@ -351,6 +351,27 @@
   <data name="Predictions.UseLastResult" xml:space="preserve"><value>Użyj ostatniego wyniku</value></data>
   <data name="Predictions.UseBestResult" xml:space="preserve"><value>Użyj najlepszego wyniku</value></data>
   <data name="Predictions.CompareAthletes" xml:space="preserve"><value>Porównaj zawodników</value></data>
+  <data name="Predictions.Compare.ToggleAthlete" xml:space="preserve"><value>Przełącz zaznaczenie {0} do porównania</value></data>
+  <data name="Predictions.Compare.SelectionTitle" xml:space="preserve"><value>Tryb porównania</value></data>
+  <data name="Predictions.Compare.SelectionHint" xml:space="preserve"><value>Zaznacz 2-3 zawodników na gridzie · wybrano {0}</value></data>
+  <data name="Predictions.Compare.OpenSelected" xml:space="preserve"><value>Porównaj wybrane</value></data>
+  <data name="Predictions.Compare.MaxThree" xml:space="preserve"><value>Możesz porównać maksymalnie 3 zawodników naraz.</value></data>
+  <data name="Predictions.Compare.Loading" xml:space="preserve"><value>Ładowanie porównania zawodników...</value></data>
+  <data name="Predictions.Compare.LoadError" xml:space="preserve"><value>Nie udało się pobrać danych do porównania.</value></data>
+  <data name="Predictions.Compare.Metric" xml:space="preserve"><value>Metryka</value></data>
+  <data name="Predictions.Compare.GroupPaper" xml:space="preserve"><value>Liczby na papierze</value></data>
+  <data name="Predictions.Compare.GroupLifts" xml:space="preserve"><value>Rozbicie na boje</value></data>
+  <data name="Predictions.Compare.GroupForm" xml:space="preserve"><value>Forma i jakość</value></data>
+  <data name="Predictions.Compare.HeadToHead" xml:space="preserve"><value>Bilans bezpośrednich starć</value></data>
+  <data name="Predictions.Compare.NoCommonStarts" xml:space="preserve"><value>Brak wspólnych startów w danych.</value></data>
+  <data name="Predictions.Compare.CommonStart" xml:space="preserve"><value>1 wspólny start</value></data>
+  <data name="Predictions.Compare.CommonStarts" xml:space="preserve"><value>{0} wspólnych startów</value></data>
+  <data name="Predictions.Compare.LatestCommonStart" xml:space="preserve"><value>Ostatni wspólny start: {0} {1} · {2} · {3}</value></data>
+  <data name="Predictions.Compare.Tie" xml:space="preserve"><value>Remis</value></data>
+  <data name="Predictions.Compare.VerdictLead" xml:space="preserve"><value>{0} prowadzi w {1} z {2} dostępnych metryk. To widok analityczny — kolejność zmień ręcznie w arkuszu, jeśli forma albo ryzyko prób mówią coś innego niż liczby.</value></data>
+  <data name="Predictions.Compare.VerdictNoData" xml:space="preserve"><value>Brakuje wystarczających danych historycznych, więc potraktuj tę macierz jako szybki podgląd nominacji i Twoich prognoz.</value></data>
+  <data name="Predictions.Compare.ReadOnly" xml:space="preserve"><value>Porównanie nie wlicza się do typu</value></data>
+  <data name="Predictions.Compare.Source" xml:space="preserve"><value>Źródło: {0}</value></data>
   <data name="Predictions.ContextPanelInsight" xml:space="preserve"><value>Panel kontekstowy pomaga porównać formę zawodnika przed wyborem w rankingu.</value></data>
   <data name="Predictions.Meet" xml:space="preserve"><value>Zawody</value></data>
   <data name="Predictions.ActiveCategory" xml:space="preserve"><value>Aktywna kategoria</value></data>
@@ -562,7 +583,9 @@
   <data name="Predictions.TopN.ComparisonZone" xml:space="preserve"><value>poniżej: strefa porównania</value></data>
   <data name="Predictions.TopN.MobileTapToRefine" xml:space="preserve"><value>Dotknij, aby doprecyzować wynik</value></data>
   <data name="Predictions.TopN.EqualNom" xml:space="preserve"><value>= NOM</value></data>
-  <data name="Predictions.TopN.CompareSoon" xml:space="preserve"><value>Porównywanie zawodników będzie dostępne wkrótce.</value></data>
+  <data name="Predictions.TopN.CompareSoon" xml:space="preserve"><value>Otwórz porównanie zawodników z okolic podium.</value></data>
+  <data name="Predictions.TopN.CompareNotEnough" xml:space="preserve"><value>Potrzebujesz co najmniej dwóch zawodników do porównania.</value></data>
+  <data name="Predictions.TopN.CompareSubtitle" xml:space="preserve"><value>{0} · miejsca {1}-{2}</value></data>
   <data name="Predictions.TopN.DragHint" xml:space="preserve"><value>Przeciągnij, by zmienić pozycję</value></data>
   <data name="Predictions.TopN.DropTo" xml:space="preserve"><value>Upuść na pozycję {0}</value></data>
   <data name="Predictions.TopN.FromData" xml:space="preserve"><value>z danych</value></data>

@@ -77,6 +77,47 @@ public sealed class WindowManager
         return descriptor;
     }
 
+    public AthleteComparisonWindowDescriptor OpenAthleteComparison(
+        string competitionId,
+        string contextId,
+        string? categoryName,
+        int scoredCount,
+        IReadOnlyList<AthleteComparisonWindowSlot> slots,
+        string title,
+        string? subtitle)
+    {
+        var existing = windows
+            .OfType<AthleteComparisonWindowDescriptor>()
+            .FirstOrDefault(window =>
+                string.Equals(window.CompetitionId, competitionId, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(window.ContextId, contextId, StringComparison.OrdinalIgnoreCase));
+
+        if (existing is not null)
+        {
+            existing.Update(categoryName, scoredCount, slots, title, subtitle);
+            existing.IsMinimized = false;
+            BringToFront(existing.Id);
+            return existing;
+        }
+
+        var descriptor = new AthleteComparisonWindowDescriptor(
+            competitionId,
+            contextId,
+            categoryName,
+            scoredCount,
+            slots,
+            NextCascadePosition(),
+            title,
+            subtitle)
+        {
+            ZIndex = ++nextZIndex
+        };
+
+        windows.Add(descriptor);
+        StateChanged?.Invoke();
+        return descriptor;
+    }
+
     public void UpdateAthleteHistorySlotContext(string athleteId, AthleteHistorySlotContext? context)
     {
         var changed = false;

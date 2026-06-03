@@ -351,6 +351,27 @@
   <data name="Predictions.UseLastResult" xml:space="preserve"><value>Use last result</value></data>
   <data name="Predictions.UseBestResult" xml:space="preserve"><value>Use best result</value></data>
   <data name="Predictions.CompareAthletes" xml:space="preserve"><value>Compare athletes</value></data>
+  <data name="Predictions.Compare.ToggleAthlete" xml:space="preserve"><value>Toggle {0} for comparison</value></data>
+  <data name="Predictions.Compare.SelectionTitle" xml:space="preserve"><value>Comparison mode</value></data>
+  <data name="Predictions.Compare.SelectionHint" xml:space="preserve"><value>Select 2-3 athletes in the grid · selected {0}</value></data>
+  <data name="Predictions.Compare.OpenSelected" xml:space="preserve"><value>Compare selected</value></data>
+  <data name="Predictions.Compare.MaxThree" xml:space="preserve"><value>You can compare up to 3 athletes at once.</value></data>
+  <data name="Predictions.Compare.Loading" xml:space="preserve"><value>Loading athlete comparison...</value></data>
+  <data name="Predictions.Compare.LoadError" xml:space="preserve"><value>Failed to load comparison data.</value></data>
+  <data name="Predictions.Compare.Metric" xml:space="preserve"><value>Metric</value></data>
+  <data name="Predictions.Compare.GroupPaper" xml:space="preserve"><value>On paper</value></data>
+  <data name="Predictions.Compare.GroupLifts" xml:space="preserve"><value>Lift breakdown</value></data>
+  <data name="Predictions.Compare.GroupForm" xml:space="preserve"><value>Form and quality</value></data>
+  <data name="Predictions.Compare.HeadToHead" xml:space="preserve"><value>Head-to-head record</value></data>
+  <data name="Predictions.Compare.NoCommonStarts" xml:space="preserve"><value>No common starts in the data.</value></data>
+  <data name="Predictions.Compare.CommonStart" xml:space="preserve"><value>1 common start</value></data>
+  <data name="Predictions.Compare.CommonStarts" xml:space="preserve"><value>{0} common starts</value></data>
+  <data name="Predictions.Compare.LatestCommonStart" xml:space="preserve"><value>Latest common start: {0} {1} · {2} · {3}</value></data>
+  <data name="Predictions.Compare.Tie" xml:space="preserve"><value>Tie</value></data>
+  <data name="Predictions.Compare.VerdictLead" xml:space="preserve"><value>{0} leads in {1} of {2} available metrics. This is an analytical view — change the order manually in the sheet if form or attempt risk tells a different story.</value></data>
+  <data name="Predictions.Compare.VerdictNoData" xml:space="preserve"><value>There is not enough history yet, so treat this matrix as a quick look at nominations and your projections.</value></data>
+  <data name="Predictions.Compare.ReadOnly" xml:space="preserve"><value>Comparison does not count as a pick</value></data>
+  <data name="Predictions.Compare.Source" xml:space="preserve"><value>Source: {0}</value></data>
   <data name="Predictions.ContextPanelInsight" xml:space="preserve"><value>The context panel helps compare athlete form before ranking picks.</value></data>
   <data name="Predictions.Meet" xml:space="preserve"><value>Meet</value></data>
   <data name="Predictions.ActiveCategory" xml:space="preserve"><value>Active category</value></data>
@@ -562,7 +583,9 @@
   <data name="Predictions.TopN.ComparisonZone" xml:space="preserve"><value>below: comparison zone</value></data>
   <data name="Predictions.TopN.MobileTapToRefine" xml:space="preserve"><value>Tap to refine result</value></data>
   <data name="Predictions.TopN.EqualNom" xml:space="preserve"><value>= NOM</value></data>
-  <data name="Predictions.TopN.CompareSoon" xml:space="preserve"><value>Athlete comparison is coming soon.</value></data>
+  <data name="Predictions.TopN.CompareSoon" xml:space="preserve"><value>Open athlete comparison around the podium cutoff.</value></data>
+  <data name="Predictions.TopN.CompareNotEnough" xml:space="preserve"><value>You need at least two athletes to compare.</value></data>
+  <data name="Predictions.TopN.CompareSubtitle" xml:space="preserve"><value>{0} · places {1}-{2}</value></data>
   <data name="Predictions.TopN.DragHint" xml:space="preserve"><value>Drag to reorder</value></data>
   <data name="Predictions.TopN.DropTo" xml:space="preserve"><value>Drop at position {0}</value></data>
   <data name="Predictions.TopN.FromData" xml:space="preserve"><value>from data</value></data>

@@ -74,6 +74,12 @@
                 builder.AddAttribute(1, "Descriptor", athleteHistory);
                 builder.CloseComponent();
                 break;
+            case AthleteComparisonWindowDescriptor athleteComparison:
+                builder.OpenComponent<AthleteComparisonWindow>(0);
+                builder.SetKey(athleteComparison.Id);
+                builder.AddAttribute(1, "Descriptor", athleteComparison);
+                builder.CloseComponent();
+                break;
         }
     };
 

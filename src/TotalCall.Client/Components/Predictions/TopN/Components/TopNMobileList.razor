@@ -16,10 +16,27 @@
             <div class="ms-ctop">
                 @if (!isExpanded)
                 {
-                    <div class="ms-move">
-                        <button type="button" aria-label="@Localizer["Predictions.MoveUp"]" disabled="@(!CanEditPredictions || !slot.CanMoveUp)" @onclick="() => MoveRequested.InvokeAsync(new TopNMove(slot.Position, -1))"><AppIcon Name="AppIconName.ChevronRight" Size="12" Class="ms-chevron--up" /></button>
-                        <button type="button" aria-label="@Localizer["Predictions.MoveDown"]" disabled="@(!CanEditPredictions || !slot.CanMoveDown)" @onclick="() => MoveRequested.InvokeAsync(new TopNMove(slot.Position, 1))"><AppIcon Name="AppIconName.ChevronRight" Size="12" Class="ms-chevron--down" /></button>
-                    </div>
+                    @if (ComparisonSelectionActive)
+                    {
+                        <button
+                            type="button"
+                            class="@MobileComparePickClass(slot)"
+                            aria-label="@Localizer["Predictions.Compare.ToggleAthlete", slot.Athlete.DisplayName]"
+                            aria-pressed="@CompareAriaPressed(slot)"
+                            @onclick="() => CompareSelectionToggled.InvokeAsync(slot.Athlete.Id)">
+                            @if (IsCompareSelected(slot))
+                            {
+                                <AppIcon Name="AppIconName.Check" Size="14" />
+                            }
+                        </button>
+                    }
+                    else
+                    {
+                        <div class="ms-move">
+                            <button type="button" aria-label="@Localizer["Predictions.MoveUp"]" disabled="@(!CanEditPredictions || !slot.CanMoveUp)" @onclick="() => MoveRequested.InvokeAsync(new TopNMove(slot.Position, -1))"><AppIcon Name="AppIconName.ChevronRight" Size="12" Class="ms-chevron--up" /></button>
+                            <button type="button" aria-label="@Localizer["Predictions.MoveDown"]" disabled="@(!CanEditPredictions || !slot.CanMoveDown)" @onclick="() => MoveRequested.InvokeAsync(new TopNMove(slot.Position, 1))"><AppIcon Name="AppIconName.ChevronRight" Size="12" Class="ms-chevron--down" /></button>
+                        </div>
+                    }
                 }
                 <div class="@RankClass(slot.Position)">@slot.Position</div>
                 <div class="ms-card__av">@Initials(slot.Athlete!)</div>
@@ -178,6 +195,12 @@
     public bool CanEditPredictions { get; set; }
 
     [Parameter]
+    public bool ComparisonSelectionActive { get; set; }
+
+    [Parameter]
+    public IReadOnlyCollection<string> ComparisonSelectedAthleteIds { get; set; } = [];
+
+    [Parameter]
     public int? ExpandedPosition { get; set; }
 
     [Parameter]
@@ -200,6 +223,9 @@
 
     [Parameter]
     public EventCallback<string> AthleteContextRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<string> CompareSelectionToggled { get; set; }
 
     [Parameter]
     public EventCallback<int> ResetRequested { get; set; }
@@ -228,6 +254,10 @@
     private static bool HasAnyQuickFill(TopNSlotView slot) =>
         slot.CanUseNominated || slot.CanUseLast || slot.CanUseBest;
 
+    private bool IsCompareSelected(TopNSlotView slot) =>
+        slot.Athlete is not null &&
+        ComparisonSelectedAthleteIds.Contains(slot.Athlete.Id, StringComparer.OrdinalIgnoreCase);
+
     private Task SetMode(TopNSlotView slot, string mode, bool isTotal)
     {
         var wantTotal = string.Equals(mode, TopNEntryMode.Total, StringComparison.OrdinalIgnoreCase);
@@ -247,7 +277,8 @@
         slot.Position > PreviewCount ? "ms-card--tail" : null,
         !slot.IsAutoSeeded ? "ms-card--authored" : null,
         expanded ? "ms-card--editing" : null,
-        slot.IsContextActive ? "ms-card--context" : null);
+        slot.IsContextActive ? "ms-card--context" : null,
+        IsCompareSelected(slot) ? "ms-card--compare-selected" : null);
 
     private static string RankClass(int position) => string.Join(
         " ",
@@ -259,6 +290,14 @@
 
     private static string SourceClass(bool isAutoSeeded) =>
         isAutoSeeded ? "ms-card__pred-src" : "ms-card__pred-src ms-card__pred-src--mine";
+
+    private string MobileComparePickClass(TopNSlotView slot) => string.Join(
+        " ",
+        "ms-compare-pick",
+        IsCompareSelected(slot) ? "ms-compare-pick--on" : null);
+
+    private string CompareAriaPressed(TopNSlotView slot) =>
+        IsCompareSelected(slot) ? "true" : "false";
 
     private string SourceText(TopNSlotView slot)
     {

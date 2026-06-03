@@ -45,6 +45,14 @@
 
     <button
         type="button"
+        class="@CompareButtonClass"
+        @onclick="() => CompareModeRequested.InvokeAsync()">
+        <AppIcon Name="AppIconName.Users" Size="14" />
+        <span>@Localizer["Predictions.CompareAthletes"]</span>
+    </button>
+
+    <button
+        type="button"
         class="topn-tool topn-tool--ghost"
         disabled="@(!CanEditPredictions)"
         @onclick="() => ClearRequested.InvokeAsync()">
@@ -75,6 +83,9 @@
     public bool IsBulkMenuOpen { get; set; }
 
     [Parameter]
+    public bool IsCompareSelectionMode { get; set; }
+
+    [Parameter]
     public EventCallback BulkMenuToggled { get; set; }
 
     [Parameter]
@@ -84,6 +95,9 @@
     public EventCallback SortRequested { get; set; }
 
     [Parameter]
+    public EventCallback CompareModeRequested { get; set; }
+
+    [Parameter]
     public EventCallback ClearRequested { get; set; }
 
     private string BulkButtonClass => string.Join(
@@ -91,6 +105,12 @@
         "topn-tool",
         "topn-tool--accent",
         IsBulkMenuOpen ? "topn-tool--on" : null);
+
+    private string CompareButtonClass => string.Join(
+        " ",
+        "topn-tool",
+        "topn-tool--compare",
+        IsCompareSelectionMode ? "topn-tool--on" : null);
 
     private string CountSummary => Localizer[
         "Predictions.TopN.FooterCount",

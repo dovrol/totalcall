@@ -54,6 +54,9 @@ else
                     DragOverPosition="@dragOverPosition"
                     MoveRequested="MoveByOffset"
                     AthleteContextRequested="OpenContext"
+                    ComparisonSelectionActive="@isCompareSelectionMode"
+                    ComparisonSelectedAthleteIds="@CompareSelectedAthleteIds"
+                    CompareSelectionToggled="ToggleCompareSelection"
                     ResetRequested="ResetAthlete"
                     ModeToggled="ToggleRowMode"
                     CellEdited="OnCellEdited"
@@ -63,6 +66,14 @@ else
                     DragEntered="OnDragEnter"
                     Dropped="OnDrop"
                     DragEnded="OnDragEnd" />
+
+                @if (isCompareSelectionMode)
+                {
+                    <TopNCompareSelectionBar
+                        Slots="@SelectedComparisonSlots"
+                        CancelRequested="CancelCompareSelection"
+                        CompareRequested="OpenSelectedComparison" />
+                }
 
                 <TopNFooterTools
                     CanEditPredictions="CanEditPredictions"
@@ -74,6 +85,8 @@ else
                     BulkMenuToggled="ToggleBulkMenu"
                     BulkFillRequested="FillDefaultsFromSource"
                     SortRequested="SortByPredictedTotal"
+                    IsCompareSelectionMode="@isCompareSelectionMode"
+                    CompareModeRequested="StartCompareSelection"
                     ClearRequested="ClearCategory" />
             </div>
         </div>
@@ -103,7 +116,18 @@ else
                 NudgeRequested="NudgeCell"
                 QuickFillRequested="OnQuickFill"
                 AthleteContextRequested="OpenContext"
+                ComparisonSelectionActive="@isCompareSelectionMode"
+                ComparisonSelectedAthleteIds="@CompareSelectedAthleteIds"
+                CompareSelectionToggled="ToggleCompareSelection"
                 ResetRequested="ResetAthlete" />
+
+            @if (isCompareSelectionMode)
+            {
+                <TopNCompareSelectionBar
+                    Slots="@SelectedComparisonSlots"
+                    CancelRequested="CancelCompareSelection"
+                    CompareRequested="OpenSelectedComparison" />
+            }
 
             <TopNFooterTools
                 CanEditPredictions="CanEditPredictions"
@@ -115,6 +139,8 @@ else
                 BulkMenuToggled="ToggleBulkMenu"
                 BulkFillRequested="FillDefaultsFromSource"
                 SortRequested="SortByPredictedTotal"
+                IsCompareSelectionMode="@isCompareSelectionMode"
+                CompareModeRequested="StartCompareSelection"
                 ClearRequested="ClearCategory" />
         </div>
 
@@ -251,6 +277,7 @@ else
     private bool isPaletteOpen;
     private bool isMobileSwitcherOpen;
     private bool isBulkMenuOpen;
+    private bool isCompareSelectionMode;
     private int? fillPopPosition;
     private int? expandedMobilePosition;
     private int? draggingPosition;
@@ -265,6 +292,7 @@ else
     private readonly Dictionary<string, AthleteHistoryEntry?> historyByAthleteId = new(StringComparer.OrdinalIgnoreCase);
     private readonly HashSet<string> loadingAthleteIds = new(StringComparer.OrdinalIgnoreCase);
     private readonly HashSet<string> seededQuestionIds = new(StringComparer.OrdinalIgnoreCase);
+    private readonly HashSet<string> compareSelectedAthleteIds = new(StringComparer.OrdinalIgnoreCase);
 
     private IReadOnlyList<PredictionQuestion> OrderedQuestions => ActiveGroup.Questions
         .OrderBy(question => question.Order)
@@ -334,6 +362,15 @@ else
         : GetPlacements(ActiveQuestion.Id);
 
     private IReadOnlyList<AthletePlacementPick> FieldPlacements => BuildFieldPlacements();
+
+    private IReadOnlyCollection<string> CompareSelectedAthleteIds => compareSelectedAthleteIds.ToArray();
+
+    private IReadOnlyList<AthleteComparisonWindowSlot> SelectedComparisonSlots => FieldPlacements
+        .Where(placement => compareSelectedAthleteIds.Contains(placement.AthleteId))
+        .OrderBy(placement => placement.Position)
+        .Select(ToComparisonSlot)
+        .OfType<AthleteComparisonWindowSlot>()
+        .ToArray();
 
     private IReadOnlyList<Athlete> EligibleAthletes
     {
@@ -561,6 +598,7 @@ else
         fillPopPosition = null;
         isBulkMenuOpen = false;
         expandedMobilePosition = null;
+        CancelCompareSelection();
         modeByPosition.Clear();
         await LoadMissingHistoriesAsync();
     }
@@ -586,6 +624,7 @@ else
         isModuleMenuOpen = false;
         isMobileSwitcherOpen = false;
         selectedAthleteId = null;
+        CancelCompareSelection();
         if (GroupChanged.HasDelegate)
         {
             await GroupChanged.InvokeAsync(groupId);
@@ -674,8 +713,127 @@ else
 
     private Task OnCompareAthletesRequested()
     {
-        Toasts.ShowInfo(Localizer["Predictions.TopN.CompareSoon"]);
+        StartCompareSelection(selectedAthleteId);
+        selectedAthleteId = null;
         return Task.CompletedTask;
+    }
+
+    private void StartCompareSelection()
+    {
+        StartCompareSelection(null);
+    }
+
+    private void StartCompareSelection(string? preselectedAthleteId)
+    {
+        isCompareSelectionMode = true;
+        fillPopPosition = null;
+        isBulkMenuOpen = false;
+        expandedMobilePosition = null;
+
+        if (!string.IsNullOrWhiteSpace(preselectedAthleteId) && IsAthleteInActiveQuestion(preselectedAthleteId))
+        {
+            compareSelectedAthleteIds.Clear();
+            compareSelectedAthleteIds.Add(preselectedAthleteId);
+        }
+    }
+
+    private void CancelCompareSelection()
+    {
+        isCompareSelectionMode = false;
+        compareSelectedAthleteIds.Clear();
+    }
+
+    private Task ToggleCompareSelection(string athleteId)
+    {
+        if (string.IsNullOrWhiteSpace(athleteId))
+        {
+            return Task.CompletedTask;
+        }
+
+        if (!isCompareSelectionMode)
+        {
+            StartCompareSelection(athleteId);
+            return Task.CompletedTask;
+        }
+
+        if (compareSelectedAthleteIds.Contains(athleteId))
+        {
+            compareSelectedAthleteIds.Remove(athleteId);
+            return Task.CompletedTask;
+        }
+
+        if (compareSelectedAthleteIds.Count >= 3)
+        {
+            Toasts.ShowInfo(Localizer["Predictions.Compare.MaxThree"]);
+            return Task.CompletedTask;
+        }
+
+        compareSelectedAthleteIds.Add(athleteId);
+        return Task.CompletedTask;
+    }
+
+    private Task OpenSelectedComparison()
+    {
+        if (ActiveQuestion is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        var slots = SelectedComparisonSlots;
+        if (slots.Count < 2)
+        {
+            Toasts.ShowInfo(Localizer["Predictions.TopN.CompareNotEnough"]);
+            return Task.CompletedTask;
+        }
+
+        var first = slots.Min(slot => slot.Position);
+        var last = slots.Max(slot => slot.Position);
+        var categoryName = GetCategoryName(ActiveQuestion);
+        var subtitle = string.Format(
+            CultureInfo.CurrentCulture,
+            Localizer["Predictions.TopN.CompareSubtitle"].Value,
+            categoryName,
+            first,
+            last);
+
+        Windows.OpenAthleteComparison(
+            competitionId: Competition.Id,
+            contextId: ActiveQuestion.Id,
+            categoryName: categoryName,
+            scoredCount: ScoredPositionsCount,
+            slots: slots,
+            title: Localizer["Predictions.CompareAthletes"].Value,
+            subtitle: subtitle);
+
+        isCompareSelectionMode = false;
+        compareSelectedAthleteIds.Clear();
+        return Task.CompletedTask;
+    }
+
+    private AthleteComparisonWindowSlot? ToComparisonSlot(AthletePlacementPick placement)
+    {
+        var athlete = Competition.Athletes.FirstOrDefault(item =>
+            string.Equals(item.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase));
+
+        if (athlete is null)
+        {
+            return null;
+        }
+
+        return new AthleteComparisonWindowSlot
+        {
+            Position = placement.Position,
+            AthleteId = athlete.Id,
+            AthleteName = athlete.DisplayName,
+            CountryCode = athlete.CountryCode,
+            CountryName = athlete.CountryName,
+            NominatedTotalKg = athlete.SeedTotalKg,
+            PredictedTotalKg = placement.PredictedTotalKg,
+            PredictedSquatKg = placement.PredictedSquatKg,
+            PredictedBenchKg = placement.PredictedBenchKg,
+            PredictedDeadliftKg = placement.PredictedDeadliftKg,
+            IsAutoSeeded = placement.IsAutoSeeded
+        };
     }
 
     // ---------- per-row mode + edits ----------
@@ -1196,6 +1354,7 @@ else
 
         selectedAthleteId = null;
         expandedMobilePosition = null;
+        CancelCompareSelection();
         modeByPosition.Clear();
         await EmitAnswer(BuildDefaultFieldPlacements());
         Toasts.ShowSuccess(Localizer["Predictions.Toast.ResetField.Success"]);
