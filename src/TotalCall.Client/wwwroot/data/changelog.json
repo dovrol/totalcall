@@ -2,6 +2,51 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.6.0-beta.1",
+      "releasedAt": "2026-06-03",
+      "title": {
+        "pl": "Porównywanie zawodników i przebudowany ranking typów",
+        "en": "Athlete comparison and redesigned prediction ranking"
+      },
+      "items": [
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Nowy widok porównywania zawodników — szybciej zestawisz ze sobą wybranych startujących i ich kluczowe dane.",
+            "en": "New athlete comparison view — compare selected competitors and their key data more easily."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Typowanie TopN zostało rozszerzone do pełnego rankingu stawki, dzięki czemu możesz analizować kolejność wszystkich zawodników zamiast tylko ścisłej czołówki.",
+            "en": "TopN predictions were expanded into a full field ranking, letting you analyze the order of all competitors instead of only the top picks."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Przebudowany workspace typowania — bardziej przejrzysty układ i lepsze dopasowanie do różnych rozmiarów ekranu.",
+            "en": "Redesigned prediction workspace — clearer layout and better adaptation to different screen sizes."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Usprawniony responsywny widok modułu TopN, szczególnie na mniejszych ekranach.",
+            "en": "Improved responsive layout of the TopN module, especially on smaller screens."
+          }
+        },
+        {
+          "type": "fix",
+          "text": {
+            "pl": "Poprawiony układ menu modułu oraz stopki, aby widok był bardziej spójny i czytelny.",
+            "en": "Refined module menu and footer layout for a more consistent and readable interface."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.5.0-beta.1",
       "releasedAt": "2026-05-31",
       "title": {
