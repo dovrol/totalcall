@@ -56,16 +56,30 @@
         </div>
     </div>
 
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="." class="reload">Reload</a>
-        <span class="dismiss">
+    <div id="blazor-error-ui" role="alert" aria-live="assertive">
+        <div class="blazor-error-ui__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
+                <path d="M12 9v4"></path>
+                <path d="M12 17h.01"></path>
+            </svg>
+        </div>
+        <div class="blazor-error-ui__copy">
+            <strong data-error-title>Aplikacja napotkała problem</strong>
+            <span data-error-description>Odśwież stronę. Jeśli problem wraca po aktualizacji lub przebudowie, użyj naprawy cache.</span>
+        </div>
+        <div class="blazor-error-ui__actions">
+            <button type="button" class="blazor-error-ui__repair" data-repair-cache>Napraw cache i odśwież</button>
+            <a href="." class="reload" data-reload-label>Odśwież</a>
+        </div>
+        <button type="button" class="dismiss" aria-label="Zamknij" data-dismiss-label>
             <svg class="dismiss-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M18 6 6 18"></path>
                 <path d="m6 6 12 12"></path>
             </svg>
-        </span>
+        </button>
     </div>
+    <script src="js/totalcall-bootstrap-recovery.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="js/totalcall-actions.js"></script>
     <script src="js/totalcall-topn.js"></script>

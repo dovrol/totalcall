@@ -15,6 +15,8 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType>none</DebugType>
     <DebuggerSupport>false</DebuggerSupport>
+    <!-- Keep dev-server asset routes stable when a rebuild replaces the app assembly. -->
+    <WasmFingerprintAssets>false</WasmFingerprintAssets>
   </PropertyGroup>
 
   <ItemGroup>
