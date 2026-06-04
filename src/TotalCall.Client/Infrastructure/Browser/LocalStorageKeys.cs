@@ -19,9 +19,11 @@ public static class LocalStorageKeys
     /// <summary>Unix-ms timestamp of the last magic-link send, backing the resend cooldown.</summary>
     public const string AuthLastSent = "totalcall:auth:last-sent";
 
+    public const string PredictionsPrefix = "totalcall:predictions:";
+
     public static string Predictions(string competitionId)
     {
-        return $"totalcall:predictions:{competitionId}";
+        return $"{PredictionsPrefix}{competitionId}";
     }
 
     public static string AthleteDataSource(string competitionId)

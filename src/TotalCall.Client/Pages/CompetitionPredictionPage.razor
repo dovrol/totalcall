@@ -1,9 +1,11 @@
 @page "/competitions/{Slug}/predictions"
 @using TotalCall.Client.Components.Predictions.Share
+@implements IDisposable
 @inject CompetitionService CompetitionService
 @inject PredictionService PredictionService
 @inject IPredictionValidationService PredictionValidationService
 @inject CompetitionReviewBuilder ReviewBuilder
+@inject PredictionSyncState PredictionSyncState
 @inject IStringLocalizer<SharedResource> Localizer
 @inject ToastService Toasts
 
@@ -35,7 +37,7 @@ else if (IsTopNGroup(ActiveGroup))
         ActiveModuleValidation="@GetModuleValidation(ActiveGroup.Id)"
         ModuleValidationByGroupId="@moduleValidationByGroupId"
         CanEditPredictions="@canEditPredictions"
-        SaveStatus="@saveStatus"
+        SaveStatus="@CurrentSaveStatus"
         LastSavedAt="@predictionSet.SavedAt"
         GroupChanged="@SelectGroup"
         AnswerChanged="@OnAnswerChanged"
@@ -51,7 +53,7 @@ else
         ActiveModuleValidation="@GetModuleValidation(ActiveGroup.Id)"
         ModuleValidationByGroupId="@moduleValidationByGroupId"
         CanEditPredictions="@canEditPredictions"
-        SaveStatus="@saveStatus"
+        SaveStatus="@CurrentSaveStatus"
         LastSavedAt="@predictionSet.SavedAt"
         GroupChanged="@SelectGroup"
         AnswerChanged="@OnAnswerChanged"
@@ -76,7 +78,6 @@ else
         new Dictionary<string, PredictionModuleValidationResult>(StringComparer.OrdinalIgnoreCase);
     private bool isLoading = true;
     private bool canEditPredictions;
-    private string? saveStatus;
     private string? activeGroupId;
     private bool isShareOpen;
     private CompetitionReviewModel? shareReview;
@@ -89,6 +90,15 @@ else
     private PredictionGroup? ActiveGroup => OrderedGroups
         .FirstOrDefault(group => group.Id == activeGroupId) ??
         OrderedGroups.FirstOrDefault();
+
+    private PredictionSaveStatus CurrentSaveStatus => predictionSet is null
+        ? PredictionSaveStatus.Local
+        : PredictionSyncState.GetStatus(predictionSet.CompetitionId);
+
+    protected override void OnInitialized()
+    {
+        PredictionSyncState.Changed += OnSyncStateChanged;
+    }
 
     private static bool IsTopNGroup(PredictionGroup group)
     {
@@ -186,18 +196,12 @@ else
             return;
         }
 
-        saveStatus = null;
         try
         {
             await PredictionService.SaveAsync(predictionSet);
-
-            saveStatus = validationResult.IsValid
-                ? Localizer["Predictions.SavedLocally"]
-                : Localizer["Predictions.DraftSaved"];
         }
         catch
         {
-            saveStatus = Localizer["Predictions.Toast.Save.Error"];
             Toasts.ShowError(Localizer["Predictions.Toast.Save.Error"]);
         }
     }
@@ -228,5 +232,18 @@ else
     {
         isShareOpen = false;
         return Task.CompletedTask;
+    }
+
+    private void OnSyncStateChanged(string competitionId)
+    {
+        if (predictionSet?.CompetitionId == competitionId)
+        {
+            _ = InvokeAsync(StateHasChanged);
+        }
+    }
+
+    public void Dispose()
+    {
+        PredictionSyncState.Changed -= OnSyncStateChanged;
     }
 }

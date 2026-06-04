@@ -18,4 +18,9 @@ public sealed class BrowserLocalStorage(IJSRuntime jsRuntime)
     {
         return jsRuntime.InvokeVoidAsync("localStorage.removeItem", cancellationToken, key);
     }
+
+    public ValueTask<string[]> GetKeysAsync(string prefix, CancellationToken cancellationToken = default)
+    {
+        return jsRuntime.InvokeAsync<string[]>("totalCallActions.getLocalStorageKeys", cancellationToken, prefix);
+    }
 }

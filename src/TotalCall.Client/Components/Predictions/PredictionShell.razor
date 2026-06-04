@@ -20,8 +20,6 @@
                         Competition="@Competition"
                         ActiveGroup="@ActiveGroup"
                         ModuleValidation="@ActiveModuleValidation"
-                        SaveStatus="@SaveStatus"
-                        LastSavedAt="@LastSavedAt"
                         CanEditPredictions="@CanEditPredictions" />
 
                     @if (!CanEditPredictions)
@@ -44,9 +42,7 @@
                             <PredictionSummaryPanel
                                 Competition="@Competition"
                                 Group="@ActiveGroup"
-                                ModuleValidation="@ActiveModuleValidation"
-                                SaveStatus="@SaveStatus"
-                                LastSavedAt="@LastSavedAt" />
+                                ModuleValidation="@ActiveModuleValidation" />
                         </div>
                     </div>
                 </aside>
@@ -56,6 +52,7 @@
 
     <PredictionActionBar
         CompetitionSlug="@Competition.Slug"
+        SaveStatus="@SaveStatus"
         LastSavedAt="@LastSavedAt"
         ShareRequested="@ShareRequested" />
 </section>
@@ -84,7 +81,7 @@
     public bool CanEditPredictions { get; set; }
 
     [Parameter]
-    public string? SaveStatus { get; set; }
+    public PredictionSaveStatus SaveStatus { get; set; }
 
     [Parameter]
     public DateTimeOffset? LastSavedAt { get; set; }

@@ -13,9 +13,9 @@
         </AppButton>
     </div>
 
-    <div class="prediction-action-bar__status">
-        <strong>@Localizer["Predictions.LocalSavedAt", FormatTime(LastSavedAt)]</strong>
-        <span>@Localizer["Predictions.LocalBrowserOnly"]</span>
+    <div class="@StatusClass" aria-live="polite">
+        <strong>@StatusLabel</strong>
+        <span>@StatusDetail</span>
     </div>
 
     <div class="prediction-action-bar__actions">
@@ -44,12 +44,38 @@
     public string CompetitionSlug { get; set; } = string.Empty;
 
     [Parameter]
+    public PredictionSaveStatus SaveStatus { get; set; }
+
+    [Parameter]
     public DateTimeOffset? LastSavedAt { get; set; }
 
     [Parameter]
     public EventCallback<MouseEventArgs> ShareRequested { get; set; }
 
     private string ReviewHref => $"competitions/{CompetitionSlug}/review";
+
+    private string StatusClass => SaveStatus switch
+    {
+        PredictionSaveStatus.Cloud => "prediction-action-bar__status prediction-action-bar__status--cloud",
+        PredictionSaveStatus.SynchronizationFailed => "prediction-action-bar__status prediction-action-bar__status--failed",
+        _ => "prediction-action-bar__status prediction-action-bar__status--local"
+    };
+
+    private string StatusLabel => Localizer[SaveStatus switch
+    {
+        PredictionSaveStatus.Cloud => "Predictions.SaveStatus.Cloud",
+        PredictionSaveStatus.SynchronizationFailed => "Predictions.SaveStatus.Failed",
+        _ => "Predictions.SaveStatus.Local"
+    }];
+
+    private string StatusDetail => Localizer[
+        SaveStatus switch
+        {
+            PredictionSaveStatus.Cloud => "Predictions.SaveStatus.CloudDetail",
+            PredictionSaveStatus.SynchronizationFailed => "Predictions.SaveStatus.FailedDetail",
+            _ => "Predictions.SaveStatus.LocalDetail"
+        },
+        FormatTime(LastSavedAt)];
 
     private Task OnShareClicked(MouseEventArgs args)
     {

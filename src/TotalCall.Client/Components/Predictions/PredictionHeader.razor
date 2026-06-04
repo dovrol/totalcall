@@ -64,12 +64,6 @@
     public PredictionModuleValidationResult ModuleValidation { get; set; } = default!;
 
     [Parameter]
-    public string? SaveStatus { get; set; }
-
-    [Parameter]
-    public DateTimeOffset? LastSavedAt { get; set; }
-
-    [Parameter]
     public bool CanEditPredictions { get; set; }
 
     private int CompletionPercent => ModuleValidation.TotalItems == 0

@@ -32,7 +32,10 @@ builder.Services.AddScoped<CultureService>();
 builder.Services.AddScoped<ThemeService>();
 builder.Services.AddSingleton<AppInfoService>();
 builder.Services.AddScoped<ChangelogService>();
-builder.Services.AddScoped<IPredictionStore, LocalStoragePredictionStore>();
+builder.Services.AddScoped<LocalStoragePredictionStore>();
+builder.Services.AddScoped<PredictionSyncState>();
+builder.Services.AddScoped<SynchronizedPredictionStore>();
+builder.Services.AddScoped<IPredictionStore>(sp => sp.GetRequiredService<SynchronizedPredictionStore>());
 builder.Services.AddScoped<PredictionService>();
 builder.Services.AddScoped<IPredictionValidationService, PredictionValidationService>();
 builder.Services.AddScoped<PredictionAnswerDisplayService>();
@@ -87,6 +90,23 @@ builder.Services.AddScoped<SupabaseSessionStore>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, TotalCallAuthenticationStateProvider>();
+builder.Services.AddScoped(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var url = config[$"{SupabaseSettings.SectionName}:Url"];
+    var key = config[$"{SupabaseSettings.SectionName}:PublishableKey"];
+
+    HttpClient? http = null;
+    if (!string.IsNullOrWhiteSpace(url) && !string.IsNullOrWhiteSpace(key))
+    {
+        http = new HttpClient { BaseAddress = new Uri(url.TrimEnd('/') + "/") };
+    }
+
+    return new SupabasePredictionStore(
+        http,
+        key ?? string.Empty,
+        sp.GetRequiredService<AuthService>());
+});
 
 builder.Services.AddScoped<WindowManager>();
 builder.Services.AddScoped<IPredictionScoringService, PredictionScoringService>();
@@ -95,4 +115,5 @@ var host = builder.Build();
 await host.Services.GetRequiredService<CultureService>().InitializeAsync();
 await host.Services.GetRequiredService<ThemeService>().InitializeAsync();
 await host.Services.GetRequiredService<AuthService>().InitializeAsync();
+await host.Services.GetRequiredService<SynchronizedPredictionStore>().InitializeAsync();
 await host.RunAsync();

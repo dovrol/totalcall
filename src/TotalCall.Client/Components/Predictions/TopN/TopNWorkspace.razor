@@ -226,6 +226,7 @@ else
 
         <PredictionActionBar
             CompetitionSlug="@Competition.Slug"
+            SaveStatus="@SaveStatus"
             LastSavedAt="@LastSavedAt"
             ShareRequested="@ShareRequested" />
     </section>
@@ -255,7 +256,7 @@ else
     public bool CanEditPredictions { get; set; }
 
     [Parameter]
-    public string? SaveStatus { get; set; }
+    public PredictionSaveStatus SaveStatus { get; set; }
 
     [Parameter]
     public DateTimeOffset? LastSavedAt { get; set; }

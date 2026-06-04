@@ -42,12 +42,6 @@
     [Parameter, EditorRequired]
     public PredictionModuleValidationResult ModuleValidation { get; set; } = default!;
 
-    [Parameter]
-    public string? SaveStatus { get; set; }
-
-    [Parameter]
-    public DateTimeOffset? LastSavedAt { get; set; }
-
     private string ItemLabelPlural => ResolveItemLabelPlural(Group);
 
     private string ResolveItemLabelPlural(PredictionGroup group)

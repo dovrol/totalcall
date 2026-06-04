@@ -47,8 +47,23 @@
         }, 0);
     }
 
+    function getLocalStorageKeys(prefix) {
+        var keys = [];
+
+        for (var index = 0; index < localStorage.length; index += 1) {
+            var key = localStorage.key(index);
+
+            if (key && key.indexOf(prefix) === 0) {
+                keys.push(key);
+            }
+        }
+
+        return keys;
+    }
+
     window.totalCallActions = {
         copyText: copyText,
-        downloadTextFile: downloadTextFile
+        downloadTextFile: downloadTextFile,
+        getLocalStorageKeys: getLocalStorageKeys
     };
 })();

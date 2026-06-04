@@ -134,7 +134,7 @@
   <data name="Predictions.Loading" xml:space="preserve"><value>Loading prediction form...</value></data>
   <data name="Predictions.NotFoundTitle" xml:space="preserve"><value>Prediction form not found</value></data>
   <data name="Predictions.NotFoundDescription" xml:space="preserve"><value>No JSON configuration exists for this competition.</value></data>
-  <data name="Predictions.Description" xml:space="preserve"><value>Your answers are saved locally in this browser.</value></data>
+  <data name="Predictions.Description" xml:space="preserve"><value>Your answers are saved locally and, after sign-in, to your private cloud save.</value></data>
   <data name="Predictions.Locked" xml:space="preserve"><value>Prediction editing is locked for this competition.</value></data>
   <data name="Predictions.Progress" xml:space="preserve"><value>Progress</value></data>
   <data name="Predictions.PredictionProgress" xml:space="preserve"><value>Prediction progress</value></data>
@@ -149,21 +149,27 @@
   <data name="Predictions.ReviewPicks" xml:space="preserve"><value>Review picks</value></data>
   <data name="Predictions.SavedLocally" xml:space="preserve"><value>Saved locally.</value></data>
   <data name="Predictions.DraftSaved" xml:space="preserve"><value>Draft saved locally. Fix validation issues before final review.</value></data>
-  <data name="Predictions.LocalNotice" xml:space="preserve"><value>Beta build: picks are saved locally in this browser only.</value></data>
+  <data name="Predictions.LocalNotice" xml:space="preserve"><value>Beta build: picks are saved locally and privately synchronized to the cloud after sign-in.</value></data>
   <data name="Predictions.LocalSavedAt" xml:space="preserve"><value>Saved locally · {0}</value></data>
   <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Picks are saved only in this browser</value></data>
+  <data name="Predictions.SaveStatus.Local" xml:space="preserve"><value>Local save</value></data>
+  <data name="Predictions.SaveStatus.Cloud" xml:space="preserve"><value>Saved to cloud</value></data>
+  <data name="Predictions.SaveStatus.Failed" xml:space="preserve"><value>Synchronization failed</value></data>
+  <data name="Predictions.SaveStatus.LocalDetail" xml:space="preserve"><value>Draft in this browser · {0}</value></data>
+  <data name="Predictions.SaveStatus.CloudDetail" xml:space="preserve"><value>Last synchronized · {0}</value></data>
+  <data name="Predictions.SaveStatus.FailedDetail" xml:space="preserve"><value>Draft saved locally · {0}</value></data>
   <data name="Predictions.CopySummary" xml:space="preserve"><value>Copy summary</value></data>
   <data name="Predictions.ExportJson" xml:space="preserve"><value>Export JSON</value></data>
   <data name="Predictions.ExportCsv" xml:space="preserve"><value>Export CSV</value></data>
   <data name="Predictions.MoreActions" xml:space="preserve"><value>More</value></data>
   <data name="Share.Trigger" xml:space="preserve"><value>Share</value></data>
   <data name="Share.Title" xml:space="preserve"><value>Export &amp; share</value></data>
-  <data name="Share.Subtitle" xml:space="preserve"><value>Keep a copy of your picks or share them on. Everything happens locally in your browser.</value></data>
+  <data name="Share.Subtitle" xml:space="preserve"><value>Keep a copy of your picks or share them on. Cloud Save remains private.</value></data>
   <data name="Share.Close" xml:space="preserve"><value>Close</value></data>
   <data name="Share.Working" xml:space="preserve"><value>Working…</value></data>
   <data name="Share.CopyAppLink" xml:space="preserve"><value>Copy link</value></data>
   <data name="Share.NoPicksHint" xml:space="preserve"><value>You don't have any saved picks yet. Export will unlock after your first selection.</value></data>
-  <data name="Share.PrivacyNote" xml:space="preserve"><value>Your picks are stored locally in this browser. JSON/CSV export lets you keep a copy — nothing is sent to a server.</value></data>
+  <data name="Share.PrivacyNote" xml:space="preserve"><value>Your picks are always stored locally. After sign-in, the private draft also synchronizes to the cloud.</value></data>
   <data name="Share.Card.CopySummary.Title" xml:space="preserve"><value>Copy summary</value></data>
   <data name="Share.Card.CopySummary.Body" xml:space="preserve"><value>Readable text for Discord, messages or podcast notes.</value></data>
   <data name="Share.Card.ExportJson.Title" xml:space="preserve"><value>Export JSON</value></data>
