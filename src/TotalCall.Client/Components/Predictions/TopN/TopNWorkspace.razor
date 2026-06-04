@@ -82,6 +82,7 @@ else
                     ScoredCount="@ScoredPositionsCount"
                     DefaultCount="@DefaultCount"
                     IsBulkMenuOpen="@isBulkMenuOpen"
+                    IsBulkFilling="@isBulkFilling"
                     BulkMenuToggled="ToggleBulkMenu"
                     BulkFillRequested="FillDefaultsFromSource"
                     SortRequested="SortByPredictedTotal"
@@ -136,6 +137,7 @@ else
                 ScoredCount="@ScoredPositionsCount"
                 DefaultCount="@DefaultCount"
                 IsBulkMenuOpen="@isBulkMenuOpen"
+                IsBulkFilling="@isBulkFilling"
                 BulkMenuToggled="ToggleBulkMenu"
                 BulkFillRequested="FillDefaultsFromSource"
                 SortRequested="SortByPredictedTotal"
@@ -278,6 +280,7 @@ else
     private bool isPaletteOpen;
     private bool isMobileSwitcherOpen;
     private bool isBulkMenuOpen;
+    private bool isBulkFilling;
     private bool isCompareSelectionMode;
     private int? fillPopPosition;
     private int? expandedMobilePosition;
@@ -444,6 +447,7 @@ else
                     CanUseNominated = athlete.SeedTotalKg is not null,
                     CanUseLast = history?.LastResult?.TotalKg is not null,
                     CanUseBest = history?.Bests?.TotalKg is not null,
+                    IsHistoryLoading = loadingAthleteIds.Contains(athlete.Id),
                     NominatedTotalKg = athlete.SeedTotalKg,
                     LastTotalKg = history?.LastResult?.TotalKg,
                     BestTotalKg = history?.Bests?.TotalKg
@@ -495,7 +499,6 @@ else
         {
             historySourceCode = source;
             historyByAthleteId.Clear();
-            loadingAthleteIds.Clear();
         }
 
         if (ActiveQuestion is null ||
@@ -557,7 +560,6 @@ else
         }
 
         await EnsureActiveFieldSeededAsync();
-        await LoadMissingHistoriesAsync();
     }
 
     public async ValueTask DisposeAsync()
@@ -585,11 +587,11 @@ else
 
     // ---------- category + module navigation ----------
 
-    private async Task OnCategoryChanged(string questionId)
+    private Task OnCategoryChanged(string questionId)
     {
         if (!OrderedQuestions.Any(question => string.Equals(question.Id, questionId, StringComparison.OrdinalIgnoreCase)))
         {
-            return;
+            return Task.CompletedTask;
         }
 
         activeQuestionId = questionId;
@@ -601,7 +603,9 @@ else
         expandedMobilePosition = null;
         CancelCompareSelection();
         modeByPosition.Clear();
-        await LoadMissingHistoriesAsync();
+        // History for the new category loads lazily when a row's fill popover or
+        // mobile editor opens, so switching categories no longer fans out requests.
+        return Task.CompletedTask;
     }
 
     private Task StepCategory(int direction)
@@ -958,9 +962,16 @@ else
 
     // ---------- fill (per-row popover + bulk) ----------
 
-    private void ToggleFillPop(int position)
+    private async Task ToggleFillPop(int position)
     {
-        fillPopPosition = fillPopPosition == position ? null : position;
+        if (fillPopPosition == position)
+        {
+            fillPopPosition = null;
+            return;
+        }
+
+        fillPopPosition = position;
+        await EnsureHistoryForPositionAsync(position);
     }
 
     private void ToggleBulkMenu()
@@ -1032,10 +1043,21 @@ else
 
         if (kind != TopNQuickFillKind.Nominated)
         {
-            foreach (var position in defaultPositions)
+            // Show the spinner on the bulk button while histories load. Flag is set
+            // before the first await so Blazor renders it on the yield, and only
+            // actually shows when a fetch is in flight (cached athletes don't yield).
+            isBulkFilling = true;
+            try
             {
-                var athleteId = placements.First(placement => placement.Position == position).AthleteId;
-                await EnsureHistoryAsync(athleteId);
+                foreach (var position in defaultPositions)
+                {
+                    var athleteId = placements.First(placement => placement.Position == position).AthleteId;
+                    await EnsureHistoryAsync(athleteId);
+                }
+            }
+            finally
+            {
+                isBulkFilling = false;
             }
         }
 
@@ -1274,9 +1296,16 @@ else
 
     // ---------- mobile card expand ----------
 
-    private void ToggleMobileCard(int position)
+    private async Task ToggleMobileCard(int position)
     {
-        expandedMobilePosition = expandedMobilePosition == position ? null : position;
+        if (expandedMobilePosition == position)
+        {
+            expandedMobilePosition = null;
+            return;
+        }
+
+        expandedMobilePosition = position;
+        await EnsureHistoryForPositionAsync(position);
     }
 
     // ---------- bulk actions ----------
@@ -1363,6 +1392,16 @@ else
 
     // ---------- history / trend ----------
 
+    private Task EnsureHistoryForPositionAsync(int position)
+    {
+        var athleteId = FieldPlacements
+            .FirstOrDefault(placement => placement.Position == position)?.AthleteId;
+
+        return string.IsNullOrWhiteSpace(athleteId)
+            ? Task.CompletedTask
+            : EnsureHistoryAsync(athleteId);
+    }
+
     private async Task EnsureHistoryAsync(string athleteId)
     {
         if (string.IsNullOrWhiteSpace(athleteId) || historyByAthleteId.ContainsKey(athleteId))
@@ -1370,57 +1409,23 @@ else
             return;
         }
 
+        // Flag the row as loading so the fill popover / mobile editor can show a spinner
+        // while the request is in flight. Blazor re-renders when this await yields.
+        loadingAthleteIds.Add(athleteId);
         try
         {
-            historyByAthleteId[athleteId] = await AthleteHistoryService.GetAthleteHistoryAsync(athleteId, Competition, historySourceCode);
+            // The sheet only needs best/last totals here, so skip the analytics RPC.
+            // The context panel fetches it on demand (with analytics) when opened.
+            historyByAthleteId[athleteId] = await AthleteHistoryService.GetAthleteHistoryAsync(
+                athleteId, Competition, historySourceCode, includeAnalytics: false);
         }
         catch
         {
             historyByAthleteId[athleteId] = null;
         }
-    }
-
-    private async Task LoadMissingHistoriesAsync()
-    {
-        var athleteIds = FieldPlacements
-            .Select(placement => placement.AthleteId)
-            .Where(id => !string.IsNullOrWhiteSpace(id))
-            .Where(id => !historyByAthleteId.ContainsKey(id) && !loadingAthleteIds.Contains(id))
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .ToArray();
-
-        if (athleteIds.Length == 0)
+        finally
         {
-            return;
-        }
-
-        foreach (var id in athleteIds)
-        {
-            loadingAthleteIds.Add(id);
-        }
-
-        var loaded = false;
-        foreach (var id in athleteIds)
-        {
-            try
-            {
-                historyByAthleteId[id] = await AthleteHistoryService.GetAthleteHistoryAsync(id, Competition, historySourceCode);
-            }
-            catch
-            {
-                historyByAthleteId[id] = null;
-            }
-            finally
-            {
-                loadingAthleteIds.Remove(id);
-            }
-
-            loaded = true;
-        }
-
-        if (loaded)
-        {
-            await InvokeAsync(StateHasChanged);
+            loadingAthleteIds.Remove(athleteId);
         }
     }
 
@@ -1431,12 +1436,10 @@ else
             return;
         }
 
-        await InvokeAsync(async () =>
+        await InvokeAsync(() =>
         {
             historySourceCode = source;
             historyByAthleteId.Clear();
-            loadingAthleteIds.Clear();
-            await LoadMissingHistoriesAsync();
             StateHasChanged();
         });
     }

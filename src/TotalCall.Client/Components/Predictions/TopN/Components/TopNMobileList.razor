@@ -130,12 +130,16 @@
                             </div>
                         }
 
-                        @if (CanEditPredictions && HasAnyQuickFill(slot))
+                        @if (CanEditPredictions && (HasAnyQuickFill(slot) || slot.IsHistoryLoading))
                         {
                             <div class="ms-equick">
                                 @if (slot.CanUseNominated)
                                 {
                                     <button type="button" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Nominated))"><span class="ms-equick__ic"><AppIcon Name="AppIconName.Target" Size="12" /></span> @Localizer["Predictions.Profile.Nomination"]</button>
+                                }
+                                @if (slot.IsHistoryLoading)
+                                {
+                                    <span class="ms-equick__loading"><span class="topn-spinner" aria-hidden="true"></span> @Localizer["Predictions.LoadingHistory"]</span>
                                 }
                                 @if (slot.CanUseLast)
                                 {

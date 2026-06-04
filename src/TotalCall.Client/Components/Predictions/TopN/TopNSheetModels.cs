@@ -57,6 +57,8 @@ public sealed record TopNSlotView
 
     public bool CanUseBest { get; init; }
 
+    public bool IsHistoryLoading { get; init; }
+
     public decimal? NominatedTotalKg { get; init; }
 
     public decimal? LastTotalKg { get; init; }

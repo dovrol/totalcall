@@ -186,6 +186,13 @@
                                                     <span class="topn-fill-opt__v">@FormatPred(slot.NominatedTotalKg)</span>
                                                 </button>
                                             }
+                                            @if (slot.IsHistoryLoading)
+                                            {
+                                                <div class="topn-fill-opt topn-fill-opt--loading">
+                                                    <span class="topn-spinner" aria-hidden="true"></span>
+                                                    <span class="topn-fill-opt__t">@Localizer["Predictions.LoadingHistory"]</span>
+                                                </div>
+                                            }
                                             @if (slot.CanUseLast)
                                             {
                                                 <button type="button" class="topn-fill-opt" @onclick="() => QuickFillRequested.InvokeAsync(new TopNQuickFill(slot.Position, TopNQuickFillKind.Last))">

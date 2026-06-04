@@ -5,11 +5,19 @@
         <button
             type="button"
             class="@BulkButtonClass"
-            disabled="@(!CanEditPredictions)"
+            disabled="@(!CanEditPredictions || IsBulkFilling)"
             aria-haspopup="true"
             aria-expanded="@IsBulkMenuOpen"
+            aria-busy="@(IsBulkFilling ? "true" : null)"
             @onclick="() => BulkMenuToggled.InvokeAsync()">
-            <AppIcon Name="AppIconName.Sparkles" Size="14" />
+            @if (IsBulkFilling)
+            {
+                <span class="topn-spinner" aria-hidden="true"></span>
+            }
+            else
+            {
+                <AppIcon Name="AppIconName.Sparkles" Size="14" />
+            }
             <span>@Localizer["Predictions.TopN.FillDefaults"]</span>
             <AppIcon Name="AppIconName.ChevronRight" Size="10" Class="topn-bulk__ch" />
         </button>
@@ -81,6 +89,9 @@
 
     [Parameter]
     public bool IsBulkMenuOpen { get; set; }
+
+    [Parameter]
+    public bool IsBulkFilling { get; set; }
 
     [Parameter]
     public bool IsCompareSelectionMode { get; set; }

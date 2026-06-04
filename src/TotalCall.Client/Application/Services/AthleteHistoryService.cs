@@ -20,6 +20,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
 
     private readonly Dictionary<string, AthleteHistoryEntry?> _cache = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<string, AthleteAnalytics?> _analyticsCache = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, AthleteAttemptBenchmark?> _benchmarkCache = new(StringComparer.Ordinal);
     private readonly Dictionary<string, Task<AthleteDataImportStatus?>> _importStatusTasks =
         new(StringComparer.OrdinalIgnoreCase);
 
@@ -33,7 +34,8 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         string athleteSlug,
         CancellationToken cancellationToken = default)
     {
-        return GetAthleteHistoryAsync(athleteSlug, (DateOnly?)null, DefaultHistorySource, cancellationToken);
+        return GetAthleteHistoryAsync(
+            athleteSlug, (DateOnly?)null, DefaultHistorySource, cancellationToken: cancellationToken);
     }
 
     public Task<AthleteHistoryEntry?> GetAthleteHistoryAsync(
@@ -41,19 +43,22 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         Competition? competition,
         CancellationToken cancellationToken = default)
     {
-        return GetAthleteHistoryAsync(athleteSlug, competition, DefaultHistorySource, cancellationToken);
+        return GetAthleteHistoryAsync(
+            athleteSlug, competition, DefaultHistorySource, cancellationToken: cancellationToken);
     }
 
     public Task<AthleteHistoryEntry?> GetAthleteHistoryAsync(
         string athleteSlug,
         Competition? competition,
         string source,
+        bool includeAnalytics = true,
         CancellationToken cancellationToken = default)
     {
         return GetAthleteHistoryAsync(
             athleteSlug,
             ResolveTotalMetricReferenceDate(competition),
             source,
+            includeAnalytics,
             cancellationToken);
     }
 
@@ -61,6 +66,7 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         string athleteSlug,
         DateOnly? totalMetricReferenceDate,
         string source,
+        bool includeAnalytics = true,
         CancellationToken cancellationToken = default)
     {
         if (httpClient is null)
@@ -75,7 +81,9 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
 
         if (_cache.TryGetValue(cacheKey, out var cached))
         {
-            return cached;
+            return includeAnalytics
+                ? await ComposeWithAnalyticsAsync(cached, athleteSlug, normalizedSource, referenceDate, cancellationToken)
+                : cached;
         }
 
         var url = "rest/v1/athlete_history_view"
@@ -96,11 +104,43 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
             return null;
         }
 
-        var analytics = await GetAthleteAnalyticsAsync(athleteSlug, normalizedSource, cancellationToken);
-        var entry = MapToEntry(rows, analytics, referenceDate);
-
+        // Build the base entry from history rows only. Aggregate analytics is a second
+        // request (get_athlete_analytics) and is composed lazily, so callers that only
+        // need best/last totals (the TopN sheet fill actions) never trigger that RPC.
+        var entry = MapToEntry(rows, null, referenceDate);
         _cache[cacheKey] = entry;
-        return entry;
+
+        return includeAnalytics
+            ? await ComposeWithAnalyticsAsync(entry, athleteSlug, normalizedSource, referenceDate, cancellationToken)
+            : entry;
+    }
+
+    private async Task<AthleteHistoryEntry?> ComposeWithAnalyticsAsync(
+        AthleteHistoryEntry? entry,
+        string athleteSlug,
+        string normalizedSource,
+        DateOnly referenceDate,
+        CancellationToken cancellationToken)
+    {
+        if (entry is null || entry.Analytics is not null)
+        {
+            return entry;
+        }
+
+        var analytics = await GetAthleteAnalyticsAsync(athleteSlug, normalizedSource, cancellationToken);
+        if (analytics is null)
+        {
+            return entry;
+        }
+
+        var fullPowerTotals = entry.RecentResults
+            .Where(IsFullPowerSbdTotal)
+            .ToArray();
+
+        return entry with
+        {
+            Analytics = EnrichAnalytics(analytics, entry.RecentResults, fullPowerTotals, referenceDate)
+        };
     }
 
     /// <summary>
@@ -202,7 +242,6 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         foreach (var scope in scopes)
         {
             var benchmark = await BuildAttemptBenchmarkAsync(
-                athleteSlug,
                 scope.Scope,
                 scope.Sex,
                 scope.AthleteIds,
@@ -455,48 +494,88 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
     }
 
     private async Task<AthleteAttemptBenchmark?> BuildAttemptBenchmarkAsync(
-        string athleteSlug,
         AthleteAttemptBenchmarkScope scope,
         AthleteSex scopeSex,
         IReadOnlyCollection<string> athleteIds,
         string source,
         CancellationToken cancellationToken)
     {
-        var comparisonAthleteIds = athleteIds
+        // The cohort is the whole scope (category/sex/field) including the viewed
+        // athlete, so it is identical for every athlete in the scope. That lets the
+        // aggregate be computed in one server-side RPC and cached + reused, instead
+        // of fetching every athlete's analytics individually and summing on the client.
+        var cohort = athleteIds
             .Where(id => !string.IsNullOrWhiteSpace(id))
             .Distinct(StringComparer.OrdinalIgnoreCase)
-            .Where(id => !string.Equals(id, athleteSlug, StringComparison.OrdinalIgnoreCase))
+            .OrderBy(id => id, StringComparer.OrdinalIgnoreCase)
             .ToArray();
 
-        if (comparisonAthleteIds.Length == 0)
+        if (cohort.Length == 0)
         {
             return null;
         }
 
-        var analyticsTasks = comparisonAthleteIds
-            .Select(id => GetAthleteAnalyticsAsync(id, source, cancellationToken))
-            .ToArray();
+        var cacheKey = $"{scope}|{source}|{string.Join(',', cohort)}";
+        if (_benchmarkCache.TryGetValue(cacheKey, out var cached))
+        {
+            return cached;
+        }
 
-        var analyticsRows = (await Task.WhenAll(analyticsTasks))
-            .OfType<AthleteAnalytics>()
-            .ToArray();
+        var row = await FetchAttemptBenchmarkRowAsync(cohort, source, cancellationToken);
+        var benchmark = row is null
+            ? null
+            : new AthleteAttemptBenchmark
+            {
+                Scope = scope,
+                Sex = scopeSex,
+                ComparedAthleteCount = row.AthleteCount,
+                SquatAttempts = ToAttemptSuccessRate(
+                    row.SquatSuccessRate, row.SquatSuccessfulAttempts, row.SquatCountedAttempts),
+                BenchAttempts = ToAttemptSuccessRate(
+                    row.BenchSuccessRate, row.BenchSuccessfulAttempts, row.BenchCountedAttempts),
+                DeadliftAttempts = ToAttemptSuccessRate(
+                    row.DeadliftSuccessRate, row.DeadliftSuccessfulAttempts, row.DeadliftCountedAttempts),
+                OverallAttempts = ToAttemptSuccessRate(
+                    row.OverallSuccessRate, row.OverallSuccessfulAttempts, row.OverallCountedAttempts),
+                ThirdAttempts = ToAttemptSuccessRate(
+                    row.ThirdAttemptSuccessRate, row.ThirdAttemptSuccessfulAttempts, row.ThirdAttemptCountedAttempts)
+            };
 
-        if (analyticsRows.Length == 0)
+        _benchmarkCache[cacheKey] = benchmark;
+        return benchmark;
+    }
+
+    private async Task<BenchmarkRow?> FetchAttemptBenchmarkRowAsync(
+        IReadOnlyCollection<string> athleteSlugs,
+        string source,
+        CancellationToken cancellationToken)
+    {
+        if (httpClient is null)
         {
             return null;
         }
 
-        return new AthleteAttemptBenchmark
+        try
         {
-            Scope = scope,
-            Sex = scopeSex,
-            ComparedAthleteCount = analyticsRows.Length,
-            SquatAttempts = AggregateAttempts(analyticsRows.Select(row => row.SquatAttempts)),
-            BenchAttempts = AggregateAttempts(analyticsRows.Select(row => row.BenchAttempts)),
-            DeadliftAttempts = AggregateAttempts(analyticsRows.Select(row => row.DeadliftAttempts)),
-            OverallAttempts = AggregateAttempts(analyticsRows.Select(row => row.OverallAttempts)),
-            ThirdAttempts = AggregateAttempts(analyticsRows.Select(row => row.ThirdAttempts))
-        };
+            var response = await httpClient.PostAsJsonAsync(
+                "rest/v1/rpc/get_attempt_benchmark",
+                new AttemptBenchmarkRequest { AthleteSlugs = athleteSlugs, Source = source },
+                SupabaseJsonOptions,
+                cancellationToken);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var rows = await response.Content.ReadFromJsonAsync<List<BenchmarkRow>>(
+                SupabaseJsonOptions, cancellationToken);
+            return rows?.FirstOrDefault();
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     private static AthleteAnalytics EnrichAnalytics(
@@ -611,27 +690,6 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         return Math.Round(totalValues.Take(count).Average(), 1);
     }
 
-    private static AthleteAttemptSuccessRate AggregateAttempts(IEnumerable<AthleteAttemptSuccessRate> attempts)
-    {
-        var successful = 0;
-        var counted = 0;
-
-        foreach (var attempt in attempts)
-        {
-            successful += attempt.SuccessfulAttempts;
-            counted += attempt.CountedAttempts;
-        }
-
-        return new AthleteAttemptSuccessRate
-        {
-            SuccessfulAttempts = successful,
-            CountedAttempts = counted,
-            RatePercent = counted == 0
-                ? null
-                : Math.Round(100m * successful / counted, 1)
-        };
-    }
-
     private static DateOnly? TryParseDate(string? value)
     {
         return DateOnly.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsed)
@@ -734,4 +792,35 @@ public sealed class AthleteHistoryService(HttpClient? httpClient)
         AthleteAttemptBenchmarkScope Scope,
         AthleteSex Sex,
         IReadOnlyCollection<string> AthleteIds);
+
+    /// <summary>Request body for the get_attempt_benchmark RPC (POST).</summary>
+    private sealed record AttemptBenchmarkRequest
+    {
+        [JsonPropertyName("p_athlete_slugs")]
+        public required IReadOnlyCollection<string> AthleteSlugs { get; init; }
+
+        [JsonPropertyName("p_source")]
+        public required string Source { get; init; }
+    }
+
+    /// <summary>PostgREST row from get_attempt_benchmark().</summary>
+    private sealed record BenchmarkRow
+    {
+        public int AthleteCount { get; init; }
+        public decimal? SquatSuccessRate { get; init; }
+        public int SquatSuccessfulAttempts { get; init; }
+        public int SquatCountedAttempts { get; init; }
+        public decimal? BenchSuccessRate { get; init; }
+        public int BenchSuccessfulAttempts { get; init; }
+        public int BenchCountedAttempts { get; init; }
+        public decimal? DeadliftSuccessRate { get; init; }
+        public int DeadliftSuccessfulAttempts { get; init; }
+        public int DeadliftCountedAttempts { get; init; }
+        public decimal? OverallSuccessRate { get; init; }
+        public int OverallSuccessfulAttempts { get; init; }
+        public int OverallCountedAttempts { get; init; }
+        public decimal? ThirdAttemptSuccessRate { get; init; }
+        public int ThirdAttemptSuccessfulAttempts { get; init; }
+        public int ThirdAttemptCountedAttempts { get; init; }
+    }
 }

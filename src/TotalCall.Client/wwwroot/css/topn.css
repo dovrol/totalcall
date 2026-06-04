@@ -1310,6 +1310,30 @@
     margin-top: 5px;
 }
 
+.topn-fill-opt--loading,
+.topn-fill-opt--loading:hover {
+    cursor: default;
+    background: transparent;
+}
+
+.topn-fill-opt--loading .topn-fill-opt__t {
+    color: var(--tn-txt-3);
+}
+
+.topn-spinner {
+    width: 14px;
+    height: 14px;
+    flex: none;
+    border-radius: 999px;
+    border: 2px solid color-mix(in srgb, var(--tn-red-bright) 28%, transparent);
+    border-top-color: var(--tn-red-bright);
+    animation: topn-spin 0.7s linear infinite;
+}
+
+@keyframes topn-spin {
+    to { transform: rotate(360deg); }
+}
+
 /* ---------------------------------------------------------------
    Footer tools
    --------------------------------------------------------------- */
@@ -2688,6 +2712,16 @@ body:has(.topn-drawer.is-open) {
 .topn-mobile .ms-equick__ic {
     color: var(--tn-red-bright);
     display: inline-flex;
+}
+
+.topn-mobile .ms-equick__loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--tn-txt-3);
+    padding: 8px 11px;
 }
 
 .topn-mobile .ms-eacts {
