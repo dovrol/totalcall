@@ -6,8 +6,8 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="App.Tagline" xml:space="preserve"><value>Typowania trójbojowe</value></data>
   <data name="App.BrandSubtitle" xml:space="preserve"><value>Powerlifting Predictions</value></data>
-  <data name="App.DataSource" xml:space="preserve"><value>Statyczne dane JSON</value></data>
-  <data name="App.Storage" xml:space="preserve"><value>Zapis lokalny</value></data>
+  <data name="App.DataSource" xml:space="preserve"><value>Dane zawodów JSON + Supabase</value></data>
+  <data name="App.Storage" xml:space="preserve"><value>Zapis lokalny + prywatna chmura</value></data>
   <data name="App.BetaBadge" xml:space="preserve"><value>BETA</value></data>
   <data name="App.VersionLine" xml:space="preserve"><value>TotalCall Beta · {0}</value></data>
   <data name="WhatsNew.Eyebrow" xml:space="preserve"><value>NOWA WERSJA</value></data>
@@ -151,7 +151,7 @@
   <data name="Predictions.DraftSaved" xml:space="preserve"><value>Szkic zapisany lokalnie. Popraw błędy przed finalnym podglądem.</value></data>
   <data name="Predictions.LocalNotice" xml:space="preserve"><value>Wersja beta: typy zapisują się lokalnie, a po zalogowaniu synchronizują prywatnie z chmurą.</value></data>
   <data name="Predictions.LocalSavedAt" xml:space="preserve"><value>Zapisano lokalnie · {0}</value></data>
-  <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Typy zapisują się tylko w tej przeglądarce</value></data>
+  <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Typy zapisują się lokalnie, a po zalogowaniu także w chmurze</value></data>
   <data name="Predictions.SaveStatus.Local" xml:space="preserve"><value>Zapis lokalny</value></data>
   <data name="Predictions.SaveStatus.Cloud" xml:space="preserve"><value>Zapisano w chmurze</value></data>
   <data name="Predictions.SaveStatus.Failed" xml:space="preserve"><value>Synchronizacja nieudana</value></data>
@@ -538,15 +538,22 @@
   <data name="Privacy.Title" xml:space="preserve"><value>Prywatność i dane</value></data>
   <data name="Privacy.Close" xml:space="preserve"><value>Zamknij</value></data>
   <data name="Privacy.LocalStorage.Title" xml:space="preserve"><value>Zapis lokalny</value></data>
-  <data name="Privacy.LocalStorage.Body" xml:space="preserve"><value>Twoje typy są zapisywane lokalnie w tej przeglądarce przy użyciu localStorage. Nie wysyłamy ich na serwer i nie zapisujemy ich w chmurze. Jeśli wyczyścisz dane przeglądarki albo zmienisz urządzenie, typy mogą zniknąć.</value></data>
-  <data name="Privacy.Export.Title" xml:space="preserve"><value>Eksport</value></data>
-  <data name="Privacy.Export.Body" xml:space="preserve"><value>Możesz wyeksportować swoje typy do pliku JSON, żeby zachować kopię albo wysłać je organizatorowi/podcastowi.</value></data>
+  <data name="Privacy.LocalStorage.Body" xml:space="preserve"><value>Typy, preferencje aplikacji i - po zalogowaniu - dane sesji są przechowywane w localStorage tej przeglądarki. Wyczyszczenie danych przeglądarki usuwa lokalny draft, ustawienia i sesję, ale nie usuwa konta ani zapisu w chmurze.</value></data>
+  <data name="Privacy.AccountCloud.Title" xml:space="preserve"><value>Konto i prywatny Cloud Save</value></data>
+  <data name="Privacy.AccountCloud.Body" xml:space="preserve"><value>Logowanie Magic Link używa adresu e-mail w Supabase Auth. Gdy jesteś zalogowany, pełny snapshot typów jest synchronizowany z Supabase i przypisany do Twojego identyfikatora użytkownika. Niezalogowani użytkownicy zapisują typy wyłącznie lokalnie.</value></data>
+  <data name="Privacy.AccountCloud.Provider" xml:space="preserve"><value>Dostawca uwierzytelniania i prywatnego zapisu: Supabase.</value></data>
+  <data name="Privacy.Visibility.Title" xml:space="preserve"><value>Widoczność i usuwanie danych</value></data>
+  <data name="Privacy.Visibility.Body" xml:space="preserve"><value>Typy w chmurze nie są publiczne i nie są używane w leaderboardzie. Zabezpieczenia RLS pozwalają zalogowanemu użytkownikowi tworzyć, odczytywać i aktualizować tylko własne dane. Wylogowanie nie usuwa lokalnych typów ani Cloud Save; obecna wersja nie ma jeszcze samoobsługowego usuwania konta lub danych w chmurze.</value></data>
+  <data name="Privacy.Export.Title" xml:space="preserve"><value>Eksport i udostępnianie</value></data>
+  <data name="Privacy.Export.Body" xml:space="preserve"><value>Eksport JSON/CSV i kopiowanie podsumowania są generowane lokalnie w przeglądarce. TotalCall nie wysyła eksportu automatycznie; po samodzielnym udostępnieniu pliku lub tekstu jego dalsze użycie zależy od odbiorcy.</value></data>
+  <data name="Privacy.AthleteData.Title" xml:space="preserve"><value>Publiczne dane zawodników</value></data>
+  <data name="Privacy.AthleteData.Body" xml:space="preserve"><value>Historia startów i analityka zawodników są publicznymi danymi sportowymi pobieranymi z Supabase, na podstawie OpenIPF i OpenPowerlifting. Nie są łączone z Twoim kontem ani prywatnymi typami.</value></data>
   <data name="Privacy.Analytics.Title" xml:space="preserve"><value>Statystyki odwiedzin</value></data>
-  <data name="Privacy.Analytics.Body" xml:space="preserve"><value>Używamy prywatnościowych statystyk odwiedzin, żeby wiedzieć, ile osób korzysta z aplikacji. Nie wysyłamy do analytics treści Twoich predykcji ani nazw wybranych zawodników.</value></data>
+  <data name="Privacy.Analytics.Body" xml:space="preserve"><value>Statystyki odwiedzin mierzą odsłony aplikacji. TotalCall nie wysyła do analytics adresu e-mail, treści typów, wybranych zawodników, danych sesji ani zawartości localStorage.</value></data>
   <data name="Privacy.Analytics.Provider" xml:space="preserve"><value>Statystyki odwiedzin: Cloudflare Web Analytics, bez cookies.</value></data>
   <data name="Privacy.Beta.Title" xml:space="preserve"><value>Wersja beta</value></data>
-  <data name="Privacy.Beta.Body" xml:space="preserve"><value>To jest wersja beta aplikacji. Funkcje i format danych mogą się zmieniać, dlatego warto eksportować swoje typy przed większymi zmianami.</value></data>
-  <data name="Privacy.Footer.Short" xml:space="preserve"><value>Typy zapisują się lokalnie w tej przeglądarce. Analytics bez treści predykcji.</value></data>
+  <data name="Privacy.Beta.Body" xml:space="preserve"><value>To jest wersja beta aplikacji. Funkcje, format danych i zasady synchronizacji mogą się zmieniać, dlatego nadal warto zachowywać własny eksport przed większymi zmianami.</value></data>
+  <data name="Privacy.Footer.Short" xml:space="preserve"><value>Zapis lokalny oraz prywatny Cloud Save po zalogowaniu. Typy nie są publiczne.</value></data>
   <data name="Predictions.TopN.CategoryStripAria" xml:space="preserve"><value>Kategorie wagowe</value></data>
   <data name="Predictions.TopN.PreviousCategory" xml:space="preserve"><value>Poprzednia kategoria</value></data>
   <data name="Predictions.TopN.NextCategory" xml:space="preserve"><value>Następna kategoria</value></data>

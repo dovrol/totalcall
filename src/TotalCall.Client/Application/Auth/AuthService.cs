@@ -163,7 +163,7 @@ public sealed class AuthService(
 
     /// <summary>
     /// Returns a valid access token for authenticating API calls (refreshing if needed),
-    /// or <c>null</c> when the user is signed out. Reserved for future cloud-save calls.
+    /// or <c>null</c> when the user is signed out.
     /// </summary>
     public async Task<string?> GetAccessTokenAsync(CancellationToken cancellationToken = default)
     {

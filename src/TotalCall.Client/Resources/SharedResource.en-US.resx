@@ -6,8 +6,8 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="App.Tagline" xml:space="preserve"><value>Powerlifting picks</value></data>
   <data name="App.BrandSubtitle" xml:space="preserve"><value>Powerlifting Predictions</value></data>
-  <data name="App.DataSource" xml:space="preserve"><value>Static JSON data</value></data>
-  <data name="App.Storage" xml:space="preserve"><value>Local storage</value></data>
+  <data name="App.DataSource" xml:space="preserve"><value>Competition JSON + Supabase</value></data>
+  <data name="App.Storage" xml:space="preserve"><value>Local save + private cloud</value></data>
   <data name="App.BetaBadge" xml:space="preserve"><value>BETA</value></data>
   <data name="App.VersionLine" xml:space="preserve"><value>TotalCall Beta · {0}</value></data>
   <data name="WhatsNew.Eyebrow" xml:space="preserve"><value>NEW RELEASE</value></data>
@@ -151,7 +151,7 @@
   <data name="Predictions.DraftSaved" xml:space="preserve"><value>Draft saved locally. Fix validation issues before final review.</value></data>
   <data name="Predictions.LocalNotice" xml:space="preserve"><value>Beta build: picks are saved locally and privately synchronized to the cloud after sign-in.</value></data>
   <data name="Predictions.LocalSavedAt" xml:space="preserve"><value>Saved locally · {0}</value></data>
-  <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Picks are saved only in this browser</value></data>
+  <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Picks are saved locally and, after sign-in, to the cloud</value></data>
   <data name="Predictions.SaveStatus.Local" xml:space="preserve"><value>Local save</value></data>
   <data name="Predictions.SaveStatus.Cloud" xml:space="preserve"><value>Saved to cloud</value></data>
   <data name="Predictions.SaveStatus.Failed" xml:space="preserve"><value>Synchronization failed</value></data>
@@ -538,15 +538,22 @@
   <data name="Privacy.Title" xml:space="preserve"><value>Privacy &amp; data</value></data>
   <data name="Privacy.Close" xml:space="preserve"><value>Close</value></data>
   <data name="Privacy.LocalStorage.Title" xml:space="preserve"><value>Local storage</value></data>
-  <data name="Privacy.LocalStorage.Body" xml:space="preserve"><value>Your picks are stored locally in this browser using localStorage. We do not send them to a server or store them in the cloud. If you clear your browser data or switch devices, your picks may be lost.</value></data>
-  <data name="Privacy.Export.Title" xml:space="preserve"><value>Export</value></data>
-  <data name="Privacy.Export.Body" xml:space="preserve"><value>You can export your picks to a JSON file to keep a copy or send them to a competition organiser or podcast.</value></data>
+  <data name="Privacy.LocalStorage.Body" xml:space="preserve"><value>Picks, app preferences and - after sign-in - session data are stored in this browser's localStorage. Clearing browser data removes the local draft, preferences and session, but does not delete the account or cloud save.</value></data>
+  <data name="Privacy.AccountCloud.Title" xml:space="preserve"><value>Account and private Cloud Save</value></data>
+  <data name="Privacy.AccountCloud.Body" xml:space="preserve"><value>Magic Link sign-in uses your email address in Supabase Auth. While signed in, a complete snapshot of your picks is synchronized to Supabase and tied to your user ID. Signed-out users save picks locally only.</value></data>
+  <data name="Privacy.AccountCloud.Provider" xml:space="preserve"><value>Authentication and private save provider: Supabase.</value></data>
+  <data name="Privacy.Visibility.Title" xml:space="preserve"><value>Visibility and data deletion</value></data>
+  <data name="Privacy.Visibility.Body" xml:space="preserve"><value>Cloud picks are not public and are not used in a leaderboard. RLS policies allow a signed-in user to create, read and update only their own data. Signing out does not delete local picks or Cloud Save; the current version does not yet provide self-service account or cloud-data deletion.</value></data>
+  <data name="Privacy.Export.Title" xml:space="preserve"><value>Export and sharing</value></data>
+  <data name="Privacy.Export.Body" xml:space="preserve"><value>JSON/CSV exports and copied summaries are generated locally in the browser. TotalCall does not upload exports automatically; after you share a file or text yourself, its further use is controlled by the recipient.</value></data>
+  <data name="Privacy.AthleteData.Title" xml:space="preserve"><value>Public athlete data</value></data>
+  <data name="Privacy.AthleteData.Body" xml:space="preserve"><value>Athlete history and analytics are public sports data fetched from Supabase and based on OpenIPF and OpenPowerlifting. They are not connected to your account or private picks.</value></data>
   <data name="Privacy.Analytics.Title" xml:space="preserve"><value>Visit statistics</value></data>
-  <data name="Privacy.Analytics.Body" xml:space="preserve"><value>We use privacy-friendly visit statistics to understand how many people use the app. We do not send prediction content or athlete names to analytics.</value></data>
+  <data name="Privacy.Analytics.Body" xml:space="preserve"><value>Visit statistics measure app page views. TotalCall does not send your email address, pick content, selected athletes, session data or localStorage contents to analytics.</value></data>
   <data name="Privacy.Analytics.Provider" xml:space="preserve"><value>Visit statistics: Cloudflare Web Analytics, no cookies.</value></data>
   <data name="Privacy.Beta.Title" xml:space="preserve"><value>Beta version</value></data>
-  <data name="Privacy.Beta.Body" xml:space="preserve"><value>This is a beta version of the app. Features and data format may change, so it is worth exporting your picks before major updates.</value></data>
-  <data name="Privacy.Footer.Short" xml:space="preserve"><value>Picks are stored locally in this browser. Analytics without prediction content.</value></data>
+  <data name="Privacy.Beta.Body" xml:space="preserve"><value>This is a beta version of the app. Features, data formats and synchronization rules may change, so keeping your own export before major updates is still recommended.</value></data>
+  <data name="Privacy.Footer.Short" xml:space="preserve"><value>Local save plus private Cloud Save after sign-in. Picks are not public.</value></data>
   <data name="Predictions.TopN.CategoryStripAria" xml:space="preserve"><value>Weight categories</value></data>
   <data name="Predictions.TopN.PreviousCategory" xml:space="preserve"><value>Previous category</value></data>
   <data name="Predictions.TopN.NextCategory" xml:space="preserve"><value>Next category</value></data>
