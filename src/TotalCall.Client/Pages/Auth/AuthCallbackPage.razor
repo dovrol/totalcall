@@ -1,0 +1,75 @@
+@page "/auth/callback"
+@inject AuthService Auth
+@inject NavigationManager Navigation
+@inject IStringLocalizer<SharedResource> Localizer
+
+<PageTitle>@Localizer["Auth.Callback.LoadingTitle"] · TotalCall</PageTitle>
+
+<div class="auth-page">
+    <AppCard AdditionalClass="auth-card auth-card--callback">
+        @if (state is CallbackState.Loading)
+        {
+            <div class="auth-card__head">
+                <span class="auth-card__spinner" aria-hidden="true"></span>
+                <h1 class="auth-card__title">@Localizer["Auth.Callback.LoadingTitle"]</h1>
+                <p class="auth-card__subtitle">@Localizer["Auth.Callback.LoadingBody"]</p>
+            </div>
+        }
+        else if (state is CallbackState.Success)
+        {
+            <div class="auth-card__head">
+                <span class="auth-card__icon auth-card__icon--success" aria-hidden="true">
+                    <AppIcon Name="AppIconName.Check" Size="22" />
+                </span>
+                <h1 class="auth-card__title">@Localizer["Auth.Callback.SuccessTitle"]</h1>
+                <p class="auth-card__subtitle">@Localizer["Auth.Callback.SuccessBody"]</p>
+            </div>
+        }
+        else
+        {
+            <div class="auth-card__head">
+                <span class="auth-card__icon auth-card__icon--error" aria-hidden="true">
+                    <AppIcon Name="AppIconName.AlertCircle" Size="22" />
+                </span>
+                <h1 class="auth-card__title">@Localizer["Auth.Callback.ErrorTitle"]</h1>
+                <p class="auth-card__subtitle" role="alert">@errorMessage</p>
+            </div>
+            <AppButton Href="auth/login" Variant="Primary" FullWidth="true" AdditionalClass="auth-card__cta">
+                @Localizer["Auth.Callback.Retry"]
+            </AppButton>
+        }
+    </AppCard>
+</div>
+
+@code {
+    private enum CallbackState
+    {
+        Loading,
+        Success,
+        Error
+    }
+
+    private CallbackState state = CallbackState.Loading;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var returnUrl = await Auth.HandleCallbackAsync();
+            state = CallbackState.Success;
+            StateHasChanged();
+
+            // Let the success state register before leaving the callback route.
+            await Task.Delay(700);
+            Navigation.NavigateTo(returnUrl, replace: true);
+        }
+        catch (Exception ex)
+        {
+            errorMessage = string.IsNullOrWhiteSpace(ex.Message)
+                ? Localizer["Auth.Callback.ErrorBody"]
+                : ex.Message;
+            state = CallbackState.Error;
+        }
+    }
+}

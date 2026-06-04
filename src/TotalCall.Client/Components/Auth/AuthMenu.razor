@@ -1,0 +1,52 @@
+@inject AuthService Auth
+@inject NavigationManager Navigation
+@inject IStringLocalizer<SharedResource> Localizer
+
+<AuthorizeView>
+    <Authorized>
+        <div class="auth-menu">
+            <span class="auth-menu__user" title="@context.User.Identity?.Name">
+                <AppIcon Name="AppIconName.User" Size="14" />
+                <span class="auth-menu__email">@context.User.Identity?.Name</span>
+            </span>
+            <button
+                type="button"
+                class="auth-menu__action"
+                disabled="@isSigningOut"
+                @onclick="SignOutAsync">
+                <AppIcon Name="AppIconName.LogOut" Size="14" />
+                <span>@Localizer["Auth.SignOut"]</span>
+            </button>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <a class="auth-menu__login" href="auth/login">
+            <AppIcon Name="AppIconName.User" Size="14" />
+            <span>@Localizer["Auth.SignIn"]</span>
+        </a>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private bool isSigningOut;
+
+    private async Task SignOutAsync()
+    {
+        if (isSigningOut)
+        {
+            return;
+        }
+
+        isSigningOut = true;
+
+        try
+        {
+            await Auth.SignOutAsync();
+            Navigation.NavigateTo("");
+        }
+        finally
+        {
+            isSigningOut = false;
+        }
+    }
+}

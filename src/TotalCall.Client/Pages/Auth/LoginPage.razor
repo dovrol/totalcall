@@ -1,0 +1,311 @@
+@page "/auth/login"
+@implements IDisposable
+@inject AuthService Auth
+@inject NavigationManager Navigation
+@inject IStringLocalizer<SharedResource> Localizer
+
+<PageTitle>@Localizer["Auth.Login.Title"] · TotalCall</PageTitle>
+
+<div class="auth-page">
+    <AuthorizeView Context="auth">
+        <Authorized>
+            <AppCard AdditionalClass="auth-card">
+                <div class="auth-card__head">
+                    <span class="auth-card__icon auth-card__icon--success" aria-hidden="true">
+                        <AppIcon Name="AppIconName.Check" Size="22" />
+                    </span>
+                    <h1 class="auth-card__title">@Localizer["Auth.Login.AlreadyTitle"]</h1>
+                    <p class="auth-card__subtitle">@auth.User.Identity?.Name</p>
+                </div>
+                <AppButton Href="/" Variant="Primary" FullWidth="true" AdditionalClass="auth-card__cta">
+                    @Localizer["Auth.Login.GoToApp"]
+                </AppButton>
+            </AppCard>
+        </Authorized>
+        <NotAuthorized>
+            @if (state is FormState.Sent)
+            {
+                <AppCard AdditionalClass="auth-card">
+                    <div class="auth-card__head">
+                        <span class="auth-card__icon auth-card__icon--success" aria-hidden="true">
+                            <AppIcon Name="AppIconName.Mail" Size="22" />
+                        </span>
+                        <h1 class="auth-card__title">@Localizer["Auth.Login.SentTitle"]</h1>
+                        <p class="auth-card__subtitle">@Localizer["Auth.Login.SentBody", sentToEmail]</p>
+                    </div>
+                    <AppButton
+                        Variant="Secondary"
+                        FullWidth="true"
+                        AdditionalClass="auth-card__cta"
+                        Disabled="@(isResending || CooldownRemaining > 0)"
+                        OnClick="ResendAsync">
+                        @if (isResending)
+                        {
+                            <span class="auth-form__spinner" aria-hidden="true"></span>
+                            @Localizer["Auth.Login.Sending"]
+                        }
+                        else if (CooldownRemaining > 0)
+                        {
+                            @Localizer["Auth.Login.ResendIn", CooldownRemaining]
+                        }
+                        else
+                        {
+                            @Localizer["Auth.Login.SendAnother"]
+                        }
+                    </AppButton>
+                    @if (resendError is not null)
+                    {
+                        <p class="auth-form__alert" role="alert">@resendError</p>
+                    }
+                    <button type="button" class="auth-card__link" @onclick="ResetForm">
+                        @Localizer["Auth.Login.UseDifferentEmail"]
+                    </button>
+                </AppCard>
+            }
+            else
+            {
+                <AppCard AdditionalClass="auth-card">
+                    <div class="auth-card__head">
+                        <span class="auth-card__icon" aria-hidden="true">
+                            <AppIcon Name="AppIconName.Mail" Size="22" />
+                        </span>
+                        <h1 class="auth-card__title">@Localizer["Auth.Login.Title"]</h1>
+                        <p class="auth-card__subtitle">@Localizer["Auth.Login.Subtitle"]</p>
+                    </div>
+
+                    <EditForm EditContext="editContext" OnValidSubmit="SubmitAsync" class="auth-form">
+                        <label class="auth-form__label" for="auth-email">@Localizer["Auth.Login.EmailLabel"]</label>
+                        <div class="auth-form__field">
+                            <AppIcon Name="AppIconName.Mail" Size="16" />
+                            <InputText
+                                id="auth-email"
+                                class="auth-form__input"
+                                type="email"
+                                autocomplete="email"
+                                inputmode="email"
+                                placeholder="@Localizer["Auth.Login.EmailPlaceholder"]"
+                                disabled="@(state is FormState.Sending)"
+                                @bind-Value="model.Email" />
+                        </div>
+                        <ValidationMessage For="@(() => model.Email)" class="auth-form__error" />
+
+                        @if (state is FormState.Error)
+                        {
+                            <p class="auth-form__alert" role="alert">@errorMessage</p>
+                        }
+
+                        <AppButton
+                            ButtonType="submit"
+                            Variant="Primary"
+                            FullWidth="true"
+                            Disabled="@(state is FormState.Sending || CooldownRemaining > 0)"
+                            AdditionalClass="auth-form__submit">
+                            @if (state is FormState.Sending)
+                            {
+                                <span class="auth-form__spinner" aria-hidden="true"></span>
+                                @Localizer["Auth.Login.Sending"]
+                            }
+                            else if (CooldownRemaining > 0)
+                            {
+                                @Localizer["Auth.Login.ResendIn", CooldownRemaining]
+                            }
+                            else
+                            {
+                                @Localizer["Auth.Login.Submit"]
+                            }
+                        </AppButton>
+                    </EditForm>
+
+                    <p class="auth-card__hint">@Localizer["Auth.Login.Hint"]</p>
+                </AppCard>
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+
+@code {
+    private enum FormState
+    {
+        Idle,
+        Sending,
+        Sent,
+        Error
+    }
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? ReturnUrl { get; set; }
+
+    private readonly LoginInput model = new();
+    private EditContext editContext = default!;
+    private ValidationMessageStore validationMessages = default!;
+    private FieldIdentifier emailField;
+
+    private FormState state = FormState.Idle;
+    private string? errorMessage;
+    private string? resendError;
+    private string sentToEmail = string.Empty;
+    private bool isResending;
+    private System.Threading.Timer? cooldownTimer;
+
+    // Whole seconds left on the resend cooldown (0 when ready to send again).
+    private int CooldownRemaining => (int)Math.Ceiling(Auth.GetResendCooldownRemaining().TotalSeconds);
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(model);
+        validationMessages = new ValidationMessageStore(editContext);
+        emailField = new FieldIdentifier(model, nameof(model.Email));
+        editContext.OnValidationRequested += ValidateModel;
+        editContext.OnFieldChanged += ClearFieldError;
+
+        // A reload mid-cooldown should still show the countdown.
+        if (CooldownRemaining > 0)
+        {
+            StartCooldownTimer();
+        }
+    }
+
+    private async Task SubmitAsync()
+    {
+        if (CooldownRemaining > 0)
+        {
+            return;
+        }
+
+        state = FormState.Sending;
+        errorMessage = null;
+
+        try
+        {
+            var email = model.Email.Trim();
+            await Auth.SendMagicLinkAsync(email, ReturnUrl);
+            sentToEmail = email;
+            state = FormState.Sent;
+            StartCooldownTimer();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = string.IsNullOrWhiteSpace(ex.Message)
+                ? Localizer["Auth.Login.Error"]
+                : ex.Message;
+            state = FormState.Error;
+        }
+    }
+
+    private async Task ResendAsync()
+    {
+        if (isResending || CooldownRemaining > 0)
+        {
+            return;
+        }
+
+        isResending = true;
+        resendError = null;
+
+        try
+        {
+            await Auth.SendMagicLinkAsync(sentToEmail, ReturnUrl);
+            StartCooldownTimer();
+        }
+        catch (Exception ex)
+        {
+            resendError = string.IsNullOrWhiteSpace(ex.Message)
+                ? Localizer["Auth.Login.Error"]
+                : ex.Message;
+        }
+        finally
+        {
+            isResending = false;
+        }
+    }
+
+    private void StartCooldownTimer()
+    {
+        if (cooldownTimer is not null)
+        {
+            return;
+        }
+
+        cooldownTimer = new System.Threading.Timer(
+            _ => InvokeAsync(() =>
+            {
+                StateHasChanged();
+                if (CooldownRemaining <= 0)
+                {
+                    cooldownTimer?.Dispose();
+                    cooldownTimer = null;
+                }
+            }),
+            null,
+            TimeSpan.FromSeconds(1),
+            TimeSpan.FromSeconds(1));
+    }
+
+    private void ResetForm()
+    {
+        state = FormState.Idle;
+        errorMessage = null;
+        resendError = null;
+        validationMessages.Clear();
+        editContext.NotifyValidationStateChanged();
+    }
+
+    public void Dispose()
+    {
+        cooldownTimer?.Dispose();
+        editContext.OnValidationRequested -= ValidateModel;
+        editContext.OnFieldChanged -= ClearFieldError;
+    }
+
+    private void ValidateModel(object? sender, ValidationRequestedEventArgs args)
+    {
+        validationMessages.Clear();
+
+        var email = model.Email?.Trim() ?? string.Empty;
+
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            validationMessages.Add(emailField, Localizer["Auth.Login.EmailRequired"]);
+        }
+        else if (!IsValidEmail(email))
+        {
+            validationMessages.Add(emailField, Localizer["Auth.Login.EmailInvalid"]);
+        }
+
+        editContext.NotifyValidationStateChanged();
+    }
+
+    private void ClearFieldError(object? sender, FieldChangedEventArgs args)
+    {
+        validationMessages.Clear(args.FieldIdentifier);
+
+        if (state is FormState.Error)
+        {
+            state = FormState.Idle;
+            errorMessage = null;
+        }
+
+        editContext.NotifyValidationStateChanged();
+    }
+
+    // Lightweight client-side format check (the server validates authoritatively):
+    // exactly one '@' not at the edges, with a dotted domain.
+    private static bool IsValidEmail(string email)
+    {
+        var at = email.IndexOf('@');
+
+        if (at <= 0 || at != email.LastIndexOf('@') || at == email.Length - 1)
+        {
+            return false;
+        }
+
+        var dot = email.IndexOf('.', at + 1);
+        return dot > at + 1 && dot < email.Length - 1;
+    }
+
+    private sealed class LoginInput
+    {
+        public string Email { get; set; } = string.Empty;
+    }
+}

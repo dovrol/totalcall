@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using TotalCall.Client;
+using TotalCall.Client.Application.Auth;
 using TotalCall.Client.Application.Localization;
 using TotalCall.Client.Application.Providers;
 using TotalCall.Client.Application.Services;
@@ -11,6 +13,7 @@ using TotalCall.Client.Application.Theme;
 using TotalCall.Client.Infrastructure.Browser;
 using TotalCall.Client.Infrastructure.Json;
 using TotalCall.Client.Infrastructure.Supabase;
+using TotalCall.Client.Infrastructure.Supabase.Auth;
 using TotalCall.Client.Scoring;
 using TotalCall.Client.Storage;
 
@@ -59,10 +62,37 @@ builder.Services.AddScoped(sp =>
     http.DefaultRequestHeaders.Add("Authorization", $"Bearer {key}");
     return new AthleteHistoryService(http);
 });
+
+// Supabase Auth (magic link / PKCE) — publishable key only, never the secret key.
+builder.Services.AddScoped(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var url = config[$"{SupabaseSettings.SectionName}:Url"];
+    var key = config[$"{SupabaseSettings.SectionName}:PublishableKey"];
+
+    if (string.IsNullOrWhiteSpace(url) || string.IsNullOrWhiteSpace(key))
+    {
+        Console.Error.WriteLine(
+            "[TotalCall] Supabase not configured. " +
+            "Set Supabase:Url and Supabase:PublishableKey in wwwroot/appsettings.json. " +
+            "Sign-in will be unavailable.");
+        url = builder.HostEnvironment.BaseAddress;
+        key = string.Empty;
+    }
+
+    var http = new HttpClient { BaseAddress = new Uri(url.TrimEnd('/') + "/") };
+    return new SupabaseAuthClient(http, key);
+});
+builder.Services.AddScoped<SupabaseSessionStore>();
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddAuthorizationCore();
+builder.Services.AddScoped<AuthenticationStateProvider, TotalCallAuthenticationStateProvider>();
+
 builder.Services.AddScoped<WindowManager>();
 builder.Services.AddScoped<IPredictionScoringService, PredictionScoringService>();
 
 var host = builder.Build();
 await host.Services.GetRequiredService<CultureService>().InitializeAsync();
 await host.Services.GetRequiredService<ThemeService>().InitializeAsync();
+await host.Services.GetRequiredService<AuthService>().InitializeAsync();
 await host.RunAsync();

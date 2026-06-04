@@ -42,5 +42,7 @@ public enum AppIconName
     PencilLine,
     Calculator,
     RotateCcw,
-    ExternalLink
+    ExternalLink,
+    Mail,
+    LogOut
 }

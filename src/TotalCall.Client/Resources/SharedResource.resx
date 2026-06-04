@@ -604,4 +604,30 @@
   <data name="Predictions.TopN.MobileDeadlift" xml:space="preserve"><value>Martwy ciąg (DL)</value></data>
   <data name="Predictions.Toast.ResetAthlete.Success" xml:space="preserve"><value>Przywrócono {0} do nominacji.</value></data>
   <data name="Predictions.Toast.ResetField.Success" xml:space="preserve"><value>Przywrócono stawkę wg nominacji.</value></data>
+  <data name="Auth.SignIn" xml:space="preserve"><value>Zaloguj</value></data>
+  <data name="Auth.SignOut" xml:space="preserve"><value>Wyloguj</value></data>
+  <data name="Auth.Login.Title" xml:space="preserve"><value>Zaloguj się</value></data>
+  <data name="Auth.Login.Subtitle" xml:space="preserve"><value>Wyślemy Ci magiczny link na e-mail — bez hasła.</value></data>
+  <data name="Auth.Login.EmailLabel" xml:space="preserve"><value>Adres e-mail</value></data>
+  <data name="Auth.Login.EmailPlaceholder" xml:space="preserve"><value>ty@example.com</value></data>
+  <data name="Auth.Login.Submit" xml:space="preserve"><value>Wyślij magiczny link</value></data>
+  <data name="Auth.Login.Sending" xml:space="preserve"><value>Wysyłanie…</value></data>
+  <data name="Auth.Login.SentTitle" xml:space="preserve"><value>Sprawdź skrzynkę</value></data>
+  <data name="Auth.Login.SentBody" xml:space="preserve"><value>Wysłaliśmy link logowania na adres {0}. Otwórz go, aby dokończyć logowanie.</value></data>
+  <data name="Auth.Login.SendAnother" xml:space="preserve"><value>Wyślij link ponownie</value></data>
+  <data name="Auth.Login.ResendIn" xml:space="preserve"><value>Wyślij ponownie ({0} s)</value></data>
+  <data name="Auth.Login.UseDifferentEmail" xml:space="preserve"><value>Użyj innego adresu</value></data>
+  <data name="Auth.Login.Error" xml:space="preserve"><value>Nie udało się wysłać linku. Spróbuj ponownie.</value></data>
+  <data name="Auth.Login.EmailRequired" xml:space="preserve"><value>Podaj adres e-mail.</value></data>
+  <data name="Auth.Login.EmailInvalid" xml:space="preserve"><value>Podaj poprawny adres e-mail.</value></data>
+  <data name="Auth.Login.Hint" xml:space="preserve"><value>Link jest ważny przez krótki czas i działa tylko raz.</value></data>
+  <data name="Auth.Login.AlreadyTitle" xml:space="preserve"><value>Jesteś zalogowany</value></data>
+  <data name="Auth.Login.GoToApp" xml:space="preserve"><value>Przejdź do aplikacji</value></data>
+  <data name="Auth.Callback.LoadingTitle" xml:space="preserve"><value>Logowanie…</value></data>
+  <data name="Auth.Callback.LoadingBody" xml:space="preserve"><value>Weryfikujemy Twój magiczny link.</value></data>
+  <data name="Auth.Callback.SuccessTitle" xml:space="preserve"><value>Zalogowano</value></data>
+  <data name="Auth.Callback.SuccessBody" xml:space="preserve"><value>Przekierowujemy Cię…</value></data>
+  <data name="Auth.Callback.ErrorTitle" xml:space="preserve"><value>Logowanie nie powiodło się</value></data>
+  <data name="Auth.Callback.ErrorBody" xml:space="preserve"><value>Link jest nieprawidłowy lub wygasł. Poproś o nowy.</value></data>
+  <data name="Auth.Callback.Retry" xml:space="preserve"><value>Spróbuj ponownie</value></data>
 </root>

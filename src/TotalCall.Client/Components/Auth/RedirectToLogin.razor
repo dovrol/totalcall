@@ -1,0 +1,15 @@
+@inject NavigationManager Navigation
+
+@code {
+    // Sends unauthenticated users hitting an [Authorize] route to the login page,
+    // preserving where they were headed so the callback can return them there.
+    protected override void OnInitialized()
+    {
+        var returnUrl = Navigation.ToBaseRelativePath(Navigation.Uri);
+        var target = string.IsNullOrEmpty(returnUrl)
+            ? "auth/login"
+            : $"auth/login?returnUrl={Uri.EscapeDataString("/" + returnUrl)}";
+
+        Navigation.NavigateTo(target, replace: true);
+    }
+}

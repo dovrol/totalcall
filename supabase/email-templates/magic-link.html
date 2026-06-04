@@ -1,0 +1,103 @@
+<!--
+  TotalCall — szablon e-maila "Magic link or OTP".
+  Wklej całość w Supabase → Authentication → Emails → Magic link or OTP → Body (tryb "Source").
+  Sugerowany Subject:  Twój link do logowania w TotalCall
+  Zmienna {{ .ConfirmationURL }} jest podstawiana przez Supabase na link logujący (PKCE).
+-->
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="supported-color-schemes" content="light dark" />
+  <title>TotalCall — logowanie</title>
+</head>
+<body style="margin:0;padding:0;background-color:#eef3f9;-webkit-font-smoothing:antialiased;">
+  <!-- Tekst podglądu (preheader) -->
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all;">
+    Twój link do logowania w TotalCall — ważny przez krótki czas i tylko jednorazowy.
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#eef3f9;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:520px;width:100%;">
+
+          <!-- Nagłówek (ciemny, z logo) -->
+          <tr>
+            <td align="center" style="background-color:#091425;border-radius:16px 16px 0 0;padding:28px 32px;">
+              <span style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:24px;font-weight:800;letter-spacing:-0.02em;">
+                <span style="color:#f3f6fb;">Total</span><span style="color:#ff5c52;">Call</span>
+              </span>
+              <span style="display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;background-color:#ff4338;color:#ffffff;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;vertical-align:middle;">BETA</span>
+              <div style="margin-top:6px;color:#97a4b9;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;">
+                Powerlifting Predictions
+              </div>
+            </td>
+          </tr>
+
+          <!-- Treść (jasna karta) -->
+          <tr>
+            <td style="background-color:#ffffff;padding:36px 32px 28px 32px;border-left:1px solid #d7e1ee;border-right:1px solid #d7e1ee;">
+              <h1 style="margin:0 0 12px 0;color:#10192a;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.01em;">
+                Zaloguj się do TotalCall
+              </h1>
+              <p style="margin:0 0 28px 0;color:#5f7089;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;">
+                Kliknij przycisk poniżej, aby dokończyć logowanie. Nie potrzebujesz hasła —
+                link wystarczy.
+              </p>
+
+              <!-- Przycisk (bulletproof) -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto;">
+                <tr>
+                  <td align="center" bgcolor="#ec3f35" style="border-radius:12px;">
+                    <a href="{{ .ConfirmationURL }}" target="_blank"
+                       style="display:inline-block;padding:15px 38px;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;color:#ffffff;text-decoration:none;border-radius:12px;">
+                      Zaloguj się
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin:28px 0 8px 0;color:#7485a0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;">
+                Jeśli przycisk nie działa, skopiuj i wklej ten adres do przeglądarki:
+              </p>
+              <p style="margin:0 0 24px 0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.5;word-break:break-all;">
+                <a href="{{ .ConfirmationURL }}" target="_blank" style="color:#256fcd;text-decoration:underline;">{{ .ConfirmationURL }}</a>
+              </p>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="padding:14px 16px;background-color:#f4f7fc;border:1px solid #e2e9f3;border-radius:10px;">
+                    <p style="margin:0;color:#5f7089;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:12.5px;line-height:1.6;">
+                      🔒 Link jest ważny przez krótki czas i działa tylko jeden raz.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Stopka -->
+          <tr>
+            <td style="background-color:#ffffff;padding:0 32px 30px 32px;border-left:1px solid #d7e1ee;border-right:1px solid #d7e1ee;border-bottom:1px solid #d7e1ee;border-radius:0 0 16px 16px;">
+              <hr style="border:0;border-top:1px solid #e2e9f3;margin:0 0 18px 0;" />
+              <p style="margin:0 0 6px 0;color:#7485a0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:12.5px;line-height:1.6;">
+                Jeśli to nie Ty prosiłeś o logowanie, po prostu zignoruj tę wiadomość —
+                nikt nie uzyska dostępu do Twojego konta.
+              </p>
+              <p style="margin:0;color:#9aa8bd;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:12px;">
+                © TotalCall · totalcall.app
+              </p>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
