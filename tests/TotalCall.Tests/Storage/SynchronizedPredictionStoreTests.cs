@@ -4,6 +4,8 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using TotalCall.Client.Application.Auth;
+using TotalCall.Client.Application.Services;
+using TotalCall.Client.Domain.Competitions;
 using TotalCall.Client.Domain.Predictions;
 using TotalCall.Client.Infrastructure.Browser;
 using TotalCall.Client.Infrastructure.Json;
@@ -15,8 +17,11 @@ namespace TotalCall.Tests.Storage;
 
 public sealed class SynchronizedPredictionStoreTests
 {
+    private const string CurrentUserId = "11111111-1111-1111-1111-111111111111";
+    private const string OtherUserId = "22222222-2222-2222-2222-222222222222";
+
     [Fact]
-    public async Task SaveAsync_WhenAnonymous_SavesOnlyLocally()
+    public async Task SaveAsync_WhenAnonymous_SavesAnonymousDraftOnlyLocally()
     {
         var js = new FakeJsRuntime();
         var handler = new RecordingHandler((_, _) =>
@@ -30,8 +35,35 @@ public sealed class SynchronizedPredictionStoreTests
         var predictionSet = CreatePredictionSet();
         await store.SaveAsync(predictionSet);
 
+        var saved = await new LocalStoragePredictionStore(new BrowserLocalStorage(js))
+            .GetAsync(predictionSet.CompetitionId);
+
+        Assert.NotNull(saved);
+        Assert.Null(saved.LocalUserId);
         Assert.Equal(0, handler.RequestCount);
-        Assert.True(js.ContainsKey(LocalStorageKeys.Predictions(predictionSet.CompetitionId)));
+        Assert.Equal(PredictionSaveStatus.Local, state.GetStatus(predictionSet.CompetitionId));
+    }
+
+    [Fact]
+    public async Task SaveAsync_WhenAnonymous_DoesNotDeclassifyOwnedDraft()
+    {
+        var js = new FakeJsRuntime();
+        var handler = new RecordingHandler((_, _) =>
+            throw new InvalidOperationException("Cloud should not be called for an anonymous user."));
+        var auth = await CreateAuthAsync(js, authenticated: false);
+        var state = new PredictionSyncState();
+
+        using var store = CreateStore(js, handler, auth, state);
+        await store.InitializeAsync();
+
+        var predictionSet = CreatePredictionSet(localUserId: CurrentUserId);
+        await store.SaveAsync(predictionSet);
+
+        var saved = await new LocalStoragePredictionStore(new BrowserLocalStorage(js))
+            .GetAsync(predictionSet.CompetitionId);
+
+        Assert.Equal(0, handler.RequestCount);
+        Assert.Null(saved);
         Assert.Equal(PredictionSaveStatus.Local, state.GetStatus(predictionSet.CompetitionId));
     }
 
@@ -39,25 +71,36 @@ public sealed class SynchronizedPredictionStoreTests
     public async Task SaveAsync_WhenAuthenticated_SavesLocallyAndUpsertsCloudDraft()
     {
         var js = new FakeJsRuntime();
-        var handler = new RecordingHandler((_, _) =>
-            Task.FromResult(new HttpResponseMessage(HttpStatusCode.Created)));
+        var handler = new RecordingHandler((request, _) =>
+            Task.FromResult(request.Method == HttpMethod.Get
+                ? new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("[]", Encoding.UTF8, "application/json")
+                }
+                : new HttpResponseMessage(HttpStatusCode.Created)));
         var auth = await CreateAuthAsync(js, authenticated: true);
         var state = new PredictionSyncState();
 
         using var store = CreateStore(js, handler, auth, state);
         await store.InitializeAsync();
 
-        var predictionSet = CreatePredictionSet();
+        var predictionSet = CreatePredictionSet(localUserId: CurrentUserId);
         await store.SaveAsync(predictionSet);
 
-        Assert.True(js.ContainsKey(LocalStorageKeys.Predictions(predictionSet.CompetitionId)));
+        var saved = await new LocalStoragePredictionStore(new BrowserLocalStorage(js))
+            .GetAsync(predictionSet.CompetitionId);
+
+        Assert.NotNull(saved);
+        Assert.Equal(CurrentUserId, saved.LocalUserId);
         Assert.Equal(PredictionSaveStatus.Cloud, state.GetStatus(predictionSet.CompetitionId));
 
-        var request = Assert.Single(handler.Requests);
+        Assert.Equal(2, handler.RequestCount);
+        var request = Assert.Single(handler.Requests, request => request.Method == HttpMethod.Post);
         Assert.Equal(HttpMethod.Post, request.Method);
         Assert.Contains("on_conflict=user_id,competition_id", request.Uri);
         Assert.Contains("\"status\":\"draft\"", request.Body);
         Assert.Contains("\"answers_json\":", request.Body);
+        Assert.Contains($"\"localUserId\":\"{CurrentUserId}\"", request.Body);
     }
 
     [Fact]
@@ -72,7 +115,7 @@ public sealed class SynchronizedPredictionStoreTests
         using var store = CreateStore(js, handler, auth, state);
         await store.InitializeAsync();
 
-        var predictionSet = CreatePredictionSet();
+        var predictionSet = CreatePredictionSet(localUserId: CurrentUserId);
         await store.SaveAsync(predictionSet);
 
         Assert.True(js.ContainsKey(LocalStorageKeys.Predictions(predictionSet.CompetitionId)));
@@ -114,6 +157,28 @@ public sealed class SynchronizedPredictionStoreTests
     }
 
     [Fact]
+    public async Task GetAsync_WhenAnonymous_HidesAndDeletesOwnedDraft()
+    {
+        var predictionSet = CreatePredictionSet(localUserId: OtherUserId);
+        var js = new FakeJsRuntime();
+        var localStore = new LocalStoragePredictionStore(new BrowserLocalStorage(js));
+        await localStore.SaveAsync(predictionSet);
+        var handler = new RecordingHandler((_, _) =>
+            throw new InvalidOperationException("Cloud should not be called for an anonymous user."));
+        var auth = await CreateAuthAsync(js, authenticated: false);
+        var state = new PredictionSyncState();
+
+        using var store = CreateStore(js, handler, auth, state);
+        await store.InitializeAsync();
+
+        var restored = await store.GetAsync(predictionSet.CompetitionId);
+
+        Assert.Null(restored);
+        Assert.Null(await localStore.GetAsync(predictionSet.CompetitionId));
+        Assert.Equal(0, handler.RequestCount);
+    }
+
+    [Fact]
     public async Task InitializeAsync_WhenAuthenticated_SynchronizesExistingLocalDraft()
     {
         var predictionSet = CreatePredictionSet();
@@ -146,6 +211,236 @@ public sealed class SynchronizedPredictionStoreTests
         Assert.Equal(PredictionSaveStatus.Cloud, state.GetStatus(predictionSet.CompetitionId));
     }
 
+    [Fact]
+    public async Task InitializeAsync_WhenAnonymousLocalDraftConflictsWithCloud_CloudWinsWithoutUpsert()
+    {
+        var localPredictionSet = CreatePredictionSet(
+            savedAt: DateTimeOffset.Parse("2026-06-04T11:00:00Z"),
+            questionId: "local-answer");
+        var cloudPredictionSet = CreatePredictionSet(
+            savedAt: DateTimeOffset.Parse("2026-06-04T09:00:00Z"),
+            questionId: "cloud-answer");
+        var responseJson = JsonSerializer.Serialize(
+            new[] { new { answers_json = cloudPredictionSet } },
+            JsonDataOptions.SerializerOptions);
+
+        var js = new FakeJsRuntime();
+        var localStore = new LocalStoragePredictionStore(new BrowserLocalStorage(js));
+        await localStore.SaveAsync(localPredictionSet);
+
+        var handler = new RecordingHandler((request, _) =>
+        {
+            Assert.Equal(HttpMethod.Get, request.Method);
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(responseJson, Encoding.UTF8, "application/json")
+            });
+        });
+        var auth = await CreateAuthAsync(js, authenticated: true);
+        var state = new PredictionSyncState();
+        var synchronized = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        state.Changed += competitionId =>
+        {
+            if (competitionId == localPredictionSet.CompetitionId &&
+                state.GetStatus(competitionId) == PredictionSaveStatus.Cloud)
+            {
+                synchronized.TrySetResult();
+            }
+        };
+
+        using var store = CreateStore(js, handler, auth, state);
+        await store.InitializeAsync();
+        await synchronized.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+        var saved = await localStore.GetAsync(localPredictionSet.CompetitionId);
+
+        Assert.NotNull(saved);
+        Assert.Equal(CurrentUserId, saved.LocalUserId);
+        Assert.Equal("cloud-answer", Assert.Single(saved.Answers).QuestionId);
+        Assert.DoesNotContain(handler.Requests, request => request.Method == HttpMethod.Post);
+    }
+
+    [Fact]
+    public async Task GetAsync_WhenLocalDraftBelongsToDifferentUserAndCloudIsMissing_DiscardsLocalWithoutUpload()
+    {
+        var localPredictionSet = CreatePredictionSet(localUserId: OtherUserId);
+        var js = new FakeJsRuntime();
+        var localStore = new LocalStoragePredictionStore(new BrowserLocalStorage(js));
+        await localStore.SaveAsync(localPredictionSet);
+
+        var handler = new RecordingHandler((request, _) =>
+        {
+            Assert.Equal(HttpMethod.Get, request.Method);
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("[]", Encoding.UTF8, "application/json")
+            });
+        });
+        var auth = await CreateAuthAsync(js, authenticated: true);
+        var state = new PredictionSyncState();
+
+        using var store = CreateStore(js, handler, auth, state);
+        await store.InitializeAsync();
+
+        var restored = await store.GetAsync(localPredictionSet.CompetitionId);
+
+        Assert.Null(restored);
+        Assert.Null(await localStore.GetAsync(localPredictionSet.CompetitionId));
+        Assert.DoesNotContain(handler.Requests, request => request.Method == HttpMethod.Post);
+    }
+
+    [Fact]
+    public async Task GetAsync_WhenCurrentUsersLocalDraftIsNewer_MergesWithoutRemovingCloudAnswers()
+    {
+        var localPredictionSet = CreatePredictionSet(
+            localUserId: CurrentUserId,
+            savedAt: DateTimeOffset.Parse("2026-06-04T11:00:00Z"),
+            questionId: "shared-answer",
+            booleanValue: true);
+        var cloudPredictionSet = CreatePredictionSet(
+            savedAt: DateTimeOffset.Parse("2026-06-04T09:00:00Z"),
+            questionId: "shared-answer",
+            booleanValue: false);
+        cloudPredictionSet = cloudPredictionSet with
+        {
+            Answers =
+            [
+                .. cloudPredictionSet.Answers,
+                CreatePredictionSet(
+                    savedAt: cloudPredictionSet.SavedAt,
+                    questionId: "cloud-only").Answers.Single()
+            ]
+        };
+        var responseJson = JsonSerializer.Serialize(
+            new[] { new { answers_json = cloudPredictionSet } },
+            JsonDataOptions.SerializerOptions);
+
+        var js = new FakeJsRuntime();
+        var localStore = new LocalStoragePredictionStore(new BrowserLocalStorage(js));
+        await localStore.SaveAsync(localPredictionSet);
+
+        var handler = new RecordingHandler((request, _) =>
+        {
+            return Task.FromResult(request.Method == HttpMethod.Get
+                ? new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(responseJson, Encoding.UTF8, "application/json")
+                }
+                : new HttpResponseMessage(HttpStatusCode.Created));
+        });
+        var auth = await CreateAuthAsync(js, authenticated: true);
+        var state = new PredictionSyncState();
+
+        using var store = CreateStore(js, handler, auth, state);
+        await store.InitializeAsync();
+
+        var restored = await store.GetAsync(localPredictionSet.CompetitionId);
+
+        Assert.NotNull(restored);
+        Assert.Equal(2, restored.Answers.Count);
+        Assert.True(restored.Answers.Single(answer => answer.QuestionId == "shared-answer").Value.BooleanValue);
+        Assert.Contains(restored.Answers, answer => answer.QuestionId == "cloud-only");
+        Assert.Contains(handler.Requests, request => request.Method == HttpMethod.Post);
+    }
+
+    [Fact]
+    public async Task SaveAsync_WhenCurrentUsersCloudHasOtherAnswers_MergesBeforeUpsert()
+    {
+        var localPredictionSet = CreatePredictionSet(
+            localUserId: CurrentUserId,
+            savedAt: DateTimeOffset.Parse("2026-06-04T11:00:00Z"),
+            questionId: "local-answer");
+        var cloudPredictionSet = CreatePredictionSet(
+            savedAt: DateTimeOffset.Parse("2026-06-04T09:00:00Z"),
+            questionId: "cloud-answer");
+        var responseJson = JsonSerializer.Serialize(
+            new[] { new { answers_json = cloudPredictionSet } },
+            JsonDataOptions.SerializerOptions);
+
+        var js = new FakeJsRuntime();
+        var handler = new RecordingHandler((request, _) =>
+            Task.FromResult(request.Method == HttpMethod.Get
+                ? new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(responseJson, Encoding.UTF8, "application/json")
+                }
+                : new HttpResponseMessage(HttpStatusCode.Created)));
+        var auth = await CreateAuthAsync(js, authenticated: true);
+        var state = new PredictionSyncState();
+
+        using var store = CreateStore(js, handler, auth, state);
+        await store.InitializeAsync();
+        await store.SaveAsync(localPredictionSet);
+
+        var saved = await new LocalStoragePredictionStore(new BrowserLocalStorage(js))
+            .GetAsync(localPredictionSet.CompetitionId);
+        var upsert = Assert.Single(handler.Requests, request => request.Method == HttpMethod.Post);
+
+        Assert.NotNull(saved);
+        Assert.Equal(2, saved.Answers.Count);
+        Assert.Contains(saved.Answers, answer => answer.QuestionId == "local-answer");
+        Assert.Contains(saved.Answers, answer => answer.QuestionId == "cloud-answer");
+        Assert.Contains("\"questionId\":\"local-answer\"", upsert.Body);
+        Assert.Contains("\"questionId\":\"cloud-answer\"", upsert.Body);
+    }
+
+    [Fact]
+    public async Task SaveAsync_WhenAuthenticatedAnonymousDraftConflictsWithCloud_CloudWinsWithoutUpsert()
+    {
+        var localPredictionSet = CreatePredictionSet(
+            savedAt: DateTimeOffset.Parse("2026-06-04T11:00:00Z"),
+            questionId: "local-answer");
+        var cloudPredictionSet = CreatePredictionSet(
+            savedAt: DateTimeOffset.Parse("2026-06-04T09:00:00Z"),
+            questionId: "cloud-answer");
+        var responseJson = JsonSerializer.Serialize(
+            new[] { new { answers_json = cloudPredictionSet } },
+            JsonDataOptions.SerializerOptions);
+
+        var js = new FakeJsRuntime();
+        var handler = new RecordingHandler((request, _) =>
+        {
+            Assert.Equal(HttpMethod.Get, request.Method);
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(responseJson, Encoding.UTF8, "application/json")
+            });
+        });
+        var auth = await CreateAuthAsync(js, authenticated: true);
+        var state = new PredictionSyncState();
+
+        using var store = CreateStore(js, handler, auth, state);
+        await store.InitializeAsync();
+        await store.SaveAsync(localPredictionSet);
+
+        var saved = await new LocalStoragePredictionStore(new BrowserLocalStorage(js))
+            .GetAsync(localPredictionSet.CompetitionId);
+
+        Assert.NotNull(saved);
+        Assert.Equal(CurrentUserId, saved.LocalUserId);
+        Assert.Equal("cloud-answer", Assert.Single(saved.Answers).QuestionId);
+        Assert.DoesNotContain(handler.Requests, request => request.Method == HttpMethod.Post);
+    }
+
+    [Fact]
+    public async Task PredictionService_WhenAuthenticatedAndNoDraft_CreatesDraftOwnedByCurrentUser()
+    {
+        var js = new FakeJsRuntime();
+        var auth = await CreateAuthAsync(js, authenticated: true);
+        var service = new PredictionService(new EmptyPredictionStore(), new AppInfoService(), auth);
+        var competition = new Competition
+        {
+            Id = "worlds-2026",
+            Slug = "worlds-2026",
+            Name = "Worlds 2026",
+            ConfigVersion = "1"
+        };
+
+        var predictionSet = await service.GetOrCreatePredictionSetAsync(competition);
+
+        Assert.Equal(CurrentUserId, predictionSet.LocalUserId);
+    }
+
     private static SynchronizedPredictionStore CreateStore(
         FakeJsRuntime js,
         RecordingHandler handler,
@@ -170,7 +465,7 @@ public sealed class SynchronizedPredictionStoreTests
                 ExpiresAt = DateTimeOffset.UtcNow.AddHours(1),
                 User = new AuthUser
                 {
-                    Id = "11111111-1111-1111-1111-111111111111",
+                    Id = CurrentUserId,
                     Email = "cloud-save@totalcall.test"
                 }
             };
@@ -197,24 +492,31 @@ public sealed class SynchronizedPredictionStoreTests
         return auth;
     }
 
-    private static PredictionSet CreatePredictionSet()
+    private static PredictionSet CreatePredictionSet(
+        string? localUserId = null,
+        DateTimeOffset? savedAt = null,
+        string questionId = "women-47",
+        bool booleanValue = true)
     {
+        var timestamp = savedAt ?? DateTimeOffset.Parse("2026-06-04T10:00:00Z");
+
         return new PredictionSet
         {
             CompetitionId = "worlds-2026",
             CompetitionConfigVersion = "1",
+            LocalUserId = localUserId,
             AppVersion = "0.5.0-test",
             SchemaVersion = PredictionSet.StorageSchemaVersion,
-            SavedAt = DateTimeOffset.Parse("2026-06-04T10:00:00Z"),
+            SavedAt = timestamp,
             Answers =
             [
                 new PredictionAnswer
                 {
                     GroupId = "women",
-                    QuestionId = "women-47",
+                    QuestionId = questionId,
                     QuestionType = PredictionQuestionType.YesNo,
-                    Value = new PredictionAnswerValue { BooleanValue = true },
-                    UpdatedAt = DateTimeOffset.Parse("2026-06-04T10:00:00Z")
+                    Value = new PredictionAnswerValue { BooleanValue = booleanValue },
+                    UpdatedAt = timestamp
                 }
             ]
         };
@@ -244,6 +546,30 @@ public sealed class SynchronizedPredictionStoreTests
     }
 
     private sealed record CapturedRequest(HttpMethod Method, string Uri, string Body);
+
+    private sealed class EmptyPredictionStore : IPredictionStore
+    {
+        public Task<PredictionSet?> GetAsync(
+            string competitionId,
+            CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult<PredictionSet?>(null);
+        }
+
+        public Task SaveAsync(
+            PredictionSet predictionSet,
+            CancellationToken cancellationToken = default)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task DeleteAsync(
+            string competitionId,
+            CancellationToken cancellationToken = default)
+        {
+            return Task.CompletedTask;
+        }
+    }
 
     private sealed class FakeJsRuntime : IJSRuntime
     {

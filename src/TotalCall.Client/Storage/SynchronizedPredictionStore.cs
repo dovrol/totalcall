@@ -36,8 +36,15 @@ public sealed class SynchronizedPredictionStore(
         CancellationToken cancellationToken = default)
     {
         var local = await localStore.GetAsync(competitionId, cancellationToken);
-        if (!authService.IsAuthenticated)
+        var currentUserId = GetCurrentUserId();
+        if (currentUserId is null)
         {
+            if (local is not null && !IsAnonymous(local))
+            {
+                await localStore.DeleteAsync(competitionId, cancellationToken);
+                local = null;
+            }
+
             syncState.SetStatus(competitionId, PredictionSaveStatus.Local);
             return local;
         }
@@ -45,12 +52,8 @@ public sealed class SynchronizedPredictionStore(
         try
         {
             var cloud = await cloudStore.GetAsync(competitionId, cancellationToken);
-            var synchronized = await ReconcileAsync(local, cloud, cancellationToken);
-            syncState.SetStatus(
-                competitionId,
-                synchronized is null
-                    ? PredictionSaveStatus.Local
-                    : PredictionSaveStatus.Cloud);
+            var synchronized = await ReconcileAsync(local, cloud, currentUserId, cancellationToken);
+            SetSynchronizedStatus(competitionId, synchronized);
             return synchronized;
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
@@ -60,7 +63,10 @@ public sealed class SynchronizedPredictionStore(
         catch
         {
             SetCloudFailureStatus(competitionId);
-            return local;
+            return local is not null &&
+                   (IsAnonymous(local) || IsOwnedBy(local, currentUserId))
+                ? local
+                : null;
         }
     }
 
@@ -68,18 +74,41 @@ public sealed class SynchronizedPredictionStore(
         PredictionSet predictionSet,
         CancellationToken cancellationToken = default)
     {
-        await localStore.SaveAsync(predictionSet, cancellationToken);
-        syncState.SetStatus(predictionSet.CompetitionId, PredictionSaveStatus.Local);
-
-        if (!authService.IsAuthenticated)
+        var currentUserId = GetCurrentUserId();
+        if (currentUserId is null)
         {
+            if (IsAnonymous(predictionSet))
+            {
+                await localStore.SaveAsync(predictionSet, cancellationToken);
+            }
+            else
+            {
+                await localStore.DeleteAsync(predictionSet.CompetitionId, cancellationToken);
+            }
+
+            syncState.SetStatus(predictionSet.CompetitionId, PredictionSaveStatus.Local);
             return;
         }
 
+        if (!IsOwnedBy(predictionSet, currentUserId))
+        {
+            await SaveUntrustedDraftAsync(predictionSet, currentUserId, cancellationToken);
+            return;
+        }
+
+        var ownedPredictionSet = AssignOwner(predictionSet, currentUserId);
+        await localStore.SaveAsync(ownedPredictionSet, cancellationToken);
+        syncState.SetStatus(predictionSet.CompetitionId, PredictionSaveStatus.Local);
+
         try
         {
-            await cloudStore.SaveDraftAsync(predictionSet, cancellationToken);
-            syncState.SetStatus(predictionSet.CompetitionId, PredictionSaveStatus.Cloud);
+            var cloud = await cloudStore.GetAsync(predictionSet.CompetitionId, cancellationToken);
+            var synchronized = await ReconcileAsync(
+                ownedPredictionSet,
+                cloud,
+                currentUserId,
+                cancellationToken);
+            SetSynchronizedStatus(predictionSet.CompetitionId, synchronized);
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
@@ -130,14 +159,24 @@ public sealed class SynchronizedPredictionStore(
                     return;
                 }
 
+                var currentUserId = GetCurrentUserId();
+                if (currentUserId is null)
+                {
+                    return;
+                }
+
                 var localDrafts = await localStore.GetAllAsync(cancellationToken);
                 foreach (var local in localDrafts)
                 {
                     try
                     {
                         var cloud = await cloudStore.GetAsync(local.CompetitionId, cancellationToken);
-                        await ReconcileAsync(local, cloud, cancellationToken);
-                        syncState.SetStatus(local.CompetitionId, PredictionSaveStatus.Cloud);
+                        var synchronized = await ReconcileAsync(
+                            local,
+                            cloud,
+                            currentUserId,
+                            cancellationToken);
+                        SetSynchronizedStatus(local.CompetitionId, synchronized);
                     }
                     catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
                     {
@@ -167,26 +206,174 @@ public sealed class SynchronizedPredictionStore(
     private async Task<PredictionSet?> ReconcileAsync(
         PredictionSet? local,
         PredictionSet? cloud,
+        string currentUserId,
         CancellationToken cancellationToken)
     {
+        // Last-write-wins is allowed only for snapshots owned by the current account.
+        var ownedCloud = cloud is null
+            ? null
+            : AssignOwner(cloud, currentUserId);
+
         if (local is null)
         {
-            if (cloud is not null)
+            if (ownedCloud is not null)
             {
-                await localStore.SaveAsync(cloud, cancellationToken);
+                await localStore.SaveAsync(ownedCloud, cancellationToken);
             }
 
-            return cloud;
+            return ownedCloud;
         }
 
-        if (cloud is null || local.SavedAt >= cloud.SavedAt)
+        if (IsAnonymous(local))
         {
-            await cloudStore.SaveDraftAsync(local, cancellationToken);
-            return local;
+            if (ownedCloud is not null)
+            {
+                await localStore.SaveAsync(ownedCloud, cancellationToken);
+                return ownedCloud;
+            }
+
+            var adoptedLocal = AssignOwner(local, currentUserId);
+            await localStore.SaveAsync(adoptedLocal, cancellationToken);
+            await cloudStore.SaveDraftAsync(adoptedLocal, cancellationToken);
+            return adoptedLocal;
         }
 
-        await localStore.SaveAsync(cloud, cancellationToken);
-        return cloud;
+        if (!IsOwnedBy(local, currentUserId))
+        {
+            if (ownedCloud is not null)
+            {
+                await localStore.SaveAsync(ownedCloud, cancellationToken);
+                return ownedCloud;
+            }
+
+            await localStore.DeleteAsync(local.CompetitionId, cancellationToken);
+            return null;
+        }
+
+        var ownedLocal = AssignOwner(local, currentUserId);
+        if (ownedCloud is null)
+        {
+            await localStore.SaveAsync(ownedLocal, cancellationToken);
+            await cloudStore.SaveDraftAsync(ownedLocal, cancellationToken);
+            return ownedLocal;
+        }
+
+        var merged = MergeOwnedSnapshots(ownedLocal, ownedCloud, currentUserId);
+        await localStore.SaveAsync(merged, cancellationToken);
+        await cloudStore.SaveDraftAsync(merged, cancellationToken);
+        return merged;
+    }
+
+    private async Task SaveUntrustedDraftAsync(
+        PredictionSet predictionSet,
+        string currentUserId,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var cloud = await cloudStore.GetAsync(predictionSet.CompetitionId, cancellationToken);
+            var synchronized = await ReconcileAsync(
+                predictionSet,
+                cloud,
+                currentUserId,
+                cancellationToken);
+            SetSynchronizedStatus(predictionSet.CompetitionId, synchronized);
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+            throw;
+        }
+        catch
+        {
+            if (IsAnonymous(predictionSet))
+            {
+                await localStore.SaveAsync(
+                    predictionSet with { LocalUserId = null },
+                    cancellationToken);
+            }
+
+            SetCloudFailureStatus(predictionSet.CompetitionId);
+        }
+    }
+
+    private string? GetCurrentUserId()
+    {
+        var userId = authService.CurrentUser?.Id;
+        return string.IsNullOrWhiteSpace(userId)
+            ? null
+            : userId.Trim();
+    }
+
+    private static PredictionSet AssignOwner(PredictionSet predictionSet, string userId)
+    {
+        return predictionSet with { LocalUserId = userId };
+    }
+
+    private static bool IsAnonymous(PredictionSet predictionSet)
+    {
+        return string.IsNullOrWhiteSpace(predictionSet.LocalUserId);
+    }
+
+    private static bool IsOwnedBy(PredictionSet predictionSet, string userId)
+    {
+        return string.Equals(
+            predictionSet.LocalUserId?.Trim(),
+            userId,
+            StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static PredictionSet MergeOwnedSnapshots(
+        PredictionSet local,
+        PredictionSet cloud,
+        string userId)
+    {
+        if (!string.Equals(
+                local.CompetitionConfigVersion,
+                cloud.CompetitionConfigVersion,
+                StringComparison.OrdinalIgnoreCase))
+        {
+            return AssignOwner(
+                local.SavedAt >= cloud.SavedAt ? local : cloud,
+                userId);
+        }
+
+        var answers = new Dictionary<string, PredictionAnswer>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var answer in cloud.Answers)
+        {
+            answers[answer.QuestionId] = answer;
+        }
+
+        foreach (var answer in local.Answers)
+        {
+            if (!answers.TryGetValue(answer.QuestionId, out var existing) ||
+                answer.UpdatedAt >= existing.UpdatedAt)
+            {
+                answers[answer.QuestionId] = answer;
+            }
+        }
+
+        var newestSnapshot = local.SavedAt >= cloud.SavedAt ? local : cloud;
+
+        return newestSnapshot with
+        {
+            LocalUserId = userId,
+            SchemaVersion = Math.Max(local.SchemaVersion, cloud.SchemaVersion),
+            SavedAt = local.SavedAt >= cloud.SavedAt ? local.SavedAt : cloud.SavedAt,
+            Answers = answers.Values
+                .OrderBy(answer => answer.GroupId)
+                .ThenBy(answer => answer.QuestionId)
+                .ToArray()
+        };
+    }
+
+    private void SetSynchronizedStatus(string competitionId, PredictionSet? predictionSet)
+    {
+        syncState.SetStatus(
+            competitionId,
+            predictionSet is null
+                ? PredictionSaveStatus.Local
+                : PredictionSaveStatus.Cloud);
     }
 
     private void SetCloudFailureStatus(string competitionId)

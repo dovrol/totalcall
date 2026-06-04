@@ -69,7 +69,7 @@ Cloud Save uses the Supabase `prediction_submissions` table.
 
 There is one cloud row per user and competition. The local draft remains the immediate cache; cloud synchronization is additional storage, not a replacement for localStorage.
 
-When both local and cloud snapshots exist, TotalCall keeps the snapshot with the newer `SavedAt` value and writes it to the other storage location.
+Local snapshots created while signed in are tagged with the owning user ID and are not exposed to anonymous sessions. When local and cloud snapshots belong to the same user and competition configuration, TotalCall merges answers by question and keeps the answer with the newer `UpdatedAt` value before each cloud save. An anonymous local draft never automatically replaces an existing cloud draft, and a draft tagged for another account is never uploaded to the current account. An anonymous draft is adopted after sign-in only when that account has no cloud draft for the competition.
 
 ### Cloud Save access control
 

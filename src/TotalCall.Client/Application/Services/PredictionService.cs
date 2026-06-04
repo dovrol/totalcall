@@ -1,3 +1,4 @@
+using TotalCall.Client.Application.Auth;
 using TotalCall.Client.Domain.Competitions;
 using TotalCall.Client.Domain.Predictions;
 using TotalCall.Client.Storage;
@@ -6,7 +7,8 @@ namespace TotalCall.Client.Application.Services;
 
 public sealed class PredictionService(
     IPredictionStore predictionStore,
-    AppInfoService appInfo)
+    AppInfoService appInfo,
+    AuthService authService)
 {
     public async Task<PredictionSet> GetOrCreatePredictionSetAsync(
         Competition competition,
@@ -24,6 +26,7 @@ public sealed class PredictionService(
         {
             CompetitionId = competition.Id,
             CompetitionConfigVersion = competition.ConfigVersion,
+            LocalUserId = authService.CurrentUser?.Id,
             AppVersion = appInfo.AppVersion,
             SchemaVersion = PredictionSet.StorageSchemaVersion,
             SavedAt = DateTimeOffset.UtcNow
