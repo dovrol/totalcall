@@ -2,6 +2,37 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.7.0-beta.1",
+      "releasedAt": "2026-06-04",
+      "title": {
+        "pl": "Szybsze typowanie i oszczędniejsze pobieranie danych zawodników",
+        "en": "Faster predictions and leaner athlete-data loading"
+      },
+      "items": [
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Ekran typowania ładuje się szybciej — dane historyczne zawodnika pobierane są na żądanie (przy wypełnianiu wyniku lub wejściu w statystyki), zamiast wszystkich naraz po wejściu na stawkę.",
+            "en": "The prediction screen loads faster — an athlete's historical data is fetched on demand (when filling a pick or opening stats) instead of all at once when you enter the field."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Wskaźniki ładowania podczas pobierania danych zawodnika — w podpowiedziach wypełniania, edytorze mobilnym oraz akcji „Uzupełnij domyślne”.",
+            "en": "Loading indicators while athlete data is being fetched — in fill suggestions, the mobile editor and the “Fill defaults” action."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Porównanie skuteczności podejść względem kategorii liczone jest teraz jednym zapytaniem zamiast wielu — panel kontekstu i szczegóły zawodnika otwierają się szybciej.",
+            "en": "The attempt-success comparison against the category is now computed in a single query instead of many — the context panel and athlete details open faster."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.6.0-beta.1",
       "releasedAt": "2026-06-03",
       "title": {
