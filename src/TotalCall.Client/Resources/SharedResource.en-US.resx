@@ -30,6 +30,17 @@
   <data name="Nav.Worlds" xml:space="preserve"><value>Worlds 2026</value></data>
   <data name="Nav.WorldsShort" xml:space="preserve"><value>Worlds</value></data>
   <data name="Nav.Menu" xml:space="preserve"><value>Menu</value></data>
+  <data name="Nav.Ranking" xml:space="preserve"><value>Ranking</value></data>
+  <data name="Nav.Profile" xml:space="preserve"><value>Profile</value></data>
+  <data name="Nav.ComingSoon" xml:space="preserve"><value>soon</value></data>
+  <data name="Account.Menu" xml:space="preserve"><value>Account</value></data>
+  <data name="Account.Settings" xml:space="preserve"><value>Settings</value></data>
+  <data name="Account.Theme" xml:space="preserve"><value>Theme</value></data>
+  <data name="Account.Language" xml:space="preserve"><value>Language</value></data>
+  <data name="Account.Guest" xml:space="preserve"><value>Guest</value></data>
+  <data name="Account.GuestLocal" xml:space="preserve"><value>Guest · local save</value></data>
+  <data name="Account.GuestSaved" xml:space="preserve"><value>Picks saved locally</value></data>
+  <data name="Account.SignInHint" xml:space="preserve"><value>We'll send a magic link by email — your picks will sync to the cloud.</value></data>
   <data name="Theme.Toggle" xml:space="preserve"><value>Change theme</value></data>
   <data name="Theme.Dark" xml:space="preserve"><value>Dark</value></data>
   <data name="Theme.Light" xml:space="preserve"><value>Light</value></data>
@@ -163,8 +174,9 @@
   <data name="Predictions.ExportCsv" xml:space="preserve"><value>Export CSV</value></data>
   <data name="Predictions.MoreActions" xml:space="preserve"><value>More</value></data>
   <data name="Share.Trigger" xml:space="preserve"><value>Share</value></data>
-  <data name="Share.Title" xml:space="preserve"><value>Export &amp; share</value></data>
-  <data name="Share.Subtitle" xml:space="preserve"><value>Keep a copy of your picks or share them on. Cloud Save remains private.</value></data>
+  <data name="Share.Title" xml:space="preserve"><value>Share picks</value></data>
+  <data name="Share.Subtitle" xml:space="preserve"><value>Quickly check completeness before copying or exporting.</value></data>
+  <data name="Share.ReviewSummary" xml:space="preserve"><value>Prediction completeness summary</value></data>
   <data name="Share.Close" xml:space="preserve"><value>Close</value></data>
   <data name="Share.Working" xml:space="preserve"><value>Working…</value></data>
   <data name="Share.CopyAppLink" xml:space="preserve"><value>Copy link</value></data>
@@ -606,6 +618,7 @@
   <data name="Predictions.TopN.FillFromHeading" xml:space="preserve"><value>Fill predicted from:</value></data>
   <data name="Predictions.TopN.FillManualNote" xml:space="preserve"><value>You can also type manually in the SQ/BP/DL fields ↑</value></data>
   <data name="Predictions.TopN.FillDefaults" xml:space="preserve"><value>Fill defaults</value></data>
+  <data name="Predictions.TopN.CategoryTools" xml:space="preserve"><value>Category tools</value></data>
   <data name="Predictions.TopN.FillDefaultsHeading" xml:space="preserve"><value>Fill {0} defaults by:</value></data>
   <data name="Predictions.TopN.NoDefaultRows" xml:space="preserve"><value>No default rows to fill.</value></data>
   <data name="Predictions.TopN.ResetField" xml:space="preserve"><value>Reset field</value></data>

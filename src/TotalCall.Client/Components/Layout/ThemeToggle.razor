@@ -1,19 +1,41 @@
 @inject ThemeService Theme
 @inject IStringLocalizer<SharedResource> Localizer
 
-<button
-    type="button"
-    class="theme-toggle"
-    aria-pressed="@Theme.IsDarkMode"
-    title="@Localizer["Theme.Toggle"]"
-    @onclick="ToggleTheme">
-    <span class="theme-toggle__dot" aria-hidden="true"></span>
-    <span class="theme-toggle__text">@(Theme.IsDarkMode ? Localizer["Theme.Dark"] : Localizer["Theme.Light"])</span>
-</button>
+<div class="theme-toggle" role="group" aria-label="@Localizer["Theme.Toggle"]">
+    <button
+        type="button"
+        class='@GetButtonClass("dark")'
+        aria-pressed='@IsTheme("dark")'
+        @onclick='() => SetTheme("dark")'>
+        <AppIcon Name="AppIconName.Moon" Size="14" />
+        <span>@Localizer["Theme.Dark"]</span>
+    </button>
+
+    <button
+        type="button"
+        class='@GetButtonClass("light")'
+        aria-pressed='@IsTheme("light")'
+        @onclick='() => SetTheme("light")'>
+        <AppIcon Name="AppIconName.Sun" Size="14" />
+        <span>@Localizer["Theme.Light"]</span>
+    </button>
+</div>
 
 @code {
-    private async Task ToggleTheme()
+    private async Task SetTheme(string theme)
     {
-        await Theme.ToggleThemeAsync();
+        await Theme.SetThemeAsync(theme);
+    }
+
+    private bool IsTheme(string theme)
+    {
+        return string.Equals(Theme.CurrentTheme, theme, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private string GetButtonClass(string theme)
+    {
+        return IsTheme(theme)
+            ? "theme-toggle__button theme-toggle__button--active"
+            : "theme-toggle__button";
     }
 }

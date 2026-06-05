@@ -30,9 +30,20 @@
   <data name="Nav.Worlds" xml:space="preserve"><value>Worlds 2026</value></data>
   <data name="Nav.WorldsShort" xml:space="preserve"><value>Worlds</value></data>
   <data name="Nav.Menu" xml:space="preserve"><value>Menu</value></data>
+  <data name="Nav.Ranking" xml:space="preserve"><value>Ranking</value></data>
+  <data name="Nav.Profile" xml:space="preserve"><value>Profil</value></data>
+  <data name="Nav.ComingSoon" xml:space="preserve"><value>wkrótce</value></data>
+  <data name="Account.Menu" xml:space="preserve"><value>Konto</value></data>
+  <data name="Account.Settings" xml:space="preserve"><value>Ustawienia</value></data>
+  <data name="Account.Theme" xml:space="preserve"><value>Motyw</value></data>
+  <data name="Account.Language" xml:space="preserve"><value>Język</value></data>
+  <data name="Account.Guest" xml:space="preserve"><value>Gość</value></data>
+  <data name="Account.GuestLocal" xml:space="preserve"><value>Gość · zapis lokalny</value></data>
+  <data name="Account.GuestSaved" xml:space="preserve"><value>Typy zapisane lokalnie</value></data>
+  <data name="Account.SignInHint" xml:space="preserve"><value>Wyślemy magic link na e-mail — zsynchronizujesz typy z chmurą.</value></data>
   <data name="Theme.Toggle" xml:space="preserve"><value>Zmień motyw</value></data>
-  <data name="Theme.Dark" xml:space="preserve"><value>Dark</value></data>
-  <data name="Theme.Light" xml:space="preserve"><value>Light</value></data>
+  <data name="Theme.Dark" xml:space="preserve"><value>Ciemny</value></data>
+  <data name="Theme.Light" xml:space="preserve"><value>Jasny</value></data>
   <data name="Competition.Navigation" xml:space="preserve"><value>Nawigacja zawodów</value></data>
   <data name="Scoreboard.Eyebrow.LocksIn" xml:space="preserve"><value>Najbliższe · Lock za</value></data>
   <data name="Scoreboard.Eyebrow.Awaiting" xml:space="preserve"><value>Najbliższe · Czeka na wynik</value></data>
@@ -163,8 +174,9 @@
   <data name="Predictions.ExportCsv" xml:space="preserve"><value>Eksportuj CSV</value></data>
   <data name="Predictions.MoreActions" xml:space="preserve"><value>Więcej</value></data>
   <data name="Share.Trigger" xml:space="preserve"><value>Udostępnij</value></data>
-  <data name="Share.Title" xml:space="preserve"><value>Eksport i udostępnianie</value></data>
-  <data name="Share.Subtitle" xml:space="preserve"><value>Zachowaj kopię swoich typów albo udostępnij je dalej. Cloud Save pozostaje prywatny.</value></data>
+  <data name="Share.Title" xml:space="preserve"><value>Udostępnij typy</value></data>
+  <data name="Share.Subtitle" xml:space="preserve"><value>Szybki przegląd kompletności przed kopiowaniem lub eksportem.</value></data>
+  <data name="Share.ReviewSummary" xml:space="preserve"><value>Podsumowanie kompletności typów</value></data>
   <data name="Share.Close" xml:space="preserve"><value>Zamknij</value></data>
   <data name="Share.Working" xml:space="preserve"><value>Pracuję…</value></data>
   <data name="Share.CopyAppLink" xml:space="preserve"><value>Skopiuj link</value></data>
@@ -606,6 +618,7 @@
   <data name="Predictions.TopN.FillFromHeading" xml:space="preserve"><value>Wypełnij predicted z:</value></data>
   <data name="Predictions.TopN.FillManualNote" xml:space="preserve"><value>Możesz też wpisać ręcznie w polach SQ/BP/DL ↑</value></data>
   <data name="Predictions.TopN.FillDefaults" xml:space="preserve"><value>Uzupełnij domyślne</value></data>
+  <data name="Predictions.TopN.CategoryTools" xml:space="preserve"><value>Narzędzia kategorii</value></data>
   <data name="Predictions.TopN.FillDefaultsHeading" xml:space="preserve"><value>Uzupełnij {0} domyślne wg:</value></data>
   <data name="Predictions.TopN.NoDefaultRows" xml:space="preserve"><value>Brak domyślnych wierszy do uzupełnienia.</value></data>
   <data name="Predictions.TopN.ResetField" xml:space="preserve"><value>Resetuj stawkę</value></data>

@@ -5,32 +5,31 @@
         <AppLogo AdditionalClass="app-topbar__brand" />
 
         <nav class="app-topbar__nav" aria-label="Main navigation">
-            <NavLink class="topbar-nav-link" ActiveClass="active" href="" Match="NavLinkMatch.All">
+            <NavLink class="topbar-nav-link" ActiveClass="active" href="" Match="NavLinkMatch.Prefix">
                 <AppIcon Name="AppIconName.Trophy" Size="16" />
                 @Localizer["Nav.Competitions"]
             </NavLink>
-            <NavLink class="topbar-nav-link" ActiveClass="active" href="competitions/worlds-2026/predictions">
-                <AppIcon Name="AppIconName.Users" Size="16" />
-                @Localizer["Nav.Worlds"]
-            </NavLink>
+            <span class="topbar-nav-link topbar-nav-link--soon" aria-disabled="true">
+                <AppIcon Name="AppIconName.BarChart" Size="16" />
+                <span>@Localizer["Nav.Ranking"]</span>
+                <span class="topbar-nav-link__soon">@Localizer["Nav.ComingSoon"]</span>
+            </span>
         </nav>
 
         <div class="app-topbar__controls">
-            <ThemeToggle />
-            <LanguageSwitcher />
-            <span class="app-topbar__divider" aria-hidden="true"></span>
             <AuthMenu />
         </div>
     </div>
 </header>
 
 <nav class="app-mobile-nav" aria-label="@Localizer["Nav.Menu"]">
-    <NavLink class="app-mobile-nav__link" ActiveClass="active" href="" Match="NavLinkMatch.All">
+    <NavLink class="app-mobile-nav__link" ActiveClass="active" href="" Match="NavLinkMatch.Prefix">
         <AppIcon Name="AppIconName.Trophy" Size="18" />
         <span>@Localizer["Nav.Competitions"]</span>
     </NavLink>
-    <NavLink class="app-mobile-nav__link" ActiveClass="active" href="competitions/worlds-2026/predictions">
-        <AppIcon Name="AppIconName.Users" Size="18" />
-        <span>@Localizer["Nav.WorldsShort"]</span>
-    </NavLink>
+    <button type="button" class="app-mobile-nav__link app-mobile-nav__link--soon" disabled>
+        <AppIcon Name="AppIconName.BarChart" Size="18" />
+        <span>@Localizer["Nav.Ranking"]</span>
+    </button>
+    <AuthMenu DisplayMode="MobileNav" />
 </nav>

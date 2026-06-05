@@ -31,6 +31,8 @@ public enum AppIconName
     AlertCircle,
     TriangleAlert,
     Info,
+    Moon,
+    Sun,
     TrendUp,
     TrendDown,
     CircleDot,

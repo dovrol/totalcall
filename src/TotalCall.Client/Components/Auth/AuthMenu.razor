@@ -4,31 +4,188 @@
 
 <AuthorizeView>
     <Authorized>
-        <div class="auth-menu">
-            <span class="auth-menu__user" title="@context.User.Identity?.Name">
-                <AppIcon Name="AppIconName.User" Size="14" />
-                <span class="auth-menu__email">@context.User.Identity?.Name</span>
-            </span>
-            <button
-                type="button"
-                class="auth-menu__action"
-                disabled="@isSigningOut"
-                @onclick="SignOutAsync">
-                <AppIcon Name="AppIconName.LogOut" Size="14" />
-                <span>@Localizer["Auth.SignOut"]</span>
-            </button>
+        <div class="@WrapperClass">
+            @if (IsMobileNav)
+            {
+                <button
+                    type="button"
+                    class="app-mobile-nav__link"
+                    aria-haspopup="dialog"
+                    aria-expanded="@isOpen"
+                    @onclick="ToggleMenu">
+                    <AppIcon Name="AppIconName.User" Size="18" />
+                    <span>@Localizer["Nav.Profile"]</span>
+                </button>
+            }
+            else
+            {
+                <button
+                    type="button"
+                    class="auth-menu__trigger"
+                    aria-label="@Localizer["Account.Menu"]"
+                    aria-haspopup="dialog"
+                    aria-expanded="@isOpen"
+                    @onclick="ToggleMenu">
+                    <span class="auth-menu__identity">
+                        <strong>@DisplayName(context.User.Identity?.Name)</strong>
+                        <small>@context.User.Identity?.Name</small>
+                    </span>
+                    <span class="auth-menu__avatar" aria-hidden="true">@Initials(context.User.Identity?.Name)</span>
+                    <AppIcon Name="AppIconName.ChevronRight" Size="13" Class="@ChevronClass" />
+                </button>
+            }
+
+            @if (isOpen)
+            {
+                <button
+                    type="button"
+                    class="auth-menu__scrim"
+                    aria-label="@Localizer["Share.Close"]"
+                    @onclick="CloseMenu"></button>
+
+                <section class="@PopoverClass" role="dialog" aria-label="@Localizer["Account.Menu"]">
+                    <header class="auth-menu__head">
+                        <span class="auth-menu__avatar auth-menu__avatar--lg" aria-hidden="true">
+                            @Initials(context.User.Identity?.Name)
+                        </span>
+                        <span class="auth-menu__head-copy">
+                            <strong>@DisplayName(context.User.Identity?.Name)</strong>
+                            <small>@context.User.Identity?.Name</small>
+                        </span>
+                    </header>
+
+                    <div class="auth-menu__section">
+                        <span class="auth-menu__label">@Localizer["Account.Theme"]</span>
+                        <ThemeToggle />
+                    </div>
+
+                    <div class="auth-menu__section">
+                        <span class="auth-menu__label">@Localizer["Account.Language"]</span>
+                        <LanguageSwitcher />
+                    </div>
+
+                    <button
+                        type="button"
+                        class="auth-menu__signout"
+                        disabled="@isSigningOut"
+                        @onclick="SignOutAsync">
+                        <AppIcon Name="AppIconName.LogOut" Size="16" />
+                        <span>@Localizer["Auth.SignOut"]</span>
+                    </button>
+                </section>
+            }
         </div>
     </Authorized>
     <NotAuthorized>
-        <a class="auth-menu__login" href="auth/login">
-            <AppIcon Name="AppIconName.User" Size="14" />
-            <span>@Localizer["Auth.SignIn"]</span>
-        </a>
+        <div class="@WrapperClass">
+            @if (IsMobileNav)
+            {
+                <button
+                    type="button"
+                    class="app-mobile-nav__link"
+                    aria-haspopup="dialog"
+                    aria-expanded="@isOpen"
+                    @onclick="ToggleMenu">
+                    <AppIcon Name="AppIconName.User" Size="18" />
+                    <span>@Localizer["Nav.Profile"]</span>
+                </button>
+            }
+            else
+            {
+                <button
+                    type="button"
+                    class="auth-menu__trigger auth-menu__trigger--guest"
+                    aria-label="@Localizer["Auth.Login.Title"]"
+                    aria-haspopup="dialog"
+                    aria-expanded="@isOpen"
+                    @onclick="ToggleMenu">
+                    <span class="auth-menu__identity auth-menu__identity--guest">
+                        <strong>@Localizer["Auth.Login.Title"]</strong>
+                        <small>@Localizer["Account.GuestLocal"]</small>
+                    </span>
+                    <span class="auth-menu__avatar auth-menu__avatar--guest" aria-hidden="true">
+                        <AppIcon Name="AppIconName.User" Size="15" />
+                    </span>
+                    <AppIcon Name="AppIconName.ChevronRight" Size="13" Class="@ChevronClass" />
+                </button>
+            }
+
+            @if (isOpen)
+            {
+                <button
+                    type="button"
+                    class="auth-menu__scrim"
+                    aria-label="@Localizer["Share.Close"]"
+                    @onclick="CloseMenu"></button>
+
+                <section class="@GuestPopoverClass" role="dialog" aria-label="@Localizer["Account.Settings"]">
+                    <header class="auth-menu__head auth-menu__head--guest">
+                        <span class="auth-menu__avatar auth-menu__avatar--lg auth-menu__avatar--guest" aria-hidden="true">
+                            <AppIcon Name="AppIconName.User" Size="17" />
+                        </span>
+                        <span class="auth-menu__head-copy">
+                            <strong>@Localizer["Account.Guest"]</strong>
+                            <small>@Localizer["Account.GuestSaved"]</small>
+                        </span>
+                    </header>
+
+                    <div class="auth-menu__section">
+                        <span class="auth-menu__label">@Localizer["Account.Theme"]</span>
+                        <ThemeToggle />
+                    </div>
+
+                    <div class="auth-menu__section">
+                        <span class="auth-menu__label">@Localizer["Account.Language"]</span>
+                        <LanguageSwitcher />
+                    </div>
+
+                    <footer class="auth-menu__guest-actions">
+                        <a class="auth-menu__signin" href="auth/login">
+                            <AppIcon Name="AppIconName.User" Size="16" />
+                            <span>@Localizer["Auth.Login.Title"]</span>
+                        </a>
+                        <p>@Localizer["Account.SignInHint"]</p>
+                    </footer>
+                </section>
+            }
+        </div>
     </NotAuthorized>
 </AuthorizeView>
 
 @code {
+    [Parameter]
+    public string DisplayMode { get; set; } = "Topbar";
+
     private bool isSigningOut;
+    private bool isOpen;
+
+    private bool IsMobileNav => string.Equals(DisplayMode, "MobileNav", StringComparison.OrdinalIgnoreCase);
+
+    private string WrapperClass => IsMobileNav
+        ? "auth-menu auth-menu--mobile"
+        : "auth-menu";
+
+    private string PopoverClass => IsMobileNav
+        ? "auth-menu__popover auth-menu__popover--mobile"
+        : "auth-menu__popover";
+
+    private string GuestPopoverClass => IsMobileNav
+        ? "auth-menu__popover auth-menu__popover--guest auth-menu__popover--mobile"
+        : "auth-menu__popover auth-menu__popover--guest";
+
+    private string ChevronClass => isOpen
+        ? "auth-menu__chevron auth-menu__chevron--open"
+        : "auth-menu__chevron";
+
+    private void ToggleMenu()
+    {
+        isOpen = !isOpen;
+    }
+
+    private void CloseMenu()
+    {
+        isOpen = false;
+    }
 
     private async Task SignOutAsync()
     {
@@ -42,11 +199,36 @@
         try
         {
             await Auth.SignOutAsync();
+            isOpen = false;
             Navigation.NavigateTo("");
         }
         finally
         {
             isSigningOut = false;
         }
+    }
+
+    private static string DisplayName(string? email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            return "TotalCall";
+        }
+
+        var separator = email.IndexOf('@');
+        return separator > 0 ? email[..separator] : email;
+    }
+
+    private static string Initials(string? email)
+    {
+        var name = DisplayName(email);
+        var letters = name
+            .Where(char.IsLetterOrDigit)
+            .Take(2)
+            .ToArray();
+
+        return letters.Length == 0
+            ? "TC"
+            : new string(letters).ToUpperInvariant();
     }
 }

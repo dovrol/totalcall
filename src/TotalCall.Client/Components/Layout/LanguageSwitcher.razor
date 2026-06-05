@@ -9,7 +9,8 @@
             class="@GetButtonClass(option.CultureName)"
             aria-pressed="@IsCurrentCulture(option.CultureName)"
             @onclick="() => SetCulture(option.CultureName)">
-            @option.Label
+            <span class="language-switcher__code">@option.Label</span>
+            <span class="language-switcher__name">@GetNativeName(option.CultureName)</span>
         </button>
     }
 </div>
@@ -35,5 +36,12 @@
         return IsCurrentCulture(cultureName)
             ? "language-switcher__button language-switcher__button--active"
             : "language-switcher__button";
+    }
+
+    private static string GetNativeName(string cultureName)
+    {
+        return string.Equals(cultureName, "en-US", StringComparison.OrdinalIgnoreCase)
+            ? "English"
+            : "Polski";
     }
 }
