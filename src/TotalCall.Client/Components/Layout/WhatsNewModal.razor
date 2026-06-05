@@ -39,13 +39,13 @@
                     <section class="whats-new-release">
                         <header class="whats-new-release__head">
                             <h3>
-                                v@(entry.Version)
+                                <span class="whats-new-release__version">v@(entry.Version)</span>
                                 @if (entry.Title is not null)
                                 {
                                     var title = entry.Title.Resolve(Culture.CurrentCultureName);
                                     if (!string.IsNullOrWhiteSpace(title))
                                     {
-                                        <span class="whats-new-release__subtitle">— @title</span>
+                                        <span class="whats-new-release__subtitle">@title</span>
                                     }
                                 }
                             </h3>
