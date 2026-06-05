@@ -20,21 +20,13 @@
 
     <div class="prediction-action-bar__actions">
         <AppButton
-            Variant="Secondary"
+            Variant="Primary"
             Size="Sm"
+            AdditionalClass="prediction-action-bar__primary"
             OnClick="@OnShareClicked"
             AriaLabel="@Localizer["Share.Title"]">
             <AppIcon Name="AppIconName.Share" Size="15" />
             <span>@Localizer["Share.Trigger"]</span>
-        </AppButton>
-
-        <AppButton
-            Href="@ReviewHref"
-            Variant="Primary"
-            Size="Sm"
-            AdditionalClass="prediction-action-bar__primary">
-            <AppIcon Name="AppIconName.Check" Size="15" />
-            <span>@Localizer["Predictions.ReviewPicks"]</span>
         </AppButton>
     </div>
 </nav>
@@ -51,8 +43,6 @@
 
     [Parameter]
     public EventCallback<MouseEventArgs> ShareRequested { get; set; }
-
-    private string ReviewHref => $"competitions/{CompetitionSlug}/review";
 
     private string StatusClass => SaveStatus switch
     {

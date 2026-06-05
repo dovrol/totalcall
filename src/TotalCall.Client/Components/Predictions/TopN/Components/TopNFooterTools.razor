@@ -1,6 +1,11 @@
 @inject IStringLocalizer<SharedResource> Localizer
 
 <div class="topn-foottools">
+    @if (ShowLabel)
+    {
+        <span class="topn-foottools__label">@Localizer["Predictions.TopN.CategoryTools"]</span>
+    }
+
     <div class="topn-bulkwrap">
         <button
             type="button"
@@ -24,6 +29,12 @@
 
         @if (IsBulkMenuOpen)
         {
+            <button
+                type="button"
+                class="topn-bulkmenu__scrim"
+                aria-label="@Localizer["Share.Close"]"
+                @onclick="() => BulkMenuClosed.InvokeAsync()"></button>
+
             <div class="topn-bulkmenu">
                 <div class="topn-fillpop__head">@Localizer["Predictions.TopN.FillDefaultsHeading", DefaultCount]</div>
                 <button type="button" class="topn-fill-opt" @onclick="() => BulkFillRequested.InvokeAsync(TopNQuickFillKind.Nominated)">
@@ -76,6 +87,9 @@
     public bool CanEditPredictions { get; set; }
 
     [Parameter]
+    public bool ShowLabel { get; set; }
+
+    [Parameter]
     public int RefinedCount { get; set; }
 
     [Parameter]
@@ -98,6 +112,9 @@
 
     [Parameter]
     public EventCallback BulkMenuToggled { get; set; }
+
+    [Parameter]
+    public EventCallback BulkMenuClosed { get; set; }
 
     [Parameter]
     public EventCallback<string> BulkFillRequested { get; set; }

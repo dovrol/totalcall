@@ -45,6 +45,23 @@ else
                 JumpRequested="OpenPalette" />
 
             <div class="topn-workspace__body">
+                <TopNFooterTools
+                    ShowLabel="true"
+                    CanEditPredictions="CanEditPredictions"
+                    RefinedCount="@RefinedCount"
+                    FieldCount="@FieldPlacements.Count"
+                    ScoredCount="@ScoredPositionsCount"
+                    DefaultCount="@DefaultCount"
+                    IsBulkMenuOpen="@isBulkMenuOpen"
+                    IsBulkFilling="@isBulkFilling"
+                    BulkMenuToggled="ToggleBulkMenu"
+                    BulkMenuClosed="CloseBulkMenu"
+                    BulkFillRequested="FillDefaultsFromSource"
+                    SortRequested="SortByPredictedTotal"
+                    IsCompareSelectionMode="@isCompareSelectionMode"
+                    CompareModeRequested="StartCompareSelection"
+                    ClearRequested="ClearCategory" />
+
                 <TopNSheet
                     Slots="SlotViews"
                     ScoredCount="@ScoredPositionsCount"
@@ -74,21 +91,6 @@ else
                         CancelRequested="CancelCompareSelection"
                         CompareRequested="OpenSelectedComparison" />
                 }
-
-                <TopNFooterTools
-                    CanEditPredictions="CanEditPredictions"
-                    RefinedCount="@RefinedCount"
-                    FieldCount="@FieldPlacements.Count"
-                    ScoredCount="@ScoredPositionsCount"
-                    DefaultCount="@DefaultCount"
-                    IsBulkMenuOpen="@isBulkMenuOpen"
-                    IsBulkFilling="@isBulkFilling"
-                    BulkMenuToggled="ToggleBulkMenu"
-                    BulkFillRequested="FillDefaultsFromSource"
-                    SortRequested="SortByPredictedTotal"
-                    IsCompareSelectionMode="@isCompareSelectionMode"
-                    CompareModeRequested="StartCompareSelection"
-                    ClearRequested="ClearCategory" />
             </div>
         </div>
 
@@ -139,6 +141,7 @@ else
                 IsBulkMenuOpen="@isBulkMenuOpen"
                 IsBulkFilling="@isBulkFilling"
                 BulkMenuToggled="ToggleBulkMenu"
+                BulkMenuClosed="CloseBulkMenu"
                 BulkFillRequested="FillDefaultsFromSource"
                 SortRequested="SortByPredictedTotal"
                 IsCompareSelectionMode="@isCompareSelectionMode"
@@ -977,6 +980,11 @@ else
     private void ToggleBulkMenu()
     {
         isBulkMenuOpen = !isBulkMenuOpen;
+    }
+
+    private void CloseBulkMenu()
+    {
+        isBulkMenuOpen = false;
     }
 
     private async Task OnQuickFill(TopNQuickFill request)

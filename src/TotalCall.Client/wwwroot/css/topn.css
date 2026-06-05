@@ -9,6 +9,8 @@
 .topn-workspace {
     --prediction-action-bar-offset: calc(var(--app-mobile-nav-height) - 1px);
     --prediction-bottom-bar-space: calc(var(--app-mobile-nav-height) + 5.4rem);
+    --topn-mobile-action-bar-height: calc(4.875rem + env(safe-area-inset-bottom));
+    --topn-mobile-tools-height: 3.6rem;
 
     /* design palette mapped to app theme tokens */
     --tn-bg: var(--bg-page);
@@ -102,7 +104,7 @@
         height: 100%;
         min-height: 0;
         overflow: hidden;
-        padding-bottom: 7.25rem;
+        padding-bottom: 5.75rem;
     }
 
     .topn-workspace__body {
@@ -1338,31 +1340,63 @@
    Footer tools
    --------------------------------------------------------------- */
 .topn-foottools {
+    position: relative;
+    z-index: 6;
     display: flex;
     flex: none;
     align-items: center;
-    gap: 9px;
+    gap: 8px;
     flex-wrap: wrap;
-    padding: 2px 2px 4px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 10px 2px 12px;
+    box-shadow: none;
+}
+
+.topn-foottools:has(.topn-bulkmenu) {
+    z-index: 90;
+}
+
+.topn-foottools__label {
+    flex: none;
+    margin-right: 2px;
+    color: var(--tn-txt-3);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
 .topn-tool {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 12.5px;
-    font-weight: 700;
-    color: var(--tn-txt-2);
-    background: var(--tn-panel-2);
-    border: 1px solid var(--tn-bd);
-    border-radius: 10px;
-    padding: 9px 14px;
+    justify-content: center;
+    gap: 9px;
+    min-height: 38px;
+    color: var(--tn-txt);
+    background: color-mix(in srgb, var(--tn-panel) 94%, var(--tn-bg));
+    border: 1px solid color-mix(in srgb, var(--tn-bd) 62%, var(--tn-panel));
+    border-radius: 12px;
+    padding: 8px 16px;
+    box-shadow: 0 6px 18px -18px rgb(0 0 0 / 0.55);
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+    transition:
+        background-color 130ms ease,
+        border-color 130ms ease,
+        color 130ms ease,
+        box-shadow 130ms ease;
 }
 
 .topn-tool:hover:not(:disabled) {
-    background: var(--tn-card-hi);
+    background: color-mix(in srgb, var(--tn-panel) 82%, var(--tn-card-hi));
+    border-color: color-mix(in srgb, var(--tn-bd) 78%, var(--tn-txt-3));
     color: var(--tn-txt);
+    box-shadow: 0 12px 24px -22px rgb(0 0 0 / 0.62);
 }
 
 .topn-tool:disabled {
@@ -1372,30 +1406,30 @@
 
 .topn-tool--accent {
     color: var(--tn-red-bright);
-    border-color: var(--tn-red-bd);
-    background: var(--tn-red-dim);
+    border-color: color-mix(in srgb, var(--tn-red) 35%, var(--tn-panel));
+    background: color-mix(in srgb, var(--tn-red) 9%, var(--tn-panel));
 }
 
 .topn-tool--ghost {
-    background: transparent;
+    background: color-mix(in srgb, var(--tn-panel) 94%, var(--tn-bg));
 }
 
 .topn-tool--compare {
-    color: var(--score);
-    border-color: color-mix(in srgb, var(--score) 38%, var(--tn-bd));
-    background: color-mix(in srgb, var(--score) 10%, transparent);
+    color: var(--tn-txt);
+    border-color: color-mix(in srgb, var(--tn-bd) 62%, var(--tn-panel));
+    background: color-mix(in srgb, var(--tn-panel) 94%, var(--tn-bg));
 }
 
 .topn-tool--on {
     color: var(--tn-red-bright);
-    border-color: var(--tn-red-bd);
-    background: var(--tn-red-dim);
+    border-color: color-mix(in srgb, var(--tn-red) 35%, var(--tn-panel));
+    background: color-mix(in srgb, var(--tn-red) 9%, var(--tn-panel));
 }
 
 .topn-tool--compare.topn-tool--on {
     color: var(--score);
-    border-color: color-mix(in srgb, var(--score) 46%, var(--tn-bd));
-    background: color-mix(in srgb, var(--score) 16%, transparent);
+    border-color: color-mix(in srgb, var(--score) 40%, var(--tn-panel));
+    background: color-mix(in srgb, var(--score) 9%, var(--tn-panel));
 }
 
 .topn-bulk__ch {
@@ -1406,14 +1440,25 @@
 
 .topn-bulkwrap {
     position: relative;
+    z-index: 7;
+}
+
+.topn-bulkmenu__scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    border: 0;
+    background: transparent;
+    cursor: default;
 }
 
 .topn-bulkmenu {
     position: absolute;
-    bottom: 46px;
+    top: calc(100% + 8px);
+    bottom: auto;
     left: 0;
     width: 248px;
-    z-index: 30;
+    z-index: 80;
     background: var(--tn-panel);
     border: 1px solid var(--tn-bd);
     border-radius: 13px;
@@ -1956,12 +2001,16 @@ body:has(.topn-drawer.is-open) {
 
 @media (max-width: 899.98px) {
     .app-shell--no-mobile-tabs .topn-workspace {
-        --prediction-action-bar-offset: calc(env(safe-area-inset-bottom) + 0.6rem);
-        --prediction-bottom-bar-space: calc(env(safe-area-inset-bottom) + 4.4rem);
+        --prediction-action-bar-offset: 0px;
+        --prediction-bottom-bar-space: calc(9.35rem + env(safe-area-inset-bottom));
     }
 }
 
 @media (max-width: 720px) {
+    .topn-workspace {
+        --prediction-bottom-bar-space: calc(9.35rem + env(safe-area-inset-bottom));
+    }
+
     .topn-desktop {
         display: none;
     }
@@ -2778,12 +2827,46 @@ body:has(.topn-drawer.is-open) {
 }
 
 .topn-mobile .topn-foottools {
-    margin-top: 13px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: var(--topn-mobile-action-bar-height);
+    z-index: 34;
+    margin-top: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    background: var(--tn-panel);
+    border-top: 1px solid var(--tn-bd-soft);
+    border-bottom: 1px solid var(--tn-bd-soft);
+    border-radius: 0;
+    padding: 8px 12px;
+    box-shadow: none;
+    scrollbar-width: none;
+}
+
+.topn-mobile .topn-foottools:has(.topn-bulkmenu) {
+    z-index: 90;
+}
+
+.topn-mobile .topn-foottools::-webkit-scrollbar {
+    display: none;
+}
+
+.topn-mobile .topn-tool,
+.topn-mobile .topn-bulkwrap {
+    flex: none;
+}
+
+.topn-mobile .topn-bulkmenu {
+    position: fixed;
+    top: auto;
+    bottom: calc(var(--topn-mobile-action-bar-height) + var(--topn-mobile-tools-height) + 0.5rem);
+    left: 0.75rem;
+    width: min(248px, calc(100vw - 1.5rem));
 }
 
 .topn-mobile .topn-foottools__count {
-    width: 100%;
-    margin-left: 0;
+    display: none;
 }
 
 .topn-mobile .ms-eacts__save {
@@ -3056,6 +3139,10 @@ body:has(.topn-drawer.is-open) {
 
 .topn-bulkmenu {
     animation: topn-pop 0.15s ease both;
+    transform-origin: top left;
+}
+
+.topn-mobile .topn-bulkmenu {
     transform-origin: bottom left;
 }
 

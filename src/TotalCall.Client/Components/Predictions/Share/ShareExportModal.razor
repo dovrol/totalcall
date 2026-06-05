@@ -57,6 +57,41 @@
             }
             else
             {
+                <section class="share-review-summary" aria-label="@Localizer["Share.ReviewSummary"]">
+                    <div class="share-review-summary__stats">
+                        <div class="share-review-summary__stat">
+                            <strong>
+                                @Review.Stats.CompletedSections
+                                <span>/ @Review.Stats.TotalSections</span>
+                            </strong>
+                            <small>@Localizer["Review.Stats.Sections"]</small>
+                        </div>
+                        <div class="share-review-summary__stat">
+                            <strong>@Review.Stats.SavedPicks</strong>
+                            <small>@Localizer["Review.Stats.SavedPicks"]</small>
+                        </div>
+                        <div class="@RemainingStatClass">
+                            <strong>@Review.Stats.RemainingSections</strong>
+                            <small>@Localizer["Review.Module.Remaining"]</small>
+                        </div>
+                    </div>
+
+                    <div class="share-review-summary__progress" aria-hidden="true">
+                        <span style="@($"width: {CompletionPercentText}%")"></span>
+                    </div>
+
+                    @if (Review.Stats.RemainingSections > 0)
+                    {
+                        <div class="share-review-summary__warning">
+                            <AppIcon Name="AppIconName.TriangleAlert" Size="17" />
+                            <span>
+                                <strong>@Localizer["Review.Notice.Incomplete", Review.Stats.RemainingSections]</strong>
+                                <small>@Localizer["Review.Notice.IncompleteHint"]</small>
+                            </span>
+                        </div>
+                    }
+                </section>
+
                 <div class="share-dialog__body">
                     @if (!HasPicks)
                     {
@@ -121,6 +156,17 @@
     private ElementReference fallbackTextareaRef;
 
     private bool HasPicks => Review?.HasAnyAnswer ?? false;
+
+    private decimal CompletionPercent => Review?.Stats.TotalSections > 0
+        ? Math.Round((decimal)Review.Stats.CompletedSections / Review.Stats.TotalSections * 100m, 1)
+        : 0m;
+
+    private string CompletionPercentText =>
+        CompletionPercent.ToString(System.Globalization.CultureInfo.InvariantCulture);
+
+    private string RemainingStatClass => Review?.Stats.RemainingSections > 0
+        ? "share-review-summary__stat share-review-summary__stat--warning"
+        : "share-review-summary__stat";
 
     private RenderFragment RenderCard(
         string title,
