@@ -1,8 +1,8 @@
 :root {
     color-scheme: dark;
     --font-sans:
-        "Plus Jakarta Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
+        "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-numeric: var(--font-sans);
 
     --bg-page: #030914;
     --bg-surface: #091425;
@@ -24,6 +24,10 @@
     --radius-sm: 0.625rem;
     --radius-md: 0.875rem;
     --app-mobile-nav-height: calc(4.15rem + env(safe-area-inset-bottom));
+    --prediction-mobile-action-bar-height: calc(4.875rem + env(safe-area-inset-bottom));
+    --prediction-mobile-topn-tools-height: 3.6rem;
+    --prediction-mobile-stack-height:
+        calc(var(--prediction-mobile-action-bar-height) + var(--prediction-mobile-topn-tools-height));
 }
 
 :root[data-theme="light"] {
@@ -82,6 +86,7 @@ body {
         var(--bg-page);
     color: var(--text-primary);
     font-family: var(--font-sans);
+    font-variant-numeric: tabular-nums;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 }
@@ -108,6 +113,24 @@ select,
 textarea {
     color: inherit;
     font: inherit;
+}
+
+:where(
+    .topn-workspace,
+    .prediction-shell,
+    .prediction-review-page,
+    .share-dialog,
+    .competition-card,
+    .scoreboard-marquee,
+    .scoreboard-clock,
+    .scoreboard-row,
+    .athlete-history-window,
+    .athlete-comparison-window,
+    .floating-window,
+    .app-shell__version-btn
+) {
+    font-family: var(--font-numeric);
+    font-variant-numeric: tabular-nums;
 }
 
 :where(a, button, input, select, textarea):focus-visible {
@@ -6509,32 +6532,56 @@ textarea {
 }
 
 @media (max-width: 899.98px) {
+    .app-shell--no-mobile-tabs {
+        min-height: 100dvh;
+        height: 100dvh;
+        overflow: hidden;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .app-shell--no-mobile-tabs .app-shell__main {
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+
     .app-shell--no-mobile-tabs .app-mobile-nav {
         display: none;
     }
 
     .app-shell--no-mobile-tabs .app-shell__content {
-        padding-block: 1.5rem calc(env(safe-area-inset-bottom) + 6.1rem);
+        min-height: 100%;
+        padding-block: 1.5rem calc(var(--prediction-mobile-action-bar-height) + 1rem);
+    }
+
+    .app-shell--no-mobile-tabs .app-shell__content:has(.topn-workspace) {
+        padding-bottom: calc(var(--prediction-mobile-stack-height) + 1.15rem);
+    }
+
+    .app-shell--no-mobile-tabs .app-shell__meta {
+        margin-top: 0.85rem;
     }
 
     .app-shell--no-mobile-tabs .prediction-shell {
         --prediction-action-bar-offset: 0px;
-        --prediction-bottom-bar-space: calc(env(safe-area-inset-bottom) + 6.1rem);
-        --prediction-rail-bottom: calc(env(safe-area-inset-bottom) + 6.1rem);
+        --prediction-bottom-bar-space: calc(var(--prediction-mobile-action-bar-height) + 1rem);
+        --prediction-rail-bottom: calc(var(--prediction-mobile-action-bar-height) + 1rem);
     }
 
     .app-shell--no-mobile-tabs .prediction-review-page {
         --prediction-action-bar-offset: 0px;
-        padding-bottom: calc(env(safe-area-inset-bottom) + 6.1rem);
+        padding-bottom: calc(var(--prediction-mobile-action-bar-height) + 1rem);
     }
 
     .app-shell--no-mobile-tabs .floating-window-host__taskbar {
-        bottom: calc(env(safe-area-inset-bottom) + 6.1rem);
+        bottom: calc(var(--prediction-mobile-action-bar-height) + 1rem);
     }
 
     .prediction-action-bar {
         grid-template-columns: minmax(0, 1fr) auto;
-        height: calc(4.875rem + env(safe-area-inset-bottom));
+        height: var(--prediction-mobile-action-bar-height);
         box-sizing: border-box;
         padding: 0.45rem 0.75rem calc(0.45rem + env(safe-area-inset-bottom));
         gap: 0.4rem;

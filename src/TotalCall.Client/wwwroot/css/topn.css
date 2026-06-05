@@ -9,8 +9,8 @@
 .topn-workspace {
     --prediction-action-bar-offset: calc(var(--app-mobile-nav-height) - 1px);
     --prediction-bottom-bar-space: calc(var(--app-mobile-nav-height) + 5.4rem);
-    --topn-mobile-action-bar-height: calc(4.875rem + env(safe-area-inset-bottom));
-    --topn-mobile-tools-height: 3.6rem;
+    --topn-mobile-action-bar-height: var(--prediction-mobile-action-bar-height);
+    --topn-mobile-tools-height: var(--prediction-mobile-topn-tools-height);
 
     /* design palette mapped to app theme tokens */
     --tn-bg: var(--bg-page);
@@ -539,6 +539,14 @@
 
 .topn-sheet__th--num {
     text-align: center;
+}
+
+.topn-sheet__th small {
+    color: var(--tn-txt-3);
+    font-size: 0.78em;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    opacity: 0.78;
 }
 
 .topn-rowgroup {
@@ -2002,13 +2010,13 @@ body:has(.topn-drawer.is-open) {
 @media (max-width: 899.98px) {
     .app-shell--no-mobile-tabs .topn-workspace {
         --prediction-action-bar-offset: 0px;
-        --prediction-bottom-bar-space: calc(9.35rem + env(safe-area-inset-bottom));
+        --prediction-bottom-bar-space: calc(var(--prediction-mobile-stack-height) + 1rem);
     }
 }
 
 @media (max-width: 720px) {
     .topn-workspace {
-        --prediction-bottom-bar-space: calc(9.35rem + env(safe-area-inset-bottom));
+        --prediction-bottom-bar-space: calc(var(--prediction-mobile-stack-height) + 1rem);
     }
 
     .topn-desktop {
@@ -2832,6 +2840,8 @@ body:has(.topn-drawer.is-open) {
     right: 0;
     bottom: var(--topn-mobile-action-bar-height);
     z-index: 34;
+    height: var(--topn-mobile-tools-height);
+    box-sizing: border-box;
     margin-top: 0;
     flex-wrap: nowrap;
     overflow-x: auto;

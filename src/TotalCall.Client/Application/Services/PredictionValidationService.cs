@@ -78,11 +78,14 @@ public sealed class PredictionValidationService : IPredictionValidationService
     {
         if (answer is null)
         {
-            return [];
+            return ShouldValidateRequiredAnswer(question)
+                ? [CreateRequiredError(group.Id, question.Id)]
+                : [];
         }
 
         var errors = new List<PredictionValidationError>();
 
+        ValidateRequiredAnswer(group, question, answer, errors);
         ValidateSelectionCount(group, question, answer, errors);
         ValidateNumericRange(group, question, answer, errors);
         ValidateDuplicateAthletes(group, question, answer, errors);
@@ -160,6 +163,41 @@ public sealed class PredictionValidationService : IPredictionValidationService
         return PredictionCompletionStatus.Complete;
     }
 
+    private static void ValidateRequiredAnswer(
+        PredictionGroup group,
+        PredictionQuestion question,
+        PredictionAnswer answer,
+        List<PredictionValidationError> errors)
+    {
+        if (!ShouldValidateRequiredAnswer(question))
+        {
+            return;
+        }
+
+        var selectedCount = GetSelectedCount(question, answer);
+        var requiredCount = GetRequiredCount(question);
+
+        if (selectedCount >= requiredCount)
+        {
+            return;
+        }
+
+        errors.Add(CreateRequiredError(group.Id, question.Id));
+    }
+
+    private static bool ShouldValidateRequiredAnswer(PredictionQuestion question)
+    {
+        if (!question.Required)
+        {
+            return false;
+        }
+
+        return question.Type is not (
+            PredictionQuestionType.MultiAthleteChoice or
+            PredictionQuestionType.AthleteRanking or
+            PredictionQuestionType.CategoryPodium);
+    }
+
     private static int GetSelectedCount(PredictionQuestion question, PredictionAnswer? answer)
     {
         if (answer is null)
@@ -207,6 +245,13 @@ public sealed class PredictionValidationService : IPredictionValidationService
             _ => 1
         };
     }
+
+    private static PredictionValidationError CreateRequiredError(string groupId, string questionId) =>
+        CreateError(
+            groupId,
+            questionId,
+            "Validation.Required",
+            "This prediction is required.");
 
     private static void ValidateSelectionCount(
         PredictionGroup group,
