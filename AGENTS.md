@@ -36,6 +36,8 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 - Supabase Studio is `http://127.0.0.1:54323`.
 - Local email/Magic Link inbox is `http://127.0.0.1:54324`.
 - Auth callback route is `/auth/callback`; local redirect URLs are configured in `supabase/config.toml`.
+- Local Supabase MCP is `http://127.0.0.1:54321/mcp`.
+- Claude Code uses `.mcp.json`; Zed uses `.zed/settings.json`. Both point to the local Supabase MCP endpoint and require the local Supabase stack to be running.
 
 ## Athlete Data Import
 
