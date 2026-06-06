@@ -167,8 +167,13 @@ public sealed class SupabaseProfileStore(
 
     private static bool IsAllowedDisplayNameCharacter(char character)
     {
-        return char.IsLetterOrDigit(character) ||
-               character is ' ' or '.' or '-' or '_';
+        // ASCII-only on purpose so this matches the database constraint
+        // (^[A-Za-z0-9 ._-]+$) regardless of the database lc_ctype locale.
+        return character is
+            (>= 'a' and <= 'z') or
+            (>= 'A' and <= 'Z') or
+            (>= '0' and <= '9') or
+            ' ' or '.' or '-' or '_';
     }
 
     private sealed record AuthenticatedContext(string UserId, string AccessToken);

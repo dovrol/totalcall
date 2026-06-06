@@ -111,6 +111,8 @@ public sealed class SupabaseProfileStoreTests
     [InlineData("<b>Kuba</b>")]
     [InlineData("Kuba\nNowak")]
     [InlineData("Kuba!")]
+    [InlineData("Mareł")]
+    [InlineData("Żelazny")]
     public void NormalizeDisplayName_RejectsTooLongHtmlControlCharactersAndUnsupportedPunctuation(string displayName)
     {
         Assert.Throws<InvalidOperationException>(() =>

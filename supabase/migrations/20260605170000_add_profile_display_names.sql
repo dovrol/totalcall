@@ -137,7 +137,7 @@ begin
       using errcode = '22023';
   end if;
 
-  if v_display_name !~ '^[[:alnum:] ._-]+$' then
+  if v_display_name !~ '^[A-Za-z0-9 ._-]+$' then
     raise exception 'display_name contains unsupported characters'
       using errcode = '22023';
   end if;
@@ -218,7 +218,7 @@ set display_name = private.default_profile_display_name(id)
 where display_name is null
   or length(btrim(display_name)) = 0
   or length(btrim(display_name)) > 32
-  or btrim(display_name) !~ '^[[:alnum:] ._-]+$';
+  or btrim(display_name) !~ '^[A-Za-z0-9 ._-]+$';
 
 update public.profiles
 set display_name = private.validate_profile_display_name(display_name)
@@ -252,7 +252,7 @@ alter table public.profiles
   check (
     display_name = btrim(display_name)
     and length(display_name) between 1 and 32
-    and display_name ~ '^[[:alnum:] ._-]+$'
+    and display_name ~ '^[A-Za-z0-9 ._-]+$'
   );
 
 drop index if exists public.profiles_display_name_ci_unique_idx;

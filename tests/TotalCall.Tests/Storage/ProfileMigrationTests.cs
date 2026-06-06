@@ -52,11 +52,11 @@ public sealed class ProfileMigrationTests
         Assert.Contains("private.validate_profile_display_name", sql);
         Assert.Contains("btrim(coalesce(p_display_name, ''))", sql);
         Assert.Contains("length(v_display_name) > 32", sql);
-        Assert.Contains("v_display_name !~ '^[[:alnum:] ._-]+$'", sql);
+        Assert.Contains("v_display_name !~ '^[A-Za-z0-9 ._-]+$'", sql);
         Assert.Contains("profiles_display_name_valid", sql);
         Assert.Contains("display_name = btrim(display_name)", sql);
         Assert.Contains("length(display_name) between 1 and 32", sql);
-        Assert.Contains("display_name ~ '^[[:alnum:] ._-]+$'", sql);
+        Assert.Contains("display_name ~ '^[A-Za-z0-9 ._-]+$'", sql);
     }
 
     [Fact]
