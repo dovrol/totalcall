@@ -15,6 +15,9 @@ public enum AppIconName
     X,
     Lock,
     Unlock,
+    HardDrive,
+    CloudCheck,
+    CloudOff,
     Share,
     Copy,
     Download,
@@ -44,6 +47,8 @@ public enum AppIconName
     PencilLine,
     Calculator,
     RotateCcw,
+    RefreshCw,
+    EyeOff,
     ExternalLink,
     Mail,
     LogOut

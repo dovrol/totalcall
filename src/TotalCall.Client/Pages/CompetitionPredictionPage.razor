@@ -8,6 +8,7 @@
 @inject PredictionSyncState PredictionSyncState
 @inject IStringLocalizer<SharedResource> Localizer
 @inject ToastService Toasts
+@inject AuthService Auth
 
 <PageTitle>@(competition is null ? Localizer["Predictions.PageTitle"] : $"{competition.Name} - {Localizer["Predictions.PageTitle"]}")</PageTitle>
 
@@ -37,10 +38,16 @@ else if (IsTopNGroup(ActiveGroup))
         ActiveModuleValidation="@GetModuleValidation(ActiveGroup.Id)"
         ModuleValidationByGroupId="@moduleValidationByGroupId"
         CanEditPredictions="@canEditPredictions"
+        IsAuthenticated="@Auth.IsAuthenticated"
         SaveStatus="@CurrentSaveStatus"
         LastSavedAt="@predictionSet.SavedAt"
+        SubmittedAt="@predictionSet.SubmittedAt"
+        IsSubmitting="@isSubmitting"
+        SubmitError="@submitError"
         GroupChanged="@SelectGroup"
         AnswerChanged="@OnAnswerChanged"
+        SubmitRequested="@OnSubmitRequested"
+        RetrySyncRequested="@OnRetrySyncRequested"
         ShareRequested="@OnShareRequested" />
 }
 else
@@ -53,10 +60,16 @@ else
         ActiveModuleValidation="@GetModuleValidation(ActiveGroup.Id)"
         ModuleValidationByGroupId="@moduleValidationByGroupId"
         CanEditPredictions="@canEditPredictions"
+        IsAuthenticated="@Auth.IsAuthenticated"
         SaveStatus="@CurrentSaveStatus"
         LastSavedAt="@predictionSet.SavedAt"
+        SubmittedAt="@predictionSet.SubmittedAt"
+        IsSubmitting="@isSubmitting"
+        SubmitError="@submitError"
         GroupChanged="@SelectGroup"
         AnswerChanged="@OnAnswerChanged"
+        SubmitRequested="@OnSubmitRequested"
+        RetrySyncRequested="@OnRetrySyncRequested"
         ShareRequested="@OnShareRequested" />
 }
 
@@ -80,6 +93,8 @@ else
     private bool canEditPredictions;
     private string? activeGroupId;
     private bool isShareOpen;
+    private bool isSubmitting;
+    private string? submitError;
     private CompetitionReviewModel? shareReview;
 
     private IReadOnlyList<PredictionGroup> OrderedGroups => competition?
@@ -91,9 +106,26 @@ else
         .FirstOrDefault(group => group.Id == activeGroupId) ??
         OrderedGroups.FirstOrDefault();
 
-    private PredictionSaveStatus CurrentSaveStatus => predictionSet is null
-        ? PredictionSaveStatus.Local
-        : PredictionSyncState.GetStatus(predictionSet.CompetitionId);
+    private PredictionSaveStatus CurrentSaveStatus
+    {
+        get
+        {
+            if (predictionSet is null)
+            {
+                return PredictionSaveStatus.Local;
+            }
+
+            var saveStatus = PredictionSyncState.GetStatus(predictionSet.CompetitionId);
+            if (saveStatus == PredictionSaveStatus.SynchronizationFailed)
+            {
+                return saveStatus;
+            }
+
+            return predictionSet.IsSubmitted
+                ? PredictionSaveStatus.Submitted
+                : saveStatus;
+        }
+    }
 
     protected override void OnInitialized()
     {
@@ -184,6 +216,7 @@ else
         }
 
         predictionSet = PredictionService.UpdateAnswer(predictionSet, answer);
+        submitError = null;
         RefreshValidation();
 
         await SaveAsync();
@@ -204,6 +237,45 @@ else
         {
             Toasts.ShowError(Localizer["Predictions.Toast.Save.Error"]);
         }
+    }
+
+    private async Task OnSubmitRequested()
+    {
+        if (competition is null ||
+            predictionSet is null ||
+            !canEditPredictions ||
+            isSubmitting ||
+            CurrentSaveStatus == PredictionSaveStatus.SynchronizationFailed)
+        {
+            return;
+        }
+
+        isSubmitting = true;
+        submitError = null;
+
+        try
+        {
+            predictionSet = await PredictionService.SubmitAsync(predictionSet);
+            RefreshValidation();
+            Toasts.ShowSuccess(Localizer["Predictions.Toast.Submit.Success"]);
+        }
+        catch (Exception ex)
+        {
+            submitError = string.IsNullOrWhiteSpace(ex.Message)
+                ? Localizer["Predictions.Toast.Submit.Error"]
+                : ex.Message;
+            Toasts.ShowError(Localizer["Predictions.Toast.Submit.Error"]);
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private async Task OnRetrySyncRequested()
+    {
+        submitError = null;
+        await SaveAsync();
     }
 
     private Task SelectGroup(string groupId)

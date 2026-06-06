@@ -61,9 +61,66 @@
         return keys;
     }
 
+    function trapFocus(root) {
+        if (!root) {
+            return;
+        }
+
+        var focusableSelector = [
+            "a[href]",
+            "button:not([disabled])",
+            "textarea:not([disabled])",
+            "input:not([disabled])",
+            "select:not([disabled])",
+            "[tabindex]:not([tabindex='-1'])"
+        ].join(",");
+
+        function getFocusable() {
+            return Array.prototype.slice.call(root.querySelectorAll(focusableSelector))
+                .filter(function (element) {
+                    return element.offsetWidth > 0 ||
+                        element.offsetHeight > 0 ||
+                        element === document.activeElement;
+                });
+        }
+
+        function onKeyDown(event) {
+            if (event.key !== "Tab") {
+                return;
+            }
+
+            var focusable = getFocusable();
+            if (focusable.length === 0) {
+                event.preventDefault();
+                root.focus();
+                return;
+            }
+
+            var first = focusable[0];
+            var last = focusable[focusable.length - 1];
+
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        }
+
+        root.addEventListener("keydown", onKeyDown);
+
+        window.setTimeout(function () {
+            var autofocus = root.querySelector("[data-autofocus]");
+            var focusable = getFocusable();
+            (autofocus || focusable[0] || root).focus();
+        }, 0);
+    }
+
     window.totalCallActions = {
         copyText: copyText,
         downloadTextFile: downloadTextFile,
-        getLocalStorageKeys: getLocalStorageKeys
+        getLocalStorageKeys: getLocalStorageKeys,
+        trapFocus: trapFocus
     };
 })();
