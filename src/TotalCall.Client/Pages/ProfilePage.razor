@@ -1,0 +1,260 @@
+@page "/profile"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@implements IDisposable
+@using TotalCall.Client.Application.Services.Notifications
+@using TotalCall.Client.Infrastructure.Supabase
+@inject AuthService Auth
+@inject SupabaseProfileStore ProfileStore
+@inject ToastService Toasts
+@inject NavigationManager Navigation
+@inject IStringLocalizer<SharedResource> Localizer
+
+<PageTitle>@Localizer["Profile.Title"] · TotalCall</PageTitle>
+
+<div class="profile-page">
+    <header class="profile-page__head">
+        <p class="profile-page__eyebrow">@Localizer["Profile.Eyebrow"]</p>
+        <h1>@Localizer["Profile.Title"]</h1>
+        <p>@Localizer["Profile.Description"]</p>
+    </header>
+
+    @if (isLoading)
+    {
+        <AppLoadingState Message="@Localizer["Profile.Loading"]" />
+    }
+    else if (loadError is not null)
+    {
+        <AppErrorState
+            Title="@Localizer["Profile.LoadErrorTitle"]"
+            Description="@loadError" />
+    }
+    else
+    {
+        <AppCard AdditionalClass="profile-card">
+            <div class="profile-card__identity">
+                <span class="profile-card__avatar" aria-hidden="true">@Initials(model.DisplayName)</span>
+                <div>
+                    <strong>@model.DisplayName</strong>
+                    <span>@Localizer["Profile.PublicName"]</span>
+                </div>
+            </div>
+
+            <dl class="profile-meta">
+                <div>
+                    <dt>@Localizer["Profile.EmailLabel"]</dt>
+                    <dd>@Email</dd>
+                </div>
+                <div>
+                    <dt>@Localizer["Profile.EmailPrivacyTitle"]</dt>
+                    <dd>@Localizer["Profile.EmailPrivacyCopy"]</dd>
+                </div>
+            </dl>
+
+            <EditForm EditContext="editContext" OnSubmit="SaveAsync" class="profile-form">
+                <div class="profile-form__field-group">
+                    <label class="profile-form__label" for="profile-display-name">
+                        @Localizer["Profile.DisplayNameLabel"]
+                    </label>
+                    <div class="profile-form__field">
+                        <AppIcon Name="AppIconName.User" Size="16" />
+                        <InputText
+                            id="profile-display-name"
+                            class="profile-form__input"
+                            maxlength="32"
+                            autocomplete="nickname"
+                            disabled="@isSaving"
+                            @bind-Value="model.DisplayName" />
+                    </div>
+                    <ValidationMessage For="@(() => model.DisplayName)" class="profile-form__error" />
+                    <p class="profile-form__hint">@Localizer["Profile.DisplayNameHint"]</p>
+                </div>
+
+                <div class="profile-form__privacy">
+                    <AppIcon Name="AppIconName.Info" Size="15" />
+                    <span>@Localizer["Profile.VisibilityCopy"]</span>
+                </div>
+
+                @if (saveError is not null)
+                {
+                    <p class="profile-form__alert" role="alert">@saveError</p>
+                }
+
+                @if (saveSuccess is not null)
+                {
+                    <p class="profile-form__success" role="status">@saveSuccess</p>
+                }
+
+                <AppButton
+                    ButtonType="submit"
+                    Variant="Primary"
+                    Disabled="@isSaving"
+                    AdditionalClass="profile-form__submit">
+                    @if (isSaving)
+                    {
+                        <span class="auth-form__spinner" aria-hidden="true"></span>
+                        @Localizer["Profile.Saving"]
+                    }
+                    else
+                    {
+                        @Localizer["Profile.Save"]
+                    }
+                </AppButton>
+            </EditForm>
+        </AppCard>
+    }
+</div>
+
+@code {
+    private readonly ProfileFormModel model = new();
+    private EditContext editContext = default!;
+    private ValidationMessageStore validationMessages = default!;
+    private FieldIdentifier displayNameField;
+    private bool isLoading = true;
+    private bool isSaving;
+    private string? loadError;
+    private string? saveError;
+    private string? saveSuccess;
+
+    private string Email => Auth.CurrentUser?.Email ?? Localizer["Profile.EmailUnavailable"];
+
+    protected override async Task OnInitializedAsync()
+    {
+        editContext = new EditContext(model);
+        validationMessages = new ValidationMessageStore(editContext);
+        displayNameField = new FieldIdentifier(model, nameof(model.DisplayName));
+        editContext.OnFieldChanged += ClearFieldState;
+
+        if (!Auth.IsAuthenticated)
+        {
+            Navigation.NavigateTo("auth/login?returnUrl=%2Fprofile", replace: true);
+            return;
+        }
+
+        await LoadProfileAsync();
+    }
+
+    private async Task LoadProfileAsync()
+    {
+        isLoading = true;
+        loadError = null;
+
+        try
+        {
+            var profile = await ProfileStore.GetCurrentProfileAsync();
+            model.DisplayName = profile.DisplayName;
+        }
+        catch (Exception ex)
+        {
+            loadError = string.IsNullOrWhiteSpace(ex.Message)
+                ? Localizer["Profile.LoadErrorDescription"]
+                : ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task SaveAsync()
+    {
+        saveError = null;
+        saveSuccess = null;
+
+        if (!ValidateDisplayName())
+        {
+            return;
+        }
+
+        isSaving = true;
+
+        try
+        {
+            var profile = await ProfileStore.UpdateDisplayNameAsync(model.DisplayName);
+            model.DisplayName = profile.DisplayName;
+            saveSuccess = Localizer["Profile.SaveSuccess"];
+            Toasts.ShowSuccess(saveSuccess);
+        }
+        catch (Exception ex)
+        {
+            saveError = ex.Message == SupabaseProfileStore.DisplayNameTakenMessage
+                ? Localizer["Profile.DisplayNameTaken"]
+                : string.IsNullOrWhiteSpace(ex.Message)
+                ? Localizer["Profile.SaveError"]
+                : ex.Message;
+            Toasts.ShowError(saveError);
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private bool ValidateDisplayName()
+    {
+        validationMessages.Clear(displayNameField);
+        var normalized = model.DisplayName.Trim();
+
+        if (normalized.Length == 0)
+        {
+            validationMessages.Add(displayNameField, Localizer["Profile.DisplayNameRequired"]);
+        }
+        else if (normalized.Length > 32)
+        {
+            validationMessages.Add(displayNameField, Localizer["Profile.DisplayNameTooLong"]);
+        }
+        else if (normalized.Any(character => char.IsControl(character) || character is '<' or '>'))
+        {
+            validationMessages.Add(displayNameField, Localizer["Profile.DisplayNameInvalid"]);
+        }
+        else if (normalized.Any(character => !IsAllowedDisplayNameCharacter(character)))
+        {
+            validationMessages.Add(displayNameField, Localizer["Profile.DisplayNameInvalid"]);
+        }
+        else
+        {
+            model.DisplayName = normalized;
+        }
+
+        editContext.NotifyValidationStateChanged();
+        return !validationMessages[displayNameField].Any();
+    }
+
+    private void ClearFieldState(object? sender, FieldChangedEventArgs args)
+    {
+        if (args.FieldIdentifier.Equals(displayNameField))
+        {
+            validationMessages.Clear(displayNameField);
+            saveError = null;
+            saveSuccess = null;
+            editContext.NotifyValidationStateChanged();
+        }
+    }
+
+    public void Dispose()
+    {
+        editContext.OnFieldChanged -= ClearFieldState;
+    }
+
+    private static string Initials(string? displayName)
+    {
+        var letters = (displayName ?? string.Empty)
+            .Where(char.IsLetterOrDigit)
+            .Take(2)
+            .ToArray();
+
+        return letters.Length == 0
+            ? "TC"
+            : new string(letters).ToUpperInvariant();
+    }
+
+    private static bool IsAllowedDisplayNameCharacter(char character)
+    {
+        return char.IsLetterOrDigit(character) ||
+               character is ' ' or '.' or '-' or '_';
+    }
+
+    private sealed class ProfileFormModel
+    {
+        public string DisplayName { get; set; } = string.Empty;
+    }
+}

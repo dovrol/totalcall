@@ -55,6 +55,13 @@
                     </header>
 
                     <div class="auth-menu__section">
+                        <a class="auth-menu__link" href="profile" @onclick="CloseMenu">
+                            <AppIcon Name="AppIconName.User" Size="16" />
+                            <span>@Localizer["Nav.Profile"]</span>
+                        </a>
+                    </div>
+
+                    <div class="auth-menu__section">
                         <span class="auth-menu__label">@Localizer["Account.Theme"]</span>
                         <ThemeToggle />
                     </div>

@@ -107,6 +107,23 @@ builder.Services.AddScoped(sp =>
         key ?? string.Empty,
         sp.GetRequiredService<AuthService>());
 });
+builder.Services.AddScoped(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var url = config[$"{SupabaseSettings.SectionName}:Url"];
+    var key = config[$"{SupabaseSettings.SectionName}:PublishableKey"];
+
+    HttpClient? http = null;
+    if (!string.IsNullOrWhiteSpace(url) && !string.IsNullOrWhiteSpace(key))
+    {
+        http = new HttpClient { BaseAddress = new Uri(url.TrimEnd('/') + "/") };
+    }
+
+    return new SupabaseProfileStore(
+        http,
+        key ?? string.Empty,
+        sp.GetRequiredService<AuthService>());
+});
 
 builder.Services.AddScoped<WindowManager>();
 builder.Services.AddScoped<IPredictionScoringService, PredictionScoringService>();

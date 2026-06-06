@@ -649,6 +649,28 @@
   <data name="Auth.Login.Hint" xml:space="preserve"><value>Link jest ważny przez krótki czas i działa tylko raz.</value></data>
   <data name="Auth.Login.AlreadyTitle" xml:space="preserve"><value>Jesteś zalogowany</value></data>
   <data name="Auth.Login.GoToApp" xml:space="preserve"><value>Przejdź do aplikacji</value></data>
+  <data name="Profile.Title" xml:space="preserve"><value>Profil</value></data>
+  <data name="Profile.Eyebrow" xml:space="preserve"><value>Konto</value></data>
+  <data name="Profile.Description" xml:space="preserve"><value>Ustaw publiczny nick dla zgłoszeń TotalCall.</value></data>
+  <data name="Profile.Loading" xml:space="preserve"><value>Wczytujemy profil…</value></data>
+  <data name="Profile.LoadErrorTitle" xml:space="preserve"><value>Nie udało się wczytać profilu</value></data>
+  <data name="Profile.LoadErrorDescription" xml:space="preserve"><value>Spróbuj odświeżyć stronę.</value></data>
+  <data name="Profile.PublicName" xml:space="preserve"><value>Publiczny nick</value></data>
+  <data name="Profile.EmailLabel" xml:space="preserve"><value>Email</value></data>
+  <data name="Profile.EmailUnavailable" xml:space="preserve"><value>Email niedostępny</value></data>
+  <data name="Profile.EmailPrivacyTitle" xml:space="preserve"><value>Prywatność emaila</value></data>
+  <data name="Profile.EmailPrivacyCopy" xml:space="preserve"><value>Twój email nie jest publiczny.</value></data>
+  <data name="Profile.DisplayNameLabel" xml:space="preserve"><value>Nick</value></data>
+  <data name="Profile.DisplayNameHint" xml:space="preserve"><value>Maksymalnie 32 znaki: litery, cyfry, spacje, kropka, myślnik i underscore.</value></data>
+  <data name="Profile.VisibilityCopy" xml:space="preserve"><value>Ten nick będzie widoczny na liście Uczestników i późniejszym leaderboardzie.</value></data>
+  <data name="Profile.Save" xml:space="preserve"><value>Zapisz</value></data>
+  <data name="Profile.Saving" xml:space="preserve"><value>Zapisywanie…</value></data>
+  <data name="Profile.SaveSuccess" xml:space="preserve"><value>Profil zapisany.</value></data>
+  <data name="Profile.SaveError" xml:space="preserve"><value>Nie udało się zapisać profilu. Spróbuj ponownie.</value></data>
+  <data name="Profile.DisplayNameRequired" xml:space="preserve"><value>Podaj nick.</value></data>
+  <data name="Profile.DisplayNameTooLong" xml:space="preserve"><value>Nick może mieć maksymalnie 32 znaki.</value></data>
+  <data name="Profile.DisplayNameInvalid" xml:space="preserve"><value>Nick może zawierać tylko litery, cyfry, spacje, kropkę, myślnik i underscore.</value></data>
+  <data name="Profile.DisplayNameTaken" xml:space="preserve"><value>Ten nick jest już zajęty.</value></data>
   <data name="Auth.Callback.LoadingTitle" xml:space="preserve"><value>Logowanie…</value></data>
   <data name="Auth.Callback.LoadingBody" xml:space="preserve"><value>Weryfikujemy Twój magiczny link.</value></data>
   <data name="Auth.Callback.SuccessTitle" xml:space="preserve"><value>Zalogowano</value></data>

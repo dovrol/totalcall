@@ -649,6 +649,28 @@
   <data name="Auth.Login.Hint" xml:space="preserve"><value>The link is valid for a short time and works only once.</value></data>
   <data name="Auth.Login.AlreadyTitle" xml:space="preserve"><value>You're signed in</value></data>
   <data name="Auth.Login.GoToApp" xml:space="preserve"><value>Go to the app</value></data>
+  <data name="Profile.Title" xml:space="preserve"><value>Profile</value></data>
+  <data name="Profile.Eyebrow" xml:space="preserve"><value>Account</value></data>
+  <data name="Profile.Description" xml:space="preserve"><value>Set the public nickname for TotalCall entries.</value></data>
+  <data name="Profile.Loading" xml:space="preserve"><value>Loading profile…</value></data>
+  <data name="Profile.LoadErrorTitle" xml:space="preserve"><value>Could not load profile</value></data>
+  <data name="Profile.LoadErrorDescription" xml:space="preserve"><value>Try refreshing the page.</value></data>
+  <data name="Profile.PublicName" xml:space="preserve"><value>Public nickname</value></data>
+  <data name="Profile.EmailLabel" xml:space="preserve"><value>Email</value></data>
+  <data name="Profile.EmailUnavailable" xml:space="preserve"><value>Email unavailable</value></data>
+  <data name="Profile.EmailPrivacyTitle" xml:space="preserve"><value>Email privacy</value></data>
+  <data name="Profile.EmailPrivacyCopy" xml:space="preserve"><value>Your email is not public.</value></data>
+  <data name="Profile.DisplayNameLabel" xml:space="preserve"><value>Nickname</value></data>
+  <data name="Profile.DisplayNameHint" xml:space="preserve"><value>Maximum 32 characters: letters, numbers, spaces, dot, hyphen and underscore.</value></data>
+  <data name="Profile.VisibilityCopy" xml:space="preserve"><value>This nickname will be visible on the Participants list and future leaderboard.</value></data>
+  <data name="Profile.Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Profile.Saving" xml:space="preserve"><value>Saving…</value></data>
+  <data name="Profile.SaveSuccess" xml:space="preserve"><value>Profile saved.</value></data>
+  <data name="Profile.SaveError" xml:space="preserve"><value>Could not save profile. Please try again.</value></data>
+  <data name="Profile.DisplayNameRequired" xml:space="preserve"><value>Enter a nickname.</value></data>
+  <data name="Profile.DisplayNameTooLong" xml:space="preserve"><value>Nickname can be at most 32 characters.</value></data>
+  <data name="Profile.DisplayNameInvalid" xml:space="preserve"><value>Nickname can contain only letters, numbers, spaces, dot, hyphen and underscore.</value></data>
+  <data name="Profile.DisplayNameTaken" xml:space="preserve"><value>This nickname is already taken.</value></data>
   <data name="Auth.Callback.LoadingTitle" xml:space="preserve"><value>Signing you in…</value></data>
   <data name="Auth.Callback.LoadingBody" xml:space="preserve"><value>Verifying your magic link.</value></data>
   <data name="Auth.Callback.SuccessTitle" xml:space="preserve"><value>Signed in</value></data>
