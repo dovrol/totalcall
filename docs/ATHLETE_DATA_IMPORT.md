@@ -156,10 +156,8 @@ Upsert pipeline per batch:
 1. Go to **Actions → "Import OpenIPF / OpenPowerlifting data"**.
 2. Click **"Run workflow"**.
 3. Fill in:
-   - **competition_json** — defaults to `src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json`
-   - **source** — `openipf` (default) or `openpowerlifting`
-   - **csv_url** — leave empty to use the default for the source
-   - **dry_run** — `true` to scan without writing
+   - **competition** — `worlds-2026` by default.
+   - **source** — `both` (default), `openipf`, or `openpowerlifting`
 4. Click **Run workflow**.
 
 The workflow also runs on a cron (Mondays 03:17 UTC).
@@ -179,20 +177,16 @@ GitHub Secrets and is only read inside the workflow runner.
 ### Running locally
 
 ```bash
-cd tools/import-opl/TotalCall.OplImporter
-
-# Dry-run against the live OPL CSV (no Supabase needed):
-dotnet run -- \
-  --competition-json ../../../src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json \
-  --source openipf \
-  --dry-run
-
-# Real run against Supabase:
 export SUPABASE_URL="https://<project>.supabase.co"
 export SUPABASE_SECRET_KEY="<service_role key>"
-dotnet run -- \
-  --competition-json ../../../src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json \
-  --source openipf
+
+# Imports both openipf and openpowerlifting by default.
+./scripts/import-athlete-data.sh
+
+# Or import a single source.
+./scripts/import-athlete-data.sh \
+  src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json \
+  openipf
 ```
 
 ## 7. Security model (no Dashboard setup required)

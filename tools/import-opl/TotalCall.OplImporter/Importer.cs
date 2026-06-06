@@ -22,7 +22,7 @@ public sealed class ImporterOptions
 
 public sealed class Importer
 {
-    private const int LookupBatchSize = 100;
+    private const int LookupBatchSize = 20;
 
     public async Task<int> RunAsync(ImporterOptions opts, CancellationToken ct)
     {
