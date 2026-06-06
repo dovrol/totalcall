@@ -26,6 +26,11 @@ public sealed class LocalStoragePredictionStore(BrowserLocalStorage localStorage
             cancellationToken);
     }
 
+    public Task<PredictionSet> SubmitAsync(PredictionSet predictionSet, CancellationToken cancellationToken = default)
+    {
+        throw new InvalidOperationException("Submitting predictions requires an authenticated cloud session.");
+    }
+
     public async Task<IReadOnlyList<PredictionSet>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var keys = await localStorage.GetKeysAsync(LocalStorageKeys.PredictionsPrefix, cancellationToken);

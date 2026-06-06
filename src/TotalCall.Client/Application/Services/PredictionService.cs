@@ -68,6 +68,18 @@ public sealed class PredictionService(
             cancellationToken);
     }
 
+    public Task<PredictionSet> SubmitAsync(PredictionSet predictionSet, CancellationToken cancellationToken = default)
+    {
+        if (!authService.IsAuthenticated)
+        {
+            throw new InvalidOperationException("Submitting predictions requires sign-in.");
+        }
+
+        return predictionStore.SubmitAsync(
+            CreateExportPayload(predictionSet),
+            cancellationToken);
+    }
+
     private PredictionSet EnsureStorageMetadata(PredictionSet predictionSet)
     {
         return predictionSet with

@@ -98,7 +98,11 @@ public sealed class SynchronizedPredictionStore(
 
         var ownedPredictionSet = AssignOwner(predictionSet, currentUserId);
         await localStore.SaveAsync(ownedPredictionSet, cancellationToken);
-        syncState.SetStatus(predictionSet.CompetitionId, PredictionSaveStatus.Local);
+        syncState.SetStatus(
+            predictionSet.CompetitionId,
+            ownedPredictionSet.IsSubmitted
+                ? PredictionSaveStatus.Submitted
+                : PredictionSaveStatus.Local);
 
         try
         {
@@ -118,6 +122,44 @@ public sealed class SynchronizedPredictionStore(
         {
             SetCloudFailureStatus(predictionSet.CompetitionId);
         }
+    }
+
+    public async Task<PredictionSet> SubmitAsync(
+        PredictionSet predictionSet,
+        CancellationToken cancellationToken = default)
+    {
+        var currentUserId = GetCurrentUserId();
+        if (currentUserId is null)
+        {
+            throw new InvalidOperationException("Submitting predictions requires an authenticated user.");
+        }
+
+        if (!IsAnonymous(predictionSet) && !IsOwnedBy(predictionSet, currentUserId))
+        {
+            throw new InvalidOperationException("Cannot submit a prediction draft owned by another user.");
+        }
+
+        if (syncState.GetStatus(predictionSet.CompetitionId) == PredictionSaveStatus.SynchronizationFailed)
+        {
+            throw new InvalidOperationException("Synchronize the cloud draft before submitting predictions.");
+        }
+
+        var ownedPredictionSet = AssignOwner(predictionSet, currentUserId);
+        var submissionCandidate = ownedPredictionSet with
+        {
+            SubmissionStatus = PredictionSet.SubmittedSubmissionStatus
+        };
+        var metadata = await cloudStore.SubmitAsync(submissionCandidate, cancellationToken);
+        var submitted = submissionCandidate with
+        {
+            SubmissionStatus = NormalizeSubmissionStatus(metadata.Status, metadata.SubmittedAt),
+            SubmittedAt = metadata.SubmittedAt
+        };
+
+        await localStore.SaveAsync(submitted, cancellationToken);
+        syncState.SetStatus(submitted.CompetitionId, PredictionSaveStatus.Submitted);
+
+        return submitted;
     }
 
     public Task DeleteAsync(string competitionId, CancellationToken cancellationToken = default)
@@ -234,7 +276,7 @@ public sealed class SynchronizedPredictionStore(
 
             var adoptedLocal = AssignOwner(local, currentUserId);
             await localStore.SaveAsync(adoptedLocal, cancellationToken);
-            await cloudStore.SaveDraftAsync(adoptedLocal, cancellationToken);
+            await SaveCloudSnapshotAsync(adoptedLocal, cancellationToken);
             return adoptedLocal;
         }
 
@@ -254,14 +296,27 @@ public sealed class SynchronizedPredictionStore(
         if (ownedCloud is null)
         {
             await localStore.SaveAsync(ownedLocal, cancellationToken);
-            await cloudStore.SaveDraftAsync(ownedLocal, cancellationToken);
+            await SaveCloudSnapshotAsync(ownedLocal, cancellationToken);
             return ownedLocal;
         }
 
         var merged = MergeOwnedSnapshots(ownedLocal, ownedCloud, currentUserId);
         await localStore.SaveAsync(merged, cancellationToken);
-        await cloudStore.SaveDraftAsync(merged, cancellationToken);
+        await SaveCloudSnapshotAsync(merged, cancellationToken);
         return merged;
+    }
+
+    private async Task SaveCloudSnapshotAsync(
+        PredictionSet predictionSet,
+        CancellationToken cancellationToken)
+    {
+        if (predictionSet.IsSubmitted)
+        {
+            await cloudStore.SubmitAsync(predictionSet, cancellationToken);
+            return;
+        }
+
+        await cloudStore.SaveDraftAsync(predictionSet, cancellationToken);
     }
 
     private async Task SaveUntrustedDraftAsync(
@@ -332,9 +387,11 @@ public sealed class SynchronizedPredictionStore(
                 cloud.CompetitionConfigVersion,
                 StringComparison.OrdinalIgnoreCase))
         {
-            return AssignOwner(
+            var newest = AssignOwner(
                 local.SavedAt >= cloud.SavedAt ? local : cloud,
                 userId);
+
+            return ApplyMergedSubmissionMetadata(newest, local, cloud);
         }
 
         var answers = new Dictionary<string, PredictionAnswer>(StringComparer.OrdinalIgnoreCase);
@@ -355,7 +412,7 @@ public sealed class SynchronizedPredictionStore(
 
         var newestSnapshot = local.SavedAt >= cloud.SavedAt ? local : cloud;
 
-        return newestSnapshot with
+        var merged = newestSnapshot with
         {
             LocalUserId = userId,
             SchemaVersion = Math.Max(local.SchemaVersion, cloud.SchemaVersion),
@@ -365,6 +422,45 @@ public sealed class SynchronizedPredictionStore(
                 .ThenBy(answer => answer.QuestionId)
                 .ToArray()
         };
+
+        return ApplyMergedSubmissionMetadata(merged, local, cloud);
+    }
+
+    private static PredictionSet ApplyMergedSubmissionMetadata(
+        PredictionSet predictionSet,
+        PredictionSet local,
+        PredictionSet cloud)
+    {
+        if (!local.IsSubmitted && !cloud.IsSubmitted)
+        {
+            return predictionSet with
+            {
+                SubmissionStatus = PredictionSet.DraftSubmissionStatus,
+                SubmittedAt = null
+            };
+        }
+
+        var submittedAt = new[] { local.SubmittedAt, cloud.SubmittedAt }
+            .Where(value => value is not null)
+            .DefaultIfEmpty(null)
+            .Min();
+
+        return predictionSet with
+        {
+            SubmissionStatus = PredictionSet.SubmittedSubmissionStatus,
+            SubmittedAt = submittedAt
+        };
+    }
+
+    private static string NormalizeSubmissionStatus(string? status, DateTimeOffset? submittedAt)
+    {
+        return submittedAt is not null ||
+               string.Equals(
+                   status,
+                   PredictionSet.SubmittedSubmissionStatus,
+                   StringComparison.OrdinalIgnoreCase)
+            ? PredictionSet.SubmittedSubmissionStatus
+            : PredictionSet.DraftSubmissionStatus;
     }
 
     private void SetSynchronizedStatus(string competitionId, PredictionSet? predictionSet)
@@ -373,6 +469,8 @@ public sealed class SynchronizedPredictionStore(
             competitionId,
             predictionSet is null
                 ? PredictionSaveStatus.Local
+                : predictionSet.IsSubmitted
+                    ? PredictionSaveStatus.Submitted
                 : PredictionSaveStatus.Cloud);
     }
 

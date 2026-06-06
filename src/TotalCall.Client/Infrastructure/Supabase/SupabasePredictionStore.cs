@@ -27,7 +27,7 @@ public sealed class SupabasePredictionStore(
         var context = await GetAuthenticatedContextAsync(cancellationToken);
         var url = "rest/v1/prediction_submissions"
                   + $"?competition_id=eq.{Uri.EscapeDataString(competitionId)}"
-                  + "&select=answers_json"
+                  + "&select=answers_json,status,submitted_at"
                   + "&limit=1";
 
         using var request = BuildRequest(HttpMethod.Get, url, context.AccessToken);
@@ -38,10 +38,22 @@ public sealed class SupabasePredictionStore(
             SupabaseJsonOptions,
             cancellationToken);
 
-        var snapshot = rows?.FirstOrDefault()?.AnswersJson;
-        return snapshot is null
+        var row = rows?.FirstOrDefault();
+        if (row?.AnswersJson is null)
+        {
+            return null;
+        }
+
+        var predictionSet = row.AnswersJson.Value.Deserialize<PredictionSet>(
+            JsonDataOptions.SerializerOptions);
+
+        return predictionSet is null
             ? null
-            : snapshot.Value.Deserialize<PredictionSet>(JsonDataOptions.SerializerOptions);
+            : predictionSet with
+            {
+                SubmissionStatus = NormalizeSubmissionStatus(row.Status, row.SubmittedAt),
+                SubmittedAt = IsSubmitted(row.Status, row.SubmittedAt) ? row.SubmittedAt : null
+            };
     }
 
     public async Task SaveDraftAsync(
@@ -53,10 +65,7 @@ public sealed class SupabasePredictionStore(
         {
             UserId = context.UserId,
             CompetitionId = predictionSet.CompetitionId,
-            Status = "draft",
-            AnswersJson = JsonSerializer.SerializeToElement(
-                predictionSet,
-                JsonDataOptions.SerializerOptions),
+            AnswersJson = SerializeSubmissionSnapshot(predictionSet),
             AppVersion = predictionSet.AppVersion,
             SchemaVersion = predictionSet.SchemaVersion
         };
@@ -73,13 +82,76 @@ public sealed class SupabasePredictionStore(
         await EnsureSuccessAsync(response, cancellationToken);
     }
 
+    public async Task<PredictionSubmissionMetadata> SubmitAsync(
+        PredictionSet predictionSet,
+        CancellationToken cancellationToken = default)
+    {
+        var context = await GetAuthenticatedContextAsync(cancellationToken);
+        var body = new SubmitPredictionBody
+        {
+            CompetitionId = predictionSet.CompetitionId,
+            AnswersJson = SerializeSubmissionSnapshot(predictionSet with
+            {
+                SubmissionStatus = PredictionSet.SubmittedSubmissionStatus
+            }),
+            AppVersion = predictionSet.AppVersion,
+            SchemaVersion = predictionSet.SchemaVersion
+        };
+
+        using var request = BuildRequest(
+            HttpMethod.Post,
+            "rest/v1/rpc/submit_prediction",
+            context.AccessToken);
+
+        request.Content = JsonContent.Create(body, options: SupabaseJsonOptions);
+
+        using var response = await httpClient!.SendAsync(request, cancellationToken);
+        await EnsureSuccessAsync(response, cancellationToken);
+
+        var rows = await response.Content.ReadFromJsonAsync<List<SubmitPredictionRow>>(
+            SupabaseJsonOptions,
+            cancellationToken);
+
+        var row = rows?.FirstOrDefault()
+                  ?? throw new InvalidOperationException("Supabase submit did not return submission metadata.");
+
+        return new PredictionSubmissionMetadata(
+            NormalizeSubmissionStatus(row.Status, row.SubmittedAt),
+            row.SubmittedAt);
+    }
+
+    public async Task<IReadOnlyList<PublicPredictionParticipant>> GetParticipantsAsync(
+        string competitionId,
+        CancellationToken cancellationToken = default)
+    {
+        EnsureConfigured();
+
+        var url = "rest/v1/prediction_participants_public"
+                  + $"?competition_id=eq.{Uri.EscapeDataString(competitionId)}"
+                  + "&select=competition_id,display_name,submitted_at,status"
+                  + "&order=submitted_at.desc";
+
+        using var request = BuildPublicRequest(HttpMethod.Get, url);
+        using var response = await httpClient!.SendAsync(request, cancellationToken);
+        await EnsureSuccessAsync(response, cancellationToken);
+
+        var rows = await response.Content.ReadFromJsonAsync<List<PublicPredictionParticipantRow>>(
+            SupabaseJsonOptions,
+            cancellationToken);
+
+        return rows?
+            .Where(row => IsSubmitted(row.Status, row.SubmittedAt))
+            .Select((row, index) => new PublicPredictionParticipant(
+                row.CompetitionId,
+                NormalizeParticipantDisplayName(row.DisplayName, index),
+                row.SubmittedAt!.Value,
+                PredictionSet.SubmittedSubmissionStatus))
+            .ToArray() ?? [];
+    }
+
     private async Task<AuthenticatedContext> GetAuthenticatedContextAsync(CancellationToken cancellationToken)
     {
-        if (httpClient is null || string.IsNullOrWhiteSpace(publishableKey))
-        {
-            throw new InvalidOperationException(
-                "Supabase is not configured. Set Supabase:Url and Supabase:PublishableKey in wwwroot/appsettings.json.");
-        }
+        EnsureConfigured();
 
         var session = await authService.GetSessionAsync(cancellationToken);
         if (session is null || string.IsNullOrWhiteSpace(session.User.Id))
@@ -96,6 +168,22 @@ public sealed class SupabasePredictionStore(
         request.Headers.TryAddWithoutValidation("apikey", publishableKey);
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         return request;
+    }
+
+    private HttpRequestMessage BuildPublicRequest(HttpMethod method, string url)
+    {
+        var request = new HttpRequestMessage(method, url);
+        request.Headers.TryAddWithoutValidation("apikey", publishableKey);
+        return request;
+    }
+
+    private void EnsureConfigured()
+    {
+        if (httpClient is null || string.IsNullOrWhiteSpace(publishableKey))
+        {
+            throw new InvalidOperationException(
+                "Supabase is not configured. Set Supabase:Url and Supabase:PublishableKey in wwwroot/appsettings.json.");
+        }
     }
 
     private static async Task EnsureSuccessAsync(
@@ -120,7 +208,11 @@ public sealed class SupabasePredictionStore(
 
     private sealed record SubmissionRow
     {
-        public JsonElement AnswersJson { get; init; }
+        public JsonElement? AnswersJson { get; init; }
+
+        public string? Status { get; init; }
+
+        public DateTimeOffset? SubmittedAt { get; init; }
     }
 
     private sealed record SubmissionUpsert
@@ -129,12 +221,84 @@ public sealed class SupabasePredictionStore(
 
         public required string CompetitionId { get; init; }
 
-        public required string Status { get; init; }
-
         public required JsonElement AnswersJson { get; init; }
 
         public required string AppVersion { get; init; }
 
         public required int SchemaVersion { get; init; }
     }
+
+    private sealed record SubmitPredictionBody
+    {
+        [JsonPropertyName("p_competition_id")]
+        public required string CompetitionId { get; init; }
+
+        [JsonPropertyName("p_answers_json")]
+        public required JsonElement AnswersJson { get; init; }
+
+        [JsonPropertyName("p_app_version")]
+        public required string AppVersion { get; init; }
+
+        [JsonPropertyName("p_schema_version")]
+        public required int SchemaVersion { get; init; }
+    }
+
+    private sealed record SubmitPredictionRow
+    {
+        public string? Status { get; init; }
+
+        public DateTimeOffset? SubmittedAt { get; init; }
+    }
+
+    private sealed record PublicPredictionParticipantRow
+    {
+        public required string CompetitionId { get; init; }
+
+        public string? DisplayName { get; init; }
+
+        public DateTimeOffset? SubmittedAt { get; init; }
+
+        public string? Status { get; init; }
+    }
+
+    private static string NormalizeSubmissionStatus(string? status, DateTimeOffset? submittedAt)
+    {
+        return IsSubmitted(status, submittedAt)
+            ? PredictionSet.SubmittedSubmissionStatus
+            : PredictionSet.DraftSubmissionStatus;
+    }
+
+    private static bool IsSubmitted(string? status, DateTimeOffset? submittedAt)
+    {
+        return submittedAt is not null ||
+               string.Equals(
+                   status,
+                   PredictionSet.SubmittedSubmissionStatus,
+                   StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string NormalizeParticipantDisplayName(string? displayName, int index)
+    {
+        if (!string.IsNullOrWhiteSpace(displayName))
+        {
+            return displayName.Trim();
+        }
+
+        return SupabaseProfileStore.MissingDisplayNameFallback;
+    }
+
+    private static JsonElement SerializeSubmissionSnapshot(PredictionSet predictionSet)
+    {
+        return JsonSerializer.SerializeToElement(
+            predictionSet with { SubmittedAt = null },
+            JsonDataOptions.SerializerOptions);
+    }
 }
+
+public sealed record PredictionSubmissionMetadata(string Status, DateTimeOffset? SubmittedAt);
+
+public sealed record PublicPredictionParticipant(
+    string CompetitionId,
+    string DisplayName,
+    DateTimeOffset SubmittedAt,
+    string Status);
