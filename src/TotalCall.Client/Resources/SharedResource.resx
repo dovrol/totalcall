@@ -102,6 +102,7 @@
   <data name="Common.Continue" xml:space="preserve"><value>Dalej</value></data>
   <data name="Common.Save" xml:space="preserve"><value>Zapisz</value></data>
   <data name="Common.Cancel" xml:space="preserve"><value>Anuluj</value></data>
+  <data name="Common.TryAgain" xml:space="preserve"><value>Spróbuj ponownie</value></data>
   <data name="Common.Tbd" xml:space="preserve"><value>Do ustalenia</value></data>
   <data name="Common.Today" xml:space="preserve"><value>dzisiaj</value></data>
   <data name="Common.Tomorrow" xml:space="preserve"><value>jutro</value></data>
@@ -164,11 +165,37 @@
   <data name="Predictions.LocalSavedAt" xml:space="preserve"><value>Zapisano lokalnie · {0}</value></data>
   <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Typy zapisują się lokalnie, a po zalogowaniu także w chmurze</value></data>
   <data name="Predictions.SaveStatus.Local" xml:space="preserve"><value>Zapis lokalny</value></data>
-  <data name="Predictions.SaveStatus.Cloud" xml:space="preserve"><value>Zapisano w chmurze</value></data>
+  <data name="Predictions.SaveStatus.Cloud" xml:space="preserve"><value>Draft w chmurze</value></data>
   <data name="Predictions.SaveStatus.Failed" xml:space="preserve"><value>Synchronizacja nieudana</value></data>
   <data name="Predictions.SaveStatus.LocalDetail" xml:space="preserve"><value>Draft w tej przeglądarce · {0}</value></data>
   <data name="Predictions.SaveStatus.CloudDetail" xml:space="preserve"><value>Ostatnia synchronizacja · {0}</value></data>
   <data name="Predictions.SaveStatus.FailedDetail" xml:space="preserve"><value>Draft zapisany lokalnie · {0}</value></data>
+  <data name="Predictions.Submit.Participants" xml:space="preserve"><value>Uczestnicy</value></data>
+  <data name="Predictions.Submit.LoginToSubmit" xml:space="preserve"><value>Zaloguj, aby zatwierdzić</value></data>
+  <data name="Predictions.Submit.SubmitTypes" xml:space="preserve"><value>Zatwierdź typy</value></data>
+  <data name="Predictions.Submit.Submitting" xml:space="preserve"><value>Zatwierdzanie…</value></data>
+  <data name="Predictions.Submit.SubmittingDetail" xml:space="preserve"><value>Wysyłanie do chmury</value></data>
+  <data name="Predictions.Submit.Submitted" xml:space="preserve"><value>Zatwierdzone</value></data>
+  <data name="Predictions.Submit.SubmittedDetail" xml:space="preserve"><value>Aktualizowane automatycznie do deadline</value></data>
+  <data name="Predictions.Submit.SubmittedAt" xml:space="preserve"><value>Zatwierdzono {0}</value></data>
+  <data name="Predictions.Submit.Error" xml:space="preserve"><value>Nie udało się zatwierdzić</value></data>
+  <data name="Predictions.Submit.ErrorDetail" xml:space="preserve"><value>Sprawdź połączenie i spróbuj ponownie</value></data>
+  <data name="Predictions.Submit.TryAgain" xml:space="preserve"><value>Spróbuj ponownie</value></data>
+  <data name="Predictions.Submit.SyncRetry" xml:space="preserve"><value>Synchronizuj ponownie</value></data>
+  <data name="Predictions.Submit.DraftLocal" xml:space="preserve"><value>Draft · lokalny</value></data>
+  <data name="Predictions.Submit.DraftPrivate" xml:space="preserve"><value>Draft · prywatny</value></data>
+  <data name="Predictions.Submit.ConfirmTitle" xml:space="preserve"><value>Zatwierdzić typy?</value></data>
+  <data name="Predictions.Submit.ConfirmDescription" xml:space="preserve"><value>Zatwierdzasz swoje typy dla tych zawodów. To nie jest zakład — bez stawek, kursów i pieniędzy.</value></data>
+  <data name="Predictions.Submit.Competition" xml:space="preserve"><value>Zawody</value></data>
+  <data name="Predictions.Submit.Deadline" xml:space="preserve"><value>do {0}</value></data>
+  <data name="Predictions.Submit.ConfirmParticipants" xml:space="preserve"><value>Twoja nazwa wyświetlana i czas zatwierdzenia mogą pojawić się na liście uczestników.</value></data>
+  <data name="Predictions.Submit.ConfirmAnswersPrivate" xml:space="preserve"><value>Pełne odpowiedzi nie są publiczne na tym etapie — inni nie zobaczą Twoich typów ani e-maila.</value></data>
+  <data name="Predictions.Submit.ConfirmDraftsPrivate" xml:space="preserve"><value>Drafty pozostają prywatne, dopóki ich nie zatwierdzisz.</value></data>
+  <data name="Predictions.Submit.ConfirmAutoUpdate" xml:space="preserve"><value>Po zatwierdzeniu możesz dalej edytować typy do deadline — kolejne zmiany automatycznie zaktualizują zgłoszenie.</value></data>
+  <data name="Predictions.Submit.ConfirmFutureLock" xml:space="preserve"><value>Po deadline typy zostaną zablokowane w przyszłej wersji.</value></data>
+  <data name="Predictions.Submit.ClickOutsideCancels" xml:space="preserve"><value>klik poza = anuluj</value></data>
+  <data name="Predictions.Toast.Submit.Success" xml:space="preserve"><value>Typy zatwierdzone. Zmiany będą aktualizować zgłoszenie do deadline.</value></data>
+  <data name="Predictions.Toast.Submit.Error" xml:space="preserve"><value>Nie udało się zatwierdzić typów.</value></data>
   <data name="Predictions.CopySummary" xml:space="preserve"><value>Kopiuj podsumowanie</value></data>
   <data name="Predictions.ExportJson" xml:space="preserve"><value>Eksportuj JSON</value></data>
   <data name="Predictions.ExportCsv" xml:space="preserve"><value>Eksportuj CSV</value></data>
@@ -630,6 +657,28 @@
   <data name="Predictions.TopN.MobileDeadlift" xml:space="preserve"><value>Martwy ciąg (DL)</value></data>
   <data name="Predictions.Toast.ResetAthlete.Success" xml:space="preserve"><value>Przywrócono {0} do nominacji.</value></data>
   <data name="Predictions.Toast.ResetField.Success" xml:space="preserve"><value>Przywrócono stawkę wg nominacji.</value></data>
+  <data name="Participants.Title" xml:space="preserve"><value>Uczestnicy</value></data>
+  <data name="Participants.Eyebrow" xml:space="preserve"><value>Zatwierdzone typy · v1</value></data>
+  <data name="Participants.Stat.Submitted" xml:space="preserve"><value>zatwierdzonych zgłoszeń</value></data>
+  <data name="Participants.Stat.Deadline" xml:space="preserve"><value>do deadline</value></data>
+  <data name="Participants.Stat.AfterCompetitionValue" xml:space="preserve"><value>po zawodach</value></data>
+  <data name="Participants.Stat.Scoring" xml:space="preserve"><value>ranking / punkty</value></data>
+  <data name="Participants.PrivacyNote" xml:space="preserve"><value>Lista pokazuje tylko zatwierdzone zgłoszenia. Ukrywamy pełne odpowiedzi, e-maile oraz identyfikatory kont. To jeszcze nie jest punktowany ranking — kolejność jest neutralna wg czasu zatwierdzenia. Punkty i ranking pojawią się po wynikach.</value></data>
+  <data name="Participants.SearchPlaceholder" xml:space="preserve"><value>Szukaj po nazwie wyświetlanej…</value></data>
+  <data name="Participants.SortNewest" xml:space="preserve"><value>Sortuj: najnowsze</value></data>
+  <data name="Participants.GoToPredictions" xml:space="preserve"><value>Przejdź do typowania</value></data>
+  <data name="Participants.ListAria" xml:space="preserve"><value>Lista zatwierdzonych zgłoszeń</value></data>
+  <data name="Participants.Column.Number" xml:space="preserve"><value>Lp.</value></data>
+  <data name="Participants.Column.Participant" xml:space="preserve"><value>Uczestnik</value></data>
+  <data name="Participants.Column.SubmittedAt" xml:space="preserve"><value>Zatwierdzono</value></data>
+  <data name="Participants.Column.Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Participants.Column.Scoring" xml:space="preserve"><value>Scoring</value></data>
+  <data name="Participants.Status.Submitted" xml:space="preserve"><value>Zatwierdzone · komplet</value></data>
+  <data name="Participants.ScoringSoon" xml:space="preserve"><value>Scoring wkrótce</value></data>
+  <data name="Participants.Empty.Title" xml:space="preserve"><value>Jeszcze nikt nie zatwierdził typów</value></data>
+  <data name="Participants.Empty.Description" xml:space="preserve"><value>Bądź pierwszą osobą na liście. Wytypuj wyniki w arkuszu predykcji, a potem zatwierdź je z paska akcji.</value></data>
+  <data name="Participants.Error.Title" xml:space="preserve"><value>Nie udało się wczytać listy</value></data>
+  <data name="Participants.Error.Description" xml:space="preserve"><value>Wystąpił problem z połączeniem. Twoje zatwierdzone typy są bezpieczne — to dotyczy tylko podglądu listy uczestników.</value></data>
   <data name="Auth.SignIn" xml:space="preserve"><value>Zaloguj</value></data>
   <data name="Auth.SignOut" xml:space="preserve"><value>Wyloguj</value></data>
   <data name="Auth.Login.Title" xml:space="preserve"><value>Zaloguj się</value></data>
@@ -649,6 +698,28 @@
   <data name="Auth.Login.Hint" xml:space="preserve"><value>Link jest ważny przez krótki czas i działa tylko raz.</value></data>
   <data name="Auth.Login.AlreadyTitle" xml:space="preserve"><value>Jesteś zalogowany</value></data>
   <data name="Auth.Login.GoToApp" xml:space="preserve"><value>Przejdź do aplikacji</value></data>
+  <data name="Profile.Title" xml:space="preserve"><value>Profil</value></data>
+  <data name="Profile.Eyebrow" xml:space="preserve"><value>Konto</value></data>
+  <data name="Profile.Description" xml:space="preserve"><value>Ustaw publiczny nick dla zgłoszeń TotalCall.</value></data>
+  <data name="Profile.Loading" xml:space="preserve"><value>Wczytujemy profil…</value></data>
+  <data name="Profile.LoadErrorTitle" xml:space="preserve"><value>Nie udało się wczytać profilu</value></data>
+  <data name="Profile.LoadErrorDescription" xml:space="preserve"><value>Spróbuj odświeżyć stronę.</value></data>
+  <data name="Profile.PublicName" xml:space="preserve"><value>Publiczny nick</value></data>
+  <data name="Profile.EmailLabel" xml:space="preserve"><value>Email</value></data>
+  <data name="Profile.EmailUnavailable" xml:space="preserve"><value>Email niedostępny</value></data>
+  <data name="Profile.EmailPrivacyTitle" xml:space="preserve"><value>Prywatność emaila</value></data>
+  <data name="Profile.EmailPrivacyCopy" xml:space="preserve"><value>Twój email nie jest publiczny.</value></data>
+  <data name="Profile.DisplayNameLabel" xml:space="preserve"><value>Nick</value></data>
+  <data name="Profile.DisplayNameHint" xml:space="preserve"><value>Maksymalnie 32 znaki: litery, cyfry, spacje, kropka, myślnik i underscore.</value></data>
+  <data name="Profile.VisibilityCopy" xml:space="preserve"><value>Ten nick będzie widoczny na liście Uczestników i późniejszym leaderboardzie.</value></data>
+  <data name="Profile.Save" xml:space="preserve"><value>Zapisz</value></data>
+  <data name="Profile.Saving" xml:space="preserve"><value>Zapisywanie…</value></data>
+  <data name="Profile.SaveSuccess" xml:space="preserve"><value>Profil zapisany.</value></data>
+  <data name="Profile.SaveError" xml:space="preserve"><value>Nie udało się zapisać profilu. Spróbuj ponownie.</value></data>
+  <data name="Profile.DisplayNameRequired" xml:space="preserve"><value>Podaj nick.</value></data>
+  <data name="Profile.DisplayNameTooLong" xml:space="preserve"><value>Nick może mieć maksymalnie 32 znaki.</value></data>
+  <data name="Profile.DisplayNameInvalid" xml:space="preserve"><value>Nick może zawierać tylko litery, cyfry, spacje, kropkę, myślnik i underscore.</value></data>
+  <data name="Profile.DisplayNameTaken" xml:space="preserve"><value>Ten nick jest już zajęty.</value></data>
   <data name="Auth.Callback.LoadingTitle" xml:space="preserve"><value>Logowanie…</value></data>
   <data name="Auth.Callback.LoadingBody" xml:space="preserve"><value>Weryfikujemy Twój magiczny link.</value></data>
   <data name="Auth.Callback.SuccessTitle" xml:space="preserve"><value>Zalogowano</value></data>

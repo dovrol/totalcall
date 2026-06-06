@@ -102,6 +102,7 @@
   <data name="Common.Continue" xml:space="preserve"><value>Continue</value></data>
   <data name="Common.Save" xml:space="preserve"><value>Save</value></data>
   <data name="Common.Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Common.TryAgain" xml:space="preserve"><value>Try again</value></data>
   <data name="Common.Tbd" xml:space="preserve"><value>TBD</value></data>
   <data name="Common.Today" xml:space="preserve"><value>today</value></data>
   <data name="Common.Tomorrow" xml:space="preserve"><value>tomorrow</value></data>
@@ -164,11 +165,37 @@
   <data name="Predictions.LocalSavedAt" xml:space="preserve"><value>Saved locally · {0}</value></data>
   <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Picks are saved locally and, after sign-in, to the cloud</value></data>
   <data name="Predictions.SaveStatus.Local" xml:space="preserve"><value>Local save</value></data>
-  <data name="Predictions.SaveStatus.Cloud" xml:space="preserve"><value>Saved to cloud</value></data>
+  <data name="Predictions.SaveStatus.Cloud" xml:space="preserve"><value>Cloud draft</value></data>
   <data name="Predictions.SaveStatus.Failed" xml:space="preserve"><value>Synchronization failed</value></data>
   <data name="Predictions.SaveStatus.LocalDetail" xml:space="preserve"><value>Draft in this browser · {0}</value></data>
   <data name="Predictions.SaveStatus.CloudDetail" xml:space="preserve"><value>Last synchronized · {0}</value></data>
   <data name="Predictions.SaveStatus.FailedDetail" xml:space="preserve"><value>Draft saved locally · {0}</value></data>
+  <data name="Predictions.Submit.Participants" xml:space="preserve"><value>Participants</value></data>
+  <data name="Predictions.Submit.LoginToSubmit" xml:space="preserve"><value>Sign in to submit</value></data>
+  <data name="Predictions.Submit.SubmitTypes" xml:space="preserve"><value>Submit picks</value></data>
+  <data name="Predictions.Submit.Submitting" xml:space="preserve"><value>Submitting…</value></data>
+  <data name="Predictions.Submit.SubmittingDetail" xml:space="preserve"><value>Sending to the cloud</value></data>
+  <data name="Predictions.Submit.Submitted" xml:space="preserve"><value>Submitted</value></data>
+  <data name="Predictions.Submit.SubmittedDetail" xml:space="preserve"><value>Updated automatically until the deadline</value></data>
+  <data name="Predictions.Submit.SubmittedAt" xml:space="preserve"><value>Submitted {0}</value></data>
+  <data name="Predictions.Submit.Error" xml:space="preserve"><value>Submit failed</value></data>
+  <data name="Predictions.Submit.ErrorDetail" xml:space="preserve"><value>Check your connection and try again</value></data>
+  <data name="Predictions.Submit.TryAgain" xml:space="preserve"><value>Try again</value></data>
+  <data name="Predictions.Submit.SyncRetry" xml:space="preserve"><value>Sync again</value></data>
+  <data name="Predictions.Submit.DraftLocal" xml:space="preserve"><value>Draft · local</value></data>
+  <data name="Predictions.Submit.DraftPrivate" xml:space="preserve"><value>Draft · private</value></data>
+  <data name="Predictions.Submit.ConfirmTitle" xml:space="preserve"><value>Submit picks?</value></data>
+  <data name="Predictions.Submit.ConfirmDescription" xml:space="preserve"><value>You are submitting your picks for this competition. This is not gambling: no stakes, odds or money.</value></data>
+  <data name="Predictions.Submit.Competition" xml:space="preserve"><value>Competition</value></data>
+  <data name="Predictions.Submit.Deadline" xml:space="preserve"><value>until {0}</value></data>
+  <data name="Predictions.Submit.ConfirmParticipants" xml:space="preserve"><value>Your display name and submission time may appear on the participants list.</value></data>
+  <data name="Predictions.Submit.ConfirmAnswersPrivate" xml:space="preserve"><value>Full answers are not public at this stage; others will not see your picks or email.</value></data>
+  <data name="Predictions.Submit.ConfirmDraftsPrivate" xml:space="preserve"><value>Drafts remain private until you submit them.</value></data>
+  <data name="Predictions.Submit.ConfirmAutoUpdate" xml:space="preserve"><value>After submitting, you can keep editing until the deadline; later changes update the submitted entry automatically.</value></data>
+  <data name="Predictions.Submit.ConfirmFutureLock" xml:space="preserve"><value>After the deadline, picks will be locked in a future version.</value></data>
+  <data name="Predictions.Submit.ClickOutsideCancels" xml:space="preserve"><value>outside click cancels</value></data>
+  <data name="Predictions.Toast.Submit.Success" xml:space="preserve"><value>Picks submitted. Changes will update the entry until the deadline.</value></data>
+  <data name="Predictions.Toast.Submit.Error" xml:space="preserve"><value>Could not submit picks.</value></data>
   <data name="Predictions.CopySummary" xml:space="preserve"><value>Copy summary</value></data>
   <data name="Predictions.ExportJson" xml:space="preserve"><value>Export JSON</value></data>
   <data name="Predictions.ExportCsv" xml:space="preserve"><value>Export CSV</value></data>
@@ -630,6 +657,28 @@
   <data name="Predictions.TopN.MobileDeadlift" xml:space="preserve"><value>Deadlift (DL)</value></data>
   <data name="Predictions.Toast.ResetAthlete.Success" xml:space="preserve"><value>Restored {0} to nomination.</value></data>
   <data name="Predictions.Toast.ResetField.Success" xml:space="preserve"><value>Restored the field to nomination order.</value></data>
+  <data name="Participants.Title" xml:space="preserve"><value>Participants</value></data>
+  <data name="Participants.Eyebrow" xml:space="preserve"><value>Submitted picks · v1</value></data>
+  <data name="Participants.Stat.Submitted" xml:space="preserve"><value>submitted entries</value></data>
+  <data name="Participants.Stat.Deadline" xml:space="preserve"><value>to deadline</value></data>
+  <data name="Participants.Stat.AfterCompetitionValue" xml:space="preserve"><value>after event</value></data>
+  <data name="Participants.Stat.Scoring" xml:space="preserve"><value>ranking / points</value></data>
+  <data name="Participants.PrivacyNote" xml:space="preserve"><value>The list shows submitted entries only. Full answers, emails and account identifiers are hidden. This is not a scored leaderboard yet; order is neutral by submission time. Points and ranking will appear after results.</value></data>
+  <data name="Participants.SearchPlaceholder" xml:space="preserve"><value>Search by display name…</value></data>
+  <data name="Participants.SortNewest" xml:space="preserve"><value>Sort: newest</value></data>
+  <data name="Participants.GoToPredictions" xml:space="preserve"><value>Go to predictions</value></data>
+  <data name="Participants.ListAria" xml:space="preserve"><value>Submitted entries list</value></data>
+  <data name="Participants.Column.Number" xml:space="preserve"><value>No.</value></data>
+  <data name="Participants.Column.Participant" xml:space="preserve"><value>Participant</value></data>
+  <data name="Participants.Column.SubmittedAt" xml:space="preserve"><value>Submitted</value></data>
+  <data name="Participants.Column.Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Participants.Column.Scoring" xml:space="preserve"><value>Scoring</value></data>
+  <data name="Participants.Status.Submitted" xml:space="preserve"><value>Submitted · complete</value></data>
+  <data name="Participants.ScoringSoon" xml:space="preserve"><value>Scoring soon</value></data>
+  <data name="Participants.Empty.Title" xml:space="preserve"><value>No one has submitted picks yet</value></data>
+  <data name="Participants.Empty.Description" xml:space="preserve"><value>Be the first person on the list. Fill the prediction sheet, then submit from the action bar.</value></data>
+  <data name="Participants.Error.Title" xml:space="preserve"><value>Could not load the list</value></data>
+  <data name="Participants.Error.Description" xml:space="preserve"><value>There was a connection problem. Your submitted picks are safe; this only affects the participants preview.</value></data>
   <data name="Auth.SignIn" xml:space="preserve"><value>Sign in</value></data>
   <data name="Auth.SignOut" xml:space="preserve"><value>Sign out</value></data>
   <data name="Auth.Login.Title" xml:space="preserve"><value>Sign in</value></data>
@@ -649,6 +698,28 @@
   <data name="Auth.Login.Hint" xml:space="preserve"><value>The link is valid for a short time and works only once.</value></data>
   <data name="Auth.Login.AlreadyTitle" xml:space="preserve"><value>You're signed in</value></data>
   <data name="Auth.Login.GoToApp" xml:space="preserve"><value>Go to the app</value></data>
+  <data name="Profile.Title" xml:space="preserve"><value>Profile</value></data>
+  <data name="Profile.Eyebrow" xml:space="preserve"><value>Account</value></data>
+  <data name="Profile.Description" xml:space="preserve"><value>Set the public nickname for TotalCall entries.</value></data>
+  <data name="Profile.Loading" xml:space="preserve"><value>Loading profile…</value></data>
+  <data name="Profile.LoadErrorTitle" xml:space="preserve"><value>Could not load profile</value></data>
+  <data name="Profile.LoadErrorDescription" xml:space="preserve"><value>Try refreshing the page.</value></data>
+  <data name="Profile.PublicName" xml:space="preserve"><value>Public nickname</value></data>
+  <data name="Profile.EmailLabel" xml:space="preserve"><value>Email</value></data>
+  <data name="Profile.EmailUnavailable" xml:space="preserve"><value>Email unavailable</value></data>
+  <data name="Profile.EmailPrivacyTitle" xml:space="preserve"><value>Email privacy</value></data>
+  <data name="Profile.EmailPrivacyCopy" xml:space="preserve"><value>Your email is not public.</value></data>
+  <data name="Profile.DisplayNameLabel" xml:space="preserve"><value>Nickname</value></data>
+  <data name="Profile.DisplayNameHint" xml:space="preserve"><value>Maximum 32 characters: letters, numbers, spaces, dot, hyphen and underscore.</value></data>
+  <data name="Profile.VisibilityCopy" xml:space="preserve"><value>This nickname will be visible on the Participants list and future leaderboard.</value></data>
+  <data name="Profile.Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Profile.Saving" xml:space="preserve"><value>Saving…</value></data>
+  <data name="Profile.SaveSuccess" xml:space="preserve"><value>Profile saved.</value></data>
+  <data name="Profile.SaveError" xml:space="preserve"><value>Could not save profile. Please try again.</value></data>
+  <data name="Profile.DisplayNameRequired" xml:space="preserve"><value>Enter a nickname.</value></data>
+  <data name="Profile.DisplayNameTooLong" xml:space="preserve"><value>Nickname can be at most 32 characters.</value></data>
+  <data name="Profile.DisplayNameInvalid" xml:space="preserve"><value>Nickname can contain only letters, numbers, spaces, dot, hyphen and underscore.</value></data>
+  <data name="Profile.DisplayNameTaken" xml:space="preserve"><value>This nickname is already taken.</value></data>
   <data name="Auth.Callback.LoadingTitle" xml:space="preserve"><value>Signing you in…</value></data>
   <data name="Auth.Callback.LoadingBody" xml:space="preserve"><value>Verifying your magic link.</value></data>
   <data name="Auth.Callback.SuccessTitle" xml:space="preserve"><value>Signed in</value></data>

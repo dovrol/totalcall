@@ -1,12 +1,12 @@
 @if (!string.IsNullOrWhiteSpace(Href))
 {
-    <a class="@CssClass" href="@Href" aria-label="@AriaLabel">
+    <a @ref="element" class="@CssClass" href="@Href" aria-label="@AriaLabel" @attributes="AdditionalAttributes">
         @ChildContent
     </a>
 }
 else
 {
-    <button class="@CssClass" type="@ButtonType" disabled="@Disabled" aria-label="@AriaLabel" @onclick="OnClick">
+    <button @ref="element" class="@CssClass" type="@ButtonType" disabled="@Disabled" aria-label="@AriaLabel" @onclick="OnClick" @attributes="AdditionalAttributes">
         @ChildContent
     </button>
 }
@@ -41,6 +41,13 @@ else
 
     [Parameter]
     public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    public ElementReference Element => element;
+
+    private ElementReference element;
 
     private string CssClass => string.Join(
         " ",

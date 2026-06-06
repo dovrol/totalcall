@@ -1,7 +1,9 @@
 @using System.Globalization
 @inject IStringLocalizer<SharedResource> Localizer
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
 
-<nav class="prediction-action-bar" aria-label="@Localizer["Predictions.ActionBarAria"]">
+<nav class="@ActionBarClass" aria-label="@Localizer["Predictions.ActionBarAria"]">
     <div class="prediction-action-bar__left">
         <AppButton
             Href="/"
@@ -14,26 +16,231 @@
     </div>
 
     <div class="@StatusClass" aria-live="polite">
-        <strong>@StatusLabel</strong>
-        <span>@StatusDetail</span>
+        <span class="prediction-action-bar__status-icon" aria-hidden="true">
+            @if (CurrentState is SubmitBarState.Submitting)
+            {
+                <span class="prediction-action-bar__spinner"></span>
+            }
+            else
+            {
+                <AppIcon Name="@StatusIcon" Size="17" />
+            }
+        </span>
+        <span class="prediction-action-bar__status-copy">
+            <strong>@StatusLabel</strong>
+            <span>@StatusDetail</span>
+            @if (CurrentState is SubmitBarState.Submitted && SubmittedAt is not null)
+            {
+                <span class="prediction-action-bar__status-stamp">
+                    <AppIcon Name="AppIconName.Clock" Size="11" />
+                    @Localizer["Predictions.Submit.SubmittedAt", FormatDateTime(SubmittedAt)]
+                </span>
+            }
+        </span>
+        @if (ShowDraftPill)
+        {
+            <span class="prediction-action-bar__submission-pill prediction-action-bar__submission-pill--draft">
+                <span class="prediction-action-bar__submission-dot"></span>
+                @DraftPillLabel
+            </span>
+        }
     </div>
 
     <div class="prediction-action-bar__actions">
         <AppButton
-            Variant="Primary"
+            Href="@ParticipantsHref"
+            Variant="Ghost"
             Size="Sm"
-            AdditionalClass="prediction-action-bar__primary"
+            AdditionalClass="prediction-action-bar__participants">
+            <AppIcon Name="AppIconName.Users" Size="15" />
+            <span>@Localizer["Predictions.Submit.Participants"]</span>
+        </AppButton>
+
+        <AppButton
+            Variant="Ghost"
+            Size="Sm"
+            AdditionalClass="prediction-action-bar__share"
             OnClick="@OnShareClicked"
             AriaLabel="@Localizer["Share.Title"]">
             <AppIcon Name="AppIconName.Share" Size="15" />
             <span>@Localizer["Share.Trigger"]</span>
         </AppButton>
+
+        @if (CurrentState is SubmitBarState.Guest)
+        {
+            <AppButton
+                Variant="Primary"
+                Size="Sm"
+                AdditionalClass="prediction-action-bar__primary"
+                OnClick="@NavigateToLogin">
+                <AppIcon Name="AppIconName.Lock" Size="15" />
+                <span>@Localizer["Predictions.Submit.LoginToSubmit"]</span>
+            </AppButton>
+        }
+        else if (CurrentState is SubmitBarState.Draft)
+        {
+            <AppButton
+                @ref="submitButton"
+                Variant="Primary"
+                Size="Sm"
+                AdditionalClass="prediction-action-bar__primary"
+                OnClick="@OpenConfirmAsync">
+                <AppIcon Name="AppIconName.Check" Size="16" />
+                <span>@Localizer["Predictions.Submit.SubmitTypes"]</span>
+            </AppButton>
+        }
+        else if (CurrentState is SubmitBarState.Submitting)
+        {
+            <AppButton
+                Variant="Primary"
+                Size="Sm"
+                AdditionalClass="prediction-action-bar__primary"
+                Disabled="true">
+                <span class="prediction-action-bar__spinner prediction-action-bar__spinner--light"></span>
+                <span>@Localizer["Predictions.Submit.Submitting"]</span>
+            </AppButton>
+        }
+        else if (CurrentState is SubmitBarState.Failed)
+        {
+            <AppButton
+                Variant="Secondary"
+                Size="Sm"
+                AdditionalClass="prediction-action-bar__retry-sync"
+                OnClick="@OnRetrySyncClicked">
+                <AppIcon Name="AppIconName.RefreshCw" Size="15" />
+                <span>@Localizer["Predictions.Submit.SyncRetry"]</span>
+            </AppButton>
+            <AppButton
+                Variant="Primary"
+                Size="Sm"
+                AdditionalClass="prediction-action-bar__primary"
+                Disabled="true">
+                <AppIcon Name="AppIconName.Check" Size="16" />
+                <span>@Localizer["Predictions.Submit.SubmitTypes"]</span>
+            </AppButton>
+        }
+        else if (CurrentState is SubmitBarState.Error)
+        {
+            <AppButton
+                @ref="submitButton"
+                Variant="Primary"
+                Size="Sm"
+                AdditionalClass="prediction-action-bar__primary"
+                OnClick="@RetrySubmitAsync">
+                <AppIcon Name="AppIconName.RefreshCw" Size="15" />
+                <span>@Localizer["Predictions.Submit.TryAgain"]</span>
+            </AppButton>
+        }
     </div>
 </nav>
 
+@if (isConfirmOpen)
+{
+    <div class="submit-confirm-scrim" @onclick="CancelConfirmAsync">
+        <section
+            @ref="confirmDialog"
+            class="submit-confirm"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="submit-confirm-title"
+            aria-describedby="submit-confirm-description"
+            tabindex="-1"
+            @onkeydown="OnConfirmKeyDown"
+            @onclick:stopPropagation="true">
+            <div class="submit-confirm__grip" aria-hidden="true"></div>
+            <div class="submit-confirm__head">
+                <span class="submit-confirm__icon" aria-hidden="true">
+                    <AppIcon Name="AppIconName.Check" Size="22" />
+                </span>
+                <h2 id="submit-confirm-title" class="submit-confirm__title">
+                    @Localizer["Predictions.Submit.ConfirmTitle"]
+                </h2>
+                <p id="submit-confirm-description" class="submit-confirm__sub">
+                    @Localizer["Predictions.Submit.ConfirmDescription"]
+                </p>
+            </div>
+
+            <div class="submit-confirm__competition">
+                <span class="submit-confirm__competition-copy">
+                    <span>@Localizer["Predictions.Submit.Competition"]</span>
+                    <strong>@CompetitionName</strong>
+                </span>
+                <AppBadge>
+                    <AppIcon Name="AppIconName.Clock" Size="13" />
+                    @Localizer["Predictions.Submit.Deadline", LockLabel]
+                </AppBadge>
+            </div>
+
+            <ul class="submit-confirm__list">
+                <li>
+                    <span class="submit-confirm__list-icon submit-confirm__list-icon--ok"><AppIcon Name="AppIconName.Users" Size="17" /></span>
+                    <span>@Localizer["Predictions.Submit.ConfirmParticipants"]</span>
+                </li>
+                <li>
+                    <span class="submit-confirm__list-icon submit-confirm__list-icon--private"><AppIcon Name="AppIconName.EyeOff" Size="17" /></span>
+                    <span>@Localizer["Predictions.Submit.ConfirmAnswersPrivate"]</span>
+                </li>
+                <li>
+                    <span class="submit-confirm__list-icon submit-confirm__list-icon--private"><AppIcon Name="AppIconName.Lock" Size="17" /></span>
+                    <span>@Localizer["Predictions.Submit.ConfirmDraftsPrivate"]</span>
+                </li>
+                <li>
+                    <span class="submit-confirm__list-icon submit-confirm__list-icon--edit"><AppIcon Name="AppIconName.PencilLine" Size="17" /></span>
+                    <span>@Localizer["Predictions.Submit.ConfirmAutoUpdate"]</span>
+                </li>
+                <li>
+                    <span class="submit-confirm__list-icon submit-confirm__list-icon--warn"><AppIcon Name="AppIconName.Lock" Size="17" /></span>
+                    <span>@Localizer["Predictions.Submit.ConfirmFutureLock"]</span>
+                </li>
+            </ul>
+
+            <div class="submit-confirm__foot">
+                <span class="submit-confirm__esc" aria-hidden="true">
+                    <kbd>Esc</kbd> / @Localizer["Predictions.Submit.ClickOutsideCancels"]
+                </span>
+                <AppButton
+                    Variant="Ghost"
+                    Size="Md"
+                    AdditionalClass="submit-confirm__cancel"
+                    OnClick="@CancelConfirmAsync">
+                    @Localizer["Common.Cancel"]
+                </AppButton>
+                <AppButton
+                    Variant="Primary"
+                    Size="Md"
+                    data-autofocus="true"
+                    AdditionalClass="submit-confirm__confirm"
+                    OnClick="@ConfirmSubmitAsync">
+                    <AppIcon Name="AppIconName.Check" Size="16" />
+                    <span>@Localizer["Predictions.Submit.SubmitTypes"]</span>
+                </AppButton>
+            </div>
+        </section>
+    </div>
+}
+
 @code {
+    private enum SubmitBarState
+    {
+        Guest,
+        Draft,
+        Submitting,
+        Submitted,
+        Failed,
+        Error
+    }
+
     [Parameter, EditorRequired]
     public string CompetitionSlug { get; set; } = string.Empty;
+
+    [Parameter]
+    public string CompetitionName { get; set; } = string.Empty;
+
+    [Parameter]
+    public DateTimeOffset? PredictionLockAt { get; set; }
+
+    [Parameter]
+    public bool IsAuthenticated { get; set; }
 
     [Parameter]
     public PredictionSaveStatus SaveStatus { get; set; }
@@ -42,38 +249,202 @@
     public DateTimeOffset? LastSavedAt { get; set; }
 
     [Parameter]
+    public DateTimeOffset? SubmittedAt { get; set; }
+
+    [Parameter]
+    public bool IsSubmitting { get; set; }
+
+    [Parameter]
+    public string? SubmitError { get; set; }
+
+    [Parameter]
     public EventCallback<MouseEventArgs> ShareRequested { get; set; }
 
-    private string StatusClass => SaveStatus switch
+    [Parameter]
+    public EventCallback SubmitRequested { get; set; }
+
+    [Parameter]
+    public EventCallback RetrySyncRequested { get; set; }
+
+    private AppButton? submitButton;
+    private ElementReference confirmDialog;
+    private bool isConfirmOpen;
+    private bool trapFocusAfterRender;
+    private bool restoreFocusAfterClose;
+
+    private SubmitBarState CurrentState
     {
-        PredictionSaveStatus.Cloud => "prediction-action-bar__status prediction-action-bar__status--cloud",
-        PredictionSaveStatus.SynchronizationFailed => "prediction-action-bar__status prediction-action-bar__status--failed",
+        get
+        {
+            if (IsSubmitting)
+            {
+                return SubmitBarState.Submitting;
+            }
+
+            if (!string.IsNullOrWhiteSpace(SubmitError))
+            {
+                return SubmitBarState.Error;
+            }
+
+            if (SaveStatus == PredictionSaveStatus.SynchronizationFailed)
+            {
+                return SubmitBarState.Failed;
+            }
+
+            if (SaveStatus == PredictionSaveStatus.Submitted)
+            {
+                return SubmitBarState.Submitted;
+            }
+
+            return IsAuthenticated ? SubmitBarState.Draft : SubmitBarState.Guest;
+        }
+    }
+
+    private string ActionBarClass => CurrentState switch
+    {
+        SubmitBarState.Submitted => "prediction-action-bar prediction-action-bar--submitted",
+        SubmitBarState.Failed => "prediction-action-bar prediction-action-bar--failed",
+        SubmitBarState.Error => "prediction-action-bar prediction-action-bar--error",
+        SubmitBarState.Submitting => "prediction-action-bar prediction-action-bar--submitting",
+        _ => "prediction-action-bar"
+    };
+
+    private string StatusClass => CurrentState switch
+    {
+        SubmitBarState.Draft => "prediction-action-bar__status prediction-action-bar__status--cloud",
+        SubmitBarState.Submitting => "prediction-action-bar__status prediction-action-bar__status--busy",
+        SubmitBarState.Submitted => "prediction-action-bar__status prediction-action-bar__status--submitted",
+        SubmitBarState.Failed or SubmitBarState.Error => "prediction-action-bar__status prediction-action-bar__status--failed",
         _ => "prediction-action-bar__status prediction-action-bar__status--local"
     };
 
-    private string StatusLabel => Localizer[SaveStatus switch
+    private AppIconName StatusIcon => CurrentState switch
     {
-        PredictionSaveStatus.Cloud => "Predictions.SaveStatus.Cloud",
-        PredictionSaveStatus.SynchronizationFailed => "Predictions.SaveStatus.Failed",
+        SubmitBarState.Draft => AppIconName.CloudCheck,
+        SubmitBarState.Submitted => AppIconName.Check,
+        SubmitBarState.Failed => AppIconName.CloudOff,
+        SubmitBarState.Error => AppIconName.AlertCircle,
+        _ => AppIconName.HardDrive
+    };
+
+    private string StatusLabel => Localizer[CurrentState switch
+    {
+        SubmitBarState.Draft => "Predictions.SaveStatus.Cloud",
+        SubmitBarState.Submitting => "Predictions.Submit.Submitting",
+        SubmitBarState.Submitted => "Predictions.Submit.Submitted",
+        SubmitBarState.Failed => "Predictions.SaveStatus.Failed",
+        SubmitBarState.Error => "Predictions.Submit.Error",
         _ => "Predictions.SaveStatus.Local"
     }];
 
-    private string StatusDetail => Localizer[
-        SaveStatus switch
+    private string StatusDetail => CurrentState switch
+    {
+        SubmitBarState.Draft => Localizer["Predictions.SaveStatus.CloudDetail", FormatTime(LastSavedAt)],
+        SubmitBarState.Submitting => Localizer["Predictions.Submit.SubmittingDetail"],
+        SubmitBarState.Submitted => Localizer["Predictions.Submit.SubmittedDetail"],
+        SubmitBarState.Failed => Localizer["Predictions.SaveStatus.FailedDetail", FormatTime(LastSavedAt)],
+        SubmitBarState.Error => string.IsNullOrWhiteSpace(SubmitError)
+            ? Localizer["Predictions.Submit.ErrorDetail"]
+            : SubmitError,
+        _ => Localizer["Predictions.SaveStatus.LocalDetail", FormatTime(LastSavedAt)]
+    };
+
+    private bool ShowDraftPill => CurrentState is SubmitBarState.Guest or SubmitBarState.Draft;
+
+    private string DraftPillLabel => Localizer[
+        CurrentState is SubmitBarState.Guest
+            ? "Predictions.Submit.DraftLocal"
+            : "Predictions.Submit.DraftPrivate"];
+
+    private string ParticipantsHref => $"competitions/{CompetitionSlug}/participants";
+
+    private string LockLabel => PredictionLockAt?.ToLocalTime().ToString("d MMM, HH:mm", CultureInfo.CurrentCulture)
+                                ?? Localizer["Common.Tbd"];
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (trapFocusAfterRender && isConfirmOpen)
         {
-            PredictionSaveStatus.Cloud => "Predictions.SaveStatus.CloudDetail",
-            PredictionSaveStatus.SynchronizationFailed => "Predictions.SaveStatus.FailedDetail",
-            _ => "Predictions.SaveStatus.LocalDetail"
-        },
-        FormatTime(LastSavedAt)];
+            trapFocusAfterRender = false;
+            await JS.InvokeVoidAsync("totalCallActions.trapFocus", confirmDialog);
+        }
+
+        if (restoreFocusAfterClose)
+        {
+            restoreFocusAfterClose = false;
+            try
+            {
+                await submitButton!.Element.FocusAsync();
+            }
+            catch
+            {
+                // The trigger may disappear after a successful submit; focus restoration is best effort then.
+            }
+        }
+    }
 
     private Task OnShareClicked(MouseEventArgs args)
     {
         return ShareRequested.InvokeAsync(args);
     }
 
+    private Task OnRetrySyncClicked(MouseEventArgs _)
+    {
+        return RetrySyncRequested.InvokeAsync();
+    }
+
+    private Task OpenConfirmAsync(MouseEventArgs _)
+    {
+        isConfirmOpen = true;
+        trapFocusAfterRender = true;
+        return Task.CompletedTask;
+    }
+
+    private void NavigateToLogin(MouseEventArgs _)
+    {
+        var returnUrl = Navigation.ToBaseRelativePath(Navigation.Uri);
+        var target = string.IsNullOrWhiteSpace(returnUrl)
+            ? "auth/login"
+            : $"auth/login?returnUrl={Uri.EscapeDataString("/" + returnUrl)}";
+
+        Navigation.NavigateTo(target);
+    }
+
+    private async Task RetrySubmitAsync(MouseEventArgs _)
+    {
+        await SubmitRequested.InvokeAsync();
+    }
+
+    private Task CancelConfirmAsync()
+    {
+        isConfirmOpen = false;
+        trapFocusAfterRender = false;
+        restoreFocusAfterClose = true;
+        return Task.CompletedTask;
+    }
+
+    private async Task ConfirmSubmitAsync(MouseEventArgs _)
+    {
+        isConfirmOpen = false;
+        trapFocusAfterRender = false;
+        await SubmitRequested.InvokeAsync();
+    }
+
+    private async Task OnConfirmKeyDown(KeyboardEventArgs args)
+    {
+        if (string.Equals(args.Key, "Escape", StringComparison.OrdinalIgnoreCase))
+        {
+            await CancelConfirmAsync();
+        }
+    }
+
     private string FormatTime(DateTimeOffset? value)
     {
         return value?.ToLocalTime().ToString("HH:mm", CultureInfo.CurrentCulture) ?? Localizer["Common.Tbd"];
+    }
+
+    private string FormatDateTime(DateTimeOffset? value)
+    {
+        return value?.ToLocalTime().ToString("d MMM, HH:mm", CultureInfo.CurrentCulture) ?? Localizer["Common.Tbd"];
     }
 }

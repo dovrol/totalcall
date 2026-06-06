@@ -231,8 +231,16 @@ else
 
         <PredictionActionBar
             CompetitionSlug="@Competition.Slug"
+            CompetitionName="@Competition.Name"
+            PredictionLockAt="@Competition.PredictionLockAt"
+            IsAuthenticated="@IsAuthenticated"
             SaveStatus="@SaveStatus"
             LastSavedAt="@LastSavedAt"
+            SubmittedAt="@SubmittedAt"
+            IsSubmitting="@IsSubmitting"
+            SubmitError="@SubmitError"
+            SubmitRequested="@SubmitRequested"
+            RetrySyncRequested="@RetrySyncRequested"
             ShareRequested="@ShareRequested" />
     </section>
 }
@@ -261,10 +269,22 @@ else
     public bool CanEditPredictions { get; set; }
 
     [Parameter]
+    public bool IsAuthenticated { get; set; }
+
+    [Parameter]
     public PredictionSaveStatus SaveStatus { get; set; }
 
     [Parameter]
     public DateTimeOffset? LastSavedAt { get; set; }
+
+    [Parameter]
+    public DateTimeOffset? SubmittedAt { get; set; }
+
+    [Parameter]
+    public bool IsSubmitting { get; set; }
+
+    [Parameter]
+    public string? SubmitError { get; set; }
 
     [Parameter]
     public EventCallback<string> GroupChanged { get; set; }
@@ -274,6 +294,12 @@ else
 
     [Parameter]
     public EventCallback<MouseEventArgs> ShareRequested { get; set; }
+
+    [Parameter]
+    public EventCallback SubmitRequested { get; set; }
+
+    [Parameter]
+    public EventCallback RetrySyncRequested { get; set; }
 
     private static readonly Regex ShortCategoryRegex = new(@"(\d+\+?)\s*kg", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 

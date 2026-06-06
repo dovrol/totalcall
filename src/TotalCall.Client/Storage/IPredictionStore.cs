@@ -8,5 +8,7 @@ public interface IPredictionStore
 
     Task SaveAsync(PredictionSet predictionSet, CancellationToken cancellationToken = default);
 
+    Task<PredictionSet> SubmitAsync(PredictionSet predictionSet, CancellationToken cancellationToken = default);
+
     Task DeleteAsync(string competitionId, CancellationToken cancellationToken = default);
 }

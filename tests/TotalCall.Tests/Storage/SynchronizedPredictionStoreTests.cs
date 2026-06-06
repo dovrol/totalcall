@@ -98,7 +98,7 @@ public sealed class SynchronizedPredictionStoreTests
         var request = Assert.Single(handler.Requests, request => request.Method == HttpMethod.Post);
         Assert.Equal(HttpMethod.Post, request.Method);
         Assert.Contains("on_conflict=user_id,competition_id", request.Uri);
-        Assert.Contains("\"status\":\"draft\"", request.Body);
+        Assert.DoesNotContain("\"status\":\"draft\"", request.Body);
         Assert.Contains("\"answers_json\":", request.Body);
         Assert.Contains($"\"localUserId\":\"{CurrentUserId}\"", request.Body);
     }
@@ -423,6 +423,256 @@ public sealed class SynchronizedPredictionStoreTests
     }
 
     [Fact]
+    public async Task SupabasePredictionStore_SubmitAsync_UsesServerTimestampAndReturnsSubmittedMetadata()
+    {
+        var submittedAt = DateTimeOffset.Parse("2026-06-05T12:15:00Z");
+        var js = new FakeJsRuntime();
+        var auth = await CreateAuthAsync(js, authenticated: true);
+        var handler = new RecordingHandler((request, _) =>
+        {
+            Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Contains("rest/v1/rpc/submit_prediction", request.Uri);
+            Assert.Contains("\"p_competition_id\":\"worlds-2026\"", request.Body);
+            Assert.Contains("\"p_answers_json\":", request.Body);
+            Assert.DoesNotContain("p_submitted_at", request.Body);
+            Assert.DoesNotContain("submitted_at", request.Body);
+            Assert.DoesNotContain(submittedAt.ToString("O"), request.Body);
+            Assert.DoesNotContain("\"status\":\"draft\"", request.Body);
+            Assert.DoesNotContain("\"submissionStatus\":\"draft\"", request.Body);
+            Assert.Contains("\"submissionStatus\":\"submitted\"", request.Body);
+
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(
+                    $$"""[{"status":"submitted","submitted_at":"{{submittedAt:O}}"}]""",
+                    Encoding.UTF8,
+                    "application/json")
+            });
+        });
+        var http = new HttpClient(handler) { BaseAddress = new Uri("https://supabase.test/") };
+        var cloudStore = new SupabasePredictionStore(http, "publishable-key", auth);
+
+        var result = await cloudStore.SubmitAsync(CreatePredictionSet(localUserId: CurrentUserId));
+
+        Assert.Equal(PredictionSet.SubmittedSubmissionStatus, result.Status);
+        Assert.Equal(submittedAt, result.SubmittedAt);
+    }
+
+    [Fact]
+    public async Task SupabasePredictionStore_SubmitAsync_WhenAlreadySubmitted_DoesNotSendSubmittedAtAndKeepsReturnedValue()
+    {
+        var firstSubmittedAt = DateTimeOffset.Parse("2026-06-05T09:00:00Z");
+        var js = new FakeJsRuntime();
+        var auth = await CreateAuthAsync(js, authenticated: true);
+        var handler = new RecordingHandler((request, _) =>
+        {
+            Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.DoesNotContain("p_submitted_at", request.Body);
+            Assert.DoesNotContain("submitted_at", request.Body);
+            Assert.DoesNotContain(firstSubmittedAt.ToString("O"), request.Body);
+
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(
+                    $$"""[{"status":"submitted","submitted_at":"{{firstSubmittedAt:O}}"}]""",
+                    Encoding.UTF8,
+                    "application/json")
+            });
+        });
+        var http = new HttpClient(handler) { BaseAddress = new Uri("https://supabase.test/") };
+        var cloudStore = new SupabasePredictionStore(http, "publishable-key", auth);
+        var submitted = CreatePredictionSet(localUserId: CurrentUserId) with
+        {
+            SubmissionStatus = PredictionSet.SubmittedSubmissionStatus,
+            SubmittedAt = firstSubmittedAt
+        };
+
+        var result = await cloudStore.SubmitAsync(submitted);
+
+        Assert.Equal(firstSubmittedAt, result.SubmittedAt);
+    }
+
+    [Fact]
+    public async Task SaveAsync_WhenAlreadySubmitted_DoesNotRevertStatusToDraft()
+    {
+        var submittedAt = DateTimeOffset.Parse("2026-06-05T10:00:00Z");
+        var cloudPredictionSet = CreatePredictionSet(localUserId: CurrentUserId) with
+        {
+            SubmissionStatus = PredictionSet.SubmittedSubmissionStatus,
+            SubmittedAt = submittedAt
+        };
+        var responseJson = JsonSerializer.Serialize(
+            new[] { new { answers_json = cloudPredictionSet, status = "submitted", submitted_at = submittedAt } },
+            JsonDataOptions.SerializerOptions);
+
+        var js = new FakeJsRuntime();
+        var handler = new RecordingHandler((request, _) =>
+        {
+            if (request.Method == HttpMethod.Get)
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(responseJson, Encoding.UTF8, "application/json")
+                });
+            }
+
+            Assert.Contains("rest/v1/rpc/submit_prediction", request.Uri);
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(
+                    $$"""[{"status":"submitted","submitted_at":"{{submittedAt:O}}"}]""",
+                    Encoding.UTF8,
+                    "application/json")
+            });
+        });
+        var auth = await CreateAuthAsync(js, authenticated: true);
+        var state = new PredictionSyncState();
+        using var store = CreateStore(js, handler, auth, state);
+        await store.InitializeAsync();
+
+        var editedSubmitted = CreatePredictionSet(
+            localUserId: CurrentUserId,
+            savedAt: DateTimeOffset.Parse("2026-06-05T11:00:00Z"),
+            questionId: "edited-answer") with
+        {
+            SubmissionStatus = PredictionSet.SubmittedSubmissionStatus,
+            SubmittedAt = submittedAt
+        };
+
+        await store.SaveAsync(editedSubmitted);
+
+        var submitRequest = Assert.Single(
+            handler.Requests,
+            request => request.Method == HttpMethod.Post &&
+                       request.Uri.Contains("rpc/submit_prediction", StringComparison.OrdinalIgnoreCase));
+        Assert.DoesNotContain("\"status\":\"draft\"", submitRequest.Body);
+        Assert.Equal(PredictionSaveStatus.Submitted, state.GetStatus(editedSubmitted.CompetitionId));
+    }
+
+    [Fact]
+    public async Task SubmitAsync_WhenAnonymous_ThrowsWithoutCallingCloud()
+    {
+        var js = new FakeJsRuntime();
+        var handler = new RecordingHandler((_, _) =>
+            throw new InvalidOperationException("Cloud should not be called for a guest submit."));
+        var auth = await CreateAuthAsync(js, authenticated: false);
+        var state = new PredictionSyncState();
+        using var store = CreateStore(js, handler, auth, state);
+        await store.InitializeAsync();
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            store.SubmitAsync(CreatePredictionSet()));
+
+        Assert.Equal(0, handler.RequestCount);
+    }
+
+    [Fact]
+    public async Task SubmitAsync_WhenSyncFailed_BlocksSubmitUntilRetry()
+    {
+        var js = new FakeJsRuntime();
+        var handler = new RecordingHandler((_, _) =>
+            Task.FromResult(new HttpResponseMessage(HttpStatusCode.ServiceUnavailable)));
+        var auth = await CreateAuthAsync(js, authenticated: true);
+        var state = new PredictionSyncState();
+        using var store = CreateStore(js, handler, auth, state);
+        await store.InitializeAsync();
+        var predictionSet = CreatePredictionSet(localUserId: CurrentUserId);
+
+        await store.SaveAsync(predictionSet);
+        var requestCountBeforeSubmit = handler.RequestCount;
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            store.SubmitAsync(predictionSet));
+
+        Assert.Equal(PredictionSaveStatus.SynchronizationFailed, state.GetStatus(predictionSet.CompetitionId));
+        Assert.Equal(requestCountBeforeSubmit, handler.RequestCount);
+    }
+
+    [Fact]
+    public async Task GetParticipantsAsync_RequestsOnlyPublicFieldsAndFiltersDrafts()
+    {
+        var submittedAt = DateTimeOffset.Parse("2026-06-05T13:00:00Z");
+        var js = new FakeJsRuntime();
+        var auth = await CreateAuthAsync(js, authenticated: false);
+        var handler = new RecordingHandler((request, _) =>
+        {
+            Assert.Equal(HttpMethod.Get, request.Method);
+            Assert.Contains("prediction_participants_public", request.Uri);
+            Assert.Contains("select=competition_id,display_name,submitted_at,status", request.Uri);
+            Assert.DoesNotContain("public_submission_id", request.Uri);
+            Assert.DoesNotContain("answers_json", request.Uri);
+            Assert.DoesNotContain("email", request.Uri);
+            Assert.DoesNotContain("user_id", request.Uri);
+
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(
+                    $$"""
+                    [
+                      {
+                        "competition_id":"worlds-2026",
+                        "display_name":"Kuba",
+                        "submitted_at":"{{submittedAt:O}}",
+                        "status":"submitted"
+                      },
+                      {
+                        "competition_id":"worlds-2026",
+                        "display_name":"Draft user",
+                        "submitted_at":null,
+                        "status":"draft"
+                      }
+                    ]
+                    """,
+                    Encoding.UTF8,
+                    "application/json")
+            });
+        });
+        var http = new HttpClient(handler) { BaseAddress = new Uri("https://supabase.test/") };
+        var cloudStore = new SupabasePredictionStore(http, "publishable-key", auth);
+
+        var participants = await cloudStore.GetParticipantsAsync("worlds-2026");
+
+        var participant = Assert.Single(participants);
+        Assert.Equal("Kuba", participant.DisplayName);
+        Assert.Equal(PredictionSet.SubmittedSubmissionStatus, participant.Status);
+        Assert.Equal(submittedAt, participant.SubmittedAt);
+    }
+
+    [Fact]
+    public async Task GetParticipantsAsync_WhenDisplayNameMissing_UsesSafeFallbackWithoutUserData()
+    {
+        var submittedAt = DateTimeOffset.Parse("2026-06-05T13:00:00Z");
+        var js = new FakeJsRuntime();
+        var auth = await CreateAuthAsync(js, authenticated: false);
+        var handler = new RecordingHandler((_, _) =>
+            Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(
+                    $$"""
+                    [
+                      {
+                        "competition_id":"worlds-2026",
+                        "display_name":" ",
+                        "submitted_at":"{{submittedAt:O}}",
+                        "status":"submitted"
+                      }
+                    ]
+                    """,
+                    Encoding.UTF8,
+                    "application/json")
+            }));
+        var http = new HttpClient(handler) { BaseAddress = new Uri("https://supabase.test/") };
+        var cloudStore = new SupabasePredictionStore(http, "publishable-key", auth);
+
+        var participant = Assert.Single(await cloudStore.GetParticipantsAsync("worlds-2026"));
+
+        Assert.Equal("Lifter X", participant.DisplayName);
+        Assert.DoesNotContain(CurrentUserId, participant.DisplayName);
+        Assert.DoesNotContain("user@example.com", participant.DisplayName);
+        Assert.False(participant.DisplayName.StartsWith("Uczestnik", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
     public async Task PredictionService_WhenAuthenticatedAndNoDraft_CreatesDraftOwnedByCurrentUser()
     {
         var js = new FakeJsRuntime();
@@ -561,6 +811,13 @@ public sealed class SynchronizedPredictionStoreTests
             CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
+        }
+
+        public Task<PredictionSet> SubmitAsync(
+            PredictionSet predictionSet,
+            CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(predictionSet);
         }
 
         public Task DeleteAsync(

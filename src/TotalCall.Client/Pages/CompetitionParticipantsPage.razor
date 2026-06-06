@@ -1,0 +1,297 @@
+@page "/competitions/{Slug}/participants"
+@using System.Globalization
+@using TotalCall.Client.Infrastructure.Supabase
+@inject CompetitionService CompetitionService
+@inject SupabasePredictionStore PredictionStore
+@inject IStringLocalizer<SharedResource> Localizer
+
+<PageTitle>@(competition is null ? Localizer["Participants.Title"] : $"{Localizer["Participants.Title"]} - {competition.Name}")</PageTitle>
+
+@if (isLoading)
+{
+    <div class="participants-page">
+        <header class="participants-head">
+            <div class="participants-skeleton participants-skeleton--title"></div>
+            <div class="participants-note">
+                <span class="participants-skeleton participants-skeleton--note"></span>
+            </div>
+        </header>
+        <div class="participants-table" aria-busy="true">
+            <div class="participants-table__head">
+                <span>@Localizer["Participants.Column.Number"]</span>
+                <span>@Localizer["Participants.Column.Participant"]</span>
+                <span>@Localizer["Participants.Column.SubmittedAt"]</span>
+                <span>@Localizer["Participants.Column.Status"]</span>
+                <span>@Localizer["Participants.Column.Scoring"]</span>
+            </div>
+            @for (var index = 0; index < 7; index++)
+            {
+                <div class="participants-skeleton-row">
+                    <span class="participants-skeleton participants-skeleton--number"></span>
+                    <span class="participants-skeleton participants-skeleton--person"></span>
+                    <span class="participants-skeleton participants-skeleton--time"></span>
+                    <span class="participants-skeleton participants-skeleton--badge"></span>
+                    <span class="participants-skeleton participants-skeleton--score"></span>
+                </div>
+            }
+        </div>
+    </div>
+}
+else if (competition is null)
+{
+    <AppErrorState
+        Title="@Localizer["Predictions.NotFoundTitle"]"
+        Description="@Localizer["Predictions.NotFoundDescription"]" />
+}
+else
+{
+    <div class="participants-page">
+        <header class="participants-head">
+            <div>
+                <div class="participants-eyebrow">@Localizer["Participants.Eyebrow"]</div>
+                <div class="participants-title-row">
+                    <div>
+                        <h1 class="participants-title">
+                            @Localizer["Participants.Title"]
+                            <small>@competition.Name</small>
+                        </h1>
+                    </div>
+                    <div class="participants-stats">
+                        <div class="participants-stat">
+                            <span class="participants-stat__value participants-stat__value--accent">@participants.Count</span>
+                            <span class="participants-stat__label">@Localizer["Participants.Stat.Submitted"]</span>
+                        </div>
+                        <div class="participants-stat">
+                            <span class="participants-stat__value">@DeadlineDistance</span>
+                            <span class="participants-stat__label">@Localizer["Participants.Stat.Deadline"]</span>
+                        </div>
+                        <div class="participants-stat">
+                            <span class="participants-stat__value participants-stat__value--muted">@Localizer["Participants.Stat.AfterCompetitionValue"]</span>
+                            <span class="participants-stat__label">@Localizer["Participants.Stat.Scoring"]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="participants-note">
+                <AppIcon Name="AppIconName.Info" Size="15" />
+                <span>@Localizer["Participants.PrivacyNote"]</span>
+            </div>
+        </header>
+
+        <div class="participants-toolbar">
+            <label class="participants-search">
+                <AppIcon Name="AppIconName.Search" Size="15" />
+                <input
+                    value="@search"
+                    @oninput="OnSearchChanged"
+                    placeholder="@Localizer["Participants.SearchPlaceholder"]" />
+            </label>
+            <span class="participants-sort">
+                <AppIcon Name="AppIconName.ArrowUpDown" Size="15" />
+                @Localizer["Participants.SortNewest"]
+            </span>
+            <AppButton
+                Href="@PredictionsHref"
+                Variant="Secondary"
+                Size="Sm">
+                <AppIcon Name="AppIconName.PencilLine" Size="15" />
+                <span>@Localizer["Participants.GoToPredictions"]</span>
+            </AppButton>
+        </div>
+
+        @if (loadError is not null)
+        {
+            <section class="participants-state participants-state--error" role="status">
+                <div class="participants-state__card">
+                    <span class="participants-state__icon"><AppIcon Name="AppIconName.AlertCircle" Size="26" /></span>
+                    <h2>@Localizer["Participants.Error.Title"]</h2>
+                    <p>@Localizer["Participants.Error.Description"]</p>
+                    <AppButton Variant="Secondary" OnClick="@ReloadAsync">
+                        <AppIcon Name="AppIconName.RefreshCw" Size="15" />
+                        <span>@Localizer["Common.TryAgain"]</span>
+                    </AppButton>
+                </div>
+            </section>
+        }
+        else if (FilteredParticipants.Count == 0)
+        {
+            <section class="participants-state" role="status">
+                <div class="participants-state__card">
+                    <span class="participants-state__icon"><AppIcon Name="AppIconName.Users" Size="26" /></span>
+                    <h2>@Localizer["Participants.Empty.Title"]</h2>
+                    <p>@Localizer["Participants.Empty.Description"]</p>
+                    <AppButton Href="@PredictionsHref" Variant="Primary">
+                        <AppIcon Name="AppIconName.PencilLine" Size="16" />
+                        <span>@Localizer["Participants.GoToPredictions"]</span>
+                    </AppButton>
+                </div>
+            </section>
+        }
+        else
+        {
+            <section class="participants-table" aria-label="@Localizer["Participants.ListAria"]">
+                <div class="participants-table__head">
+                    <span>@Localizer["Participants.Column.Number"]</span>
+                    <span>@Localizer["Participants.Column.Participant"]</span>
+                    <span>@Localizer["Participants.Column.SubmittedAt"]</span>
+                    <span>@Localizer["Participants.Column.Status"]</span>
+                    <span>@Localizer["Participants.Column.Scoring"]</span>
+                </div>
+
+                @foreach (var row in FilteredParticipants.Select((participant, index) => new { participant, index }))
+                {
+                    <article class="participant-row">
+                        <div class="participant-row__number">@(row.index + 1)</div>
+                        <div class="participant-row__person">
+                            <span class="participant-row__avatar" style="@AvatarStyle(row.index)">
+                                @Initials(row.participant.DisplayName)
+                            </span>
+                            <div class="participant-row__name">@row.participant.DisplayName</div>
+                        </div>
+                        <div class="participant-row__time">
+                            @FormatDateTime(row.participant.SubmittedAt)
+                            <small>@FormatDate(row.participant.SubmittedAt)</small>
+                        </div>
+                        <div>
+                            <AppBadge Variant="Success">
+                                <AppIcon Name="AppIconName.Check" Size="13" />
+                                @Localizer["Participants.Status.Submitted"]
+                            </AppBadge>
+                        </div>
+                        <div class="participant-row__score">
+                            <span class="participants-score-soon">
+                                <AppIcon Name="AppIconName.Trophy" Size="12" />
+                                @Localizer["Participants.ScoringSoon"]
+                            </span>
+                        </div>
+                    </article>
+                }
+            </section>
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Slug { get; set; } = string.Empty;
+
+    private Competition? competition;
+    private IReadOnlyList<PublicPredictionParticipant> participants = [];
+    private bool isLoading = true;
+    private string? loadError;
+    private string search = string.Empty;
+
+    private string PredictionsHref => $"competitions/{Slug}/predictions";
+
+    private IReadOnlyList<PublicPredictionParticipant> FilteredParticipants
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(search))
+            {
+                return participants;
+            }
+
+            var value = search.Trim();
+            return participants
+                .Where(participant => participant.DisplayName.Contains(value, StringComparison.OrdinalIgnoreCase))
+                .ToArray();
+        }
+    }
+
+    private string DeadlineDistance
+    {
+        get
+        {
+            if (competition?.PredictionLockAt is not { } lockAt)
+            {
+                return Localizer["Common.Tbd"];
+            }
+
+            var diff = lockAt - DateTimeOffset.UtcNow;
+            if (diff <= TimeSpan.Zero)
+            {
+                return Localizer["Scoreboard.Locked"];
+            }
+
+            return diff.TotalDays >= 1
+                ? $"{(int)diff.TotalDays} {Localizer["Scoreboard.Clock.DaysShort"]}"
+                : $"{Math.Max(1, (int)Math.Ceiling(diff.TotalHours))} {Localizer["Scoreboard.Clock.HoursShort"]}";
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        isLoading = true;
+        loadError = null;
+
+        try
+        {
+            competition = await CompetitionService.GetCompetitionAsync(Slug);
+            participants = competition is null
+                ? []
+                : await PredictionStore.GetParticipantsAsync(competition.Id);
+        }
+        catch (Exception ex)
+        {
+            participants = [];
+            loadError = ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private Task ReloadAsync(MouseEventArgs _)
+    {
+        return LoadAsync();
+    }
+
+    private void OnSearchChanged(ChangeEventArgs args)
+    {
+        search = args.Value?.ToString() ?? string.Empty;
+    }
+
+    private static string Initials(string value)
+    {
+        var parts = value
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Take(2)
+            .Select(part => char.ToUpperInvariant(part[0]))
+            .ToArray();
+
+        return parts.Length == 0 ? "U" : new string(parts);
+    }
+
+    private static string AvatarStyle(int index)
+    {
+        var gradients = new[]
+        {
+            "linear-gradient(160deg,#3f6dff,#6f4bff)",
+            "linear-gradient(160deg,#1fb775,#138a8a)",
+            "linear-gradient(160deg,#ff7a3d,#ff4338)",
+            "linear-gradient(160deg,#9b7cff,#5a3fd6)",
+            "linear-gradient(160deg,#d5a03a,#b9722a)",
+            "linear-gradient(160deg,#3fb0c8,#2f6fb0)"
+        };
+
+        return $"background:{gradients[index % gradients.Length]}";
+    }
+
+    private static string FormatDateTime(DateTimeOffset value)
+    {
+        return value.ToLocalTime().ToString("d MMM, HH:mm", CultureInfo.CurrentCulture);
+    }
+
+    private static string FormatDate(DateTimeOffset value)
+    {
+        return value.ToLocalTime().ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
+    }
+}
