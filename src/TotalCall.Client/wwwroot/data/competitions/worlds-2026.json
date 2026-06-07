@@ -6,10 +6,10 @@
   "federation": "IPF",
   "cardBackgroundImageUrl": "/assets/competitions/worlds-2026-card-bg.webp",
   "cardBackgroundPosition": "center",
-  "startDate": "2026-06-07T09:00:00Z",
-  "endDate": "2026-06-14T18:00:00Z",
+  "startDate": "2026-06-13T07:00:00Z",
+  "endDate": "2026-06-21T14:00:00Z",
   "predictionOpenAt": "2026-05-01T09:00:00Z",
-  "predictionLockAt": "2026-06-07T08:00:00Z",
+  "predictionLockAt": "2026-06-13T06:00:00Z",
   "status": "upcoming",
   "configVersion": "2026.3",
   "athleteData": {
