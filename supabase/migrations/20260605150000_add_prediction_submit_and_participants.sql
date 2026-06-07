@@ -1,5 +1,7 @@
 -- Submit flow and public participants list v1.
--- prediction_submissions remains private owner-only; public reads use the safe view below.
+-- prediction_submissions remains private owner-only; the public participants
+-- projection is exposed through public.get_competition_participants in the
+-- display-names migration (a security definer function, not a view).
 
 create or replace function public.submit_prediction(
   p_competition_id text,
@@ -75,25 +77,3 @@ revoke all on function public.submit_prediction(text, jsonb, text, integer)
   from public, anon, authenticated;
 grant execute on function public.submit_prediction(text, jsonb, text, integer)
   to authenticated;
-
-create or replace view public.prediction_participants_public
-with (security_barrier = true)
-as
-select
-  ps.competition_id,
-  coalesce(
-    nullif(trim(p.display_name), ''),
-    'ChalkyBenchGoblin' || right(regexp_replace(md5(ps.id::text), '[^0-9]', '', 'g') || '0000', 4)
-  ) as display_name,
-  ps.submitted_at,
-  ps.status::text as status
-from public.prediction_submissions ps
-left join public.profiles p on p.id = ps.user_id
-where ps.status = 'submitted'
-  and ps.submitted_at is not null;
-
-comment on view public.prediction_participants_public is
-  'Public participant list for submitted predictions only. Does not expose user_id, email or answers_json.';
-
-revoke all on public.prediction_participants_public from public, anon, authenticated;
-grant select on public.prediction_participants_public to anon, authenticated;

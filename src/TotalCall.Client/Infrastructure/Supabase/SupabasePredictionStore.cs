@@ -126,12 +126,13 @@ public sealed class SupabasePredictionStore(
     {
         EnsureConfigured();
 
-        var url = "rest/v1/prediction_participants_public"
-                  + $"?competition_id=eq.{Uri.EscapeDataString(competitionId)}"
-                  + "&select=competition_id,display_name,submitted_at,status"
-                  + "&order=submitted_at.desc";
+        using var request = BuildPublicRequest(
+            HttpMethod.Post,
+            "rest/v1/rpc/get_competition_participants");
+        request.Content = JsonContent.Create(
+            new GetParticipantsBody { CompetitionId = competitionId },
+            options: SupabaseJsonOptions);
 
-        using var request = BuildPublicRequest(HttpMethod.Get, url);
         using var response = await httpClient!.SendAsync(request, cancellationToken);
         await EnsureSuccessAsync(response, cancellationToken);
 
@@ -248,6 +249,12 @@ public sealed class SupabasePredictionStore(
         public string? Status { get; init; }
 
         public DateTimeOffset? SubmittedAt { get; init; }
+    }
+
+    private sealed record GetParticipantsBody
+    {
+        [JsonPropertyName("p_competition_id")]
+        public required string CompetitionId { get; init; }
     }
 
     private sealed record PublicPredictionParticipantRow

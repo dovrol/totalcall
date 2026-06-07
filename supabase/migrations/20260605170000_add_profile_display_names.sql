@@ -260,27 +260,47 @@ create unique index profiles_display_name_ci_unique_idx
   on public.profiles (lower(display_name))
   where length(btrim(display_name)) > 0;
 
-create or replace view public.prediction_participants_public
-with (security_barrier = true)
-as
-select
-  ps.competition_id,
-  coalesce(
-    nullif(trim(p.display_name), ''),
-    public.powerlifting_display_name_candidate(ps.user_id::text, 0)
-  ) as display_name,
-  ps.submitted_at,
-  ps.status::text as status
-from public.prediction_submissions ps
-left join public.profiles p on p.id = ps.user_id
-where ps.status = 'submitted'
-  and ps.submitted_at is not null;
+-- Public participants are exposed through a security definer function instead
+-- of a view. A view would run with the view owner's rights and bypass RLS,
+-- which Supabase's "security definer view" advisor flags as critical. A
+-- security definer function is the supported primitive for a curated, public
+-- projection of otherwise private tables: it returns only safe columns and the
+-- base tables (prediction_submissions, profiles) stay private owner-only.
+drop view if exists public.prediction_participants_public;
 
-comment on view public.prediction_participants_public is
+create or replace function public.get_competition_participants(p_competition_id text)
+returns table (
+  competition_id text,
+  display_name text,
+  submitted_at timestamptz,
+  status text
+)
+language sql
+security definer
+stable
+set search_path = public
+as $$
+  select
+    ps.competition_id,
+    coalesce(
+      nullif(trim(p.display_name), ''),
+      public.powerlifting_display_name_candidate(ps.user_id::text, 0)
+    ) as display_name,
+    ps.submitted_at,
+    ps.status::text as status
+  from public.prediction_submissions ps
+  left join public.profiles p on p.id = ps.user_id
+  where ps.status = 'submitted'
+    and ps.submitted_at is not null
+    and ps.competition_id = p_competition_id
+  order by ps.submitted_at desc;
+$$;
+
+comment on function public.get_competition_participants(text) is
   'Public participant list for submitted predictions only. Does not expose user_id, email or answers_json.';
 
-revoke all on public.prediction_participants_public from public, anon, authenticated;
-grant select on public.prediction_participants_public to anon, authenticated;
+revoke all on function public.get_competition_participants(text) from public, anon, authenticated;
+grant execute on function public.get_competition_participants(text) to anon, authenticated;
 
 revoke all on function private.default_profile_display_name(uuid) from public, anon, authenticated;
 revoke all on function private.validate_profile_display_name(text) from public, anon, authenticated;

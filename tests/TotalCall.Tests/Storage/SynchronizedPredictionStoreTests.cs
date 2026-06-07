@@ -596,13 +596,12 @@ public sealed class SynchronizedPredictionStoreTests
         var auth = await CreateAuthAsync(js, authenticated: false);
         var handler = new RecordingHandler((request, _) =>
         {
-            Assert.Equal(HttpMethod.Get, request.Method);
-            Assert.Contains("prediction_participants_public", request.Uri);
-            Assert.Contains("select=competition_id,display_name,submitted_at,status", request.Uri);
-            Assert.DoesNotContain("public_submission_id", request.Uri);
-            Assert.DoesNotContain("answers_json", request.Uri);
-            Assert.DoesNotContain("email", request.Uri);
-            Assert.DoesNotContain("user_id", request.Uri);
+            Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Contains("rest/v1/rpc/get_competition_participants", request.Uri);
+            Assert.Contains("\"p_competition_id\":\"worlds-2026\"", request.Body);
+            Assert.DoesNotContain("answers_json", request.Body);
+            Assert.DoesNotContain("user_id", request.Body);
+            Assert.DoesNotContain("email", request.Body);
 
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
             {

@@ -16,33 +16,7 @@ public sealed class PredictionSubmissionMigrationTests
     }
 
     [Fact]
-    public void PublicParticipantsView_ExposesOnlySafeSubmittedRows()
-    {
-        var sql = ReadMigration();
-        var viewStart = sql.IndexOf(
-            "create or replace view public.prediction_participants_public",
-            StringComparison.OrdinalIgnoreCase);
-        var commentStart = sql.IndexOf("comment on view public.prediction_participants_public", StringComparison.OrdinalIgnoreCase);
-        var viewSql = sql[viewStart..commentStart];
-        var fromStart = viewSql.IndexOf("from public.prediction_submissions", StringComparison.OrdinalIgnoreCase);
-        var selectedColumnsSql = viewSql[..fromStart];
-
-        Assert.DoesNotContain("public_submission_id", viewSql);
-        Assert.Contains("ps.competition_id", viewSql);
-        Assert.Contains("display_name", viewSql);
-        Assert.Contains("'ChalkyBenchGoblin'", viewSql);
-        Assert.Contains("md5(ps.id::text)", viewSql);
-        Assert.Contains("ps.submitted_at", viewSql);
-        Assert.Contains("ps.status::text as status", viewSql);
-        Assert.Contains("where ps.status = 'submitted'", viewSql);
-
-        Assert.DoesNotContain("answers_json", viewSql);
-        Assert.DoesNotContain("email", viewSql);
-        Assert.DoesNotContain("user_id", selectedColumnsSql);
-    }
-
-    [Fact]
-    public void Migration_DoesNotGrantPublicSelectOnPredictionSubmissions()
+    public void Migration_KeepsSubmissionsPrivateAndDoesNotCreateADefinerView()
     {
         var sql = ReadMigration();
 
@@ -50,8 +24,11 @@ public sealed class PredictionSubmissionMigrationTests
             "grant select on public.prediction_submissions to anon",
             sql,
             StringComparison.OrdinalIgnoreCase);
-        Assert.Contains(
-            "grant select on public.prediction_participants_public to anon, authenticated",
+
+        // Participants are exposed through a security definer function in the
+        // display-names migration, never through a (definer) view.
+        Assert.DoesNotContain(
+            "create or replace view public.prediction_participants_public",
             sql,
             StringComparison.OrdinalIgnoreCase);
     }

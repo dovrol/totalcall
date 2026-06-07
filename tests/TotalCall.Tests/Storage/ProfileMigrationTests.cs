@@ -99,24 +99,33 @@ public sealed class ProfileMigrationTests
     }
 
     [Fact]
-    public void ParticipantsView_StillDoesNotExposePrivateProfileOrSubmissionData()
+    public void ParticipantsFunction_IsSecurityDefinerAndExposesOnlySafeColumns()
     {
         var sql = ReadMigration();
-        var viewStart = sql.IndexOf(
-            "create or replace view public.prediction_participants_public",
-            StringComparison.OrdinalIgnoreCase);
-        var commentStart = sql.IndexOf("comment on view public.prediction_participants_public", StringComparison.OrdinalIgnoreCase);
-        var viewSql = sql[viewStart..commentStart];
-        var fromStart = viewSql.IndexOf("from public.prediction_submissions", StringComparison.OrdinalIgnoreCase);
-        var selectedColumnsSql = viewSql[..fromStart];
+        var functionSql = ExtractFunction(sql, "public.get_competition_participants");
+        var fromStart = functionSql.IndexOf("from public.prediction_submissions", StringComparison.OrdinalIgnoreCase);
+        var selectedColumnsSql = functionSql[..fromStart];
 
-        Assert.Contains("p.display_name", viewSql);
-        Assert.Contains("public.powerlifting_display_name_candidate(ps.user_id::text, 0)", viewSql);
-        Assert.Contains("where ps.status = 'submitted'", viewSql);
-        Assert.DoesNotContain("answers_json", viewSql);
-        Assert.DoesNotContain("email", viewSql, StringComparison.OrdinalIgnoreCase);
+        // No definer view anywhere: it is replaced by a security definer function
+        // so the Supabase "security definer view" advisor stays clean.
+        Assert.DoesNotContain("create or replace view public.prediction_participants_public", sql);
+        Assert.Contains("drop view if exists public.prediction_participants_public", sql);
+
+        Assert.Contains("security definer", functionSql);
+        Assert.Contains("set search_path = public", functionSql);
+        Assert.Contains("p.display_name", functionSql);
+        Assert.Contains("public.powerlifting_display_name_candidate(ps.user_id::text, 0)", functionSql);
+        Assert.Contains("where ps.status = 'submitted'", functionSql);
+        Assert.Contains("ps.competition_id = p_competition_id", functionSql);
+        Assert.DoesNotContain("answers_json", functionSql);
+        Assert.DoesNotContain("email", functionSql, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain(" as user_id", selectedColumnsSql, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("ps.user_id as", selectedColumnsSql, StringComparison.OrdinalIgnoreCase);
+
+        // Public callers may execute the function; base tables stay private.
+        Assert.Contains(
+            "grant execute on function public.get_competition_participants(text) to anon, authenticated",
+            sql);
     }
 
     private static string ExtractFunction(string sql, string functionName)
