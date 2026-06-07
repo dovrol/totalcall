@@ -1,85 +1,88 @@
 @inject IStringLocalizer<SharedResource> Localizer
 
 <div class="topn-foottools">
-    @if (ShowLabel)
-    {
-        <span class="topn-foottools__label">@Localizer["Predictions.TopN.CategoryTools"]</span>
-    }
-
-    <div class="topn-bulkwrap">
-        <button
-            type="button"
-            class="@BulkButtonClass"
-            disabled="@(!CanEditPredictions || IsBulkFilling)"
-            aria-haspopup="true"
-            aria-expanded="@IsBulkMenuOpen"
-            aria-busy="@(IsBulkFilling ? "true" : null)"
-            @onclick="() => BulkMenuToggled.InvokeAsync()">
-            @if (IsBulkFilling)
-            {
-                <span class="topn-spinner" aria-hidden="true"></span>
-            }
-            else
-            {
-                <AppIcon Name="AppIconName.Sparkles" Size="14" />
-            }
-            <span>@Localizer["Predictions.TopN.FillDefaults"]</span>
-            <AppIcon Name="AppIconName.ChevronRight" Size="10" Class="topn-bulk__ch" />
-        </button>
-
-        @if (IsBulkMenuOpen)
+    <div class="topn-foottools__scroll">
+        @if (ShowLabel)
         {
+            <span class="topn-foottools__label">@Localizer["Predictions.TopN.CategoryTools"]</span>
+        }
+
+        <div class="topn-bulkwrap">
             <button
                 type="button"
-                class="topn-bulkmenu__scrim"
-                aria-label="@Localizer["Share.Close"]"
-                @onclick="() => BulkMenuClosed.InvokeAsync()"></button>
+                class="@BulkButtonClass"
+                disabled="@(!CanEditPredictions || IsBulkFilling)"
+                aria-haspopup="true"
+                aria-expanded="@IsBulkMenuOpen"
+                aria-busy="@(IsBulkFilling ? "true" : null)"
+                @onpointerup="OnBulkPointerUp"
+                @onclick="OnBulkClick">
+                @if (IsBulkFilling)
+                {
+                    <span class="topn-spinner" aria-hidden="true"></span>
+                }
+                else
+                {
+                    <AppIcon Name="AppIconName.Sparkles" Size="14" />
+                }
+                <span>@Localizer["Predictions.TopN.FillDefaults"]</span>
+                <AppIcon Name="AppIconName.ChevronRight" Size="10" Class="topn-bulk__ch" />
+            </button>
+        </div>
 
-            <div class="topn-bulkmenu">
-                <div class="topn-fillpop__head">@Localizer["Predictions.TopN.FillDefaultsHeading", DefaultCount]</div>
-                <button type="button" class="topn-fill-opt" @onclick="() => BulkFillRequested.InvokeAsync(TopNQuickFillKind.Nominated)">
-                    <span class="topn-fill-opt__ic"><AppIcon Name="AppIconName.Target" Size="13" /></span>
-                    <span class="topn-fill-opt__t">@Localizer["Predictions.NominatedTotal"]</span>
-                </button>
-                <button type="button" class="topn-fill-opt" @onclick="() => BulkFillRequested.InvokeAsync(TopNQuickFillKind.Last)">
-                    <span class="topn-fill-opt__ic"><AppIcon Name="AppIconName.Clock" Size="13" /></span>
-                    <span class="topn-fill-opt__t">@Localizer["Predictions.LastResult"]</span>
-                </button>
-                <button type="button" class="topn-fill-opt" @onclick="() => BulkFillRequested.InvokeAsync(TopNQuickFillKind.Best)">
-                    <span class="topn-fill-opt__ic"><AppIcon Name="AppIconName.Trophy" Size="13" /></span>
-                    <span class="topn-fill-opt__t">@Localizer["Predictions.BestResult"]</span>
-                </button>
-            </div>
-        }
+        <button
+            type="button"
+            class="topn-tool"
+            disabled="@(!CanEditPredictions)"
+            @onclick="() => SortRequested.InvokeAsync()">
+            <AppIcon Name="AppIconName.ArrowUpDown" Size="14" />
+            <span>@Localizer["Predictions.SortByPredictedTotal"]</span>
+        </button>
+
+        <button
+            type="button"
+            class="@CompareButtonClass"
+            @onclick="() => CompareModeRequested.InvokeAsync()">
+            <AppIcon Name="AppIconName.Users" Size="14" />
+            <span>@Localizer["Predictions.CompareAthletes"]</span>
+        </button>
+
+        <button
+            type="button"
+            class="topn-tool topn-tool--ghost"
+            disabled="@(!CanEditPredictions)"
+            @onclick="() => ClearRequested.InvokeAsync()">
+            <AppIcon Name="AppIconName.RotateCcw" Size="14" />
+            <span>@Localizer["Predictions.TopN.ResetField"]</span>
+        </button>
+
+        <span class="topn-foottools__count">@CountSummary</span>
     </div>
 
-    <button
-        type="button"
-        class="topn-tool"
-        disabled="@(!CanEditPredictions)"
-        @onclick="() => SortRequested.InvokeAsync()">
-        <AppIcon Name="AppIconName.ArrowUpDown" Size="14" />
-        <span>@Localizer["Predictions.SortByPredictedTotal"]</span>
-    </button>
+    @if (IsBulkMenuOpen)
+    {
+        <button
+            type="button"
+            class="topn-bulkmenu__scrim"
+            aria-label="@Localizer["Share.Close"]"
+            @onclick="() => BulkMenuClosed.InvokeAsync()"></button>
 
-    <button
-        type="button"
-        class="@CompareButtonClass"
-        @onclick="() => CompareModeRequested.InvokeAsync()">
-        <AppIcon Name="AppIconName.Users" Size="14" />
-        <span>@Localizer["Predictions.CompareAthletes"]</span>
-    </button>
-
-    <button
-        type="button"
-        class="topn-tool topn-tool--ghost"
-        disabled="@(!CanEditPredictions)"
-        @onclick="() => ClearRequested.InvokeAsync()">
-        <AppIcon Name="AppIconName.RotateCcw" Size="14" />
-        <span>@Localizer["Predictions.TopN.ResetField"]</span>
-    </button>
-
-    <span class="topn-foottools__count">@CountSummary</span>
+        <div class="topn-bulkmenu">
+            <div class="topn-fillpop__head">@Localizer["Predictions.TopN.FillDefaultsHeading", DefaultCount]</div>
+            <button type="button" class="topn-fill-opt" @onclick="() => BulkFillRequested.InvokeAsync(TopNQuickFillKind.Nominated)">
+                <span class="topn-fill-opt__ic"><AppIcon Name="AppIconName.Target" Size="13" /></span>
+                <span class="topn-fill-opt__t">@Localizer["Predictions.NominatedTotal"]</span>
+            </button>
+            <button type="button" class="topn-fill-opt" @onclick="() => BulkFillRequested.InvokeAsync(TopNQuickFillKind.Last)">
+                <span class="topn-fill-opt__ic"><AppIcon Name="AppIconName.Clock" Size="13" /></span>
+                <span class="topn-fill-opt__t">@Localizer["Predictions.LastResult"]</span>
+            </button>
+            <button type="button" class="topn-fill-opt" @onclick="() => BulkFillRequested.InvokeAsync(TopNQuickFillKind.Best)">
+                <span class="topn-fill-opt__ic"><AppIcon Name="AppIconName.Trophy" Size="13" /></span>
+                <span class="topn-fill-opt__t">@Localizer["Predictions.BestResult"]</span>
+            </button>
+        </div>
+    }
 </div>
 
 @code {
@@ -128,6 +131,8 @@
     [Parameter]
     public EventCallback ClearRequested { get; set; }
 
+    private DateTimeOffset lastTouchBulkToggleAt = DateTimeOffset.MinValue;
+
     private string BulkButtonClass => string.Join(
         " ",
         "topn-tool",
@@ -145,4 +150,25 @@
         ScoredCount,
         RefinedCount,
         FieldCount];
+
+    private Task OnBulkPointerUp(PointerEventArgs args)
+    {
+        if (!string.Equals(args.PointerType, "touch", StringComparison.OrdinalIgnoreCase))
+        {
+            return Task.CompletedTask;
+        }
+
+        lastTouchBulkToggleAt = DateTimeOffset.UtcNow;
+        return BulkMenuToggled.InvokeAsync();
+    }
+
+    private Task OnBulkClick()
+    {
+        if (DateTimeOffset.UtcNow - lastTouchBulkToggleAt < TimeSpan.FromMilliseconds(650))
+        {
+            return Task.CompletedTask;
+        }
+
+        return BulkMenuToggled.InvokeAsync();
+    }
 }

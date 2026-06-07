@@ -1,0 +1,137 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<section class="topn-workspace prediction-loading-skeleton" aria-busy="true" aria-label="@Localizer["Predictions.Loading"]" role="status">
+    <div class="topn-desktop prediction-loading-skeleton__desktop">
+        <header class="topn-header prediction-loading-skeleton__header">
+            <div class="topn-header__bc prediction-loading-skeleton__breadcrumb">
+                <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--crumb-main"></span>
+                <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--crumb-chip"></span>
+            </div>
+
+            <h2 class="topn-header__title prediction-loading-skeleton__title">
+                <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--title"></span>
+                <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--status"></span>
+            </h2>
+
+            <div class="topn-header__meta prediction-loading-skeleton__meta">
+                <div class="topn-header__progress prediction-loading-skeleton__progress">
+                    <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--progress-label"></span>
+                    <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--progress-track"></span>
+                    <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--progress-count"></span>
+                </div>
+                <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--lock"></span>
+            </div>
+        </header>
+
+        <div class="topn-strip prediction-loading-skeleton__strip" aria-hidden="true">
+            <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--strip-edge"></span>
+            <div class="topn-strip__scroll prediction-loading-skeleton__strip-scroll">
+                @for (var index = 0; index < 8; index++)
+                {
+                    <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--category"></span>
+                }
+            </div>
+            <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--strip-edge"></span>
+            <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--jump"></span>
+        </div>
+
+        <div class="topn-workspace__body">
+            <div class="prediction-loading-skeleton__tools" aria-hidden="true">
+                <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--tool-wide"></span>
+                <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--tool"></span>
+                <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--tool"></span>
+                <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--tool-short"></span>
+            </div>
+
+            <div class="topn-sheet prediction-loading-skeleton__sheet" aria-hidden="true">
+                <div class="topn-sheet__head">
+                    @for (var index = 0; index < 8; index++)
+                    {
+                        <div class="topn-sheet__th">
+                            <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--th"></span>
+                        </div>
+                    }
+                </div>
+
+                <div class="topn-sheet__body">
+                    @for (var index = 0; index < 8; index++)
+                    {
+                        <div class="topn-rowgroup prediction-loading-skeleton__rowgroup">
+                            <div class="topn-row prediction-loading-skeleton__row">
+                                <div class="topn-cell topn-cell--num">
+                                    <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--rank"></span>
+                                </div>
+                                <div class="topn-cell">
+                                    <div class="prediction-loading-skeleton__athlete">
+                                        <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--avatar"></span>
+                                        <span class="prediction-loading-skeleton__athlete-lines">
+                                            <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--athlete-name"></span>
+                                            <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--athlete-meta"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="topn-cell">
+                                    <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--metric"></span>
+                                </div>
+                                <div class="topn-cell">
+                                    <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--metric"></span>
+                                </div>
+                                <div class="topn-cell">
+                                    <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--metric"></span>
+                                </div>
+                                <div class="topn-cell">
+                                    <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--metric-wide"></span>
+                                </div>
+                                <div class="topn-cell">
+                                    <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--metric"></span>
+                                </div>
+                                <div class="topn-cell">
+                                    <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--row-actions"></span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="topn-mobile prediction-loading-skeleton__mobile">
+        <div class="prediction-loading-skeleton__mobile-header" aria-hidden="true">
+            <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--mobile-kicker"></span>
+            <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--mobile-title"></span>
+            <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--mobile-progress"></span>
+        </div>
+
+        <div class="prediction-loading-skeleton__mobile-list" aria-hidden="true">
+            @for (var index = 0; index < 6; index++)
+            {
+                <div class="prediction-loading-skeleton__mobile-card">
+                    <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--mobile-rank"></span>
+                    <span class="prediction-loading-skeleton__mobile-card-main">
+                        <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--mobile-name"></span>
+                        <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--mobile-sub"></span>
+                    </span>
+                    <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--mobile-total"></span>
+                </div>
+            }
+        </div>
+    </div>
+
+    <nav class="prediction-action-bar prediction-loading-skeleton__action-bar" aria-hidden="true">
+        <div class="prediction-action-bar__left">
+            <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--action-small"></span>
+        </div>
+        <div class="prediction-action-bar__status prediction-loading-skeleton__action-status">
+            <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--action-icon"></span>
+            <span class="prediction-loading-skeleton__action-copy">
+                <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--action-title"></span>
+                <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--action-detail"></span>
+            </span>
+        </div>
+        <div class="prediction-action-bar__actions">
+            <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--action-small"></span>
+            <span class="prediction-loading-skeleton__bone prediction-loading-skeleton__bone--action-button"></span>
+        </div>
+    </nav>
+</section>

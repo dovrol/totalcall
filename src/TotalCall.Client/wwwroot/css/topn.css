@@ -1350,16 +1350,21 @@
 .topn-foottools {
     position: relative;
     z-index: 6;
-    display: flex;
     flex: none;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
     border: 0;
     border-radius: 0;
     background: transparent;
     padding: 10px 2px 12px;
     box-shadow: none;
+}
+
+.topn-foottools__scroll {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .topn-foottools:has(.topn-bulkmenu) {
@@ -2014,9 +2019,50 @@ body:has(.topn-drawer.is-open) {
     }
 }
 
+@media (min-width: 640.01px) and (max-width: 899.98px) {
+    .topn-workspace .prediction-action-bar {
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        height: auto;
+        min-height: 4.35rem;
+        padding: 0.6rem 0.85rem calc(0.6rem + env(safe-area-inset-bottom));
+        gap: 0.58rem;
+        align-content: center;
+    }
+
+    .topn-workspace .prediction-action-bar__left {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .topn-workspace .prediction-action-bar__status {
+        grid-column: 2;
+        grid-row: 1;
+        width: auto;
+        padding: 0;
+        justify-content: flex-start;
+    }
+
+    .topn-workspace .prediction-action-bar__actions {
+        grid-column: 3;
+        grid-row: 1;
+    }
+
+    .topn-workspace .prediction-action-bar__status-copy > span {
+        max-width: min(27rem, 44vw);
+    }
+}
+
 @media (max-width: 720px) {
     .topn-workspace {
-        --prediction-bottom-bar-space: calc(var(--prediction-mobile-stack-height) + 1rem);
+        --topn-mobile-action-bar-height: calc(5.75rem + env(safe-area-inset-bottom));
+        --prediction-bottom-bar-space:
+            calc(var(--topn-mobile-action-bar-height) + var(--topn-mobile-tools-height) + 1rem);
+    }
+
+    .app-shell--no-mobile-tabs .app-shell__content:has(.topn-workspace) {
+        --topn-mobile-action-bar-height: calc(5.75rem + env(safe-area-inset-bottom));
+        padding-bottom:
+            calc(var(--topn-mobile-action-bar-height) + var(--prediction-mobile-topn-tools-height) + 1.15rem);
     }
 
     .topn-desktop {
@@ -2025,6 +2071,46 @@ body:has(.topn-drawer.is-open) {
 
     .topn-mobile {
         display: flex;
+    }
+
+    .topn-workspace .prediction-action-bar {
+        height: var(--topn-mobile-action-bar-height);
+        min-height: var(--topn-mobile-action-bar-height);
+        overflow: hidden;
+        align-content: center;
+    }
+
+    .topn-workspace .prediction-action-bar__status {
+        padding-bottom: 0.08rem;
+        justify-content: flex-start;
+    }
+
+    .topn-workspace .prediction-action-bar__status-icon {
+        width: 1.72rem;
+        height: 1.72rem;
+        border-radius: 0.46rem;
+    }
+
+    .topn-workspace .prediction-action-bar__status-copy {
+        gap: 0;
+    }
+
+    .topn-workspace .prediction-action-bar__status-copy strong {
+        font-size: 0.74rem;
+    }
+
+    .topn-workspace .prediction-action-bar__status-copy > span {
+        max-width: min(21rem, 68vw);
+        font-size: 0.66rem;
+    }
+
+    .topn-workspace .prediction-action-bar--submitted .prediction-action-bar__status-copy > span:not(.prediction-action-bar__status-stamp) {
+        display: none;
+    }
+
+    .topn-workspace .prediction-action-bar__status-stamp {
+        display: inline-flex;
+        font-size: 0.62rem !important;
     }
 
     /* mobile sheets float with a gap from the screen edges */
@@ -2839,12 +2925,11 @@ body:has(.topn-drawer.is-open) {
     left: 0;
     right: 0;
     bottom: var(--topn-mobile-action-bar-height);
-    z-index: 34;
+    z-index: 60;
     height: var(--topn-mobile-tools-height);
     box-sizing: border-box;
     margin-top: 0;
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    overflow: visible;
     background: var(--tn-panel);
     border-top: 1px solid var(--tn-bd-soft);
     border-bottom: 1px solid var(--tn-bd-soft);
@@ -2854,11 +2939,19 @@ body:has(.topn-drawer.is-open) {
     scrollbar-width: none;
 }
 
+.topn-mobile .topn-foottools__scroll {
+    height: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+
 .topn-mobile .topn-foottools:has(.topn-bulkmenu) {
     z-index: 90;
 }
 
-.topn-mobile .topn-foottools::-webkit-scrollbar {
+.topn-mobile .topn-foottools__scroll::-webkit-scrollbar {
     display: none;
 }
 
@@ -2873,6 +2966,31 @@ body:has(.topn-drawer.is-open) {
     bottom: calc(var(--topn-mobile-action-bar-height) + var(--topn-mobile-tools-height) + 0.5rem);
     left: 0.75rem;
     width: min(248px, calc(100vw - 1.5rem));
+    z-index: 120;
+}
+
+.topn-mobile .topn-bulkmenu__scrim {
+    z-index: 110;
+}
+
+@media (min-width: 640.01px) and (max-width: 720px) {
+    .topn-workspace {
+        --topn-mobile-action-bar-height: calc(4.35rem + env(safe-area-inset-bottom));
+        --prediction-bottom-bar-space:
+            calc(var(--topn-mobile-action-bar-height) + var(--topn-mobile-tools-height) + 1rem);
+    }
+
+    .app-shell--no-mobile-tabs .app-shell__content:has(.topn-workspace) {
+        --topn-mobile-action-bar-height: calc(4.35rem + env(safe-area-inset-bottom));
+        padding-bottom:
+            calc(var(--topn-mobile-action-bar-height) + var(--prediction-mobile-topn-tools-height) + 1.15rem);
+    }
+
+    .topn-workspace .prediction-action-bar {
+        height: var(--topn-mobile-action-bar-height);
+        min-height: var(--topn-mobile-action-bar-height);
+        overflow: hidden;
+    }
 }
 
 .topn-mobile .topn-foottools__count {
@@ -3096,6 +3214,390 @@ body:has(.topn-drawer.is-open) {
 }
 
 /* ===============================================================
+   Prediction loading skeleton
+   =============================================================== */
+.prediction-loading-skeleton {
+    pointer-events: none;
+}
+
+.prediction-loading-skeleton__header {
+    min-height: 4.4rem;
+}
+
+.prediction-loading-skeleton__breadcrumb,
+.prediction-loading-skeleton__title,
+.prediction-loading-skeleton__meta,
+.prediction-loading-skeleton__progress,
+.prediction-loading-skeleton__tools,
+.prediction-loading-skeleton__athlete,
+.prediction-loading-skeleton__action-status,
+.prediction-loading-skeleton__action-copy {
+    min-width: 0;
+}
+
+.prediction-loading-skeleton__bone {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--tn-panel-2) 86%, var(--tn-txt-3) 14%);
+}
+
+.prediction-loading-skeleton__bone::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--tn-txt) 14%, transparent),
+        transparent
+    );
+    transform: translateX(-100%);
+    animation: prediction-loading-skeleton-shimmer 1.3s infinite;
+}
+
+.prediction-loading-skeleton__bone--crumb-main {
+    width: 9rem;
+    height: 0.82rem;
+}
+
+.prediction-loading-skeleton__bone--crumb-chip {
+    width: 11rem;
+    height: 1.72rem;
+}
+
+.prediction-loading-skeleton__bone--title {
+    width: min(25rem, 44vw);
+    height: 1.65rem;
+}
+
+.prediction-loading-skeleton__bone--status {
+    width: 6.4rem;
+    height: 1.45rem;
+    border-radius: 999px;
+}
+
+.prediction-loading-skeleton__bone--progress-label {
+    width: 5.8rem;
+    height: 0.72rem;
+}
+
+.prediction-loading-skeleton__bone--progress-track {
+    width: 7.5rem;
+    height: 0.38rem;
+    border-radius: 999px;
+}
+
+.prediction-loading-skeleton__bone--progress-count {
+    width: 2.8rem;
+    height: 0.8rem;
+}
+
+.prediction-loading-skeleton__bone--lock {
+    width: 11rem;
+    height: 1rem;
+}
+
+.prediction-loading-skeleton__strip {
+    overflow: hidden;
+}
+
+.prediction-loading-skeleton__strip-scroll {
+    min-width: 0;
+}
+
+.prediction-loading-skeleton__bone--strip-edge {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    flex: none;
+}
+
+.prediction-loading-skeleton__bone--category {
+    width: 4.4rem;
+    height: 2.1rem;
+    border-radius: 10px;
+    flex: 0 0 auto;
+}
+
+.prediction-loading-skeleton__bone--jump {
+    width: 7.4rem;
+    height: 2.15rem;
+    border-radius: 10px;
+    flex: none;
+}
+
+.prediction-loading-skeleton__tools {
+    display: flex;
+    align-items: center;
+    gap: 0.58rem;
+    min-height: 2.45rem;
+    padding: 0.48rem 0.58rem;
+    border: 1px solid var(--tn-bd-soft);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--tn-panel-2) 82%, transparent);
+}
+
+.prediction-loading-skeleton__bone--tool-wide {
+    width: min(19rem, 38vw);
+    height: 1.45rem;
+}
+
+.prediction-loading-skeleton__bone--tool,
+.prediction-loading-skeleton__bone--tool-short {
+    height: 1.8rem;
+    border-radius: 9px;
+}
+
+.prediction-loading-skeleton__bone--tool {
+    width: 7.6rem;
+}
+
+.prediction-loading-skeleton__bone--tool-short {
+    width: 5.5rem;
+    margin-left: auto;
+}
+
+.prediction-loading-skeleton__sheet {
+    overflow: hidden;
+}
+
+.prediction-loading-skeleton__sheet .topn-sheet__body {
+    max-height: min(33rem, calc(100dvh - 15rem));
+    overflow: hidden;
+}
+
+.prediction-loading-skeleton__bone--th {
+    width: 70%;
+    height: 0.66rem;
+}
+
+.prediction-loading-skeleton__row {
+    cursor: default;
+}
+
+.prediction-loading-skeleton__row:hover {
+    background: transparent;
+}
+
+.prediction-loading-skeleton__bone--rank {
+    width: 1.65rem;
+    height: 1.65rem;
+    border-radius: 999px;
+}
+
+.prediction-loading-skeleton__athlete {
+    display: flex;
+    align-items: center;
+    gap: 0.62rem;
+}
+
+.prediction-loading-skeleton__bone--avatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    flex: none;
+}
+
+.prediction-loading-skeleton__athlete-lines {
+    min-width: 0;
+    display: grid;
+    gap: 0.36rem;
+    flex: 1;
+}
+
+.prediction-loading-skeleton__bone--athlete-name {
+    width: min(12rem, 88%);
+    height: 0.9rem;
+}
+
+.prediction-loading-skeleton__bone--athlete-meta {
+    width: min(7rem, 58%);
+    height: 0.64rem;
+}
+
+.prediction-loading-skeleton__bone--metric,
+.prediction-loading-skeleton__bone--metric-wide,
+.prediction-loading-skeleton__bone--row-actions {
+    height: 0.95rem;
+}
+
+.prediction-loading-skeleton__bone--metric {
+    width: min(4.6rem, 100%);
+}
+
+.prediction-loading-skeleton__bone--metric-wide {
+    width: min(6rem, 100%);
+}
+
+.prediction-loading-skeleton__bone--row-actions {
+    width: 5.2rem;
+    border-radius: 999px;
+}
+
+.prediction-loading-skeleton__mobile {
+    gap: 0.75rem;
+}
+
+.prediction-loading-skeleton__mobile-header,
+.prediction-loading-skeleton__mobile-card {
+    border: 1px solid var(--tn-bd-soft);
+    background: color-mix(in srgb, var(--tn-panel-2) 84%, transparent);
+}
+
+.prediction-loading-skeleton__mobile-header {
+    border-radius: 15px;
+    padding: 0.85rem;
+    display: grid;
+    gap: 0.58rem;
+}
+
+.prediction-loading-skeleton__bone--mobile-kicker {
+    width: 9rem;
+    height: 0.76rem;
+}
+
+.prediction-loading-skeleton__bone--mobile-title {
+    width: min(18rem, 86%);
+    height: 1.45rem;
+}
+
+.prediction-loading-skeleton__bone--mobile-progress {
+    width: 100%;
+    height: 0.42rem;
+    border-radius: 999px;
+}
+
+.prediction-loading-skeleton__mobile-list {
+    display: grid;
+    gap: 0.55rem;
+}
+
+.prediction-loading-skeleton__mobile-card {
+    border-radius: 14px;
+    padding: 0.78rem;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.72rem;
+    align-items: center;
+}
+
+.prediction-loading-skeleton__bone--mobile-rank {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+}
+
+.prediction-loading-skeleton__mobile-card-main {
+    min-width: 0;
+    display: grid;
+    gap: 0.38rem;
+}
+
+.prediction-loading-skeleton__bone--mobile-name {
+    width: min(12rem, 82%);
+    height: 0.95rem;
+}
+
+.prediction-loading-skeleton__bone--mobile-sub {
+    width: min(8rem, 58%);
+    height: 0.68rem;
+}
+
+.prediction-loading-skeleton__bone--mobile-total {
+    width: 4.4rem;
+    height: 1.08rem;
+}
+
+.prediction-loading-skeleton__action-bar {
+    pointer-events: none;
+}
+
+.prediction-loading-skeleton__action-status {
+    display: flex;
+}
+
+.prediction-loading-skeleton__action-copy {
+    display: grid;
+    gap: 0.24rem;
+}
+
+.prediction-loading-skeleton__bone--action-icon {
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 0.5rem;
+}
+
+.prediction-loading-skeleton__bone--action-title {
+    width: min(12rem, 34vw);
+    height: 0.86rem;
+}
+
+.prediction-loading-skeleton__bone--action-detail {
+    width: min(20rem, 42vw);
+    height: 0.68rem;
+}
+
+.prediction-loading-skeleton__bone--action-small,
+.prediction-loading-skeleton__bone--action-button {
+    height: 2rem;
+    border-radius: 0.52rem;
+}
+
+.prediction-loading-skeleton__bone--action-small {
+    width: 5.2rem;
+}
+
+.prediction-loading-skeleton__bone--action-button {
+    width: 8.6rem;
+}
+
+@media (max-width: 960px) {
+    .prediction-loading-skeleton__meta {
+        justify-content: space-between;
+    }
+
+    .prediction-loading-skeleton__bone--lock {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 720px) {
+    .prediction-loading-skeleton {
+        padding-bottom: var(--prediction-bottom-bar-space);
+    }
+
+    .prediction-loading-skeleton__action-bar {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .prediction-loading-skeleton__action-bar .prediction-action-bar__left {
+        display: none;
+    }
+
+    .prediction-loading-skeleton__action-status {
+        justify-content: flex-start;
+    }
+
+    .prediction-loading-skeleton__bone--action-detail {
+        width: min(13rem, 46vw);
+    }
+
+    .prediction-loading-skeleton__bone--action-small {
+        display: none;
+    }
+
+    .prediction-loading-skeleton__bone--action-button {
+        width: 5.4rem;
+    }
+}
+
+@keyframes prediction-loading-skeleton-shimmer {
+    to { transform: translateX(100%); }
+}
+
+/* ===============================================================
    Overlay entrance animations
    =============================================================== */
 @keyframes topn-fade {
@@ -3185,7 +3687,8 @@ body:has(.topn-drawer.is-open) {
     .topn-mobile .ms-expander__icon,
     .topn-mobile .ms-edit-region,
     .topn-mobile .ms-card__chev-icon,
-    .topn-drawer {
+    .topn-drawer,
+    .prediction-loading-skeleton__bone::after {
         animation: none !important;
         transition: none !important;
     }

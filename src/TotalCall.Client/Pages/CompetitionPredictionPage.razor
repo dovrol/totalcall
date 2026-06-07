@@ -14,7 +14,7 @@
 
 @if (isLoading)
 {
-    <AppLoadingState Message="@Localizer["Predictions.Loading"]" />
+    <PredictionLoadingSkeleton />
 }
 else if (competition is null || predictionSet is null)
 {

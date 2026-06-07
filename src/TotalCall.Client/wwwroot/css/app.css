@@ -6603,7 +6603,7 @@ textarea {
         font-size: 0.76rem;
     }
 
-    .prediction-action-bar__status span {
+    .prediction-action-bar__status-copy > span {
         display: inline;
         font-size: 0.68rem;
     }
@@ -11666,6 +11666,11 @@ textarea {
     display: grid;
     place-items: center;
     flex: none;
+}
+
+.prediction-action-bar__status-icon .app-icon {
+    display: block;
+    vertical-align: top;
 }
 
 .prediction-action-bar__status-copy {
