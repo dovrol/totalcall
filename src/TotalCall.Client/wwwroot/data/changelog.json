@@ -2,6 +2,58 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.8.0-beta.1",
+      "releasedAt": "2026-06-07",
+      "title": {
+        "pl": "Wysyłanie typów, publiczni uczestnicy i odświeżony interfejs",
+        "en": "Prediction submission, public participants and refreshed interface"
+      },
+      "items": [
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Zalogowani użytkownicy mogą teraz wysyłać typy do zawodów — pasek akcji pokazuje stan szkicu, potwierdzenie oraz datę wysłania.",
+            "en": "Signed-in users can now submit predictions for a competition — the action bar shows draft state, confirmation and submission time."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Nowa publiczna lista uczestników zawodów pokazuje osoby, które wysłały typy, z wyszukiwarką, statusem i informacją o punktacji po zawodach.",
+            "en": "A new public competition participants list shows people who submitted picks, with search, status and post-competition scoring info."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Nowy profil użytkownika pozwala ustawić publiczną nazwę wyświetlaną przy wysłanych typach; adres e-mail pozostaje prywatny.",
+            "en": "A new user profile lets you set the public display name shown next to submitted picks; email addresses stay private."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Odświeżony shell aplikacji, menu użytkownika, przełączniki języka i motywu oraz ustawienia gościa są czytelniejsze na desktopie i mobile.",
+            "en": "The refreshed app shell, user menu, language and theme toggles, and guest settings are clearer on desktop and mobile."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Usprawnione akcje TopN oraz udostępnianie/eksport — najważniejsze narzędzia są bliżej modułu i lepiej układają się na małych ekranach.",
+            "en": "TopN actions and share/export were streamlined — key tools sit closer to the module and fit better on small screens."
+          }
+        },
+        {
+          "type": "fix",
+          "text": {
+            "pl": "Dopracowana walidacja i układ mobilny typowania, w tym stany wysyłania i synchronizacji oraz czytelność okna „Co nowego?”.",
+            "en": "Prediction validation and mobile layout were polished, including submit/sync states and readability of the “What's new?” modal."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.7.0-beta.1",
       "releasedAt": "2026-06-04",
       "title": {
