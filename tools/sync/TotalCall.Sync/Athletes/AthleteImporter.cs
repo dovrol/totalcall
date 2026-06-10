@@ -5,9 +5,9 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace TotalCall.OplImporter;
+namespace TotalCall.Sync.Athletes;
 
-public sealed class ImporterOptions
+public sealed class AthleteImportOptions
 {
     public required string CompetitionJsonPath { get; init; }
     public required string Source { get; init; }
@@ -20,11 +20,11 @@ public sealed class ImporterOptions
     public string TriggeredBy { get; init; } = "manual";
 }
 
-public sealed class Importer
+public sealed class AthleteImporter
 {
     private const int LookupBatchSize = 20;
 
-    public async Task<int> RunAsync(ImporterOptions opts, CancellationToken ct)
+    public async Task<int> RunAsync(AthleteImportOptions opts, CancellationToken ct)
     {
         // 1. Load competition JSON
         Console.WriteLine($"[info] Loading competition: {opts.CompetitionJsonPath}");
@@ -219,7 +219,7 @@ public sealed class Importer
     // ============================================================
     // CSV acquisition (URL/ZIP or local file)
     // ============================================================
-    private static async Task<string> EnsureCsvAsync(ImporterOptions opts, CancellationToken ct)
+    private static async Task<string> EnsureCsvAsync(AthleteImportOptions opts, CancellationToken ct)
     {
         if (!string.IsNullOrWhiteSpace(opts.LocalCsvPath))
         {
@@ -230,7 +230,7 @@ public sealed class Importer
         Console.WriteLine($"[info] Downloading {url}");
         var tmpZip = Path.GetTempFileName();
         using var http = new HttpClient { Timeout = TimeSpan.FromMinutes(30) };
-        http.DefaultRequestHeaders.UserAgent.ParseAdd("TotalCall-OplImporter/1.0");
+        http.DefaultRequestHeaders.UserAgent.ParseAdd("TotalCall-Sync/1.0");
         await using (var src = await http.GetStreamAsync(url, ct))
         await using (var dst = File.Create(tmpZip))
         {
@@ -259,7 +259,7 @@ public sealed class Importer
     // Dry-run scan (no DB writes)
     // ============================================================
     private static async Task<ImportCounters> ScanCsvAsync(
-        ImporterOptions opts,
+        AthleteImportOptions opts,
         IReadOnlyDictionary<string, string> nameIndex,
         CancellationToken ct)
     {
@@ -732,7 +732,7 @@ public sealed class Importer
     private static async Task<string> StartImportRunAsync(
         SupabaseRestClient supa,
         string sourceId,
-        ImporterOptions opts,
+        AthleteImportOptions opts,
         CancellationToken ct)
     {
         var row = new JsonArray
@@ -758,7 +758,7 @@ public sealed class Importer
         string runId,
         string status,
         ImportCounters c,
-        ImporterOptions opts,
+        AthleteImportOptions opts,
         string? errorMessage,
         CancellationToken ct)
     {

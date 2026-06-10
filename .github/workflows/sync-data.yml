@@ -1,4 +1,4 @@
-name: Import OpenIPF / OpenPowerlifting data
+name: Sync competition + OpenIPF / OpenPowerlifting data
 
 on:
   workflow_dispatch:
@@ -24,11 +24,11 @@ on:
     - cron: "17 3 * * 1"
 
 concurrency:
-  group: import-opl
+  group: sync-data
   cancel-in-progress: false
 
 jobs:
-  import:
+  sync:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -40,10 +40,10 @@ jobs:
         with:
           dotnet-version: "10.x"
 
-      - name: Restore importer
-        run: dotnet restore tools/import-opl/TotalCall.OplImporter/TotalCall.OplImporter.csproj
+      - name: Restore sync tool
+        run: dotnet restore tools/sync/TotalCall.Sync/TotalCall.Sync.csproj
 
-      - name: Run importer
+      - name: Run sync
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
@@ -55,7 +55,7 @@ jobs:
           SOURCE="${{ github.event.inputs.source || '' }}"
 
           if [ -z "$COMPETITION" ] && [ -z "$SOURCE" ]; then
-            ./scripts/import-athlete-data.sh
+            ./scripts/sync-supabase.sh
             exit 0
           fi
 
@@ -69,4 +69,4 @@ jobs:
               ;;
           esac
 
-          ./scripts/import-athlete-data.sh "$COMPETITION_JSON" "$SOURCE"
+          ./scripts/sync-supabase.sh "$COMPETITION_JSON" "$SOURCE"

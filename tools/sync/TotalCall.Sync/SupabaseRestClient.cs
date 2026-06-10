@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace TotalCall.OplImporter;
+namespace TotalCall.Sync;
 
 // Thin PostgREST wrapper. Uses the Supabase service_role key for all calls.
 // All importer writes target the public schema; admin tables are protected by

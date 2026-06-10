@@ -5,4 +5,4 @@
 - `./scripts/build.sh` - buduje cale rozwiazanie.
 - `./scripts/test.sh` - uruchamia testy.
 - `./scripts/clean.sh` - usuwa wszystkie katalogi `bin` i `obj`.
-- `./scripts/import-athlete-data.sh [competition-json] [both|openipf|openpowerlifting]` - importuje dane zawodnikow; wymaga `SUPABASE_URL` i `SUPABASE_SECRET_KEY`.
+- `./scripts/sync-supabase.sh [competition-json] [both|openipf|openpowerlifting]` - synchronizuje definicje zawodow oraz dane zawodnikow do Supabase; wymaga `SUPABASE_URL` i `SUPABASE_SECRET_KEY`.

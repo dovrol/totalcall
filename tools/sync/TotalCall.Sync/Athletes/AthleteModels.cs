@@ -1,36 +1,6 @@
-using System.Text.Json.Serialization;
+namespace TotalCall.Sync.Athletes;
 
-namespace TotalCall.OplImporter;
-
-// ---- Competition JSON DTOs (subset — only fields the importer needs) ----
-
-public sealed record CompetitionDefinition
-{
-    [JsonPropertyName("id")] public string Id { get; init; } = "";
-    [JsonPropertyName("slug")] public string Slug { get; init; } = "";
-    [JsonPropertyName("name")] public string Name { get; init; } = "";
-    [JsonPropertyName("federation")] public string? Federation { get; init; }
-    [JsonPropertyName("athletes")] public List<CompetitionAthlete> Athletes { get; init; } = [];
-}
-
-public sealed record CompetitionAthlete
-{
-    [JsonPropertyName("id")] public string Id { get; init; } = "";
-    [JsonPropertyName("displayName")] public string DisplayName { get; init; } = "";
-    [JsonPropertyName("sex")] public string? Sex { get; init; }
-    [JsonPropertyName("countryCode")] public string? CountryCode { get; init; }
-    [JsonPropertyName("countryName")] public string? CountryName { get; init; }
-    [JsonPropertyName("externalAthleteRefs")] public List<ExternalAthleteRefDto> ExternalAthleteRefs { get; init; } = [];
-}
-
-public sealed record ExternalAthleteRefDto
-{
-    [JsonPropertyName("source")] public string Source { get; init; } = "";
-    [JsonPropertyName("name")] public string Name { get; init; } = "";
-    [JsonPropertyName("externalId")] public string? ExternalId { get; init; }
-}
-
-// ---- Internal pipeline records ----
+// ---- Internal athlete-import pipeline records ----
 
 // A single parsed OPL CSV row in our domain shape.
 public sealed record OplRow

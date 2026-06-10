@@ -1,4 +1,4 @@
-namespace TotalCall.OplImporter;
+namespace TotalCall.Sync;
 
 // Minimal RFC4180-ish CSV reader sufficient for OpenPowerlifting/OpenIPF bulk CSVs.
 // Streams a TextReader line-by-line yielding column dictionaries.

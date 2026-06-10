@@ -2,9 +2,9 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace TotalCall.OplImporter;
+namespace TotalCall.Sync;
 
-// Mirrors public.normalize_name() in supabase/migrations/20260526120000_create_athlete_data_backend.sql.
+// Mirrors public.normalize_name() in supabase/migrations/20260527180000_create_athlete_data_backend.sql.
 // Steps: unaccent -> lower -> non-alphanumeric to single space -> collapse whitespace -> trim.
 // IMPORTANT: keep behavior in sync with the SQL function. If you change one, change both.
 public static class NameNormalizer

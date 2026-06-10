@@ -6,8 +6,8 @@ OpenIPF / OpenPowerlifting into Supabase.
 It complements:
 - `supabase/migrations/20260527180000_create_athlete_data_backend.sql` — the database schema.
 - `supabase/migrations/20260528110000_add_public_import_status_rpc.sql` — public import-status RPC for the frontend.
-- `tools/import-opl/TotalCall.OplImporter` — the importer console app.
-- `.github/workflows/import-opl.yml` — the GitHub Actions workflow.
+- `tools/sync/TotalCall.Sync` — the sync console app (`athletes` subcommand imports athlete history).
+- `.github/workflows/sync-data.yml` — the GitHub Actions workflow.
 
 ---
 
@@ -75,7 +75,7 @@ the importer logs a warning and skips them.
 
 ## 3. How the importer reads the competition JSON
 
-The importer (`Importer.cs`):
+The athlete importer (`Athletes/AthleteImporter.cs`, the `athletes` subcommand):
 
 1. Loads the competition JSON.
 2. Filters athletes to those that have at least one `externalAthleteRefs[source = <requested>]`.
@@ -153,7 +153,7 @@ Upsert pipeline per batch:
 
 ## 6. Running the import manually from GitHub Actions
 
-1. Go to **Actions → "Import OpenIPF / OpenPowerlifting data"**.
+1. Go to **Actions → "Sync competition + OpenIPF / OpenPowerlifting data"**.
 2. Click **"Run workflow"**.
 3. Fill in:
    - **competition** — `worlds-2026` by default.
@@ -180,11 +180,11 @@ GitHub Secrets and is only read inside the workflow runner.
 export SUPABASE_URL="https://<project>.supabase.co"
 export SUPABASE_SECRET_KEY="<service_role key>"
 
-# Imports both openipf and openpowerlifting by default.
-./scripts/import-athlete-data.sh
+# Syncs the competition definition, then both openipf and openpowerlifting by default.
+./scripts/sync-supabase.sh
 
-# Or import a single source.
-./scripts/import-athlete-data.sh \
+# Or sync a single source.
+./scripts/sync-supabase.sh \
   src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json \
   openipf
 ```

@@ -7,7 +7,7 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 - Main app: `src/TotalCall.Client`.
 - Tests: `tests/TotalCall.Tests`.
 - Supabase migrations/config: `supabase`.
-- Athlete data importer: `tools/import-opl/TotalCall.OplImporter`.
+- Supabase sync tool (athlete history + competition definitions): `tools/sync/TotalCall.Sync`.
 - Utility scripts live in `scripts`.
 
 ## Frontend
@@ -39,16 +39,20 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 - Local Supabase MCP is `http://127.0.0.1:54321/mcp`.
 - Claude Code uses `.mcp.json`; Zed uses `.zed/settings.json`. Both point to the local Supabase MCP endpoint and require the local Supabase stack to be running.
 
-## Athlete Data Import
+## Supabase Sync
 
-- Import athlete history through `./scripts/import-athlete-data.sh`.
+- Sync everything through `./scripts/sync-supabase.sh`: it first syncs the competition
+  definition (`competition` subcommand), then athlete history per source.
 - The wrapper imports both `openipf` and `openpowerlifting` by default.
-- For real imports, set `SUPABASE_URL` and `SUPABASE_SECRET_KEY` manually first.
-- GitHub Actions uses `.github/workflows/import-opl.yml`, which calls the same wrapper.
-- The importer has additional lower-level options, but the wrapper should stay thin.
+- For real syncs, set `SUPABASE_URL` and `SUPABASE_SECRET_KEY` manually first.
+- GitHub Actions uses `.github/workflows/sync-data.yml`, which calls the same wrapper.
+- `TotalCall.Sync` exposes two subcommands (`athletes`, `competition`); keep their
+  responsibilities separate. The wrapper should stay thin.
+- The competition definition lives in Supabase (`competitions` + `competition_versions`);
+  the JSON in `wwwroot/data/competitions` stays a dev/import source and runtime fallback.
 
 ## Verification
 
 - Run `./scripts/build.sh` after app code changes.
-- Run `./scripts/test.sh` when changing shared logic, persistence, scoring, validation, or importer behavior.
-- For importer-only changes, `dotnet build tools/import-opl/TotalCall.OplImporter/TotalCall.OplImporter.csproj --no-restore` is usually enough.
+- Run `./scripts/test.sh` when changing shared logic, persistence, scoring, validation, or sync behavior.
+- For sync-tool-only changes, `dotnet build tools/sync/TotalCall.Sync/TotalCall.Sync.csproj --no-restore` is usually enough.
