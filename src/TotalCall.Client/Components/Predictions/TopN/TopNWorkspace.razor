@@ -322,6 +322,8 @@ else
     private string historySourceCode = ExternalAthleteSources.OpenIpf;
     private DotNetObjectReference<TopNWorkspace>? selfRef;
     private bool shortcutsAttached;
+    private bool contextDragAttached;
+    private bool switcherDragAttached;
 
     private readonly Dictionary<int, string> modeByPosition = [];
     private readonly Dictionary<string, AthleteHistoryEntry?> historyByAthleteId = new(StringComparer.OrdinalIgnoreCase);
@@ -590,18 +592,111 @@ else
             }
         }
 
+        await SyncContextDragAsync();
+        await SyncSwitcherDragAsync();
+
         await EnsureActiveFieldSeededAsync();
+    }
+
+    private async Task SyncContextDragAsync()
+    {
+        if (IsContextOpen == contextDragAttached)
+        {
+            return;
+        }
+
+        try
+        {
+            if (IsContextOpen)
+            {
+                await JS.InvokeVoidAsync(
+                    "totalCallTopN.attachDrawerDrag", selfRef, ".topn-drawer.is-open", ".topn-drawer__handle", "CloseContextFromDrag");
+            }
+            else
+            {
+                await JS.InvokeVoidAsync("totalCallTopN.detachDrawerDrag", ".topn-drawer.is-open");
+            }
+
+            contextDragAttached = IsContextOpen;
+        }
+        catch (JSException)
+        {
+            // The optional drag script may be unavailable; the close button still works.
+        }
+        catch (JSDisconnectedException)
+        {
+            // The app is already tearing down.
+        }
+    }
+
+    private async Task SyncSwitcherDragAsync()
+    {
+        if (isMobileSwitcherOpen == switcherDragAttached)
+        {
+            return;
+        }
+
+        try
+        {
+            if (isMobileSwitcherOpen)
+            {
+                await JS.InvokeVoidAsync(
+                    "totalCallTopN.attachDrawerDrag", selfRef, ".ms-bottomsheet", ".ms-handle", "CloseSwitcherFromDrag");
+            }
+            else
+            {
+                await JS.InvokeVoidAsync("totalCallTopN.detachDrawerDrag", ".ms-bottomsheet");
+            }
+
+            switcherDragAttached = isMobileSwitcherOpen;
+        }
+        catch (JSException)
+        {
+            // The optional drag script may be unavailable; the scrim/close still works.
+        }
+        catch (JSDisconnectedException)
+        {
+            // The app is already tearing down.
+        }
+    }
+
+    [JSInvokable]
+    public Task CloseContextFromDrag()
+    {
+        return InvokeAsync(() =>
+        {
+            CloseContext();
+            StateHasChanged();
+        });
+    }
+
+    [JSInvokable]
+    public Task CloseSwitcherFromDrag()
+    {
+        return InvokeAsync(() =>
+        {
+            CloseMobileSwitcher();
+            StateHasChanged();
+        });
     }
 
     public async ValueTask DisposeAsync()
     {
         AthleteDataSources.SourceChanged -= HandleDataSourceChanged;
 
-        if (shortcutsAttached)
+        if (shortcutsAttached || contextDragAttached || switcherDragAttached)
         {
             try
             {
-                await JS.InvokeVoidAsync("totalCallTopN.detachShortcuts");
+                if (shortcutsAttached)
+                {
+                    await JS.InvokeVoidAsync("totalCallTopN.detachShortcuts");
+                }
+
+                if (contextDragAttached || switcherDragAttached)
+                {
+                    await JS.InvokeVoidAsync("totalCallTopN.detachDrawerDrag");
+                }
             }
             catch (JSException)
             {
