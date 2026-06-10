@@ -2,6 +2,44 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.9.0-beta.1",
+      "releasedAt": "2026-06-09",
+      "title": {
+        "pl": "Definicje zawodów z chmury i egzekwowany termin typowania",
+        "en": "Cloud-based competition definitions and enforced prediction deadline"
+      },
+      "items": [
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Definicje zawodów (metadane i konfiguracja) ładują się teraz z Supabase — zawody można publikować i aktualizować bez wydawania nowej wersji aplikacji, a dane wbudowane w aplikację służą jako zapas.",
+            "en": "Competition definitions (metadata and config) now load from Supabase — competitions can be published and updated without shipping a new app version, with the data bundled in the app kept as a fallback."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Termin i status typowania są teraz egzekwowane po stronie serwera — po zamknięciu zawodów nie można już zapisać ani wysłać typów, co zapewnia uczciwy moment odcięcia dla wszystkich.",
+            "en": "The prediction deadline and competition status are now enforced on the backend — once a competition locks, predictions can no longer be saved or submitted, keeping the cutoff fair for everyone."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Każdy wysłany zestaw typów jest powiązany z wersją konfiguracji zawodów, na której powstał — fundament pod przyszłą punktację i ranking.",
+            "en": "Every submitted set of picks is tied to the competition config version it was made on — groundwork for upcoming scoring and the leaderboard."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Czytelny wskaźnik ładowania podczas masowego uzupełniania TopN — szkielet wiersza pokazuje się, gdy pobierane są dane zawodników.",
+            "en": "A clearer loading state while bulk-filling TopN — a row skeleton shows while athlete data is being fetched."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.8.0-beta.1",
       "releasedAt": "2026-06-07",
       "title": {
