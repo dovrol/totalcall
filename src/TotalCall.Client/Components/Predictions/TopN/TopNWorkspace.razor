@@ -66,6 +66,7 @@ else
                     Slots="SlotViews"
                     ScoredCount="@ScoredPositionsCount"
                     CanEditPredictions="CanEditPredictions"
+                    IsBulkFilling="@isBulkFilling"
                     FillPopPosition="@fillPopPosition"
                     DraggingPosition="@draggingPosition"
                     DragOverPosition="@dragOverPosition"
@@ -111,6 +112,7 @@ else
                 Slots="SlotViews"
                 ScoredCount="@ScoredPositionsCount"
                 CanEditPredictions="CanEditPredictions"
+                IsBulkFilling="@isBulkFilling"
                 ExpandedPosition="@expandedMobilePosition"
                 CardToggled="ToggleMobileCard"
                 MoveRequested="MoveByOffset"
@@ -1075,13 +1077,12 @@ else
             return;
         }
 
-        if (kind != TopNQuickFillKind.Nominated)
+        isBulkFilling = true;
+        try
         {
-            // Show the spinner on the bulk button while histories load. Flag is set
-            // before the first await so Blazor renders it on the yield, and only
-            // actually shows when a fetch is in flight (cached athletes don't yield).
-            isBulkFilling = true;
-            try
+            await Task.Yield();
+
+            if (kind != TopNQuickFillKind.Nominated)
             {
                 foreach (var position in defaultPositions)
                 {
@@ -1089,40 +1090,40 @@ else
                     await EnsureHistoryAsync(athleteId);
                 }
             }
-            finally
+
+            var changed = false;
+            foreach (var position in defaultPositions)
             {
-                isBulkFilling = false;
+                var index = placements.FindIndex(placement => placement.Position == position);
+                var placement = placements[index];
+                var athlete = Competition.Athletes.First(item =>
+                    string.Equals(item.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase));
+                historyByAthleteId.TryGetValue(athlete.Id, out var history);
+
+                var filled = BuildFromSource(placement, athlete, history, kind);
+                if (filled is null)
+                {
+                    continue;
+                }
+
+                placements[index] = filled;
+                modeByPosition[position] = HasLiftValues(filled) ? TopNEntryMode.Lifts : TopNEntryMode.Total;
+                changed = true;
             }
-        }
 
-        var changed = false;
-        foreach (var position in defaultPositions)
-        {
-            var index = placements.FindIndex(placement => placement.Position == position);
-            var placement = placements[index];
-            var athlete = Competition.Athletes.First(item =>
-                string.Equals(item.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase));
-            historyByAthleteId.TryGetValue(athlete.Id, out var history);
-
-            var filled = BuildFromSource(placement, athlete, history, kind);
-            if (filled is null)
+            if (!changed)
             {
-                continue;
+                Toasts.ShowInfo(Localizer["Predictions.Toast.AutoFill.Empty"]);
+                return;
             }
 
-            placements[index] = filled;
-            modeByPosition[position] = HasLiftValues(filled) ? TopNEntryMode.Lifts : TopNEntryMode.Total;
-            changed = true;
+            await EmitAnswer(placements);
+            Toasts.ShowSuccess(Localizer["Predictions.Toast.AutoFill.Success"]);
         }
-
-        if (!changed)
+        finally
         {
-            Toasts.ShowInfo(Localizer["Predictions.Toast.AutoFill.Empty"]);
-            return;
+            isBulkFilling = false;
         }
-
-        await EmitAnswer(placements);
-        Toasts.ShowSuccess(Localizer["Predictions.Toast.AutoFill.Success"]);
     }
 
     private static AthletePlacementPick? BuildFromSource(

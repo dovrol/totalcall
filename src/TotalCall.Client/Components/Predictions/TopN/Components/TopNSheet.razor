@@ -13,8 +13,51 @@
         <span class="topn-sheet__th"></span>
     </div>
 
-    <div class="topn-sheet__body">
-        @foreach (var slot in VisibleSlots)
+    <div class="@SheetBodyClass" aria-busy="@IsBulkFilling">
+        @if (IsBulkFilling)
+        {
+            @for (var index = 0; index < SkeletonRowCount; index++)
+            {
+                <div class="topn-rowgroup topn-sheet-skeleton__rowgroup" aria-hidden="true">
+                    <div class="topn-row topn-sheet-skeleton__row">
+                        <div class="topn-cell">
+                            <div class="topn-pos">
+                                <span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--grip"></span>
+                                <span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--rank"></span>
+                            </div>
+                        </div>
+                        <div class="topn-cell">
+                            <div class="topn-who">
+                                <span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--avatar"></span>
+                                <span class="topn-sheet-skeleton__who-lines">
+                                    <span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--name"></span>
+                                    <span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--meta"></span>
+                                    <span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--badge"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="topn-cell topn-cell--num"><span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--input"></span></div>
+                        <div class="topn-cell topn-cell--num"><span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--input"></span></div>
+                        <div class="topn-cell topn-cell--num"><span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--input"></span></div>
+                        <div class="topn-cell topn-cell--num"><span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--total"></span></div>
+                        <div class="topn-cell topn-cell--num"><span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--delta"></span></div>
+                        <div class="topn-cell"><span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--actions"></span></div>
+                    </div>
+                </div>
+
+                @if (index == ScoredCount - 1)
+                {
+                    <div class="topn-cutoff topn-sheet-skeleton__cutoff" aria-hidden="true">
+                        <span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--cutoff-label"></span>
+                        <span class="topn-cutoff__line"></span>
+                        <span class="topn-sheet-skeleton__bone topn-sheet-skeleton__bone--cutoff-hint"></span>
+                    </div>
+                }
+            }
+        }
+        else
+        {
+            @foreach (var slot in VisibleSlots)
         {
             @if (ShowDropLine(slot.Position))
             {
@@ -242,6 +285,7 @@
                 <strong>@Localizer["Predictions.TopN.FieldCount", Slots.Count]</strong>
             </button>
         }
+        }
     </div>
 </div>
 
@@ -254,6 +298,9 @@
 
     [Parameter]
     public bool CanEditPredictions { get; set; }
+
+    [Parameter]
+    public bool IsBulkFilling { get; set; }
 
     [Parameter]
     public bool ComparisonSelectionActive { get; set; }
@@ -317,6 +364,13 @@
     private IReadOnlyList<TopNSlotView> VisibleSlots => isExpanded
         ? Slots
         : Slots.Take(PreviewCount).ToArray();
+
+    private int SkeletonRowCount => Math.Clamp(Slots.Count == 0 ? 6 : Slots.Count, 5, 8);
+
+    private string SheetBodyClass => string.Join(
+        " ",
+        "topn-sheet__body",
+        IsBulkFilling ? "topn-sheet__body--busy" : null);
 
     private void ToggleExpanded() => isExpanded = !isExpanded;
 

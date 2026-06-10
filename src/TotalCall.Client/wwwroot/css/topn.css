@@ -3214,6 +3214,218 @@ body:has(.topn-drawer.is-open) {
 }
 
 /* ===============================================================
+   Top N sheet bulk-fill skeleton
+   =============================================================== */
+.topn-sheet__body--busy {
+    overflow: hidden;
+}
+
+.topn-sheet-skeleton__rowgroup {
+    background: color-mix(in srgb, var(--tn-panel-2) 86%, transparent);
+}
+
+.topn-sheet-skeleton__row {
+    pointer-events: none;
+}
+
+.topn-sheet-skeleton__bone {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--tn-panel) 76%, var(--tn-txt-3) 16%);
+}
+
+.topn-sheet-skeleton__bone::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--tn-txt) 15%, transparent),
+        transparent
+    );
+    transform: translateX(-100%);
+    animation: prediction-loading-skeleton-shimmer 1.3s infinite;
+}
+
+.topn-sheet-skeleton__bone--grip {
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 7px;
+}
+
+.topn-sheet-skeleton__bone--rank {
+    width: 1.65rem;
+    height: 1.65rem;
+    border-radius: 8px;
+}
+
+.topn-sheet-skeleton__bone--avatar {
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 999px;
+    flex: none;
+}
+
+.topn-sheet-skeleton__who-lines {
+    min-width: 0;
+    flex: 1;
+    display: grid;
+    gap: 0.34rem;
+}
+
+.topn-sheet-skeleton__bone--name {
+    width: min(13rem, 90%);
+    height: 0.9rem;
+}
+
+.topn-sheet-skeleton__bone--meta {
+    width: min(9rem, 72%);
+    height: 0.68rem;
+}
+
+.topn-sheet-skeleton__bone--badge {
+    width: 6rem;
+    height: 1.1rem;
+    border-radius: 999px;
+}
+
+.topn-sheet-skeleton__bone--input {
+    width: min(5rem, 100%);
+    height: 2.15rem;
+    margin-inline: auto;
+    border-radius: 10px;
+}
+
+.topn-sheet-skeleton__bone--total {
+    width: min(5.4rem, 100%);
+    height: 2.45rem;
+    margin-inline: auto;
+}
+
+.topn-sheet-skeleton__bone--delta {
+    width: min(4.8rem, 100%);
+    height: 2.15rem;
+    margin-inline: auto;
+}
+
+.topn-sheet-skeleton__bone--actions {
+    width: 5.4rem;
+    height: 2rem;
+    margin-left: auto;
+    border-radius: 999px;
+}
+
+.topn-sheet-skeleton__cutoff {
+    pointer-events: none;
+}
+
+.topn-sheet-skeleton__bone--cutoff-label,
+.topn-sheet-skeleton__bone--cutoff-hint {
+    height: 0.82rem;
+}
+
+.topn-sheet-skeleton__bone--cutoff-label {
+    width: 8.6rem;
+}
+
+.topn-sheet-skeleton__bone--cutoff-hint {
+    width: 12rem;
+}
+
+.topn-mobile-skeleton__card {
+    pointer-events: none;
+}
+
+.topn-mobile-skeleton__who,
+.topn-mobile-skeleton__pred {
+    min-width: 0;
+    display: grid;
+    gap: 0.34rem;
+}
+
+.topn-mobile-skeleton__pred {
+    justify-items: end;
+}
+
+.topn-mobile-skeleton__bone--move {
+    width: 2rem;
+    height: 2.4rem;
+    border-radius: 9px;
+}
+
+.topn-mobile-skeleton__bone--rank {
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 10px;
+}
+
+.topn-mobile-skeleton__bone--avatar {
+    width: 2.45rem;
+    height: 2.45rem;
+    border-radius: 999px;
+}
+
+.topn-mobile-skeleton__bone--name {
+    width: min(9rem, 100%);
+    height: 1rem;
+}
+
+.topn-mobile-skeleton__bone--country {
+    width: min(6.8rem, 82%);
+    height: 0.72rem;
+}
+
+.topn-mobile-skeleton__bone--pred-label {
+    width: 3rem;
+    height: 0.66rem;
+}
+
+.topn-mobile-skeleton__bone--pred-value {
+    width: 4.5rem;
+    height: 1.35rem;
+}
+
+.topn-mobile-skeleton__bone--chev {
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 10px;
+}
+
+.topn-mobile-skeleton__lifts {
+    margin-top: 0.58rem;
+    border-top: 1px solid var(--tn-bd-soft);
+    padding-top: 0.58rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+}
+
+.topn-mobile-skeleton__bone--lifts {
+    width: min(13rem, 70%);
+    height: 0.9rem;
+}
+
+.topn-mobile-skeleton__bone--mode {
+    width: 5rem;
+    height: 1.55rem;
+    border-radius: 999px;
+}
+
+.topn-mobile-skeleton__cutoff {
+    pointer-events: none;
+}
+
+.topn-mobile-skeleton__bone--cutoff-label,
+.topn-mobile-skeleton__bone--cutoff-hint {
+    width: 6rem;
+    height: 0.78rem;
+}
+
+/* ===============================================================
    Prediction loading skeleton
    =============================================================== */
 .prediction-loading-skeleton {
@@ -3688,6 +3900,7 @@ body:has(.topn-drawer.is-open) {
     .topn-mobile .ms-edit-region,
     .topn-mobile .ms-card__chev-icon,
     .topn-drawer,
+    .topn-sheet-skeleton__bone::after,
     .prediction-loading-skeleton__bone::after {
         animation: none !important;
         transition: none !important;

@@ -7,7 +7,44 @@
         <span class="ms-podium-head__line"></span>
     </div>
 
-    @foreach (var slot in VisibleSlots)
+    @if (IsBulkFilling)
+    {
+        @for (var index = 0; index < SkeletonCardCount; index++)
+        {
+            <div class="ms-card topn-mobile-skeleton__card" aria-hidden="true">
+                <div class="ms-ctop">
+                    <span class="topn-sheet-skeleton__bone topn-mobile-skeleton__bone--move"></span>
+                    <span class="topn-sheet-skeleton__bone topn-mobile-skeleton__bone--rank"></span>
+                    <span class="topn-sheet-skeleton__bone topn-mobile-skeleton__bone--avatar"></span>
+                    <span class="topn-mobile-skeleton__who">
+                        <span class="topn-sheet-skeleton__bone topn-mobile-skeleton__bone--name"></span>
+                        <span class="topn-sheet-skeleton__bone topn-mobile-skeleton__bone--country"></span>
+                    </span>
+                    <span class="topn-mobile-skeleton__pred">
+                        <span class="topn-sheet-skeleton__bone topn-mobile-skeleton__bone--pred-label"></span>
+                        <span class="topn-sheet-skeleton__bone topn-mobile-skeleton__bone--pred-value"></span>
+                    </span>
+                    <span class="topn-sheet-skeleton__bone topn-mobile-skeleton__bone--chev"></span>
+                </div>
+                <div class="topn-mobile-skeleton__lifts">
+                    <span class="topn-sheet-skeleton__bone topn-mobile-skeleton__bone--lifts"></span>
+                    <span class="topn-sheet-skeleton__bone topn-mobile-skeleton__bone--mode"></span>
+                </div>
+            </div>
+
+            @if (index == ScoredCount - 1)
+            {
+                <div class="ms-cutoff topn-mobile-skeleton__cutoff" aria-hidden="true">
+                    <span class="topn-sheet-skeleton__bone topn-mobile-skeleton__bone--cutoff-label"></span>
+                    <span class="ms-cutoff__line"></span>
+                    <span class="topn-sheet-skeleton__bone topn-mobile-skeleton__bone--cutoff-hint"></span>
+                </div>
+            }
+        }
+    }
+    else
+    {
+        @foreach (var slot in VisibleSlots)
     {
         var isExpanded = ExpandedPosition == slot.Position;
         var isTotal = string.Equals(slot.Mode, TopNEntryMode.Total, StringComparison.OrdinalIgnoreCase);
@@ -186,6 +223,7 @@
             <strong>@Slots.Count</strong>
         </button>
     }
+    }
 </div>
 
 @code {
@@ -197,6 +235,9 @@
 
     [Parameter]
     public bool CanEditPredictions { get; set; }
+
+    [Parameter]
+    public bool IsBulkFilling { get; set; }
 
     [Parameter]
     public bool ComparisonSelectionActive { get; set; }
@@ -243,6 +284,8 @@
     private IReadOnlyList<TopNSlotView> VisibleSlots => isExpanded
         ? Slots
         : Slots.Take(PreviewCount).ToArray();
+
+    private int SkeletonCardCount => Math.Clamp(Slots.Count == 0 ? PreviewCount : Slots.Count, 5, PreviewCount);
 
     private sealed record LiftField(string Label, string Field, Func<AthletePlacementPick?, decimal?> Value);
 
