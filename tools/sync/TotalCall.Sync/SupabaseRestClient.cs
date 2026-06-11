@@ -106,6 +106,35 @@ public sealed class SupabaseRestClient
         return JsonNode.Parse(body) as JsonArray ?? new JsonArray();
     }
 
+    public async Task<JsonArray> InsertReturningAsync(
+        string schema,
+        string table,
+        JsonArray rows,
+        CancellationToken ct)
+    {
+        if (rows.Count == 0)
+        {
+            return new JsonArray();
+        }
+
+        var url = $"{_baseUrl}/rest/v1/{table}";
+        using var req = new HttpRequestMessage(HttpMethod.Post, url);
+        ApplyAuth(req);
+        req.Headers.Add("Content-Profile", schema);
+        req.Headers.Add("Accept-Profile", schema);
+        req.Headers.Add("Prefer", "return=representation");
+        req.Content = new StringContent(rows.ToJsonString(), Encoding.UTF8, "application/json");
+
+        using var res = await _http.SendAsync(req, ct);
+        var body = await res.Content.ReadAsStringAsync(ct);
+        if (!res.IsSuccessStatusCode)
+        {
+            throw new InvalidOperationException(
+                $"INSERT {schema}.{table} failed: {(int)res.StatusCode} {res.ReasonPhrase} — {body}");
+        }
+        return JsonNode.Parse(body) as JsonArray ?? new JsonArray();
+    }
+
     public async Task PatchAsync(
         string schema,
         string table,

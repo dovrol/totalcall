@@ -1,0 +1,59 @@
+using System.Text.Json.Nodes;
+using TotalCall.Sync.Competitions;
+
+namespace TotalCall.Tests.Tools;
+
+public sealed class CompetitionConfigHasherTests
+{
+    [Fact]
+    public void Compute_TreatsEquivalentJsonAsSameConfig()
+    {
+        var first = JsonNode.Parse(
+            """
+            {
+              "id": "worlds-2026",
+              "configVersion": "1",
+              "predictionGroups": [
+                { "id": "total", "order": 1 }
+              ]
+            }
+            """)!;
+        var second = JsonNode.Parse(
+            """
+            {"predictionGroups":[{"order":1,"id":"total"}],"configVersion":"1","id":"worlds-2026"}
+            """)!;
+
+        Assert.Equal(
+            CompetitionConfigHasher.Compute(first),
+            CompetitionConfigHasher.Compute(second));
+    }
+
+    [Fact]
+    public void Compute_ChangesWhenConfigContentChanges()
+    {
+        var first = JsonNode.Parse(
+            """
+            {
+              "id": "worlds-2026",
+              "configVersion": "1",
+              "predictionGroups": [
+                { "id": "total", "order": 1 }
+              ]
+            }
+            """)!;
+        var second = JsonNode.Parse(
+            """
+            {
+              "id": "worlds-2026",
+              "configVersion": "1",
+              "predictionGroups": [
+                { "id": "total", "order": 2 }
+              ]
+            }
+            """)!;
+
+        Assert.NotEqual(
+            CompetitionConfigHasher.Compute(first),
+            CompetitionConfigHasher.Compute(second));
+    }
+}

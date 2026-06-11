@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -29,6 +31,14 @@ public sealed class CompetitionDefinitionImporter
             Console.Error.WriteLine("[error] Competition JSON root must be an object.");
             return 1;
         }
+
+        var configNode = JsonNode.Parse(rawJson);
+        if (configNode is not JsonObject)
+        {
+            Console.Error.WriteLine("[error] Competition JSON root must be an object.");
+            return 1;
+        }
+        var configHash = CompetitionConfigHasher.Compute(configNode);
 
         var id = GetString(root, "id");
         var slug = GetString(root, "slug") ?? id;
@@ -70,24 +80,18 @@ public sealed class CompetitionDefinitionImporter
         await supabase.UpsertAsync("public", "competitions", "id", new JsonArray { competitionRow }, ct);
         Console.WriteLine($"[info] Upserted competition '{id}' (status={status}).");
 
-        // 2. Full config verbatim as a versioned JSONB row; capture its id.
-        var versionRow = new JsonObject
+        // 2. Full config verbatim as an immutable versioned JSONB row; capture its id.
+        var versionId = await ResolveOrCreateVersionAsync(
+            supabase,
+            id!,
+            version!,
+            configNode,
+            configHash,
+            ct);
+        if (versionId is null)
         {
-            ["competition_id"] = id,
-            ["version"] = version,
-            ["config"] = JsonNode.Parse(rawJson),
-            ["published_at"] = DateTimeOffset.UtcNow.ToString("o")
-        };
-        var returned = await supabase.UpsertReturningAsync(
-            "public", "competition_versions", "competition_id,version",
-            new JsonArray { versionRow }, ct);
-        if (returned.Count == 0 || returned[0]?["id"] is null)
-        {
-            Console.Error.WriteLine("[error] competition_versions upsert returned no id.");
-            return 3;
+            return 4;
         }
-        var versionId = returned[0]!["id"]!.ToString();
-        Console.WriteLine($"[info] Upserted competition_version '{version}' -> {versionId}.");
 
         // 3. Auto-publish: point the competition at this version (no admin UI yet).
         await supabase.PatchAsync(
@@ -144,4 +148,107 @@ public sealed class CompetitionDefinitionImporter
         root.TryGetProperty(name, out var value) && value.ValueKind == JsonValueKind.String
             ? value.GetString()
             : null;
+
+    private static async Task<string?> ResolveOrCreateVersionAsync(
+        SupabaseRestClient supabase,
+        string competitionId,
+        string version,
+        JsonNode configNode,
+        string configHash,
+        CancellationToken ct)
+    {
+        var query =
+            $"competition_id=eq.{Uri.EscapeDataString(competitionId)}" +
+            $"&version=eq.{Uri.EscapeDataString(version)}" +
+            "&select=id,config";
+        var existingRows = await supabase.GetAsync("public", "competition_versions", query, ct);
+        var existing = existingRows.OfType<JsonObject>().FirstOrDefault();
+        if (existing is not null)
+        {
+            var existingId = existing["id"]?.ToString();
+            var existingConfig = existing["config"];
+            if (string.IsNullOrWhiteSpace(existingId) || existingConfig is null)
+            {
+                Console.Error.WriteLine("[error] Existing competition_version row is missing id or config.");
+                return null;
+            }
+
+            var existingHash = CompetitionConfigHasher.Compute(existingConfig);
+            if (!string.Equals(existingHash, configHash, StringComparison.OrdinalIgnoreCase))
+            {
+                Console.Error.WriteLine(
+                    "[error] Existing competition_version has the same configVersion " +
+                    $"('{version}') but different config content. " +
+                    "Bump configVersion before importing changed competition config.");
+                Console.Error.WriteLine($"[error] Existing hash: {existingHash}");
+                Console.Error.WriteLine($"[error] Incoming hash: {configHash}");
+                return null;
+            }
+
+            Console.WriteLine(
+                $"[info] competition_version '{version}' already exists with identical config -> {existingId}.");
+            return existingId;
+        }
+
+        var versionRow = new JsonObject
+        {
+            ["competition_id"] = competitionId,
+            ["version"] = version,
+            ["config"] = configNode.DeepClone(),
+            ["published_at"] = DateTimeOffset.UtcNow.ToString("o")
+        };
+        var returned = await supabase.InsertReturningAsync(
+            "public",
+            "competition_versions",
+            new JsonArray { versionRow },
+            ct);
+        if (returned.Count == 0 || returned[0]?["id"] is null)
+        {
+            Console.Error.WriteLine("[error] competition_versions insert returned no id.");
+            return null;
+        }
+
+        var versionId = returned[0]!["id"]!.ToString();
+        Console.WriteLine($"[info] Inserted competition_version '{version}' -> {versionId}.");
+        return versionId;
+    }
+}
+
+public static class CompetitionConfigHasher
+{
+    public static string Compute(JsonNode config)
+    {
+        var canonical = Normalize(config).ToJsonString();
+        var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(canonical));
+        return Convert.ToHexString(bytes).ToLowerInvariant();
+    }
+
+    private static JsonNode Normalize(JsonNode node)
+    {
+        if (node is JsonObject obj)
+        {
+            var normalized = new JsonObject();
+            foreach (var property in obj.OrderBy(property => property.Key, StringComparer.Ordinal))
+            {
+                normalized[property.Key] = property.Value is null
+                    ? null
+                    : Normalize(property.Value);
+            }
+
+            return normalized;
+        }
+
+        if (node is JsonArray arr)
+        {
+            var normalized = new JsonArray();
+            foreach (var item in arr)
+            {
+                normalized.Add(item is null ? null : Normalize(item));
+            }
+
+            return normalized;
+        }
+
+        return node.DeepClone();
+    }
 }
