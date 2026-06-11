@@ -2,6 +2,23 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.9.2-beta.1",
+      "releasedAt": "2026-06-09",
+      "title": {
+        "pl": "Analityka i historia zawodników filtrowana wg dyscypliny zawodów",
+        "en": "Athlete analytics and history filtered by competition discipline"
+      },
+      "items": [
+        {
+          "type": "fix",
+          "text": {
+            "pl": "Analityka i historia zawodnika są teraz dopasowane do dyscypliny zawodów (RAW/equipped). Dla zawodów RAW, jak Worlds 2026, wyniki w sprzęcie (single-ply) nie zawyżają już rekordów, totali, skuteczności podejść ani liczby startów.",
+            "en": "Athlete analytics and history now match the competition's discipline (raw/equipped). For a raw competition like Worlds 2026, equipped (single-ply) results no longer inflate an athlete's bests, totals, attempt success rates or start counts."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.9.0-beta.1",
       "releasedAt": "2026-06-09",
       "title": {
