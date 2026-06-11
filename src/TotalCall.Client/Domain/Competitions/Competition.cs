@@ -15,6 +15,8 @@ public sealed record Competition
 
     public string? Federation { get; init; }
 
+    public CompetitionDiscipline? Discipline { get; init; }
+
     public DateTimeOffset? StartDate { get; init; }
 
     public DateTimeOffset? EndDate { get; init; }

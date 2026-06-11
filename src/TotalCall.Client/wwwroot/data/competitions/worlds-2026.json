@@ -4,6 +4,7 @@
   "name": "Worlds 2026",
   "description": "The biggest stage in powerlifting. Crown the world's strongest.",
   "federation": "IPF",
+  "discipline": "raw",
   "cardBackgroundImageUrl": "/assets/competitions/worlds-2026-card-bg.webp",
   "cardBackgroundPosition": "center",
   "startDate": "2026-06-13T07:00:00Z",
