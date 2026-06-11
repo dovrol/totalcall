@@ -1,4 +1,5 @@
 @using System.Globalization
+@implements IDisposable
 @inject IStringLocalizer<SharedResource> Localizer
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
@@ -29,7 +30,7 @@
         <span class="prediction-action-bar__status-copy">
             <strong>@StatusLabel</strong>
             <span>@StatusDetail</span>
-            @if (CurrentState is SubmitBarState.Submitted && SubmittedAt is not null)
+            @if ((CurrentState is SubmitBarState.Submitted or SubmitBarState.LockedSubmitted) && SubmittedAt is not null)
             {
                 <span class="prediction-action-bar__status-stamp">
                     <AppIcon Name="AppIconName.Clock" Size="11" />
@@ -42,6 +43,21 @@
             <span class="prediction-action-bar__submission-pill prediction-action-bar__submission-pill--draft">
                 <span class="prediction-action-bar__submission-dot"></span>
                 @DraftPillLabel
+            </span>
+        }
+        @if (ShowDeadlinePill)
+        {
+            <span class="@DeadlinePillClass">
+                @if (DeadlinePhase == PredictionDeadlinePhase.Urgent)
+                {
+                    <i class="tcl-lockchip__dot" aria-hidden="true"></i>
+                    @Localizer["Predictions.Deadline.PillUrgent", FormatCountdown()]
+                }
+                else
+                {
+                    <AppIcon Name="AppIconName.Timer" Size="12" />
+                    @Localizer["Predictions.Deadline.PillSoon", FormatRelativeDeadline()]
+                }
             </span>
         }
     </div>
@@ -83,7 +99,7 @@
                 @ref="submitButton"
                 Variant="Primary"
                 Size="Sm"
-                AdditionalClass="prediction-action-bar__primary"
+                AdditionalClass="@PrimaryButtonClass"
                 OnClick="@OpenConfirmAsync">
                 <AppIcon Name="AppIconName.Check" Size="16" />
                 <span>@Localizer["Predictions.Submit.SubmitTypes"]</span>
@@ -130,6 +146,14 @@
                 <AppIcon Name="AppIconName.RefreshCw" Size="15" />
                 <span>@Localizer["Predictions.Submit.TryAgain"]</span>
             </AppButton>
+        }
+        else if (CurrentState is SubmitBarState.Archived)
+        {
+            <span class="tcl-locked-badge"><AppIcon Name="AppIconName.Trophy" Size="14" />@Localizer["Predictions.Submit.ArchiveBadge"]</span>
+        }
+        else if (CurrentState is SubmitBarState.LockedSubmitted or SubmitBarState.LockedDraft)
+        {
+            <span class="tcl-locked-badge"><AppIcon Name="AppIconName.Lock" Size="14" />@Localizer["Predictions.Submit.LockedBadge"]</span>
         }
     </div>
 </nav>
@@ -227,7 +251,10 @@
         Submitting,
         Submitted,
         Failed,
-        Error
+        Error,
+        LockedSubmitted,
+        LockedDraft,
+        Archived
     }
 
     [Parameter, EditorRequired]
@@ -238,6 +265,15 @@
 
     [Parameter]
     public DateTimeOffset? PredictionLockAt { get; set; }
+
+    [Parameter]
+    public CompetitionStatus CompetitionStatus { get; set; } = CompetitionStatus.Upcoming;
+
+    [Parameter]
+    public DateTimeOffset? CompetitionEndDate { get; set; }
+
+    [Parameter]
+    public bool CanEditPredictions { get; set; } = true;
 
     [Parameter]
     public bool IsAuthenticated { get; set; }
@@ -271,11 +307,25 @@
     private bool isConfirmOpen;
     private bool trapFocusAfterRender;
     private bool restoreFocusAfterClose;
+    private CancellationTokenSource? deadlineTickerCancellation;
+    private DateTimeOffset now = DateTimeOffset.UtcNow;
 
     private SubmitBarState CurrentState
     {
         get
         {
+            if (!CanCurrentlyEdit && DeadlinePhase == PredictionDeadlinePhase.Ended)
+            {
+                return SubmitBarState.Archived;
+            }
+
+            if (!CanCurrentlyEdit && DeadlinePhase == PredictionDeadlinePhase.Locked)
+            {
+                return SaveStatus == PredictionSaveStatus.Submitted
+                    ? SubmitBarState.LockedSubmitted
+                    : SubmitBarState.LockedDraft;
+            }
+
             if (IsSubmitting)
             {
                 return SubmitBarState.Submitting;
@@ -302,7 +352,7 @@
 
     private string ActionBarClass => CurrentState switch
     {
-        SubmitBarState.Submitted => "prediction-action-bar prediction-action-bar--submitted",
+        SubmitBarState.Submitted or SubmitBarState.LockedSubmitted => "prediction-action-bar prediction-action-bar--submitted",
         SubmitBarState.Failed => "prediction-action-bar prediction-action-bar--failed",
         SubmitBarState.Error => "prediction-action-bar prediction-action-bar--error",
         SubmitBarState.Submitting => "prediction-action-bar prediction-action-bar--submitting",
@@ -313,7 +363,7 @@
     {
         SubmitBarState.Draft => "prediction-action-bar__status prediction-action-bar__status--cloud",
         SubmitBarState.Submitting => "prediction-action-bar__status prediction-action-bar__status--busy",
-        SubmitBarState.Submitted => "prediction-action-bar__status prediction-action-bar__status--submitted",
+        SubmitBarState.Submitted or SubmitBarState.LockedSubmitted => "prediction-action-bar__status prediction-action-bar__status--submitted",
         SubmitBarState.Failed or SubmitBarState.Error => "prediction-action-bar__status prediction-action-bar__status--failed",
         _ => "prediction-action-bar__status prediction-action-bar__status--local"
     };
@@ -321,9 +371,11 @@
     private AppIconName StatusIcon => CurrentState switch
     {
         SubmitBarState.Draft => AppIconName.CloudCheck,
-        SubmitBarState.Submitted => AppIconName.Check,
+        SubmitBarState.Submitted or SubmitBarState.LockedSubmitted => AppIconName.Check,
         SubmitBarState.Failed => AppIconName.CloudOff,
         SubmitBarState.Error => AppIconName.AlertCircle,
+        SubmitBarState.LockedDraft => AppIconName.Lock,
+        SubmitBarState.Archived => AppIconName.Trophy,
         _ => AppIconName.HardDrive
     };
 
@@ -331,9 +383,11 @@
     {
         SubmitBarState.Draft => "Predictions.SaveStatus.Cloud",
         SubmitBarState.Submitting => "Predictions.Submit.Submitting",
-        SubmitBarState.Submitted => "Predictions.Submit.Submitted",
+        SubmitBarState.Submitted or SubmitBarState.LockedSubmitted => "Predictions.Submit.Submitted",
         SubmitBarState.Failed => "Predictions.SaveStatus.Failed",
         SubmitBarState.Error => "Predictions.Submit.Error",
+        SubmitBarState.LockedDraft => "Predictions.Submit.LockedDraft",
+        SubmitBarState.Archived => "Predictions.Submit.Archived",
         _ => "Predictions.SaveStatus.Local"
     }];
 
@@ -342,6 +396,9 @@
         SubmitBarState.Draft => Localizer["Predictions.SaveStatus.CloudDetail", FormatTime(LastSavedAt)],
         SubmitBarState.Submitting => Localizer["Predictions.Submit.SubmittingDetail"],
         SubmitBarState.Submitted => Localizer["Predictions.Submit.SubmittedDetail"],
+        SubmitBarState.LockedSubmitted => Localizer["Predictions.Submit.LockedSubmittedDetail", LockLabel],
+        SubmitBarState.LockedDraft => Localizer["Predictions.Submit.LockedDraftDetail", LockLabel],
+        SubmitBarState.Archived => Localizer["Predictions.Submit.ArchivedDetail"],
         SubmitBarState.Failed => Localizer["Predictions.SaveStatus.FailedDetail", FormatTime(LastSavedAt)],
         SubmitBarState.Error => string.IsNullOrWhiteSpace(SubmitError)
             ? Localizer["Predictions.Submit.ErrorDetail"]
@@ -360,6 +417,35 @@
 
     private string LockLabel => PredictionLockAt?.ToLocalTime().ToString("d MMM, HH:mm", CultureInfo.CurrentCulture)
                                 ?? Localizer["Common.Tbd"];
+
+    private PredictionDeadlinePhase DeadlinePhase =>
+        PredictionDeadline.Resolve(CompetitionStatus, PredictionLockAt, CompetitionEndDate, now);
+
+    private bool CanCurrentlyEdit => PredictionDeadline.CanEdit(
+        CanEditPredictions,
+        CompetitionStatus,
+        PredictionLockAt,
+        CompetitionEndDate,
+        now);
+
+    private bool ShowDeadlinePill =>
+        CanCurrentlyEdit && (DeadlinePhase is PredictionDeadlinePhase.Soon or PredictionDeadlinePhase.Urgent);
+
+    private string DeadlinePillClass => string.Join(
+        " ",
+        "tcl-deadline-pill",
+        DeadlinePhase == PredictionDeadlinePhase.Urgent ? "tcl-deadline-pill--urgent" : "tcl-deadline-pill--soon");
+
+    private string PrimaryButtonClass => string.Join(
+        " ",
+        "prediction-action-bar__primary",
+        DeadlinePhase == PredictionDeadlinePhase.Urgent ? "tcl-cta-urgent" : null);
+
+    protected override void OnParametersSet()
+    {
+        now = DateTimeOffset.UtcNow;
+        SyncDeadlineTicker();
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -395,6 +481,11 @@
 
     private Task OpenConfirmAsync(MouseEventArgs _)
     {
+        if (!CanCurrentlyEdit)
+        {
+            return Task.CompletedTask;
+        }
+
         isConfirmOpen = true;
         trapFocusAfterRender = true;
         return Task.CompletedTask;
@@ -412,7 +503,10 @@
 
     private async Task RetrySubmitAsync(MouseEventArgs _)
     {
-        await SubmitRequested.InvokeAsync();
+        if (CanCurrentlyEdit)
+        {
+            await SubmitRequested.InvokeAsync();
+        }
     }
 
     private Task CancelConfirmAsync()
@@ -427,7 +521,10 @@
     {
         isConfirmOpen = false;
         trapFocusAfterRender = false;
-        await SubmitRequested.InvokeAsync();
+        if (CanCurrentlyEdit)
+        {
+            await SubmitRequested.InvokeAsync();
+        }
     }
 
     private async Task OnConfirmKeyDown(KeyboardEventArgs args)
@@ -446,5 +543,110 @@
     private string FormatDateTime(DateTimeOffset? value)
     {
         return value?.ToLocalTime().ToString("d MMM, HH:mm", CultureInfo.CurrentCulture) ?? Localizer["Common.Tbd"];
+    }
+
+    private string FormatRelativeDeadline()
+    {
+        if (PredictionLockAt is not { } value)
+        {
+            return Localizer["Common.Tbd"];
+        }
+
+        var local = value.ToLocalTime();
+        var days = (local.Date - now.ToLocalTime().Date).Days;
+        var day = days switch
+        {
+            0 => Localizer["Common.Today"].Value,
+            1 => Localizer["Common.Tomorrow"].Value,
+            _ => local.ToString("d MMM", CultureInfo.CurrentCulture)
+        };
+
+        return $"{day}, {local.ToString("HH:mm", CultureInfo.CurrentCulture)}";
+    }
+
+    private string FormatCountdown()
+    {
+        var remaining = PredictionDeadline.Remaining(PredictionLockAt, now) ?? TimeSpan.Zero;
+        if (remaining < TimeSpan.Zero)
+        {
+            remaining = TimeSpan.Zero;
+        }
+
+        return $"{(int)remaining.TotalHours:00}:{remaining.Minutes:00}:{remaining.Seconds:00}";
+    }
+
+    private void SyncDeadlineTicker()
+    {
+        if (!CanEditPredictions ||
+            CompetitionStatus != TotalCall.Client.Domain.Competitions.CompetitionStatus.Upcoming ||
+            PredictionLockAt is null)
+        {
+            StopDeadlineTicker();
+            return;
+        }
+
+        if (deadlineTickerCancellation is not null)
+        {
+            return;
+        }
+
+        deadlineTickerCancellation = new CancellationTokenSource();
+        _ = RunDeadlineTickerAsync(deadlineTickerCancellation.Token);
+    }
+
+    private async Task RunDeadlineTickerAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                await Task.Delay(GetDeadlineTickDelay(), cancellationToken);
+                now = DateTimeOffset.UtcNow;
+                await InvokeAsync(StateHasChanged);
+
+                if (!CanCurrentlyEdit)
+                {
+                    break;
+                }
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // The competition changed or the component was disposed.
+        }
+        finally
+        {
+            deadlineTickerCancellation?.Dispose();
+            deadlineTickerCancellation = null;
+        }
+    }
+
+    private TimeSpan GetDeadlineTickDelay()
+    {
+        var remaining = PredictionLockAt is { } lockAt
+            ? lockAt - DateTimeOffset.UtcNow
+            : TimeSpan.FromMinutes(15);
+
+        if (remaining <= TimeSpan.FromHours(1))
+        {
+            return TimeSpan.FromSeconds(1);
+        }
+
+        if (remaining <= TimeSpan.FromHours(48))
+        {
+            return TimeSpan.FromMinutes(1);
+        }
+
+        return TimeSpan.FromMinutes(15);
+    }
+
+    private void StopDeadlineTicker()
+    {
+        deadlineTickerCancellation?.Cancel();
+    }
+
+    public void Dispose()
+    {
+        StopDeadlineTicker();
     }
 }

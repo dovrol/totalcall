@@ -7,37 +7,46 @@
             <span class="topn-foottools__label">@Localizer["Predictions.TopN.CategoryTools"]</span>
         }
 
-        <div class="topn-bulkwrap">
+        @if (CanEditPredictions)
+        {
+            <div class="topn-bulkwrap">
+                <button
+                    type="button"
+                    class="@BulkButtonClass"
+                    disabled="@IsBulkFilling"
+                    aria-haspopup="true"
+                    aria-expanded="@IsBulkMenuOpen"
+                    aria-busy="@(IsBulkFilling ? "true" : null)"
+                    @onpointerup="OnBulkPointerUp"
+                    @onclick="OnBulkClick">
+                    @if (IsBulkFilling)
+                    {
+                        <span class="topn-spinner" aria-hidden="true"></span>
+                    }
+                    else
+                    {
+                        <AppIcon Name="AppIconName.Sparkles" Size="14" />
+                    }
+                    <span>@Localizer["Predictions.TopN.FillDefaults"]</span>
+                    <AppIcon Name="AppIconName.ChevronRight" Size="10" Class="topn-bulk__ch" />
+                </button>
+            </div>
+
             <button
                 type="button"
-                class="@BulkButtonClass"
-                disabled="@(!CanEditPredictions || IsBulkFilling)"
-                aria-haspopup="true"
-                aria-expanded="@IsBulkMenuOpen"
-                aria-busy="@(IsBulkFilling ? "true" : null)"
-                @onpointerup="OnBulkPointerUp"
-                @onclick="OnBulkClick">
-                @if (IsBulkFilling)
-                {
-                    <span class="topn-spinner" aria-hidden="true"></span>
-                }
-                else
-                {
-                    <AppIcon Name="AppIconName.Sparkles" Size="14" />
-                }
-                <span>@Localizer["Predictions.TopN.FillDefaults"]</span>
-                <AppIcon Name="AppIconName.ChevronRight" Size="10" Class="topn-bulk__ch" />
+                class="topn-tool"
+                @onclick="() => SortRequested.InvokeAsync()">
+                <AppIcon Name="AppIconName.ArrowUpDown" Size="14" />
+                <span>@Localizer["Predictions.SortByPredictedTotal"]</span>
             </button>
-        </div>
-
-        <button
-            type="button"
-            class="topn-tool"
-            disabled="@(!CanEditPredictions)"
-            @onclick="() => SortRequested.InvokeAsync()">
-            <AppIcon Name="AppIconName.ArrowUpDown" Size="14" />
-            <span>@Localizer["Predictions.SortByPredictedTotal"]</span>
-        </button>
+        }
+        else
+        {
+            <span class="tcl-ro-note">
+                <AppIcon Name="AppIconName.Lock" Size="12" />
+                @Localizer["Predictions.TopN.ReadOnlyLocked"]
+            </span>
+        }
 
         <button
             type="button"
@@ -47,19 +56,21 @@
             <span>@Localizer["Predictions.CompareAthletes"]</span>
         </button>
 
-        <button
-            type="button"
-            class="topn-tool topn-tool--ghost"
-            disabled="@(!CanEditPredictions)"
-            @onclick="() => ClearRequested.InvokeAsync()">
-            <AppIcon Name="AppIconName.RotateCcw" Size="14" />
-            <span>@Localizer["Predictions.TopN.ResetField"]</span>
-        </button>
+        @if (CanEditPredictions)
+        {
+            <button
+                type="button"
+                class="topn-tool topn-tool--ghost"
+                @onclick="() => ClearRequested.InvokeAsync()">
+                <AppIcon Name="AppIconName.RotateCcw" Size="14" />
+                <span>@Localizer["Predictions.TopN.ResetField"]</span>
+            </button>
+        }
 
         <span class="topn-foottools__count">@CountSummary</span>
     </div>
 
-    @if (IsBulkMenuOpen)
+    @if (IsBulkMenuOpen && CanEditPredictions)
     {
         <button
             type="button"

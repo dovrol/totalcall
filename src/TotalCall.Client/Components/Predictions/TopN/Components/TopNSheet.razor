@@ -1,7 +1,7 @@
 @using System.Globalization
 @inject IStringLocalizer<SharedResource> Localizer
 
-<div class="topn-sheet">
+<div class="@SheetClass">
     <div class="topn-sheet__head" aria-hidden="true">
         <span class="topn-sheet__th"></span>
         <span class="topn-sheet__th">@Localizer["Predictions.TopN.ColAthlete"]</span>
@@ -88,7 +88,7 @@
                                     }
                                 </button>
                             }
-                            else
+                            else if (CanEditPredictions)
                             {
                                 <span
                                     class="topn-grip"
@@ -162,7 +162,7 @@
                         </div>
                     </div>
 
-                    @if (isTotal)
+                    @if (isTotal && CanEditPredictions)
                     {
                         <div class="topn-cell topn-cell--num"><span class="topn-input topn-input--locked">—</span></div>
                         <div class="topn-cell topn-cell--num"><span class="topn-input topn-input--locked">—</span></div>
@@ -178,6 +178,33 @@
                                     @onchange="args => EmitEdit(slot.Position, TopNSheetField.Total, args)" />
                                 <span class="topn-total-edit__unit">@Localizer["Predictions.TopN.KgUnit"]</span>
                             </div>
+                        </div>
+                    }
+                    else if (isTotal)
+                    {
+                        <div class="topn-cell topn-cell--num"><span class="tcl-static tcl-static--muted">—</span></div>
+                        <div class="topn-cell topn-cell--num"><span class="tcl-static tcl-static--muted">—</span></div>
+                        <div class="topn-cell topn-cell--num"><span class="tcl-static tcl-static--muted">—</span></div>
+                        <div class="topn-cell topn-cell--num">
+                            <span class="@StaticValueClass(slot.Placement?.PredictedTotalKg)">@FormatPred(slot.Placement?.PredictedTotalKg)</span>
+                        </div>
+                    }
+                    else if (!CanEditPredictions)
+                    {
+                        <div class="topn-cell topn-cell--num">
+                            <span class="@StaticValueClass(slot.Placement?.PredictedSquatKg)">@FormatPred(slot.Placement?.PredictedSquatKg)</span>
+                        </div>
+                        <div class="topn-cell topn-cell--num">
+                            <span class="@StaticValueClass(slot.Placement?.PredictedBenchKg)">@FormatPred(slot.Placement?.PredictedBenchKg)</span>
+                        </div>
+                        <div class="topn-cell topn-cell--num">
+                            <span class="@StaticValueClass(slot.Placement?.PredictedDeadliftKg)">@FormatPred(slot.Placement?.PredictedDeadliftKg)</span>
+                        </div>
+                        <div class="topn-cell topn-cell--num">
+                            <span class="@PredClass(slot.IsAutoSeeded)">
+                                <small>@(slot.IsAutoSeeded ? Localizer["Predictions.TopN.ByNominationShort"] : Localizer["Predictions.PredictedShort"])</small>
+                                @FormatPred(slot.Placement?.PredictedTotalKg)
+                            </span>
                         </div>
                     }
                     else
@@ -272,7 +299,7 @@
                 <div class="topn-cutoff">
                     <span class="topn-cutoff__label"><AppIcon Name="AppIconName.Medal" Size="13" /> @Localizer["Predictions.TopN.CutoffLabel", ScoredCount]</span>
                     <span class="topn-cutoff__line"></span>
-                    <span class="topn-cutoff__hint">@Localizer["Predictions.TopN.CutoffHint"]</span>
+                    <span class="topn-cutoff__hint">@(CanEditPredictions ? Localizer["Predictions.TopN.CutoffHint"] : Localizer["Predictions.TopN.CutoffHintReadonly"])</span>
                 </div>
             }
         }
@@ -367,6 +394,11 @@
 
     private int SkeletonRowCount => Math.Clamp(Slots.Count == 0 ? 6 : Slots.Count, 5, 8);
 
+    private string SheetClass => string.Join(
+        " ",
+        "topn-sheet",
+        CanEditPredictions ? null : "tcl-readonly");
+
     private string SheetBodyClass => string.Join(
         " ",
         "topn-sheet__body",
@@ -428,6 +460,9 @@
 
     private static string PredClass(bool isAutoSeeded) =>
         isAutoSeeded ? "topn-pred topn-pred--muted" : "topn-pred";
+
+    private static string StaticValueClass(decimal? value) =>
+        value is null ? "tcl-static tcl-static--muted" : "tcl-static";
 
     private string DeltaClass(TopNSlotView slot) => string.Join(
         " ",

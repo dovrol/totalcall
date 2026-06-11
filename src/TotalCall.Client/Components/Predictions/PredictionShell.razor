@@ -20,9 +20,9 @@
                         Competition="@Competition"
                         ActiveGroup="@ActiveGroup"
                         ModuleValidation="@ActiveModuleValidation"
-                        CanEditPredictions="@CanEditPredictions" />
+                        CanEditPredictions="@CanEditNow" />
 
-                    @if (!CanEditPredictions)
+                    @if (!CanEditNow)
                     {
                         <div class="notice notice--warning">
                             @Localizer["Predictions.Locked"]
@@ -54,6 +54,9 @@
         CompetitionSlug="@Competition.Slug"
         CompetitionName="@Competition.Name"
         PredictionLockAt="@Competition.PredictionLockAt"
+        CompetitionStatus="@Competition.Status"
+        CompetitionEndDate="@Competition.EndDate"
+        CanEditPredictions="@CanEditNow"
         IsAuthenticated="@IsAuthenticated"
         SaveStatus="@SaveStatus"
         LastSavedAt="@LastSavedAt"
@@ -120,6 +123,13 @@
 
     [Parameter]
     public EventCallback RetrySyncRequested { get; set; }
+
+    private bool CanEditNow => PredictionDeadline.CanEdit(
+        CanEditPredictions,
+        Competition.Status,
+        Competition.PredictionLockAt,
+        Competition.EndDate,
+        DateTimeOffset.UtcNow);
 
     private Task OnGroupChanged(string groupId)
     {

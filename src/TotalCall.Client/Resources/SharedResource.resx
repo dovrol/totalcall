@@ -192,7 +192,7 @@
   <data name="Predictions.Submit.ConfirmAnswersPrivate" xml:space="preserve"><value>Pełne odpowiedzi nie są publiczne na tym etapie — inni nie zobaczą Twoich typów ani e-maila.</value></data>
   <data name="Predictions.Submit.ConfirmDraftsPrivate" xml:space="preserve"><value>Drafty pozostają prywatne, dopóki ich nie zatwierdzisz.</value></data>
   <data name="Predictions.Submit.ConfirmAutoUpdate" xml:space="preserve"><value>Po zatwierdzeniu możesz dalej edytować typy do deadline — kolejne zmiany automatycznie zaktualizują zgłoszenie.</value></data>
-  <data name="Predictions.Submit.ConfirmFutureLock" xml:space="preserve"><value>Po deadline typy zostaną zablokowane w przyszłej wersji.</value></data>
+  <data name="Predictions.Submit.ConfirmFutureLock" xml:space="preserve"><value>Po deadline typy zostaną zablokowane.</value></data>
   <data name="Predictions.Submit.ClickOutsideCancels" xml:space="preserve"><value>klik poza = anuluj</value></data>
   <data name="Predictions.Toast.Submit.Success" xml:space="preserve"><value>Typy zatwierdzone. Zmiany będą aktualizować zgłoszenie do deadline.</value></data>
   <data name="Predictions.Toast.Submit.Error" xml:space="preserve"><value>Nie udało się zatwierdzić typów.</value></data>
@@ -655,6 +655,26 @@
   <data name="Predictions.TopN.MobileSquat" xml:space="preserve"><value>Przysiad (SQ)</value></data>
   <data name="Predictions.TopN.MobileBench" xml:space="preserve"><value>Wyciskanie (BP)</value></data>
   <data name="Predictions.TopN.MobileDeadlift" xml:space="preserve"><value>Martwy ciąg (DL)</value></data>
+  <data name="Predictions.TopN.ReadOnlyLocked" xml:space="preserve"><value>Tylko podgląd — typy zablokowane</value></data>
+  <data name="Predictions.TopN.CutoffHintReadonly" xml:space="preserve"><value>poniżej = strefa porównania</value></data>
+  <data name="Predictions.TopN.MobileReadonlyDefault" xml:space="preserve"><value>Pozostawiono wg nominacji</value></data>
+  <data name="Predictions.Deadline.ClosesAt" xml:space="preserve"><value>Zamknięcie {0}</value></data>
+  <data name="Predictions.Deadline.InHours" xml:space="preserve"><value>za {0} godz.</value></data>
+  <data name="Predictions.Deadline.InMinutes" xml:space="preserve"><value>za {0} min</value></data>
+  <data name="Predictions.Deadline.Now" xml:space="preserve"><value>teraz</value></data>
+  <data name="Predictions.Deadline.Locked" xml:space="preserve"><value>Typy zablokowane</value></data>
+  <data name="Predictions.Deadline.Ended" xml:space="preserve"><value>Zawody zakończone</value></data>
+  <data name="Predictions.Deadline.PillSoon" xml:space="preserve"><value>Zamknięcie {0}</value></data>
+  <data name="Predictions.Deadline.PillUrgent" xml:space="preserve"><value>Zamknięcie za {0}</value></data>
+  <data name="Predictions.Deadline.ArchiveHint" xml:space="preserve"><value>Typy w trybie archiwalnym — porównaj je z wynikami zawodów, gdy będą dostępne.</value></data>
+  <data name="Predictions.Deadline.ResultsSoon" xml:space="preserve"><value>Wyniki wkrótce</value></data>
+  <data name="Predictions.Submit.LockedBadge" xml:space="preserve"><value>Typy zablokowane</value></data>
+  <data name="Predictions.Submit.ArchiveBadge" xml:space="preserve"><value>Archiwum</value></data>
+  <data name="Predictions.Submit.LockedDraft" xml:space="preserve"><value>Nie zatwierdzono</value></data>
+  <data name="Predictions.Submit.Archived" xml:space="preserve"><value>Zawody zakończone</value></data>
+  <data name="Predictions.Submit.LockedSubmittedDetail" xml:space="preserve"><value>Deadline minął {0} — typy zablokowane</value></data>
+  <data name="Predictions.Submit.LockedDraftDetail" xml:space="preserve"><value>Deadline minął {0} — draft pozostaje prywatny</value></data>
+  <data name="Predictions.Submit.ArchivedDetail" xml:space="preserve"><value>Typy archiwalne · wyniki dostępne po zawodach</value></data>
   <data name="Predictions.Toast.ResetAthlete.Success" xml:space="preserve"><value>Przywrócono {0} do nominacji.</value></data>
   <data name="Predictions.Toast.ResetField.Success" xml:space="preserve"><value>Przywrócono stawkę wg nominacji.</value></data>
   <data name="Participants.Title" xml:space="preserve"><value>Uczestnicy</value></data>

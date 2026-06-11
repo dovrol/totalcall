@@ -19,13 +19,11 @@
         <span>@ModuleTitle</span>
         <AppIcon Name="AppIconName.ChevronRight" Size="11" Class="ms-modpill__ch" />
     </button>
-    @if (!string.IsNullOrWhiteSpace(LockDistance))
-    {
-        <span class="ms-sub__prog">
-            <AppIcon Name="AppIconName.Lock" Size="11" />
-            @LockDistance
-        </span>
-    }
+    <PredictionDeadlineChip
+        CompetitionStatus="@CompetitionStatus"
+        PredictionLockAt="@PredictionLockAt"
+        CompetitionEndDate="@CompetitionEndDate"
+        Small="true" />
     @if (!string.IsNullOrWhiteSpace(StatusLine))
     {
         <span class="@StatusPillClass">@StatusLine</span>
@@ -49,7 +47,13 @@
     public string ModuleTitle { get; set; } = string.Empty;
 
     [Parameter]
-    public string? LockDistance { get; set; }
+    public CompetitionStatus CompetitionStatus { get; set; } = CompetitionStatus.Upcoming;
+
+    [Parameter]
+    public DateTimeOffset? PredictionLockAt { get; set; }
+
+    [Parameter]
+    public DateTimeOffset? CompetitionEndDate { get; set; }
 
     [Parameter]
     public string? StatusLine { get; set; }

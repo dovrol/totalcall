@@ -28,11 +28,22 @@ else
                 StatusKind="@ActiveStatusKind"
                 CompletedCategories="@CompletedCategoriesCount"
                 TotalCategories="@OrderedQuestions.Count"
-                LockLabel="@LockLabel"
-                LockDistance="@LockDistance"
+                CompetitionStatus="@Competition.Status"
+                PredictionLockAt="@Competition.PredictionLockAt"
+                CompetitionEndDate="@Competition.EndDate"
                 CanOpenModuleMenu="@CanOpenModuleMenu"
                 IsModuleMenuOpen="@isModuleMenuOpen"
                 ModuleSwitchRequested="ToggleModuleMenu" />
+
+            @if (DeadlinePhase == PredictionDeadlinePhase.Ended)
+            {
+                <div class="tcl-ribbon">
+                    <span class="tcl-ribbon__ic" aria-hidden="true"><AppIcon Name="AppIconName.Trophy" Size="14" /></span>
+                    <strong>@Localizer["Predictions.Deadline.Ended"]</strong>
+                    <span class="tcl-ribbon__sub">@Localizer["Predictions.Deadline.ArchiveHint"]</span>
+                    <span class="tcl-ribbon__pending">@Localizer["Predictions.Deadline.ResultsSoon"]</span>
+                </div>
+            }
 
             <TopNCategoryStrip
                 Questions="OrderedQuestions"
@@ -47,7 +58,7 @@ else
             <div class="topn-workspace__body">
                 <TopNFooterTools
                     ShowLabel="true"
-                    CanEditPredictions="CanEditPredictions"
+                    CanEditPredictions="@CanEditSheet"
                     RefinedCount="@RefinedCount"
                     FieldCount="@FieldPlacements.Count"
                     ScoredCount="@ScoredPositionsCount"
@@ -65,7 +76,7 @@ else
                 <TopNSheet
                     Slots="SlotViews"
                     ScoredCount="@ScoredPositionsCount"
-                    CanEditPredictions="CanEditPredictions"
+                    CanEditPredictions="@CanEditSheet"
                     IsBulkFilling="@isBulkFilling"
                     FillPopPosition="@fillPopPosition"
                     DraggingPosition="@draggingPosition"
@@ -103,7 +114,9 @@ else
                 TotalCategories="@OrderedQuestions.Count"
                 CompletedCategories="@CompletedCategoriesCount"
                 ModuleTitle="@Text.GroupTitle(Competition, ActiveGroup)"
-                LockDistance="@LockDistance"
+                CompetitionStatus="@Competition.Status"
+                PredictionLockAt="@Competition.PredictionLockAt"
+                CompetitionEndDate="@Competition.EndDate"
                 StatusLine="@MobileStatusLine"
                 StatusKind="@ActiveStatusKind"
                 SwitcherRequested="OpenMobileSwitcher" />
@@ -111,7 +124,7 @@ else
             <TopNMobileList
                 Slots="SlotViews"
                 ScoredCount="@ScoredPositionsCount"
-                CanEditPredictions="CanEditPredictions"
+                CanEditPredictions="@CanEditSheet"
                 IsBulkFilling="@isBulkFilling"
                 ExpandedPosition="@expandedMobilePosition"
                 CardToggled="ToggleMobileCard"
@@ -135,7 +148,7 @@ else
             }
 
             <TopNFooterTools
-                CanEditPredictions="CanEditPredictions"
+                CanEditPredictions="@CanEditSheet"
                 RefinedCount="@RefinedCount"
                 FieldCount="@FieldPlacements.Count"
                 ScoredCount="@ScoredPositionsCount"
@@ -221,7 +234,7 @@ else
                     SelectedAthleteId="@selectedAthleteId"
                     SelectedAthleteRank="@SelectedAthleteRank"
                     SelectedAthletePredictedTotalKg="@SelectedAthletePredictedTotal"
-                    CanEditPredictions="@CanEditPredictions"
+                    CanEditPredictions="@CanEditSheet"
                     SelectorSlotPosition="null"
                     SelectedAthletesByPosition="SelectedAthletesByPosition"
                     AthleteContextRequested="OpenContext"
@@ -235,6 +248,9 @@ else
             CompetitionSlug="@Competition.Slug"
             CompetitionName="@Competition.Name"
             PredictionLockAt="@Competition.PredictionLockAt"
+            CompetitionStatus="@Competition.Status"
+            CompetitionEndDate="@Competition.EndDate"
+            CanEditPredictions="@CanEditSheet"
             IsAuthenticated="@IsAuthenticated"
             SaveStatus="@SaveStatus"
             LastSavedAt="@LastSavedAt"
@@ -324,6 +340,7 @@ else
     private bool shortcutsAttached;
     private bool contextDragAttached;
     private bool switcherDragAttached;
+    private CancellationTokenSource? deadlineTickerCancellation;
 
     private readonly Dictionary<int, string> modeByPosition = [];
     private readonly Dictionary<string, AthleteHistoryEntry?> historyByAthleteId = new(StringComparer.OrdinalIgnoreCase);
@@ -491,30 +508,18 @@ else
         }
     }
 
-    private string? LockLabel => Competition.PredictionLockAt is null
-        ? null
-        : Competition.PredictionLockAt.Value.ToLocalTime().ToString("d MMM, HH:mm", CultureInfo.CurrentCulture);
+    private PredictionDeadlinePhase DeadlinePhase => PredictionDeadline.Resolve(
+        Competition.Status,
+        Competition.PredictionLockAt,
+        Competition.EndDate,
+        DateTimeOffset.UtcNow);
 
-    private string? LockDistance
-    {
-        get
-        {
-            if (Competition.PredictionLockAt is null)
-            {
-                return null;
-            }
-
-            var days = (Competition.PredictionLockAt.Value.ToLocalTime().Date - DateTimeOffset.Now.ToLocalTime().Date).Days;
-
-            return days switch
-            {
-                < 0 => null,
-                0 => Localizer["Common.Today"].Value,
-                1 => Localizer["Common.Tomorrow"].Value,
-                _ => Localizer["Predictions.DaysUntil", days].Value
-            };
-        }
-    }
+    private bool CanEditSheet => PredictionDeadline.CanEdit(
+        CanEditPredictions,
+        Competition.Status,
+        Competition.PredictionLockAt,
+        Competition.EndDate,
+        DateTimeOffset.UtcNow);
 
     private string ContextScrimClass => string.Join(" ", "topn-drawer-scrim", IsContextOpen ? "is-open" : null);
 
@@ -551,6 +556,13 @@ else
         {
             expandedMobilePosition = null;
         }
+
+        if (!CanEditSheet)
+        {
+            CloseEditOnlySurfaces();
+        }
+
+        SyncDeadlineTicker();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -683,6 +695,7 @@ else
     public async ValueTask DisposeAsync()
     {
         AthleteDataSources.SourceChanged -= HandleDataSourceChanged;
+        StopDeadlineTicker();
 
         if (shortcutsAttached || contextDragAttached || switcherDragAttached)
         {
@@ -709,6 +722,92 @@ else
         }
 
         selfRef?.Dispose();
+    }
+
+    private void SyncDeadlineTicker()
+    {
+        if (!CanEditPredictions ||
+            Competition.Status != CompetitionStatus.Upcoming ||
+            Competition.PredictionLockAt is null)
+        {
+            StopDeadlineTicker();
+            return;
+        }
+
+        if (deadlineTickerCancellation is not null)
+        {
+            return;
+        }
+
+        deadlineTickerCancellation = new CancellationTokenSource();
+        _ = RunDeadlineTickerAsync(deadlineTickerCancellation.Token);
+    }
+
+    private async Task RunDeadlineTickerAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                await Task.Delay(GetDeadlineTickDelay(), cancellationToken);
+                await InvokeAsync(() =>
+                {
+                    if (!CanEditSheet)
+                    {
+                        CloseEditOnlySurfaces();
+                    }
+
+                    StateHasChanged();
+                });
+
+                if (!CanEditSheet)
+                {
+                    break;
+                }
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // The competition changed or the component was disposed.
+        }
+        finally
+        {
+            deadlineTickerCancellation?.Dispose();
+            deadlineTickerCancellation = null;
+        }
+    }
+
+    private TimeSpan GetDeadlineTickDelay()
+    {
+        var remaining = Competition.PredictionLockAt is { } lockAt
+            ? lockAt - DateTimeOffset.UtcNow
+            : TimeSpan.FromMinutes(15);
+
+        if (remaining <= TimeSpan.FromHours(1))
+        {
+            return TimeSpan.FromSeconds(1);
+        }
+
+        if (remaining <= TimeSpan.FromHours(48))
+        {
+            return TimeSpan.FromMinutes(1);
+        }
+
+        return TimeSpan.FromMinutes(15);
+    }
+
+    private void StopDeadlineTicker()
+    {
+        deadlineTickerCancellation?.Cancel();
+    }
+
+    private void CloseEditOnlySurfaces()
+    {
+        fillPopPosition = null;
+        isBulkMenuOpen = false;
+        expandedMobilePosition = null;
+        draggingPosition = null;
+        dragOverPosition = null;
     }
 
     // ---------- category + module navigation ----------
@@ -981,7 +1080,7 @@ else
 
     private void ToggleRowMode(int position)
     {
-        if (!CanEditPredictions)
+        if (!CanEditSheet)
         {
             return;
         }
@@ -993,7 +1092,7 @@ else
 
     private Task OnCellEdited(TopNSheetEdit edit)
     {
-        if (!CanEditPredictions || ActiveQuestion is null)
+        if (!CanEditSheet || ActiveQuestion is null)
         {
             return Task.CompletedTask;
         }
@@ -1015,7 +1114,7 @@ else
 
     private Task NudgeCell(TopNSheetEdit edit)
     {
-        if (!CanEditPredictions || ActiveQuestion is null)
+        if (!CanEditSheet || ActiveQuestion is null)
         {
             return Task.CompletedTask;
         }
@@ -1114,7 +1213,7 @@ else
     {
         fillPopPosition = null;
 
-        if (!CanEditPredictions || ActiveQuestion is null)
+        if (!CanEditSheet || ActiveQuestion is null)
         {
             return;
         }
@@ -1155,7 +1254,7 @@ else
     {
         isBulkMenuOpen = false;
 
-        if (!CanEditPredictions || ActiveQuestion is null)
+        if (!CanEditSheet || ActiveQuestion is null)
         {
             return;
         }
@@ -1293,7 +1392,7 @@ else
 
     private void OnDragStart(int position)
     {
-        if (!CanEditPredictions || FieldPlacements.All(placement => placement.Position != position))
+        if (!CanEditSheet || FieldPlacements.All(placement => placement.Position != position))
         {
             return;
         }
@@ -1336,7 +1435,7 @@ else
 
     private async Task MoveToPosition(int from, int to)
     {
-        if (!CanEditPredictions || ActiveQuestion is null)
+        if (!CanEditSheet || ActiveQuestion is null)
         {
             return;
         }
@@ -1442,7 +1541,7 @@ else
 
     private async Task ResetAthlete(int position)
     {
-        if (!CanEditPredictions || ActiveQuestion is null)
+        if (!CanEditSheet || ActiveQuestion is null)
         {
             return;
         }
@@ -1475,7 +1574,7 @@ else
 
     private async Task SortByPredictedTotal()
     {
-        if (!CanEditPredictions || ActiveQuestion is null)
+        if (!CanEditSheet || ActiveQuestion is null)
         {
             return;
         }
@@ -1507,7 +1606,7 @@ else
 
     private async Task ClearCategory()
     {
-        if (!CanEditPredictions || ActiveQuestion is null)
+        if (!CanEditSheet || ActiveQuestion is null)
         {
             return;
         }
@@ -1578,7 +1677,7 @@ else
 
     private async Task EnsureActiveFieldSeededAsync()
     {
-        if (!CanEditPredictions || ActiveQuestion is null || !seededQuestionIds.Add(ActiveQuestion.Id))
+        if (!CanEditSheet || ActiveQuestion is null || !seededQuestionIds.Add(ActiveQuestion.Id))
         {
             return;
         }

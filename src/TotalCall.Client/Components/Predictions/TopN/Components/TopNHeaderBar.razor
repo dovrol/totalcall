@@ -38,17 +38,11 @@
             <strong>@CompletedCategories/@TotalCategories</strong>
         </div>
 
-        @if (!string.IsNullOrWhiteSpace(LockLabel))
-        {
-            <span class="topn-header__lock">
-                <AppIcon Name="AppIconName.Lock" Size="13" />
-                <strong>@LockLabel</strong>
-                @if (!string.IsNullOrWhiteSpace(LockDistance))
-                {
-                    <span class="topn-header__lock-distance">· @LockDistance</span>
-                }
-            </span>
-        }
+        <PredictionDeadlineChip
+            CompetitionStatus="@CompetitionStatus"
+            PredictionLockAt="@PredictionLockAt"
+            CompetitionEndDate="@CompetitionEndDate"
+            LegacyOpen="true" />
     </div>
 </div>
 
@@ -75,10 +69,13 @@
     public int TotalCategories { get; set; }
 
     [Parameter]
-    public string? LockLabel { get; set; }
+    public CompetitionStatus CompetitionStatus { get; set; } = CompetitionStatus.Upcoming;
 
     [Parameter]
-    public string? LockDistance { get; set; }
+    public DateTimeOffset? PredictionLockAt { get; set; }
+
+    [Parameter]
+    public DateTimeOffset? CompetitionEndDate { get; set; }
 
     [Parameter]
     public bool CanOpenModuleMenu { get; set; }

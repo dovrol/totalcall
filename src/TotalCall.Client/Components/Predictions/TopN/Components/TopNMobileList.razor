@@ -46,7 +46,7 @@
     {
         @foreach (var slot in VisibleSlots)
     {
-        var isExpanded = ExpandedPosition == slot.Position;
+        var isExpanded = CanEditPredictions && ExpandedPosition == slot.Position;
         var isTotal = string.Equals(slot.Mode, TopNEntryMode.Total, StringComparison.OrdinalIgnoreCase);
 
         <div @key="slot.Athlete!.Id" class="@CardClass(slot, isExpanded)" data-topn-athlete-id="@slot.Athlete!.Id">
@@ -67,7 +67,7 @@
                             }
                         </button>
                     }
-                    else
+                    else if (CanEditPredictions)
                     {
                         <div class="ms-move">
                             <button type="button" aria-label="@Localizer["Predictions.MoveUp"]" disabled="@(!CanEditPredictions || !slot.CanMoveUp)" @onclick="() => MoveRequested.InvokeAsync(new TopNMove(slot.Position, -1))"><AppIcon Name="AppIconName.ChevronRight" Size="12" Class="ms-chevron--up" /></button>
@@ -89,31 +89,57 @@
                         <div class="@SourceClass(slot.IsAutoSeeded)">@SourceText(slot)</div>
                     </div>
                 }
-                <button type="button" class="ms-card__chev" @onclick="() => CardToggled.InvokeAsync(slot.Position)" aria-label="@Localizer["Predictions.EditPredictedTotal"]">
-                    <AppIcon Name="AppIconName.ChevronRight" Size="16" Class="@ChevronClass(isExpanded)" />
-                </button>
+                @if (CanEditPredictions)
+                {
+                    <button type="button" class="ms-card__chev" @onclick="() => CardToggled.InvokeAsync(slot.Position)" aria-label="@Localizer["Predictions.EditPredictedTotal"]">
+                        <AppIcon Name="AppIconName.ChevronRight" Size="16" Class="@ChevronClass(isExpanded)" />
+                    </button>
+                }
             </div>
 
             @if (!isExpanded)
             {
-                <button type="button" class="ms-clifts" @onclick="() => CardToggled.InvokeAsync(slot.Position)">
-                    @if (slot.IsAutoSeeded)
-                    {
-                        <span class="ms-clifts__muted">@Localizer["Predictions.TopN.MobileTapToRefine"]</span>
-                    }
-                    else if (isTotal)
-                    {
-                        <span>@Localizer["Predictions.TopN.MobileTotalManual"]</span>
-                    }
-                    else
-                    {
-                        <span>SQ <b>@FormatPred(slot.Placement?.PredictedSquatKg)</b> <span class="ms-clifts__sep">·</span> BP <b>@FormatPred(slot.Placement?.PredictedBenchKg)</b> <span class="ms-clifts__sep">·</span> DL <b>@FormatPred(slot.Placement?.PredictedDeadliftKg)</b></span>
-                    }
-                    <span class="@PillClass(isTotal)">@(isTotal ? Localizer["Predictions.TopN.ModeTotalShort"] : Localizer["Predictions.TopN.ModeLiftsShort"])</span>
-                </button>
+                @if (CanEditPredictions)
+                {
+                    <button type="button" class="ms-clifts" @onclick="() => CardToggled.InvokeAsync(slot.Position)">
+                        @if (slot.IsAutoSeeded)
+                        {
+                            <span class="ms-clifts__muted">@Localizer["Predictions.TopN.MobileTapToRefine"]</span>
+                        }
+                        else if (isTotal)
+                        {
+                            <span>@Localizer["Predictions.TopN.MobileTotalManual"]</span>
+                        }
+                        else
+                        {
+                            <span>SQ <b>@FormatPred(slot.Placement?.PredictedSquatKg)</b> <span class="ms-clifts__sep">·</span> BP <b>@FormatPred(slot.Placement?.PredictedBenchKg)</b> <span class="ms-clifts__sep">·</span> DL <b>@FormatPred(slot.Placement?.PredictedDeadliftKg)</b></span>
+                        }
+                        <span class="@PillClass(isTotal)">@(isTotal ? Localizer["Predictions.TopN.ModeTotalShort"] : Localizer["Predictions.TopN.ModeLiftsShort"])</span>
+                    </button>
+                }
+                else
+                {
+                    <div class="ms-clifts tcl-clifts-static">
+                        @if (slot.IsAutoSeeded)
+                        {
+                            <span class="ms-clifts__muted">@Localizer["Predictions.TopN.MobileReadonlyDefault"]</span>
+                        }
+                        else if (isTotal)
+                        {
+                            <span>@Localizer["Predictions.TopN.MobileTotalManual"]</span>
+                        }
+                        else
+                        {
+                            <span>SQ <b>@FormatPred(slot.Placement?.PredictedSquatKg)</b> <span class="ms-clifts__sep">·</span> BP <b>@FormatPred(slot.Placement?.PredictedBenchKg)</b> <span class="ms-clifts__sep">·</span> DL <b>@FormatPred(slot.Placement?.PredictedDeadliftKg)</b></span>
+                        }
+                        <span class="@PillClass(isTotal)">@(isTotal ? Localizer["Predictions.TopN.ModeTotalShort"] : Localizer["Predictions.TopN.ModeLiftsShort"])</span>
+                    </div>
+                }
             }
 
-            <div class="@EditRegionClass(isExpanded)" aria-hidden="@(!isExpanded)" inert="@(isExpanded ? null : string.Empty)">
+            @if (CanEditPredictions)
+            {
+                <div class="@EditRegionClass(isExpanded)" aria-hidden="@(!isExpanded)" inert="@(isExpanded ? null : string.Empty)">
                 <div class="ms-edit-region__inner">
                     <div class="ms-edit">
                         @if (CanEditPredictions)
@@ -203,6 +229,7 @@
                     </div>
                 </div>
             </div>
+            }
         </div>
 
         @if (slot.Position == ScoredCount)

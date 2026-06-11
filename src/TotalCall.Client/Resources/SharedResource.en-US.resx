@@ -192,7 +192,7 @@
   <data name="Predictions.Submit.ConfirmAnswersPrivate" xml:space="preserve"><value>Full answers are not public at this stage; others will not see your picks or email.</value></data>
   <data name="Predictions.Submit.ConfirmDraftsPrivate" xml:space="preserve"><value>Drafts remain private until you submit them.</value></data>
   <data name="Predictions.Submit.ConfirmAutoUpdate" xml:space="preserve"><value>After submitting, you can keep editing until the deadline; later changes update the submitted entry automatically.</value></data>
-  <data name="Predictions.Submit.ConfirmFutureLock" xml:space="preserve"><value>After the deadline, picks will be locked in a future version.</value></data>
+  <data name="Predictions.Submit.ConfirmFutureLock" xml:space="preserve"><value>After the deadline, picks will be locked.</value></data>
   <data name="Predictions.Submit.ClickOutsideCancels" xml:space="preserve"><value>outside click cancels</value></data>
   <data name="Predictions.Toast.Submit.Success" xml:space="preserve"><value>Picks submitted. Changes will update the entry until the deadline.</value></data>
   <data name="Predictions.Toast.Submit.Error" xml:space="preserve"><value>Could not submit picks.</value></data>
@@ -655,6 +655,26 @@
   <data name="Predictions.TopN.MobileSquat" xml:space="preserve"><value>Squat (SQ)</value></data>
   <data name="Predictions.TopN.MobileBench" xml:space="preserve"><value>Bench (BP)</value></data>
   <data name="Predictions.TopN.MobileDeadlift" xml:space="preserve"><value>Deadlift (DL)</value></data>
+  <data name="Predictions.TopN.ReadOnlyLocked" xml:space="preserve"><value>Read-only — picks are locked</value></data>
+  <data name="Predictions.TopN.CutoffHintReadonly" xml:space="preserve"><value>below = comparison zone</value></data>
+  <data name="Predictions.TopN.MobileReadonlyDefault" xml:space="preserve"><value>Left by nomination</value></data>
+  <data name="Predictions.Deadline.ClosesAt" xml:space="preserve"><value>Closes {0}</value></data>
+  <data name="Predictions.Deadline.InHours" xml:space="preserve"><value>in {0}h</value></data>
+  <data name="Predictions.Deadline.InMinutes" xml:space="preserve"><value>in {0}m</value></data>
+  <data name="Predictions.Deadline.Now" xml:space="preserve"><value>now</value></data>
+  <data name="Predictions.Deadline.Locked" xml:space="preserve"><value>Picks locked</value></data>
+  <data name="Predictions.Deadline.Ended" xml:space="preserve"><value>Competition finished</value></data>
+  <data name="Predictions.Deadline.PillSoon" xml:space="preserve"><value>Closes {0}</value></data>
+  <data name="Predictions.Deadline.PillUrgent" xml:space="preserve"><value>Closes in {0}</value></data>
+  <data name="Predictions.Deadline.ArchiveHint" xml:space="preserve"><value>Picks are in archive mode — compare them with competition results when available.</value></data>
+  <data name="Predictions.Deadline.ResultsSoon" xml:space="preserve"><value>Results soon</value></data>
+  <data name="Predictions.Submit.LockedBadge" xml:space="preserve"><value>Picks locked</value></data>
+  <data name="Predictions.Submit.ArchiveBadge" xml:space="preserve"><value>Archive</value></data>
+  <data name="Predictions.Submit.LockedDraft" xml:space="preserve"><value>Not submitted</value></data>
+  <data name="Predictions.Submit.Archived" xml:space="preserve"><value>Competition finished</value></data>
+  <data name="Predictions.Submit.LockedSubmittedDetail" xml:space="preserve"><value>Deadline passed {0} — picks are locked</value></data>
+  <data name="Predictions.Submit.LockedDraftDetail" xml:space="preserve"><value>Deadline passed {0} — draft remains private</value></data>
+  <data name="Predictions.Submit.ArchivedDetail" xml:space="preserve"><value>Archived picks · results available after the competition</value></data>
   <data name="Predictions.Toast.ResetAthlete.Success" xml:space="preserve"><value>Restored {0} to nomination.</value></data>
   <data name="Predictions.Toast.ResetField.Success" xml:space="preserve"><value>Restored the field to nomination order.</value></data>
   <data name="Participants.Title" xml:space="preserve"><value>Participants</value></data>

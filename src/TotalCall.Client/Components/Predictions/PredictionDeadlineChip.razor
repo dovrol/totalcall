@@ -1,0 +1,239 @@
+@using System.Globalization
+@implements IDisposable
+@inject IStringLocalizer<SharedResource> Localizer
+
+@if (ShouldRenderChip)
+{
+    <span class="@ChipClass" aria-label="@AriaLabel">
+        @if (Phase == PredictionDeadlinePhase.Urgent)
+        {
+            <i class="tcl-lockchip__dot" aria-hidden="true"></i>
+        }
+        <AppIcon Name="@Icon" Size="@IconSize" />
+        <strong class="@PrimaryClass">@PrimaryLabel</strong>
+        @if (!string.IsNullOrWhiteSpace(SecondaryLabel))
+        {
+            <span class="@SecondaryClass">· @SecondaryLabel</span>
+        }
+    </span>
+}
+
+@code {
+    [Parameter]
+    public CompetitionStatus CompetitionStatus { get; set; } = CompetitionStatus.Upcoming;
+
+    [Parameter]
+    public DateTimeOffset? PredictionLockAt { get; set; }
+
+    [Parameter]
+    public DateTimeOffset? CompetitionEndDate { get; set; }
+
+    [Parameter]
+    public bool Small { get; set; }
+
+    [Parameter]
+    public bool LegacyOpen { get; set; }
+
+    private CancellationTokenSource? tickerCancellation;
+    private DateTimeOffset now = DateTimeOffset.UtcNow;
+
+    private PredictionDeadlinePhase Phase =>
+        PredictionDeadline.Resolve(CompetitionStatus, PredictionLockAt, CompetitionEndDate, now);
+
+    private bool ShouldRenderChip =>
+        PredictionLockAt is not null || Phase == PredictionDeadlinePhase.Ended;
+
+    private string ChipClass
+    {
+        get
+        {
+            if (Phase == PredictionDeadlinePhase.Open && LegacyOpen && !Small)
+            {
+                return "topn-header__lock";
+            }
+
+            return string.Join(
+                " ",
+                "tcl-lockchip",
+                Phase switch
+                {
+                    PredictionDeadlinePhase.Soon => "tcl-lockchip--soon",
+                    PredictionDeadlinePhase.Urgent => "tcl-lockchip--urgent",
+                    PredictionDeadlinePhase.Locked => "tcl-lockchip--locked",
+                    PredictionDeadlinePhase.Ended => "tcl-lockchip--ended",
+                    _ => null
+                },
+                Small ? "tcl-lockchip--sm" : null);
+        }
+    }
+
+    private AppIconName Icon => Phase switch
+    {
+        PredictionDeadlinePhase.Soon or PredictionDeadlinePhase.Urgent => AppIconName.Timer,
+        PredictionDeadlinePhase.Ended => AppIconName.Trophy,
+        _ => AppIconName.Lock
+    };
+
+    private int IconSize => Small ? 12 : 13;
+
+    private string? PrimaryClass =>
+        Phase == PredictionDeadlinePhase.Urgent ? "tcl-lockchip__count" : null;
+
+    private string? SecondaryClass =>
+        Phase == PredictionDeadlinePhase.Open && LegacyOpen && !Small ? "topn-header__lock-distance" : null;
+
+    private string PrimaryLabel => Phase switch
+    {
+        PredictionDeadlinePhase.Soon => Localizer["Predictions.Deadline.ClosesAt", FormatRelativeDeadline()],
+        PredictionDeadlinePhase.Urgent => FormatCountdown(),
+        PredictionDeadlinePhase.Locked => Localizer["Predictions.Deadline.Locked"],
+        PredictionDeadlinePhase.Ended => Localizer["Predictions.Deadline.Ended"],
+        _ => FormatLockDateTime()
+    };
+
+    private string? SecondaryLabel => Phase switch
+    {
+        PredictionDeadlinePhase.Soon => FormatRemainingShort(),
+        PredictionDeadlinePhase.Urgent => FormatRelativeDeadline(),
+        PredictionDeadlinePhase.Locked => FormatLockDateTime(),
+        PredictionDeadlinePhase.Ended => FormatEndedDate(),
+        _ => FormatDayDistance()
+    };
+
+    private string AriaLabel => string.IsNullOrWhiteSpace(SecondaryLabel)
+        ? PrimaryLabel
+        : $"{PrimaryLabel}, {SecondaryLabel}";
+
+    protected override void OnParametersSet()
+    {
+        now = DateTimeOffset.UtcNow;
+        SyncTicker();
+    }
+
+    private void SyncTicker()
+    {
+        var shouldTick = Phase == PredictionDeadlinePhase.Urgent;
+        if (shouldTick && tickerCancellation is null)
+        {
+            tickerCancellation = new CancellationTokenSource();
+            _ = RunTickerAsync(tickerCancellation.Token);
+            return;
+        }
+
+        if (!shouldTick)
+        {
+            StopTicker();
+        }
+    }
+
+    private async Task RunTickerAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            using var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+            while (await timer.WaitForNextTickAsync(cancellationToken))
+            {
+                now = DateTimeOffset.UtcNow;
+                await InvokeAsync(StateHasChanged);
+
+                if (Phase != PredictionDeadlinePhase.Urgent)
+                {
+                    break;
+                }
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // Component disposal or phase change stopped the countdown.
+        }
+        finally
+        {
+            tickerCancellation?.Dispose();
+            tickerCancellation = null;
+        }
+    }
+
+    private void StopTicker()
+    {
+        tickerCancellation?.Cancel();
+    }
+
+    private string FormatCountdown()
+    {
+        var remaining = PredictionDeadline.Remaining(PredictionLockAt, now) ?? TimeSpan.Zero;
+        if (remaining < TimeSpan.Zero)
+        {
+            remaining = TimeSpan.Zero;
+        }
+
+        return $"{(int)remaining.TotalHours:00}:{remaining.Minutes:00}:{remaining.Seconds:00}";
+    }
+
+    private string FormatRemainingShort()
+    {
+        var remaining = PredictionDeadline.Remaining(PredictionLockAt, now);
+        if (remaining is null || remaining.Value <= TimeSpan.Zero)
+        {
+            return Localizer["Predictions.Deadline.Now"];
+        }
+
+        if (remaining.Value.TotalHours >= 1)
+        {
+            return Localizer["Predictions.Deadline.InHours", Math.Max(1, (int)Math.Ceiling(remaining.Value.TotalHours))];
+        }
+
+        return Localizer["Predictions.Deadline.InMinutes", Math.Max(1, (int)Math.Ceiling(remaining.Value.TotalMinutes))];
+    }
+
+    private string FormatRelativeDeadline()
+    {
+        if (PredictionLockAt is not { } value)
+        {
+            return Localizer["Common.Tbd"];
+        }
+
+        var local = value.ToLocalTime();
+        var days = (local.Date - now.ToLocalTime().Date).Days;
+        var day = days switch
+        {
+            0 => Localizer["Common.Today"].Value,
+            1 => Localizer["Common.Tomorrow"].Value,
+            _ => local.ToString("d MMM", CultureInfo.CurrentCulture)
+        };
+
+        return $"{day}, {local.ToString("HH:mm", CultureInfo.CurrentCulture)}";
+    }
+
+    private string FormatLockDateTime()
+    {
+        return PredictionLockAt?.ToLocalTime().ToString("d MMM, HH:mm", CultureInfo.CurrentCulture)
+               ?? Localizer["Common.Tbd"];
+    }
+
+    private string? FormatDayDistance()
+    {
+        if (PredictionLockAt is null)
+        {
+            return null;
+        }
+
+        var days = (PredictionLockAt.Value.ToLocalTime().Date - now.ToLocalTime().Date).Days;
+        return days switch
+        {
+            < 0 => null,
+            0 => Localizer["Common.Today"].Value,
+            1 => Localizer["Common.Tomorrow"].Value,
+            _ => Localizer["Predictions.DaysUntil", days].Value
+        };
+    }
+
+    private string? FormatEndedDate()
+    {
+        return CompetitionEndDate?.ToLocalTime().ToString("d MMM yyyy", CultureInfo.CurrentCulture);
+    }
+
+    public void Dispose()
+    {
+        StopTicker();
+    }
+}

@@ -37,7 +37,7 @@ else if (IsTopNGroup(ActiveGroup))
         Answers="@predictionSet.Answers"
         ActiveModuleValidation="@GetModuleValidation(ActiveGroup.Id)"
         ModuleValidationByGroupId="@moduleValidationByGroupId"
-        CanEditPredictions="@canEditPredictions"
+        CanEditPredictions="@CanEditPredictionsNow"
         IsAuthenticated="@Auth.IsAuthenticated"
         SaveStatus="@CurrentSaveStatus"
         LastSavedAt="@predictionSet.SavedAt"
@@ -59,7 +59,7 @@ else
         Answers="@predictionSet.Answers"
         ActiveModuleValidation="@GetModuleValidation(ActiveGroup.Id)"
         ModuleValidationByGroupId="@moduleValidationByGroupId"
-        CanEditPredictions="@canEditPredictions"
+        CanEditPredictions="@CanEditPredictionsNow"
         IsAuthenticated="@Auth.IsAuthenticated"
         SaveStatus="@CurrentSaveStatus"
         LastSavedAt="@predictionSet.SavedAt"
@@ -105,6 +105,14 @@ else
     private PredictionGroup? ActiveGroup => OrderedGroups
         .FirstOrDefault(group => group.Id == activeGroupId) ??
         OrderedGroups.FirstOrDefault();
+
+    private bool CanEditPredictionsNow => competition is not null &&
+        PredictionDeadline.CanEdit(
+            canEditPredictions,
+            competition.Status,
+            competition.PredictionLockAt,
+            competition.EndDate,
+            DateTimeOffset.UtcNow);
 
     private PredictionSaveStatus CurrentSaveStatus
     {
@@ -210,7 +218,7 @@ else
 
     private async Task OnAnswerChanged(PredictionAnswer answer)
     {
-        if (competition is null || predictionSet is null || !canEditPredictions)
+        if (competition is null || predictionSet is null || !CanEditPredictionsNow)
         {
             return;
         }
@@ -224,7 +232,7 @@ else
 
     private async Task SaveAsync()
     {
-        if (predictionSet is null || !canEditPredictions)
+        if (predictionSet is null || !CanEditPredictionsNow)
         {
             return;
         }
@@ -243,7 +251,7 @@ else
     {
         if (competition is null ||
             predictionSet is null ||
-            !canEditPredictions ||
+            !CanEditPredictionsNow ||
             isSubmitting ||
             CurrentSaveStatus == PredictionSaveStatus.SynchronizationFailed)
         {
@@ -295,7 +303,7 @@ else
             return Task.CompletedTask;
         }
 
-        shareReview = ReviewBuilder.Build(competition, predictionSet, canEditPredictions);
+        shareReview = ReviewBuilder.Build(competition, predictionSet, CanEditPredictionsNow);
         isShareOpen = true;
         return Task.CompletedTask;
     }
