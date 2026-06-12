@@ -33,17 +33,25 @@
     --tn-amber: var(--warning);
     --tn-amber-bg: color-mix(in srgb, var(--warning) 13%, transparent);
     --tn-amber-bd: color-mix(in srgb, var(--warning) 32%, transparent);
-    --tn-r: 14px;
-    --tn-r-sm: 10px;
-    --tn-shadow: 0 40px 80px -28px rgb(2 7 13 / 0.7);
+    --tn-r: 10px;
+    --tn-r-sm: 7px;
+    --tn-shadow: 0 20px 40px -24px rgb(0 0 0 / 0.55);
     --tn-sheet-gap: 8px;
-    --tn-sheet-r: 20px;
+    --tn-sheet-r: 14px;
 
     position: relative;
     min-width: 0;
     color: var(--tn-txt);
     padding-bottom: var(--prediction-bottom-bar-space);
     font-variant-numeric: tabular-nums;
+}
+
+:root[data-theme="light"] .topn-workspace {
+    --tn-card-hi: color-mix(in srgb, var(--bg-surface-strong) 92%, var(--text-primary) 8%);
+    --tn-green-bg: color-mix(in srgb, var(--success) 7%, transparent);
+    --tn-amber-bg: color-mix(in srgb, var(--warning) 8%, transparent);
+    --tn-red-dim: color-mix(in srgb, var(--accent) 6%, transparent);
+    --tn-shadow: 0 16px 32px -22px rgb(27 28 30 / 0.25);
 }
 
 /* ============================================================
@@ -537,7 +545,7 @@
     display: block;
     height: 100%;
     border-radius: 20px;
-    background: linear-gradient(90deg, var(--tn-green), color-mix(in srgb, var(--tn-green) 60%, #5eead4));
+    background: var(--tn-green);
 }
 
 .topn-header__progress strong {
@@ -699,7 +707,7 @@
 }
 
 .topn-cat--active {
-    background: linear-gradient(135deg, var(--tn-red-bright), var(--tn-red));
+    background: var(--tn-red);
     border-color: transparent;
     color: #fff;
     box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--tn-red) 70%, transparent);
@@ -821,6 +829,10 @@
     box-shadow: inset 3px 0 0 color-mix(in srgb, var(--tn-green) 72%, transparent);
 }
 
+:root[data-theme="light"] .topn-rowgroup--authored {
+    background: color-mix(in srgb, var(--success) 2.5%, transparent);
+}
+
 .topn-rowgroup--popover-open {
     position: relative;
     z-index: 35;
@@ -847,7 +859,7 @@
 }
 
 .topn-row--lead {
-    background: linear-gradient(90deg, color-mix(in srgb, var(--tn-red) 6%, transparent), transparent 60%);
+    background: transparent;
 }
 
 .topn-rowgroup--context,
@@ -886,18 +898,21 @@
 }
 
 .topn-row__rank--p1 {
-    color: #f5c451;
-    border-color: color-mix(in srgb, #f5c451 44%, var(--tn-bd));
+    background: var(--tn-panel-2);
+    color: var(--medal-gold);
+    border-color: color-mix(in srgb, var(--medal-gold) 44%, var(--tn-bd));
 }
 
 .topn-row__rank--p2 {
-    color: #b8c2cf;
-    border-color: color-mix(in srgb, #b8c2cf 44%, var(--tn-bd));
+    background: var(--tn-panel-2);
+    color: var(--medal-silver);
+    border-color: color-mix(in srgb, var(--medal-silver) 44%, var(--tn-bd));
 }
 
 .topn-row__rank--p3 {
-    color: #c98a5b;
-    border-color: color-mix(in srgb, #c98a5b 44%, var(--tn-bd));
+    background: var(--tn-panel-2);
+    color: var(--medal-bronze);
+    border-color: color-mix(in srgb, var(--medal-bronze) 44%, var(--tn-bd));
 }
 
 /* drag handle + reorder states */
@@ -2667,7 +2682,7 @@ body:has(.topn-drawer.is-open) {
 
 .topn-mobile .ms-card--lead {
     border-color: var(--tn-red-bd);
-    background: linear-gradient(180deg, color-mix(in srgb, var(--tn-red) 7%, transparent), transparent);
+    background: var(--tn-card);
 }
 
 .topn-mobile .ms-card--context {
@@ -2777,18 +2792,21 @@ body:has(.topn-drawer.is-open) {
 }
 
 .topn-mobile .ms-card__rk--p1 {
-    color: #f5c451;
-    border-color: color-mix(in srgb, #f5c451 44%, var(--tn-bd));
+    background: var(--tn-panel-2);
+    color: var(--medal-gold);
+    border-color: color-mix(in srgb, var(--medal-gold) 44%, var(--tn-bd));
 }
 
 .topn-mobile .ms-card__rk--p2 {
-    color: #b8c2cf;
-    border-color: color-mix(in srgb, #b8c2cf 44%, var(--tn-bd));
+    background: var(--tn-panel-2);
+    color: var(--medal-silver);
+    border-color: color-mix(in srgb, var(--medal-silver) 44%, var(--tn-bd));
 }
 
 .topn-mobile .ms-card__rk--p3 {
-    color: #c98a5b;
-    border-color: color-mix(in srgb, #c98a5b 44%, var(--tn-bd));
+    background: var(--tn-panel-2);
+    color: var(--medal-bronze);
+    border-color: color-mix(in srgb, var(--medal-bronze) 44%, var(--tn-bd));
 }
 
 .topn-mobile .ms-card__av {
@@ -3312,7 +3330,7 @@ body:has(.topn-drawer.is-open) {
     font-size: 13.5px;
     font-weight: 800;
     color: #fff;
-    background: linear-gradient(135deg, var(--tn-red-bright), var(--tn-red));
+    background: var(--tn-red);
     border: 0;
     border-radius: 11px;
     padding: 12px;

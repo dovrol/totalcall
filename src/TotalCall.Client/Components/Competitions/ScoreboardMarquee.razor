@@ -1,6 +1,6 @@
 @inject IStringLocalizer<SharedResource> Localizer
 
-<section class="sb-marquee" style="@MarqueeStyle">
+<section class="sb-marquee">
     <div class="sb-marquee__lead">
         <span class="sb-marquee__eyebrow">
             <span class="sb-marquee__pulse"></span>
@@ -38,16 +38,4 @@
     private string EyebrowText => Competition.Status == CompetitionStatus.Locked
         ? Localizer["Scoreboard.Eyebrow.Awaiting"]
         : Localizer["Scoreboard.Eyebrow.LocksIn"];
-
-    private string MarqueeStyle
-    {
-        get
-        {
-            var image = string.IsNullOrWhiteSpace(Competition.CardBackgroundImageUrl)
-                ? "/assets/hero/totalcall-hero-main.webp"
-                : Competition.CardBackgroundImageUrl;
-
-            return $"--sb-marquee-bg-image: url('{image}');";
-        }
-    }
 }

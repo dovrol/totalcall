@@ -3,26 +3,30 @@
     --font-sans:
         "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --font-numeric: var(--font-sans);
+    --font-data: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-    --bg-page: #030914;
-    --bg-surface: #091425;
-    --bg-surface-strong: #0d1a2e;
-    --bg-surface-muted: #0b1628;
-    --border: #1d2c43;
-    --border-strong: #2a3b55;
-    --text-primary: #f3f6fb;
-    --text-secondary: #97a4b9;
-    --text-muted: #6f8097;
-    --accent: #ff4338;
-    --accent-strong: #ff5c52;
-    --success: #1fb775;
-    --warning: #d5a03a;
-    --danger: #ff645d;
-    --info: #3f8cff;
-    --score: #9b7cff;
-    --shadow-card: 0 12px 32px rgb(2 7 13 / 0.38);
-    --radius-sm: 0.625rem;
-    --radius-md: 0.875rem;
+    --bg-page: #0b0c0e;
+    --bg-surface: #121418;
+    --bg-surface-strong: #191c22;
+    --bg-surface-muted: #0e1013;
+    --border: #22252c;
+    --border-strong: #30343d;
+    --text-primary: #edeef1;
+    --text-secondary: #9ca2ac;
+    --text-muted: #6a717c;
+    --accent: #e03e33;
+    --accent-strong: #f25346;
+    --success: #2eae72;
+    --warning: #d9a03c;
+    --danger: #e5544b;
+    --info: #5e96d6;
+    --score: #9d8cdb;
+    --medal-gold: #d8a848;
+    --medal-silver: #a9b1bd;
+    --medal-bronze: #bd8458;
+    --shadow-card: 0 10px 24px rgb(0 0 0 / 0.35);
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
     --app-mobile-nav-height: calc(4.15rem + env(safe-area-inset-bottom));
     --prediction-mobile-action-bar-height: calc(4.875rem + env(safe-area-inset-bottom));
     --prediction-mobile-topn-tools-height: 3.6rem;
@@ -32,25 +36,26 @@
 
 :root[data-theme="light"] {
     color-scheme: light;
-    --bg-page: #f4f5f7;
+    --bg-page: #f1f1ef;
     --bg-surface: #ffffff;
-    --bg-surface-strong: #fbfbfc;
-    --bg-surface-muted: #f0f1f3;
-    --border: #e1e3e7;
-    --border-strong: #cdd1d8;
-    --text-primary: #20242b;
-    --text-secondary: #626a76;
-    --text-muted: #929aa6;
-    --accent: #df443a;
-    --accent-strong: #ec554a;
-    --success: #238b57;
-    --warning: #b97922;
-    --danger: #c43e35;
-    --info: #3375ad;
-    --score: #7058c7;
-    --shadow-card:
-        0 18px 38px -30px rgb(30 36 45 / 0.42),
-        0 1px 2px rgb(30 36 45 / 0.05);
+    --bg-surface-strong: #f6f6f4;
+    --bg-surface-muted: #e9e9e5;
+    --border: #d8d8d2;
+    --border-strong: #bdbdb6;
+    --text-primary: #1b1c1e;
+    --text-secondary: #565c64;
+    --text-muted: #7c828b;
+    --accent: #d23a30;
+    --accent-strong: #b92f26;
+    --success: #1f8f5d;
+    --warning: #a87618;
+    --danger: #c84038;
+    --info: #3a72ad;
+    --score: #6f5bbf;
+    --medal-gold: #a87c1e;
+    --medal-silver: #767f89;
+    --medal-bronze: #96673f;
+    --shadow-card: 0 8px 20px rgb(27 28 30 / 0.08);
 }
 
 *,
@@ -72,18 +77,7 @@ html {
 }
 
 body {
-    background:
-        radial-gradient(
-            circle at top right,
-            rgb(255 67 56 / 0.13),
-            transparent 28rem
-        ),
-        radial-gradient(
-            circle at 22% 8%,
-            rgb(64 140 255 / 0.07),
-            transparent 24rem
-        ),
-        var(--bg-page);
+    background: var(--bg-page);
     color: var(--text-primary);
     font-family: var(--font-sans);
     font-variant-numeric: tabular-nums;
@@ -92,14 +86,7 @@ body {
 }
 
 :root[data-theme="light"] body {
-    background:
-        radial-gradient(
-            52rem 24rem at 88% -10%,
-            rgb(223 68 58 / 0.055),
-            transparent 60%
-        ),
-        linear-gradient(180deg, #fafbfc 0%, var(--bg-page) 24rem),
-        var(--bg-page);
+    background: var(--bg-page);
 }
 
 a {
@@ -131,6 +118,24 @@ textarea {
 ) {
     font-family: var(--font-numeric);
     font-variant-numeric: tabular-nums;
+}
+
+.lb-points,
+.lb-scored strong,
+.lb-banner__progress strong,
+.participants-stat__value,
+.st-sub-when,
+.topn-input,
+.topn-total-edit__input,
+.topn-pred,
+.topn-delta,
+.tcl-static,
+.tcl-lockchip__count,
+.ms-card__pred-v,
+.topn-header__progress strong,
+.topn-cat__badge,
+.topn-mobile .ms-sub__st {
+    font-family: var(--font-data);
 }
 
 :where(a, button, input, select, textarea):focus-visible {
@@ -688,11 +693,12 @@ textarea {
 
 .app-button--primary {
     color: #fff;
-    background: linear-gradient(180deg, var(--accent-strong), var(--accent));
+    background: var(--accent);
 }
 
 .app-button--primary:hover {
-    transform: translateY(-1px);
+    background: var(--accent-strong);
+    transform: none;
 }
 
 .app-button--secondary {
@@ -8184,10 +8190,7 @@ textarea {
     position: relative;
     border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
     border-radius: var(--radius-md);
-    background:
-        linear-gradient(90deg, rgb(7 16 30 / 0.96) 0%, rgb(7 16 30 / 0.72) 48%, rgb(7 16 30 / 0.25) 100%),
-        linear-gradient(180deg, rgb(3 8 16 / 0) 0%, rgb(3 8 16 / 0.55) 100%),
-        var(--sb-marquee-bg-image, url("/assets/hero/totalcall-hero-main.webp")) 70% 60% / cover no-repeat;
+    background: var(--bg-surface);
     padding: 1.2rem 1.4rem;
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) auto;
@@ -8230,7 +8233,7 @@ textarea {
 
 .sb-marquee__title {
     margin: 0;
-    color: #fff;
+    color: var(--text-primary);
     font-size: clamp(1.7rem, 3vw, 2.3rem);
     line-height: 1;
     font-weight: 800;
@@ -8246,12 +8249,12 @@ textarea {
     display: flex;
     flex-wrap: wrap;
     gap: 0.55rem 1.2rem;
-    color: rgb(255 255 255 / 0.58);
+    color: var(--text-muted);
     font-size: 0.88rem;
 }
 
 .sb-marquee__meta strong {
-    color: #fff;
+    color: var(--text-primary);
     font-weight: 700;
 }
 
@@ -11935,10 +11938,7 @@ textarea {
 .participants-head {
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    background:
-        radial-gradient(circle at top right, rgb(255 67 56 / 0.1), transparent 24rem),
-        radial-gradient(circle at 18% 0%, rgb(63 140 255 / 0.08), transparent 20rem),
-        color-mix(in srgb, var(--bg-surface) 92%, transparent);
+    background: var(--bg-surface);
     padding: 1.25rem;
     display: grid;
     gap: 0.9rem;
@@ -11946,9 +11946,9 @@ textarea {
 
 .participants-eyebrow {
     color: var(--accent);
-    font-size: 0.78rem;
+    font-size: 0.68rem;
     font-weight: 800;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
@@ -11963,6 +11963,8 @@ textarea {
 .participants-title {
     margin: 0.2rem 0 0;
     font-size: clamp(1.75rem, 4vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
     line-height: 1.04;
 }
 
@@ -11994,6 +11996,7 @@ textarea {
     color: var(--text-primary);
     font-size: 1.35rem;
     font-weight: 800;
+    letter-spacing: -0.02em;
     line-height: 1;
 }
 
@@ -12354,9 +12357,7 @@ textarea {
 .lb-banner {
     border: 1px solid color-mix(in srgb, var(--info) 32%, var(--border));
     border-radius: var(--radius-md);
-    background:
-        linear-gradient(135deg, color-mix(in srgb, var(--info) 12%, transparent), transparent 58%),
-        color-mix(in srgb, var(--bg-surface) 90%, transparent);
+    background: var(--bg-surface);
     padding: 1rem;
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) minmax(8rem, auto) auto;
@@ -12365,17 +12366,11 @@ textarea {
 }
 
 .lb-banner--live {
-    border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
-    background:
-        linear-gradient(135deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent 58%),
-        color-mix(in srgb, var(--bg-surface) 90%, transparent);
+    border-color: color-mix(in srgb, var(--warning) 26%, var(--border));
 }
 
 .lb-banner--final {
-    border-color: color-mix(in srgb, var(--warning) 42%, var(--border));
-    background:
-        linear-gradient(135deg, color-mix(in srgb, var(--warning) 15%, transparent), transparent 58%),
-        color-mix(in srgb, var(--bg-surface) 90%, transparent);
+    border-color: color-mix(in srgb, var(--success) 26%, var(--border));
 }
 
 .lb-banner__icon {
@@ -12391,15 +12386,15 @@ textarea {
 }
 
 .lb-banner--live .lb-banner__icon {
-    border-color: color-mix(in srgb, var(--accent) 36%, var(--border));
-    background: color-mix(in srgb, var(--accent) 13%, transparent);
-    color: color-mix(in srgb, var(--accent) 82%, var(--text-primary));
+    border-color: color-mix(in srgb, var(--warning) 36%, var(--border));
+    background: color-mix(in srgb, var(--warning) 12%, transparent);
+    color: color-mix(in srgb, var(--warning) 82%, var(--text-primary));
 }
 
 .lb-banner--final .lb-banner__icon {
-    border-color: color-mix(in srgb, var(--warning) 42%, var(--border));
-    background: color-mix(in srgb, var(--warning) 14%, transparent);
-    color: color-mix(in srgb, var(--warning) 86%, var(--text-primary));
+    border-color: color-mix(in srgb, var(--medal-gold) 36%, var(--border));
+    background: color-mix(in srgb, var(--medal-gold) 10%, transparent);
+    color: var(--medal-gold);
 }
 
 .lb-live-dot {
@@ -12466,12 +12461,12 @@ textarea {
     display: block;
     height: 100%;
     border-radius: inherit;
-    background: linear-gradient(90deg, var(--info), var(--accent));
+    background: var(--warning);
 }
 
 .lb-banner--final .lb-banner__track i,
 .lb-scored--full .lb-scored__track i {
-    background: linear-gradient(90deg, var(--success), var(--warning));
+    background: var(--success);
 }
 
 .lb-banner__updated {
@@ -12534,9 +12529,7 @@ textarea {
 }
 
 .lb-row--p1 {
-    background:
-        linear-gradient(90deg, color-mix(in srgb, var(--warning) 12%, transparent), transparent 46%),
-        color-mix(in srgb, var(--bg-surface) 90%, transparent);
+    background: transparent;
 }
 
 .lb-rank {
@@ -12548,33 +12541,34 @@ textarea {
     min-width: 2rem;
     height: 2rem;
     border: 1px solid var(--border);
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--bg-surface-muted) 82%, transparent);
+    border-radius: 0.4rem;
+    background: var(--bg-surface-muted);
     color: var(--text-secondary);
     display: inline-grid;
     place-items: center;
     padding-inline: 0.38rem;
     font-size: 0.82rem;
+    font-family: var(--font-data);
     font-weight: 850;
     line-height: 1;
 }
 
 .lb-rank__badge--p1 {
-    border-color: color-mix(in srgb, var(--warning) 62%, var(--border));
-    background: color-mix(in srgb, var(--warning) 18%, transparent);
-    color: color-mix(in srgb, var(--warning) 88%, var(--text-primary));
+    border-color: color-mix(in srgb, var(--medal-gold) 45%, var(--border-strong));
+    background: var(--bg-surface-muted);
+    color: var(--medal-gold);
 }
 
 .lb-rank__badge--p2 {
-    border-color: color-mix(in srgb, var(--text-secondary) 56%, var(--border));
-    background: color-mix(in srgb, var(--text-secondary) 13%, transparent);
-    color: var(--text-primary);
+    border-color: color-mix(in srgb, var(--medal-silver) 40%, var(--border-strong));
+    background: var(--bg-surface-muted);
+    color: var(--medal-silver);
 }
 
 .lb-rank__badge--p3 {
-    border-color: color-mix(in srgb, #c87a42 62%, var(--border));
-    background: color-mix(in srgb, #c87a42 16%, transparent);
-    color: color-mix(in srgb, #d9915a 88%, var(--text-primary));
+    border-color: color-mix(in srgb, var(--medal-bronze) 42%, var(--border-strong));
+    background: var(--bg-surface-muted);
+    color: var(--medal-bronze);
 }
 
 .lb-user {
@@ -12587,14 +12581,18 @@ textarea {
 .lb-user__avatar {
     width: 2.36rem;
     height: 2.36rem;
-    border-radius: 999px;
-    color: #fff;
+    border: 1px solid var(--border-strong);
+    border-radius: 0.5rem;
+    background: var(--bg-surface-strong) !important;
+    color: var(--text-secondary);
     display: grid;
     place-items: center;
     flex: none;
-    font-size: 0.78rem;
+    font-family: var(--font-data);
+    font-size: 0.66rem;
     font-weight: 850;
-    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
+    letter-spacing: 0.04em;
+    box-shadow: none;
 }
 
 .lb-user__name {
@@ -12608,8 +12606,9 @@ textarea {
 
 .lb-points {
     color: var(--text-primary);
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 900;
+    letter-spacing: -0.02em;
 }
 
 .lb-points small {
@@ -12668,7 +12667,7 @@ textarea {
     justify-self: start;
     border: 1px solid color-mix(in srgb, var(--success) 36%, var(--border));
     border-radius: 999px;
-    background: color-mix(in srgb, var(--success) 12%, transparent);
+    background: transparent;
     color: color-mix(in srgb, var(--success) 82%, var(--text-primary));
     padding: 0.24rem 0.58rem;
     display: inline-flex;
