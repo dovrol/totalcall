@@ -5,5 +5,8 @@ namespace TotalCall.Client.Scoring;
 
 public interface IPredictionScoringService
 {
-    TotalScoreResult Score(Competition competition, PredictionSet predictionSet);
+    TotalScoreResult Score(
+        Competition competition,
+        PredictionSet predictionSet,
+        OfficialCompetitionResults officialResults);
 }

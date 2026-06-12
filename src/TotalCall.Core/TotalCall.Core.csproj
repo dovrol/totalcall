@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../TotalCall.Client/Domain/**/*.cs" LinkBase="Domain" />
+    <Compile Include="../TotalCall.Client/Scoring/**/*.cs" LinkBase="Scoring" />
+  </ItemGroup>
+
+</Project>

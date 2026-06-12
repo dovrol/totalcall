@@ -158,6 +158,28 @@ public sealed class SupabaseRestClient
         }
     }
 
+    public async Task DeleteAsync(
+        string schema,
+        string table,
+        string query,
+        CancellationToken ct)
+    {
+        var url = $"{_baseUrl}/rest/v1/{table}?{query}";
+        using var req = new HttpRequestMessage(HttpMethod.Delete, url);
+        ApplyAuth(req);
+        req.Headers.Add("Accept-Profile", schema);
+        req.Headers.Add("Content-Profile", schema);
+        req.Headers.Add("Prefer", "return=minimal");
+
+        using var res = await _http.SendAsync(req, ct);
+        if (!res.IsSuccessStatusCode)
+        {
+            var body = await res.Content.ReadAsStringAsync(ct);
+            throw new InvalidOperationException(
+                $"DELETE {schema}.{table} failed: {(int)res.StatusCode} {res.ReasonPhrase} — {body}");
+        }
+    }
+
     private void ApplyAuth(HttpRequestMessage req)
     {
         req.Headers.Add("apikey", _serviceKey);

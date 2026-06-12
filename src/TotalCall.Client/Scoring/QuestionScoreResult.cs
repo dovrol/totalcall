@@ -5,4 +5,5 @@ public sealed record QuestionScoreResult(
     string QuestionId,
     decimal Points,
     decimal MaxPoints,
+    string? CategoryId = null,
     string? Explanation = null);
