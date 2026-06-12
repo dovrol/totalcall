@@ -2,6 +2,44 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.10.0-beta.1",
+      "releasedAt": "2026-06-12",
+      "title": {
+        "pl": "Klasyfikacja i oficjalna punktacja",
+        "en": "Standings and official scoring"
+      },
+      "items": [
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Nowy ekran Klasyfikacja pokazuje wysłane typy przed rozpoczęciem punktacji, a po imporcie wyników przełącza się na publiczny ranking.",
+            "en": "The new Standings screen shows submitted picks before scoring starts, then switches to a public leaderboard after results are imported."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Oficjalne punkty są teraz liczone po stronie backendu na podstawie zatwierdzonych typów i snapshotów wyników — frontend nie wylicza oficjalnego rankingu samodzielnie.",
+            "en": "Official points are now calculated on the backend from submitted predictions and result snapshots — the frontend no longer calculates the official leaderboard itself."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Ranking obsługuje wyniki częściowe: liczone są tylko zakończone grupy, a postęp pokazuje ile grup zostało już uwzględnionych.",
+            "en": "The leaderboard supports partial results: only finalized groups are scored, and progress shows how many groups have already been counted."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Publiczna klasyfikacja pokazuje tylko bezpieczne dane: nazwę wyświetlaną, miejsce, punkty, postęp i czas przeliczenia. Typy, e-mail, ID konta oraz szkice pozostają prywatne.",
+            "en": "Public standings expose only safe data: display name, position, points, progress and calculation time. Picks, email, account ID and drafts stay private."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.9.2-beta.1",
       "releasedAt": "2026-06-09",
       "title": {
