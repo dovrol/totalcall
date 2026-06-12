@@ -10,4 +10,8 @@
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../../../src/TotalCall.Core/TotalCall.Core.csproj" />
+  </ItemGroup>
+
 </Project>

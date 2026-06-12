@@ -143,6 +143,8 @@ builder.Services.AddScoped(sp =>
 });
 
 builder.Services.AddScoped<WindowManager>();
+builder.Services.AddScoped<IQuestionScorer, AthleteRankingQuestionScorer>();
+builder.Services.AddScoped<IQuestionScorer, CategoryPodiumQuestionScorer>();
 builder.Services.AddScoped<IPredictionScoringService, PredictionScoringService>();
 
 var host = builder.Build();

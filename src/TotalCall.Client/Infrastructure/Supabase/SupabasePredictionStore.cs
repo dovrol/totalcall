@@ -150,6 +150,39 @@ public sealed class SupabasePredictionStore(
             .ToArray() ?? [];
     }
 
+    public async Task<IReadOnlyList<PublicCompetitionLeaderboardEntry>> GetLeaderboardAsync(
+        string competitionId,
+        CancellationToken cancellationToken = default)
+    {
+        EnsureConfigured();
+
+        using var request = BuildPublicRequest(
+            HttpMethod.Post,
+            "rest/v1/rpc/get_competition_leaderboard");
+        request.Content = JsonContent.Create(
+            new GetParticipantsBody { CompetitionId = competitionId },
+            options: SupabaseJsonOptions);
+
+        using var response = await httpClient!.SendAsync(request, cancellationToken);
+        await EnsureSuccessAsync(response, cancellationToken);
+
+        var rows = await response.Content.ReadFromJsonAsync<List<PublicCompetitionLeaderboardRow>>(
+            SupabaseJsonOptions,
+            cancellationToken);
+
+        return rows?
+            .Where(row => row.Position > 0)
+            .Select(row => new PublicCompetitionLeaderboardEntry(
+                row.Position,
+                NormalizeParticipantDisplayName(row.DisplayName, row.Position - 1),
+                row.TotalPoints,
+                row.ScoredGroupsCount,
+                row.TotalGroupsCount,
+                NormalizeScoreStatus(row.Status),
+                row.LastCalculatedAt))
+            .ToArray() ?? [];
+    }
+
     private async Task<AuthenticatedContext> GetAuthenticatedContextAsync(CancellationToken cancellationToken)
     {
         EnsureConfigured();
@@ -268,6 +301,23 @@ public sealed class SupabasePredictionStore(
         public string? Status { get; init; }
     }
 
+    private sealed record PublicCompetitionLeaderboardRow
+    {
+        public int Position { get; init; }
+
+        public string? DisplayName { get; init; }
+
+        public decimal TotalPoints { get; init; }
+
+        public int ScoredGroupsCount { get; init; }
+
+        public int TotalGroupsCount { get; init; }
+
+        public string? Status { get; init; }
+
+        public DateTimeOffset LastCalculatedAt { get; init; }
+    }
+
     private static string NormalizeSubmissionStatus(string? status, DateTimeOffset? submittedAt)
     {
         return IsSubmitted(status, submittedAt)
@@ -294,6 +344,13 @@ public sealed class SupabasePredictionStore(
         return SupabaseProfileStore.MissingDisplayNameFallback;
     }
 
+    private static string NormalizeScoreStatus(string? status)
+    {
+        return string.Equals(status, PublicCompetitionLeaderboardEntry.FinalStatus, StringComparison.OrdinalIgnoreCase)
+            ? PublicCompetitionLeaderboardEntry.FinalStatus
+            : PublicCompetitionLeaderboardEntry.PartialStatus;
+    }
+
     private static JsonElement SerializeSubmissionSnapshot(PredictionSet predictionSet)
     {
         return JsonSerializer.SerializeToElement(
@@ -309,3 +366,16 @@ public sealed record PublicPredictionParticipant(
     string DisplayName,
     DateTimeOffset SubmittedAt,
     string Status);
+
+public sealed record PublicCompetitionLeaderboardEntry(
+    int Position,
+    string DisplayName,
+    decimal TotalPoints,
+    int ScoredGroupsCount,
+    int TotalGroupsCount,
+    string Status,
+    DateTimeOffset LastCalculatedAt)
+{
+    public const string PartialStatus = "partial";
+    public const string FinalStatus = "final";
+}

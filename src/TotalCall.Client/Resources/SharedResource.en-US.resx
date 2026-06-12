@@ -170,7 +170,7 @@
   <data name="Predictions.SaveStatus.LocalDetail" xml:space="preserve"><value>Draft in this browser · {0}</value></data>
   <data name="Predictions.SaveStatus.CloudDetail" xml:space="preserve"><value>Last synchronized · {0}</value></data>
   <data name="Predictions.SaveStatus.FailedDetail" xml:space="preserve"><value>Draft saved locally · {0}</value></data>
-  <data name="Predictions.Submit.Participants" xml:space="preserve"><value>Participants</value></data>
+  <data name="Predictions.Submit.Participants" xml:space="preserve"><value>Standings</value></data>
   <data name="Predictions.Submit.LoginToSubmit" xml:space="preserve"><value>Sign in to submit</value></data>
   <data name="Predictions.Submit.SubmitTypes" xml:space="preserve"><value>Submit picks</value></data>
   <data name="Predictions.Submit.Submitting" xml:space="preserve"><value>Submitting…</value></data>
@@ -188,7 +188,7 @@
   <data name="Predictions.Submit.ConfirmDescription" xml:space="preserve"><value>You are submitting your picks for this competition. This is not gambling: no stakes, odds or money.</value></data>
   <data name="Predictions.Submit.Competition" xml:space="preserve"><value>Competition</value></data>
   <data name="Predictions.Submit.Deadline" xml:space="preserve"><value>until {0}</value></data>
-  <data name="Predictions.Submit.ConfirmParticipants" xml:space="preserve"><value>Your display name and submission time may appear on the participants list.</value></data>
+  <data name="Predictions.Submit.ConfirmParticipants" xml:space="preserve"><value>Your display name and submission time may appear in standings.</value></data>
   <data name="Predictions.Submit.ConfirmAnswersPrivate" xml:space="preserve"><value>Full answers are not public at this stage; others will not see your picks or email.</value></data>
   <data name="Predictions.Submit.ConfirmDraftsPrivate" xml:space="preserve"><value>Drafts remain private until you submit them.</value></data>
   <data name="Predictions.Submit.ConfirmAutoUpdate" xml:space="preserve"><value>After submitting, you can keep editing until the deadline; later changes update the submitted entry automatically.</value></data>
@@ -699,6 +699,42 @@
   <data name="Participants.Empty.Description" xml:space="preserve"><value>Be the first person on the list. Fill the prediction sheet, then submit from the action bar.</value></data>
   <data name="Participants.Error.Title" xml:space="preserve"><value>Could not load the list</value></data>
   <data name="Participants.Error.Description" xml:space="preserve"><value>There was a connection problem. Your submitted picks are safe; this only affects the participants preview.</value></data>
+  <data name="Standings.Title" xml:space="preserve"><value>Standings</value></data>
+  <data name="Standings.Subtitle" xml:space="preserve"><value>Submissions, live scoring and final ranking</value></data>
+  <data name="Standings.PrivacyNote" xml:space="preserve"><value>Public data includes only display name, position, points, progress and calculation time. Picks, email and account ID stay private.</value></data>
+  <data name="Standings.StepperAria" xml:space="preserve"><value>Standings stage</value></data>
+  <data name="Standings.Step.Submissions" xml:space="preserve"><value>Submissions</value></data>
+  <data name="Standings.Step.Live" xml:space="preserve"><value>Live scoring</value></data>
+  <data name="Standings.Step.Final" xml:space="preserve"><value>Final</value></data>
+  <data name="Standings.Eyebrow.Submissions" xml:space="preserve"><value>Submitted picks</value></data>
+  <data name="Standings.Eyebrow.Live" xml:space="preserve"><value>Live scoring</value></data>
+  <data name="Standings.Eyebrow.Final" xml:space="preserve"><value>Final results</value></data>
+  <data name="Standings.Stat.Ranked" xml:space="preserve"><value>ranked</value></data>
+  <data name="Standings.Stat.Progress" xml:space="preserve"><value>groups scored</value></data>
+  <data name="Standings.Stat.LastCalculated" xml:space="preserve"><value>last calculated</value></data>
+  <data name="Standings.Column.Position" xml:space="preserve"><value>Position</value></data>
+  <data name="Standings.Column.Points" xml:space="preserve"><value>Points</value></data>
+  <data name="Standings.Column.Scored" xml:space="preserve"><value>Scored</value></data>
+  <data name="Standings.SortLeaderboard" xml:space="preserve"><value>Sort: points descending</value></data>
+  <data name="Standings.ListAria" xml:space="preserve"><value>Public standings</value></data>
+  <data name="Standings.PointsShort" xml:space="preserve"><value>pts</value></data>
+  <data name="Standings.InProgress" xml:space="preserve"><value>in progress</value></data>
+  <data name="Standings.SubmittedLabel" xml:space="preserve"><value>submitted</value></data>
+  <data name="Standings.Empty.Title" xml:space="preserve"><value>No public submissions yet</value></data>
+  <data name="Standings.Empty.Description" xml:space="preserve"><value>Standings will show submitted picks. Drafts stay private and never appear here.</value></data>
+  <data name="Standings.Error.Title" xml:space="preserve"><value>Could not load standings</value></data>
+  <data name="Standings.Error.Description" xml:space="preserve"><value>There was a connection problem. Private picks are not fetched or exposed on this page.</value></data>
+  <data name="Standings.Banner.Submissions.Title" xml:space="preserve"><value>Awaiting results</value></data>
+  <data name="Standings.Banner.Submissions.Description" xml:space="preserve"><value>Only submitted entries are shown for now. Points will appear after the first final groups are imported.</value></data>
+  <data name="Standings.Banner.Live.Title" xml:space="preserve"><value>Scoring in progress</value></data>
+  <data name="Standings.Banner.Live.Description" xml:space="preserve"><value>{0} of {1} required groups have been scored. Pending groups do not count as zero.</value></data>
+  <data name="Standings.Banner.Final.Title" xml:space="preserve"><value>Final ranking</value></data>
+  <data name="Standings.Banner.Final.Description" xml:space="preserve"><value>All {0} required groups have been scored.</value></data>
+  <data name="Standings.Banner.UpdatedAt" xml:space="preserve"><value>Calculated {0}</value></data>
+  <data name="Standings.Banner.AwaitingResults" xml:space="preserve"><value>No calculation yet</value></data>
+  <data name="Standings.PreFootnote" xml:space="preserve"><value>Before results are imported, standings do not show points or zeroes for unscored groups.</value></data>
+  <data name="Standings.LiveFootnote" xml:space="preserve"><value>The ranking is built from backend score snapshots. Pending groups are skipped until their final result is available.</value></data>
+  <data name="Standings.FinalFootnote" xml:space="preserve"><value>Final standings use prepared score snapshots without public access to other users' picks.</value></data>
   <data name="Auth.SignIn" xml:space="preserve"><value>Sign in</value></data>
   <data name="Auth.SignOut" xml:space="preserve"><value>Sign out</value></data>
   <data name="Auth.Login.Title" xml:space="preserve"><value>Sign in</value></data>
@@ -731,7 +767,7 @@
   <data name="Profile.EmailPrivacyCopy" xml:space="preserve"><value>Your email is not public.</value></data>
   <data name="Profile.DisplayNameLabel" xml:space="preserve"><value>Nickname</value></data>
   <data name="Profile.DisplayNameHint" xml:space="preserve"><value>Maximum 32 characters: letters, numbers, spaces, dot, hyphen and underscore.</value></data>
-  <data name="Profile.VisibilityCopy" xml:space="preserve"><value>This nickname will be visible on the Participants list and future leaderboard.</value></data>
+  <data name="Profile.VisibilityCopy" xml:space="preserve"><value>This nickname will be visible in public standings.</value></data>
   <data name="Profile.Save" xml:space="preserve"><value>Save</value></data>
   <data name="Profile.Saving" xml:space="preserve"><value>Saving…</value></data>
   <data name="Profile.SaveSuccess" xml:space="preserve"><value>Profile saved.</value></data>

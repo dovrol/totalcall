@@ -413,7 +413,7 @@
             ? "Predictions.Submit.DraftLocal"
             : "Predictions.Submit.DraftPrivate"];
 
-    private string ParticipantsHref => $"competitions/{CompetitionSlug}/participants";
+    private string ParticipantsHref => $"competitions/{CompetitionSlug}/standings";
 
     private string LockLabel => PredictionLockAt?.ToLocalTime().ToString("d MMM, HH:mm", CultureInfo.CurrentCulture)
                                 ?? Localizer["Common.Tbd"];

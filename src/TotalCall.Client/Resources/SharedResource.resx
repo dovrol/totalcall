@@ -170,7 +170,7 @@
   <data name="Predictions.SaveStatus.LocalDetail" xml:space="preserve"><value>Draft w tej przeglądarce · {0}</value></data>
   <data name="Predictions.SaveStatus.CloudDetail" xml:space="preserve"><value>Ostatnia synchronizacja · {0}</value></data>
   <data name="Predictions.SaveStatus.FailedDetail" xml:space="preserve"><value>Draft zapisany lokalnie · {0}</value></data>
-  <data name="Predictions.Submit.Participants" xml:space="preserve"><value>Uczestnicy</value></data>
+  <data name="Predictions.Submit.Participants" xml:space="preserve"><value>Klasyfikacja</value></data>
   <data name="Predictions.Submit.LoginToSubmit" xml:space="preserve"><value>Zaloguj, aby zatwierdzić</value></data>
   <data name="Predictions.Submit.SubmitTypes" xml:space="preserve"><value>Zatwierdź typy</value></data>
   <data name="Predictions.Submit.Submitting" xml:space="preserve"><value>Zatwierdzanie…</value></data>
@@ -188,7 +188,7 @@
   <data name="Predictions.Submit.ConfirmDescription" xml:space="preserve"><value>Zatwierdzasz swoje typy dla tych zawodów. To nie jest zakład — bez stawek, kursów i pieniędzy.</value></data>
   <data name="Predictions.Submit.Competition" xml:space="preserve"><value>Zawody</value></data>
   <data name="Predictions.Submit.Deadline" xml:space="preserve"><value>do {0}</value></data>
-  <data name="Predictions.Submit.ConfirmParticipants" xml:space="preserve"><value>Twoja nazwa wyświetlana i czas zatwierdzenia mogą pojawić się na liście uczestników.</value></data>
+  <data name="Predictions.Submit.ConfirmParticipants" xml:space="preserve"><value>Twoja nazwa wyświetlana i czas zatwierdzenia mogą pojawić się w klasyfikacji.</value></data>
   <data name="Predictions.Submit.ConfirmAnswersPrivate" xml:space="preserve"><value>Pełne odpowiedzi nie są publiczne na tym etapie — inni nie zobaczą Twoich typów ani e-maila.</value></data>
   <data name="Predictions.Submit.ConfirmDraftsPrivate" xml:space="preserve"><value>Drafty pozostają prywatne, dopóki ich nie zatwierdzisz.</value></data>
   <data name="Predictions.Submit.ConfirmAutoUpdate" xml:space="preserve"><value>Po zatwierdzeniu możesz dalej edytować typy do deadline — kolejne zmiany automatycznie zaktualizują zgłoszenie.</value></data>
@@ -699,6 +699,42 @@
   <data name="Participants.Empty.Description" xml:space="preserve"><value>Bądź pierwszą osobą na liście. Wytypuj wyniki w arkuszu predykcji, a potem zatwierdź je z paska akcji.</value></data>
   <data name="Participants.Error.Title" xml:space="preserve"><value>Nie udało się wczytać listy</value></data>
   <data name="Participants.Error.Description" xml:space="preserve"><value>Wystąpił problem z połączeniem. Twoje zatwierdzone typy są bezpieczne — to dotyczy tylko podglądu listy uczestników.</value></data>
+  <data name="Standings.Title" xml:space="preserve"><value>Klasyfikacja</value></data>
+  <data name="Standings.Subtitle" xml:space="preserve"><value>Zgłoszenia, live scoring i końcowy ranking</value></data>
+  <data name="Standings.PrivacyNote" xml:space="preserve"><value>Publicznie pokazujemy tylko nick, pozycję, punkty, postęp i czas przeliczenia. Typy, email i identyfikator konta pozostają prywatne.</value></data>
+  <data name="Standings.StepperAria" xml:space="preserve"><value>Etap klasyfikacji</value></data>
+  <data name="Standings.Step.Submissions" xml:space="preserve"><value>Zgłoszenia</value></data>
+  <data name="Standings.Step.Live" xml:space="preserve"><value>Live scoring</value></data>
+  <data name="Standings.Step.Final" xml:space="preserve"><value>Final</value></data>
+  <data name="Standings.Eyebrow.Submissions" xml:space="preserve"><value>Zatwierdzone typy</value></data>
+  <data name="Standings.Eyebrow.Live" xml:space="preserve"><value>Scoring live</value></data>
+  <data name="Standings.Eyebrow.Final" xml:space="preserve"><value>Wyniki finalne</value></data>
+  <data name="Standings.Stat.Ranked" xml:space="preserve"><value>w rankingu</value></data>
+  <data name="Standings.Stat.Progress" xml:space="preserve"><value>grupy policzone</value></data>
+  <data name="Standings.Stat.LastCalculated" xml:space="preserve"><value>ostatnie liczenie</value></data>
+  <data name="Standings.Column.Position" xml:space="preserve"><value>Pozycja</value></data>
+  <data name="Standings.Column.Points" xml:space="preserve"><value>Punkty</value></data>
+  <data name="Standings.Column.Scored" xml:space="preserve"><value>Policzone</value></data>
+  <data name="Standings.SortLeaderboard" xml:space="preserve"><value>Sortuj: punkty malejąco</value></data>
+  <data name="Standings.ListAria" xml:space="preserve"><value>Publiczna klasyfikacja</value></data>
+  <data name="Standings.PointsShort" xml:space="preserve"><value>pkt</value></data>
+  <data name="Standings.InProgress" xml:space="preserve"><value>w toku</value></data>
+  <data name="Standings.SubmittedLabel" xml:space="preserve"><value>zgłoszenie</value></data>
+  <data name="Standings.Empty.Title" xml:space="preserve"><value>Brak publicznych zgłoszeń</value></data>
+  <data name="Standings.Empty.Description" xml:space="preserve"><value>Klasyfikacja pokaże zatwierdzone typy. Drafty pozostają prywatne i nie trafiają na tę listę.</value></data>
+  <data name="Standings.Error.Title" xml:space="preserve"><value>Nie udało się wczytać klasyfikacji</value></data>
+  <data name="Standings.Error.Description" xml:space="preserve"><value>Wystąpił problem z połączeniem. Prywatne typy nie są pobierane ani ujawniane na tej stronie.</value></data>
+  <data name="Standings.Banner.Submissions.Title" xml:space="preserve"><value>Czekamy na wyniki</value></data>
+  <data name="Standings.Banner.Submissions.Description" xml:space="preserve"><value>Na razie pokazujemy tylko zatwierdzone zgłoszenia. Punkty pojawią się po imporcie pierwszych finalnych grup.</value></data>
+  <data name="Standings.Banner.Live.Title" xml:space="preserve"><value>Scoring w toku</value></data>
+  <data name="Standings.Banner.Live.Description" xml:space="preserve"><value>Policzono {0} z {1} wymaganych grup. Grupy pending nie dają zerowych punktów.</value></data>
+  <data name="Standings.Banner.Final.Title" xml:space="preserve"><value>Ranking finalny</value></data>
+  <data name="Standings.Banner.Final.Description" xml:space="preserve"><value>Wszystkie {0} wymagane grupy są policzone.</value></data>
+  <data name="Standings.Banner.UpdatedAt" xml:space="preserve"><value>Przeliczono {0}</value></data>
+  <data name="Standings.Banner.AwaitingResults" xml:space="preserve"><value>Brak przeliczenia</value></data>
+  <data name="Standings.PreFootnote" xml:space="preserve"><value>Przed importem wyników ranking nie pokazuje punktów ani zer za niepoliczone grupy.</value></data>
+  <data name="Standings.LiveFootnote" xml:space="preserve"><value>Ranking powstaje z backendowych snapshotów. Grupy pending są pomijane do czasu finalnego wyniku.</value></data>
+  <data name="Standings.FinalFootnote" xml:space="preserve"><value>Finalny ranking korzysta z gotowych snapshotów score, bez publicznego dostępu do cudzych typów.</value></data>
   <data name="Auth.SignIn" xml:space="preserve"><value>Zaloguj</value></data>
   <data name="Auth.SignOut" xml:space="preserve"><value>Wyloguj</value></data>
   <data name="Auth.Login.Title" xml:space="preserve"><value>Zaloguj się</value></data>
@@ -731,7 +767,7 @@
   <data name="Profile.EmailPrivacyCopy" xml:space="preserve"><value>Twój email nie jest publiczny.</value></data>
   <data name="Profile.DisplayNameLabel" xml:space="preserve"><value>Nick</value></data>
   <data name="Profile.DisplayNameHint" xml:space="preserve"><value>Maksymalnie 32 znaki: litery, cyfry, spacje, kropka, myślnik i underscore.</value></data>
-  <data name="Profile.VisibilityCopy" xml:space="preserve"><value>Ten nick będzie widoczny na liście Uczestników i późniejszym leaderboardzie.</value></data>
+  <data name="Profile.VisibilityCopy" xml:space="preserve"><value>Ten nick będzie widoczny w publicznej klasyfikacji.</value></data>
   <data name="Profile.Save" xml:space="preserve"><value>Zapisz</value></data>
   <data name="Profile.Saving" xml:space="preserve"><value>Zapisywanie…</value></data>
   <data name="Profile.SaveSuccess" xml:space="preserve"><value>Profil zapisany.</value></data>

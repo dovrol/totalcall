@@ -7,4 +7,5 @@ public sealed record QuestionScoringContext(
     Competition Competition,
     PredictionGroup Group,
     PredictionQuestion Question,
-    PredictionAnswer Answer);
+    PredictionAnswer Answer,
+    OfficialResultGroup ResultGroup);
