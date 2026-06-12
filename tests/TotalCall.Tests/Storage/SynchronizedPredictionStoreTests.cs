@@ -672,6 +672,76 @@ public sealed class SynchronizedPredictionStoreTests
     }
 
     [Fact]
+    public async Task GetLeaderboardAsync_RequestsPublicSnapshotsAndMapsScoreStatus()
+    {
+        var calculatedAt = DateTimeOffset.Parse("2026-06-07T18:30:00Z");
+        var js = new FakeJsRuntime();
+        var auth = await CreateAuthAsync(js, authenticated: false);
+        var handler = new RecordingHandler((request, _) =>
+        {
+            Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Contains("rest/v1/rpc/get_competition_leaderboard", request.Uri);
+            Assert.Contains("\"p_competition_id\":\"worlds-2026\"", request.Body);
+            Assert.DoesNotContain("answers_json", request.Body);
+            Assert.DoesNotContain("user_id", request.Body);
+            Assert.DoesNotContain("email", request.Body);
+
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(
+                    $$"""
+                    [
+                      {
+                        "position":1,
+                        "display_name":"Kuba",
+                        "total_points":12.5,
+                        "scored_groups_count":2,
+                        "total_groups_count":4,
+                        "status":"partial",
+                        "last_calculated_at":"{{calculatedAt:O}}"
+                      },
+                      {
+                        "position":2,
+                        "display_name":" ",
+                        "total_points":8,
+                        "scored_groups_count":4,
+                        "total_groups_count":4,
+                        "status":"final",
+                        "last_calculated_at":"{{calculatedAt:O}}"
+                      }
+                    ]
+                    """,
+                    Encoding.UTF8,
+                    "application/json")
+            });
+        });
+        var http = new HttpClient(handler) { BaseAddress = new Uri("https://supabase.test/") };
+        var cloudStore = new SupabasePredictionStore(http, "publishable-key", auth);
+
+        var leaderboard = await cloudStore.GetLeaderboardAsync("worlds-2026");
+
+        Assert.Collection(
+            leaderboard,
+            first =>
+            {
+                Assert.Equal(1, first.Position);
+                Assert.Equal("Kuba", first.DisplayName);
+                Assert.Equal(12.5m, first.TotalPoints);
+                Assert.Equal(2, first.ScoredGroupsCount);
+                Assert.Equal(4, first.TotalGroupsCount);
+                Assert.Equal(PublicCompetitionLeaderboardEntry.PartialStatus, first.Status);
+                Assert.Equal(calculatedAt, first.LastCalculatedAt);
+            },
+            second =>
+            {
+                Assert.Equal(2, second.Position);
+                Assert.Equal("Lifter X", second.DisplayName);
+                Assert.Equal(8m, second.TotalPoints);
+                Assert.Equal(PublicCompetitionLeaderboardEntry.FinalStatus, second.Status);
+            });
+    }
+
+    [Fact]
     public async Task PredictionService_WhenAuthenticatedAndNoDraft_CreatesDraftOwnedByCurrentUser()
     {
         var js = new FakeJsRuntime();

@@ -1,37 +1,36 @@
 @page "/competitions/{Slug}/participants"
+@page "/competitions/{Slug}/standings"
 @using System.Globalization
 @using TotalCall.Client.Infrastructure.Supabase
 @inject CompetitionService CompetitionService
 @inject SupabasePredictionStore PredictionStore
 @inject IStringLocalizer<SharedResource> Localizer
 
-<PageTitle>@(competition is null ? Localizer["Participants.Title"] : $"{Localizer["Participants.Title"]} - {competition.Name}")</PageTitle>
+<PageTitle>@(competition is null ? Localizer["Standings.Title"] : $"{Localizer["Standings.Title"]} - {competition.Name}")</PageTitle>
 
 @if (isLoading)
 {
-    <div class="participants-page">
+    <div class="participants-page standings-page">
         <header class="participants-head">
             <div class="participants-skeleton participants-skeleton--title"></div>
             <div class="participants-note">
                 <span class="participants-skeleton participants-skeleton--note"></span>
             </div>
         </header>
-        <div class="participants-table" aria-busy="true">
-            <div class="participants-table__head">
-                <span>@Localizer["Participants.Column.Number"]</span>
+        <div class="participants-table standings-table" aria-busy="true">
+            <div class="participants-table__head standings-skeleton-head">
+                <span>@Localizer["Standings.Column.Position"]</span>
                 <span>@Localizer["Participants.Column.Participant"]</span>
-                <span>@Localizer["Participants.Column.SubmittedAt"]</span>
-                <span>@Localizer["Participants.Column.Status"]</span>
-                <span>@Localizer["Participants.Column.Scoring"]</span>
+                <span>@Localizer["Standings.Column.Points"]</span>
+                <span>@Localizer["Standings.Column.Scored"]</span>
             </div>
             @for (var index = 0; index < 7; index++)
             {
-                <div class="participants-skeleton-row">
+                <div class="participants-skeleton-row standings-skeleton-row">
                     <span class="participants-skeleton participants-skeleton--number"></span>
                     <span class="participants-skeleton participants-skeleton--person"></span>
-                    <span class="participants-skeleton participants-skeleton--time"></span>
-                    <span class="participants-skeleton participants-skeleton--badge"></span>
                     <span class="participants-skeleton participants-skeleton--score"></span>
+                    <span class="participants-skeleton participants-skeleton--badge"></span>
                 </div>
             }
         </div>
@@ -45,29 +44,29 @@ else if (competition is null)
 }
 else
 {
-    <div class="participants-page">
+    <div class="participants-page standings-page">
         <header class="participants-head">
             <div>
-                <div class="participants-eyebrow">@Localizer["Participants.Eyebrow"]</div>
+                <div class="participants-eyebrow">@competition.Name · @StageEyebrow</div>
                 <div class="participants-title-row">
                     <div>
                         <h1 class="participants-title">
-                            @Localizer["Participants.Title"]
-                            <small>@competition.Name</small>
+                            @Localizer["Standings.Title"]
+                            <small>@Localizer["Standings.Subtitle"]</small>
                         </h1>
                     </div>
                     <div class="participants-stats">
                         <div class="participants-stat">
-                            <span class="participants-stat__value participants-stat__value--accent">@participants.Count</span>
-                            <span class="participants-stat__label">@Localizer["Participants.Stat.Submitted"]</span>
+                            <span class="participants-stat__value participants-stat__value--accent">@VisibleCount</span>
+                            <span class="participants-stat__label">@VisibleCountLabel</span>
                         </div>
                         <div class="participants-stat">
-                            <span class="participants-stat__value">@DeadlineDistance</span>
-                            <span class="participants-stat__label">@Localizer["Participants.Stat.Deadline"]</span>
+                            <span class="participants-stat__value">@ProgressLabel</span>
+                            <span class="participants-stat__label">@Localizer["Standings.Stat.Progress"]</span>
                         </div>
                         <div class="participants-stat">
-                            <span class="participants-stat__value participants-stat__value--muted">@Localizer["Participants.Stat.AfterCompetitionValue"]</span>
-                            <span class="participants-stat__label">@Localizer["Participants.Stat.Scoring"]</span>
+                            <span class="@LastCalculatedStatClass">@LastCalculatedLabel</span>
+                            <span class="participants-stat__label">@Localizer["Standings.Stat.LastCalculated"]</span>
                         </div>
                     </div>
                 </div>
@@ -75,11 +74,25 @@ else
 
             <div class="participants-note">
                 <AppIcon Name="AppIconName.Info" Size="15" />
-                <span>@Localizer["Participants.PrivacyNote"]</span>
+                <span>@Localizer["Standings.PrivacyNote"]</span>
             </div>
         </header>
 
         <div class="participants-toolbar">
+            <div class="st-stepper" aria-label="@Localizer["Standings.StepperAria"]">
+                @for (var index = 0; index < StageSteps.Length; index++)
+                {
+                    if (index > 0)
+                    {
+                        <span class="st-step__line" aria-hidden="true"></span>
+                    }
+                    <span class="@StepClass(index)">
+                        <i class="st-step__dot" aria-hidden="true"></i>
+                        @StageSteps[index]
+                    </span>
+                }
+            </div>
+
             <label class="participants-search">
                 <AppIcon Name="AppIconName.Search" Size="15" />
                 <input
@@ -87,10 +100,12 @@ else
                     @oninput="OnSearchChanged"
                     placeholder="@Localizer["Participants.SearchPlaceholder"]" />
             </label>
+
             <span class="participants-sort">
                 <AppIcon Name="AppIconName.ArrowUpDown" Size="15" />
-                @Localizer["Participants.SortNewest"]
+                @SortLabel
             </span>
+
             <AppButton
                 Href="@PredictionsHref"
                 Variant="Secondary"
@@ -105,8 +120,8 @@ else
             <section class="participants-state participants-state--error" role="status">
                 <div class="participants-state__card">
                     <span class="participants-state__icon"><AppIcon Name="AppIconName.AlertCircle" Size="26" /></span>
-                    <h2>@Localizer["Participants.Error.Title"]</h2>
-                    <p>@Localizer["Participants.Error.Description"]</p>
+                    <h2>@Localizer["Standings.Error.Title"]</h2>
+                    <p>@Localizer["Standings.Error.Description"]</p>
                     <AppButton Variant="Secondary" OnClick="@ReloadAsync">
                         <AppIcon Name="AppIconName.RefreshCw" Size="15" />
                         <span>@Localizer["Common.TryAgain"]</span>
@@ -114,13 +129,13 @@ else
                 </div>
             </section>
         }
-        else if (FilteredParticipants.Count == 0)
+        else if (!HasRows)
         {
             <section class="participants-state" role="status">
                 <div class="participants-state__card">
                     <span class="participants-state__icon"><AppIcon Name="AppIconName.Users" Size="26" /></span>
-                    <h2>@Localizer["Participants.Empty.Title"]</h2>
-                    <p>@Localizer["Participants.Empty.Description"]</p>
+                    <h2>@Localizer["Standings.Empty.Title"]</h2>
+                    <p>@Localizer["Standings.Empty.Description"]</p>
                     <AppButton Href="@PredictionsHref" Variant="Primary">
                         <AppIcon Name="AppIconName.PencilLine" Size="16" />
                         <span>@Localizer["Participants.GoToPredictions"]</span>
@@ -130,44 +145,111 @@ else
         }
         else
         {
-            <section class="participants-table" aria-label="@Localizer["Participants.ListAria"]">
-                <div class="participants-table__head">
-                    <span>@Localizer["Participants.Column.Number"]</span>
-                    <span>@Localizer["Participants.Column.Participant"]</span>
-                    <span>@Localizer["Participants.Column.SubmittedAt"]</span>
-                    <span>@Localizer["Participants.Column.Status"]</span>
-                    <span>@Localizer["Participants.Column.Scoring"]</span>
-                </div>
-
-                @foreach (var row in FilteredParticipants.Select((participant, index) => new { participant, index }))
+            <section class="@BannerClass" role="status" aria-live="polite">
+                <span class="lb-banner__icon" aria-hidden="true">
+                    @if (stage == StandingsStage.Live)
+                    {
+                        <span class="lb-live-dot"></span>
+                    }
+                    <AppIcon Name="@BannerIcon" Size="22" />
+                </span>
+                <span class="lb-banner__copy">
+                    <strong>@BannerTitle</strong>
+                    <span>@BannerDescription</span>
+                </span>
+                <span class="lb-banner__progress" aria-label="@Localizer["Standings.Stat.Progress"]">
+                    <strong>@ProgressLabel</strong>
+                    <span class="lb-banner__track" aria-hidden="true">
+                        <i style="@ProgressStyle(ScoredGroupsCount, TotalGroupsCount)"></i>
+                    </span>
+                </span>
+                @if (LastCalculatedAt is { } calculatedAt)
                 {
-                    <article class="participant-row">
-                        <div class="participant-row__number">@(row.index + 1)</div>
-                        <div class="participant-row__person">
-                            <span class="participant-row__avatar" style="@AvatarStyle(row.index)">
-                                @Initials(row.participant.DisplayName)
-                            </span>
-                            <div class="participant-row__name">@row.participant.DisplayName</div>
-                        </div>
-                        <div class="participant-row__time">
-                            @FormatDateTime(row.participant.SubmittedAt)
-                            <small>@FormatDate(row.participant.SubmittedAt)</small>
-                        </div>
-                        <div>
-                            <AppBadge Variant="Success">
-                                <AppIcon Name="AppIconName.Check" Size="13" />
-                                @Localizer["Participants.Status.Submitted"]
-                            </AppBadge>
-                        </div>
-                        <div class="participant-row__score">
-                            <span class="participants-score-soon">
-                                <AppIcon Name="AppIconName.Trophy" Size="12" />
-                                @Localizer["Participants.ScoringSoon"]
-                            </span>
-                        </div>
-                    </article>
+                    <time class="lb-banner__updated" datetime="@calculatedAt.ToString("O", CultureInfo.InvariantCulture)">
+                        @Localizer["Standings.Banner.UpdatedAt", FormatShortDateTime(calculatedAt)]
+                    </time>
+                }
+                else
+                {
+                    <span class="lb-banner__updated">@Localizer["Standings.Banner.AwaitingResults"]</span>
                 }
             </section>
+
+            @if (HasLeaderboard)
+            {
+                <section class="lb-table standings-rank-table" aria-label="@Localizer["Standings.ListAria"]">
+                    <div class="lb-head">
+                        <span>@Localizer["Standings.Column.Position"]</span>
+                        <span>@Localizer["Participants.Column.Participant"]</span>
+                        <span>@Localizer["Standings.Column.Points"]</span>
+                        <span>@Localizer["Standings.Column.Scored"]</span>
+                    </div>
+
+                    @foreach (var row in FilteredLeaderboard.Select((entry, index) => new { entry, index }))
+                    {
+                        <article class="@LeaderboardRowClass(row.entry)">
+                            <span class="lb-rank">
+                                <span class="@RankBadgeClass(row.entry.Position)">@row.entry.Position</span>
+                            </span>
+                            <div class="lb-user">
+                                <span class="lb-user__avatar" style="@AvatarStyle(row.index)">
+                                    @Initials(row.entry.DisplayName)
+                                </span>
+                                <span class="lb-user__name">@row.entry.DisplayName</span>
+                            </div>
+                            <span class="lb-points">@FormatPoints(row.entry.TotalPoints)<small>@Localizer["Standings.PointsShort"]</small></span>
+                            <span class="@ScoredClass(row.entry)">
+                                <span class="lb-scored__track" aria-hidden="true">
+                                    <i style="@ProgressStyle(row.entry.ScoredGroupsCount, row.entry.TotalGroupsCount)"></i>
+                                </span>
+                                <strong>@row.entry.ScoredGroupsCount/@row.entry.TotalGroupsCount</strong>
+                                @if (row.entry.Status != PublicCompetitionLeaderboardEntry.FinalStatus)
+                                {
+                                    <small>@Localizer["Standings.InProgress"]</small>
+                                }
+                            </span>
+                        </article>
+                    }
+                </section>
+                <p class="lb-footnote">
+                    <AppIcon Name="AppIconName.Info" Size="14" />
+                    <span>@LeaderboardFootnote</span>
+                </p>
+            }
+            else
+            {
+                <section class="lb-table standings-submissions-table" aria-label="@Localizer["Participants.ListAria"]">
+                    <div class="st-sub-head">
+                        <span>@Localizer["Participants.Column.Participant"]</span>
+                        <span>@Localizer["Participants.Column.SubmittedAt"]</span>
+                        <span>@Localizer["Participants.Column.Status"]</span>
+                    </div>
+
+                    @foreach (var row in FilteredParticipants.Select((participant, index) => new { participant, index }))
+                    {
+                        <article class="st-sub-row">
+                            <div class="lb-user">
+                                <span class="lb-user__avatar" style="@AvatarStyle(row.index)">
+                                    @Initials(row.participant.DisplayName)
+                                </span>
+                                <span class="lb-user__name">@row.participant.DisplayName</span>
+                            </div>
+                            <span class="st-sub-when">
+                                @FormatDateTime(row.participant.SubmittedAt)
+                                <small>@Localizer["Standings.SubmittedLabel"]</small>
+                            </span>
+                            <span class="st-status">
+                                <AppIcon Name="AppIconName.Check" Size="12" />
+                                @Localizer["Participants.Status.Submitted"]
+                            </span>
+                        </article>
+                    }
+                </section>
+                <p class="lb-footnote">
+                    <AppIcon Name="AppIconName.Info" Size="14" />
+                    <span>@Localizer["Standings.PreFootnote"]</span>
+                </p>
+            }
         }
     </div>
 }
@@ -176,13 +258,36 @@ else
     [Parameter]
     public string Slug { get; set; } = string.Empty;
 
+    private static readonly string[] StageStepsKeys =
+    [
+        "Standings.Step.Submissions",
+        "Standings.Step.Live",
+        "Standings.Step.Final"
+    ];
+
     private Competition? competition;
     private IReadOnlyList<PublicPredictionParticipant> participants = [];
+    private IReadOnlyList<PublicCompetitionLeaderboardEntry> leaderboard = [];
+    private StandingsStage stage = StandingsStage.Submissions;
     private bool isLoading = true;
     private string? loadError;
     private string search = string.Empty;
 
     private string PredictionsHref => $"competitions/{Slug}/predictions";
+
+    private bool HasLeaderboard => leaderboard.Count > 0;
+
+    private bool HasRows => HasLeaderboard ? leaderboard.Count > 0 : participants.Count > 0;
+
+    private string[] StageSteps => StageStepsKeys.Select(key => Localizer[key].Value).ToArray();
+
+    private int StageIndex => stage switch
+    {
+        StandingsStage.Submissions => 0,
+        StandingsStage.Live => 1,
+        StandingsStage.Final => 2,
+        _ => 0
+    };
 
     private IReadOnlyList<PublicPredictionParticipant> FilteredParticipants
     {
@@ -200,26 +305,96 @@ else
         }
     }
 
-    private string DeadlineDistance
+    private IReadOnlyList<PublicCompetitionLeaderboardEntry> FilteredLeaderboard
     {
         get
         {
-            if (competition?.PredictionLockAt is not { } lockAt)
+            if (string.IsNullOrWhiteSpace(search))
             {
-                return Localizer["Common.Tbd"];
+                return leaderboard;
             }
 
-            var diff = lockAt - DateTimeOffset.UtcNow;
-            if (diff <= TimeSpan.Zero)
-            {
-                return Localizer["Scoreboard.Locked"];
-            }
-
-            return diff.TotalDays >= 1
-                ? $"{(int)diff.TotalDays} {Localizer["Scoreboard.Clock.DaysShort"]}"
-                : $"{Math.Max(1, (int)Math.Ceiling(diff.TotalHours))} {Localizer["Scoreboard.Clock.HoursShort"]}";
+            var value = search.Trim();
+            return leaderboard
+                .Where(entry => entry.DisplayName.Contains(value, StringComparison.OrdinalIgnoreCase))
+                .ToArray();
         }
     }
+
+    private int VisibleCount => HasLeaderboard ? FilteredLeaderboard.Count : FilteredParticipants.Count;
+
+    private string VisibleCountLabel => HasLeaderboard
+        ? Localizer["Standings.Stat.Ranked"]
+        : Localizer["Participants.Stat.Submitted"];
+
+    private int ScoredGroupsCount => HasLeaderboard
+        ? leaderboard.Max(entry => entry.ScoredGroupsCount)
+        : 0;
+
+    private int TotalGroupsCount => HasLeaderboard
+        ? leaderboard.Max(entry => entry.TotalGroupsCount)
+        : RequiredGroupsCount;
+
+    private int RequiredGroupsCount => competition?.PredictionGroups
+        .SelectMany(group => group.Questions.Select(question => new { group, question }))
+        .Count(item => item.group.Required && item.question.Required) ?? 0;
+
+    private DateTimeOffset? LastCalculatedAt => HasLeaderboard
+        ? leaderboard.Max(entry => entry.LastCalculatedAt)
+        : null;
+
+    private string ProgressLabel => $"{ScoredGroupsCount}/{Math.Max(TotalGroupsCount, 0)}";
+
+    private string LastCalculatedLabel => LastCalculatedAt is { } calculatedAt
+        ? FormatShortDateTime(calculatedAt)
+        : Localizer["Common.Tbd"];
+
+    private string LastCalculatedStatClass => LastCalculatedAt is null
+        ? "participants-stat__value participants-stat__value--muted"
+        : "participants-stat__value";
+
+    private string StageEyebrow => stage switch
+    {
+        StandingsStage.Live => Localizer["Standings.Eyebrow.Live"],
+        StandingsStage.Final => Localizer["Standings.Eyebrow.Final"],
+        _ => Localizer["Standings.Eyebrow.Submissions"]
+    };
+
+    private string SortLabel => HasLeaderboard
+        ? Localizer["Standings.SortLeaderboard"]
+        : Localizer["Participants.SortNewest"];
+
+    private string LeaderboardFootnote => stage == StandingsStage.Final
+        ? Localizer["Standings.FinalFootnote"]
+        : Localizer["Standings.LiveFootnote"];
+
+    private string BannerClass => stage switch
+    {
+        StandingsStage.Live => "lb-banner lb-banner--live",
+        StandingsStage.Final => "lb-banner lb-banner--final",
+        _ => "lb-banner"
+    };
+
+    private AppIconName BannerIcon => stage switch
+    {
+        StandingsStage.Live => AppIconName.BarChart,
+        StandingsStage.Final => AppIconName.Trophy,
+        _ => AppIconName.Clock
+    };
+
+    private string BannerTitle => stage switch
+    {
+        StandingsStage.Live => Localizer["Standings.Banner.Live.Title"],
+        StandingsStage.Final => Localizer["Standings.Banner.Final.Title"],
+        _ => Localizer["Standings.Banner.Submissions.Title"]
+    };
+
+    private string BannerDescription => stage switch
+    {
+        StandingsStage.Live => Localizer["Standings.Banner.Live.Description", ScoredGroupsCount, TotalGroupsCount],
+        StandingsStage.Final => Localizer["Standings.Banner.Final.Description", TotalGroupsCount],
+        _ => Localizer["Standings.Banner.Submissions.Description"]
+    };
 
     protected override async Task OnParametersSetAsync()
     {
@@ -234,13 +409,26 @@ else
         try
         {
             competition = await CompetitionService.GetCompetitionAsync(Slug);
-            participants = competition is null
-                ? []
-                : await PredictionStore.GetParticipantsAsync(competition.Id);
+            if (competition is null)
+            {
+                participants = [];
+                leaderboard = [];
+                return;
+            }
+
+            var participantsTask = PredictionStore.GetParticipantsAsync(competition.Id);
+            var leaderboardTask = PredictionStore.GetLeaderboardAsync(competition.Id);
+            await Task.WhenAll(participantsTask, leaderboardTask);
+
+            participants = await participantsTask;
+            leaderboard = await leaderboardTask;
+            stage = ResolveStage(leaderboard);
         }
         catch (Exception ex)
         {
             participants = [];
+            leaderboard = [];
+            stage = StandingsStage.Submissions;
             loadError = ex.Message;
         }
         finally
@@ -259,10 +447,45 @@ else
         search = args.Value?.ToString() ?? string.Empty;
     }
 
+    private string StepClass(int index)
+    {
+        var classes = new List<string> { "st-step" };
+        if (index == 1)
+        {
+            classes.Add("st-step--live");
+        }
+        if (index == 2)
+        {
+            classes.Add("st-step--final");
+        }
+        if (index < StageIndex)
+        {
+            classes.Add("st-step--done");
+        }
+        if (index == StageIndex)
+        {
+            classes.Add("st-step--current");
+        }
+
+        return string.Join(" ", classes);
+    }
+
+    private static StandingsStage ResolveStage(IReadOnlyList<PublicCompetitionLeaderboardEntry> rows)
+    {
+        if (rows.Count == 0)
+        {
+            return StandingsStage.Submissions;
+        }
+
+        return rows.All(entry => entry.Status == PublicCompetitionLeaderboardEntry.FinalStatus)
+            ? StandingsStage.Final
+            : StandingsStage.Live;
+    }
+
     private static string Initials(string value)
     {
         var parts = value
-            .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Split([' ', '-'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .Take(2)
             .Select(part => char.ToUpperInvariant(part[0]))
             .ToArray();
@@ -285,13 +508,60 @@ else
         return $"background:{gradients[index % gradients.Length]}";
     }
 
+    private static string LeaderboardRowClass(PublicCompetitionLeaderboardEntry entry)
+    {
+        return entry.Position == 1
+            ? "lb-row lb-row--p1"
+            : "lb-row";
+    }
+
+    private static string RankBadgeClass(int position)
+    {
+        return position switch
+        {
+            1 => "lb-rank__badge lb-rank__badge--p1",
+            2 => "lb-rank__badge lb-rank__badge--p2",
+            3 => "lb-rank__badge lb-rank__badge--p3",
+            _ => "lb-rank__badge"
+        };
+    }
+
+    private static string ScoredClass(PublicCompetitionLeaderboardEntry entry)
+    {
+        return entry.Status == PublicCompetitionLeaderboardEntry.FinalStatus
+            ? "lb-scored lb-scored--full"
+            : "lb-scored";
+    }
+
+    private static string ProgressStyle(int scored, int total)
+    {
+        var percent = total <= 0
+            ? 0
+            : Math.Clamp((decimal)scored / total * 100m, 0m, 100m);
+        return $"width:{percent:0.##}%";
+    }
+
+    private static string FormatPoints(decimal value)
+    {
+        return value % 1m == 0m
+            ? value.ToString("0", CultureInfo.CurrentCulture)
+            : value.ToString("0.##", CultureInfo.CurrentCulture);
+    }
+
     private static string FormatDateTime(DateTimeOffset value)
     {
         return value.ToLocalTime().ToString("d MMM, HH:mm", CultureInfo.CurrentCulture);
     }
 
-    private static string FormatDate(DateTimeOffset value)
+    private static string FormatShortDateTime(DateTimeOffset value)
     {
-        return value.ToLocalTime().ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
+        return value.ToLocalTime().ToString("d MMM, HH:mm", CultureInfo.CurrentCulture);
+    }
+
+    private enum StandingsStage
+    {
+        Submissions,
+        Live,
+        Final
     }
 }
