@@ -2,6 +2,51 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.11.0-beta.1",
+      "releasedAt": "2026-06-13",
+      "title": {
+        "pl": "Aktualizacje rosteru i pierwsze wyniki Worlds 2026",
+        "en": "Roster updates and first Worlds 2026 results"
+      },
+      "items": [
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Zawody obsługują teraz wycofanych zawodników bez usuwania ich z konfiguracji: nowe typy ich pomijają, ale istniejące wybory pozostają widoczne.",
+            "en": "Competitions now support withdrawn athletes without removing them from the config: new picks skip them, while existing selections remain visible."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Nowy panel Aktualizacje zawodów pokazuje historię zmian rosteru, deadline'u i wyników, z osobnym ostrzeżeniem jeśli zmiana dotyczy Twoich typów.",
+            "en": "The new Competition Updates panel shows roster, deadline and results history, with a separate warning when an update affects your picks."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Wycofany zawodnik w wysłanym typie punktuje jak nietrafiony slot: 0 punktów za tego zawodnika, ale pozostałe trafienia w grupie nadal liczą się normalnie.",
+            "en": "A withdrawn athlete left in a submitted pick scores like a missed slot: 0 points for that athlete, while the remaining hits in the group still count normally."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Sync zawodów może teraz razem z konfiguracją importować przygotowane pliki oficjalnych wyników, dzięki czemu częściowy ranking można publikować szybciej.",
+            "en": "Competition sync can now import prepared official result files alongside the config, making it faster to publish partial standings."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Worlds 2026 dostało najnowszy roster update z nominacji Goodlift oraz pierwsze przygotowane wyniki dla kategorii Women 47 kg i Men 59 kg.",
+            "en": "Worlds 2026 now includes the latest Goodlift nomination roster update and the first prepared results for Women 47 kg and Men 59 kg."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.10.0-beta.1",
       "releasedAt": "2026-06-12",
       "title": {
