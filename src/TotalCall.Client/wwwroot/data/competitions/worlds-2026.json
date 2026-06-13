@@ -12,7 +12,46 @@
   "predictionOpenAt": "2026-05-01T09:00:00Z",
   "predictionLockAt": "2026-06-13T06:00:00Z",
   "status": "upcoming",
-  "configVersion": "2026.3",
+  "configVersion": "2026.4",
+  "updates": [
+    {
+      "id": "worlds-2026-roster-update-2026-06-13-goodlift-nominations",
+      "type": "roster_update",
+      "occurred_at": "2026-06-13T21:15:00Z",
+      "title": "Roster update: 27 athletes have withdrawn.",
+      "body": "Latest Goodlift nominations no longer list these athletes. They remain visible in existing picks, are not selectable for new picks, and score 0 if left in submitted picks.",
+      "source": "Goodlift nominations, 2026-06-13",
+      "athlete_ids": [
+        "sboui-fares",
+        "ibanez-pawathon-bernardo",
+        "aldirsi-mohammed",
+        "naoussi-nembot-ano",
+        "fidan-hussein",
+        "abousinan-mohammed",
+        "elhamali-mohamed",
+        "jimenez-santos",
+        "naoussi-ezelgbo-darling-williams",
+        "gimorri-giacomo",
+        "saed-awnullah",
+        "figueroa-contreras-jose",
+        "castillo-jose",
+        "techap-fongang",
+        "nagem-mohamed",
+        "hedlund-gustav",
+        "balangwe-bakinien",
+        "salim-khalleefah",
+        "zerai-elyes",
+        "alsabri-taha",
+        "al-jundi-nour",
+        "tavares-cicera",
+        "khwang-hayley",
+        "bisol-bruna",
+        "lawrence-amanda",
+        "lahtinen-mira",
+        "rodrigues-ana"
+      ]
+    }
+  ],
   "athleteData": {
     "defaultSource": "openipf",
     "availableSources": [
@@ -228,7 +267,12 @@
           "source": "openpowerlifting",
           "name": "Nour Al Jundi"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "wedlock-sze-yee-venezia",
@@ -1935,7 +1979,12 @@
           "source": "openpowerlifting",
           "name": "Cícera Tavares"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "mabidikama-acima",
@@ -2125,7 +2174,12 @@
           "source": "openpowerlifting",
           "name": "Hayley Khwang"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "kairaityte-dainora",
@@ -2277,7 +2331,12 @@
           "source": "openpowerlifting",
           "name": "Bruna Bisol"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "peyraud-clara",
@@ -2695,7 +2754,12 @@
           "source": "openpowerlifting",
           "name": "Amanda Lawrence #1"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "tongotea-karlina",
@@ -2904,7 +2968,12 @@
           "source": "openpowerlifting",
           "name": "Mira Lahtinen"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "letting-regitze",
@@ -3151,7 +3220,12 @@
           "source": "openpowerlifting",
           "name": "Ana Rodrigues"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "szymkowiak-magdalena",
@@ -3512,7 +3586,12 @@
           "source": "openpowerlifting",
           "name": "Mohamed Elhamali"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "nyarko-kwaku",
@@ -3854,7 +3933,12 @@
           "source": "openpowerlifting",
           "name": "Santos Jimenez"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "satake-yusuke",
@@ -4071,7 +4155,12 @@
           "source": "openpowerlifting",
           "name": "Williams Naoussi Ezelgbo Darling"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "lin-ching-lun",
@@ -4261,7 +4350,12 @@
           "source": "openpowerlifting",
           "name": "Giacomo Gimorri"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "konstantinou-christos",
@@ -4413,7 +4507,12 @@
           "source": "openpowerlifting",
           "name": "Awnullah Saed"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "strachan-john",
@@ -4774,7 +4873,12 @@
           "source": "openpowerlifting",
           "name": "Jose Matias Figueroa Contreras"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "kuerzi-patrick",
@@ -4812,7 +4916,12 @@
           "source": "openpowerlifting",
           "name": "José Castillo #1"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "el-moukallif-naim",
@@ -4869,7 +4978,12 @@
           "source": "openpowerlifting",
           "name": "Fongang Techap"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "ishikawa-aoi",
@@ -4907,7 +5021,12 @@
           "source": "openpowerlifting",
           "name": "Mohamed Nagem"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "hoffmann-daniel",
@@ -5306,7 +5425,12 @@
           "source": "openpowerlifting",
           "name": "Gustav Hedlund"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "nouari-aimene",
@@ -5401,7 +5525,12 @@
           "source": "openpowerlifting",
           "name": "Julien Balangwe Bakinien"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "van-bezooijen-richard",
@@ -5515,7 +5644,12 @@
           "source": "openpowerlifting",
           "name": "Khalleefah Salim"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "zerai-elyes",
@@ -5534,7 +5668,12 @@
           "source": "openpowerlifting",
           "name": "Elyes Zerai"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "gortz-guilherme",
@@ -5694,7 +5833,12 @@
           "source": "openpowerlifting",
           "name": "Taha Essabri"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "klimka-airidas",
@@ -5778,7 +5922,7 @@
       "sex": "male",
       "countryName": "Ukraine",
       "weightCategoryId": "men-105",
-      "seedTotalKg": 940.5,
+      "seedTotalKg": 950,
       "countryCode": "UA",
       "externalAthleteRefs": [
         {
@@ -5865,7 +6009,12 @@
           "source": "openpowerlifting",
           "name": "Fares Sboui"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "massiah-nathaniel",
@@ -6093,7 +6242,12 @@
           "source": "openpowerlifting",
           "name": "Bernardo Ibañez Pawahton"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "henry-matthew",
@@ -6188,7 +6342,12 @@
           "source": "openpowerlifting",
           "name": "Mohammed Aldirsi"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "norkus-martynas",
@@ -6671,7 +6830,12 @@
           "source": "openpowerlifting",
           "name": "Ano Naoussi Nembot"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "juzups-maris",
@@ -6994,7 +7158,12 @@
           "source": "openpowerlifting",
           "name": "Hussein Fidan"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "reinmuth-tony",
@@ -7108,7 +7277,12 @@
           "source": "openpowerlifting",
           "name": "Mohammed Abousinan"
         }
-      ]
+      ],
+      "status": "withdrawn",
+      "withdrawn_at": "2026-06-13T21:15:00Z",
+      "withdrawal_reason": "Not listed in latest Goodlift nominations",
+      "withdrawal_source": "Goodlift nominations, 2026-06-13",
+      "updated_at": "2026-06-13T21:15:00Z"
     },
     {
       "id": "wu-yi-chiu",

@@ -6,16 +6,19 @@ SYNC_PROJECT="${ROOT_DIR}/tools/sync/TotalCall.Sync/TotalCall.Sync.csproj"
 
 COMPETITION_JSON="${1:-src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json}"
 SOURCE="${2:-both}"
+RESULTS="${3:-auto}"
 TRIGGERED_BY="${TRIGGERED_BY:-local-script}"
 DOTNET_CONFIGURATION="${DOTNET_CONFIGURATION:-Release}"
 
 if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
   cat <<'EOF'
 Usage:
-  ./scripts/sync-supabase.sh [competition-json] [both|openipf|openpowerlifting]
+  ./scripts/sync-supabase.sh [competition-json] [both|openipf|openpowerlifting] [auto|none|results-json]
 
 Syncs the competition definition (metadata + versioned config) and then the
 athlete history for the requested source(s) into Supabase.
+If matching official results JSON files exist under tools/sync/data/results,
+they are imported after athlete history by default.
 
 Environment:
   SUPABASE_URL
@@ -29,6 +32,8 @@ fi
 if [[ "$COMPETITION_JSON" != /* ]]; then
   COMPETITION_JSON="${ROOT_DIR}/${COMPETITION_JSON}"
 fi
+
+COMPETITION_ID="$(basename "$COMPETITION_JSON" .json)"
 
 if [[ ! -f "$COMPETITION_JSON" ]]; then
   echo "[error] Competition JSON not found: $COMPETITION_JSON" >&2
@@ -74,3 +79,46 @@ for DATA_SOURCE in "${SOURCES[@]}"; do
     --source "$DATA_SOURCE" \
     --triggered-by "$TRIGGERED_BY"
 done
+
+import_results() {
+  local results_json="$1"
+
+  dotnet run \
+    --configuration "$DOTNET_CONFIGURATION" \
+    --project "$SYNC_PROJECT" \
+    -- \
+    results \
+    --competition-id "$COMPETITION_ID" \
+    --results-json "$results_json" \
+    --triggered-by "$TRIGGERED_BY"
+}
+
+case "$RESULTS" in
+  none)
+    ;;
+  auto)
+    mapfile -t RESULTS_FILES < <(
+      find "${ROOT_DIR}/tools/sync/data/results" \
+        -maxdepth 1 \
+        -type f \
+        -name "${COMPETITION_ID}-*.json" \
+        2>/dev/null | sort
+    )
+
+    for RESULTS_JSON in "${RESULTS_FILES[@]}"; do
+      import_results "$RESULTS_JSON"
+    done
+    ;;
+  *)
+    if [[ "$RESULTS" != /* ]]; then
+      RESULTS="${ROOT_DIR}/${RESULTS}"
+    fi
+
+    if [[ ! -f "$RESULTS" ]]; then
+      echo "[error] Results JSON not found: $RESULTS" >&2
+      exit 1
+    fi
+
+    import_results "$RESULTS"
+    ;;
+esac

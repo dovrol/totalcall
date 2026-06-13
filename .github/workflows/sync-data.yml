@@ -1,4 +1,4 @@
-name: Sync competition + OpenIPF / OpenPowerlifting data
+name: Sync competition, results + OpenIPF / OpenPowerlifting data
 
 on:
   workflow_dispatch:
@@ -19,6 +19,14 @@ on:
           - both
           - openipf
           - openpowerlifting
+      results:
+        description: "Official results import"
+        required: true
+        default: "auto"
+        type: choice
+        options:
+          - auto
+          - none
   schedule:
     # Mondays 03:17 UTC
     - cron: "17 3 * * 1"
@@ -53,6 +61,7 @@ jobs:
           set -euo pipefail
           COMPETITION="${{ github.event.inputs.competition || '' }}"
           SOURCE="${{ github.event.inputs.source || '' }}"
+          RESULTS="${{ github.event.inputs.results || 'auto' }}"
 
           if [ -z "$COMPETITION" ] && [ -z "$SOURCE" ]; then
             ./scripts/sync-supabase.sh
@@ -69,4 +78,4 @@ jobs:
               ;;
           esac
 
-          ./scripts/sync-supabase.sh "$COMPETITION_JSON" "$SOURCE"
+          ./scripts/sync-supabase.sh "$COMPETITION_JSON" "$SOURCE" "$RESULTS"

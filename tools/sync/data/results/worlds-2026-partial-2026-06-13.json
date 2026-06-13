@@ -1,0 +1,71 @@
+{
+  "competitionId": "worlds-2026",
+  "status": "partial",
+  "source": "IPF 2026 Classic Worlds results PDFs, 2026-06-13",
+  "groups": [
+    {
+      "groupId": "category-top5",
+      "questionId": "top5-women-47",
+      "categoryId": "women-47",
+      "status": "final",
+      "placements": [
+        {
+          "position": 1,
+          "athleteId": "chapon-tiffany",
+          "squatKg": 170.5,
+          "benchKg": 105.0,
+          "deadliftKg": 177.5,
+          "totalKg": 453.0
+        },
+        {
+          "position": 2,
+          "athleteId": "picher-plante-amelie",
+          "squatKg": 155.0,
+          "benchKg": 90.0,
+          "deadliftKg": 187.5,
+          "totalKg": 432.5
+        },
+        {
+          "position": 3,
+          "athleteId": "le-leanne",
+          "squatKg": 145.0,
+          "benchKg": 87.5,
+          "deadliftKg": 195.0,
+          "totalKg": 427.5
+        }
+      ]
+    },
+    {
+      "groupId": "category-top5",
+      "questionId": "top5-men-59",
+      "categoryId": "men-59",
+      "status": "final",
+      "placements": [
+        {
+          "position": 1,
+          "athleteId": "campano-diaz-ivan",
+          "squatKg": 220.0,
+          "benchKg": 150.0,
+          "deadliftKg": 290.0,
+          "totalKg": 660.0
+        },
+        {
+          "position": 2,
+          "athleteId": "slabic-michael",
+          "squatKg": 230.0,
+          "benchKg": 125.0,
+          "deadliftKg": 303.0,
+          "totalKg": 658.0
+        },
+        {
+          "position": 3,
+          "athleteId": "garcia-antoine",
+          "squatKg": 235.0,
+          "benchKg": 140.0,
+          "deadliftKg": 257.5,
+          "totalKg": 632.5
+        }
+      ]
+    }
+  ]
+}
