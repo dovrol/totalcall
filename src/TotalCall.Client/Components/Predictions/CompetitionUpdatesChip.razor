@@ -1,0 +1,69 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+@if (Items.Count > 0)
+{
+    <button
+        type="button"
+        class="@CssClass"
+        title="@Localizer["CompetitionUpdates.Open"]"
+        aria-label="@AriaLabel"
+        @onclick="OnClick">
+        @if (HasLiveUpdate)
+        {
+            <i class="competition-updates-chip__live" aria-hidden="true"></i>
+        }
+        else
+        {
+            <AppIcon Name="AppIconName.Clock" Size="@IconSize" />
+        }
+        <span>@Localizer["CompetitionUpdates.Chip"]</span>
+        <strong>@CountLabel</strong>
+    </button>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter]
+    public IReadOnlyList<PredictionAnswer> Answers { get; set; } = [];
+
+    [Parameter]
+    public bool Compact { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> Clicked { get; set; }
+
+    private IReadOnlyList<CompetitionTimelineItem> Items =>
+        CompetitionTimelineService.GetTimeline(Competition);
+
+    private IReadOnlyList<string> AffectedNames =>
+        RosterUpdateService.GetAffectedAthleteNames(Competition, Answers);
+
+    private bool HasAffectedPicks => AffectedNames.Count > 0;
+
+    private bool HasLiveUpdate => Items.Any(item =>
+        string.Equals(CompetitionUpdateTypes.Normalize(item.Type), CompetitionUpdateTypes.ScoringUpdate, StringComparison.OrdinalIgnoreCase));
+
+    private int IconSize => Compact ? 13 : 14;
+
+    private string CountLabel => HasAffectedPicks
+        ? AffectedNames.Count.ToString()
+        : Items.Count.ToString();
+
+    private string AriaLabel => HasAffectedPicks
+        ? Localizer["CompetitionUpdates.OpenAffected", AffectedNames.Count]
+        : Localizer["CompetitionUpdates.OpenWithCount", Items.Count];
+
+    private string CssClass => string.Join(
+        " ",
+        "competition-updates-chip",
+        HasAffectedPicks ? "competition-updates-chip--alert" : null,
+        HasLiveUpdate ? "competition-updates-chip--live" : null,
+        Compact ? "competition-updates-chip--compact" : null);
+
+    private Task OnClick(MouseEventArgs args)
+    {
+        return Clicked.InvokeAsync(args);
+    }
+}

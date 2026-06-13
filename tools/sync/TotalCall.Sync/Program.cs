@@ -270,7 +270,8 @@ static void PrintHelp()
           scenario      Prepare local-only development states. Requires --local.
             <name>                               all-states, open-with-submissions,
                                                  locked-no-results, partial-results,
-                                                 final-results or empty.
+                                                 final-results, empty, roster-update
+                                                 or roster-update-locked.
             --local                              Required guard; scenarios only run
                                                  against loopback Supabase URLs.
             [--base-competition-json <path>]     Source config to clone. Default:

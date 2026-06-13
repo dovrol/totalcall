@@ -8,9 +8,25 @@
         <span class="ms-catbtn__nm">@ActiveCategoryName <AppIcon Name="AppIconName.ChevronRight" Size="12" Class="ms-catbtn__ch" /></span>
         <span class="ms-catbtn__pos">@Localizer["Predictions.TopN.MobileCatPos", CategoryIndex, TotalCategories, CompletedCategories]</span>
     </button>
-    <button type="button" class="ms-bar__ic" aria-label="@Localizer["Predictions.TopN.QuickJump"]" @onclick="() => SwitcherRequested.InvokeAsync()">
-        <AppIcon Name="AppIconName.Search" Size="16" />
-    </button>
+    @if (HasCompetitionUpdates)
+    {
+        <button type="button" class="@UpdatesButtonClass" aria-label="@UpdatesAriaLabel" @onclick="OpenUpdates">
+            @if (HasAffectedPicks)
+            {
+                <span class="ms-updates-count">@AffectedNames.Count</span>
+            }
+            else
+            {
+                <AppIcon Name="AppIconName.Clock" Size="16" />
+            }
+        </button>
+    }
+    else
+    {
+        <button type="button" class="ms-bar__ic" aria-label="@Localizer["Predictions.TopN.QuickJump"]" @onclick="() => SwitcherRequested.InvokeAsync()">
+            <AppIcon Name="AppIconName.Search" Size="16" />
+        </button>
+    }
 </div>
 
 <div class="ms-sub">
@@ -56,6 +72,12 @@
     public DateTimeOffset? CompetitionEndDate { get; set; }
 
     [Parameter]
+    public Competition? Competition { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<PredictionAnswer> Answers { get; set; } = [];
+
+    [Parameter]
     public string? StatusLine { get; set; }
 
     [Parameter]
@@ -63,6 +85,36 @@
 
     [Parameter]
     public EventCallback SwitcherRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> UpdatesRequested { get; set; }
+
+    private IReadOnlyList<CompetitionTimelineItem> Updates => Competition is null
+        ? []
+        : CompetitionTimelineService.GetTimeline(Competition);
+
+    private IReadOnlyList<string> AffectedNames => Competition is null
+        ? []
+        : RosterUpdateService.GetAffectedAthleteNames(Competition, Answers);
+
+    private bool HasCompetitionUpdates => Updates.Count > 0;
+
+    private bool HasAffectedPicks => AffectedNames.Count > 0;
+
+    private string UpdatesButtonClass => string.Join(
+        " ",
+        "ms-bar__ic",
+        "ms-bar__ic--updates",
+        HasAffectedPicks ? "ms-bar__ic--updates-alert" : null);
+
+    private string UpdatesAriaLabel => HasAffectedPicks
+        ? Localizer["CompetitionUpdates.OpenAffected", AffectedNames.Count]
+        : Localizer["CompetitionUpdates.OpenWithCount", Updates.Count];
+
+    private Task OpenUpdates(MouseEventArgs args)
+    {
+        return UpdatesRequested.InvokeAsync(args);
+    }
 
     private string StatusPillClass => string.Join(
         " ",

@@ -146,6 +146,10 @@
                                         }
                                         @(slot.IsAutoSeeded ? Localizer["Predictions.TopN.ByNomination"] : Localizer["Predictions.TopN.YourPick"])
                                     </span>
+                                    @if (slot.IsWithdrawn)
+                                    {
+                                        <span class="topn-withdrawn-badge">@Localizer["Predictions.Roster.Withdrawn"]</span>
+                                    }
                                     @if (CanEditPredictions)
                                     {
                                         <button
@@ -292,6 +296,14 @@
                         </div>
                     </div>
                 </div>
+
+                @if (slot.IsWithdrawn && slot.IsScored)
+                {
+                    <div class="topn-row-warning" role="alert">
+                        <AppIcon Name="AppIconName.AlertCircle" Size="14" />
+                        <span>@Localizer[CanEditPredictions ? "Predictions.Roster.PickWarningEditable" : "Predictions.Roster.PickWarningLocked"]</span>
+                    </div>
+                }
             </div>
 
             @if (slot.Position == ScoredCount)
@@ -424,6 +436,7 @@
         slot.IsScored ? "topn-rowgroup--scored" : null,
         slot.Position > PreviewCount ? "topn-rowgroup--tail" : null,
         !slot.IsAutoSeeded ? "topn-rowgroup--authored" : null,
+        slot.IsWithdrawn ? "topn-rowgroup--withdrawn" : null,
         FillPopPosition == slot.Position ? "topn-rowgroup--popover-open" : null,
         slot.IsContextActive ? "topn-rowgroup--context" : null);
 
@@ -431,6 +444,7 @@
         " ",
         "topn-row",
         slot.Position == 1 ? "topn-row--lead" : null,
+        slot.IsWithdrawn ? "topn-row--withdrawn" : null,
         slot.IsContextActive ? "topn-row--context" : null,
         IsCompareSelected(slot) ? "topn-row--compare-selected" : null,
         DraggingPosition == slot.Position ? "topn-row--dragging" : null,

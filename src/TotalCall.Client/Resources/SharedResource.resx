@@ -103,8 +103,10 @@
   <data name="Common.Save" xml:space="preserve"><value>Zapisz</value></data>
   <data name="Common.Cancel" xml:space="preserve"><value>Anuluj</value></data>
   <data name="Common.TryAgain" xml:space="preserve"><value>Spróbuj ponownie</value></data>
+  <data name="Common.Close" xml:space="preserve"><value>Zamknij</value></data>
   <data name="Common.Tbd" xml:space="preserve"><value>Do ustalenia</value></data>
   <data name="Common.Today" xml:space="preserve"><value>dzisiaj</value></data>
+  <data name="Common.Yesterday" xml:space="preserve"><value>wczoraj</value></data>
   <data name="Common.Tomorrow" xml:space="preserve"><value>jutro</value></data>
   <data name="Common.Required" xml:space="preserve"><value>Wymagane</value></data>
   <data name="Common.Optional" xml:space="preserve"><value>Opcjonalne</value></data>
@@ -119,6 +121,60 @@
   <data name="Common.Gold" xml:space="preserve"><value>Złoto</value></data>
   <data name="Common.Silver" xml:space="preserve"><value>Srebro</value></data>
   <data name="Common.Bronze" xml:space="preserve"><value>Brąz</value></data>
+  <data name="CompetitionTimeline.Title" xml:space="preserve"><value>Historia zawodów</value></data>
+  <data name="CompetitionTimeline.Summary.Latest" xml:space="preserve"><value>Ostatnio: {0}</value></data>
+  <data name="CompetitionTimeline.Count" xml:space="preserve"><value>Wpisy: {0}</value></data>
+  <data name="CompetitionTimeline.NoDate" xml:space="preserve"><value>Data niepodana</value></data>
+  <data name="CompetitionTimeline.Athletes" xml:space="preserve"><value>Zawodnicy</value></data>
+  <data name="CompetitionTimeline.Type.General" xml:space="preserve"><value>Update</value></data>
+  <data name="CompetitionTimeline.Type.RosterUpdate" xml:space="preserve"><value>Roster</value></data>
+  <data name="CompetitionTimeline.Type.DeadlineChange" xml:space="preserve"><value>Deadline</value></data>
+  <data name="CompetitionTimeline.Type.ResultsUpdate" xml:space="preserve"><value>Wyniki</value></data>
+  <data name="CompetitionTimeline.Type.ScoringUpdate" xml:space="preserve"><value>Punktacja</value></data>
+  <data name="CompetitionTimeline.Default.General" xml:space="preserve"><value>Aktualizacja zawodów</value></data>
+  <data name="CompetitionTimeline.Default.RosterSingle" xml:space="preserve"><value>Roster update: {0} wycofał(a) się.</value></data>
+  <data name="CompetitionTimeline.Default.RosterMultiple" xml:space="preserve"><value>Roster update: {0} zawodników wycofało się.</value></data>
+  <data name="CompetitionTimeline.Default.DeadlineChange" xml:space="preserve"><value>Zmieniono deadline typów</value></data>
+  <data name="CompetitionTimeline.Default.ResultsUpdate" xml:space="preserve"><value>Aktualizacja wyników</value></data>
+  <data name="CompetitionTimeline.Default.ScoringUpdate" xml:space="preserve"><value>Aktualizacja punktacji</value></data>
+  <data name="CompetitionTimeline.RosterBodySingle" xml:space="preserve"><value>Ten zawodnik nie jest dostępny dla nowych typów.</value></data>
+  <data name="CompetitionTimeline.RosterBodyMultiple" xml:space="preserve"><value>Ci zawodnicy nie są dostępni dla nowych typów.</value></data>
+  <data name="CompetitionTimeline.Source.Config" xml:space="preserve"><value>competition config</value></data>
+  <data name="CompetitionUpdates.Chip" xml:space="preserve"><value>Aktualizacje</value></data>
+  <data name="CompetitionUpdates.Open" xml:space="preserve"><value>Otwórz aktualizacje zawodów</value></data>
+  <data name="CompetitionUpdates.OpenWithCount" xml:space="preserve"><value>Otwórz aktualizacje zawodów. Liczba wpisów: {0}.</value></data>
+  <data name="CompetitionUpdates.OpenAffected" xml:space="preserve"><value>Otwórz aktualizacje zawodów. {0} wycofanych zawodników dotyczy Twoich typów.</value></data>
+  <data name="CompetitionUpdates.Title" xml:space="preserve"><value>Aktualizacje zawodów</value></data>
+  <data name="CompetitionUpdates.Subtitle" xml:space="preserve"><value>Roster, deadline i wyniki — w kolejności zdarzeń</value></data>
+  <data name="CompetitionUpdates.Filters" xml:space="preserve"><value>Filtry aktualizacji</value></data>
+  <data name="CompetitionUpdates.Filter.All" xml:space="preserve"><value>Wszystkie</value></data>
+  <data name="CompetitionUpdates.Filter.Action" xml:space="preserve"><value>Wymaga akcji</value></data>
+  <data name="CompetitionUpdates.Filter.Results" xml:space="preserve"><value>Wyniki</value></data>
+  <data name="CompetitionUpdates.Badge.Info" xml:space="preserve"><value>Bez akcji</value></data>
+  <data name="CompetitionUpdates.Badge.Important" xml:space="preserve"><value>Ważne</value></data>
+  <data name="CompetitionUpdates.Badge.Action" xml:space="preserve"><value>Wymaga akcji</value></data>
+  <data name="CompetitionUpdates.Type.General" xml:space="preserve"><value>Komunikat</value></data>
+  <data name="CompetitionUpdates.Type.RosterUpdate" xml:space="preserve"><value>Zmiana w rosterze</value></data>
+  <data name="CompetitionUpdates.Type.DeadlineChange" xml:space="preserve"><value>Typy zablokowane</value></data>
+  <data name="CompetitionUpdates.Type.ResultsUpdate" xml:space="preserve"><value>Zaimportowano wyniki</value></data>
+  <data name="CompetitionUpdates.Type.ScoringUpdate" xml:space="preserve"><value>Ranking na żywo</value></data>
+  <data name="CompetitionUpdates.Default.General" xml:space="preserve"><value>Aktualizacja zawodów</value></data>
+  <data name="CompetitionUpdates.Default.RosterSingle" xml:space="preserve"><value>Roster update: {0} wycofał(a) się.</value></data>
+  <data name="CompetitionUpdates.Default.RosterMultiple" xml:space="preserve"><value>Roster update: {0} zawodników wycofało się.</value></data>
+  <data name="CompetitionUpdates.Default.DeadlineChange" xml:space="preserve"><value>Zmieniono deadline typów</value></data>
+  <data name="CompetitionUpdates.Default.ResultsUpdate" xml:space="preserve"><value>Aktualizacja wyników</value></data>
+  <data name="CompetitionUpdates.Default.ScoringUpdate" xml:space="preserve"><value>Aktualizacja punktacji</value></data>
+  <data name="CompetitionUpdates.RosterBodySingle" xml:space="preserve"><value>Ten zawodnik nie jest dostępny dla nowych typów.</value></data>
+  <data name="CompetitionUpdates.RosterBodyMultiple" xml:space="preserve"><value>Ci zawodnicy nie są dostępni dla nowych typów.</value></data>
+  <data name="CompetitionUpdates.Source.Config" xml:space="preserve"><value>competition config</value></data>
+  <data name="CompetitionUpdates.NoDate" xml:space="preserve"><value>Data niepodana</value></data>
+  <data name="CompetitionUpdates.Pinned.Title" xml:space="preserve"><value>Dotyczy Twoich typów</value></data>
+  <data name="CompetitionUpdates.Pinned.Editable" xml:space="preserve"><value>Masz wycofanego zawodnika w typach: {0}. Popraw typ przed deadlinem, bo bez zmiany ten slot zaliczy 0 pkt.</value></data>
+  <data name="CompetitionUpdates.Pinned.Locked" xml:space="preserve"><value>Typy są zablokowane. Wycofani zawodnicy w Twoich typach ({0}) zaliczą 0 pkt; edycja nie jest już możliwa.</value></data>
+  <data name="CompetitionUpdates.Pinned.FixPick" xml:space="preserve"><value>Popraw typ</value></data>
+  <data name="CompetitionUpdates.Empty.Title" xml:space="preserve"><value>Brak aktualizacji</value></data>
+  <data name="CompetitionUpdates.Empty.Body" xml:space="preserve"><value>Ważne zmiany w rosterze, deadline i wynikach pojawią się tutaj, gdy tylko nadejdą.</value></data>
+  <data name="CompetitionUpdates.Privacy" xml:space="preserve"><value>Aktualizacje są publiczne i dotyczą całych zawodów. Ostrzeżenia o Twoich typach widzisz tylko Ty — nie pokazujemy cudzych typów, e-maili ani draftów.</value></data>
   <data name="Status.Upcoming" xml:space="preserve"><value>Otwarte</value></data>
   <data name="Status.Locked" xml:space="preserve"><value>Zablokowane</value></data>
   <data name="Status.Completed" xml:space="preserve"><value>Zakończone</value></data>
@@ -485,6 +541,20 @@
   <data name="Predictions.CompleteSectionToScore" xml:space="preserve"><value>Uzupełnij tę kategorię, aby zdobyć punkty.</value></data>
   <data name="Predictions.Category" xml:space="preserve"><value>Kategoria</value></data>
   <data name="Predictions.Pick" xml:space="preserve"><value>Wybierz</value></data>
+  <data name="Predictions.Roster.Withdrawn" xml:space="preserve"><value>Withdrawn</value></data>
+  <data name="Predictions.Roster.AthleteWithdrawn" xml:space="preserve"><value>Ten zawodnik wycofał się ze startu.</value></data>
+  <data name="Predictions.Roster.PickWarningEditable" xml:space="preserve"><value>Wybrałeś wycofanego zawodnika. Zmień ten typ przed deadline.</value></data>
+  <data name="Predictions.Roster.PickWarningLocked" xml:space="preserve"><value>Ten typ jest zablokowany. Wycofany zawodnik daje 0 punktów.</value></data>
+  <data name="Predictions.Roster.Banner.Single" xml:space="preserve"><value>Roster update: {0} wycofał(a) się.</value></data>
+  <data name="Predictions.Roster.Banner.Multiple" xml:space="preserve"><value>Roster update: {0} zawodników wycofało się.</value></data>
+  <data name="Predictions.Roster.Banner.AffectedTitle" xml:space="preserve"><value>Twoje typy zawierają wycofanego zawodnika.</value></data>
+  <data name="Predictions.Roster.Banner.AffectedEditable" xml:space="preserve"><value>{0}: zmień typ przed deadline.</value></data>
+  <data name="Predictions.Roster.Banner.AffectedLocked" xml:space="preserve"><value>{0}: typy są zablokowane, a wycofany zawodnik daje 0 punktów.</value></data>
+  <data name="Predictions.Roster.Banner.NeutralSingle" xml:space="preserve"><value>Ten zawodnik nie jest dostępny dla nowych typów.</value></data>
+  <data name="Predictions.Roster.Banner.NeutralMultiple" xml:space="preserve"><value>{0} nie są dostępni dla nowych typów.</value></data>
+  <data name="Predictions.Roster.SubmitWarningTitle" xml:space="preserve"><value>Wybrano wycofanego zawodnika</value></data>
+  <data name="Predictions.Roster.SubmitWarningBody" xml:space="preserve"><value>Wycofani zawodnicy w typach: {0}. Możesz zatwierdzić, ale te sloty dadzą 0 punktów, jeśli zostaną bez zmian.</value></data>
+  <data name="Predictions.Roster.Rules" xml:space="preserve"><value>Jeśli zawodnik wycofa się przed deadline, możesz zmienić typy do momentu blokady. Jeśli wycofany zawodnik zostanie w zatwierdzonych typach, ten slot daje 0 punktów. Typy nie są automatycznie przesuwane ani zastępowane.</value></data>
   <data name="Review.PageTitle" xml:space="preserve"><value>Podgląd typów</value></data>
   <data name="Review.Loading" xml:space="preserve"><value>Ładowanie podglądu...</value></data>
   <data name="Review.NotFoundTitle" xml:space="preserve"><value>Nie znaleziono podglądu</value></data>

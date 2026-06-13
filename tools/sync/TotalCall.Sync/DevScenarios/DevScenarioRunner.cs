@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using TotalCall.Client.Domain.Athletes;
 using TotalCall.Client.Domain.Competitions;
 using TotalCall.Client.Domain.Predictions;
 using TotalCall.Sync.Results;
@@ -42,12 +43,14 @@ public sealed class DevScenarioRunner
     private static readonly DateTimeOffset PastLockAt = DateTimeOffset.Parse("2020-06-13T06:00:00Z");
     private static readonly DateTimeOffset PastEndAt = DateTimeOffset.Parse("2020-06-21T14:00:00Z");
     private static readonly DateTimeOffset SubmittedAt = DateTimeOffset.Parse("2026-01-15T12:00:00Z");
+    private static readonly DateTimeOffset RosterUpdatedAt = DateTimeOffset.Parse("2026-06-12T12:00:00Z");
 
     private static readonly DevScenarioUser[] ScenarioUsers =
     [
-        new("dev-alice@totalcall.local", "Dev Alice"),
-        new("dev-bruno@totalcall.local", "Dev Bruno"),
-        new("dev-casey@totalcall.local", "Dev Casey")
+        new("dev-alice@totalcall.local", "Dev Alice Affected"),
+        new("dev-bruno@totalcall.local", "Dev Bruno Unaffected"),
+        new("dev-casey@totalcall.local", "Dev Casey Generated"),
+        new("dev-dana@totalcall.local", "Dev Dana Fresh")
     ];
 
     private static readonly DevCompetitionScenario[] Scenarios =
@@ -117,7 +120,32 @@ public sealed class DevScenarioRunner
             FutureLockAt.AddDays(4),
             FutureEndAt.AddDays(4),
             SubmittedUsersCount: 0,
-            ResultsMode.None)
+            ResultsMode.None,
+            HasRosterWithdrawal: false),
+        new(
+            "dev-roster-update",
+            ["roster-update"],
+            "Dev Roster Update",
+            CompetitionStatus.Upcoming,
+            FutureOpenAt,
+            FutureStartAt.AddDays(5),
+            FutureLockAt.AddDays(5),
+            FutureEndAt.AddDays(5),
+            SubmittedUsersCount: 3,
+            ResultsMode.None,
+            HasRosterWithdrawal: true),
+        new(
+            "dev-roster-update-locked",
+            ["roster-update-locked"],
+            "Dev Roster Update Locked",
+            CompetitionStatus.Locked,
+            PastOpenAt,
+            PastStartAt,
+            PastLockAt,
+            PastEndAt,
+            SubmittedUsersCount: 3,
+            new ResultsMode("final", null),
+            HasRosterWithdrawal: true)
     ];
 
     public async Task<int> RunAsync(DevScenarioOptions opts, CancellationToken ct)
@@ -171,6 +199,7 @@ public sealed class DevScenarioRunner
                 await SeedSubmittedPredictionsAsync(
                     supabase,
                     competition,
+                    scenario,
                     users.Take(scenario.SubmittedUsersCount).ToArray(),
                     ct);
             }
@@ -203,6 +232,8 @@ public sealed class DevScenarioRunner
               partial-results
               final-results
               empty
+              roster-update
+              roster-update-locked
 
             Direct competition aliases:
               dev-open
@@ -211,6 +242,8 @@ public sealed class DevScenarioRunner
               dev-partial-results
               dev-final-results
               dev-empty
+              dev-roster-update
+              dev-roster-update-locked
             """);
     }
 
@@ -323,7 +356,7 @@ public sealed class DevScenarioRunner
         Competition baseCompetition,
         DevCompetitionScenario scenario)
     {
-        return baseCompetition with
+        var competition = baseCompetition with
         {
             Id = scenario.CompetitionId,
             Slug = scenario.CompetitionId,
@@ -336,6 +369,231 @@ public sealed class DevScenarioRunner
             PredictionLockAt = scenario.PredictionLockAt,
             ConfigVersion = DevConfigVersion
         };
+
+        if (scenario.HasRosterWithdrawal)
+        {
+            competition = MarkScoreableAthletesWithdrawn(competition);
+        }
+
+        return AddScenarioUpdates(competition, scenario);
+    }
+
+    private static Competition MarkScoreableAthletesWithdrawn(Competition competition)
+    {
+        var withdrawalSeeds = GetRosterWithdrawalSeeds(competition);
+        if (withdrawalSeeds.Count == 0)
+        {
+            return competition;
+        }
+
+        var seedsByAthleteId = withdrawalSeeds.ToDictionary(seed => seed.AthleteId, StringComparer.OrdinalIgnoreCase);
+        return competition with
+        {
+            Athletes = competition.Athletes
+                .Select(athlete => seedsByAthleteId.TryGetValue(athlete.Id, out var seed)
+                    ? athlete with
+                    {
+                        Status = AthleteStatus.Withdrawn,
+                        WithdrawnAt = seed.UseWithdrawnAt ? seed.OccurredAt : null,
+                        WithdrawalReason = seed.Reason,
+                        WithdrawalSource = seed.Source,
+                        UpdatedAt = seed.OccurredAt
+                    }
+                    : athlete)
+                .ToArray()
+        };
+    }
+
+    private static IReadOnlyList<RosterWithdrawalSeed> GetRosterWithdrawalSeeds(Competition competition)
+    {
+        var scoreableQuestions = ScoreableQuestions(competition).ToArray();
+        var specs = new[]
+        {
+            new RosterWithdrawalSpec(
+                QuestionIndex: 0,
+                AthleteIndex: 0,
+                ManualUpdateKey: "primary",
+                OccurredAt: RosterUpdatedAt,
+                Reason: "Dev weigh-in roster update",
+                Source: "dev federation bulletin",
+                UseWithdrawnAt: true),
+            new RosterWithdrawalSpec(
+                QuestionIndex: 1,
+                AthleteIndex: 1,
+                ManualUpdateKey: "primary",
+                OccurredAt: RosterUpdatedAt,
+                Reason: "Dev weigh-in roster update",
+                Source: "dev federation bulletin",
+                UseWithdrawnAt: true),
+            new RosterWithdrawalSpec(
+                QuestionIndex: 6,
+                AthleteIndex: 0,
+                ManualUpdateKey: "primary",
+                OccurredAt: RosterUpdatedAt,
+                Reason: "Dev weigh-in roster update",
+                Source: "dev federation bulletin",
+                UseWithdrawnAt: true),
+            new RosterWithdrawalSpec(
+                QuestionIndex: 2,
+                AthleteIndex: 3,
+                ManualUpdateKey: null,
+                OccurredAt: RosterUpdatedAt.AddHours(2),
+                Reason: "Dev metadata-only update: no manual timeline entry covers this athlete.",
+                Source: "dev athlete metadata",
+                UseWithdrawnAt: false),
+            new RosterWithdrawalSpec(
+                QuestionIndex: 8,
+                AthleteIndex: 2,
+                ManualUpdateKey: null,
+                OccurredAt: RosterUpdatedAt.AddHours(3),
+                Reason: "Dev late travel issue",
+                Source: "dev federation bulletin",
+                UseWithdrawnAt: true),
+            new RosterWithdrawalSpec(
+                QuestionIndex: 10,
+                AthleteIndex: 0,
+                ManualUpdateKey: "secondary",
+                OccurredAt: RosterUpdatedAt.AddHours(4),
+                Reason: "Dev technical meeting withdrawal",
+                Source: "dev technical meeting",
+                UseWithdrawnAt: true)
+        };
+
+        var seeds = new List<RosterWithdrawalSeed>();
+        var seenAthleteIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var spec in specs)
+        {
+            if (spec.QuestionIndex >= scoreableQuestions.Length)
+            {
+                continue;
+            }
+
+            var question = scoreableQuestions[spec.QuestionIndex].Question;
+            if (spec.AthleteIndex >= question.AthleteIds.Count)
+            {
+                continue;
+            }
+
+            var athleteId = question.AthleteIds[spec.AthleteIndex];
+            if (!seenAthleteIds.Add(athleteId))
+            {
+                continue;
+            }
+
+            seeds.Add(new RosterWithdrawalSeed(
+                athleteId,
+                spec.ManualUpdateKey,
+                spec.OccurredAt,
+                spec.Reason,
+                spec.Source,
+                spec.UseWithdrawnAt));
+        }
+
+        return seeds;
+    }
+
+    private static Competition AddScenarioUpdates(
+        Competition competition,
+        DevCompetitionScenario scenario)
+    {
+        var updates = competition.Updates.ToList();
+        if (scenario.HasRosterWithdrawal)
+        {
+            updates.AddRange(BuildRosterScenarioUpdates(competition, scenario));
+        }
+
+        if (scenario.HasRosterWithdrawal && scenario.Results.HasResults)
+        {
+            updates.Add(new CompetitionUpdate
+            {
+                Id = $"{scenario.CompetitionId}-results-update",
+                Type = CompetitionUpdateTypes.ResultsUpdate,
+                OccurredAt = scenario.EndDate.AddHours(1),
+                Title = "Final results published",
+                Body = "Official results exclude withdrawn athletes; remaining picks continue to score normally.",
+                Source = "dev-scenarios"
+            });
+        }
+
+        return updates.Count == competition.Updates.Count
+            ? competition
+            : competition with { Updates = updates.ToArray() };
+    }
+
+    private static IReadOnlyList<CompetitionUpdate> BuildRosterScenarioUpdates(
+        Competition competition,
+        DevCompetitionScenario scenario)
+    {
+        var seeds = GetRosterWithdrawalSeeds(competition);
+        if (seeds.Count == 0)
+        {
+            return [];
+        }
+
+        var athletesById = competition.Athletes.ToDictionary(athlete => athlete.Id, StringComparer.OrdinalIgnoreCase);
+        var updates = new List<CompetitionUpdate>
+        {
+            new()
+            {
+                Id = $"{scenario.CompetitionId}-deadline-note",
+                Type = CompetitionUpdateTypes.DeadlineChange,
+                OccurredAt = RosterUpdatedAt.AddMinutes(-45),
+                Title = "Prediction deadline confirmed",
+                Body = "Dev scenario note: editable roster-update checks stay available until the configured lock time.",
+                Source = "dev-scenarios"
+            },
+            new()
+            {
+                Id = $"{scenario.CompetitionId}-scoring-note",
+                Type = CompetitionUpdateTypes.ScoringUpdate,
+                OccurredAt = RosterUpdatedAt.AddMinutes(-20),
+                Title = "Scoring note for withdrawals",
+                Body = "Withdrawn athletes left in submitted picks score 0 for that slot; other hits still score.",
+                Source = "dev-scenarios"
+            },
+            new()
+            {
+                Id = $"{scenario.CompetitionId}-general-note",
+                Type = CompetitionUpdateTypes.General,
+                OccurredAt = RosterUpdatedAt.AddHours(5),
+                Title = "Dev scenario includes mixed roster updates",
+                Body = "Use Alice, Bruno, Casey, and Dana to check affected, unaffected, generated-only, and fresh-user states.",
+                Source = "dev-scenarios"
+            }
+        };
+
+        foreach (var group in seeds
+                     .Where(seed => !string.IsNullOrWhiteSpace(seed.ManualUpdateKey))
+                     .GroupBy(seed => seed.ManualUpdateKey!, StringComparer.OrdinalIgnoreCase)
+                     .OrderBy(group => group.Min(seed => seed.OccurredAt)))
+        {
+            var groupSeeds = group.OrderBy(seed => seed.OccurredAt).ToArray();
+            var athletes = groupSeeds
+                .Select(seed => athletesById.TryGetValue(seed.AthleteId, out var athlete) ? athlete : null)
+                .OfType<Athlete>()
+                .OrderBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+            if (athletes.Length == 0)
+            {
+                continue;
+            }
+
+            updates.Add(new CompetitionUpdate
+            {
+                Id = $"{scenario.CompetitionId}-roster-{group.Key}",
+                Type = CompetitionUpdateTypes.RosterUpdate,
+                OccurredAt = groupSeeds.Min(seed => seed.OccurredAt),
+                Title = athletes.Length == 1
+                    ? $"Roster update: {athletes[0].DisplayName} has withdrawn."
+                    : $"Roster update: {athletes.Length} athletes have withdrawn.",
+                Body = string.Join(", ", athletes.Select(athlete => athlete.DisplayName))
+                    + " are no longer selectable for new picks.",
+                AthleteIds = athletes.Select(athlete => athlete.Id).ToArray(),
+                Source = groupSeeds[0].Source
+            });
+        }
+
+        return updates;
     }
 
     private static async Task PublishCompetitionAsync(
@@ -421,6 +679,7 @@ public sealed class DevScenarioRunner
     private static async Task SeedSubmittedPredictionsAsync(
         SupabaseRestClient supabase,
         Competition competition,
+        DevCompetitionScenario scenario,
         IReadOnlyList<ScenarioUser> users,
         CancellationToken ct)
     {
@@ -428,7 +687,7 @@ public sealed class DevScenarioRunner
         for (var index = 0; index < users.Count; index++)
         {
             var user = users[index];
-            var predictionSet = CreatePredictionSet(competition, user.Id, index);
+            var predictionSet = CreatePredictionSet(competition, scenario, user.Id, index);
             rows.Add(new JsonObject
             {
                 ["user_id"] = user.Id,
@@ -449,7 +708,11 @@ public sealed class DevScenarioRunner
             ct);
     }
 
-    private static PredictionSet CreatePredictionSet(Competition competition, string userId, int userIndex)
+    private static PredictionSet CreatePredictionSet(
+        Competition competition,
+        DevCompetitionScenario scenario,
+        string userId,
+        int userIndex)
     {
         var answers = ScoreableQuestions(competition)
             .Select(item => new PredictionAnswer
@@ -460,7 +723,7 @@ public sealed class DevScenarioRunner
                 UpdatedAt = SubmittedAt,
                 Value = new PredictionAnswerValue
                 {
-                    AthletePlacements = BuildPredictedPlacements(item.Question, userIndex)
+                    AthletePlacements = BuildPredictedPlacements(competition, scenario, item.Question, userIndex)
                 }
             })
             .ToArray();
@@ -480,17 +743,14 @@ public sealed class DevScenarioRunner
     }
 
     private static IReadOnlyList<AthletePlacementPick> BuildPredictedPlacements(
+        Competition competition,
+        DevCompetitionScenario scenario,
         PredictionQuestion question,
         int userIndex)
     {
-        var athleteIds = userIndex switch
-        {
-            1 when question.AthleteIds.Count >= 2 =>
-                [question.AthleteIds[1], question.AthleteIds[0], .. question.AthleteIds.Skip(2)],
-            2 when question.AthleteIds.Count >= 4 =>
-                [.. question.AthleteIds.Skip(1), question.AthleteIds[0]],
-            _ => question.AthleteIds
-        };
+        var athleteIds = scenario.HasRosterWithdrawal
+            ? BuildRosterScenarioAthleteOrder(competition, question, userIndex)
+            : BuildDefaultAthleteOrder(question, userIndex);
 
         return athleteIds
             .Select((athleteId, index) => new AthletePlacementPick
@@ -505,6 +765,66 @@ public sealed class DevScenarioRunner
                 PredictedTotalKg = 560m - (index * 3)
             })
             .ToArray();
+    }
+
+    private static IReadOnlyList<string> BuildDefaultAthleteOrder(PredictionQuestion question, int userIndex)
+    {
+        return userIndex switch
+        {
+            1 when question.AthleteIds.Count >= 2 =>
+                [question.AthleteIds[1], question.AthleteIds[0], .. question.AthleteIds.Skip(2)],
+            2 when question.AthleteIds.Count >= 4 =>
+                [.. question.AthleteIds.Skip(1), question.AthleteIds[0]],
+            _ => question.AthleteIds
+        };
+    }
+
+    private static IReadOnlyList<string> BuildRosterScenarioAthleteOrder(
+        Competition competition,
+        PredictionQuestion question,
+        int userIndex)
+    {
+        var withdrawalSeeds = GetRosterWithdrawalSeeds(competition);
+        var withdrawnIds = withdrawalSeeds
+            .Select(seed => seed.AthleteId)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        if (withdrawnIds.Count == 0)
+        {
+            return BuildDefaultAthleteOrder(question, userIndex);
+        }
+
+        var activeAthleteIds = question.AthleteIds
+            .Where(athleteId => !withdrawnIds.Contains(athleteId))
+            .ToArray();
+        var withdrawnAthleteIds = question.AthleteIds
+            .Where(withdrawnIds.Contains)
+            .ToArray();
+
+        if (withdrawnAthleteIds.Length == 0)
+        {
+            return BuildDefaultAthleteOrder(question, userIndex);
+        }
+
+        if (userIndex == 1)
+        {
+            return [.. activeAthleteIds, .. withdrawnAthleteIds];
+        }
+
+        if (userIndex == 2)
+        {
+            var generatedOnlyIds = withdrawalSeeds
+                .Where(seed => string.IsNullOrWhiteSpace(seed.ManualUpdateKey))
+                .Select(seed => seed.AthleteId)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+            var generatedOnlyPick = withdrawnAthleteIds.FirstOrDefault(generatedOnlyIds.Contains);
+
+            return generatedOnlyPick is null
+                ? [.. activeAthleteIds, .. withdrawnAthleteIds]
+                : [generatedOnlyPick, .. activeAthleteIds, .. withdrawnAthleteIds.Where(athleteId =>
+                    !string.Equals(athleteId, generatedOnlyPick, StringComparison.OrdinalIgnoreCase))];
+        }
+
+        return question.AthleteIds;
     }
 
     private static async Task<int> ImportResultsAsync(
@@ -555,7 +875,7 @@ public sealed class DevScenarioRunner
                 QuestionId = item.Question.Id,
                 CategoryId = item.Question.CategoryId,
                 Status = OfficialResultGroupImportStatus.Final,
-                Placements = CreateOfficialPlacements(item.Question)
+                Placements = CreateOfficialPlacements(competition, item.Question)
             })
             .ToList();
 
@@ -568,9 +888,17 @@ public sealed class DevScenarioRunner
         };
     }
 
-    private static List<OfficialResultPlacementFile> CreateOfficialPlacements(PredictionQuestion question)
+    private static List<OfficialResultPlacementFile> CreateOfficialPlacements(
+        Competition competition,
+        PredictionQuestion question)
     {
+        var activeAthleteIds = competition.Athletes
+            .Where(athlete => !athlete.IsWithdrawn)
+            .Select(athlete => athlete.Id)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
         return question.AthleteIds
+            .Where(activeAthleteIds.Contains)
             .Take(GetRequiredCount(question))
             .Select((athleteId, index) => new OfficialResultPlacementFile
             {
@@ -645,7 +973,8 @@ public sealed class DevScenarioRunner
         DateTimeOffset PredictionLockAt,
         DateTimeOffset EndDate,
         int SubmittedUsersCount,
-        ResultsMode Results);
+        ResultsMode Results,
+        bool HasRosterWithdrawal = false);
 
     private sealed record ResultsMode(string? Status, int? FinalGroupCount)
     {
@@ -659,6 +988,23 @@ public sealed class DevScenarioRunner
     private sealed record ScenarioUser(string Id, string Email, string DisplayName);
 
     private sealed record ScoreableQuestion(PredictionGroup Group, PredictionQuestion Question);
+
+    private sealed record RosterWithdrawalSpec(
+        int QuestionIndex,
+        int AthleteIndex,
+        string? ManualUpdateKey,
+        DateTimeOffset OccurredAt,
+        string Reason,
+        string Source,
+        bool UseWithdrawnAt);
+
+    private sealed record RosterWithdrawalSeed(
+        string AthleteId,
+        string? ManualUpdateKey,
+        DateTimeOffset OccurredAt,
+        string Reason,
+        string Source,
+        bool UseWithdrawnAt);
 }
 
 internal sealed class SupabaseAuthAdminClient(string baseUrl, string serviceKey)

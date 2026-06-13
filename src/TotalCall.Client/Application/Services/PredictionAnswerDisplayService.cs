@@ -131,7 +131,15 @@ public sealed class PredictionAnswerDisplayService(
             return localizer["Common.NotAnswered"];
         }
 
-        return competition.Athletes.FirstOrDefault(athlete => athlete.Id == athleteId)?.DisplayName ?? athleteId;
+        var athlete = competition.Athletes.FirstOrDefault(athlete => athlete.Id == athleteId);
+        if (athlete is null)
+        {
+            return athleteId;
+        }
+
+        return athlete.IsWithdrawn
+            ? $"{athlete.DisplayName} ({localizer["Predictions.Roster.Withdrawn"]})"
+            : athlete.DisplayName;
     }
 
     private string FormatPosition(int position, bool useMedalLabels)

@@ -106,6 +106,10 @@ else
                 @SortLabel
             </span>
 
+            <CompetitionUpdatesChip
+                Competition="@(competition!)"
+                Clicked="@OpenUpdates" />
+
             <AppButton
                 Href="@PredictionsHref"
                 Variant="Secondary"
@@ -252,6 +256,11 @@ else
             }
         }
     </div>
+
+    <CompetitionTimeline
+        Competition="@(competition!)"
+        IsOpen="@isUpdatesOpen"
+        Closed="@CloseUpdates" />
 }
 
 @code {
@@ -272,6 +281,7 @@ else
     private bool isLoading = true;
     private string? loadError;
     private string search = string.Empty;
+    private bool isUpdatesOpen;
 
     private string PredictionsHref => $"competitions/{Slug}/predictions";
 
@@ -440,6 +450,18 @@ else
     private Task ReloadAsync(MouseEventArgs _)
     {
         return LoadAsync();
+    }
+
+    private Task OpenUpdates(MouseEventArgs _)
+    {
+        isUpdatesOpen = true;
+        return Task.CompletedTask;
+    }
+
+    private Task CloseUpdates()
+    {
+        isUpdatesOpen = false;
+        return Task.CompletedTask;
     }
 
     private void OnSearchChanged(ChangeEventArgs args)

@@ -833,6 +833,11 @@
     background: color-mix(in srgb, var(--success) 2.5%, transparent);
 }
 
+.topn-rowgroup--withdrawn {
+    background: color-mix(in srgb, var(--danger) 5%, transparent);
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--danger) 64%, transparent);
+}
+
 .topn-rowgroup--popover-open {
     position: relative;
     z-index: 35;
@@ -1042,6 +1047,31 @@
     box-shadow: inset 3px 0 0 var(--score);
 }
 
+.topn-row--withdrawn .topn-who__name {
+    color: color-mix(in srgb, var(--danger) 80%, var(--tn-txt));
+}
+
+.topn-row-warning {
+    margin: 0 10px 10px;
+    border: 1px solid color-mix(in srgb, var(--danger) 36%, var(--tn-bd));
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--danger) 10%, transparent);
+    color: var(--tn-txt-2);
+    padding: 9px 11px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.topn-row-warning .app-icon {
+    color: var(--danger);
+    flex: none;
+    margin-top: 1px;
+}
+
 .topn-dropline {
     height: 0;
     border-top: 2px dashed var(--tn-red-bright);
@@ -1161,6 +1191,22 @@
     color: var(--tn-green);
     border-color: var(--tn-green-bd);
     background: var(--tn-green-bg);
+}
+
+.topn-withdrawn-badge,
+.ms-withdrawn-badge {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid color-mix(in srgb, var(--danger) 42%, var(--tn-bd));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--danger) 11%, transparent);
+    color: color-mix(in srgb, var(--danger) 82%, var(--tn-txt));
+    padding: 3px 7px;
+    font-size: 9px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 .topn-modepill {
@@ -2504,6 +2550,30 @@ body:has(.topn-drawer.is-open) {
     transform: rotate(180deg);
 }
 
+.topn-mobile .ms-bar__ic--updates {
+    position: relative;
+}
+
+.topn-mobile .ms-bar__ic--updates-alert {
+    color: var(--tn-red-bright);
+    border-color: color-mix(in srgb, var(--tn-red) 46%, var(--tn-bd));
+    background: color-mix(in srgb, var(--tn-red) 12%, transparent);
+}
+
+.topn-mobile .ms-updates-count {
+    min-width: 1.18rem;
+    height: 1.18rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--tn-red-bright);
+    background: color-mix(in srgb, var(--tn-red) 14%, transparent);
+    font-family: var(--font-data);
+    font-size: 0.68rem;
+    font-weight: 900;
+}
+
 .topn-mobile .ms-catbtn {
     flex: 1;
     display: flex;
@@ -2703,6 +2773,12 @@ body:has(.topn-drawer.is-open) {
     box-shadow: inset 3px 0 0 color-mix(in srgb, var(--tn-green) 72%, transparent);
 }
 
+.topn-mobile .ms-card--withdrawn {
+    border-color: color-mix(in srgb, var(--danger) 38%, var(--tn-bd));
+    background: color-mix(in srgb, var(--danger) 5%, var(--tn-card));
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--danger) 64%, transparent);
+}
+
 .topn-mobile .ms-ctop {
     display: flex;
     align-items: center;
@@ -2855,9 +2931,32 @@ body:has(.topn-drawer.is-open) {
     color: var(--tn-txt-2);
     font-weight: 600;
     margin-top: 1px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    min-width: 0;
+}
+
+.topn-mobile .ms-roster-warning {
+    margin-top: 10px;
+    border: 1px solid color-mix(in srgb, var(--danger) 36%, var(--tn-bd));
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--danger) 10%, transparent);
+    color: var(--tn-txt-2);
+    padding: 9px 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.topn-mobile .ms-roster-warning .app-icon {
+    color: var(--danger);
+    flex: none;
+    margin-top: 1px;
 }
 
 .topn-mobile .ms-card__pred {

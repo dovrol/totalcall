@@ -20,7 +20,9 @@
                         Competition="@Competition"
                         ActiveGroup="@ActiveGroup"
                         ModuleValidation="@ActiveModuleValidation"
-                        CanEditPredictions="@CanEditNow" />
+                        CanEditPredictions="@CanEditNow"
+                        Answers="@Answers"
+                        UpdatesRequested="@OpenUpdates" />
 
                     @if (!CanEditNow)
                     {
@@ -63,9 +65,17 @@
         SubmittedAt="@SubmittedAt"
         IsSubmitting="@IsSubmitting"
         SubmitError="@SubmitError"
+        WithdrawnPickNames="@AffectedWithdrawnAthleteNames"
         SubmitRequested="@SubmitRequested"
         RetrySyncRequested="@RetrySyncRequested"
         ShareRequested="@ShareRequested" />
+
+    <CompetitionTimeline
+        Competition="@Competition"
+        Answers="@Answers"
+        CanEditPredictions="@CanEditNow"
+        IsOpen="@isUpdatesOpen"
+        Closed="@CloseUpdates" />
 </section>
 
 @code {
@@ -124,6 +134,8 @@
     [Parameter]
     public EventCallback RetrySyncRequested { get; set; }
 
+    private bool isUpdatesOpen;
+
     private bool CanEditNow => PredictionDeadline.CanEdit(
         CanEditPredictions,
         Competition.Status,
@@ -131,8 +143,23 @@
         Competition.EndDate,
         DateTimeOffset.UtcNow);
 
+    private IReadOnlyList<string> AffectedWithdrawnAthleteNames =>
+        RosterUpdateService.GetAffectedAthleteNames(Competition, Answers);
+
     private Task OnGroupChanged(string groupId)
     {
         return GroupChanged.InvokeAsync(groupId);
+    }
+
+    private Task OpenUpdates(MouseEventArgs _)
+    {
+        isUpdatesOpen = true;
+        return Task.CompletedTask;
+    }
+
+    private Task CloseUpdates()
+    {
+        isUpdatesOpen = false;
+        return Task.CompletedTask;
     }
 }

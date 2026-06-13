@@ -36,6 +36,10 @@
                             <CountryFlag Code="@row.CountryCode" CountryName="@row.CountryName" Class="review-pick-table__flag" />
                         }
                         <span class="review-pick-table__name">@row.AthleteName</span>
+                        @if (row.IsWithdrawn)
+                        {
+                            <span class="review-pick-table__withdrawn">@Localizer["Predictions.Roster.Withdrawn"]</span>
+                        }
                     </span>
                 }
                 else

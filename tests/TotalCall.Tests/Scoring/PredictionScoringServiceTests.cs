@@ -1,4 +1,5 @@
 using TotalCall.Client.Domain.Competitions;
+using TotalCall.Client.Domain.Athletes;
 using TotalCall.Client.Domain.Predictions;
 using TotalCall.Client.Scoring;
 
@@ -79,6 +80,19 @@ public sealed class PredictionScoringServiceTests
         Assert.Equal(4m, score.TotalPoints);
     }
 
+    [Fact]
+    public void Placement_scorer_counts_remaining_hits_when_withdrawn_pick_misses()
+    {
+        var competition = CreateCompetition("q1");
+        var predictionSet = CreatePredictionSet(Answer("q1", "withdrawn", "a2", "a3"));
+        var results = CreateResults(Result("q1", OfficialResultGroupStatus.Final, "a4", "a2", "a3"));
+
+        var score = scoring.Score(competition, predictionSet, results);
+
+        Assert.Equal(6m, score.TotalPoints);
+        Assert.Equal(6m, Assert.Single(score.QuestionScores).Points);
+    }
+
     private static Competition CreateCompetition(params string[] questionIds)
     {
         return new Competition
@@ -87,6 +101,14 @@ public sealed class PredictionScoringServiceTests
             Slug = "competition",
             Name = "Competition",
             ConfigVersion = "v1",
+            Athletes =
+            [
+                new Athlete { Id = "a1", DisplayName = "A1" },
+                new Athlete { Id = "a2", DisplayName = "A2" },
+                new Athlete { Id = "a3", DisplayName = "A3" },
+                new Athlete { Id = "a4", DisplayName = "A4" },
+                new Athlete { Id = "withdrawn", DisplayName = "Withdrawn", Status = AthleteStatus.Withdrawn }
+            ],
             PredictionGroups =
             [
                 new PredictionGroup

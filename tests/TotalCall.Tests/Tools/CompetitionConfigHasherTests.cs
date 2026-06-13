@@ -56,4 +56,62 @@ public sealed class CompetitionConfigHasherTests
             CompetitionConfigHasher.Compute(first),
             CompetitionConfigHasher.Compute(second));
     }
+
+    [Fact]
+    public void Compute_ChangesWhenAthleteStatusChangesToWithdrawn()
+    {
+        var active = JsonNode.Parse(
+            """
+            {
+              "id": "worlds-2026",
+              "configVersion": "1",
+              "athletes": [
+                { "id": "a1", "displayName": "Athlete One", "status": "active" }
+              ]
+            }
+            """)!;
+        var withdrawn = JsonNode.Parse(
+            """
+            {
+              "id": "worlds-2026",
+              "configVersion": "1",
+              "athletes": [
+                { "id": "a1", "displayName": "Athlete One", "status": "withdrawn" }
+              ]
+            }
+            """)!;
+
+        Assert.NotEqual(
+            CompetitionConfigHasher.Compute(active),
+            CompetitionConfigHasher.Compute(withdrawn));
+    }
+
+    [Fact]
+    public void Compute_ChangesWhenCompetitionTimelineChanges()
+    {
+        var first = JsonNode.Parse(
+            """
+            {
+              "id": "worlds-2026",
+              "configVersion": "1",
+              "updates": [
+                { "id": "roster-1", "type": "roster_update", "title": "Roster update" }
+              ]
+            }
+            """)!;
+        var second = JsonNode.Parse(
+            """
+            {
+              "id": "worlds-2026",
+              "configVersion": "1",
+              "updates": [
+                { "id": "roster-1", "type": "roster_update", "title": "Roster update changed" }
+              ]
+            }
+            """)!;
+
+        Assert.NotEqual(
+            CompetitionConfigHasher.Compute(first),
+            CompetitionConfigHasher.Compute(second));
+    }
 }

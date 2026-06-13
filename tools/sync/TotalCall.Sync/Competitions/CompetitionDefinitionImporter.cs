@@ -159,41 +159,38 @@ public sealed class CompetitionDefinitionImporter
     {
         var query =
             $"competition_id=eq.{Uri.EscapeDataString(competitionId)}" +
-            $"&version=eq.{Uri.EscapeDataString(version)}" +
-            "&select=id,config";
+            "&select=id,version,config";
         var existingRows = await supabase.GetAsync("public", "competition_versions", query, ct);
-        var existing = existingRows.OfType<JsonObject>().FirstOrDefault();
-        if (existing is not null)
+        var existingVersions = existingRows
+            .OfType<JsonObject>()
+            .Select(ToExistingVersion)
+            .OfType<ExistingCompetitionVersion>()
+            .ToArray();
+
+        foreach (var existing in existingVersions)
         {
-            var existingId = existing["id"]?.ToString();
-            var existingConfig = existing["config"];
-            if (string.IsNullOrWhiteSpace(existingId) || existingConfig is null)
+            if (string.Equals(existing.ConfigHash, configHash, StringComparison.OrdinalIgnoreCase))
             {
-                Console.Error.WriteLine("[error] Existing competition_version row is missing id or config.");
-                return null;
+                Console.WriteLine(
+                    $"[info] competition_version '{existing.Version}' already exists with identical config -> {existing.Id}.");
+                return existing.Id;
             }
+        }
 
-            var existingHash = CompetitionConfigHasher.Compute(existingConfig);
-            if (!string.Equals(existingHash, configHash, StringComparison.OrdinalIgnoreCase))
-            {
-                Console.Error.WriteLine(
-                    "[error] Existing competition_version has the same configVersion " +
-                    $"('{version}') but different config content. " +
-                    "Bump configVersion before importing changed competition config.");
-                Console.Error.WriteLine($"[error] Existing hash: {existingHash}");
-                Console.Error.WriteLine($"[error] Incoming hash: {configHash}");
-                return null;
-            }
-
+        var effectiveVersion = version;
+        if (existingVersions.Any(existing => string.Equals(existing.Version, version, StringComparison.OrdinalIgnoreCase)))
+        {
+            effectiveVersion = BuildDerivedVersion(version, configHash);
             Console.WriteLine(
-                $"[info] competition_version '{version}' already exists with identical config -> {existingId}.");
-            return existingId;
+                "[warn] Existing competition_version has the same configVersion " +
+                $"('{version}') but different config content. " +
+                $"Creating immutable roster-update version '{effectiveVersion}'.");
         }
 
         var versionRow = new JsonObject
         {
             ["competition_id"] = competitionId,
-            ["version"] = version,
+            ["version"] = effectiveVersion,
             ["config"] = configNode.DeepClone(),
             ["published_at"] = DateTimeOffset.UtcNow.ToString("o")
         };
@@ -209,9 +206,34 @@ public sealed class CompetitionDefinitionImporter
         }
 
         var versionId = returned[0]!["id"]!.ToString();
-        Console.WriteLine($"[info] Inserted competition_version '{version}' -> {versionId}.");
+        Console.WriteLine($"[info] Inserted competition_version '{effectiveVersion}' -> {versionId}.");
         return versionId;
     }
+
+    private static ExistingCompetitionVersion? ToExistingVersion(JsonObject row)
+    {
+        var id = row["id"]?.ToString();
+        var version = row["version"]?.ToString();
+        var config = row["config"];
+        if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(version) || config is null)
+        {
+            Console.Error.WriteLine("[error] Existing competition_version row is missing id, version or config.");
+            return null;
+        }
+
+        return new ExistingCompetitionVersion(
+            id,
+            version,
+            CompetitionConfigHasher.Compute(config));
+    }
+
+    private static string BuildDerivedVersion(string version, string configHash)
+    {
+        var suffix = configHash[..Math.Min(8, configHash.Length)];
+        return $"{version}+roster.{suffix}";
+    }
+
+    private sealed record ExistingCompetitionVersion(string Id, string Version, string ConfigHash);
 }
 
 public static class CompetitionConfigHasher

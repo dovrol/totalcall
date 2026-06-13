@@ -195,6 +195,19 @@
                 </AppBadge>
             </div>
 
+            @if (HasWithdrawnPicks)
+            {
+                <div class="submit-confirm__warning" role="alert">
+                    <span class="submit-confirm__warning-icon" aria-hidden="true">
+                        <AppIcon Name="AppIconName.AlertCircle" Size="18" />
+                    </span>
+                    <span>
+                        <strong>@Localizer["Predictions.Roster.SubmitWarningTitle"]</strong>
+                        <small>@Localizer["Predictions.Roster.SubmitWarningBody", WithdrawnPickSummary]</small>
+                    </span>
+                </div>
+            }
+
             <ul class="submit-confirm__list">
                 <li>
                     <span class="submit-confirm__list-icon submit-confirm__list-icon--ok"><AppIcon Name="AppIconName.Users" Size="17" /></span>
@@ -292,6 +305,9 @@
 
     [Parameter]
     public string? SubmitError { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<string> WithdrawnPickNames { get; set; } = [];
 
     [Parameter]
     public EventCallback<MouseEventArgs> ShareRequested { get; set; }
@@ -407,6 +423,12 @@
     };
 
     private bool ShowDraftPill => CurrentState is SubmitBarState.Guest or SubmitBarState.Draft;
+
+    private bool HasWithdrawnPicks => WithdrawnPickNames.Count > 0;
+
+    private string WithdrawnPickSummary => WithdrawnPickNames.Count <= 2
+        ? string.Join(", ", WithdrawnPickNames)
+        : $"{string.Join(", ", WithdrawnPickNames.Take(2))} +{WithdrawnPickNames.Count - 2}";
 
     private string DraftPillLabel => Localizer[
         CurrentState is SubmitBarState.Guest

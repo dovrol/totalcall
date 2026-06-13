@@ -43,6 +43,14 @@
             PredictionLockAt="@PredictionLockAt"
             CompetitionEndDate="@CompetitionEndDate"
             LegacyOpen="true" />
+
+        @if (Competition is not null)
+        {
+            <CompetitionUpdatesChip
+                Competition="@Competition"
+                Answers="@Answers"
+                Clicked="@UpdatesRequested" />
+        }
     </div>
 </div>
 
@@ -78,6 +86,12 @@
     public DateTimeOffset? CompetitionEndDate { get; set; }
 
     [Parameter]
+    public Competition? Competition { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<PredictionAnswer> Answers { get; set; } = [];
+
+    [Parameter]
     public bool CanOpenModuleMenu { get; set; }
 
     [Parameter]
@@ -85,6 +99,9 @@
 
     [Parameter]
     public EventCallback ModuleSwitchRequested { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> UpdatesRequested { get; set; }
 
     private int CompletionPercent => TotalCategories == 0
         ? 0

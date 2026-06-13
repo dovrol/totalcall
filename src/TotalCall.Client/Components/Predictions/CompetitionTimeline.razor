@@ -1,0 +1,459 @@
+@using System.Globalization
+@inject IStringLocalizer<SharedResource> Localizer
+
+@if (IsOpen)
+{
+    <div class="competition-updates-overlay" role="presentation" @onclick="Close">
+        <aside
+            class="competition-updates-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="competition-updates-title"
+            @onclick:stopPropagation="true">
+            <div class="competition-updates-drawer__grip" aria-hidden="true"></div>
+            <header class="competition-updates-drawer__head">
+                <span class="competition-updates-drawer__node" aria-hidden="true">
+                    <AppIcon Name="AppIconName.Clock" Size="17" />
+                </span>
+                <div class="competition-updates-drawer__titles">
+                    <span>@Competition.Name</span>
+                    <h2 id="competition-updates-title">@Localizer["CompetitionUpdates.Title"]</h2>
+                    <p>@Localizer["CompetitionUpdates.Subtitle"]</p>
+                </div>
+                <button
+                    type="button"
+                    class="competition-updates-drawer__close"
+                    aria-label="@Localizer["Common.Close"]"
+                    @onclick="Close">
+                    <AppIcon Name="AppIconName.X" Size="15" />
+                </button>
+            </header>
+
+            @if (Items.Count > 0)
+            {
+                <div class="competition-updates-filters" aria-label="@Localizer["CompetitionUpdates.Filters"]">
+                    <button type="button" class="@GetFilterClass(UpdateFilter.All)" @onclick="() => SetFilter(UpdateFilter.All)">
+                        @Localizer["CompetitionUpdates.Filter.All"]
+                        <span>@Items.Count</span>
+                    </button>
+                    <button type="button" class="@GetFilterClass(UpdateFilter.Action)" @onclick="() => SetFilter(UpdateFilter.Action)">
+                        @Localizer["CompetitionUpdates.Filter.Action"]
+                        <span>@ActionItemsCount</span>
+                    </button>
+                    <button type="button" class="@GetFilterClass(UpdateFilter.Results)" @onclick="() => SetFilter(UpdateFilter.Results)">
+                        @Localizer["CompetitionUpdates.Filter.Results"]
+                        <span>@ResultsItemsCount</span>
+                    </button>
+                </div>
+            }
+
+            <div class="competition-updates-drawer__scroll">
+                @if (HasAffectedPicks)
+                {
+                    <section class="@PinnedClass">
+                        <span class="competition-updates-pinned__head">
+                            <AppIcon Name="@PinnedIcon" Size="15" />
+                            @Localizer["CompetitionUpdates.Pinned.Title"]
+                        </span>
+                        <p>@PinnedDescription</p>
+                        @if (CanEditPredictions)
+                        {
+                            <button type="button" class="competition-updates-pinned__cta" @onclick="Close">
+                                <AppIcon Name="AppIconName.PencilLine" Size="14" />
+                                <span>@Localizer["CompetitionUpdates.Pinned.FixPick"]</span>
+                            </button>
+                        }
+                    </section>
+                }
+
+                @if (FilteredItems.Count == 0)
+                {
+                    <div class="competition-updates-state" role="status">
+                        <span class="competition-updates-state__icon" aria-hidden="true">
+                            <AppIcon Name="AppIconName.Clock" Size="22" />
+                        </span>
+                        <h3>@Localizer["CompetitionUpdates.Empty.Title"]</h3>
+                        <p>@Localizer["CompetitionUpdates.Empty.Body"]</p>
+                    </div>
+                }
+                else
+                {
+                    <ol class="competition-updates-list">
+                        @foreach (var group in GroupedItems)
+                        {
+                            <li class="competition-updates-day">
+                                <span>@group.Label</span>
+                            </li>
+                            @foreach (var item in group.Items)
+                            {
+                                <li class="@GetItemClass(item)">
+                                    <span class="@GetNodeClass(item)" aria-hidden="true">
+                                        <AppIcon Name="@GetIcon(item)" Size="16" />
+                                        @if (IsLiveItem(item))
+                                        {
+                                            <i class="competition-updates-item__live"></i>
+                                        }
+                                    </span>
+                                    <article class="competition-updates-item__main">
+                                        <div class="competition-updates-item__head">
+                                            <span class="competition-updates-item__type">@GetTypeLabel(item.Type)</span>
+                                            <span class="@GetBadgeClass(item)">
+                                                <i aria-hidden="true"></i>
+                                                @GetBadgeLabel(item)
+                                            </span>
+                                            <time datetime="@FormatDateAttribute(item.OccurredAt)">@FormatTime(item.OccurredAt)</time>
+                                        </div>
+
+                                        <h3>@GetTitle(item)</h3>
+                                        @if (!string.IsNullOrWhiteSpace(GetBody(item)))
+                                        {
+                                            <p>@GetBody(item)</p>
+                                        }
+
+                                        @if (IsAffectedItem(item))
+                                        {
+                                            <div class="@GetCalloutClass()">
+                                                <AppIcon Name="@PinnedIcon" Size="15" />
+                                                <span>@PinnedDescription</span>
+                                            </div>
+                                        }
+
+                                        @if (item.Athletes.Count > 0 || !string.IsNullOrWhiteSpace(GetSource(item)))
+                                        {
+                                            <div class="competition-updates-item__meta">
+                                                @foreach (var athlete in item.Athletes.Take(4))
+                                                {
+                                                    <span class="competition-updates-athlete">
+                                                        <AppIcon Name="AppIconName.User" Size="12" />
+                                                        @athlete.DisplayName
+                                                        @if (athlete.IsWithdrawn)
+                                                        {
+                                                            <small>@Localizer["Predictions.Roster.Withdrawn"]</small>
+                                                        }
+                                                    </span>
+                                                }
+                                                @if (item.Athletes.Count > 4)
+                                                {
+                                                    <span class="competition-updates-athlete competition-updates-athlete--more">
+                                                        +@(item.Athletes.Count - 4)
+                                                    </span>
+                                                }
+                                                @if (!string.IsNullOrWhiteSpace(GetSource(item)))
+                                                {
+                                                    <span class="competition-updates-source">
+                                                        <AppIcon Name="AppIconName.Info" Size="12" />
+                                                        @GetSource(item)
+                                                    </span>
+                                                }
+                                            </div>
+                                        }
+                                    </article>
+                                </li>
+                            }
+                        }
+                    </ol>
+                }
+            </div>
+
+            <footer class="competition-updates-foot">
+                <AppIcon Name="AppIconName.Info" Size="14" />
+                <span>@Localizer["CompetitionUpdates.Privacy"]</span>
+            </footer>
+        </aside>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public Competition Competition { get; set; } = default!;
+
+    [Parameter]
+    public IReadOnlyList<PredictionAnswer> Answers { get; set; } = [];
+
+    [Parameter]
+    public bool CanEditPredictions { get; set; }
+
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public EventCallback Closed { get; set; }
+
+    private enum UpdateFilter
+    {
+        All,
+        Action,
+        Results
+    }
+
+    private UpdateFilter activeFilter = UpdateFilter.All;
+
+    private IReadOnlyList<CompetitionTimelineItem> Items =>
+        CompetitionTimelineService.GetTimeline(Competition);
+
+    private IReadOnlyList<RosterAffectedPick> AffectedPicks =>
+        RosterUpdateService.FindAffectedPicks(Competition, Answers);
+
+    private IReadOnlyList<string> AffectedNames =>
+        AffectedPicks
+            .Select(pick => pick.AthleteName)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(name => name, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+    private HashSet<string> AffectedAthleteIds =>
+        AffectedPicks
+            .Select(pick => pick.AthleteId)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+    private bool HasAffectedPicks => AffectedNames.Count > 0;
+
+    private IReadOnlyList<CompetitionTimelineItem> FilteredItems => activeFilter switch
+    {
+        UpdateFilter.Action => Items.Where(IsAffectedItem).ToArray(),
+        UpdateFilter.Results => Items.Where(IsResultsItem).ToArray(),
+        _ => Items
+    };
+
+    private int ActionItemsCount => Items.Count(IsAffectedItem);
+
+    private int ResultsItemsCount => Items.Count(IsResultsItem);
+
+    private IReadOnlyList<TimelineGroup> GroupedItems => FilteredItems
+        .GroupBy(item => GetDayKey(item.OccurredAt))
+        .Select(group => new TimelineGroup(
+            FormatDayLabel(group.Key),
+            group.ToArray()))
+        .ToArray();
+
+    private string PinnedClass => string.Join(
+        " ",
+        "competition-updates-pinned",
+        !CanEditPredictions ? "competition-updates-pinned--locked" : null);
+
+    private AppIconName PinnedIcon => CanEditPredictions
+        ? AppIconName.AlertCircle
+        : AppIconName.Info;
+
+    private string PinnedDescription => CanEditPredictions
+        ? Localizer["CompetitionUpdates.Pinned.Editable", FormatNames(AffectedNames)]
+        : Localizer["CompetitionUpdates.Pinned.Locked", FormatNames(AffectedNames)];
+
+    private string GetTitle(CompetitionTimelineItem item)
+    {
+        if (!string.IsNullOrWhiteSpace(item.Title))
+        {
+            return item.Title;
+        }
+
+        return CompetitionUpdateTypes.Normalize(item.Type) switch
+        {
+            CompetitionUpdateTypes.RosterUpdate when item.Athletes.Count == 1 =>
+                Localizer["CompetitionUpdates.Default.RosterSingle", item.Athletes[0].DisplayName].Value,
+            CompetitionUpdateTypes.RosterUpdate when item.Athletes.Count > 1 =>
+                Localizer["CompetitionUpdates.Default.RosterMultiple", item.Athletes.Count].Value,
+            CompetitionUpdateTypes.DeadlineChange =>
+                Localizer["CompetitionUpdates.Default.DeadlineChange"].Value,
+            CompetitionUpdateTypes.ResultsUpdate =>
+                Localizer["CompetitionUpdates.Default.ResultsUpdate"].Value,
+            CompetitionUpdateTypes.ScoringUpdate =>
+                Localizer["CompetitionUpdates.Default.ScoringUpdate"].Value,
+            _ => Localizer["CompetitionUpdates.Default.General"].Value
+        };
+    }
+
+    private string? GetBody(CompetitionTimelineItem item)
+    {
+        if (!string.IsNullOrWhiteSpace(item.Body))
+        {
+            return item.Body;
+        }
+
+        return CompetitionUpdateTypes.Normalize(item.Type) switch
+        {
+            CompetitionUpdateTypes.RosterUpdate when item.Athletes.Count == 1 =>
+                Localizer["CompetitionUpdates.RosterBodySingle"].Value,
+            CompetitionUpdateTypes.RosterUpdate when item.Athletes.Count > 1 =>
+                Localizer["CompetitionUpdates.RosterBodyMultiple"].Value,
+            _ => null
+        };
+    }
+
+    private string GetTypeLabel(string type)
+    {
+        return CompetitionUpdateTypes.Normalize(type) switch
+        {
+            CompetitionUpdateTypes.RosterUpdate => Localizer["CompetitionUpdates.Type.RosterUpdate"].Value,
+            CompetitionUpdateTypes.DeadlineChange => Localizer["CompetitionUpdates.Type.DeadlineChange"].Value,
+            CompetitionUpdateTypes.ResultsUpdate => Localizer["CompetitionUpdates.Type.ResultsUpdate"].Value,
+            CompetitionUpdateTypes.ScoringUpdate => Localizer["CompetitionUpdates.Type.ScoringUpdate"].Value,
+            _ => Localizer["CompetitionUpdates.Type.General"].Value
+        };
+    }
+
+    private string? GetSource(CompetitionTimelineItem item)
+    {
+        if (!string.IsNullOrWhiteSpace(item.Source))
+        {
+            return item.Source;
+        }
+
+        return item.IsGenerated
+            ? Localizer["CompetitionUpdates.Source.Config"].Value
+            : null;
+    }
+
+    private string FormatTime(DateTimeOffset? value)
+    {
+        return value?.ToLocalTime().ToString("HH:mm", CultureInfo.CurrentCulture) ??
+               Localizer["CompetitionUpdates.NoDate"].Value;
+    }
+
+    private static string? FormatDateAttribute(DateTimeOffset? value)
+    {
+        return value?.ToString("o", CultureInfo.InvariantCulture);
+    }
+
+    private string GetFilterClass(UpdateFilter filter)
+    {
+        return string.Join(
+            " ",
+            "competition-updates-filter",
+            activeFilter == filter ? "competition-updates-filter--active" : null,
+            filter == UpdateFilter.Action ? "competition-updates-filter--alert" : null);
+    }
+
+    private void SetFilter(UpdateFilter filter)
+    {
+        activeFilter = filter;
+    }
+
+    private Task Close()
+    {
+        return Closed.InvokeAsync();
+    }
+
+    private string GetItemClass(CompetitionTimelineItem item)
+    {
+        return string.Join(
+            " ",
+            "competition-updates-item",
+            IsAffectedItem(item) ? "competition-updates-item--action" : null);
+    }
+
+    private string GetNodeClass(CompetitionTimelineItem item)
+    {
+        return string.Join(
+            " ",
+            "competition-updates-item__node",
+            CompetitionUpdateTypes.Normalize(item.Type) switch
+            {
+                CompetitionUpdateTypes.RosterUpdate when IsAffectedItem(item) => "competition-updates-item__node--accent",
+                CompetitionUpdateTypes.RosterUpdate => "competition-updates-item__node--blue",
+                CompetitionUpdateTypes.ResultsUpdate => "competition-updates-item__node--blue",
+                CompetitionUpdateTypes.ScoringUpdate => "competition-updates-item__node--amber",
+                _ => null
+            });
+    }
+
+    private AppIconName GetIcon(CompetitionTimelineItem item)
+    {
+        return CompetitionUpdateTypes.Normalize(item.Type) switch
+        {
+            CompetitionUpdateTypes.RosterUpdate => AppIconName.Users,
+            CompetitionUpdateTypes.DeadlineChange => AppIconName.Lock,
+            CompetitionUpdateTypes.ResultsUpdate => AppIconName.CloudCheck,
+            CompetitionUpdateTypes.ScoringUpdate => AppIconName.BarChart,
+            _ => AppIconName.Info
+        };
+    }
+
+    private string GetBadgeClass(CompetitionTimelineItem item)
+    {
+        return string.Join(
+            " ",
+            "competition-updates-badge",
+            IsAffectedItem(item) ? "competition-updates-badge--action" :
+            IsResultsItem(item) ? "competition-updates-badge--important" :
+            "competition-updates-badge--info");
+    }
+
+    private string GetBadgeLabel(CompetitionTimelineItem item)
+    {
+        if (IsAffectedItem(item))
+        {
+            return Localizer["CompetitionUpdates.Badge.Action"];
+        }
+
+        return IsResultsItem(item)
+            ? Localizer["CompetitionUpdates.Badge.Important"]
+            : Localizer["CompetitionUpdates.Badge.Info"];
+    }
+
+    private string GetCalloutClass()
+    {
+        return string.Join(
+            " ",
+            "competition-updates-callout",
+            !CanEditPredictions ? "competition-updates-callout--locked" : null);
+    }
+
+    private bool IsAffectedItem(CompetitionTimelineItem item)
+    {
+        var affectedIds = AffectedAthleteIds;
+        return affectedIds.Count > 0 &&
+               item.Athletes.Any(athlete => affectedIds.Contains(athlete.Id));
+    }
+
+    private static bool IsResultsItem(CompetitionTimelineItem item)
+    {
+        var type = CompetitionUpdateTypes.Normalize(item.Type);
+        return string.Equals(type, CompetitionUpdateTypes.ResultsUpdate, StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(type, CompetitionUpdateTypes.ScoringUpdate, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsLiveItem(CompetitionTimelineItem item)
+    {
+        return string.Equals(
+            CompetitionUpdateTypes.Normalize(item.Type),
+            CompetitionUpdateTypes.ScoringUpdate,
+            StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static DateOnly? GetDayKey(DateTimeOffset? value)
+    {
+        return value is null
+            ? null
+            : DateOnly.FromDateTime(value.Value.ToLocalTime().DateTime);
+    }
+
+    private string FormatDayLabel(DateOnly? day)
+    {
+        if (day is null)
+        {
+            return Localizer["CompetitionUpdates.NoDate"];
+        }
+
+        var today = DateOnly.FromDateTime(DateTimeOffset.Now.ToLocalTime().DateTime);
+        if (day == today)
+        {
+            return Localizer["Common.Today"];
+        }
+
+        if (day == today.AddDays(-1))
+        {
+            return Localizer["Common.Yesterday"];
+        }
+
+        return day.Value.ToDateTime(TimeOnly.MinValue).ToString("d MMM yyyy", CultureInfo.CurrentCulture);
+    }
+
+    private static string FormatNames(IReadOnlyList<string> names)
+    {
+        return names.Count <= 2
+            ? string.Join(", ", names)
+            : $"{string.Join(", ", names.Take(2))} +{names.Count - 2}";
+    }
+
+    private sealed record TimelineGroup(string Label, IReadOnlyList<CompetitionTimelineItem> Items);
+}

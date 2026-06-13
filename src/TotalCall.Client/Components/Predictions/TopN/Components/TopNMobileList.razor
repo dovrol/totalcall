@@ -79,7 +79,13 @@
                 <div class="ms-card__av">@Initials(slot.Athlete!)</div>
                 <div class="ms-card__who">
                     <div class="ms-card__n">@slot.Athlete!.DisplayName <CountryFlag Code="@slot.Athlete.CountryCode" CountryName="@slot.Athlete.CountryName" Class="ms-card__flag" /></div>
-                    <div class="ms-card__c">@CountryLine(slot.Athlete)</div>
+                    <div class="ms-card__c">
+                        @CountryLine(slot.Athlete)
+                        @if (slot.IsWithdrawn)
+                        {
+                            <span class="ms-withdrawn-badge">@Localizer["Predictions.Roster.Withdrawn"]</span>
+                        }
+                    </div>
                 </div>
                 @if (!isExpanded)
                 {
@@ -96,6 +102,14 @@
                     </button>
                 }
             </div>
+
+            @if (slot.IsWithdrawn && slot.IsScored)
+            {
+                <div class="ms-roster-warning" role="alert">
+                    <AppIcon Name="AppIconName.AlertCircle" Size="14" />
+                    <span>@Localizer[CanEditPredictions ? "Predictions.Roster.PickWarningEditable" : "Predictions.Roster.PickWarningLocked"]</span>
+                </div>
+            }
 
             @if (!isExpanded)
             {
@@ -350,6 +364,7 @@
         slot.Position == 1 ? "ms-card--lead" : null,
         slot.Position > PreviewCount ? "ms-card--tail" : null,
         !slot.IsAutoSeeded ? "ms-card--authored" : null,
+        slot.IsWithdrawn ? "ms-card--withdrawn" : null,
         expanded ? "ms-card--editing" : null,
         slot.IsContextActive ? "ms-card--context" : null,
         IsCompareSelected(slot) ? "ms-card--compare-selected" : null);

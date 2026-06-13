@@ -12,6 +12,8 @@ public sealed record ReviewPickRowModel
 
     public string? CountryName { get; init; }
 
+    public bool IsWithdrawn { get; init; }
+
     public decimal? PredictedTotalKg { get; init; }
 
     public decimal? PredictedSquatKg { get; init; }

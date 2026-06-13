@@ -21,6 +21,7 @@ else
         @* ---------------- DESKTOP ---------------- *@
         <div class="topn-desktop">
             <TopNHeaderBar
+                Competition="@Competition"
                 CompetitionName="@Competition.Name"
                 ModuleTitle="@Text.GroupTitle(Competition, ActiveGroup)"
                 ActiveCategoryName="@GetCategoryName(ActiveQuestion)"
@@ -31,9 +32,11 @@ else
                 CompetitionStatus="@Competition.Status"
                 PredictionLockAt="@Competition.PredictionLockAt"
                 CompetitionEndDate="@Competition.EndDate"
+                Answers="@Answers"
                 CanOpenModuleMenu="@CanOpenModuleMenu"
                 IsModuleMenuOpen="@isModuleMenuOpen"
-                ModuleSwitchRequested="ToggleModuleMenu" />
+                ModuleSwitchRequested="ToggleModuleMenu"
+                UpdatesRequested="@OpenUpdates" />
 
             @if (DeadlinePhase == PredictionDeadlinePhase.Ended)
             {
@@ -109,6 +112,7 @@ else
         @* ---------------- MOBILE ---------------- *@
         <div class="topn-mobile">
             <TopNMobileHeader
+                Competition="@Competition"
                 ActiveCategoryName="@GetCategoryName(ActiveQuestion)"
                 CategoryIndex="@(ActiveQuestionIndex + 1)"
                 TotalCategories="@OrderedQuestions.Count"
@@ -117,9 +121,11 @@ else
                 CompetitionStatus="@Competition.Status"
                 PredictionLockAt="@Competition.PredictionLockAt"
                 CompetitionEndDate="@Competition.EndDate"
+                Answers="@Answers"
                 StatusLine="@MobileStatusLine"
                 StatusKind="@ActiveStatusKind"
-                SwitcherRequested="OpenMobileSwitcher" />
+                SwitcherRequested="OpenMobileSwitcher"
+                UpdatesRequested="@OpenUpdates" />
 
             <TopNMobileList
                 Slots="SlotViews"
@@ -257,9 +263,17 @@ else
             SubmittedAt="@SubmittedAt"
             IsSubmitting="@IsSubmitting"
             SubmitError="@SubmitError"
+            WithdrawnPickNames="@AffectedWithdrawnAthleteNames"
             SubmitRequested="@SubmitRequested"
             RetrySyncRequested="@RetrySyncRequested"
             ShareRequested="@ShareRequested" />
+
+        <CompetitionTimeline
+            Competition="@Competition"
+            Answers="@Answers"
+            CanEditPredictions="@CanEditSheet"
+            IsOpen="@isUpdatesOpen"
+            Closed="@CloseUpdates" />
     </section>
 }
 
@@ -326,6 +340,7 @@ else
     private bool isModuleMenuOpen;
     private bool isPaletteOpen;
     private bool isMobileSwitcherOpen;
+    private bool isUpdatesOpen;
     private bool isBulkMenuOpen;
     private bool isBulkFilling;
     private bool isCompareSelectionMode;
@@ -417,6 +432,9 @@ else
 
     private IReadOnlyList<AthletePlacementPick> FieldPlacements => BuildFieldPlacements();
 
+    private IReadOnlyList<string> AffectedWithdrawnAthleteNames =>
+        RosterUpdateService.GetAffectedAthleteNames(Competition, Answers);
+
     private IReadOnlyCollection<string> CompareSelectedAthleteIds => compareSelectedAthleteIds.ToArray();
 
     private IReadOnlyList<AthleteComparisonWindowSlot> SelectedComparisonSlots => FieldPlacements
@@ -426,7 +444,7 @@ else
         .OfType<AthleteComparisonWindowSlot>()
         .ToArray();
 
-    private IReadOnlyList<Athlete> EligibleAthletes
+    private IReadOnlyList<Athlete> QuestionAthletes
     {
         get
         {
@@ -447,6 +465,10 @@ else
                 .ToArray();
         }
     }
+
+    private IReadOnlyList<Athlete> EligibleAthletes => QuestionAthletes
+        .Where(athlete => !athlete.IsWithdrawn)
+        .ToArray();
 
     private IReadOnlyDictionary<int, Athlete> SelectedAthletesByPosition => FieldPlacements
         .Select(placement => new
@@ -492,6 +514,7 @@ else
                     IsContextActive = string.Equals(athlete.Id, selectedAthleteId, StringComparison.OrdinalIgnoreCase),
                     IsScored = placement.IsScored,
                     IsAutoSeeded = placement.IsAutoSeeded,
+                    IsWithdrawn = athlete.IsWithdrawn,
                     CanMoveUp = placement.Position > 1,
                     CanMoveDown = placement.Position < placements.Count,
                     CanUseNominated = athlete.SeedTotalKg is not null,
@@ -848,6 +871,18 @@ else
     private void ToggleModuleMenu() => isModuleMenuOpen = !isModuleMenuOpen;
 
     private void CloseModuleMenu() => isModuleMenuOpen = false;
+
+    private Task OpenUpdates(MouseEventArgs _)
+    {
+        isUpdatesOpen = true;
+        return Task.CompletedTask;
+    }
+
+    private Task CloseUpdates()
+    {
+        isUpdatesOpen = false;
+        return Task.CompletedTask;
+    }
 
     private async Task OnModuleChanged(string groupId)
     {
@@ -1696,13 +1731,13 @@ else
             return [];
         }
 
-        var eligibleById = EligibleAthletes.ToDictionary(athlete => athlete.Id, StringComparer.OrdinalIgnoreCase);
+        var questionAthletesById = QuestionAthletes.ToDictionary(athlete => athlete.Id, StringComparer.OrdinalIgnoreCase);
         var seenAthleteIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        var field = new List<AthletePlacementPick>(eligibleById.Count);
+        var field = new List<AthletePlacementPick>(questionAthletesById.Count);
 
         foreach (var placement in StoredPlacements.OrderBy(item => item.Position))
         {
-            if (eligibleById.ContainsKey(placement.AthleteId) && seenAthleteIds.Add(placement.AthleteId))
+            if (questionAthletesById.ContainsKey(placement.AthleteId) && seenAthleteIds.Add(placement.AthleteId))
             {
                 field.Add(placement);
             }
@@ -1777,13 +1812,13 @@ else
             return Task.CompletedTask;
         }
 
-        var eligibleAthleteIds = EligibleAthletes
+        var questionAthleteIds = QuestionAthletes
             .Select(athlete => athlete.Id)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         var sanitized = placements
             .Where(placement => !string.IsNullOrWhiteSpace(placement.AthleteId) &&
-                                eligibleAthleteIds.Contains(placement.AthleteId))
+                                questionAthleteIds.Contains(placement.AthleteId))
             .GroupBy(placement => placement.AthleteId, StringComparer.OrdinalIgnoreCase)
             .Select(group => group.First())
             .OrderBy(placement => placement.Position)

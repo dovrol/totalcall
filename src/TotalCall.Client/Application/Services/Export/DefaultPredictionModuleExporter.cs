@@ -51,7 +51,7 @@ public sealed class DefaultPredictionModuleExporter(IStringLocalizer<SharedResou
                         Module = module.Title,
                         Category = category,
                         Rank = pick.Position,
-                        Athlete = pick.AthleteName,
+                        Athlete = FormatAthleteName(pick),
                         Country = pick.CountryName ?? pick.CountryCode ?? string.Empty,
                         NominatedTotalKg = athlete?.SeedTotalKg,
                         PredictedTotalKg = pick.PredictedTotalKg,
@@ -111,7 +111,7 @@ public sealed class DefaultPredictionModuleExporter(IStringLocalizer<SharedResou
                     var country = string.IsNullOrWhiteSpace(pick.CountryCode) ? "" : $" ({pick.CountryCode})";
                     var total = pick.PredictedTotalKg is null ? "—" : $"{Format(pick.PredictedTotalKg.Value)} kg";
                     var lifts = FormatLifts(pick);
-                    builder.AppendLine($"    {position} {pick.AthleteName}{country}  total={total}{lifts}");
+                    builder.AppendLine($"    {position} {FormatAthleteName(pick)}{country}  total={total}{lifts}");
                 }
             }
             else if (!string.IsNullOrWhiteSpace(section.SummaryText))
@@ -151,6 +151,9 @@ public sealed class DefaultPredictionModuleExporter(IStringLocalizer<SharedResou
 
     private static string Format(decimal value) =>
         value.ToString("0.#", CultureInfo.InvariantCulture);
+
+    private static string FormatAthleteName(ReviewPickRowModel pick) =>
+        pick.IsWithdrawn ? $"{pick.AthleteName} (Withdrawn)" : pick.AthleteName;
 
     private static string FormatLifts(ReviewPickRowModel pick)
     {

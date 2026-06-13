@@ -47,6 +47,8 @@ public sealed record TopNSlotView
 
     public bool IsAutoSeeded { get; init; }
 
+    public bool IsWithdrawn { get; init; }
+
     public bool CanMoveUp { get; init; }
 
     public bool CanMoveDown { get; init; }

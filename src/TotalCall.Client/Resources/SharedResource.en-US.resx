@@ -103,8 +103,10 @@
   <data name="Common.Save" xml:space="preserve"><value>Save</value></data>
   <data name="Common.Cancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="Common.TryAgain" xml:space="preserve"><value>Try again</value></data>
+  <data name="Common.Close" xml:space="preserve"><value>Close</value></data>
   <data name="Common.Tbd" xml:space="preserve"><value>TBD</value></data>
   <data name="Common.Today" xml:space="preserve"><value>today</value></data>
+  <data name="Common.Yesterday" xml:space="preserve"><value>yesterday</value></data>
   <data name="Common.Tomorrow" xml:space="preserve"><value>tomorrow</value></data>
   <data name="Common.Required" xml:space="preserve"><value>Required</value></data>
   <data name="Common.Optional" xml:space="preserve"><value>Optional</value></data>
@@ -119,6 +121,60 @@
   <data name="Common.Gold" xml:space="preserve"><value>Gold</value></data>
   <data name="Common.Silver" xml:space="preserve"><value>Silver</value></data>
   <data name="Common.Bronze" xml:space="preserve"><value>Bronze</value></data>
+  <data name="CompetitionTimeline.Title" xml:space="preserve"><value>Competition timeline</value></data>
+  <data name="CompetitionTimeline.Summary.Latest" xml:space="preserve"><value>Latest: {0}</value></data>
+  <data name="CompetitionTimeline.Count" xml:space="preserve"><value>Updates: {0}</value></data>
+  <data name="CompetitionTimeline.NoDate" xml:space="preserve"><value>Date not set</value></data>
+  <data name="CompetitionTimeline.Athletes" xml:space="preserve"><value>Athletes</value></data>
+  <data name="CompetitionTimeline.Type.General" xml:space="preserve"><value>Update</value></data>
+  <data name="CompetitionTimeline.Type.RosterUpdate" xml:space="preserve"><value>Roster</value></data>
+  <data name="CompetitionTimeline.Type.DeadlineChange" xml:space="preserve"><value>Deadline</value></data>
+  <data name="CompetitionTimeline.Type.ResultsUpdate" xml:space="preserve"><value>Results</value></data>
+  <data name="CompetitionTimeline.Type.ScoringUpdate" xml:space="preserve"><value>Scoring</value></data>
+  <data name="CompetitionTimeline.Default.General" xml:space="preserve"><value>Competition update</value></data>
+  <data name="CompetitionTimeline.Default.RosterSingle" xml:space="preserve"><value>Roster update: {0} has withdrawn.</value></data>
+  <data name="CompetitionTimeline.Default.RosterMultiple" xml:space="preserve"><value>Roster update: {0} athletes have withdrawn.</value></data>
+  <data name="CompetitionTimeline.Default.DeadlineChange" xml:space="preserve"><value>Prediction deadline updated</value></data>
+  <data name="CompetitionTimeline.Default.ResultsUpdate" xml:space="preserve"><value>Results update</value></data>
+  <data name="CompetitionTimeline.Default.ScoringUpdate" xml:space="preserve"><value>Scoring update</value></data>
+  <data name="CompetitionTimeline.RosterBodySingle" xml:space="preserve"><value>This athlete is no longer selectable for new picks.</value></data>
+  <data name="CompetitionTimeline.RosterBodyMultiple" xml:space="preserve"><value>These athletes are no longer selectable for new picks.</value></data>
+  <data name="CompetitionTimeline.Source.Config" xml:space="preserve"><value>competition config</value></data>
+  <data name="CompetitionUpdates.Chip" xml:space="preserve"><value>Updates</value></data>
+  <data name="CompetitionUpdates.Open" xml:space="preserve"><value>Open competition updates</value></data>
+  <data name="CompetitionUpdates.OpenWithCount" xml:space="preserve"><value>Open competition updates. Update count: {0}.</value></data>
+  <data name="CompetitionUpdates.OpenAffected" xml:space="preserve"><value>Open competition updates. {0} withdrawn athlete(s) affect your picks.</value></data>
+  <data name="CompetitionUpdates.Title" xml:space="preserve"><value>Competition updates</value></data>
+  <data name="CompetitionUpdates.Subtitle" xml:space="preserve"><value>Roster, deadline, and results in event order</value></data>
+  <data name="CompetitionUpdates.Filters" xml:space="preserve"><value>Update filters</value></data>
+  <data name="CompetitionUpdates.Filter.All" xml:space="preserve"><value>All</value></data>
+  <data name="CompetitionUpdates.Filter.Action" xml:space="preserve"><value>Needs action</value></data>
+  <data name="CompetitionUpdates.Filter.Results" xml:space="preserve"><value>Results</value></data>
+  <data name="CompetitionUpdates.Badge.Info" xml:space="preserve"><value>No action</value></data>
+  <data name="CompetitionUpdates.Badge.Important" xml:space="preserve"><value>Important</value></data>
+  <data name="CompetitionUpdates.Badge.Action" xml:space="preserve"><value>Needs action</value></data>
+  <data name="CompetitionUpdates.Type.General" xml:space="preserve"><value>Notice</value></data>
+  <data name="CompetitionUpdates.Type.RosterUpdate" xml:space="preserve"><value>Roster update</value></data>
+  <data name="CompetitionUpdates.Type.DeadlineChange" xml:space="preserve"><value>Picks locked</value></data>
+  <data name="CompetitionUpdates.Type.ResultsUpdate" xml:space="preserve"><value>Results imported</value></data>
+  <data name="CompetitionUpdates.Type.ScoringUpdate" xml:space="preserve"><value>Live standings</value></data>
+  <data name="CompetitionUpdates.Default.General" xml:space="preserve"><value>Competition update</value></data>
+  <data name="CompetitionUpdates.Default.RosterSingle" xml:space="preserve"><value>Roster update: {0} has withdrawn.</value></data>
+  <data name="CompetitionUpdates.Default.RosterMultiple" xml:space="preserve"><value>Roster update: {0} athletes have withdrawn.</value></data>
+  <data name="CompetitionUpdates.Default.DeadlineChange" xml:space="preserve"><value>Prediction deadline updated</value></data>
+  <data name="CompetitionUpdates.Default.ResultsUpdate" xml:space="preserve"><value>Results update</value></data>
+  <data name="CompetitionUpdates.Default.ScoringUpdate" xml:space="preserve"><value>Scoring update</value></data>
+  <data name="CompetitionUpdates.RosterBodySingle" xml:space="preserve"><value>This athlete is no longer selectable for new picks.</value></data>
+  <data name="CompetitionUpdates.RosterBodyMultiple" xml:space="preserve"><value>These athletes are no longer selectable for new picks.</value></data>
+  <data name="CompetitionUpdates.Source.Config" xml:space="preserve"><value>competition config</value></data>
+  <data name="CompetitionUpdates.NoDate" xml:space="preserve"><value>Date not set</value></data>
+  <data name="CompetitionUpdates.Pinned.Title" xml:space="preserve"><value>Affects your picks</value></data>
+  <data name="CompetitionUpdates.Pinned.Editable" xml:space="preserve"><value>Your picks include withdrawn athlete(s): {0}. Update before the deadline; unchanged withdrawn slots score 0 points.</value></data>
+  <data name="CompetitionUpdates.Pinned.Locked" xml:space="preserve"><value>Picks are locked. Withdrawn athlete(s) in your picks ({0}) score 0 points; editing is no longer available.</value></data>
+  <data name="CompetitionUpdates.Pinned.FixPick" xml:space="preserve"><value>Update pick</value></data>
+  <data name="CompetitionUpdates.Empty.Title" xml:space="preserve"><value>No updates</value></data>
+  <data name="CompetitionUpdates.Empty.Body" xml:space="preserve"><value>Important roster, deadline, and result updates will appear here when they happen.</value></data>
+  <data name="CompetitionUpdates.Privacy" xml:space="preserve"><value>Updates are public event-level entries. Warnings about your picks are private to you; we do not expose other users' picks, emails, or drafts.</value></data>
   <data name="Status.Upcoming" xml:space="preserve"><value>Open</value></data>
   <data name="Status.Locked" xml:space="preserve"><value>Locked</value></data>
   <data name="Status.Completed" xml:space="preserve"><value>Completed</value></data>
@@ -485,6 +541,20 @@
   <data name="Predictions.CompleteSectionToScore" xml:space="preserve"><value>Complete this category to score points.</value></data>
   <data name="Predictions.Category" xml:space="preserve"><value>Category</value></data>
   <data name="Predictions.Pick" xml:space="preserve"><value>Pick</value></data>
+  <data name="Predictions.Roster.Withdrawn" xml:space="preserve"><value>Withdrawn</value></data>
+  <data name="Predictions.Roster.AthleteWithdrawn" xml:space="preserve"><value>This athlete has withdrawn.</value></data>
+  <data name="Predictions.Roster.PickWarningEditable" xml:space="preserve"><value>You selected a withdrawn athlete. Update this pick before the deadline.</value></data>
+  <data name="Predictions.Roster.PickWarningLocked" xml:space="preserve"><value>This pick is locked. Withdrawn athletes score 0 points.</value></data>
+  <data name="Predictions.Roster.Banner.Single" xml:space="preserve"><value>Roster update: {0} has withdrawn.</value></data>
+  <data name="Predictions.Roster.Banner.Multiple" xml:space="preserve"><value>Roster update: {0} athletes have withdrawn.</value></data>
+  <data name="Predictions.Roster.Banner.AffectedTitle" xml:space="preserve"><value>Your picks include a withdrawn athlete.</value></data>
+  <data name="Predictions.Roster.Banner.AffectedEditable" xml:space="preserve"><value>{0}: update before the deadline.</value></data>
+  <data name="Predictions.Roster.Banner.AffectedLocked" xml:space="preserve"><value>{0}: picks are locked; withdrawn athletes score 0 points.</value></data>
+  <data name="Predictions.Roster.Banner.NeutralSingle" xml:space="preserve"><value>This athlete is no longer selectable for new picks.</value></data>
+  <data name="Predictions.Roster.Banner.NeutralMultiple" xml:space="preserve"><value>{0} are no longer selectable for new picks.</value></data>
+  <data name="Predictions.Roster.SubmitWarningTitle" xml:space="preserve"><value>Withdrawn athlete selected</value></data>
+  <data name="Predictions.Roster.SubmitWarningBody" xml:space="preserve"><value>Selected withdrawn athlete(s): {0}. You can still submit, but those slots score 0 if left unchanged.</value></data>
+  <data name="Predictions.Roster.Rules" xml:space="preserve"><value>If an athlete withdraws before the deadline, you can update your picks until predictions lock. If a withdrawn athlete remains in your submitted picks, that athlete scores 0 points. Picks are not automatically shifted or replaced.</value></data>
   <data name="Review.PageTitle" xml:space="preserve"><value>Prediction review</value></data>
   <data name="Review.Loading" xml:space="preserve"><value>Loading prediction review...</value></data>
   <data name="Review.NotFoundTitle" xml:space="preserve"><value>Prediction review not found</value></data>

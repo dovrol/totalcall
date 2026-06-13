@@ -39,6 +39,8 @@ public sealed record Competition
 
     public AthleteDataConfiguration? AthleteData { get; init; }
 
+    public IReadOnlyList<CompetitionUpdate> Updates { get; init; } = [];
+
     public IReadOnlyList<Athlete> Athletes { get; init; } = [];
 
     public IReadOnlyList<WeightCategory> Categories { get; init; } = [];

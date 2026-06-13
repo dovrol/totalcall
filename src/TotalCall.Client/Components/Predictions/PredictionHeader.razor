@@ -39,6 +39,10 @@
                     </strong>
                 </div>
 
+                <CompetitionUpdatesChip
+                    Competition="@Competition"
+                    Answers="@Answers"
+                    Clicked="@UpdatesRequested" />
             </div>
         </div>
 
@@ -65,6 +69,12 @@
 
     [Parameter]
     public bool CanEditPredictions { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<PredictionAnswer> Answers { get; set; } = [];
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> UpdatesRequested { get; set; }
 
     private int CompletionPercent => ModuleValidation.TotalItems == 0
         ? 0

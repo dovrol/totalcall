@@ -202,6 +202,7 @@ public sealed class CompetitionReviewBuilder(
                     AthleteName = athlete?.DisplayName ?? placement.AthleteId,
                     CountryCode = athlete?.CountryCode,
                     CountryName = athlete?.CountryName,
+                    IsWithdrawn = athlete?.IsWithdrawn ?? false,
                     PredictedTotalKg = placement.PredictedTotalKg,
                     PredictedSquatKg = placement.PredictedSquatKg,
                     PredictedBenchKg = placement.PredictedBenchKg,

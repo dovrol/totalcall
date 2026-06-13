@@ -16,10 +16,13 @@ public sealed class PredictionService(
     {
         var savedPredictions = await predictionStore.GetAsync(competition.Id, cancellationToken);
 
-        if (savedPredictions is not null &&
-            savedPredictions.CompetitionConfigVersion == competition.ConfigVersion)
+        if (savedPredictions is not null)
         {
-            return EnsureStorageMetadata(savedPredictions);
+            return EnsureStorageMetadata(savedPredictions) with
+            {
+                CompetitionConfigVersion = competition.ConfigVersion,
+                LocalUserId = savedPredictions.LocalUserId ?? authService.CurrentUser?.Id
+            };
         }
 
         return new PredictionSet
