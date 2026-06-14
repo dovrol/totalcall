@@ -32,6 +32,94 @@
           "benchKg": 87.5,
           "deadliftKg": 195.0,
           "totalKg": 427.5
+        },
+        {
+          "position": 4,
+          "athleteId": "motta-annalisa",
+          "squatKg": 147.5,
+          "benchKg": 90.0,
+          "deadliftKg": 180.0,
+          "totalKg": 417.5
+        },
+        {
+          "position": 5,
+          "athleteId": "duno-frankmary",
+          "squatKg": 145.0,
+          "benchKg": 97.5,
+          "deadliftKg": 165.0,
+          "totalKg": 407.5
+        },
+        {
+          "position": 6,
+          "athleteId": "kijumnuayporn-vicky",
+          "squatKg": 140.0,
+          "benchKg": 92.5,
+          "deadliftKg": 165.0,
+          "totalKg": 397.5
+        },
+        {
+          "position": 7,
+          "athleteId": "mikova-anezka",
+          "squatKg": 152.5,
+          "benchKg": 77.5,
+          "deadliftKg": 167.5,
+          "totalKg": 397.5
+        },
+        {
+          "position": 8,
+          "athleteId": "altamimi-alhanouf",
+          "squatKg": 132.5,
+          "benchKg": 82.5,
+          "deadliftKg": 177.5,
+          "totalKg": 392.5
+        },
+        {
+          "position": 9,
+          "athleteId": "jones-ainsley",
+          "squatKg": 135.0,
+          "benchKg": 75.0,
+          "deadliftKg": 165.0,
+          "totalKg": 375.0
+        },
+        {
+          "position": 10,
+          "athleteId": "santos-mediavilla-paula",
+          "squatKg": 127.5,
+          "benchKg": 80.0,
+          "deadliftKg": 152.5,
+          "totalKg": 360.0
+        },
+        {
+          "position": 11,
+          "athleteId": "wedlock-sze-yee-venezia",
+          "squatKg": 130.0,
+          "benchKg": 57.5,
+          "deadliftKg": 135.0,
+          "totalKg": 322.5
+        },
+        {
+          "position": 12,
+          "athleteId": "mai-on-kotchaphan",
+          "squatKg": 97.5,
+          "benchKg": 70.0,
+          "deadliftKg": 140.0,
+          "totalKg": 307.5
+        },
+        {
+          "position": 13,
+          "athleteId": "clarke-joanne",
+          "squatKg": 107.5,
+          "benchKg": 65.0,
+          "deadliftKg": 127.5,
+          "totalKg": 300.0
+        },
+        {
+          "position": 14,
+          "athleteId": "idczak-karolina",
+          "squatKg": 107.5,
+          "benchKg": 52.5,
+          "deadliftKg": 120.0,
+          "totalKg": 280.0
         }
       ]
     },
@@ -64,6 +152,110 @@
           "benchKg": 140.0,
           "deadliftKg": 257.5,
           "totalKg": 632.5
+        },
+        {
+          "position": 4,
+          "athleteId": "nyarko-kwaku",
+          "squatKg": 230.0,
+          "benchKg": 140.0,
+          "deadliftKg": 257.5,
+          "totalKg": 627.5
+        },
+        {
+          "position": 5,
+          "athleteId": "you-yao-wei",
+          "squatKg": 210.0,
+          "benchKg": 120.0,
+          "deadliftKg": 270.0,
+          "totalKg": 600.0
+        },
+        {
+          "position": 6,
+          "athleteId": "leon-franklin",
+          "squatKg": 230.0,
+          "benchKg": 132.5,
+          "deadliftKg": 232.5,
+          "totalKg": 595.0
+        },
+        {
+          "position": 7,
+          "athleteId": "takiyama-yasutaka",
+          "squatKg": 220.0,
+          "benchKg": 135.0,
+          "deadliftKg": 235.0,
+          "totalKg": 590.0
+        },
+        {
+          "position": 8,
+          "athleteId": "madera-joenas",
+          "squatKg": 195.0,
+          "benchKg": 125.0,
+          "deadliftKg": 255.0,
+          "totalKg": 575.0
+        },
+        {
+          "position": 9,
+          "athleteId": "cruz-angel",
+          "squatKg": 207.5,
+          "benchKg": 125.0,
+          "deadliftKg": 240.0,
+          "totalKg": 572.5
+        },
+        {
+          "position": 10,
+          "athleteId": "huang-wei-chen",
+          "squatKg": 205.0,
+          "benchKg": 127.5,
+          "deadliftKg": 237.5,
+          "totalKg": 570.0
+        },
+        {
+          "position": 11,
+          "athleteId": "gelashvili-giorgi",
+          "squatKg": 192.5,
+          "benchKg": 155.0,
+          "deadliftKg": 212.5,
+          "totalKg": 560.0
+        },
+        {
+          "position": 12,
+          "athleteId": "santangelo-jacopo",
+          "squatKg": 202.5,
+          "benchKg": 122.5,
+          "deadliftKg": 222.5,
+          "totalKg": 547.5
+        },
+        {
+          "position": 13,
+          "athleteId": "ergin-kemal",
+          "squatKg": 182.5,
+          "benchKg": 147.5,
+          "deadliftKg": 215.0,
+          "totalKg": 545.0
+        },
+        {
+          "position": 14,
+          "athleteId": "imamura-ryo",
+          "squatKg": 185.0,
+          "benchKg": 132.5,
+          "deadliftKg": 225.0,
+          "totalKg": 542.5
+        },
+        {
+          "position": 15,
+          "athleteId": "cancel-ivan",
+          "squatKg": 192.5,
+          "benchKg": 122.5,
+          "deadliftKg": 217.5,
+          "totalKg": 532.5
+        },
+        {
+          "position": 16,
+          "athleteId": "flores-jose",
+          "squatKg": 157.5,
+          "benchKg": 105.0,
+          "deadliftKg": 227.5,
+          "totalKg": 490.0
         }
       ]
     }
