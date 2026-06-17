@@ -2,6 +2,58 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.12.0-beta.1",
+      "releasedAt": "2026-06-17",
+      "title": {
+        "pl": "Tryb wyników na planszy typów i publiczne tablice graczy",
+        "en": "Results mode on the prediction board and public player boards"
+      },
+      "items": [
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Po terminie zablokowana plansza typów zamienia się w tablicę wyników: kolumna „Δ NOM” staje się komórką „Wynik” z oficjalnym miejscem oraz punktami za trafione sloty Top-N.",
+            "en": "After the deadline the locked prediction board turns into a results board: the “Δ NOM” column becomes a “Result” cell with the official place and points for hit Top-N slots."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Z klasyfikacji możesz teraz wejść na publiczną tablicę dowolnego gracza (/board) i obejrzeć jego typy oraz wyniki w trybie tylko do odczytu.",
+            "en": "From the standings you can now open any player's public board (/board) and view their picks and results in read-only mode."
+          }
+        },
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Nowa punktacja slotów: trafienie dokładne +3, trafienie w innym miejscu +1, pudło 0, plus bonusy za skompletowanie Top-N (+1) i idealną kolejność (+2).",
+            "en": "New per-slot scoring: exact hit +3, right athlete in the wrong place +1, miss 0, plus bonuses for completing the Top-N (+1) and a perfect order (+2)."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Czytelny nagłówek kontekstu i podsumowanie punktów dla każdej kategorii, z akcentem kolorystycznym zależnym od trybu: niebieski dla tablicy publicznej, zielony dla własnej zablokowanej, czerwony przy edycji.",
+            "en": "A clear context header and per-category points summary, with a mode accent colour: blue for a public board, green for your own locked board, red while editing."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Frontend tylko wyświetla snapshot wyników liczony po stronie backendu — oficjalne punkty nigdy nie są wyliczane w przeglądarce. Publiczne tablice udostępniają wyłącznie typy i wynik, bez e-maila, ID konta czy szkiców.",
+            "en": "The frontend only renders a backend-computed score snapshot — official points are never calculated in the browser. Public boards expose only picks and the score, never email, account ID or drafts."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Worlds 2026 dostało kolejne dni oficjalnych wyników (13–17 czerwca), więc klasyfikacja i tablice wyników obejmują coraz więcej rozstrzygniętych kategorii.",
+            "en": "Worlds 2026 received several more days of official results (June 13–17), so the standings and results boards now cover more finalized categories."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.11.0-beta.1",
       "releasedAt": "2026-06-13",
       "title": {
