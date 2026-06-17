@@ -1,0 +1,175 @@
+{
+  "competitionId": "worlds-2026",
+  "status": "partial",
+  "source": "IPF 2026 Classic Worlds results PDFs, 2026-06-17",
+  "groups": [
+    {
+      "groupId": "category-top5",
+      "questionId": "top5-men-93",
+      "categoryId": "men-93",
+      "status": "final",
+      "placements": [
+        {
+          "position": 1,
+          "athleteId": "ball-william",
+          "squatKg": 335.0,
+          "benchKg": 217.5,
+          "deadliftKg": 375.0,
+          "totalKg": 927.5
+        },
+        {
+          "position": 2,
+          "athleteId": "ayandokun-christian",
+          "squatKg": 320.0,
+          "benchKg": 207.5,
+          "deadliftKg": 372.5,
+          "totalKg": 900.0
+        },
+        {
+          "position": 3,
+          "athleteId": "krastev-emil",
+          "squatKg": 307.5,
+          "benchKg": 235.0,
+          "deadliftKg": 355.0,
+          "totalKg": 897.5
+        },
+        {
+          "position": 4,
+          "athleteId": "nouari-aimene",
+          "squatKg": 337.5,
+          "benchKg": 190.0,
+          "deadliftKg": 370.0,
+          "totalKg": 897.5
+        },
+        {
+          "position": 5,
+          "athleteId": "antwi-kwaku",
+          "squatKg": 280.0,
+          "benchKg": 217.5,
+          "deadliftKg": 377.5,
+          "totalKg": 875.0
+        },
+        {
+          "position": 6,
+          "athleteId": "van-bezooijen-richard",
+          "squatKg": 305.0,
+          "benchKg": 190.0,
+          "deadliftKg": 317.5,
+          "totalKg": 812.5
+        },
+        {
+          "position": 7,
+          "athleteId": "hermisdorf-leonardo",
+          "squatKg": 280.0,
+          "benchKg": 185.0,
+          "deadliftKg": 337.5,
+          "totalKg": 802.5
+        },
+        {
+          "position": 8,
+          "athleteId": "blackmore-aaron",
+          "squatKg": 310.0,
+          "benchKg": 192.5,
+          "deadliftKg": 300.0,
+          "totalKg": 802.5
+        },
+        {
+          "position": 9,
+          "athleteId": "wortel-john",
+          "squatKg": 292.5,
+          "benchKg": 200.0,
+          "deadliftKg": 295.0,
+          "totalKg": 787.5
+        },
+        {
+          "position": 10,
+          "athleteId": "tsuruya-shimon",
+          "squatKg": 290.0,
+          "benchKg": 175.0,
+          "deadliftKg": 320.0,
+          "totalKg": 785.0
+        },
+        {
+          "position": 11,
+          "athleteId": "ussing-daniel",
+          "squatKg": 282.5,
+          "benchKg": 182.5,
+          "deadliftKg": 312.5,
+          "totalKg": 777.5
+        },
+        {
+          "position": 12,
+          "athleteId": "gortz-guilherme",
+          "squatKg": 295.0,
+          "benchKg": 165.0,
+          "deadliftKg": 290.0,
+          "totalKg": 750.0
+        },
+        {
+          "position": 13,
+          "athleteId": "gonzalez-jose",
+          "squatKg": 277.5,
+          "benchKg": 162.5,
+          "deadliftKg": 300.0,
+          "totalKg": 740.0
+        },
+        {
+          "position": 14,
+          "athleteId": "law-tak-kan-duncan",
+          "squatKg": 260.0,
+          "benchKg": 185.0,
+          "deadliftKg": 275.0,
+          "totalKg": 720.0
+        },
+        {
+          "position": 15,
+          "athleteId": "zabeau-tom",
+          "squatKg": 267.5,
+          "benchKg": 185.0,
+          "deadliftKg": 265.0,
+          "totalKg": 717.5
+        },
+        {
+          "position": 16,
+          "athleteId": "klimka-airidas",
+          "squatKg": 245.0,
+          "benchKg": 167.5,
+          "deadliftKg": 295.0,
+          "totalKg": 707.5
+        },
+        {
+          "position": 17,
+          "athleteId": "hibsfelds-ricards",
+          "squatKg": 257.5,
+          "benchKg": 177.5,
+          "deadliftKg": 272.5,
+          "totalKg": 707.5
+        },
+        {
+          "position": 18,
+          "athleteId": "hapon-danyil",
+          "squatKg": 260.0,
+          "benchKg": 152.5,
+          "deadliftKg": 292.5,
+          "totalKg": 705.0
+        },
+        {
+          "position": 19,
+          "athleteId": "choi-junwon",
+          "squatKg": 270.0,
+          "benchKg": 160.0,
+          "deadliftKg": 270.0,
+          "totalKg": 700.0
+        },
+        {
+          "position": 20,
+          "athleteId": "khuzwayo-bandile",
+          "squatKg": 247.5,
+          "benchKg": 142.5,
+          "deadliftKg": 260.0,
+          "totalKg": 650.0
+        }
+      ]
+    }
+  ]
+}
