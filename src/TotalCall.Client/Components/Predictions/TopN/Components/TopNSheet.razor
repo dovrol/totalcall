@@ -65,6 +65,7 @@
             }
 
             var isTotal = string.Equals(slot.Mode, TopNEntryMode.Total, StringComparison.OrdinalIgnoreCase);
+            var rowResult = ShowResults ? GetResult(slot.Athlete!.Id) : null;
 
             <div @key="slot.Athlete!.Id" class="@RowGroupClass(slot)" data-topn-athlete-id="@slot.Athlete!.Id">
                 <div
@@ -189,25 +190,94 @@
                         <div class="topn-cell topn-cell--num"><span class="tcl-static tcl-static--muted">—</span></div>
                         <div class="topn-cell topn-cell--num"><span class="tcl-static tcl-static--muted">—</span></div>
                         <div class="topn-cell topn-cell--num"><span class="tcl-static tcl-static--muted">—</span></div>
-                        <div class="topn-cell topn-cell--num">
-                            <span class="@StaticValueClass(slot.Placement?.PredictedTotalKg)">@FormatPred(slot.Placement?.PredictedTotalKg)</span>
+                        <div class="topn-cell topn-cell--num topn-cell--prediction">
+                            <span class="@PredPairClass(rowResult?.OfficialTotalKg is not null)">
+                                <span class="topn-predpair__item topn-predpair__item--pred">
+                                    <small>@Localizer["Predictions.PredictedShort"]</small>
+                                    <strong>@FormatPred(slot.Placement?.PredictedTotalKg)</strong>
+                                </span>
+                            @if (rowResult?.OfficialTotalKg is { } actualTotal)
+                            {
+                                    <span class="topn-predpair__item topn-predpair__item--actual">
+                                        <small>@Localizer["Predictions.TopN.ActualShort"]</small>
+                                        <strong>@FormatPred(actualTotal)</strong>
+                                    </span>
+                            }
+                            </span>
                         </div>
                     }
                     else if (!CanEditPredictions)
                     {
                         <div class="topn-cell topn-cell--num">
-                            <span class="@StaticValueClass(slot.Placement?.PredictedSquatKg)">@FormatPred(slot.Placement?.PredictedSquatKg)</span>
+                            @if (rowResult?.OfficialSquatKg is { } actualSquat)
+                            {
+                                <span class="topn-predpair topn-predpair--with-actual topn-predpair--lift">
+                                    <span class="@PredPairItemClass(slot.IsAutoSeeded)">
+                                        <small>@Localizer["Predictions.PredictedShort"]</small>
+                                        <strong>@FormatPred(slot.Placement?.PredictedSquatKg)</strong>
+                                    </span>
+                                    <span class="topn-predpair__item topn-predpair__item--actual">
+                                        <small>@Localizer["Predictions.TopN.ActualShort"]</small>
+                                        <strong>@FormatPred(actualSquat)</strong>
+                                    </span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="@StaticValueClass(slot.Placement?.PredictedSquatKg)">@FormatPred(slot.Placement?.PredictedSquatKg)</span>
+                            }
                         </div>
                         <div class="topn-cell topn-cell--num">
-                            <span class="@StaticValueClass(slot.Placement?.PredictedBenchKg)">@FormatPred(slot.Placement?.PredictedBenchKg)</span>
+                            @if (rowResult?.OfficialBenchKg is { } actualBench)
+                            {
+                                <span class="topn-predpair topn-predpair--with-actual topn-predpair--lift">
+                                    <span class="@PredPairItemClass(slot.IsAutoSeeded)">
+                                        <small>@Localizer["Predictions.PredictedShort"]</small>
+                                        <strong>@FormatPred(slot.Placement?.PredictedBenchKg)</strong>
+                                    </span>
+                                    <span class="topn-predpair__item topn-predpair__item--actual">
+                                        <small>@Localizer["Predictions.TopN.ActualShort"]</small>
+                                        <strong>@FormatPred(actualBench)</strong>
+                                    </span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="@StaticValueClass(slot.Placement?.PredictedBenchKg)">@FormatPred(slot.Placement?.PredictedBenchKg)</span>
+                            }
                         </div>
                         <div class="topn-cell topn-cell--num">
-                            <span class="@StaticValueClass(slot.Placement?.PredictedDeadliftKg)">@FormatPred(slot.Placement?.PredictedDeadliftKg)</span>
+                            @if (rowResult?.OfficialDeadliftKg is { } actualDeadlift)
+                            {
+                                <span class="topn-predpair topn-predpair--with-actual topn-predpair--lift">
+                                    <span class="@PredPairItemClass(slot.IsAutoSeeded)">
+                                        <small>@Localizer["Predictions.PredictedShort"]</small>
+                                        <strong>@FormatPred(slot.Placement?.PredictedDeadliftKg)</strong>
+                                    </span>
+                                    <span class="topn-predpair__item topn-predpair__item--actual">
+                                        <small>@Localizer["Predictions.TopN.ActualShort"]</small>
+                                        <strong>@FormatPred(actualDeadlift)</strong>
+                                    </span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="@StaticValueClass(slot.Placement?.PredictedDeadliftKg)">@FormatPred(slot.Placement?.PredictedDeadliftKg)</span>
+                            }
                         </div>
-                        <div class="topn-cell topn-cell--num">
-                            <span class="@PredClass(slot.IsAutoSeeded)">
-                                <small>@(slot.IsAutoSeeded ? Localizer["Predictions.TopN.ByNominationShort"] : Localizer["Predictions.PredictedShort"])</small>
-                                @FormatPred(slot.Placement?.PredictedTotalKg)
+                        <div class="topn-cell topn-cell--num topn-cell--prediction">
+                            <span class="@PredPairClass(rowResult?.OfficialTotalKg is not null)">
+                                <span class="@PredPairItemClass(slot.IsAutoSeeded)">
+                                    <small>@(slot.IsAutoSeeded ? Localizer["Predictions.TopN.ByNominationShort"] : Localizer["Predictions.PredictedShort"])</small>
+                                    <strong>@FormatPred(slot.Placement?.PredictedTotalKg)</strong>
+                                </span>
+                            @if (rowResult?.OfficialTotalKg is { } actualTotal)
+                            {
+                                    <span class="topn-predpair__item topn-predpair__item--actual">
+                                        <small>@Localizer["Predictions.TopN.ActualShort"]</small>
+                                        <strong>@FormatPred(actualTotal)</strong>
+                                    </span>
+                            }
                             </span>
                         </div>
                     }
@@ -231,7 +301,7 @@
                     }
 
                     <div class="topn-cell topn-cell--num">
-                        @if (ShowResults && TryGetResult(slot.Athlete!.Id, out var result) && (result.OfficialPlace is not null || result.Verdict is not null))
+                        @if (ShowResults && rowResult is { } result && (result.OfficialPlace is not null || result.Verdict is not null))
                         {
                             <span class="topn-result">
                                 @if (result.OfficialPlace is not null)
@@ -425,17 +495,10 @@
 
     private bool ShowResults => Results is not null;
 
-    private bool TryGetResult(string athleteId, out TopNSlotResult result)
-    {
-        if (Results is not null && !string.IsNullOrEmpty(athleteId) && Results.TryGetValue(athleteId, out var found))
-        {
-            result = found;
-            return true;
-        }
-
-        result = default!;
-        return false;
-    }
+    private TopNSlotResult? GetResult(string athleteId) =>
+        Results is not null && !string.IsNullOrEmpty(athleteId) && Results.TryGetValue(athleteId, out var r)
+            ? r
+            : null;
 
     private static string PlaceClass(int? place) => place switch
     {
@@ -529,6 +592,14 @@
 
     private static string PredClass(bool isAutoSeeded) =>
         isAutoSeeded ? "topn-pred topn-pred--muted" : "topn-pred";
+
+    private static string PredPairClass(bool hasActual) =>
+        hasActual ? "topn-predpair topn-predpair--with-actual" : "topn-predpair";
+
+    private static string PredPairItemClass(bool isAutoSeeded) =>
+        isAutoSeeded
+            ? "topn-predpair__item topn-predpair__item--pred topn-predpair__item--muted"
+            : "topn-predpair__item topn-predpair__item--pred";
 
     private static string StaticValueClass(decimal? value) =>
         value is null ? "tcl-static tcl-static--muted" : "tcl-static";

@@ -550,6 +550,57 @@ public sealed class SynchronizedPredictionStoreTests
     }
 
     [Fact]
+    public async Task GetAsync_WhenAlreadySubmitted_DoesNotReSubmitDuringReconcile()
+    {
+        var submittedAt = DateTimeOffset.Parse("2026-06-05T10:00:00Z");
+        var localPredictionSet = CreatePredictionSet(
+            localUserId: CurrentUserId,
+            savedAt: DateTimeOffset.Parse("2026-06-05T11:00:00Z"),
+            questionId: "local-answer") with
+        {
+            SubmissionStatus = PredictionSet.SubmittedSubmissionStatus,
+            SubmittedAt = submittedAt
+        };
+        var cloudPredictionSet = CreatePredictionSet(
+            localUserId: CurrentUserId,
+            savedAt: DateTimeOffset.Parse("2026-06-05T09:00:00Z"),
+            questionId: "cloud-answer") with
+        {
+            SubmissionStatus = PredictionSet.SubmittedSubmissionStatus,
+            SubmittedAt = submittedAt
+        };
+        var responseJson = JsonSerializer.Serialize(
+            new[] { new { answers_json = cloudPredictionSet, status = "submitted", submitted_at = submittedAt } },
+            JsonDataOptions.SerializerOptions);
+
+        var js = new FakeJsRuntime();
+        var localStore = new LocalStoragePredictionStore(new BrowserLocalStorage(js));
+        await localStore.SaveAsync(localPredictionSet);
+
+        var handler = new RecordingHandler((request, _) =>
+        {
+            Assert.Equal(HttpMethod.Get, request.Method);
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(responseJson, Encoding.UTF8, "application/json")
+            });
+        });
+        var auth = await CreateAuthAsync(js, authenticated: true);
+        var state = new PredictionSyncState();
+        using var store = CreateStore(js, handler, auth, state);
+
+        var restored = await store.GetAsync(localPredictionSet.CompetitionId);
+
+        Assert.NotNull(restored);
+        Assert.True(restored.IsSubmitted);
+        Assert.Equal(submittedAt, restored.SubmittedAt);
+        Assert.DoesNotContain(handler.Requests, request =>
+            request.Method == HttpMethod.Post &&
+            request.Uri.Contains("rpc/submit_prediction", StringComparison.OrdinalIgnoreCase));
+        Assert.Equal(PredictionSaveStatus.Submitted, state.GetStatus(localPredictionSet.CompetitionId));
+    }
+
+    [Fact]
     public async Task SubmitAsync_WhenAnonymous_ThrowsWithoutCallingCloud()
     {
         var js = new FakeJsRuntime();

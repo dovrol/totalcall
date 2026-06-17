@@ -52,7 +52,12 @@ public sealed class SynchronizedPredictionStore(
         try
         {
             var cloud = await cloudStore.GetAsync(competitionId, cancellationToken);
-            var synchronized = await ReconcileAsync(local, cloud, currentUserId, cancellationToken);
+            var synchronized = await ReconcileAsync(
+                local,
+                cloud,
+                currentUserId,
+                CloudWriteMode.DraftsOnly,
+                cancellationToken);
             SetSynchronizedStatus(competitionId, synchronized);
             return synchronized;
         }
@@ -111,6 +116,7 @@ public sealed class SynchronizedPredictionStore(
                 ownedPredictionSet,
                 cloud,
                 currentUserId,
+                CloudWriteMode.All,
                 cancellationToken);
             SetSynchronizedStatus(predictionSet.CompetitionId, synchronized);
         }
@@ -217,6 +223,7 @@ public sealed class SynchronizedPredictionStore(
                             local,
                             cloud,
                             currentUserId,
+                            CloudWriteMode.DraftsOnly,
                             cancellationToken);
                         SetSynchronizedStatus(local.CompetitionId, synchronized);
                     }
@@ -249,6 +256,7 @@ public sealed class SynchronizedPredictionStore(
         PredictionSet? local,
         PredictionSet? cloud,
         string currentUserId,
+        CloudWriteMode cloudWriteMode,
         CancellationToken cancellationToken)
     {
         // Last-write-wins is allowed only for snapshots owned by the current account.
@@ -276,7 +284,7 @@ public sealed class SynchronizedPredictionStore(
 
             var adoptedLocal = AssignOwner(local, currentUserId);
             await localStore.SaveAsync(adoptedLocal, cancellationToken);
-            await SaveCloudSnapshotAsync(adoptedLocal, cancellationToken);
+            await SaveCloudSnapshotAsync(adoptedLocal, cloudWriteMode, cancellationToken);
             return adoptedLocal;
         }
 
@@ -296,23 +304,28 @@ public sealed class SynchronizedPredictionStore(
         if (ownedCloud is null)
         {
             await localStore.SaveAsync(ownedLocal, cancellationToken);
-            await SaveCloudSnapshotAsync(ownedLocal, cancellationToken);
+            await SaveCloudSnapshotAsync(ownedLocal, cloudWriteMode, cancellationToken);
             return ownedLocal;
         }
 
         var merged = MergeOwnedSnapshots(ownedLocal, ownedCloud, currentUserId);
         await localStore.SaveAsync(merged, cancellationToken);
-        await SaveCloudSnapshotAsync(merged, cancellationToken);
+        await SaveCloudSnapshotAsync(merged, cloudWriteMode, cancellationToken);
         return merged;
     }
 
     private async Task SaveCloudSnapshotAsync(
         PredictionSet predictionSet,
+        CloudWriteMode cloudWriteMode,
         CancellationToken cancellationToken)
     {
         if (predictionSet.IsSubmitted)
         {
-            await cloudStore.SubmitAsync(predictionSet, cancellationToken);
+            if (cloudWriteMode == CloudWriteMode.All)
+            {
+                await cloudStore.SubmitAsync(predictionSet, cancellationToken);
+            }
+
             return;
         }
 
@@ -331,6 +344,7 @@ public sealed class SynchronizedPredictionStore(
                 predictionSet,
                 cloud,
                 currentUserId,
+                CloudWriteMode.All,
                 cancellationToken);
             SetSynchronizedStatus(predictionSet.CompetitionId, synchronized);
         }
@@ -481,5 +495,11 @@ public sealed class SynchronizedPredictionStore(
             authService.IsAuthenticated
                 ? PredictionSaveStatus.SynchronizationFailed
                 : PredictionSaveStatus.Local);
+    }
+
+    private enum CloudWriteMode
+    {
+        DraftsOnly,
+        All
     }
 }

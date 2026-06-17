@@ -894,4 +894,5 @@
   <data name="Results.Status.Locked" xml:space="preserve"><value>Zablokowane</value></data>
   <data name="BoardHeader.Expand" xml:space="preserve"><value>Rozwiń</value></data>
   <data name="BoardHeader.Collapse" xml:space="preserve"><value>Zwiń</value></data>
+  <data name="Predictions.TopN.ActualShort" xml:space="preserve"><value>Realnie</value></data>
 </root>

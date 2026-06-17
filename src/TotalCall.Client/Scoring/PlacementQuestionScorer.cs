@@ -45,7 +45,13 @@ public abstract class PlacementQuestionScorer : IQuestionScorer
         var official = context.ResultGroup.Placements
             .Where(placement => placement.Position >= 1 && !string.IsNullOrWhiteSpace(placement.AthleteId))
             .OrderBy(placement => placement.Position)
-            .Select(placement => new OfficialPlacementRef(placement.Position, placement.AthleteId))
+            .Select(placement => new OfficialPlacementRef(
+                placement.Position,
+                placement.AthleteId,
+                placement.TotalKg,
+                placement.SquatKg,
+                placement.BenchKg,
+                placement.DeadliftKg))
             .ToArray();
 
         if (predictedPlacements.Length < requiredCount)

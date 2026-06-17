@@ -715,7 +715,7 @@ public sealed class DevScenarioRunner
         int userIndex)
     {
         var answers = ScoreableQuestions(competition)
-            .Select(item => new PredictionAnswer
+            .Select((item, questionIndex) => new PredictionAnswer
             {
                 GroupId = item.Group.Id,
                 QuestionId = item.Question.Id,
@@ -723,7 +723,7 @@ public sealed class DevScenarioRunner
                 UpdatedAt = SubmittedAt,
                 Value = new PredictionAnswerValue
                 {
-                    AthletePlacements = BuildPredictedPlacements(competition, scenario, item.Question, userIndex)
+                    AthletePlacements = BuildPredictedPlacements(competition, scenario, item.Question, userIndex, questionIndex)
                 }
             })
             .ToArray();
@@ -746,25 +746,120 @@ public sealed class DevScenarioRunner
         Competition competition,
         DevCompetitionScenario scenario,
         PredictionQuestion question,
-        int userIndex)
+        int userIndex,
+        int questionIndex)
     {
         var athleteIds = scenario.HasRosterWithdrawal
             ? BuildRosterScenarioAthleteOrder(competition, question, userIndex)
             : BuildDefaultAthleteOrder(question, userIndex);
 
         return athleteIds
-            .Select((athleteId, index) => new AthletePlacementPick
-            {
-                Position = index + 1,
-                AthleteId = athleteId,
-                IsScored = index < GetRequiredCount(question),
-                IsAutoSeeded = false,
-                PredictedSquatKg = 200m - index,
-                PredictedBenchKg = 120m - index,
-                PredictedDeadliftKg = 240m - index,
-                PredictedTotalKg = 560m - (index * 3)
-            })
+            .Select((athleteId, index) => BuildPredictedPlacement(competition, question, athleteId, index, userIndex, questionIndex))
             .ToArray();
+    }
+
+    private static AthletePlacementPick BuildPredictedPlacement(
+        Competition competition,
+        PredictionQuestion question,
+        string athleteId,
+        int index,
+        int userIndex,
+        int questionIndex)
+    {
+        var position = index + 1;
+        var isScored = index < GetRequiredCount(question);
+        var seedStyle = GetPredictionSeedStyle(userIndex, questionIndex, index);
+        if (seedStyle == PredictionSeedStyle.AutoSeeded)
+        {
+            return new AthletePlacementPick
+            {
+                Position = position,
+                AthleteId = athleteId,
+                IsScored = isScored,
+                IsAutoSeeded = true,
+                PredictedTotalKg = GetNominationTotal(competition, athleteId)
+            };
+        }
+
+        var officialIndex = Math.Max(0, IndexOfAthlete(question.AthleteIds, athleteId));
+        var officialSquat = 200m - officialIndex;
+        var officialBench = 120m - officialIndex;
+        var officialDeadlift = 240m - officialIndex;
+        var officialTotal = 560m - (officialIndex * 3);
+        var totalOffset = GetTotalOffset(userIndex, questionIndex, index);
+
+        if (seedStyle == PredictionSeedStyle.TotalOnly)
+        {
+            return new AthletePlacementPick
+            {
+                Position = position,
+                AthleteId = athleteId,
+                IsScored = isScored,
+                IsAutoSeeded = false,
+                PredictedTotalKg = officialTotal + totalOffset
+            };
+        }
+
+        var squat = officialSquat + GetLiftOffset(userIndex, questionIndex, index, 0);
+        var bench = officialBench + GetLiftOffset(userIndex, questionIndex, index, 1);
+        var deadlift = officialDeadlift + GetLiftOffset(userIndex, questionIndex, index, 2);
+        return new AthletePlacementPick
+        {
+            Position = position,
+            AthleteId = athleteId,
+            IsScored = isScored,
+            IsAutoSeeded = false,
+            PredictedSquatKg = squat,
+            PredictedBenchKg = bench,
+            PredictedDeadliftKg = deadlift,
+            PredictedTotalKg = squat + bench + deadlift
+        };
+    }
+
+    private static PredictionSeedStyle GetPredictionSeedStyle(int userIndex, int questionIndex, int athleteIndex)
+    {
+        if (userIndex == 0 && questionIndex % 5 == 3)
+        {
+            return PredictionSeedStyle.AutoSeeded;
+        }
+
+        if ((questionIndex + athleteIndex + userIndex) % 4 == 2)
+        {
+            return PredictionSeedStyle.AutoSeeded;
+        }
+
+        return (questionIndex + athleteIndex + userIndex) % 3 == 1
+            ? PredictionSeedStyle.TotalOnly
+            : PredictionSeedStyle.Lifts;
+    }
+
+    private static decimal GetNominationTotal(Competition competition, string athleteId) =>
+        competition.Athletes.FirstOrDefault(athlete =>
+            string.Equals(athlete.Id, athleteId, StringComparison.OrdinalIgnoreCase))?.SeedTotalKg ?? 0m;
+
+    private static int IndexOfAthlete(IReadOnlyList<string> athleteIds, string athleteId)
+    {
+        for (var index = 0; index < athleteIds.Count; index++)
+        {
+            if (string.Equals(athleteIds[index], athleteId, StringComparison.OrdinalIgnoreCase))
+            {
+                return index;
+            }
+        }
+
+        return -1;
+    }
+
+    private static decimal GetTotalOffset(int userIndex, int questionIndex, int athleteIndex)
+    {
+        var direction = (userIndex + questionIndex + athleteIndex) % 2 == 0 ? 1m : -1m;
+        return direction * (2m + ((questionIndex + athleteIndex) % 4));
+    }
+
+    private static decimal GetLiftOffset(int userIndex, int questionIndex, int athleteIndex, int liftIndex)
+    {
+        var value = ((userIndex * 3) + questionIndex + athleteIndex + liftIndex) % 5 - 2;
+        return value == 0 ? 1m : value;
     }
 
     private static IReadOnlyList<string> BuildDefaultAthleteOrder(PredictionQuestion question, int userIndex)
@@ -989,6 +1084,13 @@ public sealed class DevScenarioRunner
     private sealed record ScenarioUser(string Id, string Email, string DisplayName);
 
     private sealed record ScoreableQuestion(PredictionGroup Group, PredictionQuestion Question);
+
+    private enum PredictionSeedStyle
+    {
+        Lifts,
+        TotalOnly,
+        AutoSeeded
+    }
 
     private sealed record RosterWithdrawalSpec(
         int QuestionIndex,

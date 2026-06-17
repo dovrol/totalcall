@@ -206,16 +206,12 @@ else
                             <span class="lb-points">@FormatPoints(row.entry.TotalPoints)<small>@Localizer["Standings.PointsShort"]</small></span>
                             <span class="@ScoredClass(row.entry)">
                                 <span class="lb-scored__track" aria-hidden="true">
-                                    <i style="@ProgressStyle(row.entry.ScoredGroupsCount, row.entry.TotalGroupsCount)"></i>
+                                    <i style="@PointsFillStyle(row.entry)"></i>
                                 </span>
-                                <strong>@row.entry.ScoredGroupsCount/@row.entry.TotalGroupsCount</strong>
+                                <strong>@FormatPoints(row.entry.TotalPoints)/@FormatPoints(MaxPointsSoFar(row.entry))</strong>
                                 @if (BoardHref(row.entry) is not null)
                                 {
                                     <AppIcon Name="AppIconName.ChevronRight" Size="14" Class="lb-row__go" />
-                                }
-                                else if (row.entry.Status != PublicCompetitionLeaderboardEntry.FinalStatus)
-                                {
-                                    <small>@Localizer["Standings.InProgress"]</small>
                                 }
                             </span>
                         </a>
@@ -582,7 +578,33 @@ else
         var percent = total <= 0
             ? 0
             : Math.Clamp((decimal)scored / total * 100m, 0m, 100m);
-        return $"width:{percent:0.##}%";
+        return string.Create(CultureInfo.InvariantCulture, $"width:{percent:0.##}%");
+    }
+
+    // Max points achievable from the categories scored so far (per-user), assuming the
+    // competition's standard per-category max (e.g. 12 for Top 3).
+    private decimal MaxPointsPerCategory
+    {
+        get
+        {
+            var question = competition?.PredictionGroups
+                .SelectMany(group => group.Questions)
+                .FirstOrDefault(q => q.Type is PredictionQuestionType.AthleteRanking or PredictionQuestionType.CategoryPodium);
+            var required = question?.Constraints.ExactSelections ?? question?.Constraints.MaxSelections ?? 3;
+            return required * 3m + 3m;
+        }
+    }
+
+    private decimal MaxPointsSoFar(PublicCompetitionLeaderboardEntry entry) =>
+        entry.ScoredGroupsCount * MaxPointsPerCategory;
+
+    private string PointsFillStyle(PublicCompetitionLeaderboardEntry entry)
+    {
+        var max = MaxPointsSoFar(entry);
+        var percent = max <= 0m
+            ? 0m
+            : Math.Clamp(entry.TotalPoints / max * 100m, 0m, 100m);
+        return string.Create(CultureInfo.InvariantCulture, $"width:{percent:0.##}%");
     }
 
     private static string FormatPoints(decimal value)

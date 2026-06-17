@@ -90,6 +90,18 @@ public sealed record CategoryOfficialPlacement
     public int Position { get; init; }
 
     public string AthleteId { get; init; } = string.Empty;
+
+    /// <summary>The athlete's actual official squat (kg), when imported.</summary>
+    public decimal? SquatKg { get; init; }
+
+    /// <summary>The athlete's actual official bench (kg), when imported.</summary>
+    public decimal? BenchKg { get; init; }
+
+    /// <summary>The athlete's actual official deadlift (kg), when imported.</summary>
+    public decimal? DeadliftKg { get; init; }
+
+    /// <summary>The athlete's actual official total (kg), when imported.</summary>
+    public decimal? TotalKg { get; init; }
 }
 
 /// <summary>Stable verdict identifiers shared with the backend snapshot and the results UI.</summary>

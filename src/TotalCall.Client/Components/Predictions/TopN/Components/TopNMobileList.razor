@@ -87,22 +87,40 @@
                         }
                     </div>
                 </div>
-                @if (ShowResults && TryGetResult(slot.Athlete!.Id, out var result) && (result.OfficialPlace is not null || result.Verdict is not null))
+                @if (ShowResults && TryGetResult(slot.Athlete!.Id, out var result))
                 {
                     <div class="ms-card__pred ms-card__pred--result">
-                        @if (result.OfficialPlace is not null)
-                        {
-                            <span class="@PlaceClass(result.OfficialPlace)">
-                                @if (result.OfficialPlace is >= 1 and <= 3)
-                                {
-                                    <AppIcon Name="AppIconName.Medal" Size="11" Class="rbs-place__ic" />
-                                }
-                                @PlaceLabel(result.OfficialPlace)
+                        <span class="@MobilePredPairClass(result.OfficialTotalKg is not null)">
+                            <span class="@MobilePredItemClass(slot.IsAutoSeeded)">
+                                <small>@(slot.IsAutoSeeded ? Localizer["Predictions.TopN.ByNominationShort"] : Localizer["Predictions.PredictedShort"])</small>
+                                <strong>@FormatPred(slot.Placement?.PredictedTotalKg)</strong>
                             </span>
-                        }
-                        @if (result.Verdict is not null)
+                        @if (result.OfficialTotalKg is { } actualTotal)
                         {
-                            <ResultBadge Verdict="@result.Verdict" Small="true" />
+                                <span class="topn-predpair__item topn-predpair__item--actual">
+                                    <small>@Localizer["Predictions.TopN.ActualShort"]</small>
+                                    <strong>@FormatPred(actualTotal)</strong>
+                                </span>
+                        }
+                        </span>
+                        @if (result.OfficialPlace is not null || result.Verdict is not null)
+                        {
+                            <span class="ms-card__resultline">
+                                @if (result.OfficialPlace is not null)
+                                {
+                                    <span class="@PlaceClass(result.OfficialPlace)">
+                                        @if (result.OfficialPlace is >= 1 and <= 3)
+                                        {
+                                            <AppIcon Name="AppIconName.Medal" Size="11" Class="rbs-place__ic" />
+                                        }
+                                        @PlaceLabel(result.OfficialPlace)
+                                    </span>
+                                }
+                                @if (result.Verdict is not null)
+                                {
+                                    <ResultBadge Verdict="@result.Verdict" Small="true" />
+                                }
+                            </span>
                         }
                     </div>
                 }
@@ -143,6 +161,14 @@
                         {
                             <span>@Localizer["Predictions.TopN.MobileTotalManual"]</span>
                         }
+                        else if (ShowResults && TryGetResult(slot.Athlete!.Id, out var liftResult) && HasOfficialLiftResults(liftResult))
+                        {
+                            <span class="ms-clifts__result-grid">
+                                <span>SQ <b class="@MobileLiftPredClass(slot.Placement?.PredictedSquatKg)">@FormatPred(slot.Placement?.PredictedSquatKg)</b><small>@FormatPred(liftResult.OfficialSquatKg)</small></span>
+                                <span>BP <b class="@MobileLiftPredClass(slot.Placement?.PredictedBenchKg)">@FormatPred(slot.Placement?.PredictedBenchKg)</b><small>@FormatPred(liftResult.OfficialBenchKg)</small></span>
+                                <span>DL <b class="@MobileLiftPredClass(slot.Placement?.PredictedDeadliftKg)">@FormatPred(slot.Placement?.PredictedDeadliftKg)</b><small>@FormatPred(liftResult.OfficialDeadliftKg)</small></span>
+                            </span>
+                        }
                         else
                         {
                             <span>SQ <b>@FormatPred(slot.Placement?.PredictedSquatKg)</b> <span class="ms-clifts__sep">·</span> BP <b>@FormatPred(slot.Placement?.PredictedBenchKg)</b> <span class="ms-clifts__sep">·</span> DL <b>@FormatPred(slot.Placement?.PredictedDeadliftKg)</b></span>
@@ -160,6 +186,14 @@
                         else if (isTotal)
                         {
                             <span>@Localizer["Predictions.TopN.MobileTotalManual"]</span>
+                        }
+                        else if (ShowResults && TryGetResult(slot.Athlete!.Id, out var liftResult) && HasOfficialLiftResults(liftResult))
+                        {
+                            <span class="ms-clifts__result-grid">
+                                <span>SQ <b class="@MobileLiftPredClass(slot.Placement?.PredictedSquatKg)">@FormatPred(slot.Placement?.PredictedSquatKg)</b><small>@FormatPred(liftResult.OfficialSquatKg)</small></span>
+                                <span>BP <b class="@MobileLiftPredClass(slot.Placement?.PredictedBenchKg)">@FormatPred(slot.Placement?.PredictedBenchKg)</b><small>@FormatPred(liftResult.OfficialBenchKg)</small></span>
+                                <span>DL <b class="@MobileLiftPredClass(slot.Placement?.PredictedDeadliftKg)">@FormatPred(slot.Placement?.PredictedDeadliftKg)</b><small>@FormatPred(liftResult.OfficialDeadliftKg)</small></span>
+                            </span>
                         }
                         else
                         {
@@ -341,6 +375,22 @@
     private bool isExpanded;
 
     private bool ShowResults => Results is not null;
+
+    private static string MobilePredPairClass(bool hasActual) =>
+        hasActual ? "topn-predpair topn-predpair--mobile topn-predpair--with-actual" : "topn-predpair topn-predpair--mobile";
+
+    private static string MobilePredItemClass(bool isAutoSeeded) =>
+        isAutoSeeded
+            ? "topn-predpair__item topn-predpair__item--pred topn-predpair__item--muted"
+            : "topn-predpair__item topn-predpair__item--pred";
+
+    private static bool HasOfficialLiftResults(TopNSlotResult result) =>
+        result.OfficialSquatKg is not null ||
+        result.OfficialBenchKg is not null ||
+        result.OfficialDeadliftKg is not null;
+
+    private static string MobileLiftPredClass(decimal? value) =>
+        value is null ? "ms-clifts__pred-value ms-clifts__pred-value--missing" : "ms-clifts__pred-value";
 
     private bool TryGetResult(string athleteId, out TopNSlotResult result)
     {

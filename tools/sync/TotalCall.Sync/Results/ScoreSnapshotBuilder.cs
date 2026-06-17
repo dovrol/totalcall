@@ -117,7 +117,11 @@ public sealed class ScoreSnapshotBuilder(IPredictionScoringService scoringServic
             array.Add(new JsonObject
             {
                 ["position"] = placement.Position,
-                ["athleteId"] = placement.AthleteId
+                ["athleteId"] = placement.AthleteId,
+                ["squatKg"] = placement.SquatKg,
+                ["benchKg"] = placement.BenchKg,
+                ["deadliftKg"] = placement.DeadliftKg,
+                ["totalKg"] = placement.TotalKg
             });
         }
 

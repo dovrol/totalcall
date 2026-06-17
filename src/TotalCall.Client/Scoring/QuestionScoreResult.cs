@@ -17,8 +17,14 @@ public sealed record QuestionScoreResult(
 /// <summary>Per-pick scoring verdict for one slot in a placement question.</summary>
 public sealed record SlotScoreResult(int Position, string AthleteId, string Verdict, decimal Points);
 
-/// <summary>A single official placement (athlete + finishing position) for a category.</summary>
-public sealed record OfficialPlacementRef(int Position, string AthleteId);
+/// <summary>A single official placement (athlete + finishing position + actual lifts) for a category.</summary>
+public sealed record OfficialPlacementRef(
+    int Position,
+    string AthleteId,
+    decimal? TotalKg = null,
+    decimal? SquatKg = null,
+    decimal? BenchKg = null,
+    decimal? DeadliftKg = null);
 
 /// <summary>Verdict identifiers shared between the scorer, snapshot and results UI.</summary>
 public static class SlotVerdict

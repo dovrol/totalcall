@@ -457,27 +457,35 @@ else
 
             var officialByAthlete = breakdown.Official
                 .GroupBy(placement => placement.AthleteId, StringComparer.OrdinalIgnoreCase)
-                .ToDictionary(group => group.Key, group => group.First().Position, StringComparer.OrdinalIgnoreCase);
+                .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
 
-            // Every athlete with an official place gets a place badge; the user's scored
-            // Top N picks additionally carry the verdict + points.
+            // Every athlete with an official result gets a place + actual total; the user's
+            // scored Top N picks additionally carry the verdict + points.
             var map = new Dictionary<string, TopNSlotResult>(StringComparer.OrdinalIgnoreCase);
             foreach (var placement in breakdown.Official)
             {
-                map[placement.AthleteId] = new TopNSlotResult(placement.Position, null, null);
+                map[placement.AthleteId] = ToTopNSlotResult(placement, null);
             }
 
             foreach (var slot in breakdown.Slots)
             {
-                int? officialPlace = officialByAthlete.TryGetValue(slot.AthleteId, out var place)
-                    ? place
-                    : null;
-                map[slot.AthleteId] = new TopNSlotResult(officialPlace, slot.Verdict, slot.Points);
+                officialByAthlete.TryGetValue(slot.AthleteId, out var official);
+                map[slot.AthleteId] = ToTopNSlotResult(official, slot);
             }
 
             return map;
         }
     }
+
+    private static TopNSlotResult ToTopNSlotResult(CategoryOfficialPlacement? official, CategorySlotResult? slot) =>
+        new(
+            official?.Position,
+            slot?.Verdict,
+            slot?.Points,
+            official?.TotalKg,
+            official?.SquatKg,
+            official?.BenchKg,
+            official?.DeadliftKg);
 
     // The rich identity header shows on any read-only board (public = blue, my locked = green).
     private bool ShowContextHeader => IsPublicBoard || !CanEditSheet;

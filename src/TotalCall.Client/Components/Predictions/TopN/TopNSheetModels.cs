@@ -84,4 +84,11 @@ public sealed record TopNMove(int Position, int Delta);
 /// are only set for the user's scored Top N picks; comparison-zone athletes show
 /// just their place.
 /// </summary>
-public sealed record TopNSlotResult(int? OfficialPlace, string? Verdict, decimal? Points);
+public sealed record TopNSlotResult(
+    int? OfficialPlace,
+    string? Verdict,
+    decimal? Points,
+    decimal? OfficialTotalKg = null,
+    decimal? OfficialSquatKg = null,
+    decimal? OfficialBenchKg = null,
+    decimal? OfficialDeadliftKg = null);

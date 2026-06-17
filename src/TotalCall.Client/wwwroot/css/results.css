@@ -1004,14 +1004,129 @@
 .topn-result .rbs-place { font-size: 12px; padding: 3px 8px; }
 .topn-result .rb-badge { white-space: nowrap; }
 
+.topn-cell--prediction { justify-content: center; }
+
+.topn-predpair {
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(46px, auto);
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.topn-predpair--with-actual {
+    padding: 6px 8px;
+    border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--bg-surface) 48%, transparent);
+}
+
+.topn-predpair__item {
+    display: grid;
+    justify-items: end;
+    gap: 1px;
+    min-width: 0;
+    font-family: var(--font-data);
+    line-height: 1;
+}
+
+.topn-predpair__item small {
+    font-family: "Geist", system-ui, sans-serif;
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.topn-predpair__item strong {
+    font-size: 16px;
+    font-weight: 850;
+    color: var(--success);
+}
+
+.topn-predpair__item--muted strong { color: var(--text-muted); }
+
+.topn-predpair__item--actual {
+    padding-left: 10px;
+    border-left: 1px solid var(--border);
+}
+
+.topn-predpair__item--actual small { color: color-mix(in srgb, var(--score) 78%, var(--text-muted)); }
+.topn-predpair__item--actual strong { color: var(--text-primary); }
+
+.topn-predpair--lift {
+    gap: 7px;
+    padding: 5px 7px;
+}
+
+.topn-predpair--lift .topn-predpair__item { justify-items: center; }
+.topn-predpair--lift .topn-predpair__item--actual { padding-left: 7px; }
+.topn-predpair--lift .topn-predpair__item small { font-size: 7.5px; }
+.topn-predpair--lift .topn-predpair__item strong { font-size: 13px; }
+
 .ms-card__pred--result {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 5px;
+    gap: 6px;
     margin-left: auto;
 }
 .ms-card__pred--result .rbs-place { font-size: 11px; padding: 3px 7px; }
+
+.topn-predpair--mobile {
+    gap: 7px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+.topn-predpair--mobile .topn-predpair__item strong { font-size: 16px; }
+.topn-predpair--mobile .topn-predpair__item small { font-size: 8px; }
+.topn-predpair--mobile .topn-predpair__item--actual { padding-left: 7px; }
+
+.ms-card__resultline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.ms-clifts__result-grid {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 9px;
+}
+
+.ms-clifts__result-grid > span {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 3px;
+}
+
+.ms-clifts__pred-value {
+    color: var(--success);
+}
+
+.ms-clifts__pred-value--missing {
+    color: var(--text-muted);
+}
+
+.ms-clifts__result-grid small {
+    color: var(--text-primary);
+    font-size: 10px;
+    font-weight: 850;
+}
+
+.ms-clifts__result-grid small::before {
+    content: "/";
+    color: var(--text-muted);
+    margin-right: 3px;
+    font-weight: 800;
+}
 
 /* the per-category score summary bar spaces itself from the sheet */
 .topn-workspace__body > .rbs-scorebar,
