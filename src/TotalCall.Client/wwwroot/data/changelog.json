@@ -2,6 +2,44 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.12.1-beta.1",
+      "releasedAt": "2026-06-18",
+      "title": {
+        "pl": "Czytelniejsze wyniki na zablokowanych planszach",
+        "en": "Clearer results on locked boards"
+      },
+      "items": [
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Zablokowane i publiczne plansze Top-N pokazują teraz obok typów także oficjalny total oraz, gdy są dostępne, rzeczywiste wyniki SQ/BP/DL.",
+            "en": "Locked and public Top-N boards now show the official total alongside predictions and, when available, actual SQ/BP/DL results."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Widok mobilny lepiej rozróżnia typ, wynik faktyczny i typ zostawiony z nominacji, bez ukrywania brakujących bojów.",
+            "en": "The mobile view now distinguishes predictions, actual results and nomination-only picks more clearly without hiding missing lift predictions."
+          }
+        },
+        {
+          "type": "fix",
+          "text": {
+            "pl": "Po deadline aplikacja nie próbuje już ponownie wysyłać wcześniej zatwierdzonych typów podczas otwierania planszy tylko do odczytu.",
+            "en": "After the deadline the app no longer tries to re-submit already submitted picks when opening the read-only board."
+          }
+        },
+        {
+          "type": "improvement",
+          "text": {
+            "pl": "Scenariusze dev lepiej symulują realne typowanie: część picków ma tylko total, część ma rozbite boje, a część zostaje jako domyślne nominacje.",
+            "en": "Dev scenarios now better simulate real prediction behavior: some picks use totals only, some include lift breakdowns, and some stay as default nominations."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.12.0-beta.1",
       "releasedAt": "2026-06-17",
       "title": {
