@@ -853,4 +853,45 @@
   <data name="Auth.Callback.ErrorTitle" xml:space="preserve"><value>Logowanie nie powiodło się</value></data>
   <data name="Auth.Callback.ErrorBody" xml:space="preserve"><value>Link jest nieprawidłowy lub wygasł. Poproś o nowy.</value></data>
   <data name="Auth.Callback.Retry" xml:space="preserve"><value>Spróbuj ponownie</value></data>
+  <data name="Results.Verdict.Exact" xml:space="preserve"><value>Trafione</value></data>
+  <data name="Results.Verdict.Wrong" xml:space="preserve"><value>Złe miejsce</value></data>
+  <data name="Results.Verdict.Miss" xml:space="preserve"><value>Pudło</value></data>
+  <data name="Results.Verdict.Withdrawn" xml:space="preserve"><value>Wycofany</value></data>
+  <data name="Results.Breakdown.Placement" xml:space="preserve"><value>Miejsca</value></data>
+  <data name="Results.Breakdown.SetBonus" xml:space="preserve"><value>Komplet</value></data>
+  <data name="Results.Breakdown.PerfectOrder" xml:space="preserve"><value>Idealna kolejność</value></data>
+  <data name="Results.Breakdown.Total" xml:space="preserve"><value>Razem</value></data>
+  <data name="Results.Pending.Title" xml:space="preserve"><value>Jeszcze nieocenione</value></data>
+  <data name="Results.Pending.Note" xml:space="preserve"><value>Oczekujące kategorie nie liczą się jako zero</value></data>
+  <data name="Predictions.TopN.ResultColumn" xml:space="preserve"><value>Wynik</value></data>
+  <data name="Predictions.TopN.ResultOutShort" xml:space="preserve"><value>poza</value></data>
+  <data name="Predictions.Results.CategoryFinal" xml:space="preserve"><value>Kategoria oceniona — wynik końcowy</value></data>
+  <data name="Predictions.Results.CategoryLive" xml:space="preserve"><value>Kategoria oceniona — na żywo</value></data>
+  <data name="Predictions.Results.ScoredSubtitle" xml:space="preserve"><value>Punkty z oficjalnych wyników</value></data>
+  <data name="Predictions.Results.PendingDetail" xml:space="preserve"><value>Oficjalny wynik tej kategorii nie został jeszcze zaimportowany.</value></data>
+  <data name="PublicBoard.PageTitle" xml:space="preserve"><value>Tablica użytkownika</value></data>
+  <data name="PublicBoard.NotFoundTitle" xml:space="preserve"><value>Nie znaleziono tablicy</value></data>
+  <data name="PublicBoard.NotFoundDescription" xml:space="preserve"><value>Ta publiczna tablica jest niedostępna lub typy nie zostały jeszcze odsłonięte.</value></data>
+  <data name="Predictions.PublicBoard.Back" xml:space="preserve"><value>Klasyfikacja</value></data>
+  <data name="Predictions.PublicBoard.Bar.Title" xml:space="preserve"><value>Publiczna tablica — tylko podgląd</value></data>
+  <data name="Predictions.PublicBoard.Bar.Body" xml:space="preserve"><value>Oglądasz zgłoszone typy użytkownika {0} — nie można ich edytować</value></data>
+  <data name="Standings.ViewBoard" xml:space="preserve"><value>Zobacz tablicę: {0}</value></data>
+  <data name="BoardHeader.Eyebrow.Public" xml:space="preserve"><value>Publiczny board</value></data>
+  <data name="BoardHeader.Eyebrow.Mine" xml:space="preserve"><value>Twój board</value></data>
+  <data name="BoardHeader.ReadOnly.Public" xml:space="preserve"><value>Tylko podgląd · cudze typy</value></data>
+  <data name="BoardHeader.ReadOnly.Mine" xml:space="preserve"><value>Tylko podgląd · Twoje typy</value></data>
+  <data name="BoardHeader.Stat.Rank" xml:space="preserve"><value>Miejsce</value></data>
+  <data name="BoardHeader.Stat.FinalRank" xml:space="preserve"><value>Miejsce końcowe</value></data>
+  <data name="BoardHeader.Stat.Scored" xml:space="preserve"><value>Ocenione</value></data>
+  <data name="BoardHeader.Stat.Points" xml:space="preserve"><value>Punkty</value></data>
+  <data name="BoardHeader.Stat.FinalScore" xml:space="preserve"><value>Wynik końcowy</value></data>
+  <data name="BoardHeader.MyBoardName" xml:space="preserve"><value>Moja plansza typów</value></data>
+  <data name="BoardHeader.Break.Final" xml:space="preserve"><value>Z oficjalnych wyników</value></data>
+  <data name="BoardHeader.Break.Live" xml:space="preserve"><value>Na żywo · wyniki częściowe</value></data>
+  <data name="BoardHeader.Break.CategoryTotal" xml:space="preserve"><value>Razem w kategorii</value></data>
+  <data name="Results.Status.Final" xml:space="preserve"><value>Końcowe</value></data>
+  <data name="Results.Status.Live" xml:space="preserve"><value>Na żywo</value></data>
+  <data name="Results.Status.Locked" xml:space="preserve"><value>Zablokowane</value></data>
+  <data name="BoardHeader.Expand" xml:space="preserve"><value>Rozwiń</value></data>
+  <data name="BoardHeader.Collapse" xml:space="preserve"><value>Zwiń</value></data>
 </root>

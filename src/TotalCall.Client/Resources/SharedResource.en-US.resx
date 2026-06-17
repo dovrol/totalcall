@@ -853,4 +853,45 @@
   <data name="Auth.Callback.ErrorTitle" xml:space="preserve"><value>Sign-in failed</value></data>
   <data name="Auth.Callback.ErrorBody" xml:space="preserve"><value>The link is invalid or has expired. Please request a new one.</value></data>
   <data name="Auth.Callback.Retry" xml:space="preserve"><value>Try again</value></data>
+  <data name="Results.Verdict.Exact" xml:space="preserve"><value>Exact</value></data>
+  <data name="Results.Verdict.Wrong" xml:space="preserve"><value>Wrong position</value></data>
+  <data name="Results.Verdict.Miss" xml:space="preserve"><value>Miss</value></data>
+  <data name="Results.Verdict.Withdrawn" xml:space="preserve"><value>Withdrawn</value></data>
+  <data name="Results.Breakdown.Placement" xml:space="preserve"><value>Placement</value></data>
+  <data name="Results.Breakdown.SetBonus" xml:space="preserve"><value>Set bonus</value></data>
+  <data name="Results.Breakdown.PerfectOrder" xml:space="preserve"><value>Perfect order</value></data>
+  <data name="Results.Breakdown.Total" xml:space="preserve"><value>Total</value></data>
+  <data name="Results.Pending.Title" xml:space="preserve"><value>Not scored yet</value></data>
+  <data name="Results.Pending.Note" xml:space="preserve"><value>Pending categories are not counted as zero</value></data>
+  <data name="Predictions.TopN.ResultColumn" xml:space="preserve"><value>Result</value></data>
+  <data name="Predictions.TopN.ResultOutShort" xml:space="preserve"><value>out</value></data>
+  <data name="Predictions.Results.CategoryFinal" xml:space="preserve"><value>Category scored — final result</value></data>
+  <data name="Predictions.Results.CategoryLive" xml:space="preserve"><value>Category scored — live</value></data>
+  <data name="Predictions.Results.ScoredSubtitle" xml:space="preserve"><value>Points from official results</value></data>
+  <data name="Predictions.Results.PendingDetail" xml:space="preserve"><value>Official result for this category hasn't been imported yet.</value></data>
+  <data name="PublicBoard.PageTitle" xml:space="preserve"><value>User board</value></data>
+  <data name="PublicBoard.NotFoundTitle" xml:space="preserve"><value>Board not found</value></data>
+  <data name="PublicBoard.NotFoundDescription" xml:space="preserve"><value>This public board is unavailable, or picks haven't been revealed yet.</value></data>
+  <data name="Predictions.PublicBoard.Back" xml:space="preserve"><value>Standings</value></data>
+  <data name="Predictions.PublicBoard.Bar.Title" xml:space="preserve"><value>Public board — read-only</value></data>
+  <data name="Predictions.PublicBoard.Bar.Body" xml:space="preserve"><value>You're viewing {0}'s submitted picks — you can't edit them</value></data>
+  <data name="Standings.ViewBoard" xml:space="preserve"><value>View {0}'s board</value></data>
+  <data name="BoardHeader.Eyebrow.Public" xml:space="preserve"><value>Public board</value></data>
+  <data name="BoardHeader.Eyebrow.Mine" xml:space="preserve"><value>Your board</value></data>
+  <data name="BoardHeader.ReadOnly.Public" xml:space="preserve"><value>Read-only · their submitted picks</value></data>
+  <data name="BoardHeader.ReadOnly.Mine" xml:space="preserve"><value>Read-only · your submitted picks</value></data>
+  <data name="BoardHeader.Stat.Rank" xml:space="preserve"><value>Rank</value></data>
+  <data name="BoardHeader.Stat.FinalRank" xml:space="preserve"><value>Final rank</value></data>
+  <data name="BoardHeader.Stat.Scored" xml:space="preserve"><value>Scored</value></data>
+  <data name="BoardHeader.Stat.Points" xml:space="preserve"><value>Points</value></data>
+  <data name="BoardHeader.Stat.FinalScore" xml:space="preserve"><value>Final score</value></data>
+  <data name="BoardHeader.MyBoardName" xml:space="preserve"><value>Your prediction board</value></data>
+  <data name="BoardHeader.Break.Final" xml:space="preserve"><value>Scored from official results</value></data>
+  <data name="BoardHeader.Break.Live" xml:space="preserve"><value>Live · partial results</value></data>
+  <data name="BoardHeader.Break.CategoryTotal" xml:space="preserve"><value>Category total</value></data>
+  <data name="Results.Status.Final" xml:space="preserve"><value>Final</value></data>
+  <data name="Results.Status.Live" xml:space="preserve"><value>Live</value></data>
+  <data name="Results.Status.Locked" xml:space="preserve"><value>Locked</value></data>
+  <data name="BoardHeader.Expand" xml:space="preserve"><value>Expand</value></data>
+  <data name="BoardHeader.Collapse" xml:space="preserve"><value>Collapse</value></data>
 </root>

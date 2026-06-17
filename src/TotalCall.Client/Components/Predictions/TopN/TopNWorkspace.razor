@@ -17,7 +17,24 @@
 }
 else
 {
-    <section class="topn-workspace">
+    <section class="topn-workspace @BoardModeClass">
+        @if (ShowContextHeader)
+        {
+            <BoardContextHeader
+                IsPublic="IsPublicBoard"
+                Name="@(IsPublicBoard ? PublicBoardName! : Localizer["BoardHeader.MyBoardName"].Value)"
+                CompetitionName="@Competition.Name"
+                Rank="Score?.Rank"
+                Points="@(Score?.TotalPoints ?? 0m)"
+                MaxPoints="MaxResultsPoints"
+                Scored="@(Score?.ScoredGroupsCount ?? 0)"
+                Total="@ResultsTotalCount"
+                IsFinal="@(Score?.IsFinal ?? false)"
+                HasScore="@(Score is not null)"
+                CategoryLabel="@ActiveCategoryLabel"
+                Breakdown="ActiveBreakdown" />
+        }
+
         @* ---------------- DESKTOP ---------------- *@
         <div class="topn-desktop">
             <TopNHeaderBar
@@ -79,6 +96,7 @@ else
                 <TopNSheet
                     Slots="SlotViews"
                     ScoredCount="@ScoredPositionsCount"
+                    Results="@ActiveSheetResults"
                     CanEditPredictions="@CanEditSheet"
                     IsBulkFilling="@isBulkFilling"
                     FillPopPosition="@fillPopPosition"
@@ -130,6 +148,7 @@ else
             <TopNMobileList
                 Slots="SlotViews"
                 ScoredCount="@ScoredPositionsCount"
+                Results="@ActiveSheetResults"
                 CanEditPredictions="@CanEditSheet"
                 IsBulkFilling="@isBulkFilling"
                 ExpandedPosition="@expandedMobilePosition"
@@ -250,23 +269,44 @@ else
             }
         </aside>
 
-        <PredictionActionBar
-            CompetitionSlug="@Competition.Slug"
-            CompetitionName="@Competition.Name"
-            PredictionLockAt="@Competition.PredictionLockAt"
-            CompetitionStatus="@Competition.Status"
-            CompetitionEndDate="@Competition.EndDate"
-            CanEditPredictions="@CanEditSheet"
-            IsAuthenticated="@IsAuthenticated"
-            SaveStatus="@SaveStatus"
-            LastSavedAt="@LastSavedAt"
-            SubmittedAt="@SubmittedAt"
-            IsSubmitting="@IsSubmitting"
-            SubmitError="@SubmitError"
-            WithdrawnPickNames="@AffectedWithdrawnAthleteNames"
-            SubmitRequested="@SubmitRequested"
-            RetrySyncRequested="@RetrySyncRequested"
-            ShareRequested="@ShareRequested" />
+        @if (IsPublicBoard)
+        {
+            <nav class="prediction-action-bar prediction-action-bar--public" aria-label="@Localizer["Predictions.PublicBoard.Bar.Title"]">
+                <div class="prediction-action-bar__left">
+                    <a class="app-button app-button--ghost app-button--sm prediction-action-bar__back tcl-back" href="@BackHref">
+                        <AppIcon Name="AppIconName.ChevronRight" Size="15" Class="rb-back__ic" />
+                        <span>@Localizer["Predictions.PublicBoard.Back"]</span>
+                    </a>
+                </div>
+                <div class="prediction-action-bar__status">
+                    <span class="prediction-action-bar__status-icon prediction-action-bar__status-icon--public" aria-hidden="true"><AppIcon Name="AppIconName.User" Size="17" /></span>
+                    <span class="prediction-action-bar__status-copy">
+                        <strong>@Localizer["Predictions.PublicBoard.Bar.Title"]</strong>
+                        <span>@Localizer["Predictions.PublicBoard.Bar.Body", PublicBoardName!]</span>
+                    </span>
+                </div>
+            </nav>
+        }
+        else
+        {
+            <PredictionActionBar
+                CompetitionSlug="@Competition.Slug"
+                CompetitionName="@Competition.Name"
+                PredictionLockAt="@Competition.PredictionLockAt"
+                CompetitionStatus="@Competition.Status"
+                CompetitionEndDate="@Competition.EndDate"
+                CanEditPredictions="@CanEditSheet"
+                IsAuthenticated="@IsAuthenticated"
+                SaveStatus="@SaveStatus"
+                LastSavedAt="@LastSavedAt"
+                SubmittedAt="@SubmittedAt"
+                IsSubmitting="@IsSubmitting"
+                SubmitError="@SubmitError"
+                WithdrawnPickNames="@AffectedWithdrawnAthleteNames"
+                SubmitRequested="@SubmitRequested"
+                RetrySyncRequested="@RetrySyncRequested"
+                ShareRequested="@ShareRequested" />
+        }
 
         <CompetitionTimeline
             Competition="@Competition"
@@ -289,6 +329,16 @@ else
 
     [Parameter]
     public IReadOnlyList<PredictionAnswer> Answers { get; set; } = [];
+
+    [Parameter]
+    public MyScoreSnapshot? Score { get; set; }
+
+    /// <summary>When set, the workspace renders read-only as another user's public board.</summary>
+    [Parameter]
+    public string? PublicBoardName { get; set; }
+
+    [Parameter]
+    public string? BackHref { get; set; }
 
     [Parameter, EditorRequired]
     public PredictionModuleValidationResult ActiveModuleValidation { get; set; } = default!;
@@ -384,6 +434,67 @@ else
     private int ScoredPositionsCount => ActiveQuestion?.Constraints.ExactSelections ??
                                         ActiveQuestion?.Constraints.MaxSelections ??
                                         3;
+
+    // ---------- results overlay (backend score snapshot) ----------
+
+    private bool HasResultsImported => Score is not null;
+
+    private CategoryScoreBreakdown? ActiveBreakdown => ActiveQuestion is null
+        ? null
+        : Score?.FindCategory(ActiveGroup.Id, ActiveQuestion.Id);
+
+    private bool IsActiveCategoryScored => ActiveBreakdown is not null;
+
+    private IReadOnlyDictionary<string, TopNSlotResult>? ActiveSheetResults
+    {
+        get
+        {
+            var breakdown = ActiveBreakdown;
+            if (breakdown is null)
+            {
+                return null;
+            }
+
+            var officialByAthlete = breakdown.Official
+                .GroupBy(placement => placement.AthleteId, StringComparer.OrdinalIgnoreCase)
+                .ToDictionary(group => group.Key, group => group.First().Position, StringComparer.OrdinalIgnoreCase);
+
+            // Every athlete with an official place gets a place badge; the user's scored
+            // Top N picks additionally carry the verdict + points.
+            var map = new Dictionary<string, TopNSlotResult>(StringComparer.OrdinalIgnoreCase);
+            foreach (var placement in breakdown.Official)
+            {
+                map[placement.AthleteId] = new TopNSlotResult(placement.Position, null, null);
+            }
+
+            foreach (var slot in breakdown.Slots)
+            {
+                int? officialPlace = officialByAthlete.TryGetValue(slot.AthleteId, out var place)
+                    ? place
+                    : null;
+                map[slot.AthleteId] = new TopNSlotResult(officialPlace, slot.Verdict, slot.Points);
+            }
+
+            return map;
+        }
+    }
+
+    // The rich identity header shows on any read-only board (public = blue, my locked = green).
+    private bool ShowContextHeader => IsPublicBoard || !CanEditSheet;
+
+    private string ActiveCategoryLabel => ActiveQuestion is null ? string.Empty : GetCategoryName(ActiveQuestion);
+
+    private IReadOnlyList<PredictionQuestion> PlacementQuestions => OrderedQuestions
+        .Where(question => question.Type is PredictionQuestionType.AthleteRanking or PredictionQuestionType.CategoryPodium)
+        .ToArray();
+
+    private int ResultsTotalCount => Score?.TotalGroupsCount ?? PlacementQuestions.Count;
+
+    private decimal MaxResultsPoints => PlacementQuestions.Sum(question =>
+    {
+        var required = question.Constraints.ExactSelections ?? question.Constraints.MaxSelections ?? 3;
+        return required * 3m + 3m;
+    });
 
     private int ActiveSelectedCount => ActiveQuestionStatus?.SelectedCount ?? FieldPlacements.Count(placement => placement.IsScored);
 
@@ -537,7 +648,17 @@ else
         Competition.EndDate,
         DateTimeOffset.UtcNow);
 
-    private bool CanEditSheet => PredictionDeadline.CanEdit(
+    private bool IsPublicBoard => !string.IsNullOrWhiteSpace(PublicBoardName);
+
+    // "One board, three frames": another user's board reads blue (public), my own
+    // locked board reads green (review), the editable board stays red (default).
+    private string BoardModeClass => IsPublicBoard
+        ? "topn-workspace--public"
+        : CanEditSheet
+            ? string.Empty
+            : "topn-workspace--review";
+
+    private bool CanEditSheet => !IsPublicBoard && PredictionDeadline.CanEdit(
         CanEditPredictions,
         Competition.Status,
         Competition.PredictionLockAt,

@@ -1,0 +1,142 @@
+@page "/competitions/{Slug}/board/{BoardRef}"
+@using TotalCall.Client.Infrastructure.Supabase
+@inject CompetitionService CompetitionService
+@inject IPredictionValidationService PredictionValidationService
+@inject SupabasePredictionStore PredictionStore
+@inject IStringLocalizer<SharedResource> Localizer
+
+<PageTitle>@(board is null ? Localizer["PublicBoard.PageTitle"] : $"{board.DisplayName} - {Localizer["PublicBoard.PageTitle"]}")</PageTitle>
+
+@if (isLoading)
+{
+    <PredictionLoadingSkeleton />
+}
+else if (competition is null || board is null)
+{
+    <AppErrorState
+        Title="@Localizer["PublicBoard.NotFoundTitle"]"
+        Description="@Localizer["PublicBoard.NotFoundDescription"]" />
+}
+else if (ActiveGroup is null || !IsTopNGroup(ActiveGroup))
+{
+    <AppErrorState
+        Title="@Localizer["PublicBoard.NotFoundTitle"]"
+        Description="@Localizer["PublicBoard.NotFoundDescription"]" />
+}
+else
+{
+    <TopNWorkspace
+        Competition="@competition"
+        Groups="@OrderedGroups"
+        ActiveGroup="@ActiveGroup"
+        Answers="@board.PredictionSet.Answers"
+        Score="@board.Snapshot"
+        ActiveModuleValidation="@GetModuleValidation(ActiveGroup.Id)"
+        ModuleValidationByGroupId="@moduleValidationByGroupId"
+        CanEditPredictions="false"
+        IsAuthenticated="false"
+        PublicBoardName="@board.DisplayName"
+        BackHref="@StandingsHref"
+        GroupChanged="SelectGroup" />
+}
+
+@code {
+    [Parameter]
+    public string Slug { get; set; } = string.Empty;
+
+    [Parameter]
+    public string BoardRef { get; set; } = string.Empty;
+
+    private Competition? competition;
+    private PublicBoardResult? board;
+    private IReadOnlyDictionary<string, PredictionModuleValidationResult> moduleValidationByGroupId =
+        new Dictionary<string, PredictionModuleValidationResult>(StringComparer.OrdinalIgnoreCase);
+    private string? activeGroupId;
+    private bool isLoading = true;
+
+    private string StandingsHref => $"competitions/{Slug}/standings";
+
+    private IReadOnlyList<PredictionGroup> OrderedGroups => competition?
+        .PredictionGroups
+        .OrderBy(group => group.Order)
+        .ToArray() ?? [];
+
+    private PredictionGroup? ActiveGroup => OrderedGroups
+        .FirstOrDefault(group => group.Id == activeGroupId) ??
+        OrderedGroups.FirstOrDefault();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        isLoading = true;
+        competition = await CompetitionService.GetCompetitionAsync(Slug);
+        board = null;
+
+        if (competition is not null)
+        {
+            board = await TryLoadBoardAsync(competition.Id);
+
+            if (board is not null)
+            {
+                moduleValidationByGroupId = OrderedGroups.ToDictionary(
+                    group => group.Id,
+                    group => PredictionValidationService.ValidateModule(competition, group, board.PredictionSet),
+                    StringComparer.OrdinalIgnoreCase);
+
+                if (OrderedGroups.All(group => group.Id != activeGroupId))
+                {
+                    activeGroupId = OrderedGroups.FirstOrDefault()?.Id;
+                }
+            }
+        }
+
+        isLoading = false;
+    }
+
+    private async Task<PublicBoardResult?> TryLoadBoardAsync(string competitionId)
+    {
+        try
+        {
+            return await PredictionStore.GetPublicBoardAsync(competitionId, BoardRef);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private Task SelectGroup(string groupId)
+    {
+        if (OrderedGroups.Any(group => group.Id == groupId))
+        {
+            activeGroupId = groupId;
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private PredictionModuleValidationResult GetModuleValidation(string groupId)
+    {
+        return moduleValidationByGroupId.TryGetValue(groupId, out var result)
+            ? result
+            : new PredictionModuleValidationResult(groupId, PredictionCompletionStatus.NotStarted, 0, 0, 0, 0, [], []);
+    }
+
+    private static bool IsTopNGroup(PredictionGroup group)
+    {
+        var normalizedType = PredictionModuleType.Normalize(group.Type);
+        if (!string.IsNullOrWhiteSpace(normalizedType))
+        {
+            return normalizedType == PredictionModuleType.TopNByCategory;
+        }
+
+        var questionTypes = group.Questions
+            .Select(question => question.Type)
+            .Distinct()
+            .ToArray();
+
+        return questionTypes.Length == 1 &&
+               questionTypes[0] == PredictionQuestionType.AthleteRanking &&
+               group.Questions.Count > 1 &&
+               group.Questions.All(question => !string.IsNullOrWhiteSpace(question.CategoryId));
+    }
+}
