@@ -1,10 +1,12 @@
 @page "/competitions/{Slug}/predictions"
 @using TotalCall.Client.Components.Predictions.Share
+@using TotalCall.Client.Infrastructure.Supabase
 @implements IDisposable
 @inject CompetitionService CompetitionService
 @inject PredictionService PredictionService
 @inject IPredictionValidationService PredictionValidationService
 @inject CompetitionReviewBuilder ReviewBuilder
+@inject SupabasePredictionStore PredictionStore
 @inject PredictionSyncState PredictionSyncState
 @inject IStringLocalizer<SharedResource> Localizer
 @inject ToastService Toasts
@@ -35,6 +37,7 @@ else if (IsTopNGroup(ActiveGroup))
         Groups="@OrderedGroups"
         ActiveGroup="@ActiveGroup"
         Answers="@predictionSet.Answers"
+        Score="@score"
         ActiveModuleValidation="@GetModuleValidation(ActiveGroup.Id)"
         ModuleValidationByGroupId="@moduleValidationByGroupId"
         CanEditPredictions="@CanEditPredictionsNow"
@@ -96,6 +99,7 @@ else
     private bool isSubmitting;
     private string? submitError;
     private CompetitionReviewModel? shareReview;
+    private MyScoreSnapshot? score;
 
     private IReadOnlyList<PredictionGroup> OrderedGroups => competition?
         .PredictionGroups
@@ -162,6 +166,7 @@ else
     protected override async Task OnParametersSetAsync()
     {
         isLoading = true;
+        score = null;
         competition = await CompetitionService.GetCompetitionAsync(Slug);
 
         if (competition is not null)
@@ -176,9 +181,29 @@ else
             {
                 activeGroupId = firstGroup.Id;
             }
+
+            // After lock the same board gains official results + points from the backend
+            // score snapshot (the frontend never recomputes points).
+            if (!CanEditPredictionsNow)
+            {
+                score = await TryLoadScoreSnapshotAsync(competition.Id);
+            }
         }
 
         isLoading = false;
+    }
+
+    private async Task<MyScoreSnapshot?> TryLoadScoreSnapshotAsync(string competitionId)
+    {
+        try
+        {
+            return await PredictionStore.GetMyScoreAsync(competitionId);
+        }
+        catch
+        {
+            // No cloud session / results not exposed yet — fall back to the locked (no-results) board.
+            return null;
+        }
     }
 
     private void RefreshValidation()
@@ -296,7 +321,9 @@ else
         return Task.CompletedTask;
     }
 
-    private Task OnShareRequested(MouseEventArgs _)
+    private Task OnShareRequested(MouseEventArgs _) => OpenShare();
+
+    private Task OpenShare()
     {
         if (competition is null || predictionSet is null)
         {

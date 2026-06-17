@@ -1,0 +1,166 @@
+@using System.Globalization
+@inject IStringLocalizer<SharedResource> Localizer
+
+@* Rich read-only board header: identity + overall rank/points/status (row 1)
+   and the active category's score folded into row 2. Accent is inherited from
+   the workspace mode scope (blue = public, green = review). *@
+<section class="pbh @(collapsed ? "pbh--collapsed" : null)">
+    <button type="button" class="pbh__toggle" @onclick="Toggle"
+            aria-expanded="@((!collapsed).ToString().ToLowerInvariant())"
+            aria-label="@(collapsed ? Localizer["BoardHeader.Expand"] : Localizer["BoardHeader.Collapse"])"
+            title="@(collapsed ? Localizer["BoardHeader.Expand"] : Localizer["BoardHeader.Collapse"])">
+        <AppIcon Name="AppIconName.ChevronRight" Size="15" Class="@(collapsed ? "pbh__toggle-ic" : "pbh__toggle-ic pbh__toggle-ic--open")" />
+    </button>
+    <div class="pbh__row">
+        <div class="pbh__who">
+            <span class="pbh__av">
+                @if (IsPublic)
+                {
+                    @Initials
+                }
+                else
+                {
+                    <AppIcon Name="AppIconName.Trophy" Size="20" />
+                }
+            </span>
+            <div class="pbh__txt">
+                <span class="pbh__eyebrow">
+                    <AppIcon Name="@(IsPublic ? AppIconName.Users : AppIconName.Trophy)" Size="12" />
+                    @(IsPublic ? Localizer["BoardHeader.Eyebrow.Public"] : Localizer["BoardHeader.Eyebrow.Mine"]) · @CompetitionName
+                </span>
+                <h1 class="pbh__name">@Name</h1>
+                <span class="pbh__ro">
+                    <AppIcon Name="AppIconName.Lock" Size="12" />
+                    @(IsPublic ? Localizer["BoardHeader.ReadOnly.Public"] : Localizer["BoardHeader.ReadOnly.Mine"])
+                </span>
+            </div>
+        </div>
+
+        <div class="pbh__stats">
+            <div class="pbh-stat">
+                <span class="pbh-stat__k">@(IsFinal ? Localizer["BoardHeader.Stat.FinalRank"] : Localizer["BoardHeader.Stat.Rank"])</span>
+                <span class="pbh-stat__v">
+                    @if (Rank is { } rank)
+                    {
+                        <AppIcon Name="AppIconName.Medal" Size="15" Class="pbh-medal" />@($"#{rank}")
+                    }
+                    else
+                    {
+                        <span>—</span>
+                    }
+                </span>
+            </div>
+            <div class="pbh-stat">
+                <span class="pbh-stat__k">@Localizer["BoardHeader.Stat.Scored"]</span>
+                <span class="pbh-stat__v">
+                    @Scored/@Total
+                    <span class="pbh-prog @(IsFinal ? "pbh-prog--done" : null)"><i style="width:@ProgressWidth"></i></span>
+                </span>
+            </div>
+            <div class="pbh-stat pbh-stat--total">
+                <span class="pbh-stat__k">@(IsFinal ? Localizer["BoardHeader.Stat.FinalScore"] : Localizer["BoardHeader.Stat.Points"])</span>
+                <span class="pbh-stat__v">
+                    @if (HasScore)
+                    {
+                        @FormatPoints(Points)
+                        @if (IsFinal && MaxPoints > 0)
+                        {
+                            <small>/@FormatPoints(MaxPoints)</small>
+                        }
+                    }
+                    else
+                    {
+                        <span>—</span>
+                    }
+                </span>
+            </div>
+            <span class="pbh-status pbh-status--@StatusMod">
+                <span class="pbh-status__dot"></span>@StatusLabel
+            </span>
+        </div>
+    </div>
+
+    <div class="pbh__breakwrap">
+    @if (Breakdown is not null)
+    {
+        <div class="pbh__break @(IsFinal ? null : "pbh__break--live")">
+            <span class="pbh__break-cat"><AppIcon Name="AppIconName.Medal" Size="13" />@CategoryLabel</span>
+            <span class="pbh__break-note">@(IsFinal ? Localizer["BoardHeader.Break.Final"] : Localizer["BoardHeader.Break.Live"])</span>
+            <div class="pbh-chips">
+                <div class="pbh-chip">
+                    <span class="pbh-chip__k">@Localizer["Results.Breakdown.Placement"]</span>
+                    <span class="pbh-chip__v">@FormatPoints(Breakdown.Placement)/@FormatPoints(Breakdown.PlacementMax)</span>
+                </div>
+                <div class="pbh-chip @(Breakdown.SetBonus > 0 ? "pbh-chip--on" : null)">
+                    <span class="pbh-chip__k">@Localizer["Results.Breakdown.SetBonus"]</span>
+                    <span class="pbh-chip__v">+@FormatPoints(Breakdown.SetBonus)</span>
+                </div>
+                <div class="pbh-chip @(Breakdown.OrderBonus > 0 ? "pbh-chip--on" : null)">
+                    <span class="pbh-chip__k">@Localizer["Results.Breakdown.PerfectOrder"]</span>
+                    <span class="pbh-chip__v">+@FormatPoints(Breakdown.OrderBonus)</span>
+                </div>
+                <div class="pbh-chip pbh-chip--total">
+                    <span class="pbh-chip__k">@Localizer["BoardHeader.Break.CategoryTotal"]</span>
+                    <span class="pbh-chip__v">@FormatPoints(Breakdown.Points)<small>/@FormatPoints(Breakdown.MaxPoints)</small></span>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="pbh__break pbh__break--pending">
+            <span class="pbh__break-cat"><AppIcon Name="AppIconName.Clock" Size="13" />@CategoryLabel</span>
+            <span class="pbh__break-note">@Localizer["Predictions.Results.PendingDetail"]</span>
+            <span class="pbh__break-sel">@Localizer["Results.Pending.Title"]</span>
+        </div>
+    }
+    </div>
+</section>
+
+@code {
+    [Parameter] public bool IsPublic { get; set; }
+    [Parameter] public string Name { get; set; } = string.Empty;
+    [Parameter] public string CompetitionName { get; set; } = string.Empty;
+    [Parameter] public int? Rank { get; set; }
+    [Parameter] public decimal Points { get; set; }
+    [Parameter] public decimal MaxPoints { get; set; }
+    [Parameter] public int Scored { get; set; }
+    [Parameter] public int Total { get; set; }
+    [Parameter] public bool IsFinal { get; set; }
+    [Parameter] public bool HasScore { get; set; }
+    [Parameter] public string CategoryLabel { get; set; } = string.Empty;
+    [Parameter] public CategoryScoreBreakdown? Breakdown { get; set; }
+
+    private bool collapsed;
+
+    private void Toggle() => collapsed = !collapsed;
+
+    private string StatusMod => !HasScore ? "locked" : IsFinal ? "final" : "live";
+
+    private string StatusLabel => !HasScore
+        ? Localizer["Results.Status.Locked"]
+        : IsFinal ? Localizer["Results.Status.Final"] : Localizer["Results.Status.Live"];
+
+    private string ProgressWidth
+    {
+        get
+        {
+            var percent = Total <= 0 ? 0m : Math.Clamp((decimal)Scored / Total * 100m, 0m, 100m);
+            return $"{percent.ToString("0.##", CultureInfo.InvariantCulture)}%";
+        }
+    }
+
+    private string Initials
+    {
+        get
+        {
+            var parts = Name.Split([' ', '-'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Take(2).Select(p => char.ToUpperInvariant(p[0])).ToArray();
+            return parts.Length == 0 ? "?" : new string(parts);
+        }
+    }
+
+    private static string FormatPoints(decimal value) => value % 1m == 0m
+        ? value.ToString("0", CultureInfo.CurrentCulture)
+        : value.ToString("0.##", CultureInfo.CurrentCulture);
+}

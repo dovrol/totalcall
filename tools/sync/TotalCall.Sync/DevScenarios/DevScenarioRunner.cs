@@ -897,9 +897,10 @@ public sealed class DevScenarioRunner
             .Select(athlete => athlete.Id)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
+        // Full category ranking (every active athlete gets a place), so the results
+        // board can show an official place badge for the whole field, not just Top N.
         return question.AthleteIds
             .Where(activeAthleteIds.Contains)
-            .Take(GetRequiredCount(question))
             .Select((athleteId, index) => new OfficialResultPlacementFile
             {
                 Position = index + 1,

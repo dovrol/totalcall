@@ -8,7 +8,7 @@ namespace TotalCall.Sync.Results;
 
 public sealed class ScoreSnapshotBuilder(IPredictionScoringService scoringService)
 {
-    public const string RulesVersion = "placement-v1";
+    public const string RulesVersion = "placement-v2";
 
     public IReadOnlyList<ScoreSnapshotImportRow> Build(
         IReadOnlyList<PredictionSubmissionImportRow> submissions,
@@ -66,7 +66,13 @@ public sealed class ScoreSnapshotBuilder(IPredictionScoringService scoringServic
                 ["categoryId"] = questionScore.CategoryId,
                 ["points"] = questionScore.Points,
                 ["maxPoints"] = questionScore.MaxPoints,
-                ["explanation"] = questionScore.Explanation
+                ["placement"] = questionScore.PlacementPoints,
+                ["placementMax"] = questionScore.PlacementMax,
+                ["setBonus"] = questionScore.SetBonus,
+                ["orderBonus"] = questionScore.OrderBonus,
+                ["explanation"] = questionScore.Explanation,
+                ["slots"] = BuildSlots(questionScore.Slots),
+                ["official"] = BuildOfficial(questionScore.Official)
             });
         }
 
@@ -74,6 +80,48 @@ public sealed class ScoreSnapshotBuilder(IPredictionScoringService scoringServic
         {
             ["questionScores"] = questionScores
         };
+    }
+
+    private static JsonArray BuildSlots(IReadOnlyList<SlotScoreResult>? slots)
+    {
+        var array = new JsonArray();
+        if (slots is null)
+        {
+            return array;
+        }
+
+        foreach (var slot in slots)
+        {
+            array.Add(new JsonObject
+            {
+                ["position"] = slot.Position,
+                ["athleteId"] = slot.AthleteId,
+                ["verdict"] = slot.Verdict,
+                ["points"] = slot.Points
+            });
+        }
+
+        return array;
+    }
+
+    private static JsonArray BuildOfficial(IReadOnlyList<OfficialPlacementRef>? official)
+    {
+        var array = new JsonArray();
+        if (official is null)
+        {
+            return array;
+        }
+
+        foreach (var placement in official)
+        {
+            array.Add(new JsonObject
+            {
+                ["position"] = placement.Position,
+                ["athleteId"] = placement.AthleteId
+            });
+        }
+
+        return array;
     }
 }
 

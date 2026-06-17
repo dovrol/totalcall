@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using TotalCall.Client.Application.Auth;
 using TotalCall.Client.Domain.Predictions;
+using TotalCall.Client.Domain.Predictions.Results;
 using TotalCall.Client.Infrastructure.Json;
 
 namespace TotalCall.Client.Infrastructure.Supabase;
@@ -18,6 +19,12 @@ public sealed class SupabasePredictionStore(
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
         PropertyNameCaseInsensitive = true,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+    };
+
+    // breakdown_json is authored by the sync tool with camelCase keys; match case-insensitively.
+    private static readonly JsonSerializerOptions BreakdownJsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true
     };
 
     public async Task<PredictionSet?> GetAsync(
@@ -120,6 +127,58 @@ public sealed class SupabasePredictionStore(
             row.SubmittedAt);
     }
 
+    public async Task<MyScoreSnapshot?> GetMyScoreAsync(
+        string competitionId,
+        CancellationToken cancellationToken = default)
+    {
+        var context = await GetAuthenticatedContextAsync(cancellationToken);
+
+        using var request = BuildRequest(
+            HttpMethod.Post,
+            "rest/v1/rpc/get_my_score",
+            context.AccessToken);
+        request.Content = JsonContent.Create(
+            new GetParticipantsBody { CompetitionId = competitionId },
+            options: SupabaseJsonOptions);
+
+        using var response = await httpClient!.SendAsync(request, cancellationToken);
+        await EnsureSuccessAsync(response, cancellationToken);
+
+        var rows = await response.Content.ReadFromJsonAsync<List<MyScoreRow>>(
+            SupabaseJsonOptions,
+            cancellationToken);
+
+        var row = rows?.FirstOrDefault();
+        if (row is null)
+        {
+            return null;
+        }
+
+        var categories = ParseCategories(row.BreakdownJson);
+
+        return new MyScoreSnapshot
+        {
+            Rank = row.Rank,
+            TotalPoints = row.TotalPoints,
+            ScoredGroupsCount = row.ScoredGroupsCount,
+            TotalGroupsCount = row.TotalGroupsCount,
+            Status = NormalizeScoreStatus(row.Status),
+            LastCalculatedAt = row.LastCalculatedAt,
+            Categories = categories
+        };
+    }
+
+    private static IReadOnlyList<CategoryScoreBreakdown> ParseCategories(JsonElement? breakdownJson)
+    {
+        if (breakdownJson is not { ValueKind: JsonValueKind.Object } breakdown)
+        {
+            return [];
+        }
+
+        var payload = breakdown.Deserialize<ScoreBreakdownPayload>(BreakdownJsonOptions);
+        return payload?.QuestionScores ?? [];
+    }
+
     public async Task<IReadOnlyList<PublicPredictionParticipant>> GetParticipantsAsync(
         string competitionId,
         CancellationToken cancellationToken = default)
@@ -179,8 +238,66 @@ public sealed class SupabasePredictionStore(
                 row.ScoredGroupsCount,
                 row.TotalGroupsCount,
                 NormalizeScoreStatus(row.Status),
-                row.LastCalculatedAt))
+                row.LastCalculatedAt,
+                row.BoardRef))
             .ToArray() ?? [];
+    }
+
+    public async Task<PublicBoardResult?> GetPublicBoardAsync(
+        string competitionId,
+        string boardRef,
+        CancellationToken cancellationToken = default)
+    {
+        EnsureConfigured();
+
+        using var request = BuildPublicRequest(
+            HttpMethod.Post,
+            "rest/v1/rpc/get_public_board");
+        request.Content = JsonContent.Create(
+            new GetPublicBoardBody { CompetitionId = competitionId, BoardRef = boardRef },
+            options: SupabaseJsonOptions);
+
+        using var response = await httpClient!.SendAsync(request, cancellationToken);
+        await EnsureSuccessAsync(response, cancellationToken);
+
+        var rows = await response.Content.ReadFromJsonAsync<List<PublicBoardRow>>(
+            SupabaseJsonOptions,
+            cancellationToken);
+
+        var row = rows?.FirstOrDefault();
+        if (row?.PicksJson is not { ValueKind: JsonValueKind.Array } picksJson)
+        {
+            return null;
+        }
+
+        // The public RPC returns only the picks array (never the full PredictionSet),
+        // so rebuild a minimal submitted PredictionSet that the board can render.
+        var answers = picksJson.Deserialize<List<PredictionAnswer>>(JsonDataOptions.SerializerOptions)
+                      ?? [];
+
+        var predictionSet = new PredictionSet
+        {
+            CompetitionId = competitionId,
+            CompetitionConfigVersion = string.Empty,
+            SubmissionStatus = PredictionSet.SubmittedSubmissionStatus,
+            Answers = answers
+        };
+
+        var snapshot = new MyScoreSnapshot
+        {
+            Rank = row.Rank,
+            TotalPoints = row.TotalPoints,
+            ScoredGroupsCount = row.ScoredGroupsCount,
+            TotalGroupsCount = row.TotalGroupsCount,
+            Status = NormalizeScoreStatus(row.Status),
+            LastCalculatedAt = row.LastCalculatedAt,
+            Categories = ParseCategories(row.BreakdownJson)
+        };
+
+        return new PublicBoardResult(
+            NormalizeParticipantDisplayName(row.DisplayName, 0),
+            predictionSet,
+            snapshot);
     }
 
     private async Task<AuthenticatedContext> GetAuthenticatedContextAsync(CancellationToken cancellationToken)
@@ -290,6 +407,28 @@ public sealed class SupabasePredictionStore(
         public required string CompetitionId { get; init; }
     }
 
+    private sealed record MyScoreRow
+    {
+        public int? Rank { get; init; }
+
+        public decimal TotalPoints { get; init; }
+
+        public int ScoredGroupsCount { get; init; }
+
+        public int TotalGroupsCount { get; init; }
+
+        public string? Status { get; init; }
+
+        public JsonElement? BreakdownJson { get; init; }
+
+        public DateTimeOffset? LastCalculatedAt { get; init; }
+    }
+
+    private sealed record ScoreBreakdownPayload
+    {
+        public List<CategoryScoreBreakdown>? QuestionScores { get; init; }
+    }
+
     private sealed record PublicPredictionParticipantRow
     {
         public required string CompetitionId { get; init; }
@@ -301,9 +440,41 @@ public sealed class SupabasePredictionStore(
         public string? Status { get; init; }
     }
 
+    private sealed record GetPublicBoardBody
+    {
+        [JsonPropertyName("p_competition_id")]
+        public required string CompetitionId { get; init; }
+
+        [JsonPropertyName("p_board_ref")]
+        public required string BoardRef { get; init; }
+    }
+
+    private sealed record PublicBoardRow
+    {
+        public string? DisplayName { get; init; }
+
+        public int? Rank { get; init; }
+
+        public decimal TotalPoints { get; init; }
+
+        public int ScoredGroupsCount { get; init; }
+
+        public int TotalGroupsCount { get; init; }
+
+        public string? Status { get; init; }
+
+        public JsonElement? PicksJson { get; init; }
+
+        public JsonElement? BreakdownJson { get; init; }
+
+        public DateTimeOffset? LastCalculatedAt { get; init; }
+    }
+
     private sealed record PublicCompetitionLeaderboardRow
     {
         public int Position { get; init; }
+
+        public string? BoardRef { get; init; }
 
         public string? DisplayName { get; init; }
 
@@ -374,8 +545,14 @@ public sealed record PublicCompetitionLeaderboardEntry(
     int ScoredGroupsCount,
     int TotalGroupsCount,
     string Status,
-    DateTimeOffset LastCalculatedAt)
+    DateTimeOffset LastCalculatedAt,
+    string? BoardRef = null)
 {
     public const string PartialStatus = "partial";
     public const string FinalStatus = "final";
 }
+
+public sealed record PublicBoardResult(
+    string DisplayName,
+    PredictionSet PredictionSet,
+    MyScoreSnapshot Snapshot);

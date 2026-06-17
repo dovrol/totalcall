@@ -87,7 +87,8 @@
 
         var path = parsed.AbsolutePath;
         return path.Contains("/predictions", StringComparison.OrdinalIgnoreCase)
-            || path.Contains("/review", StringComparison.OrdinalIgnoreCase);
+            || path.Contains("/review", StringComparison.OrdinalIgnoreCase)
+            || path.Contains("/board/", StringComparison.OrdinalIgnoreCase);
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)

@@ -191,7 +191,9 @@ else
 
                     @foreach (var row in FilteredLeaderboard.Select((entry, index) => new { entry, index }))
                     {
-                        <article class="@LeaderboardRowClass(row.entry)">
+                        <a class="@LeaderboardRowClass(row.entry)"
+                           href="@BoardHref(row.entry)"
+                           title="@ViewBoardTitle(row.entry)">
                             <span class="lb-rank">
                                 <span class="@RankBadgeClass(row.entry.Position)">@row.entry.Position</span>
                             </span>
@@ -207,12 +209,16 @@ else
                                     <i style="@ProgressStyle(row.entry.ScoredGroupsCount, row.entry.TotalGroupsCount)"></i>
                                 </span>
                                 <strong>@row.entry.ScoredGroupsCount/@row.entry.TotalGroupsCount</strong>
-                                @if (row.entry.Status != PublicCompetitionLeaderboardEntry.FinalStatus)
+                                @if (BoardHref(row.entry) is not null)
+                                {
+                                    <AppIcon Name="AppIconName.ChevronRight" Size="14" Class="lb-row__go" />
+                                }
+                                else if (row.entry.Status != PublicCompetitionLeaderboardEntry.FinalStatus)
                                 {
                                     <small>@Localizer["Standings.InProgress"]</small>
                                 }
                             </span>
-                        </article>
+                        </a>
                     }
                 </section>
                 <p class="lb-footnote">
@@ -530,11 +536,27 @@ else
         return $"background:{gradients[index % gradients.Length]}";
     }
 
-    private static string LeaderboardRowClass(PublicCompetitionLeaderboardEntry entry)
+    private string? BoardHref(PublicCompetitionLeaderboardEntry entry)
     {
-        return entry.Position == 1
-            ? "lb-row lb-row--p1"
-            : "lb-row";
+        return string.IsNullOrWhiteSpace(entry.BoardRef)
+            ? null
+            : $"competitions/{Slug}/board/{entry.BoardRef}";
+    }
+
+    private string? ViewBoardTitle(PublicCompetitionLeaderboardEntry entry)
+    {
+        return BoardHref(entry) is null
+            ? null
+            : Localizer["Standings.ViewBoard", entry.DisplayName].Value;
+    }
+
+    private string LeaderboardRowClass(PublicCompetitionLeaderboardEntry entry)
+    {
+        return string.Join(
+            " ",
+            "lb-row",
+            entry.Position == 1 ? "lb-row--p1" : null,
+            BoardHref(entry) is null ? null : "lb-row--link");
     }
 
     private static string RankBadgeClass(int position)

@@ -1,0 +1,46 @@
+@inject IStringLocalizer<SharedResource> Localizer
+
+<span class="rb-badge rb-badge--@Mod @(Small ? "rb-badge--sm" : null)">
+    <AppIcon Name="@Icon" Size="@(Small ? 11 : 13)" Class="rb-badge__ic" />
+    <span>@Label</span>
+    <span class="rb-badge__pts">@PointsLabel</span>
+</span>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Verdict { get; set; } = ResultVerdict.Miss;
+
+    [Parameter]
+    public bool Small { get; set; }
+
+    private string Mod => Verdict switch
+    {
+        ResultVerdict.Exact => "exact",
+        ResultVerdict.Wrong => "wrong",
+        ResultVerdict.Withdrawn => "withdrawn",
+        _ => "miss"
+    };
+
+    private AppIconName Icon => Verdict switch
+    {
+        ResultVerdict.Exact => AppIconName.Target,
+        ResultVerdict.Wrong => AppIconName.ArrowLeftRight,
+        ResultVerdict.Withdrawn => AppIconName.TriangleAlert,
+        _ => AppIconName.Minus
+    };
+
+    private string Label => Verdict switch
+    {
+        ResultVerdict.Exact => Localizer["Results.Verdict.Exact"],
+        ResultVerdict.Wrong => Localizer["Results.Verdict.Wrong"],
+        ResultVerdict.Withdrawn => Localizer["Results.Verdict.Withdrawn"],
+        _ => Localizer["Results.Verdict.Miss"]
+    };
+
+    private string PointsLabel => Verdict switch
+    {
+        ResultVerdict.Exact => "+3",
+        ResultVerdict.Wrong => "+1",
+        _ => "+0"
+    };
+}

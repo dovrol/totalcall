@@ -26,7 +26,8 @@ public sealed class PredictionScoringServiceTests
 
         var score = scoring.Score(competition, predictionSet, results);
 
-        Assert.Equal(9m, score.TotalPoints);
+        // q1 is a perfect Top 3: 3+3+3 placement + 1 set + 2 order = 12.
+        Assert.Equal(12m, score.TotalPoints);
         Assert.Equal(1, score.ScoredGroupsCount);
         Assert.Equal(2, score.TotalGroupsCount);
         Assert.Equal(ScoreCalculationStatus.Partial, score.Status);
@@ -46,7 +47,8 @@ public sealed class PredictionScoringServiceTests
 
         var score = scoring.Score(competition, predictionSet, results);
 
-        Assert.Equal(18m, score.TotalPoints);
+        // Two perfect Top 3 groups: 12 + 12.
+        Assert.Equal(24m, score.TotalPoints);
         Assert.Equal(2, score.ScoredGroupsCount);
         Assert.Equal(2, score.TotalGroupsCount);
         Assert.Equal(ScoreCalculationStatus.Final, score.Status);
@@ -77,7 +79,72 @@ public sealed class PredictionScoringServiceTests
 
         var score = scoring.Score(competition, predictionSet, results);
 
+        // a1 exact (+3), a3 correct-wrong-slot (+1), a4 miss (+0); no bonus (a2 missing).
         Assert.Equal(4m, score.TotalPoints);
+
+        var question = Assert.Single(score.QuestionScores);
+        Assert.Equal(4m, question.PlacementPoints);
+        Assert.Equal(9m, question.PlacementMax);
+        Assert.Equal(0m, question.SetBonus);
+        Assert.Equal(0m, question.OrderBonus);
+        Assert.Equal(12m, question.MaxPoints);
+        Assert.NotNull(question.Slots);
+        Assert.Collection(question.Slots!,
+            slot => Assert.Equal(SlotVerdict.Exact, slot.Verdict),
+            slot => Assert.Equal(SlotVerdict.Wrong, slot.Verdict),
+            slot => Assert.Equal(SlotVerdict.Miss, slot.Verdict));
+        Assert.NotNull(question.Official);
+        Assert.Equal(3, question.Official!.Count);
+    }
+
+    [Fact]
+    public void Placement_scorer_awards_set_bonus_without_perfect_order()
+    {
+        var competition = CreateCompetition("q1");
+        var predictionSet = CreatePredictionSet(Answer("q1", "a1", "a3", "a2"));
+        var results = CreateResults(Result("q1", OfficialResultGroupStatus.Final, "a1", "a2", "a3"));
+
+        var score = scoring.Score(competition, predictionSet, results);
+
+        // a1 exact (+3), a3/a2 swapped (+1 each) = 5 placement, all three present (+1 set), not perfect.
+        var question = Assert.Single(score.QuestionScores);
+        Assert.Equal(5m, question.PlacementPoints);
+        Assert.Equal(1m, question.SetBonus);
+        Assert.Equal(0m, question.OrderBonus);
+        Assert.Equal(6m, score.TotalPoints);
+    }
+
+    [Fact]
+    public void Placement_scorer_awards_perfect_order_bonus()
+    {
+        var competition = CreateCompetition("q1");
+        var predictionSet = CreatePredictionSet(Answer("q1", "a1", "a2", "a3"));
+        var results = CreateResults(Result("q1", OfficialResultGroupStatus.Final, "a1", "a2", "a3"));
+
+        var score = scoring.Score(competition, predictionSet, results);
+
+        var question = Assert.Single(score.QuestionScores);
+        Assert.Equal(9m, question.PlacementPoints);
+        Assert.Equal(1m, question.SetBonus);
+        Assert.Equal(2m, question.OrderBonus);
+        Assert.Equal(12m, score.TotalPoints);
+        Assert.All(question.Slots!, slot => Assert.Equal(SlotVerdict.Exact, slot.Verdict));
+    }
+
+    [Fact]
+    public void Placement_scorer_marks_withdrawn_pick_and_skips_set_bonus()
+    {
+        var competition = CreateCompetition("q1");
+        var predictionSet = CreatePredictionSet(Answer("q1", "withdrawn", "a2", "a3"));
+        var results = CreateResults(Result("q1", OfficialResultGroupStatus.Final, "a4", "a2", "a3"));
+
+        var score = scoring.Score(competition, predictionSet, results);
+
+        var question = Assert.Single(score.QuestionScores);
+        Assert.Equal(6m, score.TotalPoints);
+        Assert.Equal(0m, question.SetBonus);
+        Assert.Equal(SlotVerdict.Withdrawn, question.Slots![0].Verdict);
+        Assert.Equal(0m, question.Slots![0].Points);
     }
 
     [Fact]

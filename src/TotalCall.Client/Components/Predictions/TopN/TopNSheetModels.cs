@@ -76,3 +76,12 @@ public sealed record TopNQuickFill(int Position, string Kind);
 
 /// <summary>A reorder request: move the slot at <see cref="Position"/> by <see cref="Delta"/> places.</summary>
 public sealed record TopNMove(int Position, int Delta);
+
+/// <summary>
+/// Backend scoring overlay for one athlete row, shown after results import.
+/// <see cref="OfficialPlace"/> is the athlete's official finishing place (null
+/// when they have no official result). <see cref="Verdict"/> / <see cref="Points"/>
+/// are only set for the user's scored Top N picks; comparison-zone athletes show
+/// just their place.
+/// </summary>
+public sealed record TopNSlotResult(int? OfficialPlace, string? Verdict, decimal? Points);

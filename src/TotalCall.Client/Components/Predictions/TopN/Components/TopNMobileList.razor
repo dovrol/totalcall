@@ -87,7 +87,26 @@
                         }
                     </div>
                 </div>
-                @if (!isExpanded)
+                @if (ShowResults && TryGetResult(slot.Athlete!.Id, out var result) && (result.OfficialPlace is not null || result.Verdict is not null))
+                {
+                    <div class="ms-card__pred ms-card__pred--result">
+                        @if (result.OfficialPlace is not null)
+                        {
+                            <span class="@PlaceClass(result.OfficialPlace)">
+                                @if (result.OfficialPlace is >= 1 and <= 3)
+                                {
+                                    <AppIcon Name="AppIconName.Medal" Size="11" Class="rbs-place__ic" />
+                                }
+                                @PlaceLabel(result.OfficialPlace)
+                            </span>
+                        }
+                        @if (result.Verdict is not null)
+                        {
+                            <ResultBadge Verdict="@result.Verdict" Small="true" />
+                        }
+                    </div>
+                }
+                else if (!isExpanded)
                 {
                     <div class="ms-card__pred">
                         <div class="ms-card__pred-k">@Localizer["Predictions.PredictedShort"]</div>
@@ -275,6 +294,9 @@
     public int ScoredCount { get; set; } = 3;
 
     [Parameter]
+    public IReadOnlyDictionary<string, TopNSlotResult>? Results { get; set; }
+
+    [Parameter]
     public bool CanEditPredictions { get; set; }
 
     [Parameter]
@@ -317,6 +339,32 @@
     public EventCallback<int> ResetRequested { get; set; }
 
     private bool isExpanded;
+
+    private bool ShowResults => Results is not null;
+
+    private bool TryGetResult(string athleteId, out TopNSlotResult result)
+    {
+        if (Results is not null && !string.IsNullOrEmpty(athleteId) && Results.TryGetValue(athleteId, out var found))
+        {
+            result = found;
+            return true;
+        }
+
+        result = default!;
+        return false;
+    }
+
+    private static string PlaceClass(int? place) => place switch
+    {
+        1 => "rbs-place rbs-place--p1",
+        2 => "rbs-place rbs-place--p2",
+        3 => "rbs-place rbs-place--p3",
+        _ => "rbs-place rbs-place--out"
+    };
+
+    private string PlaceLabel(int? place) => place is null
+        ? Localizer["Predictions.TopN.ResultOutShort"]
+        : $"{place}.";
 
     private int PreviewCount => Math.Max(ScoredCount + 2, 5);
 
