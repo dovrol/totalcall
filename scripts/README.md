@@ -1,8 +1,11 @@
 # Scripts
 
-- `./scripts/dev.sh [port]` - uruchamia aplikacje lokalnie (domyslnie port `5010`).
-- `./scripts/restore.sh` - przywraca paczki NuGet.
-- `./scripts/build.sh` - buduje cale rozwiazanie.
-- `./scripts/test.sh` - uruchamia testy.
-- `./scripts/clean.sh` - usuwa wszystkie katalogi `bin` i `obj`.
-- `./scripts/sync-supabase.sh [competition-json] [both|openipf|openpowerlifting]` - synchronizuje definicje zawodow oraz dane zawodnikow do Supabase; wymaga `SUPABASE_URL` i `SUPABASE_SECRET_KEY`.
+- `./scripts/dev.sh [port]` - runs the Blazor app locally, default port `5010`.
+- `./scripts/restore.sh` - restores NuGet packages for `TotalCall.sln`.
+- `./scripts/build.sh` - builds `TotalCall.sln` without restore.
+- `./scripts/test.sh` - runs tests without build.
+- `./scripts/clean.sh` - removes all `bin` and `obj` directories.
+- `./scripts/dev-scenarios.sh [scenario] [sync-tool-options]` - applies local migrations and seeds local-only Supabase product states. Requires local Supabase.
+- `./scripts/sync-supabase.sh [competition-json] [both|openipf|openpowerlifting] [auto|none|results-json]` - syncs competition config, athlete history, and optionally official results/scoring snapshots. Requires `SUPABASE_URL` and `SUPABASE_SECRET_KEY`.
+
+See [../docs/LOCAL_DEVELOPMENT.md](../docs/LOCAL_DEVELOPMENT.md), [../docs/DEV_SCENARIOS.md](../docs/DEV_SCENARIOS.md), and [../docs/SUPABASE.md](../docs/SUPABASE.md).

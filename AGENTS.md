@@ -12,7 +12,7 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 
 ## Frontend
 
-- Use plain CSS from `src/TotalCall.Client/wwwroot/css`; Tailwind is not used.
+- Use plain CSS from `src/TotalCall.Client/wwwroot/css`.
 - Keep pages thin and compose them from Blazor components.
 - Prefer existing primitives in `Components/UI` before adding new styling patterns.
 - UI primitives must not reference domain models.
