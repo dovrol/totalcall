@@ -3,8 +3,8 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TotalCall.Client.Application.Auth;
-using TotalCall.Client.Domain.Predictions;
-using TotalCall.Client.Domain.Predictions.Results;
+using TotalCall.Core.Domain.Predictions;
+using TotalCall.Core.Domain.Predictions.Results;
 using TotalCall.Client.Infrastructure.Json;
 
 namespace TotalCall.Client.Infrastructure.Supabase;

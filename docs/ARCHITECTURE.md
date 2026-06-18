@@ -32,7 +32,7 @@ GitHub Actions
 ## Projects
 
 - `src/TotalCall.Client` is the Blazor WebAssembly frontend.
-- `src/TotalCall.Core` compiles linked domain and scoring files from `TotalCall.Client` so tests and the sync tool can reuse the same types.
+- `src/TotalCall.Core` contains shared domain models and scoring code used by the public app, tests, and the sync tool.
 - `tests/TotalCall.Tests` contains xUnit tests for domain logic, validation, storage, migrations, scoring, and sync helpers.
 - `tools/sync/TotalCall.Sync` is a .NET console tool for Supabase imports, scoring recomputation, and local scenarios.
 - `supabase/migrations` is the source of truth for database schema, RPCs, RLS, and grants.
@@ -48,11 +48,11 @@ The frontend is a Blazor WebAssembly app with plain CSS:
 - Pages live in `src/TotalCall.Client/Pages`.
 - UI primitives live in `src/TotalCall.Client/Components/UI`.
 - Prediction shell, modules, Top-N workspace, results views, sharing, and timeline components live in `src/TotalCall.Client/Components/Predictions`.
-- Domain models live under `src/TotalCall.Client/Domain`.
+- Domain models live under `src/TotalCall.Core/Domain`.
 - Reusable application services live under `src/TotalCall.Client/Application`.
 - Infrastructure adapters live under `src/TotalCall.Client/Infrastructure`.
 - Prediction storage abstractions live under `src/TotalCall.Client/Storage`.
-- Scoring code lives under `src/TotalCall.Client/Scoring` and is shared through `TotalCall.Core`.
+- Scoring code lives under `src/TotalCall.Core/Scoring`.
 
 Pages should stay thin. Domain components may reference domain models, but scoring and persistence should stay outside Razor components.
 

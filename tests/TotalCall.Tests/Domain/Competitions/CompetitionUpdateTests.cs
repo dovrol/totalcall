@@ -1,5 +1,5 @@
 using System.Text.Json;
-using TotalCall.Client.Domain.Competitions;
+using TotalCall.Core.Domain.Competitions;
 using TotalCall.Client.Infrastructure.Json;
 
 namespace TotalCall.Tests.Domain.Competitions;

@@ -1,9 +1,9 @@
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using TotalCall.Client.Domain.Competitions;
-using TotalCall.Client.Domain.Predictions;
-using TotalCall.Client.Scoring;
+using TotalCall.Core.Domain.Competitions;
+using TotalCall.Core.Domain.Predictions;
+using TotalCall.Core.Scoring;
 using TotalCall.Sync.Competitions;
 
 namespace TotalCall.Sync.Results;

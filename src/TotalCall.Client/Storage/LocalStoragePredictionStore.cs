@@ -1,5 +1,5 @@
 using System.Text.Json;
-using TotalCall.Client.Domain.Predictions;
+using TotalCall.Core.Domain.Predictions;
 using TotalCall.Client.Infrastructure.Browser;
 using TotalCall.Client.Infrastructure.Json;
 

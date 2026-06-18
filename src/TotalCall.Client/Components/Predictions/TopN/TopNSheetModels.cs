@@ -1,5 +1,5 @@
-using TotalCall.Client.Domain.Athletes;
-using TotalCall.Client.Domain.Predictions;
+using TotalCall.Core.Domain.Athletes;
+using TotalCall.Core.Domain.Predictions;
 
 namespace TotalCall.Client.Components.Predictions.TopN;
 

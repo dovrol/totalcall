@@ -600,7 +600,7 @@
     private void SyncDeadlineTicker()
     {
         if (!CanEditPredictions ||
-            CompetitionStatus != TotalCall.Client.Domain.Competitions.CompetitionStatus.Upcoming ||
+            CompetitionStatus != TotalCall.Core.Domain.Competitions.CompetitionStatus.Upcoming ||
             PredictionLockAt is null)
         {
             StopDeadlineTicker();

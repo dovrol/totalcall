@@ -14,7 +14,7 @@ using TotalCall.Client.Infrastructure.Browser;
 using TotalCall.Client.Infrastructure.Json;
 using TotalCall.Client.Infrastructure.Supabase;
 using TotalCall.Client.Infrastructure.Supabase.Auth;
-using TotalCall.Client.Scoring;
+using TotalCall.Core.Scoring;
 using TotalCall.Client.Storage;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

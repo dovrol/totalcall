@@ -1,5 +1,5 @@
 using TotalCall.Client.Application.Auth;
-using TotalCall.Client.Domain.Predictions;
+using TotalCall.Core.Domain.Predictions;
 using TotalCall.Client.Infrastructure.Supabase;
 
 namespace TotalCall.Client.Storage;

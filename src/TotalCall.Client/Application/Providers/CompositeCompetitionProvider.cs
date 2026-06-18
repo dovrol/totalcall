@@ -1,4 +1,4 @@
-using TotalCall.Client.Domain.Competitions;
+using TotalCall.Core.Domain.Competitions;
 
 namespace TotalCall.Client.Application.Providers;
 

@@ -3,10 +3,10 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Localization;
 using TotalCall.Client.Application.Localization;
-using TotalCall.Client.Domain.Competitions;
-using TotalCall.Client.Domain.Predictions;
-using TotalCall.Client.Domain.Predictions.Export;
-using TotalCall.Client.Domain.Predictions.Review;
+using TotalCall.Core.Domain.Competitions;
+using TotalCall.Core.Domain.Predictions;
+using TotalCall.Core.Domain.Predictions.Export;
+using TotalCall.Core.Domain.Predictions.Review;
 using TotalCall.Client.Infrastructure.Json;
 
 namespace TotalCall.Client.Application.Services.Export;

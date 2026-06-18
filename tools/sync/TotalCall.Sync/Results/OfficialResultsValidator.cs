@@ -1,5 +1,5 @@
-using TotalCall.Client.Domain.Competitions;
-using TotalCall.Client.Domain.Predictions;
+using TotalCall.Core.Domain.Competitions;
+using TotalCall.Core.Domain.Predictions;
 
 namespace TotalCall.Sync.Results;
 

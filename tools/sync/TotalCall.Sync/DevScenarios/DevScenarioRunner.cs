@@ -4,9 +4,9 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
-using TotalCall.Client.Domain.Athletes;
-using TotalCall.Client.Domain.Competitions;
-using TotalCall.Client.Domain.Predictions;
+using TotalCall.Core.Domain.Athletes;
+using TotalCall.Core.Domain.Competitions;
+using TotalCall.Core.Domain.Predictions;
 using TotalCall.Sync.Results;
 
 namespace TotalCall.Sync.DevScenarios;

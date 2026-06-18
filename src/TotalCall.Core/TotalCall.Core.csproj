@@ -6,9 +6,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="../TotalCall.Client/Domain/**/*.cs" LinkBase="Domain" />
-    <Compile Include="../TotalCall.Client/Scoring/**/*.cs" LinkBase="Scoring" />
-  </ItemGroup>
-
 </Project>

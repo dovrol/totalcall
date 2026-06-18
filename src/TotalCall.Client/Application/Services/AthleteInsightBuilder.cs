@@ -1,4 +1,4 @@
-using TotalCall.Client.Domain.Athletes;
+using TotalCall.Core.Domain.Athletes;
 
 namespace TotalCall.Client.Application.Services;
 

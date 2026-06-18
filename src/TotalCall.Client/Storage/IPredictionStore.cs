@@ -1,4 +1,4 @@
-using TotalCall.Client.Domain.Predictions;
+using TotalCall.Core.Domain.Predictions;
 
 namespace TotalCall.Client.Storage;
 

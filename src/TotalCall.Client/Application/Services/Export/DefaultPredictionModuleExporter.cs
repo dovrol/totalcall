@@ -2,10 +2,10 @@ using System.Globalization;
 using System.Text;
 using Microsoft.Extensions.Localization;
 using TotalCall.Client.Application.Localization;
-using TotalCall.Client.Domain.Athletes;
-using TotalCall.Client.Domain.Predictions;
-using TotalCall.Client.Domain.Predictions.Export;
-using TotalCall.Client.Domain.Predictions.Review;
+using TotalCall.Core.Domain.Athletes;
+using TotalCall.Core.Domain.Predictions;
+using TotalCall.Core.Domain.Predictions.Export;
+using TotalCall.Core.Domain.Predictions.Review;
 
 namespace TotalCall.Client.Application.Services.Export;
 

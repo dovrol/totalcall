@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TotalCall.Client.Application.Providers;
-using TotalCall.Client.Domain.Competitions;
+using TotalCall.Core.Domain.Competitions;
 using TotalCall.Client.Infrastructure.Json;
 
 namespace TotalCall.Client.Infrastructure.Supabase;

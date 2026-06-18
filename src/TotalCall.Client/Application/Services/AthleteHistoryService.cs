@@ -2,8 +2,8 @@ using System.Globalization;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using TotalCall.Client.Domain.Athletes;
-using TotalCall.Client.Domain.Competitions;
+using TotalCall.Core.Domain.Athletes;
+using TotalCall.Core.Domain.Competitions;
 
 namespace TotalCall.Client.Application.Services;
 

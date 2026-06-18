@@ -1,6 +1,6 @@
 using System.Text;
-using TotalCall.Client.Domain.Predictions.Export;
-using TotalCall.Client.Domain.Predictions.Review;
+using TotalCall.Core.Domain.Predictions.Export;
+using TotalCall.Core.Domain.Predictions.Review;
 
 namespace TotalCall.Client.Application.Services.Export;
 

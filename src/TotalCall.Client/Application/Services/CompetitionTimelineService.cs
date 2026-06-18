@@ -1,5 +1,5 @@
-using TotalCall.Client.Domain.Athletes;
-using TotalCall.Client.Domain.Competitions;
+using TotalCall.Core.Domain.Athletes;
+using TotalCall.Core.Domain.Competitions;
 
 namespace TotalCall.Client.Application.Services;
 

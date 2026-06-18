@@ -1,7 +1,7 @@
-using TotalCall.Client.Domain.Athletes;
-using TotalCall.Client.Domain.Competitions;
-using TotalCall.Client.Domain.Predictions;
-using TotalCall.Client.Domain.Predictions.Review;
+using TotalCall.Core.Domain.Athletes;
+using TotalCall.Core.Domain.Competitions;
+using TotalCall.Core.Domain.Predictions;
+using TotalCall.Core.Domain.Predictions.Review;
 using Microsoft.Extensions.Localization;
 
 namespace TotalCall.Client.Application.Services.Review;

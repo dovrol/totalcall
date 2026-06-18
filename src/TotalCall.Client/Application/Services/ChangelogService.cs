@@ -1,5 +1,5 @@
 using System.Net.Http.Json;
-using TotalCall.Client.Domain.Releases;
+using TotalCall.Core.Domain.Releases;
 using TotalCall.Client.Infrastructure.Browser;
 using TotalCall.Client.Infrastructure.Json;
 
