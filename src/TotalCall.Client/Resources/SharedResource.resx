@@ -7,7 +7,7 @@
   <data name="App.Tagline" xml:space="preserve"><value>Typowania trójbojowe</value></data>
   <data name="App.BrandSubtitle" xml:space="preserve"><value>Powerlifting Predictions</value></data>
   <data name="App.DataSource" xml:space="preserve"><value>Dane zawodów JSON + Supabase</value></data>
-  <data name="App.Storage" xml:space="preserve"><value>Zapis lokalny + prywatna chmura</value></data>
+  <data name="App.Storage" xml:space="preserve"><value>Zapis lokalny + sync z chmurą</value></data>
   <data name="App.BetaBadge" xml:space="preserve"><value>BETA</value></data>
   <data name="App.VersionLine" xml:space="preserve"><value>TotalCall Beta · {0}</value></data>
   <data name="WhatsNew.Eyebrow" xml:space="preserve"><value>NOWA WERSJA</value></data>
@@ -79,7 +79,7 @@
   <data name="Home.PrimaryCta" xml:space="preserve"><value>Zacznij typować</value></data>
   <data name="Home.SecondaryCta" xml:space="preserve"><value>Zobacz zawody</value></data>
   <data name="Home.PointNoOdds" xml:space="preserve"><value>Bez kursów</value></data>
-  <data name="Home.PointLocal" xml:space="preserve"><value>Tylko lokalny zapis</value></data>
+  <data name="Home.PointLocal" xml:space="preserve"><value>Prywatny zapis draftu</value></data>
   <data name="Home.PointSkills" xml:space="preserve"><value>Liczy się wiedza</value></data>
   <data name="Home.Loading" xml:space="preserve"><value>Ładowanie zawodów...</value></data>
   <data name="Home.Empty" xml:space="preserve"><value>Nie skonfigurowano jeszcze żadnych zawodów.</value></data>
@@ -88,8 +88,8 @@
   <data name="Home.StatOpen" xml:space="preserve"><value>Aktywne zawody</value></data>
   <data name="Home.StatOpenHint" xml:space="preserve"><value>Gotowe do typowania</value></data>
   <data name="Home.StatStorage" xml:space="preserve"><value>Przechowywanie</value></data>
-  <data name="Home.StatStorageValue" xml:space="preserve"><value>Lokalna przeglądarka</value></data>
-  <data name="Home.StatStorageHint" xml:space="preserve"><value>Bez konta</value></data>
+  <data name="Home.StatStorageValue" xml:space="preserve"><value>Lokalnie + chmura</value></data>
+  <data name="Home.StatStorageHint" xml:space="preserve"><value>Konto opcjonalne</value></data>
   <data name="Home.StatDeadline" xml:space="preserve"><value>Najbliższa blokada</value></data>
   <data name="Home.StatDeadlineNone" xml:space="preserve"><value>Brak aktywnej blokady</value></data>
   <data name="Common.Starts" xml:space="preserve"><value>Start</value></data>
@@ -174,7 +174,7 @@
   <data name="CompetitionUpdates.Pinned.FixPick" xml:space="preserve"><value>Popraw typ</value></data>
   <data name="CompetitionUpdates.Empty.Title" xml:space="preserve"><value>Brak aktualizacji</value></data>
   <data name="CompetitionUpdates.Empty.Body" xml:space="preserve"><value>Ważne zmiany w rosterze, deadline i wynikach pojawią się tutaj, gdy tylko nadejdą.</value></data>
-  <data name="CompetitionUpdates.Privacy" xml:space="preserve"><value>Aktualizacje są publiczne i dotyczą całych zawodów. Ostrzeżenia o Twoich typach widzisz tylko Ty — nie pokazujemy cudzych typów, e-maili ani draftów.</value></data>
+  <data name="CompetitionUpdates.Privacy" xml:space="preserve"><value>Aktualizacje są publiczne i dotyczą całych zawodów. Ostrzeżenia o Twoich typach widzisz tylko Ty. Zatwierdzone typy mogą pojawić się na publicznych tablicach dopiero po blokadzie i punktacji; e-maile, identyfikatory kont, drafty i surowe dane zgłoszeń pozostają prywatne.</value></data>
   <data name="Status.Upcoming" xml:space="preserve"><value>Otwarte</value></data>
   <data name="Status.Locked" xml:space="preserve"><value>Zablokowane</value></data>
   <data name="Status.Completed" xml:space="preserve"><value>Zakończone</value></data>
@@ -202,7 +202,7 @@
   <data name="Predictions.Loading" xml:space="preserve"><value>Ładowanie formularza...</value></data>
   <data name="Predictions.NotFoundTitle" xml:space="preserve"><value>Nie znaleziono formularza</value></data>
   <data name="Predictions.NotFoundDescription" xml:space="preserve"><value>Brak konfiguracji JSON dla tych zawodów.</value></data>
-  <data name="Predictions.Description" xml:space="preserve"><value>Odpowiedzi zapisują się lokalnie, a po zalogowaniu także w prywatnej chmurze.</value></data>
+  <data name="Predictions.Description" xml:space="preserve"><value>Draft zapisuje się lokalnie, a po zalogowaniu synchronizuje się z chmurą.</value></data>
   <data name="Predictions.Locked" xml:space="preserve"><value>Edycja typów jest zablokowana dla tych zawodów.</value></data>
   <data name="Predictions.Progress" xml:space="preserve"><value>Postęp</value></data>
   <data name="Predictions.PredictionProgress" xml:space="preserve"><value>Postęp typowania</value></data>
@@ -217,9 +217,9 @@
   <data name="Predictions.ReviewPicks" xml:space="preserve"><value>Sprawdź typy</value></data>
   <data name="Predictions.SavedLocally" xml:space="preserve"><value>Zapisano lokalnie.</value></data>
   <data name="Predictions.DraftSaved" xml:space="preserve"><value>Szkic zapisany lokalnie. Popraw błędy przed finalnym podglądem.</value></data>
-  <data name="Predictions.LocalNotice" xml:space="preserve"><value>Wersja beta: typy zapisują się lokalnie, a po zalogowaniu synchronizują prywatnie z chmurą.</value></data>
+  <data name="Predictions.LocalNotice" xml:space="preserve"><value>Drafty zapisują się lokalnie i synchronizują z chmurą po zalogowaniu. Zatwierdzone typy mogą być publiczne po blokadzie i punktacji.</value></data>
   <data name="Predictions.LocalSavedAt" xml:space="preserve"><value>Zapisano lokalnie · {0}</value></data>
-  <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Typy zapisują się lokalnie, a po zalogowaniu także w chmurze</value></data>
+  <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Drafty zapisują się lokalnie, a po zalogowaniu także w chmurze</value></data>
   <data name="Predictions.SaveStatus.Local" xml:space="preserve"><value>Zapis lokalny</value></data>
   <data name="Predictions.SaveStatus.Cloud" xml:space="preserve"><value>Draft w chmurze</value></data>
   <data name="Predictions.SaveStatus.Failed" xml:space="preserve"><value>Synchronizacja nieudana</value></data>
@@ -245,8 +245,8 @@
   <data name="Predictions.Submit.Competition" xml:space="preserve"><value>Zawody</value></data>
   <data name="Predictions.Submit.Deadline" xml:space="preserve"><value>do {0}</value></data>
   <data name="Predictions.Submit.ConfirmParticipants" xml:space="preserve"><value>Twoja nazwa wyświetlana i czas zatwierdzenia mogą pojawić się w klasyfikacji.</value></data>
-  <data name="Predictions.Submit.ConfirmAnswersPrivate" xml:space="preserve"><value>Pełne odpowiedzi nie są publiczne na tym etapie — inni nie zobaczą Twoich typów ani e-maila.</value></data>
-  <data name="Predictions.Submit.ConfirmDraftsPrivate" xml:space="preserve"><value>Drafty pozostają prywatne, dopóki ich nie zatwierdzisz.</value></data>
+  <data name="Predictions.Submit.ConfirmAnswersPrivate" xml:space="preserve"><value>Przed blokadą inni użytkownicy nie widzą Twoich typów. Po blokadzie i punktacji zatwierdzone typy mogą pojawić się na publicznej tablicy; Twój e-mail i surowe dane zgłoszenia pozostają prywatne.</value></data>
+  <data name="Predictions.Submit.ConfirmDraftsPrivate" xml:space="preserve"><value>Drafty pozostają prywatne i nigdy nie są pokazywane na publicznych tablicach.</value></data>
   <data name="Predictions.Submit.ConfirmAutoUpdate" xml:space="preserve"><value>Po zatwierdzeniu możesz dalej edytować typy do deadline — kolejne zmiany automatycznie zaktualizują zgłoszenie.</value></data>
   <data name="Predictions.Submit.ConfirmFutureLock" xml:space="preserve"><value>Po deadline typy zostaną zablokowane.</value></data>
   <data name="Predictions.Submit.ClickOutsideCancels" xml:space="preserve"><value>klik poza = anuluj</value></data>
@@ -264,7 +264,7 @@
   <data name="Share.Working" xml:space="preserve"><value>Pracuję…</value></data>
   <data name="Share.CopyAppLink" xml:space="preserve"><value>Skopiuj link</value></data>
   <data name="Share.NoPicksHint" xml:space="preserve"><value>Nie masz jeszcze zapisanych typów. Eksport zostanie odblokowany po pierwszym wyborze.</value></data>
-  <data name="Share.PrivacyNote" xml:space="preserve"><value>Twoje typy są zawsze zapisywane lokalnie. Po zalogowaniu prywatny draft synchronizuje się również z chmurą.</value></data>
+  <data name="Share.PrivacyNote" xml:space="preserve"><value>Eksport powstaje w tej przeglądarce. Drafty i surowe dane zgłoszeń pozostają prywatne; zatwierdzone typy mogą później pojawić się na publicznych tablicach po blokadzie i punktacji.</value></data>
   <data name="Share.Card.CopySummary.Title" xml:space="preserve"><value>Kopiuj podsumowanie</value></data>
   <data name="Share.Card.CopySummary.Body" xml:space="preserve"><value>Czytelny tekst do Discorda, wiadomości albo notatek podcastu.</value></data>
   <data name="Share.Card.ExportJson.Title" xml:space="preserve"><value>Eksportuj JSON</value></data>
@@ -272,7 +272,7 @@
   <data name="Share.Card.ExportCsv.Title" xml:space="preserve"><value>Eksportuj CSV</value></data>
   <data name="Share.Card.ExportCsv.Body" xml:space="preserve"><value>Tabela do analizy i porównań — otwiera się w Excelu, Numbers i Sheets. (CSV, nie XLSX.)</value></data>
   <data name="Share.Card.CopyLink.Title" xml:space="preserve"><value>Skopiuj link do aplikacji</value></data>
-  <data name="Share.Card.CopyLink.Body" xml:space="preserve"><value>Link do TotalCall bez Twoich typów — typy zostają w Twojej przeglądarce.</value></data>
+  <data name="Share.Card.CopyLink.Body" xml:space="preserve"><value>Link do TotalCall bez Twoich typów. Nie zawiera danych draftu ani zatwierdzonych typów.</value></data>
   <data name="Share.Toast.CopySummary.Success" xml:space="preserve"><value>Skopiowano podsumowanie do schowka.</value></data>
   <data name="Share.Toast.ExportJson.Success" xml:space="preserve"><value>Pobrano plik JSON z typami.</value></data>
   <data name="Share.Toast.ExportCsv.Success" xml:space="preserve"><value>Pobrano plik CSV z typami.</value></data>
@@ -652,7 +652,7 @@
   <data name="Privacy.AccountCloud.Body" xml:space="preserve"><value>Logowanie Magic Link używa adresu e-mail w Supabase Auth. Gdy jesteś zalogowany, pełny snapshot typów jest synchronizowany z Supabase i przypisany do Twojego identyfikatora użytkownika. Niezalogowani użytkownicy zapisują typy wyłącznie lokalnie.</value></data>
   <data name="Privacy.AccountCloud.Provider" xml:space="preserve"><value>Dostawca uwierzytelniania i prywatnego zapisu: Supabase.</value></data>
   <data name="Privacy.Visibility.Title" xml:space="preserve"><value>Widoczność i usuwanie danych</value></data>
-  <data name="Privacy.Visibility.Body" xml:space="preserve"><value>Typy w chmurze nie są publiczne i nie są używane w leaderboardzie. Zabezpieczenia RLS pozwalają zalogowanemu użytkownikowi tworzyć, odczytywać i aktualizować tylko własne dane. Wylogowanie nie usuwa lokalnych typów ani Cloud Save; obecna wersja nie ma jeszcze samoobsługowego usuwania konta lub danych w chmurze.</value></data>
+  <data name="Privacy.Visibility.Body" xml:space="preserve"><value>Drafty i surowe dane zgłoszeń pozostają prywatne. Po blokadzie i punktacji zatwierdzone typy mogą pojawić się na publicznych tablicach linkowanych z klasyfikacji. Widoki publiczne pokazują tylko nick, zatwierdzone typy, wynik, miejsce i postęp punktacji; e-mail, identyfikator konta, drafty i surowy JSON zgłoszenia pozostają prywatne. Wylogowanie nie usuwa lokalnych typów ani Cloud Save; obecna wersja nie ma jeszcze samoobsługowego usuwania konta lub danych w chmurze.</value></data>
   <data name="Privacy.Export.Title" xml:space="preserve"><value>Eksport i udostępnianie</value></data>
   <data name="Privacy.Export.Body" xml:space="preserve"><value>Eksport JSON/CSV i kopiowanie podsumowania są generowane lokalnie w przeglądarce. TotalCall nie wysyła eksportu automatycznie; po samodzielnym udostępnieniu pliku lub tekstu jego dalsze użycie zależy od odbiorcy.</value></data>
   <data name="Privacy.AthleteData.Title" xml:space="preserve"><value>Publiczne dane zawodników</value></data>
@@ -662,7 +662,7 @@
   <data name="Privacy.Analytics.Provider" xml:space="preserve"><value>Statystyki odwiedzin: Cloudflare Web Analytics, bez cookies.</value></data>
   <data name="Privacy.Beta.Title" xml:space="preserve"><value>Wersja beta</value></data>
   <data name="Privacy.Beta.Body" xml:space="preserve"><value>To jest wersja beta aplikacji. Funkcje, format danych i zasady synchronizacji mogą się zmieniać, dlatego nadal warto zachowywać własny eksport przed większymi zmianami.</value></data>
-  <data name="Privacy.Footer.Short" xml:space="preserve"><value>Zapis lokalny oraz prywatny Cloud Save po zalogowaniu. Typy nie są publiczne.</value></data>
+  <data name="Privacy.Footer.Short" xml:space="preserve"><value>Drafty pozostają prywatne. Zatwierdzone typy mogą być publiczne na tablicach po blokadzie i punktacji.</value></data>
   <data name="Predictions.TopN.CategoryStripAria" xml:space="preserve"><value>Kategorie wagowe</value></data>
   <data name="Predictions.TopN.PreviousCategory" xml:space="preserve"><value>Poprzednia kategoria</value></data>
   <data name="Predictions.TopN.NextCategory" xml:space="preserve"><value>Następna kategoria</value></data>
@@ -753,7 +753,7 @@
   <data name="Participants.Stat.Deadline" xml:space="preserve"><value>do deadline</value></data>
   <data name="Participants.Stat.AfterCompetitionValue" xml:space="preserve"><value>po zawodach</value></data>
   <data name="Participants.Stat.Scoring" xml:space="preserve"><value>ranking / punkty</value></data>
-  <data name="Participants.PrivacyNote" xml:space="preserve"><value>Lista pokazuje tylko zatwierdzone zgłoszenia. Ukrywamy pełne odpowiedzi, e-maile oraz identyfikatory kont. To jeszcze nie jest punktowany ranking — kolejność jest neutralna wg czasu zatwierdzenia. Punkty i ranking pojawią się po wynikach.</value></data>
+  <data name="Participants.PrivacyNote" xml:space="preserve"><value>Przed punktacją lista pokazuje tylko zatwierdzone zgłoszenia. Po imporcie wyników klasyfikacja przełącza się na punktowany ranking. E-maile, identyfikatory kont, drafty i surowe dane zgłoszeń są ukryte; zatwierdzone typy są widoczne tylko przez publiczne tablice po blokadzie i punktacji.</value></data>
   <data name="Participants.SearchPlaceholder" xml:space="preserve"><value>Szukaj po nazwie wyświetlanej…</value></data>
   <data name="Participants.SortNewest" xml:space="preserve"><value>Sortuj: najnowsze</value></data>
   <data name="Participants.GoToPredictions" xml:space="preserve"><value>Przejdź do typowania</value></data>
@@ -771,7 +771,7 @@
   <data name="Participants.Error.Description" xml:space="preserve"><value>Wystąpił problem z połączeniem. Twoje zatwierdzone typy są bezpieczne — to dotyczy tylko podglądu listy uczestników.</value></data>
   <data name="Standings.Title" xml:space="preserve"><value>Klasyfikacja</value></data>
   <data name="Standings.Subtitle" xml:space="preserve"><value>Zgłoszenia, live scoring i końcowy ranking</value></data>
-  <data name="Standings.PrivacyNote" xml:space="preserve"><value>Publicznie pokazujemy tylko nick, pozycję, punkty, postęp i czas przeliczenia. Typy, email i identyfikator konta pozostają prywatne.</value></data>
+  <data name="Standings.PrivacyNote" xml:space="preserve"><value>Publiczna klasyfikacja pokazuje nick, miejsce, punkty, postęp i czas przeliczenia. Linki do tablic mogą pokazywać zatwierdzone typy po blokadzie i punktacji. E-mail, identyfikator konta, drafty i surowe dane zgłoszeń pozostają prywatne.</value></data>
   <data name="Standings.StepperAria" xml:space="preserve"><value>Etap klasyfikacji</value></data>
   <data name="Standings.Step.Submissions" xml:space="preserve"><value>Zgłoszenia</value></data>
   <data name="Standings.Step.Live" xml:space="preserve"><value>Live scoring</value></data>
@@ -791,9 +791,9 @@
   <data name="Standings.InProgress" xml:space="preserve"><value>w toku</value></data>
   <data name="Standings.SubmittedLabel" xml:space="preserve"><value>zgłoszenie</value></data>
   <data name="Standings.Empty.Title" xml:space="preserve"><value>Brak publicznych zgłoszeń</value></data>
-  <data name="Standings.Empty.Description" xml:space="preserve"><value>Klasyfikacja pokaże zatwierdzone typy. Drafty pozostają prywatne i nie trafiają na tę listę.</value></data>
+  <data name="Standings.Empty.Description" xml:space="preserve"><value>Klasyfikacja pokaże zatwierdzone zgłoszenia. Drafty pozostają prywatne i nie trafiają na tę listę.</value></data>
   <data name="Standings.Error.Title" xml:space="preserve"><value>Nie udało się wczytać klasyfikacji</value></data>
-  <data name="Standings.Error.Description" xml:space="preserve"><value>Wystąpił problem z połączeniem. Prywatne typy nie są pobierane ani ujawniane na tej stronie.</value></data>
+  <data name="Standings.Error.Description" xml:space="preserve"><value>Wystąpił problem z połączeniem. Surowe prywatne dane odpowiedzi nie są pobierane ani ujawniane na tej stronie.</value></data>
   <data name="Standings.Banner.Submissions.Title" xml:space="preserve"><value>Czekamy na wyniki</value></data>
   <data name="Standings.Banner.Submissions.Description" xml:space="preserve"><value>Na razie pokazujemy tylko zatwierdzone zgłoszenia. Punkty pojawią się po imporcie pierwszych finalnych grup.</value></data>
   <data name="Standings.Banner.Live.Title" xml:space="preserve"><value>Scoring w toku</value></data>
@@ -804,7 +804,7 @@
   <data name="Standings.Banner.AwaitingResults" xml:space="preserve"><value>Brak przeliczenia</value></data>
   <data name="Standings.PreFootnote" xml:space="preserve"><value>Przed importem wyników ranking nie pokazuje punktów ani zer za niepoliczone grupy.</value></data>
   <data name="Standings.LiveFootnote" xml:space="preserve"><value>Ranking powstaje z backendowych snapshotów. Grupy pending są pomijane do czasu finalnego wyniku.</value></data>
-  <data name="Standings.FinalFootnote" xml:space="preserve"><value>Finalny ranking korzysta z gotowych snapshotów score, bez publicznego dostępu do cudzych typów.</value></data>
+  <data name="Standings.FinalFootnote" xml:space="preserve"><value>Finalny ranking korzysta z gotowych snapshotów score. Linki do tablic pokazują zatwierdzone typy bez e-maila, identyfikatora konta, draftów ani surowego JSON zgłoszenia.</value></data>
   <data name="Auth.SignIn" xml:space="preserve"><value>Zaloguj</value></data>
   <data name="Auth.SignOut" xml:space="preserve"><value>Wyloguj</value></data>
   <data name="Auth.Login.Title" xml:space="preserve"><value>Zaloguj się</value></data>
@@ -837,7 +837,7 @@
   <data name="Profile.EmailPrivacyCopy" xml:space="preserve"><value>Twój email nie jest publiczny.</value></data>
   <data name="Profile.DisplayNameLabel" xml:space="preserve"><value>Nick</value></data>
   <data name="Profile.DisplayNameHint" xml:space="preserve"><value>Maksymalnie 32 znaki: litery, cyfry, spacje, kropka, myślnik i underscore.</value></data>
-  <data name="Profile.VisibilityCopy" xml:space="preserve"><value>Ten nick będzie widoczny w publicznej klasyfikacji.</value></data>
+  <data name="Profile.VisibilityCopy" xml:space="preserve"><value>Ten nick będzie widoczny w publicznej klasyfikacji i na publicznych tablicach.</value></data>
   <data name="Profile.Save" xml:space="preserve"><value>Zapisz</value></data>
   <data name="Profile.Saving" xml:space="preserve"><value>Zapisywanie…</value></data>
   <data name="Profile.SaveSuccess" xml:space="preserve"><value>Profil zapisany.</value></data>

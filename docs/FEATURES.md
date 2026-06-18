@@ -213,7 +213,7 @@ Implemented behavior:
 
 - Footer opens an in-app "Privacy & data" modal.
 - The app includes a roster-withdrawal rules note in the prediction summary panel.
-- In-app privacy copy must match the current public-board and leaderboard model before v1.0.0. See [Security and Privacy](SECURITY_PRIVACY.md) and [Release](RELEASE.md) for the checklist.
+- In-app privacy copy describes the current public-board and leaderboard model: drafts and raw submission data stay private, while submitted picks may appear on public boards after lock and scoring.
 
 ## Dev Scenarios
 

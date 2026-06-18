@@ -182,11 +182,11 @@ Review carefully when changing:
 - analytics injection,
 - localStorage session handling.
 
-## Known Documentation/Product Gap
+## In-App Privacy Copy
 
-The in-app privacy modal must be reviewed before v1.0.0 so it matches the current public leaderboard and sanitized public board behavior.
+The in-app privacy modal and related notes should continue to match the current public leaderboard and sanitized public board behavior.
 
-Before v1.0.0, update the in-app copy to say:
+Current copy states:
 
 - drafts and raw `answers_json` are private,
 - submitted picks may be shown as sanitized public boards after lock and scoring,

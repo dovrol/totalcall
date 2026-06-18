@@ -7,7 +7,7 @@
   <data name="App.Tagline" xml:space="preserve"><value>Powerlifting picks</value></data>
   <data name="App.BrandSubtitle" xml:space="preserve"><value>Powerlifting Predictions</value></data>
   <data name="App.DataSource" xml:space="preserve"><value>Competition JSON + Supabase</value></data>
-  <data name="App.Storage" xml:space="preserve"><value>Local save + private cloud</value></data>
+  <data name="App.Storage" xml:space="preserve"><value>Local save + cloud sync</value></data>
   <data name="App.BetaBadge" xml:space="preserve"><value>BETA</value></data>
   <data name="App.VersionLine" xml:space="preserve"><value>TotalCall Beta · {0}</value></data>
   <data name="WhatsNew.Eyebrow" xml:space="preserve"><value>NEW RELEASE</value></data>
@@ -79,7 +79,7 @@
   <data name="Home.PrimaryCta" xml:space="preserve"><value>Start predicting</value></data>
   <data name="Home.SecondaryCta" xml:space="preserve"><value>View competitions</value></data>
   <data name="Home.PointNoOdds" xml:space="preserve"><value>No odds, ever</value></data>
-  <data name="Home.PointLocal" xml:space="preserve"><value>Local picks only</value></data>
+  <data name="Home.PointLocal" xml:space="preserve"><value>Private draft save</value></data>
   <data name="Home.PointSkills" xml:space="preserve"><value>Powerlifting knowledge</value></data>
   <data name="Home.Loading" xml:space="preserve"><value>Loading competitions...</value></data>
   <data name="Home.Empty" xml:space="preserve"><value>No competitions are configured yet.</value></data>
@@ -88,8 +88,8 @@
   <data name="Home.StatOpen" xml:space="preserve"><value>Active competitions</value></data>
   <data name="Home.StatOpenHint" xml:space="preserve"><value>Ready for picks</value></data>
   <data name="Home.StatStorage" xml:space="preserve"><value>Pick storage</value></data>
-  <data name="Home.StatStorageValue" xml:space="preserve"><value>Local browser</value></data>
-  <data name="Home.StatStorageHint" xml:space="preserve"><value>No account required</value></data>
+  <data name="Home.StatStorageValue" xml:space="preserve"><value>Local + cloud</value></data>
+  <data name="Home.StatStorageHint" xml:space="preserve"><value>Account optional</value></data>
   <data name="Home.StatDeadline" xml:space="preserve"><value>Next lock</value></data>
   <data name="Home.StatDeadlineNone" xml:space="preserve"><value>No active lock window</value></data>
   <data name="Common.Starts" xml:space="preserve"><value>Starts</value></data>
@@ -174,7 +174,7 @@
   <data name="CompetitionUpdates.Pinned.FixPick" xml:space="preserve"><value>Update pick</value></data>
   <data name="CompetitionUpdates.Empty.Title" xml:space="preserve"><value>No updates</value></data>
   <data name="CompetitionUpdates.Empty.Body" xml:space="preserve"><value>Important roster, deadline, and result updates will appear here when they happen.</value></data>
-  <data name="CompetitionUpdates.Privacy" xml:space="preserve"><value>Updates are public event-level entries. Warnings about your picks are private to you; we do not expose other users' picks, emails, or drafts.</value></data>
+  <data name="CompetitionUpdates.Privacy" xml:space="preserve"><value>Updates are public event-level entries. Warnings about your picks are private to you. Submitted picks can appear on public boards only after lock and scoring; emails, account IDs, drafts and raw submission data stay private.</value></data>
   <data name="Status.Upcoming" xml:space="preserve"><value>Open</value></data>
   <data name="Status.Locked" xml:space="preserve"><value>Locked</value></data>
   <data name="Status.Completed" xml:space="preserve"><value>Completed</value></data>
@@ -202,7 +202,7 @@
   <data name="Predictions.Loading" xml:space="preserve"><value>Loading prediction form...</value></data>
   <data name="Predictions.NotFoundTitle" xml:space="preserve"><value>Prediction form not found</value></data>
   <data name="Predictions.NotFoundDescription" xml:space="preserve"><value>No JSON configuration exists for this competition.</value></data>
-  <data name="Predictions.Description" xml:space="preserve"><value>Your answers are saved locally and, after sign-in, to your private cloud save.</value></data>
+  <data name="Predictions.Description" xml:space="preserve"><value>Your draft is saved locally and, after sign-in, synchronized to the cloud.</value></data>
   <data name="Predictions.Locked" xml:space="preserve"><value>Prediction editing is locked for this competition.</value></data>
   <data name="Predictions.Progress" xml:space="preserve"><value>Progress</value></data>
   <data name="Predictions.PredictionProgress" xml:space="preserve"><value>Prediction progress</value></data>
@@ -217,9 +217,9 @@
   <data name="Predictions.ReviewPicks" xml:space="preserve"><value>Review picks</value></data>
   <data name="Predictions.SavedLocally" xml:space="preserve"><value>Saved locally.</value></data>
   <data name="Predictions.DraftSaved" xml:space="preserve"><value>Draft saved locally. Fix validation issues before final review.</value></data>
-  <data name="Predictions.LocalNotice" xml:space="preserve"><value>Beta build: picks are saved locally and privately synchronized to the cloud after sign-in.</value></data>
+  <data name="Predictions.LocalNotice" xml:space="preserve"><value>Drafts are saved locally and synchronized to the cloud after sign-in. Submitted picks may be public after lock and scoring.</value></data>
   <data name="Predictions.LocalSavedAt" xml:space="preserve"><value>Saved locally · {0}</value></data>
-  <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Picks are saved locally and, after sign-in, to the cloud</value></data>
+  <data name="Predictions.LocalBrowserOnly" xml:space="preserve"><value>Drafts are saved locally and, after sign-in, to the cloud</value></data>
   <data name="Predictions.SaveStatus.Local" xml:space="preserve"><value>Local save</value></data>
   <data name="Predictions.SaveStatus.Cloud" xml:space="preserve"><value>Cloud draft</value></data>
   <data name="Predictions.SaveStatus.Failed" xml:space="preserve"><value>Synchronization failed</value></data>
@@ -245,8 +245,8 @@
   <data name="Predictions.Submit.Competition" xml:space="preserve"><value>Competition</value></data>
   <data name="Predictions.Submit.Deadline" xml:space="preserve"><value>until {0}</value></data>
   <data name="Predictions.Submit.ConfirmParticipants" xml:space="preserve"><value>Your display name and submission time may appear in standings.</value></data>
-  <data name="Predictions.Submit.ConfirmAnswersPrivate" xml:space="preserve"><value>Full answers are not public at this stage; others will not see your picks or email.</value></data>
-  <data name="Predictions.Submit.ConfirmDraftsPrivate" xml:space="preserve"><value>Drafts remain private until you submit them.</value></data>
+  <data name="Predictions.Submit.ConfirmAnswersPrivate" xml:space="preserve"><value>Before lock, other users do not see your picks. After lock and scoring, submitted picks may appear on a public board; your email and raw submission data stay private.</value></data>
+  <data name="Predictions.Submit.ConfirmDraftsPrivate" xml:space="preserve"><value>Drafts stay private and are never shown on public boards.</value></data>
   <data name="Predictions.Submit.ConfirmAutoUpdate" xml:space="preserve"><value>After submitting, you can keep editing until the deadline; later changes update the submitted entry automatically.</value></data>
   <data name="Predictions.Submit.ConfirmFutureLock" xml:space="preserve"><value>After the deadline, picks will be locked.</value></data>
   <data name="Predictions.Submit.ClickOutsideCancels" xml:space="preserve"><value>outside click cancels</value></data>
@@ -264,7 +264,7 @@
   <data name="Share.Working" xml:space="preserve"><value>Working…</value></data>
   <data name="Share.CopyAppLink" xml:space="preserve"><value>Copy link</value></data>
   <data name="Share.NoPicksHint" xml:space="preserve"><value>You don't have any saved picks yet. Export will unlock after your first selection.</value></data>
-  <data name="Share.PrivacyNote" xml:space="preserve"><value>Your picks are always stored locally. After sign-in, the private draft also synchronizes to the cloud.</value></data>
+  <data name="Share.PrivacyNote" xml:space="preserve"><value>Exports are generated in this browser. Drafts and raw submission data stay private; submitted picks may later appear on public boards after lock and scoring.</value></data>
   <data name="Share.Card.CopySummary.Title" xml:space="preserve"><value>Copy summary</value></data>
   <data name="Share.Card.CopySummary.Body" xml:space="preserve"><value>Readable text for Discord, messages or podcast notes.</value></data>
   <data name="Share.Card.ExportJson.Title" xml:space="preserve"><value>Export JSON</value></data>
@@ -272,7 +272,7 @@
   <data name="Share.Card.ExportCsv.Title" xml:space="preserve"><value>Export CSV</value></data>
   <data name="Share.Card.ExportCsv.Body" xml:space="preserve"><value>Table for analysis &amp; comparison — opens in Excel, Numbers and Sheets. (CSV, not XLSX.)</value></data>
   <data name="Share.Card.CopyLink.Title" xml:space="preserve"><value>Copy app link</value></data>
-  <data name="Share.Card.CopyLink.Body" xml:space="preserve"><value>A link to TotalCall without your picks — your picks stay in your browser.</value></data>
+  <data name="Share.Card.CopyLink.Body" xml:space="preserve"><value>A link to TotalCall without your picks. It does not include draft or submitted pick data.</value></data>
   <data name="Share.Toast.CopySummary.Success" xml:space="preserve"><value>Summary copied to clipboard.</value></data>
   <data name="Share.Toast.ExportJson.Success" xml:space="preserve"><value>JSON file downloaded.</value></data>
   <data name="Share.Toast.ExportCsv.Success" xml:space="preserve"><value>CSV file downloaded.</value></data>
@@ -652,7 +652,7 @@
   <data name="Privacy.AccountCloud.Body" xml:space="preserve"><value>Magic Link sign-in uses your email address in Supabase Auth. While signed in, a complete snapshot of your picks is synchronized to Supabase and tied to your user ID. Signed-out users save picks locally only.</value></data>
   <data name="Privacy.AccountCloud.Provider" xml:space="preserve"><value>Authentication and private save provider: Supabase.</value></data>
   <data name="Privacy.Visibility.Title" xml:space="preserve"><value>Visibility and data deletion</value></data>
-  <data name="Privacy.Visibility.Body" xml:space="preserve"><value>Cloud picks are not public and are not used in a leaderboard. RLS policies allow a signed-in user to create, read and update only their own data. Signing out does not delete local picks or Cloud Save; the current version does not yet provide self-service account or cloud-data deletion.</value></data>
+  <data name="Privacy.Visibility.Body" xml:space="preserve"><value>Drafts and raw submission data stay private. After lock and scoring, submitted picks can appear on public boards linked from standings. Public views show display name, submitted picks, score, rank and scoring progress only; email, account ID, drafts and raw submission JSON stay private. Signing out does not delete local picks or Cloud Save; the current version does not yet provide self-service account or cloud-data deletion.</value></data>
   <data name="Privacy.Export.Title" xml:space="preserve"><value>Export and sharing</value></data>
   <data name="Privacy.Export.Body" xml:space="preserve"><value>JSON/CSV exports and copied summaries are generated locally in the browser. TotalCall does not upload exports automatically; after you share a file or text yourself, its further use is controlled by the recipient.</value></data>
   <data name="Privacy.AthleteData.Title" xml:space="preserve"><value>Public athlete data</value></data>
@@ -662,7 +662,7 @@
   <data name="Privacy.Analytics.Provider" xml:space="preserve"><value>Visit statistics: Cloudflare Web Analytics, no cookies.</value></data>
   <data name="Privacy.Beta.Title" xml:space="preserve"><value>Beta version</value></data>
   <data name="Privacy.Beta.Body" xml:space="preserve"><value>This is a beta version of the app. Features, data formats and synchronization rules may change, so keeping your own export before major updates is still recommended.</value></data>
-  <data name="Privacy.Footer.Short" xml:space="preserve"><value>Local save plus private Cloud Save after sign-in. Picks are not public.</value></data>
+  <data name="Privacy.Footer.Short" xml:space="preserve"><value>Drafts stay private. Submitted picks may be public on boards after lock and scoring.</value></data>
   <data name="Predictions.TopN.CategoryStripAria" xml:space="preserve"><value>Weight categories</value></data>
   <data name="Predictions.TopN.PreviousCategory" xml:space="preserve"><value>Previous category</value></data>
   <data name="Predictions.TopN.NextCategory" xml:space="preserve"><value>Next category</value></data>
@@ -753,7 +753,7 @@
   <data name="Participants.Stat.Deadline" xml:space="preserve"><value>to deadline</value></data>
   <data name="Participants.Stat.AfterCompetitionValue" xml:space="preserve"><value>after event</value></data>
   <data name="Participants.Stat.Scoring" xml:space="preserve"><value>ranking / points</value></data>
-  <data name="Participants.PrivacyNote" xml:space="preserve"><value>The list shows submitted entries only. Full answers, emails and account identifiers are hidden. This is not a scored leaderboard yet; order is neutral by submission time. Points and ranking will appear after results.</value></data>
+  <data name="Participants.PrivacyNote" xml:space="preserve"><value>Before scoring, this list shows submitted entries only. After results are imported, standings switch to a scored leaderboard. Emails, account IDs, drafts and raw submission data are hidden; submitted picks are visible only through public boards after lock and scoring.</value></data>
   <data name="Participants.SearchPlaceholder" xml:space="preserve"><value>Search by display name…</value></data>
   <data name="Participants.SortNewest" xml:space="preserve"><value>Sort: newest</value></data>
   <data name="Participants.GoToPredictions" xml:space="preserve"><value>Go to predictions</value></data>
@@ -771,7 +771,7 @@
   <data name="Participants.Error.Description" xml:space="preserve"><value>There was a connection problem. Your submitted picks are safe; this only affects the participants preview.</value></data>
   <data name="Standings.Title" xml:space="preserve"><value>Standings</value></data>
   <data name="Standings.Subtitle" xml:space="preserve"><value>Submissions, live scoring and final ranking</value></data>
-  <data name="Standings.PrivacyNote" xml:space="preserve"><value>Public data includes only display name, position, points, progress and calculation time. Picks, email and account ID stay private.</value></data>
+  <data name="Standings.PrivacyNote" xml:space="preserve"><value>Public standings show display name, rank, points, progress and calculation time. Board links may show submitted picks after lock and scoring. Email, account ID, drafts and raw submission data stay private.</value></data>
   <data name="Standings.StepperAria" xml:space="preserve"><value>Standings stage</value></data>
   <data name="Standings.Step.Submissions" xml:space="preserve"><value>Submissions</value></data>
   <data name="Standings.Step.Live" xml:space="preserve"><value>Live scoring</value></data>
@@ -791,9 +791,9 @@
   <data name="Standings.InProgress" xml:space="preserve"><value>in progress</value></data>
   <data name="Standings.SubmittedLabel" xml:space="preserve"><value>submitted</value></data>
   <data name="Standings.Empty.Title" xml:space="preserve"><value>No public submissions yet</value></data>
-  <data name="Standings.Empty.Description" xml:space="preserve"><value>Standings will show submitted picks. Drafts stay private and never appear here.</value></data>
+  <data name="Standings.Empty.Description" xml:space="preserve"><value>Standings will show submitted entries. Drafts stay private and never appear here.</value></data>
   <data name="Standings.Error.Title" xml:space="preserve"><value>Could not load standings</value></data>
-  <data name="Standings.Error.Description" xml:space="preserve"><value>There was a connection problem. Private picks are not fetched or exposed on this page.</value></data>
+  <data name="Standings.Error.Description" xml:space="preserve"><value>There was a connection problem. Raw private answer data is not fetched or exposed on this page.</value></data>
   <data name="Standings.Banner.Submissions.Title" xml:space="preserve"><value>Awaiting results</value></data>
   <data name="Standings.Banner.Submissions.Description" xml:space="preserve"><value>Only submitted entries are shown for now. Points will appear after the first final groups are imported.</value></data>
   <data name="Standings.Banner.Live.Title" xml:space="preserve"><value>Scoring in progress</value></data>
@@ -804,7 +804,7 @@
   <data name="Standings.Banner.AwaitingResults" xml:space="preserve"><value>No calculation yet</value></data>
   <data name="Standings.PreFootnote" xml:space="preserve"><value>Before results are imported, standings do not show points or zeroes for unscored groups.</value></data>
   <data name="Standings.LiveFootnote" xml:space="preserve"><value>The ranking is built from backend score snapshots. Pending groups are skipped until their final result is available.</value></data>
-  <data name="Standings.FinalFootnote" xml:space="preserve"><value>Final standings use prepared score snapshots without public access to other users' picks.</value></data>
+  <data name="Standings.FinalFootnote" xml:space="preserve"><value>Final standings use prepared score snapshots. Board links show submitted picks without email, account ID, drafts or raw submission JSON.</value></data>
   <data name="Auth.SignIn" xml:space="preserve"><value>Sign in</value></data>
   <data name="Auth.SignOut" xml:space="preserve"><value>Sign out</value></data>
   <data name="Auth.Login.Title" xml:space="preserve"><value>Sign in</value></data>
@@ -837,7 +837,7 @@
   <data name="Profile.EmailPrivacyCopy" xml:space="preserve"><value>Your email is not public.</value></data>
   <data name="Profile.DisplayNameLabel" xml:space="preserve"><value>Nickname</value></data>
   <data name="Profile.DisplayNameHint" xml:space="preserve"><value>Maximum 32 characters: letters, numbers, spaces, dot, hyphen and underscore.</value></data>
-  <data name="Profile.VisibilityCopy" xml:space="preserve"><value>This nickname will be visible in public standings.</value></data>
+  <data name="Profile.VisibilityCopy" xml:space="preserve"><value>This nickname will be visible in public standings and public boards.</value></data>
   <data name="Profile.Save" xml:space="preserve"><value>Save</value></data>
   <data name="Profile.Saving" xml:space="preserve"><value>Saving…</value></data>
   <data name="Profile.SaveSuccess" xml:space="preserve"><value>Profile saved.</value></data>

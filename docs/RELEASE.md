@@ -188,7 +188,7 @@ TotalCall v1.0.0 documents and stabilizes the production prediction flow for pow
 
 Known limitations for v1.0.0:
 
-- In-app privacy copy needs an update before release to mention sanitized public boards.
+- In-app privacy copy must be rechecked whenever public standings or board RPC fields change.
 - Public self-service account deletion/cloud-data deletion is not implemented.
 - Branch protection policy is outside the repo and must be verified in GitHub.
 - Generic non-placement module scoring is not implemented as official scoring.
