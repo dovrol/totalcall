@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TotalCall</title>
+    <base href="/" />
+    <script>
+        (function () {
+            var baseElement = document.querySelector("base");
+            var base = baseElement ? baseElement.getAttribute("href") : "/";
+            var indexUrl = new URL(base, window.location.origin);
+            var route = window.location.pathname + window.location.search + window.location.hash;
+
+            indexUrl.searchParams.set("_tc_route", route);
+            window.location.replace(indexUrl.toString());
+        })();
+    </script>
+</head>
+
+<body>
+    Redirecting to TotalCall...
+</body>
+
+</html>

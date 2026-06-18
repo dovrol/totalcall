@@ -8,6 +8,20 @@
     <base href="/" />
     <script>
         (function () {
+            var url = new URL(window.location.href);
+            var route = url.searchParams.get("_tc_route");
+
+            if (!route || !route.startsWith("/") || route.startsWith("//")) {
+                return;
+            }
+
+            url.searchParams.delete("_tc_route");
+            var target = new URL(route, window.location.origin);
+            window.history.replaceState(null, "", target.pathname + target.search + target.hash);
+        })();
+    </script>
+    <script>
+        (function () {
             var key = "totalcall:theme";
             var stored = localStorage.getItem(key);
             var currentTheme = stored === "light" ? "light" : "dark";

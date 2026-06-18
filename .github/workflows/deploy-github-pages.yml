@@ -66,7 +66,7 @@ jobs:
           fi
 
           sed -i "s|<base href=\"/\" />|<base href=\"${BASE_HREF}\" />|g" "${PUBLISH_DIR}/index.html"
-          cp "${PUBLISH_DIR}/index.html" "${PUBLISH_DIR}/404.html"
+          sed -i "s|<base href=\"/\" />|<base href=\"${BASE_HREF}\" />|g" "${PUBLISH_DIR}/404.html"
           touch "${PUBLISH_DIR}/.nojekyll"
 
       - name: Inject analytics snippet
@@ -75,7 +75,6 @@ jobs:
           ANALYTICS_SNIPPET: ${{ secrets.ANALYTICS_SNIPPET }}
         run: |
           perl -i -pe 's/<!-- ANALYTICS_SNIPPET -->/$ENV{ANALYTICS_SNIPPET}/g' release/wwwroot/index.html
-          cp release/wwwroot/index.html release/wwwroot/404.html
           [ -n "$ANALYTICS_SNIPPET" ] && echo "Analytics snippet injected." || echo "No analytics snippet configured, placeholder removed."
 
       - name: Upload artifact
