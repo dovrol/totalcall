@@ -10,7 +10,9 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddSingleton(AdminRuntimeOptions.FromConfiguration(builder.Configuration));
 builder.Services.AddSingleton<AdminRuntimeStatusService>();
+builder.Services.AddSingleton<AdminCompetitionService>();
 builder.Services.AddSingleton<CompetitionConfigFileChecker>();
+builder.Services.AddSingleton<CompetitionAdminStore>();
 builder.Services.AddSingleton<CompetitionDefinitionImporter>();
 builder.Services.AddSingleton<OfficialResultsImporter>();
 builder.Services.AddSingleton<AdminOperationAuditStore>();

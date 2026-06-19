@@ -1,6 +1,8 @@
 @page "/competitions"
 @using System.ComponentModel.DataAnnotations
+@using TotalCall.Operations.Admin
 @using TotalCall.Operations.Competitions
+@inject AdminCompetitionService CompetitionService
 @inject CompetitionConfigFileChecker ConfigChecker
 @inject CompetitionDefinitionImporter DefinitionImporter
 @inject AdminOperationAuditService AuditService
@@ -10,12 +12,110 @@
 
 <section class="page-heading">
     <p class="eyebrow">Competitions</p>
-    <h1>Config validation</h1>
+    <h1>Competition operations</h1>
 </section>
 
 <section class="panel">
     <div class="panel-heading">
-        <h2>Local JSON</h2>
+        <h2>Imported competitions</h2>
+        <span class="state @(RuntimeOptions.IsConfigured ? "state-ok" : "state-missing")">
+            <span class="state-dot"></span>
+            @(RuntimeOptions.IsConfigured ? "Configured" : "Missing credentials")
+        </span>
+    </div>
+
+    @if (!RuntimeOptions.IsConfigured)
+    {
+        <p class="muted">Competition grid requires server-side Supabase credentials.</p>
+    }
+    else
+    {
+        <button class="button-primary" type="button" @onclick="LoadCompetitionsAsync" disabled="@_isLoadingCompetitions">
+            @(_isLoadingCompetitions ? "Refreshing" : "Refresh")
+        </button>
+    }
+</section>
+
+@if (!string.IsNullOrWhiteSpace(_competitionLoadError))
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Grid status</h2>
+            <span class="state state-missing">
+                <span class="state-dot"></span>
+                Failed
+            </span>
+        </div>
+        <p class="muted">@_competitionLoadError</p>
+    </section>
+}
+
+@if (_competitionRows.Count > 0)
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Last @_competitionRows.Count competitions</h2>
+        </div>
+
+        <div class="table-wrap">
+            <table class="data-table data-table--operations">
+                <thead>
+                    <tr>
+                        <th>Competition</th>
+                        <th>Status</th>
+                        <th>Lock</th>
+                        <th>Config</th>
+                        <th>Results</th>
+                        <th>Last operation</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var row in _competitionRows)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@row.Competition.Name</strong>
+                                <span class="table-subtext">@row.Competition.Id</span>
+                            </td>
+                            <td>
+                                <span class="state @CompetitionStatusClass(row.Competition.Status)">
+                                    <span class="state-dot"></span>
+                                    @row.Competition.Status
+                                </span>
+                            </td>
+                            <td>@FormatDate(row.Competition.PredictionLockAt)</td>
+                            <td>
+                                <strong>@(row.Competition.ActiveVersion ?? "Unpublished")</strong>
+                                <span class="table-subtext">@row.Competition.VersionsCount version(s)</span>
+                            </td>
+                            <td>
+                                <strong>@(row.Competition.OfficialResultsStatus ?? "Not imported")</strong>
+                                <span class="table-subtext">@FormatDate(row.Competition.OfficialResultsImportedAt)</span>
+                            </td>
+                            <td>@FormatOperation(row.LatestOperation)</td>
+                            <td>
+                                <div class="table-actions">
+                                    <a class="button-secondary" href="@CompetitionDetailsHref(row.Competition.Id)">Open</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+}
+else if (RuntimeOptions.IsConfigured && !_isLoadingCompetitions && string.IsNullOrWhiteSpace(_competitionLoadError))
+{
+    <section class="panel">
+        <p class="muted">No competitions have been imported yet.</p>
+    </section>
+}
+
+<section class="panel">
+    <div class="panel-heading">
+        <h2>Local JSON validation</h2>
     </div>
 
     <EditForm Model="_form" OnValidSubmit="CheckConfigAsync" class="form-stack">
@@ -223,11 +323,14 @@
     };
     private readonly CompetitionPublishForm _publishForm = new();
 
+    private IReadOnlyList<AdminCompetitionGridRow> _competitionRows = [];
     private CompetitionConfigFileCheckResult? _result;
     private CompetitionSyncResult? _publishResult;
+    private string? _competitionLoadError;
     private string? _publishError;
     private string? _auditStatus;
     private string? _auditError;
+    private bool _isLoadingCompetitions;
     private bool _isChecking;
     private bool _isPublishing;
 
@@ -240,6 +343,33 @@
             _publishForm.ConfirmationText.Trim(),
             RequiredPublishConfirmation,
             StringComparison.Ordinal);
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (RuntimeOptions.IsConfigured)
+        {
+            await LoadCompetitionsAsync();
+        }
+    }
+
+    private async Task LoadCompetitionsAsync()
+    {
+        _isLoadingCompetitions = true;
+        _competitionLoadError = null;
+        try
+        {
+            _competitionRows = await CompetitionService.ListAsync(CancellationToken.None);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _competitionRows = [];
+            _competitionLoadError = $"Competition grid could not be loaded: {ex.Message}";
+        }
+        finally
+        {
+            _isLoadingCompetitions = false;
+        }
+    }
 
     private async Task CheckConfigAsync()
     {
@@ -356,6 +486,36 @@
 
         return "Unavailable";
     }
+
+    private static string CompetitionDetailsHref(string competitionId) =>
+        $"/competitions/{Uri.EscapeDataString(competitionId)}";
+
+    private static string FormatDate(DateTimeOffset? value) =>
+        value is null ? "Unavailable" : value.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm");
+
+    private static string FormatOperation(AdminOperationAuditRecord? operation)
+    {
+        if (operation is null)
+        {
+            return "None";
+        }
+
+        return $"{FormatOperationType(operation.OperationType)} · {operation.Status} · {FormatDate(operation.FinishedAt)}";
+    }
+
+    private static string FormatOperationType(string operationType) => operationType switch
+    {
+        AdminOperationType.CompetitionConfigPublish => "Config publish",
+        AdminOperationType.OfficialResultsImport => "Results import",
+        _ => operationType
+    };
+
+    private static string CompetitionStatusClass(string status) => status switch
+    {
+        "completed" or "archived" => "state-ok",
+        "locked" => "state-neutral",
+        _ => "state-ok"
+    };
 
     private sealed class CompetitionConfigForm
     {
