@@ -1045,19 +1045,16 @@ else
             return Task.CompletedTask;
         }
 
-        if (!TopNPlacementEditor.TryReadOptionalPositiveDecimal(edit.Value, CultureInfo.CurrentCulture, out var parsed))
+        var plan = TopNSheetEditPlanner.ApplyEdit(FieldPlacements, edit, CultureInfo.CurrentCulture);
+        if (plan.Status == TopNSheetEditPlanStatus.InvalidValue)
         {
             Toasts.ShowError(Localizer["Predictions.PredictionValueInvalid"]);
             return Task.CompletedTask;
         }
 
-        var placements = FieldPlacements
-            .Select(placement => placement.Position == edit.Position
-                ? TopNPlacementEditor.ApplyEdit(placement, edit.Field, parsed)
-                : placement)
-            .ToArray();
-
-        return EmitAnswer(placements);
+        return plan.Status == TopNSheetEditPlanStatus.Applied
+            ? EmitAnswer(plan.Placements)
+            : Task.CompletedTask;
     }
 
     private Task NudgeCell(TopNSheetEdit edit)
@@ -1067,24 +1064,10 @@ else
             return Task.CompletedTask;
         }
 
-        if (!TopNPlacementEditor.TryReadNudgeDelta(edit.Value, out var delta))
-        {
-            return Task.CompletedTask;
-        }
-
-        var placement = FieldPlacements.FirstOrDefault(item => item.Position == edit.Position);
-        if (placement is null)
-        {
-            return Task.CompletedTask;
-        }
-
-        var updated = FieldPlacements
-            .Select(item => item.Position == edit.Position
-                ? TopNPlacementEditor.ApplyNudge(item, edit.Field, delta)
-                : item)
-            .ToArray();
-
-        return EmitAnswer(updated);
+        var plan = TopNSheetEditPlanner.ApplyNudge(FieldPlacements, edit);
+        return plan.Status == TopNSheetEditPlanStatus.Applied
+            ? EmitAnswer(plan.Placements)
+            : Task.CompletedTask;
     }
 
     // ---------- fill (per-row popover + bulk) ----------
