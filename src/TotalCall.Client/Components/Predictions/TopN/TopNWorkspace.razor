@@ -100,8 +100,8 @@ else
                     CanEditPredictions="@CanEditSheet"
                     IsBulkFilling="@isBulkFilling"
                     FillPopPosition="@fillPopPosition"
-                    DraggingPosition="@draggingPosition"
-                    DragOverPosition="@dragOverPosition"
+                    DraggingPosition="@dragState.DraggingPosition"
+                    DragOverPosition="@dragState.DragOverPosition"
                     MoveRequested="MoveByOffset"
                     AthleteContextRequested="OpenContext"
                     ComparisonSelectionActive="@isCompareSelectionMode"
@@ -394,8 +394,6 @@ else
     private bool isBulkFilling;
     private int? fillPopPosition;
     private int? expandedMobilePosition;
-    private int? draggingPosition;
-    private int? dragOverPosition;
     private bool animateReorderAfterRender;
     private string defaultMode = TopNEntryMode.Lifts;
     private string historySourceCode = ExternalAthleteSources.OpenIpf;
@@ -411,6 +409,7 @@ else
     private readonly HashSet<string> seededQuestionIds = new(StringComparer.OrdinalIgnoreCase);
     private TopNContextSelectionState contextSelection = TopNContextSelectionState.Empty;
     private TopNCompareSelectionState compareSelection = TopNCompareSelectionState.Empty;
+    private TopNDragState dragState = TopNDragState.Empty;
 
     private TopNCategoryNavigationState CategoryNavigation => TopNCategoryNavigationState.Resolve(
         ActiveGroup,
@@ -803,8 +802,7 @@ else
         fillPopPosition = null;
         isBulkMenuOpen = false;
         expandedMobilePosition = null;
-        draggingPosition = null;
-        dragOverPosition = null;
+        dragState = dragState.End();
     }
 
     // ---------- category + module navigation ----------
@@ -1198,35 +1196,30 @@ else
             return;
         }
 
-        draggingPosition = position;
-        dragOverPosition = position;
+        dragState = dragState.Start(position, FieldPlacements);
     }
 
     private void OnDragEnter(int position)
     {
-        if (draggingPosition is not null)
-        {
-            dragOverPosition = position;
-        }
+        dragState = dragState.Enter(position);
     }
 
     private Task OnDrop(int position)
     {
-        if (draggingPosition is null)
+        var (state, move) = dragState.Drop(position);
+        dragState = state;
+
+        if (move is null)
         {
             return Task.CompletedTask;
         }
 
-        var from = draggingPosition.Value;
-        draggingPosition = null;
-        dragOverPosition = null;
-        return MoveToPosition(from, position);
+        return MoveToPosition(move.From, move.To);
     }
 
     private void OnDragEnd()
     {
-        draggingPosition = null;
-        dragOverPosition = null;
+        dragState = dragState.End();
     }
 
     private Task MoveByOffset(TopNMove move)
