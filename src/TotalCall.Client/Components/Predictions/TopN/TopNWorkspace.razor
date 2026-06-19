@@ -1388,24 +1388,12 @@ else
             return;
         }
 
-        var placements = FieldPlacements;
-        if (placements.Count == 0 || placements.All(placement => placement.PredictedTotalKg is null))
+        var sorted = TopNSortPlanner.SortByPredictedTotal(FieldPlacements, ScoredPositionsCount);
+        if (sorted is null)
         {
             Toasts.ShowInfo(Localizer["Predictions.Toast.SortPredicted.Empty"]);
             return;
         }
-
-        var sorted = placements
-            .Select((placement, index) => new { placement, index })
-            .OrderBy(item => item.placement.PredictedTotalKg is null ? 1 : 0)
-            .ThenByDescending(item => item.placement.PredictedTotalKg ?? 0m)
-            .ThenBy(item => item.index)
-            .Select((item, index) => item.placement with
-            {
-                Position = index + 1,
-                IsScored = index < ScoredPositionsCount
-            })
-            .ToArray();
 
         await CaptureReorderPositionsAsync();
         modeByPosition.Clear();
