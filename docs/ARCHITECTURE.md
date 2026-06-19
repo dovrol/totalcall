@@ -33,7 +33,7 @@ GitHub Actions
 
 - `src/TotalCall.Client` is the Blazor WebAssembly frontend.
 - `src/TotalCall.Core` contains shared domain models and scoring code used by the public app, tests, and the sync tool.
-- `src/TotalCall.Operations` contains server/CLI-side operational code that can use service-role credentials. It currently owns the Supabase REST wrapper, competition config hashing, and competition config publish workflow.
+- `src/TotalCall.Operations` contains server/CLI-side operational code that can use service-role credentials. It currently owns the Supabase REST wrapper, competition config hashing, competition config publish workflow, official results import, and score snapshot recomputation.
 - `tests/TotalCall.Tests` contains xUnit tests for domain logic, validation, storage, migrations, scoring, and sync helpers.
 - `tools/sync/TotalCall.Sync` is a .NET console wrapper for Supabase imports, scoring recomputation, and local scenarios.
 - `supabase/migrations` is the source of truth for database schema, RPCs, RLS, and grants.

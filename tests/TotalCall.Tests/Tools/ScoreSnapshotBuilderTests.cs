@@ -1,7 +1,7 @@
 using TotalCall.Core.Domain.Competitions;
 using TotalCall.Core.Domain.Predictions;
 using TotalCall.Core.Scoring;
-using TotalCall.Sync.Results;
+using TotalCall.Operations.Results;
 
 namespace TotalCall.Tests.Tools;
 

@@ -8,7 +8,7 @@ using TotalCall.Core.Domain.Athletes;
 using TotalCall.Core.Domain.Competitions;
 using TotalCall.Core.Domain.Predictions;
 using TotalCall.Operations.Supabase;
-using TotalCall.Sync.Results;
+using TotalCall.Operations.Results;
 
 namespace TotalCall.Sync.DevScenarios;
 

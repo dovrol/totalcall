@@ -4,7 +4,7 @@ using TotalCall.Core.Domain.Competitions;
 using TotalCall.Core.Domain.Predictions;
 using TotalCall.Core.Scoring;
 
-namespace TotalCall.Sync.Results;
+namespace TotalCall.Operations.Results;
 
 public sealed class ScoreSnapshotBuilder(IPredictionScoringService scoringService)
 {

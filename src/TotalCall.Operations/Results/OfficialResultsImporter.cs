@@ -7,7 +7,7 @@ using TotalCall.Core.Scoring;
 using TotalCall.Operations.Competitions;
 using TotalCall.Operations.Supabase;
 
-namespace TotalCall.Sync.Results;
+namespace TotalCall.Operations.Results;
 
 public sealed class ResultsImportOptions
 {

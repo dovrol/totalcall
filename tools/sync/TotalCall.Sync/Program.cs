@@ -1,7 +1,7 @@
 using TotalCall.Operations.Competitions;
 using TotalCall.Sync.Athletes;
 using TotalCall.Sync.DevScenarios;
-using TotalCall.Sync.Results;
+using TotalCall.Operations.Results;
 
 if (args.Length == 0 || args[0] is "-h" or "--help")
 {

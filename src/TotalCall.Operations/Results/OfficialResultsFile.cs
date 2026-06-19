@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace TotalCall.Sync.Results;
+namespace TotalCall.Operations.Results;
 
 public sealed record OfficialResultsFile
 {

@@ -1,7 +1,7 @@
 using TotalCall.Core.Domain.Competitions;
 using TotalCall.Core.Domain.Predictions;
 
-namespace TotalCall.Sync.Results;
+namespace TotalCall.Operations.Results;
 
 public sealed class OfficialResultsValidator
 {
