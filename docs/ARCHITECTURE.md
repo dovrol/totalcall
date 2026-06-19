@@ -33,8 +33,9 @@ GitHub Actions
 
 - `src/TotalCall.Client` is the Blazor WebAssembly frontend.
 - `src/TotalCall.Core` contains shared domain models and scoring code used by the public app, tests, and the sync tool.
+- `src/TotalCall.Operations` contains server/CLI-side operational code that can use service-role credentials. It currently owns the Supabase REST wrapper, competition config hashing, and competition config publish workflow.
 - `tests/TotalCall.Tests` contains xUnit tests for domain logic, validation, storage, migrations, scoring, and sync helpers.
-- `tools/sync/TotalCall.Sync` is a .NET console tool for Supabase imports, scoring recomputation, and local scenarios.
+- `tools/sync/TotalCall.Sync` is a .NET console wrapper for Supabase imports, scoring recomputation, and local scenarios.
 - `supabase/migrations` is the source of truth for database schema, RPCs, RLS, and grants.
 - `scripts` contains thin local wrappers.
 
@@ -110,11 +111,11 @@ Supabase provides:
 - Private score snapshots.
 - Public standings, participant list, and public board RPCs.
 
-The frontend uses only `Supabase:Url` and `Supabase:PublishableKey`. Authenticated requests add the user's access token. Service-role keys are used only by `TotalCall.Sync`, scripts, GitHub Actions secrets, and local dev scenario tooling.
+The frontend uses only `Supabase:Url` and `Supabase:PublishableKey`. Authenticated requests add the user's access token. Service-role keys are used only by CLI/server-side operations, scripts, GitHub Actions secrets, and local dev scenario tooling.
 
 ## Sync And Import Tool
 
-`tools/sync/TotalCall.Sync` exposes these subcommands:
+`tools/sync/TotalCall.Sync` exposes these subcommands and delegates shared operational code to `TotalCall.Operations`:
 
 - `competition` syncs competition metadata and immutable versioned JSON config, then publishes the version.
 - `athletes` imports OpenIPF/OpenPowerlifting history for athletes referenced by the competition JSON.

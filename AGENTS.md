@@ -7,6 +7,7 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 - Main app: `src/TotalCall.Client`.
 - Tests: `tests/TotalCall.Tests`.
 - Supabase migrations/config: `supabase`.
+- Shared server/CLI-side operational workflows: `src/TotalCall.Operations`.
 - Supabase sync tool (athlete history + competition definitions): `tools/sync/TotalCall.Sync`.
 - Utility scripts live in `scripts`.
 
@@ -46,10 +47,13 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 - The wrapper imports both `openipf` and `openpowerlifting` by default.
 - For real syncs, set `SUPABASE_URL` and `SUPABASE_SECRET_KEY` manually first.
 - GitHub Actions uses `.github/workflows/sync-data.yml`, which calls the same wrapper.
-- `TotalCall.Sync` exposes two subcommands (`athletes`, `competition`); keep their
-  responsibilities separate. The wrapper should stay thin.
+- `TotalCall.Sync` exposes `athletes`, `competition`, `results`, and `scenario`
+  subcommands; keep their responsibilities separate. The CLI should stay thin
+  when code belongs in `src/TotalCall.Operations`.
 - The competition definition lives in Supabase (`competitions` + `competition_versions`);
   the JSON in `wwwroot/data/competitions` stays a dev/import source and runtime fallback.
+- Service-role keys must stay in CLI/server-side operations. Never pass them to
+  Blazor WebAssembly or browser-delivered admin UI code.
 
 ## Verification
 

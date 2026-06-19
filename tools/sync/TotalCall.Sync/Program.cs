@@ -1,5 +1,5 @@
+using TotalCall.Operations.Competitions;
 using TotalCall.Sync.Athletes;
-using TotalCall.Sync.Competitions;
 using TotalCall.Sync.DevScenarios;
 using TotalCall.Sync.Results;
 

@@ -4,8 +4,9 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using TotalCall.Core.Domain.Competitions;
 using TotalCall.Core.Validation;
+using TotalCall.Operations.Supabase;
 
-namespace TotalCall.Sync.Competitions;
+namespace TotalCall.Operations.Competitions;
 
 public sealed class CompetitionSyncOptions
 {

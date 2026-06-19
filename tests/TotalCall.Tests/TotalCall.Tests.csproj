@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\TotalCall.Core\TotalCall.Core.csproj" />
+    <ProjectReference Include="..\..\src\TotalCall.Operations\TotalCall.Operations.csproj" />
     <ProjectReference Include="..\..\src\TotalCall.Client\TotalCall.Client.csproj" />
     <ProjectReference Include="..\..\tools\sync\TotalCall.Sync\TotalCall.Sync.csproj" />
   </ItemGroup>

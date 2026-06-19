@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../../../src/TotalCall.Core/TotalCall.Core.csproj" />
+    <ProjectReference Include="../../../src/TotalCall.Operations/TotalCall.Operations.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,7 +4,8 @@ using System.Text.Json.Nodes;
 using TotalCall.Core.Domain.Competitions;
 using TotalCall.Core.Domain.Predictions;
 using TotalCall.Core.Scoring;
-using TotalCall.Sync.Competitions;
+using TotalCall.Operations.Competitions;
+using TotalCall.Operations.Supabase;
 
 namespace TotalCall.Sync.Results;
 
