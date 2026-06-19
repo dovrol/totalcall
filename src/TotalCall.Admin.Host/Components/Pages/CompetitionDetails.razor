@@ -1,5 +1,6 @@
 @page "/competitions/{CompetitionId}"
 @using TotalCall.Operations.Admin
+@using TotalCall.Operations.Competitions
 @inject AdminCompetitionService CompetitionService
 @inject AdminRuntimeOptions RuntimeOptions
 
@@ -138,6 +139,90 @@
         }
     </section>
 
+    @if (_diff is not null)
+    {
+        <section class="panel">
+            <div class="panel-heading">
+                <h2>Config drift</h2>
+                <span class="state @ConfigDriftClass(_diff)">
+                    <span class="state-dot"></span>
+                    @ConfigDriftLabel(_diff)
+                </span>
+            </div>
+
+            <p class="notice">
+                Compares the local dev/import JSON against the config this competition is
+                currently published at. Local JSON is a source artifact, not the live config.
+            </p>
+
+            <dl class="status-list status-list--wide">
+                <div>
+                    <dt>Local path</dt>
+                    <dd>@_diff.LocalPath</dd>
+                </div>
+                <div>
+                    <dt>Local config version</dt>
+                    <dd>@(_diff.LocalConfigVersion ?? "Unavailable")</dd>
+                </div>
+                <div>
+                    <dt>Active version</dt>
+                    <dd>@(_diff.ActiveVersion ?? "Unpublished")</dd>
+                </div>
+                <div>
+                    <dt>Local hash</dt>
+                    <dd>@ShortHash(_diff.Diff?.LocalHash)</dd>
+                </div>
+                <div>
+                    <dt>Active hash</dt>
+                    <dd>@ShortHash(_diff.Diff?.RemoteHash)</dd>
+                </div>
+            </dl>
+
+            @if (!string.IsNullOrWhiteSpace(_diff.LocalError))
+            {
+                <p class="muted">@_diff.LocalError</p>
+            }
+            else if (!_diff.HasActiveVersion)
+            {
+                <p class="muted">No active config version is published, so there is nothing to compare against.</p>
+            }
+            else if (_diff.Diff is { IsIdentical: true })
+            {
+                <p class="muted">Local JSON matches the active version exactly.</p>
+            }
+            else if (_diff.Diff is { Differences.Count: > 0 } diff)
+            {
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Path</th>
+                                <th>Change</th>
+                                <th>Local</th>
+                                <th>Active</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var entry in diff.Differences)
+                            {
+                                <tr>
+                                    <td>@entry.Path</td>
+                                    <td>@DiffKindLabel(entry.Kind)</td>
+                                    <td>@(entry.LocalValue ?? "—")</td>
+                                    <td>@(entry.RemoteValue ?? "—")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (diff.Truncated)
+                {
+                    <p class="muted">Showing the first @diff.Differences.Count differences; more were omitted.</p>
+                }
+            }
+        </section>
+    }
+
     <section class="panel">
         <div class="panel-heading">
             <h2>Recent operations</h2>
@@ -219,6 +304,7 @@ else if (RuntimeOptions.IsConfigured && !_isLoading && string.IsNullOrWhiteSpace
     public string CompetitionId { get; set; } = string.Empty;
 
     private AdminCompetitionDetailView? _view;
+    private AdminCompetitionConfigDiffView? _diff;
     private string? _loadError;
     private bool _isLoading;
 
@@ -234,9 +320,14 @@ else if (RuntimeOptions.IsConfigured && !_isLoading && string.IsNullOrWhiteSpace
     {
         _isLoading = true;
         _loadError = null;
+        _diff = null;
         try
         {
             _view = await CompetitionService.GetDetailAsync(CompetitionId, CancellationToken.None);
+            if (_view is not null)
+            {
+                await LoadConfigDiffAsync(_view.Detail.Competition);
+            }
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
@@ -246,6 +337,30 @@ else if (RuntimeOptions.IsConfigured && !_isLoading && string.IsNullOrWhiteSpace
         finally
         {
             _isLoading = false;
+        }
+    }
+
+    // Config drift is best-effort enrichment; a failure here must not take down
+    // the rest of the details page.
+    private async Task LoadConfigDiffAsync(CompetitionAdminRow competition)
+    {
+        try
+        {
+            _diff = await CompetitionService.GetConfigDiffAsync(
+                competition.Id,
+                competition.Slug,
+                CancellationToken.None);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _diff = new AdminCompetitionConfigDiffView(
+                $"src/TotalCall.Client/wwwroot/data/competitions/{competition.Slug}.json",
+                LocalAvailable: false,
+                LocalConfigVersion: null,
+                LocalError: $"Config drift could not be computed: {ex.Message}",
+                HasActiveVersion: false,
+                ActiveVersion: null,
+                Diff: null);
         }
     }
 
@@ -272,4 +387,39 @@ else if (RuntimeOptions.IsConfigured && !_isLoading && string.IsNullOrWhiteSpace
         AdminOperationStatus.Failed => "state-missing",
         _ => "state-neutral"
     };
+
+    private static string ConfigDriftClass(AdminCompetitionConfigDiffView diff)
+    {
+        if (!string.IsNullOrWhiteSpace(diff.LocalError) || !diff.HasActiveVersion || !diff.LocalAvailable)
+        {
+            return "state-neutral";
+        }
+
+        return diff.Diff is { IsIdentical: true } ? "state-ok" : "state-missing";
+    }
+
+    private static string ConfigDriftLabel(AdminCompetitionConfigDiffView diff)
+    {
+        if (!string.IsNullOrWhiteSpace(diff.LocalError) || !diff.LocalAvailable)
+        {
+            return "Local JSON unavailable";
+        }
+
+        if (!diff.HasActiveVersion)
+        {
+            return "No active version";
+        }
+
+        return diff.Diff is { IsIdentical: true } ? "In sync" : "Drift detected";
+    }
+
+    private static string DiffKindLabel(ConfigDiffKind kind) => kind switch
+    {
+        ConfigDiffKind.LocalOnly => "Only in local",
+        ConfigDiffKind.RemoteOnly => "Only in active",
+        _ => "Changed"
+    };
+
+    private static string ShortHash(string? hash) =>
+        string.IsNullOrWhiteSpace(hash) ? "Unavailable" : hash[..Math.Min(12, hash.Length)];
 }

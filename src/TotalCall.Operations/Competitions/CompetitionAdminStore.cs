@@ -40,6 +40,11 @@ public sealed record CompetitionAdminDetail(
     CompetitionAdminRow Competition,
     IReadOnlyList<CompetitionAdminVersionRow> Versions);
 
+public sealed record CompetitionActiveConfig(
+    string VersionId,
+    string Version,
+    JsonNode Config);
+
 public sealed class CompetitionAdminStore
 {
     public async Task<IReadOnlyList<CompetitionAdminRow>> ListAsync(
@@ -101,6 +106,53 @@ public sealed class CompetitionAdminStore
             .ToArray();
 
         return new CompetitionAdminDetail(competition, versions);
+    }
+
+    // Loads the config JSON of the version a competition is currently published at.
+    // Two primary-key lookups (competition -> published_version_id -> version),
+    // so this stays bounded even though the config payload itself can be large.
+    public async Task<CompetitionActiveConfig?> GetActiveConfigAsync(
+        CompetitionAdminOptions options,
+        string competitionId,
+        CancellationToken ct)
+    {
+        if (string.IsNullOrWhiteSpace(competitionId))
+        {
+            return null;
+        }
+
+        var supabase = CreateClient(options);
+        var competitionRows = await supabase.GetAsync(
+            "public",
+            "competitions",
+            $"id=eq.{Uri.EscapeDataString(competitionId)}&select=published_version_id&limit=1",
+            ct);
+
+        var publishedVersionId = competitionRows
+            .OfType<JsonObject>()
+            .Select(row => Value(row, "published_version_id"))
+            .FirstOrDefault();
+        if (string.IsNullOrWhiteSpace(publishedVersionId))
+        {
+            return null;
+        }
+
+        var versionRows = await supabase.GetAsync(
+            "public",
+            "competition_versions",
+            $"id=eq.{Uri.EscapeDataString(publishedVersionId)}&select=id,version,config&limit=1",
+            ct);
+
+        var versionRow = versionRows.OfType<JsonObject>().FirstOrDefault();
+        if (versionRow?["config"] is not JsonNode config)
+        {
+            return null;
+        }
+
+        return new CompetitionActiveConfig(
+            Value(versionRow, "id") ?? publishedVersionId,
+            Value(versionRow, "version") ?? "unknown",
+            config.DeepClone());
     }
 
     public static IReadOnlyList<CompetitionAdminRow> BuildRows(
