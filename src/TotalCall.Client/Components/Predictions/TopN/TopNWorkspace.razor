@@ -487,8 +487,13 @@ else
             official?.BenchKg,
             official?.DeadliftKg);
 
-    // The rich identity header shows on any read-only board (public = blue, my locked = green).
-    private bool ShowContextHeader => IsPublicBoard || !CanEditSheet;
+    private TopNWorkspaceState WorkspaceState => TopNWorkspaceState.Resolve(
+        Competition,
+        CanEditPredictions,
+        PublicBoardName,
+        DateTimeOffset.UtcNow);
+
+    private bool ShowContextHeader => WorkspaceState.ShowContextHeader;
 
     private string ActiveCategoryLabel => ActiveQuestion is null ? string.Empty : GetCategoryName(ActiveQuestion);
 
@@ -650,28 +655,13 @@ else
         }
     }
 
-    private PredictionDeadlinePhase DeadlinePhase => PredictionDeadline.Resolve(
-        Competition.Status,
-        Competition.PredictionLockAt,
-        Competition.EndDate,
-        DateTimeOffset.UtcNow);
+    private PredictionDeadlinePhase DeadlinePhase => WorkspaceState.DeadlinePhase;
 
-    private bool IsPublicBoard => !string.IsNullOrWhiteSpace(PublicBoardName);
+    private bool IsPublicBoard => WorkspaceState.IsPublicBoard;
 
-    // "One board, three frames": another user's board reads blue (public), my own
-    // locked board reads green (review), the editable board stays red (default).
-    private string BoardModeClass => IsPublicBoard
-        ? "topn-workspace--public"
-        : CanEditSheet
-            ? string.Empty
-            : "topn-workspace--review";
+    private string BoardModeClass => WorkspaceState.BoardModeClass;
 
-    private bool CanEditSheet => !IsPublicBoard && PredictionDeadline.CanEdit(
-        CanEditPredictions,
-        Competition.Status,
-        Competition.PredictionLockAt,
-        Competition.EndDate,
-        DateTimeOffset.UtcNow);
+    private bool CanEditSheet => WorkspaceState.CanEditSheet;
 
     private string ContextScrimClass => string.Join(" ", "topn-drawer-scrim", IsContextOpen ? "is-open" : null);
 
@@ -931,21 +921,7 @@ else
 
     private TimeSpan GetDeadlineTickDelay()
     {
-        var remaining = Competition.PredictionLockAt is { } lockAt
-            ? lockAt - DateTimeOffset.UtcNow
-            : TimeSpan.FromMinutes(15);
-
-        if (remaining <= TimeSpan.FromHours(1))
-        {
-            return TimeSpan.FromSeconds(1);
-        }
-
-        if (remaining <= TimeSpan.FromHours(48))
-        {
-            return TimeSpan.FromMinutes(1);
-        }
-
-        return TimeSpan.FromMinutes(15);
+        return TopNWorkspaceState.GetDeadlineTickDelay(Competition.PredictionLockAt, DateTimeOffset.UtcNow);
     }
 
     private void StopDeadlineTicker()
