@@ -2,6 +2,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using TotalCall.Core.Domain.Competitions;
+using TotalCall.Core.Validation;
 
 namespace TotalCall.Sync.Competitions;
 
@@ -19,6 +21,13 @@ public sealed class CompetitionSyncOptions
 // Kept separate from the athlete history import (AthleteImporter) on purpose.
 public sealed class CompetitionDefinitionImporter
 {
+    private static readonly JsonSerializerOptions CompetitionJsonOptions = new(JsonSerializerDefaults.Web)
+    {
+        PropertyNameCaseInsensitive = true
+    };
+
+    private readonly CompetitionConfigValidator configValidator = new();
+
     public async Task<int> RunAsync(CompetitionSyncOptions opts, CancellationToken ct)
     {
         Console.WriteLine($"[info] Loading competition definition: {opts.CompetitionJsonPath}");
@@ -38,6 +47,25 @@ public sealed class CompetitionDefinitionImporter
             Console.Error.WriteLine("[error] Competition JSON root must be an object.");
             return 1;
         }
+
+        var competition = DeserializeCompetition(rawJson);
+        if (competition is null)
+        {
+            return 1;
+        }
+
+        var validation = configValidator.Validate(competition);
+        if (!validation.IsValid)
+        {
+            Console.Error.WriteLine("[error] Competition config validation failed:");
+            foreach (var error in validation.Errors)
+            {
+                Console.Error.WriteLine($"[error] {error.Path}: {error.Message} ({error.Code})");
+            }
+
+            return 1;
+        }
+
         var configHash = CompetitionConfigHasher.Compute(configNode);
 
         var id = GetString(root, "id");
@@ -99,6 +127,19 @@ public sealed class CompetitionDefinitionImporter
             new JsonObject { ["published_version_id"] = versionId }, ct);
         Console.WriteLine($"[done] Published '{id}' version '{version}'.");
         return 0;
+    }
+
+    private static Competition? DeserializeCompetition(string rawJson)
+    {
+        try
+        {
+            return JsonSerializer.Deserialize<Competition>(rawJson, CompetitionJsonOptions);
+        }
+        catch (JsonException ex)
+        {
+            Console.Error.WriteLine($"[error] Competition JSON could not be parsed as a competition config: {ex.Message}");
+            return null;
+        }
     }
 
     // The competition list reads a small summary snapshot. Prefer the sibling
