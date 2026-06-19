@@ -9,6 +9,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddSingleton(AdminRuntimeOptions.FromConfiguration(builder.Configuration));
 builder.Services.AddSingleton<AdminRuntimeStatusService>();
 builder.Services.AddSingleton<CompetitionConfigFileChecker>();
+builder.Services.AddSingleton<CompetitionDefinitionImporter>();
 
 var app = builder.Build();
 

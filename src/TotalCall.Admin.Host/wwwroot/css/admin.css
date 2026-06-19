@@ -217,6 +217,13 @@ h2 {
     color: var(--muted);
 }
 
+.notice {
+    border-left: 3px solid var(--accent);
+    background: #f3f7ff;
+    padding: 10px 12px;
+    color: var(--text);
+}
+
 .form-stack {
     display: grid;
     gap: 16px;
@@ -298,6 +305,27 @@ h2 {
 
 .data-table td {
     overflow-wrap: anywhere;
+}
+
+.log-level {
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.log-level-info {
+    color: var(--accent);
+}
+
+.log-level-warn {
+    color: var(--warn);
+}
+
+.log-level-error {
+    color: var(--missing);
+}
+
+.log-level-done {
+    color: var(--ok);
 }
 
 @media (max-width: 760px) {

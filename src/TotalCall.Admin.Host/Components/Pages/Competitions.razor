@@ -2,6 +2,8 @@
 @using System.ComponentModel.DataAnnotations
 @using TotalCall.Operations.Competitions
 @inject CompetitionConfigFileChecker ConfigChecker
+@inject CompetitionDefinitionImporter DefinitionImporter
+@inject AdminRuntimeOptions RuntimeOptions
 
 <PageTitle>Competition config</PageTitle>
 
@@ -87,18 +89,133 @@
     }
 }
 
+@if (_result?.IsValid == true)
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Publish config</h2>
+            <span class="state @(RuntimeOptions.IsConfigured ? "state-neutral" : "state-missing")">
+                <span class="state-dot"></span>
+                @(RuntimeOptions.IsConfigured ? "Confirmation required" : "Missing credentials")
+            </span>
+        </div>
+
+        <p class="notice">
+            Publishes the validated JSON to the configured Supabase project, creates or reuses an immutable
+            competition version, and points the competition at that version.
+        </p>
+
+        <EditForm Model="_publishForm" OnValidSubmit="PublishConfigAsync" class="form-stack">
+            <DataAnnotationsValidator />
+            <div class="field">
+                <label for="publish-confirmation">Type @RequiredPublishConfirmation to publish</label>
+                <InputText id="publish-confirmation" @bind-Value="_publishForm.ConfirmationText" />
+                <ValidationMessage For="@(() => _publishForm.ConfirmationText)" />
+            </div>
+            <button class="button-primary" type="submit" disabled="@(!CanPublish || _isPublishing)">
+                @(_isPublishing ? "Publishing" : "Publish config")
+            </button>
+        </EditForm>
+    </section>
+}
+
+@if (!string.IsNullOrWhiteSpace(_publishError))
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Publish status</h2>
+            <span class="state state-missing">
+                <span class="state-dot"></span>
+                Failed
+            </span>
+        </div>
+        <p class="muted">@_publishError</p>
+    </section>
+}
+
+@if (_publishResult is not null)
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Publish result</h2>
+            <span class="state @(_publishResult.Succeeded ? "state-ok" : "state-missing")">
+                <span class="state-dot"></span>
+                @(_publishResult.Succeeded ? "Published" : "Not published")
+            </span>
+        </div>
+
+        <dl class="status-list">
+            <div>
+                <dt>Exit code</dt>
+                <dd>@_publishResult.ExitCode</dd>
+            </div>
+            <div>
+                <dt>Version</dt>
+                <dd>@(_publishResult.EffectiveConfigVersion ?? _publishResult.ConfigVersion ?? "Unavailable")</dd>
+            </div>
+            <div>
+                <dt>Version id</dt>
+                <dd>@(_publishResult.PublishedVersionId ?? "Unavailable")</dd>
+            </div>
+        </dl>
+    </section>
+
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Operation log</h2>
+        </div>
+
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var entry in _publishResult.Logs)
+                    {
+                        <tr>
+                            <td class="log-level log-level-@entry.Level">@entry.Level</td>
+                            <td>@entry.Message</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+}
+
 @code {
     private readonly CompetitionConfigForm _form = new()
     {
         CompetitionJsonPath = "src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json"
     };
+    private readonly CompetitionPublishForm _publishForm = new();
 
     private CompetitionConfigFileCheckResult? _result;
+    private CompetitionSyncResult? _publishResult;
+    private string? _publishError;
     private bool _isChecking;
+    private bool _isPublishing;
+
+    private string RequiredPublishConfirmation => $"publish {_result?.CompetitionId ?? string.Empty}";
+
+    private bool CanPublish =>
+        _result is { IsValid: true, CompetitionId: { Length: > 0 } }
+        && RuntimeOptions.IsConfigured
+        && string.Equals(
+            _publishForm.ConfirmationText.Trim(),
+            RequiredPublishConfirmation,
+            StringComparison.Ordinal);
 
     private async Task CheckConfigAsync()
     {
         _isChecking = true;
+        _publishResult = null;
+        _publishError = null;
+        _publishForm.ConfirmationText = string.Empty;
         try
         {
             _result = await ConfigChecker.CheckAsync(_form.CompetitionJsonPath, CancellationToken.None);
@@ -106,6 +223,62 @@
         finally
         {
             _isChecking = false;
+        }
+    }
+
+    private async Task PublishConfigAsync()
+    {
+        if (!CanPublish)
+        {
+            return;
+        }
+
+        _isPublishing = true;
+        _publishResult = null;
+        _publishError = null;
+        try
+        {
+            var latestCheck = await ConfigChecker.CheckAsync(_form.CompetitionJsonPath, CancellationToken.None);
+            _result = latestCheck;
+            if (!latestCheck.IsValid)
+            {
+                _publishError = "Publish was blocked because the config is no longer valid.";
+                return;
+            }
+
+            var latestConfirmation = $"publish {latestCheck.CompetitionId}";
+            if (!string.Equals(
+                _publishForm.ConfirmationText.Trim(),
+                latestConfirmation,
+                StringComparison.Ordinal))
+            {
+                _publishError = $"Publish was blocked because confirmation must match {latestConfirmation}.";
+                return;
+            }
+
+            _publishResult = await DefinitionImporter.SyncAsync(
+                new CompetitionSyncOptions
+                {
+                    CompetitionJsonPath = latestCheck.ResolvedPath,
+                    SupabaseUrl = RuntimeOptions.SupabaseUrl,
+                    SupabaseSecretKey = RuntimeOptions.SupabaseSecretKey,
+                    TriggeredBy = "admin-host"
+                },
+                CancellationToken.None);
+
+            if (!_publishResult.Succeeded)
+            {
+                _publishError = "Publish did not complete. Review the operation log.";
+            }
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _publishError = $"Publish failed: {ex.Message}";
+        }
+        finally
+        {
+            _publishForm.ConfirmationText = string.Empty;
+            _isPublishing = false;
         }
     }
 
@@ -128,5 +301,11 @@
     {
         [Required]
         public string CompetitionJsonPath { get; set; } = string.Empty;
+    }
+
+    private sealed class CompetitionPublishForm
+    {
+        [Required]
+        public string ConfirmationText { get; set; } = string.Empty;
     }
 }

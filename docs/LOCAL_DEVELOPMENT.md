@@ -105,6 +105,7 @@ The admin host currently includes:
 
 - runtime credential status at `/`,
 - local competition config validation at `/competitions`,
+- confirmation-gated competition config publish at `/competitions`,
 - sanitized JSON health status at `/healthz`.
 
 ## Build And Test
