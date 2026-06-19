@@ -1163,13 +1163,10 @@ else
             return;
         }
 
-        var placements = FieldPlacements.ToList();
-        var defaultPositions = placements
-            .Where(placement => placement.IsAutoSeeded)
-            .Select(placement => placement.Position)
-            .ToArray();
+        var placements = FieldPlacements;
+        var defaultPositions = TopNBulkQuickFillPlanner.GetDefaultPositions(placements);
 
-        if (defaultPositions.Length == 0)
+        if (defaultPositions.Count == 0)
         {
             Toasts.ShowInfo(Localizer["Predictions.TopN.NoDefaultRows"]);
             return;
@@ -1189,35 +1186,25 @@ else
                 }
             }
 
-            var changed = false;
-            foreach (var position in defaultPositions)
+            var filled = TopNBulkQuickFillPlanner.FillDefaultPositions(
+                placements,
+                defaultPositions,
+                Competition.Athletes,
+                historyByAthleteId,
+                kind);
+
+            foreach (var (position, mode) in filled.ModeByPosition)
             {
-                var index = placements.FindIndex(placement => placement.Position == position);
-                var placement = placements[index];
-                var athlete = Competition.Athletes.First(item =>
-                    string.Equals(item.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase));
-                historyByAthleteId.TryGetValue(athlete.Id, out var history);
-
-                var filled = TopNQuickFillBuilder.BuildFromSource(placement, athlete, history, kind);
-                if (filled is null)
-                {
-                    continue;
-                }
-
-                placements[index] = filled;
-                modeByPosition[position] = TopNPlacementEditor.HasLiftValues(filled)
-                    ? TopNEntryMode.Lifts
-                    : TopNEntryMode.Total;
-                changed = true;
+                modeByPosition[position] = mode;
             }
 
-            if (!changed)
+            if (!filled.Changed)
             {
                 Toasts.ShowInfo(Localizer["Predictions.Toast.AutoFill.Empty"]);
                 return;
             }
 
-            await EmitAnswer(placements);
+            await EmitAnswer(filled.Placements);
             Toasts.ShowSuccess(Localizer["Predictions.Toast.AutoFill.Success"]);
         }
         finally
