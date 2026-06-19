@@ -1,0 +1,210 @@
+@page "/results"
+@using System.ComponentModel.DataAnnotations
+@using TotalCall.Operations.Results
+@inject OfficialResultsImporter ResultsImporter
+@inject AdminRuntimeOptions RuntimeOptions
+
+<PageTitle>Results import</PageTitle>
+
+<section class="page-heading">
+    <p class="eyebrow">Results</p>
+    <h1>Official results import</h1>
+</section>
+
+<section class="panel">
+    <div class="panel-heading">
+        <h2>Import file</h2>
+        <span class="state @(RuntimeOptions.IsConfigured ? "state-neutral" : "state-missing")">
+            <span class="state-dot"></span>
+            @(RuntimeOptions.IsConfigured ? "Confirmation required" : "Missing credentials")
+        </span>
+    </div>
+
+    <p class="notice">
+        Imports official result groups, then recomputes score snapshots for submitted predictions.
+    </p>
+
+    <EditForm Model="_form" OnValidSubmit="ImportResultsAsync" class="form-stack">
+        <DataAnnotationsValidator />
+        <div class="field">
+            <label for="results-competition-id">Competition id</label>
+            <InputText id="results-competition-id" @bind-Value="_form.CompetitionId" />
+            <ValidationMessage For="@(() => _form.CompetitionId)" />
+        </div>
+        <div class="field">
+            <label for="results-json-path">Results JSON path</label>
+            <InputText id="results-json-path" @bind-Value="_form.ResultsJsonPath" />
+            <ValidationMessage For="@(() => _form.ResultsJsonPath)" />
+        </div>
+        <div class="field">
+            <label for="results-confirmation">Type @RequiredImportConfirmation to import</label>
+            <InputText id="results-confirmation" @bind-Value="_form.ConfirmationText" />
+            <ValidationMessage For="@(() => _form.ConfirmationText)" />
+        </div>
+        <button class="button-primary" type="submit" disabled="@(!CanImport || _isImporting)">
+            @(_isImporting ? "Importing" : "Import results")
+        </button>
+    </EditForm>
+</section>
+
+@if (!string.IsNullOrWhiteSpace(_importError))
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Import status</h2>
+            <span class="state state-missing">
+                <span class="state-dot"></span>
+                Failed
+            </span>
+        </div>
+        <p class="muted">@_importError</p>
+    </section>
+}
+
+@if (_importResult is not null)
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Import result</h2>
+            <span class="state @(_importResult.Succeeded ? "state-ok" : "state-missing")">
+                <span class="state-dot"></span>
+                @(_importResult.Succeeded ? "Imported" : "Not imported")
+            </span>
+        </div>
+
+        <dl class="status-list">
+            <div>
+                <dt>Exit code</dt>
+                <dd>@_importResult.ExitCode</dd>
+            </div>
+            <div>
+                <dt>Groups in file</dt>
+                <dd>@_importResult.GroupsInFile</dd>
+            </div>
+            <div>
+                <dt>Groups imported</dt>
+                <dd>@_importResult.GroupsImported</dd>
+            </div>
+            <div>
+                <dt>Submitted rows scored</dt>
+                <dd>@_importResult.SubmittedRowsScored</dd>
+            </div>
+            <div>
+                <dt>Leaderboard status</dt>
+                <dd>@(_importResult.LeaderboardStatus ?? "Unavailable")</dd>
+            </div>
+            <div>
+                <dt>Calculated at</dt>
+                <dd>@(_importResult.CalculatedAt?.ToString("O") ?? "Unavailable")</dd>
+            </div>
+        </dl>
+    </section>
+
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Operation log</h2>
+        </div>
+
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var entry in _importResult.Logs)
+                    {
+                        <tr>
+                            <td class="log-level log-level-@entry.Level">@entry.Level</td>
+                            <td>@entry.Message</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+}
+
+@code {
+    private readonly ResultsImportForm _form = new()
+    {
+        CompetitionId = "worlds-2026",
+        ResultsJsonPath = "tools/sync/data/results/worlds-2026-partial-2026-06-17.json"
+    };
+
+    private ResultsImportResult? _importResult;
+    private string? _importError;
+    private bool _isImporting;
+
+    private string RequiredImportConfirmation => $"import {_form.CompetitionId.Trim()}";
+
+    private bool CanImport =>
+        RuntimeOptions.IsConfigured
+        && !string.IsNullOrWhiteSpace(_form.CompetitionId)
+        && !string.IsNullOrWhiteSpace(_form.ResultsJsonPath)
+        && string.Equals(
+            _form.ConfirmationText.Trim(),
+            RequiredImportConfirmation,
+            StringComparison.Ordinal);
+
+    private async Task ImportResultsAsync()
+    {
+        if (!CanImport)
+        {
+            return;
+        }
+
+        _isImporting = true;
+        _importResult = null;
+        _importError = null;
+        try
+        {
+            var competitionId = _form.CompetitionId.Trim();
+            var requiredConfirmation = $"import {competitionId}";
+            if (!string.Equals(_form.ConfirmationText.Trim(), requiredConfirmation, StringComparison.Ordinal))
+            {
+                _importError = $"Import was blocked because confirmation must match {requiredConfirmation}.";
+                return;
+            }
+
+            _importResult = await ResultsImporter.ImportAsync(
+                new ResultsImportOptions
+                {
+                    CompetitionId = competitionId,
+                    ResultsJsonPath = _form.ResultsJsonPath.Trim(),
+                    SupabaseUrl = RuntimeOptions.SupabaseUrl,
+                    SupabaseSecretKey = RuntimeOptions.SupabaseSecretKey,
+                    TriggeredBy = "admin-host"
+                },
+                CancellationToken.None);
+
+            if (!_importResult.Succeeded)
+            {
+                _importError = "Import did not complete. Review the operation log.";
+            }
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _importError = $"Import failed: {ex.Message}";
+        }
+        finally
+        {
+            _form.ConfirmationText = string.Empty;
+            _isImporting = false;
+        }
+    }
+
+    private sealed class ResultsImportForm
+    {
+        [Required]
+        public string CompetitionId { get; set; } = string.Empty;
+
+        [Required]
+        public string ResultsJsonPath { get; set; } = string.Empty;
+
+        [Required]
+        public string ConfirmationText { get; set; } = string.Empty;
+    }
+}

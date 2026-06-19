@@ -1,6 +1,7 @@
 using TotalCall.Admin.Host.Components;
 using TotalCall.Admin.Host.Services;
 using TotalCall.Operations.Competitions;
+using TotalCall.Operations.Results;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddSingleton(AdminRuntimeOptions.FromConfiguration(builder.Conf
 builder.Services.AddSingleton<AdminRuntimeStatusService>();
 builder.Services.AddSingleton<CompetitionConfigFileChecker>();
 builder.Services.AddSingleton<CompetitionDefinitionImporter>();
+builder.Services.AddSingleton<OfficialResultsImporter>();
 
 var app = builder.Build();
 
