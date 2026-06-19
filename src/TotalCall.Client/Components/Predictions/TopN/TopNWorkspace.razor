@@ -393,7 +393,6 @@ else
     private bool isUpdatesOpen;
     private bool isBulkMenuOpen;
     private bool isBulkFilling;
-    private bool isCompareSelectionMode;
     private int? fillPopPosition;
     private int? expandedMobilePosition;
     private int? draggingPosition;
@@ -411,7 +410,7 @@ else
     private readonly Dictionary<string, AthleteHistoryEntry?> historyByAthleteId = new(StringComparer.OrdinalIgnoreCase);
     private readonly HashSet<string> loadingAthleteIds = new(StringComparer.OrdinalIgnoreCase);
     private readonly HashSet<string> seededQuestionIds = new(StringComparer.OrdinalIgnoreCase);
-    private readonly HashSet<string> compareSelectedAthleteIds = new(StringComparer.OrdinalIgnoreCase);
+    private TopNCompareSelectionState compareSelection = TopNCompareSelectionState.Empty;
 
     private TopNCategoryNavigationState CategoryNavigation => TopNCategoryNavigationState.Resolve(
         ActiveGroup,
@@ -499,14 +498,12 @@ else
     private IReadOnlyList<string> AffectedWithdrawnAthleteNames =>
         RosterUpdateService.GetAffectedAthleteNames(Competition, Answers);
 
-    private IReadOnlyCollection<string> CompareSelectedAthleteIds => compareSelectedAthleteIds.ToArray();
+    private bool isCompareSelectionMode => compareSelection.IsActive;
 
-    private IReadOnlyList<AthleteComparisonWindowSlot> SelectedComparisonSlots => FieldPlacements
-        .Where(placement => compareSelectedAthleteIds.Contains(placement.AthleteId))
-        .OrderBy(placement => placement.Position)
-        .Select(ToComparisonSlot)
-        .OfType<AthleteComparisonWindowSlot>()
-        .ToArray();
+    private IReadOnlyCollection<string> CompareSelectedAthleteIds => compareSelection.SelectedAthleteIds;
+
+    private IReadOnlyList<AthleteComparisonWindowSlot> SelectedComparisonSlots =>
+        compareSelection.BuildSelectedSlots(FieldPlacements, Competition.Athletes);
 
     private IReadOnlyList<Athlete> QuestionAthletes => FieldPlacementState.QuestionAthletes;
 
@@ -1013,50 +1010,27 @@ else
 
     private void StartCompareSelection(string? preselectedAthleteId)
     {
-        isCompareSelectionMode = true;
         fillPopPosition = null;
         isBulkMenuOpen = false;
         expandedMobilePosition = null;
-
-        if (!string.IsNullOrWhiteSpace(preselectedAthleteId) && IsAthleteInActiveQuestion(preselectedAthleteId))
-        {
-            compareSelectedAthleteIds.Clear();
-            compareSelectedAthleteIds.Add(preselectedAthleteId);
-        }
+        compareSelection = compareSelection.Start(preselectedAthleteId, IsAthleteInActiveQuestion);
     }
 
     private void CancelCompareSelection()
     {
-        isCompareSelectionMode = false;
-        compareSelectedAthleteIds.Clear();
+        compareSelection = compareSelection.Cancel();
     }
 
     private Task ToggleCompareSelection(string athleteId)
     {
-        if (string.IsNullOrWhiteSpace(athleteId))
-        {
-            return Task.CompletedTask;
-        }
+        var (state, result) = compareSelection.Toggle(athleteId, IsAthleteInActiveQuestion);
+        compareSelection = state;
 
-        if (!isCompareSelectionMode)
-        {
-            StartCompareSelection(athleteId);
-            return Task.CompletedTask;
-        }
-
-        if (compareSelectedAthleteIds.Contains(athleteId))
-        {
-            compareSelectedAthleteIds.Remove(athleteId);
-            return Task.CompletedTask;
-        }
-
-        if (compareSelectedAthleteIds.Count >= 3)
+        if (result == TopNCompareSelectionToggleResult.MaxReached)
         {
             Toasts.ShowInfo(Localizer["Predictions.Compare.MaxThree"]);
-            return Task.CompletedTask;
         }
 
-        compareSelectedAthleteIds.Add(athleteId);
         return Task.CompletedTask;
     }
 
@@ -1093,35 +1067,8 @@ else
             title: Localizer["Predictions.CompareAthletes"].Value,
             subtitle: subtitle);
 
-        isCompareSelectionMode = false;
-        compareSelectedAthleteIds.Clear();
+        compareSelection = compareSelection.Cancel();
         return Task.CompletedTask;
-    }
-
-    private AthleteComparisonWindowSlot? ToComparisonSlot(AthletePlacementPick placement)
-    {
-        var athlete = Competition.Athletes.FirstOrDefault(item =>
-            string.Equals(item.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase));
-
-        if (athlete is null)
-        {
-            return null;
-        }
-
-        return new AthleteComparisonWindowSlot
-        {
-            Position = placement.Position,
-            AthleteId = athlete.Id,
-            AthleteName = athlete.DisplayName,
-            CountryCode = athlete.CountryCode,
-            CountryName = athlete.CountryName,
-            NominatedTotalKg = athlete.SeedTotalKg,
-            PredictedTotalKg = placement.PredictedTotalKg,
-            PredictedSquatKg = placement.PredictedSquatKg,
-            PredictedBenchKg = placement.PredictedBenchKg,
-            PredictedDeadliftKg = placement.PredictedDeadliftKg,
-            IsAutoSeeded = placement.IsAutoSeeded
-        };
     }
 
     // ---------- per-row mode + edits ----------
