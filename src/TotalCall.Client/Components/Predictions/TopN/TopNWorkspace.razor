@@ -1241,7 +1241,7 @@ else
         await EnsureHistoryAsync(athlete.Id);
         historyByAthleteId.TryGetValue(athlete.Id, out var history);
 
-        var updated = BuildFromSource(placement, athlete, history, request.Kind);
+        var updated = TopNQuickFillBuilder.BuildFromSource(placement, athlete, history, request.Kind);
         if (updated is null)
         {
             return;
@@ -1303,7 +1303,7 @@ else
                     string.Equals(item.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase));
                 historyByAthleteId.TryGetValue(athlete.Id, out var history);
 
-                var filled = BuildFromSource(placement, athlete, history, kind);
+                var filled = TopNQuickFillBuilder.BuildFromSource(placement, athlete, history, kind);
                 if (filled is null)
                 {
                     continue;
@@ -1331,73 +1331,12 @@ else
         }
     }
 
-    private static AthletePlacementPick? BuildFromSource(
-        AthletePlacementPick placement,
-        Athlete athlete,
-        AthleteHistoryEntry? history,
-        string kind)
-    {
-        return kind switch
-        {
-            TopNQuickFillKind.Nominated when athlete.SeedTotalKg is not null => placement with
-            {
-                PredictedSquatKg = null,
-                PredictedBenchKg = null,
-                PredictedDeadliftKg = null,
-                PredictedTotalKg = athlete.SeedTotalKg,
-                IsAutoSeeded = false
-            },
-            TopNQuickFillKind.Last when history?.LastResult?.TotalKg is not null => FromResult(
-                placement,
-                history.LastResult.SquatKg,
-                history.LastResult.BenchKg,
-                history.LastResult.DeadliftKg,
-                history.LastResult.TotalKg),
-            TopNQuickFillKind.Best when history?.Bests?.TotalKg is not null => FromResult(
-                placement,
-                history.Bests.SquatKg,
-                history.Bests.BenchKg,
-                history.Bests.DeadliftKg,
-                history.Bests.TotalKg),
-            _ => null
-        };
-    }
-
     private string QuickFillToast(string kind, string athleteName) => kind switch
     {
         TopNQuickFillKind.Nominated => Localizer["Predictions.Toast.QuickFill.Nominated", athleteName].Value,
         TopNQuickFillKind.Last => Localizer["Predictions.Toast.QuickFill.Last", athleteName].Value,
         _ => Localizer["Predictions.Toast.QuickFill.Best", athleteName].Value
     };
-
-    private static AthletePlacementPick FromResult(
-        AthletePlacementPick placement,
-        decimal? squat,
-        decimal? bench,
-        decimal? deadlift,
-        decimal? total)
-    {
-        if (squat is not null || bench is not null || deadlift is not null)
-        {
-            return placement with
-            {
-                PredictedSquatKg = squat,
-                PredictedBenchKg = bench,
-                PredictedDeadliftKg = deadlift,
-                PredictedTotalKg = total ?? (squat ?? 0m) + (bench ?? 0m) + (deadlift ?? 0m),
-                IsAutoSeeded = false
-            };
-        }
-
-        return placement with
-        {
-            PredictedSquatKg = null,
-            PredictedBenchKg = null,
-            PredictedDeadliftKg = null,
-            PredictedTotalKg = total,
-            IsAutoSeeded = false
-        };
-    }
 
     // ---------- reorder ----------
 
