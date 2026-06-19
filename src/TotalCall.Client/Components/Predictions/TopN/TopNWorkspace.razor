@@ -435,55 +435,18 @@ else
 
     // ---------- results overlay (backend score snapshot) ----------
 
-    private bool HasResultsImported => Score is not null;
+    private TopNResultsDisplayState ResultsState => TopNResultsDisplayState.Resolve(
+        ActiveGroup,
+        ActiveQuestion,
+        Score);
 
-    private CategoryScoreBreakdown? ActiveBreakdown => ActiveQuestion is null
-        ? null
-        : Score?.FindCategory(ActiveGroup.Id, ActiveQuestion.Id);
+    private bool HasResultsImported => ResultsState.HasResultsImported;
 
-    private bool IsActiveCategoryScored => ActiveBreakdown is not null;
+    private CategoryScoreBreakdown? ActiveBreakdown => ResultsState.ActiveBreakdown;
 
-    private IReadOnlyDictionary<string, TopNSlotResult>? ActiveSheetResults
-    {
-        get
-        {
-            var breakdown = ActiveBreakdown;
-            if (breakdown is null)
-            {
-                return null;
-            }
+    private bool IsActiveCategoryScored => ResultsState.IsActiveCategoryScored;
 
-            var officialByAthlete = breakdown.Official
-                .GroupBy(placement => placement.AthleteId, StringComparer.OrdinalIgnoreCase)
-                .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
-
-            // Every athlete with an official result gets a place + actual total; the user's
-            // scored Top N picks additionally carry the verdict + points.
-            var map = new Dictionary<string, TopNSlotResult>(StringComparer.OrdinalIgnoreCase);
-            foreach (var placement in breakdown.Official)
-            {
-                map[placement.AthleteId] = ToTopNSlotResult(placement, null);
-            }
-
-            foreach (var slot in breakdown.Slots)
-            {
-                officialByAthlete.TryGetValue(slot.AthleteId, out var official);
-                map[slot.AthleteId] = ToTopNSlotResult(official, slot);
-            }
-
-            return map;
-        }
-    }
-
-    private static TopNSlotResult ToTopNSlotResult(CategoryOfficialPlacement? official, CategorySlotResult? slot) =>
-        new(
-            official?.Position,
-            slot?.Verdict,
-            slot?.Points,
-            official?.TotalKg,
-            official?.SquatKg,
-            official?.BenchKg,
-            official?.DeadliftKg);
+    private IReadOnlyDictionary<string, TopNSlotResult>? ActiveSheetResults => ResultsState.ActiveSheetResults;
 
     private TopNWorkspaceState WorkspaceState => TopNWorkspaceState.Resolve(
         Competition,
@@ -495,17 +458,11 @@ else
 
     private string ActiveCategoryLabel => ActiveQuestion is null ? string.Empty : GetCategoryName(ActiveQuestion);
 
-    private IReadOnlyList<PredictionQuestion> PlacementQuestions => OrderedQuestions
-        .Where(question => question.Type is PredictionQuestionType.AthleteRanking or PredictionQuestionType.CategoryPodium)
-        .ToArray();
+    private IReadOnlyList<PredictionQuestion> PlacementQuestions => ResultsState.PlacementQuestions;
 
-    private int ResultsTotalCount => Score?.TotalGroupsCount ?? PlacementQuestions.Count;
+    private int ResultsTotalCount => ResultsState.ResultsTotalCount;
 
-    private decimal MaxResultsPoints => PlacementQuestions.Sum(question =>
-    {
-        var required = question.Constraints.ExactSelections ?? question.Constraints.MaxSelections ?? 3;
-        return required * 3m + 3m;
-    });
+    private decimal MaxResultsPoints => ResultsState.MaxResultsPoints;
 
     private int ActiveSelectedCount => ActiveQuestionStatus?.SelectedCount ?? FieldPlacements.Count(placement => placement.IsScored);
 
