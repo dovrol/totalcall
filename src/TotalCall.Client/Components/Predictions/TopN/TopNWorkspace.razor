@@ -256,7 +256,7 @@ else
                     Competition="@Competition"
                     ActiveQuestion="@ActiveQuestion"
                     ActiveQuestionStatus="@ActiveQuestionStatus"
-                    SelectedAthleteId="@selectedAthleteId"
+                    SelectedAthleteId="@contextSelection.SelectedAthleteId"
                     SelectedAthleteRank="@SelectedAthleteRank"
                     SelectedAthletePredictedTotalKg="@SelectedAthletePredictedTotal"
                     CanEditPredictions="@CanEditSheet"
@@ -386,7 +386,6 @@ else
     private static readonly Regex ShortCategoryRegex = new(@"(\d+\+?)\s*kg", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
     private string? activeQuestionId;
-    private string? selectedAthleteId;
     private bool isModuleMenuOpen;
     private bool isPaletteOpen;
     private bool isMobileSwitcherOpen;
@@ -410,6 +409,7 @@ else
     private readonly Dictionary<string, AthleteHistoryEntry?> historyByAthleteId = new(StringComparer.OrdinalIgnoreCase);
     private readonly HashSet<string> loadingAthleteIds = new(StringComparer.OrdinalIgnoreCase);
     private readonly HashSet<string> seededQuestionIds = new(StringComparer.OrdinalIgnoreCase);
+    private TopNContextSelectionState contextSelection = TopNContextSelectionState.Empty;
     private TopNCompareSelectionState compareSelection = TopNCompareSelectionState.Empty;
 
     private TopNCategoryNavigationState CategoryNavigation => TopNCategoryNavigationState.Resolve(
@@ -509,25 +509,14 @@ else
 
     private IReadOnlyList<Athlete> EligibleAthletes => FieldPlacementState.EligibleAthletes;
 
-    private IReadOnlyDictionary<int, Athlete> SelectedAthletesByPosition => FieldPlacements
-        .Select(placement => new
-        {
-            placement.Position,
-            Athlete = Competition.Athletes.FirstOrDefault(athlete =>
-                string.Equals(athlete.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase))
-        })
-        .Where(item => item.Athlete is not null)
-        .ToDictionary(item => item.Position, item => item.Athlete!, EqualityComparer<int>.Default);
+    private IReadOnlyDictionary<int, Athlete> SelectedAthletesByPosition =>
+        contextSelection.BuildSelectedAthletesByPosition(FieldPlacements, Competition.Athletes);
 
-    private bool IsContextOpen => !string.IsNullOrWhiteSpace(selectedAthleteId);
+    private bool IsContextOpen => contextSelection.IsOpen;
 
-    private int? SelectedAthleteRank => FieldPlacements
-        .FirstOrDefault(placement => string.Equals(placement.AthleteId, selectedAthleteId, StringComparison.OrdinalIgnoreCase))
-        ?.Position;
+    private int? SelectedAthleteRank => contextSelection.GetSelectedRank(FieldPlacements);
 
-    private decimal? SelectedAthletePredictedTotal => FieldPlacements
-        .FirstOrDefault(placement => string.Equals(placement.AthleteId, selectedAthleteId, StringComparison.OrdinalIgnoreCase))
-        ?.PredictedTotalKg;
+    private decimal? SelectedAthletePredictedTotal => contextSelection.GetSelectedPredictedTotal(FieldPlacements);
 
     private IReadOnlyList<TopNSlotView> SlotViews
     {
@@ -550,7 +539,7 @@ else
                     Athlete = athlete,
                     Placement = placement,
                     Mode = EffectiveMode(placement.Position, placement),
-                    IsContextActive = string.Equals(athlete.Id, selectedAthleteId, StringComparison.OrdinalIgnoreCase),
+                    IsContextActive = contextSelection.IsSelected(athlete.Id),
                     IsScored = placement.IsScored,
                     IsAutoSeeded = placement.IsAutoSeeded,
                     IsWithdrawn = athlete.IsWithdrawn,
@@ -602,10 +591,7 @@ else
             activeQuestionId = OrderedQuestions.FirstOrDefault()?.Id;
         }
 
-        if (!IsAthleteInActiveQuestion(selectedAthleteId))
-        {
-            selectedAthleteId = null;
-        }
+        contextSelection = contextSelection.EnsureSelectable(IsAthleteInActiveQuestion);
 
         if (expandedMobilePosition is not null &&
             (expandedMobilePosition < 1 || expandedMobilePosition > FieldPlacements.Count ||
@@ -863,7 +849,7 @@ else
         }
 
         activeQuestionId = questionId;
-        selectedAthleteId = null;
+        contextSelection = contextSelection.Close();
         isPaletteOpen = false;
         isMobileSwitcherOpen = false;
         fillPopPosition = null;
@@ -908,7 +894,7 @@ else
     {
         isModuleMenuOpen = false;
         isMobileSwitcherOpen = false;
-        selectedAthleteId = null;
+        contextSelection = contextSelection.Close();
         CancelCompareSelection();
         if (GroupChanged.HasDelegate)
         {
@@ -978,16 +964,10 @@ else
 
     private void OpenContext(string athleteId)
     {
-        if (string.IsNullOrWhiteSpace(athleteId))
-        {
-            selectedAthleteId = null;
-            return;
-        }
-
-        selectedAthleteId = athleteId;
+        contextSelection = contextSelection.Open(athleteId);
     }
 
-    private void CloseContext() => selectedAthleteId = null;
+    private void CloseContext() => contextSelection = contextSelection.Close();
 
     private Task OnUseNominatedFromContext()
     {
@@ -998,8 +978,8 @@ else
 
     private Task OnCompareAthletesRequested()
     {
-        StartCompareSelection(selectedAthleteId);
-        selectedAthleteId = null;
+        StartCompareSelection(contextSelection.SelectedAthleteId);
+        contextSelection = contextSelection.Close();
         return Task.CompletedTask;
     }
 
@@ -1472,7 +1452,7 @@ else
             return;
         }
 
-        selectedAthleteId = null;
+        contextSelection = contextSelection.Close();
         expandedMobilePosition = null;
         CancelCompareSelection();
         modeByPosition.Clear();
