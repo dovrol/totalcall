@@ -134,7 +134,7 @@ The frontend uses only `Supabase:Url` and `Supabase:PublishableKey`. Authenticat
 
 ## Admin Host
 
-`src/TotalCall.Admin.Host` is an ASP.NET Core server app intended for local/operator workflows. It currently provides a runtime dashboard, `/healthz` endpoint, local competition config validation, confirmation-gated competition config publish, and confirmation-gated official results import with score snapshot recomputation.
+`src/TotalCall.Admin.Host` is an ASP.NET Core server app intended for local/operator workflows. It currently provides a runtime dashboard, `/healthz` endpoint, local competition config validation, confirmation-gated competition config publish, confirmation-gated official results import with score snapshot recomputation, and private operation history.
 
 The host reads `SUPABASE_URL` and `SUPABASE_SECRET_KEY` from server-side configuration. Its UI and health response expose only sanitized runtime status, never the service-role key.
 

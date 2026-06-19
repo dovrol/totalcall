@@ -107,6 +107,7 @@ The admin host currently includes:
 - local competition config validation at `/competitions`,
 - confirmation-gated competition config publish at `/competitions`,
 - confirmation-gated official results import at `/results`,
+- private operation history at `/operations`,
 - sanitized JSON health status at `/healthz`.
 
 ## Build And Test

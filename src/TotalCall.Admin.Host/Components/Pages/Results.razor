@@ -2,6 +2,7 @@
 @using System.ComponentModel.DataAnnotations
 @using TotalCall.Operations.Results
 @inject OfficialResultsImporter ResultsImporter
+@inject AdminOperationAuditService AuditService
 @inject AdminRuntimeOptions RuntimeOptions
 
 <PageTitle>Results import</PageTitle>
@@ -127,6 +128,34 @@
     </section>
 }
 
+@if (!string.IsNullOrWhiteSpace(_auditStatus))
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Audit</h2>
+            <span class="state state-ok">
+                <span class="state-dot"></span>
+                Recorded
+            </span>
+        </div>
+        <p class="muted">@_auditStatus</p>
+    </section>
+}
+
+@if (!string.IsNullOrWhiteSpace(_auditError))
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Audit</h2>
+            <span class="state state-missing">
+                <span class="state-dot"></span>
+                Failed
+            </span>
+        </div>
+        <p class="muted">@_auditError</p>
+    </section>
+}
+
 @code {
     private readonly ResultsImportForm _form = new()
     {
@@ -136,6 +165,8 @@
 
     private ResultsImportResult? _importResult;
     private string? _importError;
+    private string? _auditStatus;
+    private string? _auditError;
     private bool _isImporting;
 
     private string RequiredImportConfirmation => $"import {_form.CompetitionId.Trim()}";
@@ -159,6 +190,9 @@
         _isImporting = true;
         _importResult = null;
         _importError = null;
+        _auditStatus = null;
+        _auditError = null;
+        var startedAt = DateTimeOffset.UtcNow;
         try
         {
             var competitionId = _form.CompetitionId.Trim();
@@ -180,6 +214,13 @@
                 },
                 CancellationToken.None);
 
+            await TryRecordAuditAsync(
+                competitionId,
+                _form.ResultsJsonPath.Trim(),
+                _importResult,
+                startedAt,
+                DateTimeOffset.UtcNow);
+
             if (!_importResult.Succeeded)
             {
                 _importError = "Import did not complete. Review the operation log.";
@@ -193,6 +234,30 @@
         {
             _form.ConfirmationText = string.Empty;
             _isImporting = false;
+        }
+    }
+
+    private async Task TryRecordAuditAsync(
+        string competitionId,
+        string resultsJsonPath,
+        ResultsImportResult result,
+        DateTimeOffset startedAt,
+        DateTimeOffset finishedAt)
+    {
+        try
+        {
+            var auditId = await AuditService.RecordResultsImportAsync(
+                competitionId,
+                resultsJsonPath,
+                result,
+                startedAt,
+                finishedAt,
+                CancellationToken.None);
+            _auditStatus = $"Operation audit recorded as {auditId}.";
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _auditError = $"Operation completed, but audit history could not be written: {ex.Message}";
         }
     }
 

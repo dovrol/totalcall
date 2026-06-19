@@ -14,6 +14,7 @@ Private by default:
 - raw `answers_json`,
 - full `PredictionSet` metadata,
 - import logs and admin tables,
+- admin operation history,
 - private score snapshot table rows.
 
 Public or public-safe:

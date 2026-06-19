@@ -1,0 +1,153 @@
+@page "/operations"
+@using TotalCall.Operations.Admin
+@inject AdminRuntimeOptions RuntimeOptions
+@inject AdminOperationAuditService AuditService
+
+<PageTitle>Operation history</PageTitle>
+
+<section class="page-heading">
+    <p class="eyebrow">Operations</p>
+    <h1>Operation history</h1>
+</section>
+
+<section class="panel">
+    <div class="panel-heading">
+        <h2>Recent operations</h2>
+        <span class="state @(RuntimeOptions.IsConfigured ? "state-ok" : "state-missing")">
+            <span class="state-dot"></span>
+            @(RuntimeOptions.IsConfigured ? "Configured" : "Missing credentials")
+        </span>
+    </div>
+
+    @if (!RuntimeOptions.IsConfigured)
+    {
+        <p class="muted">Operation history requires server-side Supabase credentials.</p>
+    }
+    else
+    {
+        <button class="button-primary" type="button" @onclick="LoadOperationsAsync" disabled="@_isLoading">
+            @(_isLoading ? "Refreshing" : "Refresh")
+        </button>
+    }
+</section>
+
+@if (!string.IsNullOrWhiteSpace(_loadError))
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>History status</h2>
+            <span class="state state-missing">
+                <span class="state-dot"></span>
+                Failed
+            </span>
+        </div>
+        <p class="muted">@_loadError</p>
+    </section>
+}
+
+@if (_records.Count > 0)
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Last @_records.Count</h2>
+        </div>
+
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Started</th>
+                        <th>Operation</th>
+                        <th>Status</th>
+                        <th>Target</th>
+                        <th>Triggered by</th>
+                        <th>Runtime</th>
+                        <th>Error</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var record in _records)
+                    {
+                        <tr>
+                            <td>@FormatDate(record.StartedAt)</td>
+                            <td>@FormatOperation(record.OperationType)</td>
+                            <td>
+                                <span class="state @StatusClass(record.Status)">
+                                    <span class="state-dot"></span>
+                                    @record.Status
+                                </span>
+                            </td>
+                            <td>@FormatTarget(record)</td>
+                            <td>@(record.TriggeredBy ?? "Unavailable")</td>
+                            <td>@(record.RuntimeOrigin ?? "Unavailable")</td>
+                            <td>@(record.ErrorMessage ?? "")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+}
+else if (RuntimeOptions.IsConfigured && !_isLoading && string.IsNullOrWhiteSpace(_loadError))
+{
+    <section class="panel">
+        <p class="muted">No admin operations have been recorded yet.</p>
+    </section>
+}
+
+@code {
+    private IReadOnlyList<AdminOperationAuditRecord> _records = [];
+    private string? _loadError;
+    private bool _isLoading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (RuntimeOptions.IsConfigured)
+        {
+            await LoadOperationsAsync();
+        }
+    }
+
+    private async Task LoadOperationsAsync()
+    {
+        _isLoading = true;
+        _loadError = null;
+        try
+        {
+            _records = await AuditService.ListRecentAsync(25, CancellationToken.None);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _records = [];
+            _loadError = $"Operation history could not be loaded: {ex.Message}";
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private static string FormatDate(DateTimeOffset value) =>
+        value == DateTimeOffset.MinValue
+            ? "Unavailable"
+            : value.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss");
+
+    private static string FormatOperation(string operationType) => operationType switch
+    {
+        AdminOperationType.CompetitionConfigPublish => "Competition config publish",
+        AdminOperationType.OfficialResultsImport => "Official results import",
+        _ => operationType
+    };
+
+    private static string FormatTarget(AdminOperationAuditRecord record) =>
+        string.IsNullOrWhiteSpace(record.TargetId)
+            ? record.TargetType
+            : $"{record.TargetType}: {record.TargetId}";
+
+    private static string StatusClass(string status) => status switch
+    {
+        AdminOperationStatus.Succeeded => "state-ok",
+        AdminOperationStatus.Failed => "state-missing",
+        _ => "state-neutral"
+    };
+}
