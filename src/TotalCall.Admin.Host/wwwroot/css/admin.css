@@ -217,6 +217,89 @@ h2 {
     color: var(--muted);
 }
 
+.form-stack {
+    display: grid;
+    gap: 16px;
+}
+
+.field {
+    display: grid;
+    gap: 7px;
+}
+
+.field label {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.field input {
+    width: 100%;
+    min-height: 42px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 8px 10px;
+    color: var(--text);
+    font: inherit;
+}
+
+.field input:focus {
+    border-color: var(--accent);
+    outline: 3px solid #dbe8ff;
+}
+
+.validation-message {
+    color: var(--missing);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.button-primary {
+    justify-self: start;
+    min-height: 40px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--accent);
+    color: #ffffff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    padding: 0 14px;
+}
+
+.button-primary:disabled {
+    cursor: default;
+    opacity: 0.55;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 640px;
+}
+
+.data-table th,
+.data-table td {
+    border-bottom: 1px solid var(--line);
+    padding: 10px 8px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.data-table th {
+    color: var(--muted);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+}
+
+.data-table td {
+    overflow-wrap: anywhere;
+}
+
 @media (max-width: 760px) {
     .admin-shell {
         grid-template-columns: 1fr;

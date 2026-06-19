@@ -1,11 +1,14 @@
 using TotalCall.Admin.Host.Components;
 using TotalCall.Admin.Host.Services;
+using TotalCall.Operations.Competitions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddRazorComponents();
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
 builder.Services.AddSingleton(AdminRuntimeOptions.FromConfiguration(builder.Configuration));
 builder.Services.AddSingleton<AdminRuntimeStatusService>();
+builder.Services.AddSingleton<CompetitionConfigFileChecker>();
 
 var app = builder.Build();
 
@@ -17,7 +20,8 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.MapRazorComponents<App>();
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
 app.MapGet("/healthz", (AdminRuntimeStatusService status) => Results.Ok(status.GetStatus()));
 
 app.Run();

@@ -1,0 +1,132 @@
+@page "/competitions"
+@using System.ComponentModel.DataAnnotations
+@using TotalCall.Operations.Competitions
+@inject CompetitionConfigFileChecker ConfigChecker
+
+<PageTitle>Competition config</PageTitle>
+
+<section class="page-heading">
+    <p class="eyebrow">Competitions</p>
+    <h1>Config validation</h1>
+</section>
+
+<section class="panel">
+    <div class="panel-heading">
+        <h2>Local JSON</h2>
+    </div>
+
+    <EditForm Model="_form" OnValidSubmit="CheckConfigAsync" class="form-stack">
+        <DataAnnotationsValidator />
+        <div class="field">
+            <label for="competition-json-path">Competition JSON path</label>
+            <InputText id="competition-json-path" @bind-Value="_form.CompetitionJsonPath" />
+            <ValidationMessage For="@(() => _form.CompetitionJsonPath)" />
+        </div>
+        <button class="button-primary" type="submit" disabled="@_isChecking">
+            @(_isChecking ? "Checking" : "Check config")
+        </button>
+    </EditForm>
+</section>
+
+@if (_result is not null)
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Validation result</h2>
+            <span class="state @(_result.IsValid ? "state-ok" : "state-missing")">
+                <span class="state-dot"></span>
+                @(_result.IsValid ? "Valid" : "Invalid")
+            </span>
+        </div>
+
+        <dl class="status-list">
+            <div>
+                <dt>Resolved path</dt>
+                <dd>@_result.ResolvedPath</dd>
+            </div>
+            <div>
+                <dt>Competition</dt>
+                <dd>@DisplayCompetition(_result)</dd>
+            </div>
+            <div>
+                <dt>Config version</dt>
+                <dd>@(_result.ConfigVersion ?? "Unavailable")</dd>
+            </div>
+        </dl>
+    </section>
+
+    @if (_result.Errors.Count > 0)
+    {
+        <section class="panel">
+            <div class="panel-heading">
+                <h2>Errors</h2>
+            </div>
+
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Path</th>
+                            <th>Code</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var error in _result.Errors)
+                        {
+                            <tr>
+                                <td>@error.Path</td>
+                                <td>@error.Code</td>
+                                <td>@error.Message</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    }
+}
+
+@code {
+    private readonly CompetitionConfigForm _form = new()
+    {
+        CompetitionJsonPath = "src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json"
+    };
+
+    private CompetitionConfigFileCheckResult? _result;
+    private bool _isChecking;
+
+    private async Task CheckConfigAsync()
+    {
+        _isChecking = true;
+        try
+        {
+            _result = await ConfigChecker.CheckAsync(_form.CompetitionJsonPath, CancellationToken.None);
+        }
+        finally
+        {
+            _isChecking = false;
+        }
+    }
+
+    private static string DisplayCompetition(CompetitionConfigFileCheckResult result)
+    {
+        if (!string.IsNullOrWhiteSpace(result.CompetitionName))
+        {
+            return result.CompetitionName;
+        }
+
+        if (!string.IsNullOrWhiteSpace(result.CompetitionId))
+        {
+            return result.CompetitionId;
+        }
+
+        return "Unavailable";
+    }
+
+    private sealed class CompetitionConfigForm
+    {
+        [Required]
+        public string CompetitionJsonPath { get; set; } = string.Empty;
+    }
+}

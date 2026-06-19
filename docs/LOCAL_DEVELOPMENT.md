@@ -101,6 +101,12 @@ dotnet run --project src/TotalCall.Admin.Host/TotalCall.Admin.Host.csproj
 
 Use `supabase status` to inspect local credentials. Do not put service-role keys in appsettings files. The admin host keeps those values server-side and exposes only sanitized runtime status to the browser and `/healthz`.
 
+The admin host currently includes:
+
+- runtime credential status at `/`,
+- local competition config validation at `/competitions`,
+- sanitized JSON health status at `/healthz`.
+
 ## Build And Test
 
 ```bash
