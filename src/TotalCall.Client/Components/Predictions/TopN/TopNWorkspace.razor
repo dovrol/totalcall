@@ -1355,30 +1355,15 @@ else
             return;
         }
 
-        var placement = FieldPlacements.FirstOrDefault(item => item.Position == position);
-        if (placement is null)
+        var reset = TopNAthleteResetPlanner.ResetAthlete(FieldPlacements, Competition.Athletes, position);
+        if (reset is null)
         {
             return;
         }
 
-        var athlete = Competition.Athletes.First(item =>
-            string.Equals(item.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase));
         modeByPosition.Remove(position);
-
-        var placements = FieldPlacements
-            .Select(item => item.Position == position
-                ? item with
-                {
-                    PredictedSquatKg = null,
-                    PredictedBenchKg = null,
-                    PredictedDeadliftKg = null,
-                    PredictedTotalKg = athlete.SeedTotalKg,
-                    IsAutoSeeded = true
-                }
-                : item)
-            .ToArray();
-        await EmitAnswer(placements);
-        Toasts.ShowSuccess(Localizer["Predictions.Toast.ResetAthlete.Success", athlete.DisplayName]);
+        await EmitAnswer(reset.Placements);
+        Toasts.ShowSuccess(Localizer["Predictions.Toast.ResetAthlete.Success", reset.Athlete.DisplayName]);
     }
 
     private async Task SortByPredictedTotal()
