@@ -744,6 +744,7 @@ public sealed class SynchronizedPredictionStoreTests
                     [
                       {
                         "position":1,
+                        "board_ref":"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                         "display_name":"Kuba",
                         "total_points":12.5,
                         "scored_groups_count":2,
@@ -753,6 +754,7 @@ public sealed class SynchronizedPredictionStoreTests
                       },
                       {
                         "position":2,
+                        "board_ref":"bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
                         "display_name":" ",
                         "total_points":8,
                         "scored_groups_count":4,
@@ -782,6 +784,7 @@ public sealed class SynchronizedPredictionStoreTests
                 Assert.Equal(4, first.TotalGroupsCount);
                 Assert.Equal(PublicCompetitionLeaderboardEntry.PartialStatus, first.Status);
                 Assert.Equal(calculatedAt, first.LastCalculatedAt);
+                Assert.Equal("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", first.BoardRef);
             },
             second =>
             {
@@ -789,7 +792,209 @@ public sealed class SynchronizedPredictionStoreTests
                 Assert.Equal("Lifter X", second.DisplayName);
                 Assert.Equal(8m, second.TotalPoints);
                 Assert.Equal(PublicCompetitionLeaderboardEntry.FinalStatus, second.Status);
+                Assert.Equal("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", second.BoardRef);
             });
+    }
+
+    [Fact]
+    public async Task GetPublicBoardAsync_RequestsPublicBoardAndRebuildsSubmittedPredictionSet()
+    {
+        var calculatedAt = DateTimeOffset.Parse("2026-06-07T18:30:00Z");
+        var picksJson = JsonSerializer.Serialize(
+            CreatePredictionSet().Answers,
+            JsonDataOptions.SerializerOptions);
+        var js = new FakeJsRuntime();
+        var auth = await CreateAuthAsync(js, authenticated: false);
+        var handler = new RecordingHandler((request, _) =>
+        {
+            Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Contains("rest/v1/rpc/get_public_board", request.Uri);
+            Assert.Contains("\"p_competition_id\":\"worlds-2026\"", request.Body);
+            Assert.Contains("\"p_board_ref\":\"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa\"", request.Body);
+            Assert.DoesNotContain("answers_json", request.Body);
+            Assert.DoesNotContain("user_id", request.Body);
+            Assert.DoesNotContain("email", request.Body);
+
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(
+                    $$"""
+                    [
+                      {
+                        "display_name":"Kuba",
+                        "rank":1,
+                        "total_points":12,
+                        "scored_groups_count":1,
+                        "total_groups_count":3,
+                        "status":"partial",
+                        "picks_json":{{picksJson}},
+                        "breakdown_json":{
+                          "questionScores":[
+                            {
+                              "groupId":"women",
+                              "questionId":"women-47",
+                              "categoryId":"47",
+                              "points":4,
+                              "maxPoints":12,
+                              "placement":3,
+                              "placementMax":9,
+                              "setBonus":1,
+                              "orderBonus":0,
+                              "explanation":"partial"
+                            }
+                          ]
+                        },
+                        "last_calculated_at":"{{calculatedAt:O}}"
+                      }
+                    ]
+                    """,
+                    Encoding.UTF8,
+                    "application/json")
+            });
+        });
+        var http = new HttpClient(handler) { BaseAddress = new Uri("https://supabase.test/") };
+        var cloudStore = new SupabasePredictionStore(http, "publishable-key", auth);
+
+        var board = await cloudStore.GetPublicBoardAsync(
+            "worlds-2026",
+            "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+
+        Assert.NotNull(board);
+        Assert.Equal("Kuba", board.DisplayName);
+        Assert.Null(board.PredictionSet.LocalUserId);
+        Assert.Equal(PredictionSet.SubmittedSubmissionStatus, board.PredictionSet.SubmissionStatus);
+        Assert.Equal("worlds-2026", board.PredictionSet.CompetitionId);
+        Assert.Equal(string.Empty, board.PredictionSet.CompetitionConfigVersion);
+        Assert.Equal("women-47", Assert.Single(board.PredictionSet.Answers).QuestionId);
+        Assert.Equal(1, board.Snapshot.Rank);
+        Assert.Equal(12m, board.Snapshot.TotalPoints);
+        Assert.Equal(PublicCompetitionLeaderboardEntry.PartialStatus, board.Snapshot.Status);
+        Assert.Equal(calculatedAt, board.Snapshot.LastCalculatedAt);
+
+        var category = Assert.Single(board.Snapshot.Categories);
+        Assert.Equal("women", category.GroupId);
+        Assert.Equal("women-47", category.QuestionId);
+        Assert.Equal(4m, category.Points);
+    }
+
+    [Fact]
+    public async Task GetPublicBoardAsync_WhenPicksAreNotArray_ReturnsNull()
+    {
+        var js = new FakeJsRuntime();
+        var auth = await CreateAuthAsync(js, authenticated: false);
+        var handler = new RecordingHandler((_, _) =>
+            Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(
+                    """
+                    [
+                      {
+                        "display_name":"Kuba",
+                        "rank":1,
+                        "total_points":12,
+                        "scored_groups_count":1,
+                        "total_groups_count":3,
+                        "status":"partial",
+                        "picks_json":{"answers":[]},
+                        "breakdown_json":{}
+                      }
+                    ]
+                    """,
+                    Encoding.UTF8,
+                    "application/json")
+            }));
+        var http = new HttpClient(handler) { BaseAddress = new Uri("https://supabase.test/") };
+        var cloudStore = new SupabasePredictionStore(http, "publishable-key", auth);
+
+        var board = await cloudStore.GetPublicBoardAsync(
+            "worlds-2026",
+            "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+
+        Assert.Null(board);
+    }
+
+    [Fact]
+    public async Task GetMyScoreAsync_RequiresAuthenticatedUserAndMapsOwnBreakdown()
+    {
+        var calculatedAt = DateTimeOffset.Parse("2026-06-07T18:30:00Z");
+        var js = new FakeJsRuntime();
+        var auth = await CreateAuthAsync(js, authenticated: true);
+        var handler = new RecordingHandler((request, _) =>
+        {
+            Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Contains("rest/v1/rpc/get_my_score", request.Uri);
+            Assert.Contains("\"p_competition_id\":\"worlds-2026\"", request.Body);
+            Assert.DoesNotContain("answers_json", request.Body);
+            Assert.DoesNotContain("user_id", request.Body);
+            Assert.DoesNotContain("email", request.Body);
+
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(
+                    $$"""
+                    [
+                      {
+                        "rank":2,
+                        "total_points":8,
+                        "scored_groups_count":2,
+                        "total_groups_count":3,
+                        "status":"final",
+                        "breakdown_json":{
+                          "questionScores":[
+                            {
+                              "groupId":"men",
+                              "questionId":"men-83",
+                              "categoryId":"83",
+                              "points":8,
+                              "maxPoints":12,
+                              "placement":6,
+                              "placementMax":9,
+                              "setBonus":1,
+                              "orderBonus":1
+                            }
+                          ]
+                        },
+                        "last_calculated_at":"{{calculatedAt:O}}"
+                      }
+                    ]
+                    """,
+                    Encoding.UTF8,
+                    "application/json")
+            });
+        });
+        var http = new HttpClient(handler) { BaseAddress = new Uri("https://supabase.test/") };
+        var cloudStore = new SupabasePredictionStore(http, "publishable-key", auth);
+
+        var score = await cloudStore.GetMyScoreAsync("worlds-2026");
+
+        Assert.NotNull(score);
+        Assert.Equal(2, score.Rank);
+        Assert.Equal(8m, score.TotalPoints);
+        Assert.Equal(2, score.ScoredGroupsCount);
+        Assert.Equal(3, score.TotalGroupsCount);
+        Assert.Equal(PublicCompetitionLeaderboardEntry.FinalStatus, score.Status);
+        Assert.Equal(calculatedAt, score.LastCalculatedAt);
+
+        var category = Assert.Single(score.Categories);
+        Assert.Equal("men", category.GroupId);
+        Assert.Equal("men-83", category.QuestionId);
+        Assert.Equal(8m, category.Points);
+    }
+
+    [Fact]
+    public async Task GetMyScoreAsync_WhenAnonymous_ThrowsWithoutCallingCloud()
+    {
+        var js = new FakeJsRuntime();
+        var auth = await CreateAuthAsync(js, authenticated: false);
+        var handler = new RecordingHandler((_, _) =>
+            throw new InvalidOperationException("Cloud should not be called for an anonymous score request."));
+        var http = new HttpClient(handler) { BaseAddress = new Uri("https://supabase.test/") };
+        var cloudStore = new SupabasePredictionStore(http, "publishable-key", auth);
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            cloudStore.GetMyScoreAsync("worlds-2026"));
+
+        Assert.Equal(0, handler.RequestCount);
     }
 
     [Fact]
