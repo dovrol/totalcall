@@ -1,0 +1,87 @@
+@page "/"
+@inject AdminRuntimeStatusService RuntimeStatus
+
+@{
+    var status = RuntimeStatus.GetStatus();
+}
+
+<PageTitle>TotalCall Admin</PageTitle>
+
+<section class="page-heading">
+    <p class="eyebrow">Operations</p>
+    <h1>Admin dashboard</h1>
+</section>
+
+<section class="panel">
+    <div class="panel-heading">
+        <h2>Runtime</h2>
+        <span class="state @(status.IsConfigured ? "state-ok" : "state-missing")">
+            <span class="state-dot"></span>
+            @(status.IsConfigured ? "Configured" : "Missing credentials")
+        </span>
+    </div>
+
+    <dl class="status-list">
+        <div>
+            <dt>Environment</dt>
+            <dd>@status.EnvironmentName</dd>
+        </div>
+        <div>
+            <dt>Supabase URL</dt>
+            <dd>@(status.HasSupabaseUrl ? status.SupabaseOrigin : "Not configured")</dd>
+        </div>
+        <div>
+            <dt>Service role key</dt>
+            <dd>@(status.HasServiceRoleKey ? "Loaded server-side" : "Not configured")</dd>
+        </div>
+    </dl>
+</section>
+
+<section class="panel">
+    <div class="panel-heading">
+        <h2>Operational workflows</h2>
+    </div>
+
+    <div class="workflow-list">
+        <div class="workflow-row">
+            <div>
+                <strong>Competition config</strong>
+                <span>Operation library available</span>
+            </div>
+            <span class="state state-neutral">
+                <span class="state-dot"></span>
+                UI pending
+            </span>
+        </div>
+        <div class="workflow-row">
+            <div>
+                <strong>Official results</strong>
+                <span>Operation library available</span>
+            </div>
+            <span class="state state-neutral">
+                <span class="state-dot"></span>
+                UI pending
+            </span>
+        </div>
+        <div class="workflow-row">
+            <div>
+                <strong>Score snapshots</strong>
+                <span>Operation library available</span>
+            </div>
+            <span class="state state-neutral">
+                <span class="state-dot"></span>
+                UI pending
+            </span>
+        </div>
+        <div class="workflow-row">
+            <div>
+                <strong>Athlete history</strong>
+                <span>CLI workflow only</span>
+            </div>
+            <span class="state state-neutral">
+                <span class="state-dot"></span>
+                CLI
+            </span>
+        </div>
+    </div>
+</section>

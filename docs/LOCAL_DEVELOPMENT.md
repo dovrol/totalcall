@@ -79,6 +79,28 @@ Use a custom port:
 
 If you use a custom port for auth flows, add matching redirect URLs to local Supabase config.
 
+## Run Admin Host
+
+```bash
+dotnet run --project src/TotalCall.Admin.Host/TotalCall.Admin.Host.csproj
+```
+
+Default URL:
+
+```text
+http://localhost:5025
+```
+
+With local Supabase credentials:
+
+```bash
+SUPABASE_URL=http://127.0.0.1:54321 \
+SUPABASE_SECRET_KEY=<local service-role key> \
+dotnet run --project src/TotalCall.Admin.Host/TotalCall.Admin.Host.csproj
+```
+
+Use `supabase status` to inspect local credentials. Do not put service-role keys in appsettings files. The admin host keeps those values server-side and exposes only sanitized runtime status to the browser and `/healthz`.
+
 ## Build And Test
 
 ```bash

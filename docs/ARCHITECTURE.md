@@ -1,6 +1,8 @@
 # Architecture
 
-TotalCall is a static Blazor WebAssembly app backed by Supabase. The browser renders and edits predictions, while Supabase stores private user data and exposes curated public projections. Official scoring is computed by the sync/import tool and persisted as backend snapshots; the frontend renders those snapshots and does not compute official leaderboard points.
+TotalCall's public app is a static Blazor WebAssembly app backed by Supabase. The browser renders and edits predictions, while Supabase stores private user data and exposes curated public projections. Official scoring is computed by server/CLI-side operations and persisted as backend snapshots; the frontend renders those snapshots and does not compute official leaderboard points.
+
+The repo also contains a local-first ASP.NET Core admin host. It is server-side by design, so service-role credentials stay in the host process and are never shipped to browser assets.
 
 ## High-Level Shape
 
@@ -24,6 +26,11 @@ Sync/import tool
   -> score_snapshots recomputation
   -> local-only dev scenarios
 
+Admin host (ASP.NET Core server)
+  -> local/server-side operator UI
+  -> reads SUPABASE_URL and SUPABASE_SECRET_KEY from process env/config
+  -> delegates reusable operational workflows to TotalCall.Operations
+
 GitHub Actions
   -> tag/workflow-dispatch frontend deploy to GitHub Pages
   -> scheduled/manual data sync workflow
@@ -33,6 +40,7 @@ GitHub Actions
 
 - `src/TotalCall.Client` is the Blazor WebAssembly frontend.
 - `src/TotalCall.Core` contains shared domain models and scoring code used by the public app, tests, and the sync tool.
+- `src/TotalCall.Admin.Host` is a server-side admin host for local/operator workflows. It must keep service-role credentials on the server.
 - `src/TotalCall.Operations` contains server/CLI-side operational code that can use service-role credentials. It currently owns the Supabase REST wrapper, competition config hashing, competition config publish workflow, official results import, and score snapshot recomputation.
 - `tests/TotalCall.Tests` contains xUnit tests for domain logic, validation, storage, migrations, scoring, and sync helpers.
 - `tools/sync/TotalCall.Sync` is a .NET console wrapper for Supabase imports, scoring recomputation, and local scenarios.
@@ -123,6 +131,12 @@ The frontend uses only `Supabase:Url` and `Supabase:PublishableKey`. Authenticat
 - `scenario` seeds local-only product states and users for UI testing.
 
 `./scripts/sync-supabase.sh` is the production-oriented wrapper. It syncs the competition first, then athlete history for one or both sources, then imports matching official results files from `tools/sync/data/results` when results mode is `auto`.
+
+## Admin Host
+
+`src/TotalCall.Admin.Host` is an ASP.NET Core server app intended for local/operator workflows. It currently provides a runtime dashboard and `/healthz` endpoint, with the project boundary ready for competition config, official results, and score snapshot operations.
+
+The host reads `SUPABASE_URL` and `SUPABASE_SECRET_KEY` from server-side configuration. Its UI and health response expose only sanitized runtime status, never the service-role key.
 
 ## Scoring Ownership
 
