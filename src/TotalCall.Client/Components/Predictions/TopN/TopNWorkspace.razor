@@ -1390,44 +1390,24 @@ else
             return;
         }
 
-        to = Math.Clamp(to, 1, FieldPlacements.Count);
-        if (from == to)
+        var reorder = TopNReorderPlanner.MoveToPosition(
+            FieldPlacements,
+            from,
+            to,
+            ScoredPositionsCount);
+        if (reorder is null)
         {
             return;
         }
-
-        var ordered = FieldPlacements.OrderBy(placement => placement.Position).ToList();
-        var source = ordered.FirstOrDefault(placement => placement.Position == from);
-        if (source is null)
-        {
-            return;
-        }
-
-        ordered.Remove(source);
-
-        // After removing the source the list is renumbered contiguously, so the
-        // target position maps directly to the insert index. This works for both
-        // upward and downward moves (the old "first placement with position >= to"
-        // logic left downward moves a no-op).
-        var insertIndex = Math.Clamp(to - 1, 0, ordered.Count);
-        ordered.Insert(insertIndex, source);
-
-        var renumbered = ordered
-            .Select((placement, index) => placement with
-            {
-                Position = index + 1,
-                IsScored = index < ScoredPositionsCount
-            })
-            .ToArray();
 
         await CaptureReorderPositionsAsync();
-        RemapModesAfterReorder(ordered, renumbered);
+        RemapModesAfterReorder(reorder.BeforeOrder, reorder.AfterOrder);
         if (expandedMobilePosition == from)
         {
             expandedMobilePosition = null;
         }
 
-        await EmitAnswer(renumbered);
+        await EmitAnswer(reorder.AfterOrder);
     }
 
     private async Task CaptureReorderPositionsAsync()
@@ -1449,27 +1429,11 @@ else
 
     private void RemapModesAfterReorder(IReadOnlyList<AthletePlacementPick> beforeOrder, IReadOnlyList<AthletePlacementPick> afterOrder)
     {
-        if (modeByPosition.Count == 0)
-        {
-            return;
-        }
-
-        var modeByAthlete = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        foreach (var placement in beforeOrder)
-        {
-            if (modeByPosition.TryGetValue(placement.Position, out var mode))
-            {
-                modeByAthlete[placement.AthleteId] = mode;
-            }
-        }
-
+        var remapped = TopNReorderPlanner.RemapModesAfterReorder(modeByPosition, beforeOrder, afterOrder);
         modeByPosition.Clear();
-        foreach (var placement in afterOrder)
+        foreach (var (position, mode) in remapped)
         {
-            if (modeByAthlete.TryGetValue(placement.AthleteId, out var mode))
-            {
-                modeByPosition[placement.Position] = mode;
-            }
+            modeByPosition[position] = mode;
         }
     }
 
