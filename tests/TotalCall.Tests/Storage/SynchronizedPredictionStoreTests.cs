@@ -431,6 +431,7 @@ public sealed class SynchronizedPredictionStoreTests
         var handler = new RecordingHandler((request, _) =>
         {
             Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Equal("Bearer access-token", request.Authorization);
             Assert.Contains("rest/v1/rpc/submit_prediction", request.Uri);
             Assert.Contains("\"p_competition_id\":\"worlds-2026\"", request.Body);
             Assert.Contains("\"p_answers_json\":", request.Body);
@@ -648,6 +649,7 @@ public sealed class SynchronizedPredictionStoreTests
         var handler = new RecordingHandler((request, _) =>
         {
             Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Null(request.Authorization);
             Assert.Contains("rest/v1/rpc/get_competition_participants", request.Uri);
             Assert.Contains("\"p_competition_id\":\"worlds-2026\"", request.Body);
             Assert.DoesNotContain("answers_json", request.Body);
@@ -731,6 +733,7 @@ public sealed class SynchronizedPredictionStoreTests
         var handler = new RecordingHandler((request, _) =>
         {
             Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Null(request.Authorization);
             Assert.Contains("rest/v1/rpc/get_competition_leaderboard", request.Uri);
             Assert.Contains("\"p_competition_id\":\"worlds-2026\"", request.Body);
             Assert.DoesNotContain("answers_json", request.Body);
@@ -797,6 +800,31 @@ public sealed class SynchronizedPredictionStoreTests
     }
 
     [Fact]
+    public async Task GetLeaderboardAsync_WhenRequestFails_DoesNotExposeSupabaseResponseBody()
+    {
+        var js = new FakeJsRuntime();
+        var auth = await CreateAuthAsync(js, authenticated: false);
+        var handler = new RecordingHandler((_, _) =>
+            Task.FromResult(new HttpResponseMessage(HttpStatusCode.BadRequest)
+            {
+                Content = new StringContent(
+                    "details include user@example.com and SUPABASE_SECRET_KEY=secret-value",
+                    Encoding.UTF8,
+                    "application/json")
+            }));
+        var http = new HttpClient(handler) { BaseAddress = new Uri("https://supabase.test/") };
+        var cloudStore = new SupabasePredictionStore(http, "publishable-key", auth);
+
+        var exception = await Assert.ThrowsAsync<HttpRequestException>(() =>
+            cloudStore.GetLeaderboardAsync("worlds-2026"));
+
+        Assert.Contains("(400)", exception.Message);
+        Assert.DoesNotContain("user@example.com", exception.Message);
+        Assert.DoesNotContain("secret-value", exception.Message);
+        Assert.DoesNotContain("SUPABASE_SECRET_KEY", exception.Message);
+    }
+
+    [Fact]
     public async Task GetPublicBoardAsync_RequestsPublicBoardAndRebuildsSubmittedPredictionSet()
     {
         var calculatedAt = DateTimeOffset.Parse("2026-06-07T18:30:00Z");
@@ -808,6 +836,7 @@ public sealed class SynchronizedPredictionStoreTests
         var handler = new RecordingHandler((request, _) =>
         {
             Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Null(request.Authorization);
             Assert.Contains("rest/v1/rpc/get_public_board", request.Uri);
             Assert.Contains("\"p_competition_id\":\"worlds-2026\"", request.Body);
             Assert.Contains("\"p_board_ref\":\"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa\"", request.Body);
@@ -922,6 +951,7 @@ public sealed class SynchronizedPredictionStoreTests
         var handler = new RecordingHandler((request, _) =>
         {
             Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Equal("Bearer access-token", request.Authorization);
             Assert.Contains("rest/v1/rpc/get_my_score", request.Uri);
             Assert.Contains("\"p_competition_id\":\"worlds-2026\"", request.Body);
             Assert.DoesNotContain("answers_json", request.Body);
@@ -1111,6 +1141,7 @@ public sealed class SynchronizedPredictionStoreTests
             var captured = new CapturedRequest(
                 request.Method,
                 request.RequestUri?.ToString() ?? string.Empty,
+                request.Headers.Authorization?.ToString(),
                 request.Content is null
                     ? string.Empty
                     : await request.Content.ReadAsStringAsync(cancellationToken));
@@ -1120,7 +1151,7 @@ public sealed class SynchronizedPredictionStoreTests
         }
     }
 
-    private sealed record CapturedRequest(HttpMethod Method, string Uri, string Body);
+    private sealed record CapturedRequest(HttpMethod Method, string Uri, string? Authorization, string Body);
 
     private sealed class EmptyPredictionStore : IPredictionStore
     {
