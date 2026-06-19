@@ -1120,38 +1120,24 @@ else
             return;
         }
 
-        var placement = FieldPlacements.FirstOrDefault(item => item.Position == request.Position);
-        if (placement is null)
+        var target = TopNRowQuickFillPlanner.ResolveTarget(FieldPlacements, Competition.Athletes, request.Position);
+        if (target is null)
         {
             return;
         }
 
-        var athlete = Competition.Athletes.FirstOrDefault(item =>
-            string.Equals(item.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase));
-        if (athlete is null)
+        await EnsureHistoryAsync(target.Athlete.Id);
+        historyByAthleteId.TryGetValue(target.Athlete.Id, out var history);
+
+        var filled = TopNRowQuickFillPlanner.Fill(FieldPlacements, target, history, request.Kind);
+        if (filled is null)
         {
             return;
         }
 
-        await EnsureHistoryAsync(athlete.Id);
-        historyByAthleteId.TryGetValue(athlete.Id, out var history);
-
-        var updated = TopNQuickFillBuilder.BuildFromSource(placement, athlete, history, request.Kind);
-        if (updated is null)
-        {
-            return;
-        }
-
-        modeByPosition[request.Position] = TopNPlacementEditor.HasLiftValues(updated)
-            ? TopNEntryMode.Lifts
-            : TopNEntryMode.Total;
-
-        var placements = FieldPlacements
-            .Select(item => item.Position == request.Position ? updated : item)
-            .ToArray();
-
-        await EmitAnswer(placements);
-        Toasts.ShowSuccess(QuickFillToast(request.Kind, athlete.DisplayName));
+        modeByPosition[request.Position] = filled.Mode;
+        await EmitAnswer(filled.Placements);
+        Toasts.ShowSuccess(QuickFillToast(request.Kind, filled.Athlete.DisplayName));
     }
 
     private async Task FillDefaultsFromSource(string kind)
