@@ -488,7 +488,13 @@ else
         ? []
         : GetPlacements(ActiveQuestion.Id);
 
-    private IReadOnlyList<AthletePlacementPick> FieldPlacements => BuildFieldPlacements();
+    private TopNFieldPlacementState FieldPlacementState => TopNFieldPlacementState.Resolve(
+        Competition,
+        ActiveQuestion,
+        StoredPlacements,
+        ScoredPositionsCount);
+
+    private IReadOnlyList<AthletePlacementPick> FieldPlacements => FieldPlacementState.FieldPlacements;
 
     private IReadOnlyList<string> AffectedWithdrawnAthleteNames =>
         RosterUpdateService.GetAffectedAthleteNames(Competition, Answers);
@@ -502,31 +508,9 @@ else
         .OfType<AthleteComparisonWindowSlot>()
         .ToArray();
 
-    private IReadOnlyList<Athlete> QuestionAthletes
-    {
-        get
-        {
-            if (ActiveQuestion is null)
-            {
-                return [];
-            }
+    private IReadOnlyList<Athlete> QuestionAthletes => FieldPlacementState.QuestionAthletes;
 
-            var athletes = ActiveQuestion.AthleteIds.Count == 0
-                ? Competition.Athletes
-                : Competition.Athletes
-                    .Where(athlete => ActiveQuestion.AthleteIds.Contains(athlete.Id))
-                    .ToArray();
-
-            return athletes
-                .OrderByDescending(athlete => athlete.SeedTotalKg ?? 0m)
-                .ThenBy(athlete => athlete.DisplayName, StringComparer.OrdinalIgnoreCase)
-                .ToArray();
-        }
-    }
-
-    private IReadOnlyList<Athlete> EligibleAthletes => QuestionAthletes
-        .Where(athlete => !athlete.IsWithdrawn)
-        .ToArray();
+    private IReadOnlyList<Athlete> EligibleAthletes => FieldPlacementState.EligibleAthletes;
 
     private IReadOnlyDictionary<int, Athlete> SelectedAthletesByPosition => FieldPlacements
         .Select(placement => new
@@ -1757,91 +1741,15 @@ else
         }
 
         var field = FieldPlacements;
-        if (!HasSameField(StoredPlacements, field))
+        if (!TopNFieldPlacementState.HasSameField(StoredPlacements, field))
         {
             await EmitAnswer(field);
         }
     }
 
-    private IReadOnlyList<AthletePlacementPick> BuildFieldPlacements()
-    {
-        if (ActiveQuestion is null)
-        {
-            return [];
-        }
-
-        var questionAthletesById = QuestionAthletes.ToDictionary(athlete => athlete.Id, StringComparer.OrdinalIgnoreCase);
-        var seenAthleteIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        var field = new List<AthletePlacementPick>(questionAthletesById.Count);
-
-        foreach (var placement in StoredPlacements.OrderBy(item => item.Position))
-        {
-            if (questionAthletesById.ContainsKey(placement.AthleteId) && seenAthleteIds.Add(placement.AthleteId))
-            {
-                field.Add(placement);
-            }
-        }
-
-        foreach (var athlete in EligibleAthletes)
-        {
-            if (!seenAthleteIds.Add(athlete.Id))
-            {
-                continue;
-            }
-
-            field.Add(new AthletePlacementPick
-            {
-                Position = field.Count + 1,
-                AthleteId = athlete.Id,
-                PredictedTotalKg = athlete.SeedTotalKg,
-                IsAutoSeeded = true
-            });
-        }
-
-        return field
-            .Select((placement, index) => placement with
-            {
-                Position = index + 1,
-                IsScored = index < ScoredPositionsCount
-            })
-            .ToArray();
-    }
-
     private IReadOnlyList<AthletePlacementPick> BuildDefaultFieldPlacements()
     {
-        return EligibleAthletes
-            .Select((athlete, index) => new AthletePlacementPick
-            {
-                Position = index + 1,
-                AthleteId = athlete.Id,
-                PredictedTotalKg = athlete.SeedTotalKg,
-                IsScored = index < ScoredPositionsCount,
-                IsAutoSeeded = true
-            })
-            .ToArray();
-    }
-
-    private static bool HasSameField(
-        IReadOnlyList<AthletePlacementPick> stored,
-        IReadOnlyList<AthletePlacementPick> normalized)
-    {
-        if (stored.Count != normalized.Count)
-        {
-            return false;
-        }
-
-        for (var index = 0; index < stored.Count; index++)
-        {
-            if (stored[index].Position != normalized[index].Position ||
-                stored[index].IsScored != normalized[index].IsScored ||
-                stored[index].IsAutoSeeded != normalized[index].IsAutoSeeded ||
-                !string.Equals(stored[index].AthleteId, normalized[index].AthleteId, StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return FieldPlacementState.BuildDefaultFieldPlacements();
     }
 
     private Task EmitAnswer(IEnumerable<AthletePlacementPick> placements)
@@ -1851,22 +1759,7 @@ else
             return Task.CompletedTask;
         }
 
-        var questionAthleteIds = QuestionAthletes
-            .Select(athlete => athlete.Id)
-            .ToHashSet(StringComparer.OrdinalIgnoreCase);
-
-        var sanitized = placements
-            .Where(placement => !string.IsNullOrWhiteSpace(placement.AthleteId) &&
-                                questionAthleteIds.Contains(placement.AthleteId))
-            .GroupBy(placement => placement.AthleteId, StringComparer.OrdinalIgnoreCase)
-            .Select(group => group.First())
-            .OrderBy(placement => placement.Position)
-            .Select((placement, index) => placement with
-            {
-                Position = index + 1,
-                IsScored = index < ScoredPositionsCount
-            })
-            .ToArray();
+        var sanitized = FieldPlacementState.NormalizeForAnswer(placements);
 
         return AnswerChanged.InvokeAsync(new PredictionAnswer
         {
