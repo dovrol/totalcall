@@ -518,46 +518,14 @@ else
 
     private decimal? SelectedAthletePredictedTotal => contextSelection.GetSelectedPredictedTotal(FieldPlacements);
 
-    private IReadOnlyList<TopNSlotView> SlotViews
-    {
-        get
-        {
-            var placements = FieldPlacements;
-            var views = new List<TopNSlotView>(placements.Count);
-
-            foreach (var placement in placements)
-            {
-                var athlete = Competition.Athletes.First(item =>
-                    string.Equals(item.Id, placement.AthleteId, StringComparison.OrdinalIgnoreCase));
-
-                AthleteHistoryEntry? history = null;
-                historyByAthleteId.TryGetValue(athlete.Id, out history);
-
-                views.Add(new TopNSlotView
-                {
-                    Position = placement.Position,
-                    Athlete = athlete,
-                    Placement = placement,
-                    Mode = EffectiveMode(placement.Position, placement),
-                    IsContextActive = contextSelection.IsSelected(athlete.Id),
-                    IsScored = placement.IsScored,
-                    IsAutoSeeded = placement.IsAutoSeeded,
-                    IsWithdrawn = athlete.IsWithdrawn,
-                    CanMoveUp = placement.Position > 1,
-                    CanMoveDown = placement.Position < placements.Count,
-                    CanUseNominated = athlete.SeedTotalKg is not null,
-                    CanUseLast = history?.LastResult?.TotalKg is not null,
-                    CanUseBest = history?.Bests?.TotalKg is not null,
-                    IsHistoryLoading = loadingAthleteIds.Contains(athlete.Id),
-                    NominatedTotalKg = athlete.SeedTotalKg,
-                    LastTotalKg = history?.LastResult?.TotalKg,
-                    BestTotalKg = history?.Bests?.TotalKg
-                });
-            }
-
-            return views;
-        }
-    }
+    private IReadOnlyList<TopNSlotView> SlotViews => TopNSlotViewBuilder.Build(
+        FieldPlacements,
+        Competition.Athletes,
+        modeByPosition,
+        defaultMode,
+        contextSelection,
+        historyByAthleteId,
+        loadingAthleteIds);
 
     private PredictionDeadlinePhase DeadlinePhase => WorkspaceState.DeadlinePhase;
 
