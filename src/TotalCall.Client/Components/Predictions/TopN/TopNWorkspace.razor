@@ -413,23 +413,21 @@ else
     private readonly HashSet<string> seededQuestionIds = new(StringComparer.OrdinalIgnoreCase);
     private readonly HashSet<string> compareSelectedAthleteIds = new(StringComparer.OrdinalIgnoreCase);
 
-    private IReadOnlyList<PredictionQuestion> OrderedQuestions => ActiveGroup.Questions
-        .OrderBy(question => question.Order)
-        .ToArray();
+    private TopNCategoryNavigationState CategoryNavigation => TopNCategoryNavigationState.Resolve(
+        ActiveGroup,
+        activeQuestionId,
+        ActiveModuleValidation);
 
-    private PredictionQuestion? ActiveQuestion => OrderedQuestions
-        .FirstOrDefault(question => string.Equals(question.Id, activeQuestionId, StringComparison.OrdinalIgnoreCase)) ??
-        OrderedQuestions.FirstOrDefault();
+    private IReadOnlyList<PredictionQuestion> OrderedQuestions => CategoryNavigation.OrderedQuestions;
+
+    private PredictionQuestion? ActiveQuestion => CategoryNavigation.ActiveQuestion;
 
     private bool CanOpenModuleMenu => Groups.Count > 0;
 
-    private IReadOnlyDictionary<string, PredictionQuestionCompletionResult> StatusByQuestionId => ActiveModuleValidation.Questions
-        .ToDictionary(result => result.QuestionId, StringComparer.OrdinalIgnoreCase);
+    private IReadOnlyDictionary<string, PredictionQuestionCompletionResult> StatusByQuestionId =>
+        CategoryNavigation.StatusByQuestionId;
 
-    private PredictionQuestionCompletionResult? ActiveQuestionStatus => ActiveQuestion is not null &&
-        StatusByQuestionId.TryGetValue(ActiveQuestion.Id, out var status)
-            ? status
-            : null;
+    private PredictionQuestionCompletionResult? ActiveQuestionStatus => CategoryNavigation.ActiveQuestionStatus;
 
     private int ScoredPositionsCount => ActiveQuestion?.Constraints.ExactSelections ??
                                         ActiveQuestion?.Constraints.MaxSelections ??
@@ -517,32 +515,11 @@ else
 
     private int DefaultCount => FieldPlacements.Count(placement => placement.IsAutoSeeded);
 
-    private int ActiveQuestionIndex
-    {
-        get
-        {
-            if (ActiveQuestion is null)
-            {
-                return 0;
-            }
+    private int ActiveQuestionIndex => CategoryNavigation.ActiveQuestionIndex;
 
-            for (var index = 0; index < OrderedQuestions.Count; index++)
-            {
-                if (OrderedQuestions[index].Id == ActiveQuestion.Id)
-                {
-                    return index;
-                }
-            }
+    private int CompletedCategoriesCount => CategoryNavigation.CompletedCategoriesCount;
 
-            return 0;
-        }
-    }
-
-    private int CompletedCategoriesCount => OrderedQuestions
-        .Count(question => StatusByQuestionId.TryGetValue(question.Id, out var status) &&
-                           status.Status == PredictionCompletionStatus.Complete);
-
-    private PredictionCompletionStatus ActiveStatusKind => ActiveQuestionStatus?.Status ?? PredictionCompletionStatus.NotStarted;
+    private PredictionCompletionStatus ActiveStatusKind => CategoryNavigation.ActiveStatusKind;
 
     private string? ActiveStatusLine => ActiveQuestionStatus is null
         ? null
