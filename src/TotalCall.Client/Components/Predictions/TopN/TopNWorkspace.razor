@@ -1128,12 +1128,7 @@ else
 
     private string EffectiveMode(int position, AthletePlacementPick? placement)
     {
-        if (modeByPosition.TryGetValue(position, out var mode))
-        {
-            return mode;
-        }
-
-        return HasLiftValues(placement) ? TopNEntryMode.Lifts : defaultMode;
+        return TopNPlacementEditor.ResolveEntryMode(modeByPosition, position, placement, defaultMode);
     }
 
     private void ToggleRowMode(int position)
@@ -1155,7 +1150,7 @@ else
             return Task.CompletedTask;
         }
 
-        if (!TryReadOptionalPositiveDecimal(edit.Value, out var parsed))
+        if (!TopNPlacementEditor.TryReadOptionalPositiveDecimal(edit.Value, CultureInfo.CurrentCulture, out var parsed))
         {
             Toasts.ShowError(Localizer["Predictions.PredictionValueInvalid"]);
             return Task.CompletedTask;
@@ -1163,7 +1158,7 @@ else
 
         var placements = FieldPlacements
             .Select(placement => placement.Position == edit.Position
-                ? ApplyEdit(placement, edit.Field, parsed)
+                ? TopNPlacementEditor.ApplyEdit(placement, edit.Field, parsed)
                 : placement)
             .ToArray();
 
@@ -1177,7 +1172,7 @@ else
             return Task.CompletedTask;
         }
 
-        if (!decimal.TryParse(edit.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out var delta))
+        if (!TopNPlacementEditor.TryReadNudgeDelta(edit.Value, out var delta))
         {
             return Task.CompletedTask;
         }
@@ -1188,59 +1183,13 @@ else
             return Task.CompletedTask;
         }
 
-        var current = edit.Field switch
-        {
-            TopNSheetField.Squat => placement.PredictedSquatKg,
-            TopNSheetField.Bench => placement.PredictedBenchKg,
-            TopNSheetField.Deadlift => placement.PredictedDeadliftKg,
-            _ => placement.PredictedTotalKg
-        } ?? 0m;
-
-        var next = Math.Clamp(current + delta, 0m, 1500m);
-        if (next <= 0m)
-        {
-            next = Math.Max(0m, delta > 0 ? delta : 0m);
-        }
-
         var updated = FieldPlacements
             .Select(item => item.Position == edit.Position
-                ? ApplyEdit(item, edit.Field, next == 0m ? null : next)
+                ? TopNPlacementEditor.ApplyNudge(item, edit.Field, delta)
                 : item)
             .ToArray();
 
         return EmitAnswer(updated);
-    }
-
-    private AthletePlacementPick ApplyEdit(AthletePlacementPick placement, string field, decimal? value)
-    {
-        if (string.Equals(field, TopNSheetField.Total, StringComparison.OrdinalIgnoreCase))
-        {
-            return placement with
-            {
-                PredictedSquatKg = null,
-                PredictedBenchKg = null,
-                PredictedDeadliftKg = null,
-                PredictedTotalKg = value,
-                IsAutoSeeded = false
-            };
-        }
-
-        var squat = string.Equals(field, TopNSheetField.Squat, StringComparison.OrdinalIgnoreCase) ? value : placement.PredictedSquatKg;
-        var bench = string.Equals(field, TopNSheetField.Bench, StringComparison.OrdinalIgnoreCase) ? value : placement.PredictedBenchKg;
-        var deadlift = string.Equals(field, TopNSheetField.Deadlift, StringComparison.OrdinalIgnoreCase) ? value : placement.PredictedDeadliftKg;
-
-        var total = squat is not null || bench is not null || deadlift is not null
-            ? (squat ?? 0m) + (bench ?? 0m) + (deadlift ?? 0m)
-            : (decimal?)null;
-
-        return placement with
-        {
-            PredictedSquatKg = squat,
-            PredictedBenchKg = bench,
-            PredictedDeadliftKg = deadlift,
-            PredictedTotalKg = total,
-            IsAutoSeeded = false
-        };
     }
 
     // ---------- fill (per-row popover + bulk) ----------
@@ -1298,7 +1247,9 @@ else
             return;
         }
 
-        modeByPosition[request.Position] = HasLiftValues(updated) ? TopNEntryMode.Lifts : TopNEntryMode.Total;
+        modeByPosition[request.Position] = TopNPlacementEditor.HasLiftValues(updated)
+            ? TopNEntryMode.Lifts
+            : TopNEntryMode.Total;
 
         var placements = FieldPlacements
             .Select(item => item.Position == request.Position ? updated : item)
@@ -1359,7 +1310,9 @@ else
                 }
 
                 placements[index] = filled;
-                modeByPosition[position] = HasLiftValues(filled) ? TopNEntryMode.Lifts : TopNEntryMode.Total;
+                modeByPosition[position] = TopNPlacementEditor.HasLiftValues(filled)
+                    ? TopNEntryMode.Lifts
+                    : TopNEntryMode.Total;
                 changed = true;
             }
 
@@ -1833,29 +1786,4 @@ else
         _ => Localizer["Predictions.Status.NotStarted"]
     };
 
-    private static bool HasLiftValues(AthletePlacementPick? placement) =>
-        placement?.PredictedSquatKg is not null ||
-        placement?.PredictedBenchKg is not null ||
-        placement?.PredictedDeadliftKg is not null;
-
-    private static bool TryReadOptionalPositiveDecimal(string value, out decimal? parsed)
-    {
-        parsed = null;
-
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return true;
-        }
-
-        if ((!decimal.TryParse(value, NumberStyles.Number, CultureInfo.CurrentCulture, out var number) &&
-             !decimal.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out number)) ||
-            number <= 0 ||
-            number > 1500m)
-        {
-            return false;
-        }
-
-        parsed = number;
-        return true;
-    }
 }
