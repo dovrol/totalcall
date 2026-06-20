@@ -197,6 +197,7 @@ static async Task<int> RunResultsAsync(string[] args, CancellationToken ct)
 {
     string? competitionId = null;
     string? resultsJson = null;
+    var dryRun = false;
     var triggeredBy = Environment.GetEnvironmentVariable("GITHUB_ACTIONS") == "true" ? "github-actions" : "manual";
 
     for (var i = 0; i < args.Length; i++)
@@ -207,6 +208,8 @@ static async Task<int> RunResultsAsync(string[] args, CancellationToken ct)
                 competitionId = args[++i]; break;
             case "--results-json":
                 resultsJson = args[++i]; break;
+            case "--dry-run":
+                dryRun = true; break;
             case "--triggered-by":
                 triggeredBy = args[++i]; break;
             default:
@@ -237,7 +240,10 @@ static async Task<int> RunResultsAsync(string[] args, CancellationToken ct)
         TriggeredBy = triggeredBy
     };
 
-    return await new OfficialResultsImporter().RunAsync(options, ct);
+    var importer = new OfficialResultsImporter();
+    return dryRun
+        ? await importer.RunDryRunAsync(options, ct)
+        : await importer.RunAsync(options, ct);
 }
 
 static void PrintHelp()
@@ -265,6 +271,7 @@ static void PrintHelp()
           results       Import official result groups and recalculate score snapshots.
             --competition-id <id>                Competition id, e.g. worlds-2026.
             --results-json <path>                Path to official results JSON.
+            [--dry-run]                          Validate against the published config; no DB writes.
             [--triggered-by <text>]              Label written into import metadata source fallback.
 
           scenario      Prepare local-only development states. Requires --local.

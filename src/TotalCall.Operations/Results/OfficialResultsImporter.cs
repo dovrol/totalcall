@@ -39,6 +39,29 @@ public sealed record ResultsImportResult(
     public bool Succeeded => ExitCode == 0;
 }
 
+// Read-only preview of what an import would do: same load/parse/validation as
+// ImportAsync, but no writes. Exit code 0 means the file would import cleanly.
+public sealed record ResultsImportDryRunResult(
+    int ExitCode,
+    string? CompetitionId,
+    string? ResultsJsonPath,
+    string? Status,
+    string? Source,
+    string? ResultsHash,
+    int GroupsInFile,
+    int FinalGroupsInFile,
+    int PendingGroupsInFile,
+    int DistinctAthletesReferenced,
+    bool CompetitionPublished,
+    string? ActiveConfigVersion,
+    string? StoredResultsHash,
+    bool MatchesStoredResults,
+    IReadOnlyList<string> ValidationErrors,
+    IReadOnlyList<OperationLogEntry> Logs)
+{
+    public bool IsValid => ExitCode == 0;
+}
+
 public sealed class OfficialResultsImporter
 {
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web)
@@ -59,168 +82,34 @@ public sealed class OfficialResultsImporter
         return result.ExitCode;
     }
 
+    public async Task<int> RunDryRunAsync(ResultsImportOptions opts, CancellationToken ct)
+    {
+        var result = await DryRunAsync(opts, ct);
+        WriteLogs(result.Logs);
+        return result.ExitCode;
+    }
+
     public async Task<ResultsImportResult> ImportAsync(ResultsImportOptions opts, CancellationToken ct)
     {
-        if (string.IsNullOrWhiteSpace(opts.CompetitionId))
-        {
-            var logs = new List<OperationLogEntry>
-            {
-                OperationLogEntry.Error("results: --competition-id is required.")
-            };
-            return Finish(1, logs);
-        }
-
-        var inputResultsJsonPath = opts.ResultsJsonPath?.Trim();
-        var operationLogs = new List<OperationLogEntry>
-        {
-            OperationLogEntry.Info($"Loading official results: {inputResultsJsonPath}")
-        };
-
-        var competitionId = opts.CompetitionId.Trim();
-
-        if (string.IsNullOrWhiteSpace(inputResultsJsonPath))
-        {
-            operationLogs.Add(OperationLogEntry.Error("results: --results-json is required."));
-            return Finish(1, operationLogs, competitionId);
-        }
-
-        var resultsJsonPath = ResolveFullPath(inputResultsJsonPath);
-        if (!File.Exists(resultsJsonPath))
-        {
-            operationLogs.Add(OperationLogEntry.Error($"Results JSON not found: {resultsJsonPath}"));
-            return Finish(1, operationLogs, competitionId, resultsJsonPath);
-        }
-
-        string rawJson;
-        try
-        {
-            rawJson = await File.ReadAllTextAsync(resultsJsonPath, ct);
-        }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
-        {
-            operationLogs.Add(OperationLogEntry.Error($"Results JSON could not be read: {ex.Message}"));
-            return Finish(1, operationLogs, competitionId, resultsJsonPath);
-        }
-
-        JsonObject resultsNode;
-        try
-        {
-            if (JsonNode.Parse(rawJson) is not JsonObject parsed)
-            {
-                operationLogs.Add(OperationLogEntry.Error("Results JSON root must be an object."));
-                return Finish(1, operationLogs, competitionId, resultsJsonPath);
-            }
-
-            resultsNode = parsed;
-        }
-        catch (JsonException ex)
-        {
-            operationLogs.Add(OperationLogEntry.Error($"Results JSON could not be parsed: {ex.Message}"));
-            return Finish(1, operationLogs, competitionId, resultsJsonPath);
-        }
-
-        OfficialResultsFile? resultsFile;
-        try
-        {
-            resultsFile = resultsNode.Deserialize<OfficialResultsFile>(JsonOptions);
-        }
-        catch (JsonException ex)
-        {
-            operationLogs.Add(OperationLogEntry.Error($"Could not parse results JSON: {ex.Message}"));
-            return Finish(1, operationLogs, competitionId, resultsJsonPath);
-        }
-
-        if (resultsFile is null)
-        {
-            operationLogs.Add(OperationLogEntry.Error("Could not parse results JSON."));
-            return Finish(1, operationLogs, competitionId, resultsJsonPath);
-        }
-
-        if (string.IsNullOrWhiteSpace(resultsFile.CompetitionId))
-        {
-            operationLogs.Add(OperationLogEntry.Error("results.competitionId is required."));
-            return Finish(
-                1,
-                operationLogs,
-                competitionId,
-                resultsJsonPath,
-                resultsFile);
-        }
-
-        if (!string.Equals(resultsFile.CompetitionId, competitionId, StringComparison.OrdinalIgnoreCase))
-        {
-            operationLogs.Add(OperationLogEntry.Error(
-                $"results.competitionId '{resultsFile.CompetitionId}' does not match '{competitionId}'."));
-            return Finish(
-                1,
-                operationLogs,
-                competitionId,
-                resultsJsonPath,
-                resultsFile);
-        }
-
-        var shapeErrors = ValidateImportShape(resultsFile);
-        if (shapeErrors.Count > 0)
-        {
-            foreach (var error in shapeErrors)
-            {
-                operationLogs.Add(OperationLogEntry.Error(error));
-            }
-
-            return Finish(
-                1,
-                operationLogs,
-                competitionId,
-                resultsJsonPath,
-                resultsFile);
-        }
-
-        var incomingHash = CompetitionConfigHasher.Compute(resultsNode);
-
-        if (string.IsNullOrWhiteSpace(opts.SupabaseUrl) || string.IsNullOrWhiteSpace(opts.SupabaseSecretKey))
-        {
-            operationLogs.Add(OperationLogEntry.Error("SUPABASE_URL and SUPABASE_SECRET_KEY must be set."));
-            return Finish(
-                2,
-                operationLogs,
-                competitionId,
-                resultsJsonPath,
-                resultsFile,
-                incomingHash);
-        }
-
-        var supabase = new SupabaseRestClient(opts.SupabaseUrl, opts.SupabaseSecretKey);
-        var published = await LoadPublishedCompetitionAsync(supabase, competitionId, operationLogs, ct);
-        if (published is null)
+        var prep = await PrepareAsync(opts, ct);
+        if (prep.Prepared is not { } prepared)
         {
             return Finish(
-                3,
-                operationLogs,
-                competitionId,
-                resultsJsonPath,
-                resultsFile,
-                incomingHash);
+                prep.ExitCode,
+                prep.Logs,
+                prep.CompetitionId,
+                prep.ResolvedPath,
+                prep.ResultsFile,
+                prep.IncomingHash);
         }
 
-        var validationErrors = new OfficialResultsValidator().Validate(
-            published.Competition,
-            resultsFile,
-            competitionId);
-        if (validationErrors.Count > 0)
-        {
-            foreach (var error in validationErrors)
-            {
-                operationLogs.Add(OperationLogEntry.Error(error));
-            }
-
-            return Finish(
-                3,
-                operationLogs,
-                competitionId,
-                resultsJsonPath,
-                resultsFile,
-                incomingHash);
-        }
+        var operationLogs = prep.Logs;
+        var supabase = prepared.Supabase;
+        var competitionId = prepared.CompetitionId;
+        var resultsJsonPath = prepared.ResolvedPath;
+        var resultsFile = prepared.ResultsFile;
+        var incomingHash = prepared.IncomingHash;
+        var published = prepared.Published;
 
         var officialResultId = await UpsertOfficialResultsAsync(
             supabase,
@@ -308,6 +197,267 @@ public sealed class OfficialResultsImporter
             leaderboardStatus,
             calculatedAt,
             snapshotsDeleted);
+    }
+
+    // Read-only validation: runs the same prepare phase as ImportAsync (load,
+    // parse, shape + config-aware validation) and reports a preview without
+    // writing official_results, result groups or score snapshots.
+    public async Task<ResultsImportDryRunResult> DryRunAsync(ResultsImportOptions opts, CancellationToken ct)
+    {
+        var prep = await PrepareAsync(opts, ct);
+        if (prep.Prepared is not { } prepared)
+        {
+            return DryRunFinish(
+                prep.ExitCode,
+                prep.Logs,
+                prep.ValidationErrors,
+                prep.CompetitionId,
+                prep.ResolvedPath,
+                prep.ResultsFile,
+                prep.IncomingHash);
+        }
+
+        var logs = prep.Logs;
+        var storedHash = await LoadStoredResultsHashAsync(prepared.Supabase, prepared.CompetitionId, ct);
+        var matchesStored = !string.IsNullOrWhiteSpace(storedHash)
+            && string.Equals(storedHash, prepared.IncomingHash, StringComparison.OrdinalIgnoreCase);
+
+        var groups = prepared.ResultsFile.Groups;
+        var finalGroups = groups.Count(group =>
+            string.Equals(group.Status, OfficialResultGroupImportStatus.Final, StringComparison.OrdinalIgnoreCase));
+        logs.Add(OperationLogEntry.Info(
+            $"Dry run: {groups.Count} group(s) in file ({finalGroups} final / {groups.Count - finalGroups} pending) " +
+            $"against active config '{prepared.Published.Competition.ConfigVersion}'."));
+        logs.Add(OperationLogEntry.Info(
+            string.IsNullOrWhiteSpace(storedHash)
+                ? "Dry run: no results imported yet — this would be the first import."
+                : matchesStored
+                    ? "Dry run: payload matches the currently imported results (no change)."
+                    : "Dry run: payload differs from the currently imported results."));
+        logs.Add(OperationLogEntry.Done("Dry run validated official results; no data was written."));
+
+        return DryRunFinish(
+            0,
+            logs,
+            [],
+            prepared.CompetitionId,
+            prepared.ResolvedPath,
+            prepared.ResultsFile,
+            prepared.IncomingHash,
+            competitionPublished: true,
+            activeConfigVersion: prepared.Published.Competition.ConfigVersion,
+            storedResultsHash: storedHash,
+            matchesStoredResults: matchesStored);
+    }
+
+    // Shared load/parse/validate phase. Both ImportAsync and DryRunAsync run this
+    // so the dry run validates exactly what the import would write. No writes.
+    private static async Task<ResultsPreparation> PrepareAsync(ResultsImportOptions opts, CancellationToken ct)
+    {
+        if (string.IsNullOrWhiteSpace(opts.CompetitionId))
+        {
+            var logs = new List<OperationLogEntry>
+            {
+                OperationLogEntry.Error("results: --competition-id is required.")
+            };
+            return Prep(1, logs);
+        }
+
+        var inputResultsJsonPath = opts.ResultsJsonPath?.Trim();
+        var operationLogs = new List<OperationLogEntry>
+        {
+            OperationLogEntry.Info($"Loading official results: {inputResultsJsonPath}")
+        };
+
+        var competitionId = opts.CompetitionId.Trim();
+
+        if (string.IsNullOrWhiteSpace(inputResultsJsonPath))
+        {
+            operationLogs.Add(OperationLogEntry.Error("results: --results-json is required."));
+            return Prep(1, operationLogs, competitionId);
+        }
+
+        var resultsJsonPath = ResolveFullPath(inputResultsJsonPath);
+        if (!File.Exists(resultsJsonPath))
+        {
+            operationLogs.Add(OperationLogEntry.Error($"Results JSON not found: {resultsJsonPath}"));
+            return Prep(1, operationLogs, competitionId, resultsJsonPath);
+        }
+
+        string rawJson;
+        try
+        {
+            rawJson = await File.ReadAllTextAsync(resultsJsonPath, ct);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            operationLogs.Add(OperationLogEntry.Error($"Results JSON could not be read: {ex.Message}"));
+            return Prep(1, operationLogs, competitionId, resultsJsonPath);
+        }
+
+        JsonObject resultsNode;
+        try
+        {
+            if (JsonNode.Parse(rawJson) is not JsonObject parsed)
+            {
+                operationLogs.Add(OperationLogEntry.Error("Results JSON root must be an object."));
+                return Prep(1, operationLogs, competitionId, resultsJsonPath);
+            }
+
+            resultsNode = parsed;
+        }
+        catch (JsonException ex)
+        {
+            operationLogs.Add(OperationLogEntry.Error($"Results JSON could not be parsed: {ex.Message}"));
+            return Prep(1, operationLogs, competitionId, resultsJsonPath);
+        }
+
+        OfficialResultsFile? resultsFile;
+        try
+        {
+            resultsFile = resultsNode.Deserialize<OfficialResultsFile>(JsonOptions);
+        }
+        catch (JsonException ex)
+        {
+            operationLogs.Add(OperationLogEntry.Error($"Could not parse results JSON: {ex.Message}"));
+            return Prep(1, operationLogs, competitionId, resultsJsonPath);
+        }
+
+        if (resultsFile is null)
+        {
+            operationLogs.Add(OperationLogEntry.Error("Could not parse results JSON."));
+            return Prep(1, operationLogs, competitionId, resultsJsonPath);
+        }
+
+        if (string.IsNullOrWhiteSpace(resultsFile.CompetitionId))
+        {
+            operationLogs.Add(OperationLogEntry.Error("results.competitionId is required."));
+            return Prep(1, operationLogs, competitionId, resultsJsonPath, resultsFile);
+        }
+
+        if (!string.Equals(resultsFile.CompetitionId, competitionId, StringComparison.OrdinalIgnoreCase))
+        {
+            operationLogs.Add(OperationLogEntry.Error(
+                $"results.competitionId '{resultsFile.CompetitionId}' does not match '{competitionId}'."));
+            return Prep(1, operationLogs, competitionId, resultsJsonPath, resultsFile);
+        }
+
+        var shapeErrors = ValidateImportShape(resultsFile);
+        if (shapeErrors.Count > 0)
+        {
+            foreach (var error in shapeErrors)
+            {
+                operationLogs.Add(OperationLogEntry.Error(error));
+            }
+
+            return Prep(1, operationLogs, competitionId, resultsJsonPath, resultsFile, validationErrors: shapeErrors);
+        }
+
+        var incomingHash = CompetitionConfigHasher.Compute(resultsNode);
+
+        if (string.IsNullOrWhiteSpace(opts.SupabaseUrl) || string.IsNullOrWhiteSpace(opts.SupabaseSecretKey))
+        {
+            operationLogs.Add(OperationLogEntry.Error("SUPABASE_URL and SUPABASE_SECRET_KEY must be set."));
+            return Prep(2, operationLogs, competitionId, resultsJsonPath, resultsFile, incomingHash);
+        }
+
+        var supabase = new SupabaseRestClient(opts.SupabaseUrl, opts.SupabaseSecretKey);
+        var published = await LoadPublishedCompetitionAsync(supabase, competitionId, operationLogs, ct);
+        if (published is null)
+        {
+            return Prep(3, operationLogs, competitionId, resultsJsonPath, resultsFile, incomingHash);
+        }
+
+        var validationErrors = new OfficialResultsValidator().Validate(
+            published.Competition,
+            resultsFile,
+            competitionId);
+        if (validationErrors.Count > 0)
+        {
+            foreach (var error in validationErrors)
+            {
+                operationLogs.Add(OperationLogEntry.Error(error));
+            }
+
+            return Prep(3, operationLogs, competitionId, resultsJsonPath, resultsFile, incomingHash, validationErrors);
+        }
+
+        var prepared = new PreparedResultsImport(
+            supabase,
+            competitionId,
+            resultsJsonPath,
+            resultsFile,
+            resultsNode,
+            incomingHash,
+            published);
+        return new ResultsPreparation(
+            0, operationLogs, [], competitionId, resultsJsonPath, resultsFile, incomingHash, prepared);
+    }
+
+    private static ResultsPreparation Prep(
+        int exitCode,
+        List<OperationLogEntry> logs,
+        string? competitionId = null,
+        string? resolvedPath = null,
+        OfficialResultsFile? resultsFile = null,
+        string? incomingHash = null,
+        IReadOnlyList<string>? validationErrors = null) =>
+        new(exitCode, logs, validationErrors ?? [], competitionId, resolvedPath, resultsFile, incomingHash, Prepared: null);
+
+    private static ResultsImportDryRunResult DryRunFinish(
+        int exitCode,
+        List<OperationLogEntry> logs,
+        IReadOnlyList<string> validationErrors,
+        string? competitionId,
+        string? resultsJsonPath,
+        OfficialResultsFile? resultsFile,
+        string? incomingHash,
+        bool competitionPublished = false,
+        string? activeConfigVersion = null,
+        string? storedResultsHash = null,
+        bool matchesStoredResults = false)
+    {
+        var groups = resultsFile?.Groups ?? [];
+        var finalGroups = groups.Count(group =>
+            string.Equals(group.Status, OfficialResultGroupImportStatus.Final, StringComparison.OrdinalIgnoreCase));
+        var distinctAthletes = groups
+            .SelectMany(group => group.Placements)
+            .Select(placement => placement.AthleteId)
+            .Where(athleteId => !string.IsNullOrWhiteSpace(athleteId))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .Count();
+
+        return new ResultsImportDryRunResult(
+            exitCode,
+            competitionId,
+            resultsJsonPath,
+            resultsFile?.Status,
+            resultsFile?.Source,
+            incomingHash,
+            groups.Count,
+            finalGroups,
+            groups.Count - finalGroups,
+            distinctAthletes,
+            competitionPublished,
+            activeConfigVersion,
+            storedResultsHash,
+            matchesStoredResults,
+            validationErrors,
+            logs.ToArray());
+    }
+
+    private static async Task<string?> LoadStoredResultsHashAsync(
+        SupabaseRestClient supabase,
+        string competitionId,
+        CancellationToken ct)
+    {
+        var rows = await supabase.GetAsync(
+            "public",
+            "official_results",
+            $"competition_id=eq.{Uri.EscapeDataString(competitionId)}&select=results_hash&limit=1",
+            ct);
+
+        return rows.OfType<JsonObject>().FirstOrDefault()?["results_hash"]?.ToString();
     }
 
     private static async Task<PublishedCompetition?> LoadPublishedCompetitionAsync(
@@ -849,4 +999,23 @@ public sealed class OfficialResultsImporter
     }
 
     private sealed record PublishedCompetition(string VersionId, Competition Competition);
+
+    private sealed record PreparedResultsImport(
+        SupabaseRestClient Supabase,
+        string CompetitionId,
+        string ResolvedPath,
+        OfficialResultsFile ResultsFile,
+        JsonObject ResultsNode,
+        string IncomingHash,
+        PublishedCompetition Published);
+
+    private sealed record ResultsPreparation(
+        int ExitCode,
+        List<OperationLogEntry> Logs,
+        IReadOnlyList<string> ValidationErrors,
+        string? CompetitionId,
+        string? ResolvedPath,
+        OfficialResultsFile? ResultsFile,
+        string? IncomingHash,
+        PreparedResultsImport? Prepared);
 }

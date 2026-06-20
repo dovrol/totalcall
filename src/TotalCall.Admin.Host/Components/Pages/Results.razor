@@ -42,11 +42,136 @@
             <InputText id="results-confirmation" @bind-Value="_form.ConfirmationText" />
             <ValidationMessage For="@(() => _form.ConfirmationText)" />
         </div>
-        <button class="button-primary" type="submit" disabled="@(!CanImport || _isImporting)">
-            @(_isImporting ? "Importing" : "Import results")
-        </button>
+        <div class="form-actions">
+            <button class="button-secondary" type="button" @onclick="DryRunAsync"
+                    disabled="@(!CanDryRun || _isDryRunning || _isImporting)">
+                @(_isDryRunning ? "Validating" : "Validate (dry run)")
+            </button>
+            <button class="button-primary" type="submit" disabled="@(!CanImport || _isImporting || _isDryRunning)">
+                @(_isImporting ? "Importing" : "Import results")
+            </button>
+        </div>
     </EditForm>
 </section>
+
+@if (!string.IsNullOrWhiteSpace(_dryRunError))
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Dry run status</h2>
+            <span class="state state-missing">
+                <span class="state-dot"></span>
+                Failed
+            </span>
+        </div>
+        <p class="muted">@_dryRunError</p>
+    </section>
+}
+
+@if (_dryRunResult is not null)
+{
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Dry run preview</h2>
+            <span class="state @(_dryRunResult.IsValid ? "state-ok" : "state-missing")">
+                <span class="state-dot"></span>
+                @(_dryRunResult.IsValid ? "Would import" : "Blocked")
+            </span>
+        </div>
+
+        <p class="notice">No data was written. This previews what an import would do.</p>
+
+        <dl class="status-list status-list--wide">
+            <div>
+                <dt>Status</dt>
+                <dd>@(_dryRunResult.Status ?? "Unavailable")</dd>
+            </div>
+            <div>
+                <dt>Groups in file</dt>
+                <dd>@_dryRunResult.GroupsInFile (@_dryRunResult.FinalGroupsInFile final / @_dryRunResult.PendingGroupsInFile pending)</dd>
+            </div>
+            <div>
+                <dt>Athletes referenced</dt>
+                <dd>@_dryRunResult.DistinctAthletesReferenced</dd>
+            </div>
+            <div>
+                <dt>Active config version</dt>
+                <dd>@(_dryRunResult.ActiveConfigVersion ?? "Unavailable")</dd>
+            </div>
+            <div>
+                <dt>Results hash</dt>
+                <dd>@ShortHash(_dryRunResult.ResultsHash)</dd>
+            </div>
+            <div>
+                <dt>Compared to imported</dt>
+                <dd>@ComparedToImportedLabel(_dryRunResult)</dd>
+            </div>
+        </dl>
+    </section>
+
+    @if (_dryRunResult.ValidationErrors.Count > 0)
+    {
+        <section class="panel">
+            <div class="panel-heading">
+                <h2>Validation errors</h2>
+                <span class="state state-missing">
+                    <span class="state-dot"></span>
+                    @_dryRunResult.ValidationErrors.Count issue(s)
+                </span>
+            </div>
+
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var errorIndex = 0;
+                        }
+                        @foreach (var error in _dryRunResult.ValidationErrors)
+                        {
+                            errorIndex++;
+                            <tr>
+                                <td>@errorIndex</td>
+                                <td>@error</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    }
+
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>Dry run log</h2>
+        </div>
+
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var entry in _dryRunResult.Logs)
+                    {
+                        <tr>
+                            <td class="log-level log-level-@entry.Level">@entry.Level</td>
+                            <td>@entry.Message</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+}
 
 @if (!string.IsNullOrWhiteSpace(_importError))
 {
@@ -164,21 +289,62 @@
     };
 
     private ResultsImportResult? _importResult;
+    private ResultsImportDryRunResult? _dryRunResult;
     private string? _importError;
+    private string? _dryRunError;
     private string? _auditStatus;
     private string? _auditError;
     private bool _isImporting;
+    private bool _isDryRunning;
 
     private string RequiredImportConfirmation => $"import {_form.CompetitionId.Trim()}";
 
-    private bool CanImport =>
+    private bool CanDryRun =>
         RuntimeOptions.IsConfigured
         && !string.IsNullOrWhiteSpace(_form.CompetitionId)
-        && !string.IsNullOrWhiteSpace(_form.ResultsJsonPath)
+        && !string.IsNullOrWhiteSpace(_form.ResultsJsonPath);
+
+    private bool CanImport =>
+        CanDryRun
         && string.Equals(
             _form.ConfirmationText.Trim(),
             RequiredImportConfirmation,
             StringComparison.Ordinal);
+
+    private async Task DryRunAsync()
+    {
+        if (!CanDryRun)
+        {
+            return;
+        }
+
+        _isDryRunning = true;
+        _dryRunResult = null;
+        _dryRunError = null;
+        _importResult = null;
+        _importError = null;
+        try
+        {
+            _dryRunResult = await ResultsImporter.DryRunAsync(
+                new ResultsImportOptions
+                {
+                    CompetitionId = _form.CompetitionId.Trim(),
+                    ResultsJsonPath = _form.ResultsJsonPath.Trim(),
+                    SupabaseUrl = RuntimeOptions.SupabaseUrl,
+                    SupabaseSecretKey = RuntimeOptions.SupabaseSecretKey,
+                    TriggeredBy = "admin-host"
+                },
+                CancellationToken.None);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _dryRunError = $"Dry run failed: {ex.Message}";
+        }
+        finally
+        {
+            _isDryRunning = false;
+        }
+    }
 
     private async Task ImportResultsAsync()
     {
@@ -190,6 +356,8 @@
         _isImporting = true;
         _importResult = null;
         _importError = null;
+        _dryRunResult = null;
+        _dryRunError = null;
         _auditStatus = null;
         _auditError = null;
         var startedAt = DateTimeOffset.UtcNow;
@@ -259,6 +427,24 @@
         {
             _auditError = $"Operation completed, but audit history could not be written: {ex.Message}";
         }
+    }
+
+    private static string ShortHash(string? hash) =>
+        string.IsNullOrWhiteSpace(hash) ? "Unavailable" : hash[..Math.Min(12, hash.Length)];
+
+    private static string ComparedToImportedLabel(ResultsImportDryRunResult result)
+    {
+        if (!result.CompetitionPublished)
+        {
+            return "Unavailable";
+        }
+
+        if (result.MatchesStoredResults)
+        {
+            return "Unchanged";
+        }
+
+        return string.IsNullOrWhiteSpace(result.StoredResultsHash) ? "First import" : "Changed";
     }
 
     private sealed class ResultsImportForm

@@ -350,6 +350,12 @@ h2 {
     gap: 8px;
 }
 
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
 .log-level {
     font-weight: 800;
     text-transform: uppercase;
