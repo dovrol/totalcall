@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 CLI_PROJECT="${ROOT_DIR}/ops/cli/TotalCall.Cli/TotalCall.Cli.csproj"
 RESULTS_DIR="${ROOT_DIR}/ops/data/results"
+KEYCHAIN_ACCOUNT="${TOTALCALL_SUPABASE_KEYCHAIN_ACCOUNT:-production}"
 
 COMPETITION_JSON="${1:-src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json}"
 SOURCE="${2:-both}"
@@ -22,8 +24,10 @@ If matching official results JSON files exist under ops/data/results,
 they are imported after athlete history by default.
 
 Environment:
-  SUPABASE_URL
-  SUPABASE_SECRET_KEY
+  SUPABASE_URL          Optional override. Otherwise read from macOS Keychain.
+  SUPABASE_SECRET_KEY   Optional override. Otherwise read from macOS Keychain.
+  TOTALCALL_SUPABASE_KEYCHAIN_ACCOUNT
+                         Keychain account to use. Defaults to production.
   TRIGGERED_BY           Defaults to local-script.
   DOTNET_CONFIGURATION   Defaults to Release.
 EOF
@@ -42,8 +46,10 @@ if [[ ! -f "$COMPETITION_JSON" ]]; then
 fi
 
 if [[ -z "${SUPABASE_URL:-}" || -z "${SUPABASE_SECRET_KEY:-}" ]]; then
-  echo "[error] SUPABASE_URL and SUPABASE_SECRET_KEY are required." >&2
-  exit 1
+  exec "${SCRIPT_DIR}/with-supabase-keychain.sh" \
+    --account "$KEYCHAIN_ACCOUNT" \
+    -- \
+    "${SCRIPT_DIR}/sync-supabase.sh" "$@"
 fi
 
 dotnet build "$CLI_PROJECT" \

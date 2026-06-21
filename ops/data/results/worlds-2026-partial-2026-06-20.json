@@ -1,0 +1,399 @@
+{
+  "competitionId": "worlds-2026",
+  "status": "partial",
+  "source": "IPF 2026 Classic Worlds results PDFs, 2026-06-20",
+  "groups": [
+    {
+      "groupId": "category-top5",
+      "questionId": "top5-women-84",
+      "categoryId": "women-84",
+      "status": "final",
+      "placements": [
+        {
+          "position": 1,
+          "athleteId": "azariah-ziana",
+          "squatKg": 227.5,
+          "benchKg": 122.5,
+          "deadliftKg": 270.0,
+          "totalKg": 620.0
+        },
+        {
+          "position": 2,
+          "athleteId": "tongotea-karlina",
+          "squatKg": 215.0,
+          "benchKg": 137.5,
+          "deadliftKg": 255.0,
+          "totalKg": 607.5
+        },
+        {
+          "position": 3,
+          "athleteId": "zeigler-nicolette",
+          "squatKg": 222.5,
+          "benchKg": 130.0,
+          "deadliftKg": 237.5,
+          "totalKg": 590.0
+        },
+        {
+          "position": 4,
+          "athleteId": "almeida-marina",
+          "squatKg": 200.0,
+          "benchKg": 117.5,
+          "deadliftKg": 262.5,
+          "totalKg": 580.0
+        },
+        {
+          "position": 5,
+          "athleteId": "buettner-jessica",
+          "squatKg": 225.0,
+          "benchKg": 112.5,
+          "deadliftKg": 240.0,
+          "totalKg": 577.5
+        },
+        {
+          "position": 6,
+          "athleteId": "thorhallsdottir-kristin",
+          "squatKg": 225.0,
+          "benchKg": 120.0,
+          "deadliftKg": 230.0,
+          "totalKg": 575.0
+        },
+        {
+          "position": 7,
+          "athleteId": "bychok-liudmyla",
+          "squatKg": 222.5,
+          "benchKg": 127.5,
+          "deadliftKg": 217.5,
+          "totalKg": 567.5
+        },
+        {
+          "position": 8,
+          "athleteId": "mouchet-emilie",
+          "squatKg": 212.5,
+          "benchKg": 135.0,
+          "deadliftKg": 215.0,
+          "totalKg": 562.5
+        },
+        {
+          "position": 9,
+          "athleteId": "ieronimos-anna",
+          "squatKg": 200.0,
+          "benchKg": 117.5,
+          "deadliftKg": 240.0,
+          "totalKg": 557.5
+        },
+        {
+          "position": 10,
+          "athleteId": "rudin-agnes",
+          "squatKg": 220.0,
+          "benchKg": 117.5,
+          "deadliftKg": 212.5,
+          "totalKg": 550.0
+        },
+        {
+          "position": 11,
+          "athleteId": "coopoosamy-nicole",
+          "squatKg": 207.5,
+          "benchKg": 112.5,
+          "deadliftKg": 217.5,
+          "totalKg": 537.5
+        },
+        {
+          "position": 12,
+          "athleteId": "laitinen-jenna",
+          "squatKg": 200.0,
+          "benchKg": 125.0,
+          "deadliftKg": 205.0,
+          "totalKg": 530.0
+        },
+        {
+          "position": 13,
+          "athleteId": "joergensen-katja",
+          "squatKg": 190.0,
+          "benchKg": 110.0,
+          "deadliftKg": 230.0,
+          "totalKg": 530.0
+        },
+        {
+          "position": 14,
+          "athleteId": "zhao-yan-fei",
+          "squatKg": 195.0,
+          "benchKg": 127.5,
+          "deadliftKg": 207.5,
+          "totalKg": 530.0
+        },
+        {
+          "position": 15,
+          "athleteId": "matsuda-miyu",
+          "squatKg": 215.0,
+          "benchKg": 115.0,
+          "deadliftKg": 190.0,
+          "totalKg": 520.0
+        },
+        {
+          "position": 16,
+          "athleteId": "letting-regitze",
+          "squatKg": 187.5,
+          "benchKg": 102.5,
+          "deadliftKg": 230.0,
+          "totalKg": 520.0
+        },
+        {
+          "position": 17,
+          "athleteId": "erimo-sabadell-rosa",
+          "squatKg": 192.5,
+          "benchKg": 107.5,
+          "deadliftKg": 215.0,
+          "totalKg": 515.0
+        },
+        {
+          "position": 18,
+          "athleteId": "sanchez-jorge-carla",
+          "squatKg": 197.5,
+          "benchKg": 107.5,
+          "deadliftKg": 207.5,
+          "totalKg": 512.5
+        },
+        {
+          "position": 19,
+          "athleteId": "abouassi-nour",
+          "squatKg": 192.5,
+          "benchKg": 100.0,
+          "deadliftKg": 200.0,
+          "totalKg": 492.5
+        },
+        {
+          "position": 20,
+          "athleteId": "adedokun-comfort",
+          "squatKg": 162.5,
+          "benchKg": 102.5,
+          "deadliftKg": 200.0,
+          "totalKg": 465.0
+        },
+        {
+          "position": 21,
+          "athleteId": "suitauloa-shaniele",
+          "squatKg": 175.0,
+          "benchKg": 97.5,
+          "deadliftKg": 192.5,
+          "totalKg": 465.0
+        },
+        {
+          "position": 22,
+          "athleteId": "szymkowiak-magdalena",
+          "squatKg": 157.5,
+          "benchKg": 72.5,
+          "deadliftKg": 187.5,
+          "totalKg": 417.5
+        }
+      ]
+    },
+    {
+      "groupId": "category-top5",
+      "questionId": "top5-men-120",
+      "categoryId": "men-120",
+      "status": "final",
+      "placements": [
+        {
+          "position": 1,
+          "athleteId": "hunte-rondel",
+          "squatKg": 370.0,
+          "benchKg": 260.0,
+          "deadliftKg": 370.0,
+          "totalKg": 1000.0
+        },
+        {
+          "position": 2,
+          "athleteId": "ngoka-joshua",
+          "squatKg": 372.5,
+          "benchKg": 220.0,
+          "deadliftKg": 372.5,
+          "totalKg": 965.0
+        },
+        {
+          "position": 3,
+          "athleteId": "mcdonald-joseph",
+          "squatKg": 350.0,
+          "benchKg": 245.0,
+          "deadliftKg": 370.0,
+          "totalKg": 965.0
+        },
+        {
+          "position": 4,
+          "athleteId": "el-chaer-etienne",
+          "squatKg": 345.0,
+          "benchKg": 232.5,
+          "deadliftKg": 372.5,
+          "totalKg": 950.0
+        },
+        {
+          "position": 5,
+          "athleteId": "rouska-ashton",
+          "squatKg": 393.0,
+          "benchKg": 200.0,
+          "deadliftKg": 342.5,
+          "totalKg": 935.5
+        },
+        {
+          "position": 6,
+          "athleteId": "de-rohden-antoine",
+          "squatKg": 332.5,
+          "benchKg": 225.0,
+          "deadliftKg": 375.0,
+          "totalKg": 932.5
+        },
+        {
+          "position": 7,
+          "athleteId": "wiendieck-jonah",
+          "squatKg": 342.5,
+          "benchKg": 252.5,
+          "deadliftKg": 332.5,
+          "totalKg": 927.5
+        },
+        {
+          "position": 8,
+          "athleteId": "sulayman-abdul",
+          "squatKg": 365.0,
+          "benchKg": 220.0,
+          "deadliftKg": 340.0,
+          "totalKg": 925.0
+        },
+        {
+          "position": 9,
+          "athleteId": "sahad-mohamed",
+          "squatKg": 375.0,
+          "benchKg": 225.0,
+          "deadliftKg": 325.0,
+          "totalKg": 925.0
+        },
+        {
+          "position": 10,
+          "athleteId": "melnychuk-taras",
+          "squatKg": 330.0,
+          "benchKg": 240.0,
+          "deadliftKg": 350.0,
+          "totalKg": 920.0
+        },
+        {
+          "position": 11,
+          "athleteId": "sekenofsky-baruch",
+          "squatKg": 355.0,
+          "benchKg": 205.0,
+          "deadliftKg": 337.5,
+          "totalKg": 897.5
+        },
+        {
+          "position": 12,
+          "athleteId": "wiseman-lucas",
+          "squatKg": 337.5,
+          "benchKg": 187.5,
+          "deadliftKg": 367.5,
+          "totalKg": 892.5
+        },
+        {
+          "position": 13,
+          "athleteId": "vogelius-jesper",
+          "squatKg": 350.0,
+          "benchKg": 212.5,
+          "deadliftKg": 312.5,
+          "totalKg": 875.0
+        },
+        {
+          "position": 14,
+          "athleteId": "due-laurits",
+          "squatKg": 315.0,
+          "benchKg": 192.5,
+          "deadliftKg": 365.0,
+          "totalKg": 872.5
+        },
+        {
+          "position": 15,
+          "athleteId": "motoki-ayuto",
+          "squatKg": 350.0,
+          "benchKg": 215.0,
+          "deadliftKg": 285.0,
+          "totalKg": 850.0
+        },
+        {
+          "position": 16,
+          "athleteId": "graham-heath",
+          "squatKg": 295.0,
+          "benchKg": 215.0,
+          "deadliftKg": 332.5,
+          "totalKg": 842.5
+        },
+        {
+          "position": 17,
+          "athleteId": "penco-joseph",
+          "squatKg": 305.0,
+          "benchKg": 172.5,
+          "deadliftKg": 355.0,
+          "totalKg": 832.5
+        },
+        {
+          "position": 18,
+          "athleteId": "krisztian-cseszko",
+          "squatKg": 305.0,
+          "benchKg": 185.0,
+          "deadliftKg": 342.5,
+          "totalKg": 832.5
+        },
+        {
+          "position": 19,
+          "athleteId": "pola-daniele",
+          "squatKg": 307.5,
+          "benchKg": 215.0,
+          "deadliftKg": 307.5,
+          "totalKg": 830.0
+        },
+        {
+          "position": 20,
+          "athleteId": "juzups-maris",
+          "squatKg": 305.0,
+          "benchKg": 217.5,
+          "deadliftKg": 295.0,
+          "totalKg": 817.5
+        },
+        {
+          "position": 21,
+          "athleteId": "sigurdsson-helgi",
+          "squatKg": 312.5,
+          "benchKg": 187.5,
+          "deadliftKg": 315.0,
+          "totalKg": 815.0
+        },
+        {
+          "position": 22,
+          "athleteId": "stell-mark",
+          "squatKg": 265.0,
+          "benchKg": 200.0,
+          "deadliftKg": 317.5,
+          "totalKg": 782.5
+        },
+        {
+          "position": 23,
+          "athleteId": "raw-simon",
+          "squatKg": 245.0,
+          "benchKg": 197.5,
+          "deadliftKg": 310.0,
+          "totalKg": 752.5
+        },
+        {
+          "position": 24,
+          "athleteId": "thoma-thomas",
+          "squatKg": 270.0,
+          "benchKg": 185.0,
+          "deadliftKg": 290.0,
+          "totalKg": 745.0
+        },
+        {
+          "position": 25,
+          "athleteId": "karkusashvili-rubeni",
+          "squatKg": 260.0,
+          "benchKg": 182.5,
+          "deadliftKg": 300.0,
+          "totalKg": 742.5
+        }
+      ]
+    }
+  ]
+}

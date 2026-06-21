@@ -19,3 +19,8 @@ node_modules/
 # Logs
 *.log
 artifacts/
+
+# Local secrets
+.env
+.env.*
+!.env.example

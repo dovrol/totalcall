@@ -49,6 +49,13 @@ Then seed scenarios if needed:
 ./scripts/dev-scenarios.sh all-states
 ```
 
+`dev-scenarios.sh` loads local Supabase operations credentials from macOS
+Keychain account `local`. Set it up once:
+
+```bash
+./scripts/setup-supabase-keychain.sh --account local
+```
+
 ## Run Migrations
 
 Apply pending local migrations without a full reset:
@@ -104,8 +111,7 @@ dotnet build ops/cli/TotalCall.Cli/TotalCall.Cli.csproj --no-restore
 Production-oriented wrapper:
 
 ```bash
-SUPABASE_URL=...
-SUPABASE_SECRET_KEY=...
+./scripts/setup-supabase-keychain.sh --account production
 ./scripts/sync-supabase.sh src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json both auto
 ```
 
@@ -117,16 +123,17 @@ Arguments:
 
 `auto` imports matching files from `ops/data/results`.
 
-Direct CLI commands (or use `./scripts/ops.sh <command> ...`):
+Direct CLI commands that need Supabase credentials should run through the
+Keychain wrapper:
 
 ```bash
-dotnet run --project ops/cli/TotalCall.Cli/TotalCall.Cli.csproj -- competition --competition-json <path>
-dotnet run --project ops/cli/TotalCall.Cli/TotalCall.Cli.csproj -- athletes --competition-json <path> --source openipf
-dotnet run --project ops/cli/TotalCall.Cli/TotalCall.Cli.csproj -- results --competition-id worlds-2026 --results-json <path>
-dotnet run --project ops/cli/TotalCall.Cli/TotalCall.Cli.csproj -- scenario all-states --local
+./scripts/with-supabase-keychain.sh --account production -- ./scripts/ops.sh competition --competition-json <path>
+./scripts/with-supabase-keychain.sh --account production -- ./scripts/ops.sh athletes --competition-json <path> --source openipf
+./scripts/with-supabase-keychain.sh --account production -- ./scripts/ops.sh results --competition-id worlds-2026 --results-json <path>
+./scripts/dev-scenarios.sh all-states
 ```
 
-Only run production syncs with intentional environment variables. Do not put service keys in appsettings files.
+Only run production syncs with intentional Keychain account selection. Do not put service keys in appsettings files.
 
 ## Local Auth / Email Inbox
 

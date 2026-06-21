@@ -177,8 +177,7 @@ GitHub Secrets and is only read inside the workflow runner.
 ### Running locally
 
 ```bash
-export SUPABASE_URL="https://<project>.supabase.co"
-export SUPABASE_SECRET_KEY="<service_role key>"
+./scripts/setup-supabase-keychain.sh --account production
 
 # Syncs the competition definition, then both openipf and openpowerlifting by default.
 ./scripts/sync-supabase.sh

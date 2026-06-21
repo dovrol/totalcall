@@ -9,8 +9,8 @@ Dev scenarios seed local Supabase with predictable competitions, users, submissi
 The scenario runner refuses to run unless:
 
 - `--local` is passed.
-- `SUPABASE_URL` is set.
-- `SUPABASE_SECRET_KEY` or `SUPABASE_SERVICE_ROLE_KEY` is set.
+- local Supabase operations credentials are available through macOS Keychain account `local`
+  or explicit process environment variables.
 - The Supabase URL is loopback, such as `http://127.0.0.1:54321`.
 
 Do not run scenario seeding against production. The runner deletes and recreates selected `dev-*` competitions and related rows.
@@ -19,13 +19,15 @@ Do not run scenario seeding against production. The runner deletes and recreates
 
 ```bash
 supabase start
+./scripts/setup-supabase-keychain.sh --account local
 ./scripts/dev-scenarios.sh all-states
 ./scripts/dev.sh
 ```
 
 Open `http://localhost:5010` and look for `dev-*` competitions.
 
-`./scripts/dev-scenarios.sh` applies pending local migrations before seeding.
+`./scripts/dev-scenarios.sh` loads credentials from Keychain and applies
+pending local migrations before seeding.
 
 ## Available Scenarios
 

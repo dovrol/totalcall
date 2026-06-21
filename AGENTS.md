@@ -40,18 +40,20 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 - Local email/Magic Link inbox is `http://127.0.0.1:54324`.
 - Auth callback route is `/auth/callback`; local redirect URLs are configured in `supabase/config.toml`.
 - Local Supabase MCP is `http://127.0.0.1:54321/mcp`.
-- Claude Code uses `.mcp.json`. It exposes `totalcall-ops` over stdio and
-  `supabase-local` over the local Supabase MCP endpoint. Build the solution
-  before starting `totalcall-ops`, because it runs with `dotnet run --no-build`.
-- Zed uses `.zed/settings.json` for the local Supabase MCP endpoint and requires
-  the local Supabase stack to be running.
+- Claude Code uses `.mcp.json`. It exposes `totalcall-ops-local`,
+  `totalcall-ops-production`, and `supabase-local`. Build the solution before
+  starting TotalCall MCP servers, because they run with `dotnet run --no-build`.
+- Zed uses `.zed/settings.json`. It defines `totalcall-ops-local`,
+  `totalcall-ops-production`, and the local Supabase MCP endpoint. Use the
+  production server only for intentional production operations.
 
 ## Supabase Sync
 
 - Sync everything through `./scripts/sync-supabase.sh`: it first syncs the competition
   definition (`competition` subcommand), then athlete history per source.
 - The wrapper imports both `openipf` and `openpowerlifting` by default.
-- For real syncs, set `SUPABASE_URL` and `SUPABASE_SECRET_KEY` manually first.
+- For real syncs, use macOS Keychain via `./scripts/setup-supabase-keychain.sh --account production`
+  and `./scripts/with-supabase-keychain.sh --account production -- <command>`.
 - GitHub Actions uses `.github/workflows/sync-data.yml`, which calls the same wrapper.
 - `ops/cli/TotalCall.Cli` exposes `athletes`, `competition`, `results`, and
   `scenario` subcommands; keep their responsibilities separate. The CLI should

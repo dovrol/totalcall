@@ -41,7 +41,9 @@ Local Supabase tools:
 ./scripts/sync-supabase.sh [competition-json] [both|openipf|openpowerlifting] [auto|none|results-json]
 ```
 
-For production syncs, set `SUPABASE_URL` and `SUPABASE_SECRET_KEY` manually. Never put service-role keys in frontend config or commit them.
+For production syncs, store credentials in macOS Keychain with
+`./scripts/setup-supabase-keychain.sh --account production`; never put
+service-role keys in frontend config or commit them.
 
 ## Documentation
 

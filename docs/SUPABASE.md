@@ -21,6 +21,7 @@ supabase start
 supabase status
 supabase db reset
 supabase migration up --local
+./scripts/setup-supabase-keychain.sh --account local
 ./scripts/dev-scenarios.sh all-states
 ```
 
