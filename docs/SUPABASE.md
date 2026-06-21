@@ -84,7 +84,6 @@ Private service-role data:
 - `official_results`
 - `official_result_groups`
 - `score_snapshots`
-- `admin_operation_runs`
 
 ## Competition Config
 

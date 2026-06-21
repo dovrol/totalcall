@@ -62,6 +62,29 @@ public sealed record ResultsImportDryRunResult(
     public bool IsValid => ExitCode == 0;
 }
 
+public sealed class ScoreSnapshotRecomputeOptions
+{
+    public required string CompetitionId { get; init; }
+    public string? SupabaseUrl { get; init; }
+    public string? SupabaseSecretKey { get; init; }
+    public string TriggeredBy { get; init; } = "manual";
+}
+
+public sealed record ScoreSnapshotRecomputeResult(
+    int ExitCode,
+    string? CompetitionId,
+    int OfficialResultGroupsCount,
+    int SubmittedRowsScored,
+    int FinalGroupsCount,
+    int PendingGroupsCount,
+    string? LeaderboardStatus,
+    DateTimeOffset? CalculatedAt,
+    bool ScoreSnapshotsDeleted,
+    IReadOnlyList<OperationLogEntry> Logs)
+{
+    public bool Succeeded => ExitCode == 0;
+}
+
 public sealed class OfficialResultsImporter
 {
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web)
@@ -85,6 +108,13 @@ public sealed class OfficialResultsImporter
     public async Task<int> RunDryRunAsync(ResultsImportOptions opts, CancellationToken ct)
     {
         var result = await DryRunAsync(opts, ct);
+        WriteLogs(result.Logs);
+        return result.ExitCode;
+    }
+
+    public async Task<int> RunRecomputeAsync(ScoreSnapshotRecomputeOptions opts, CancellationToken ct)
+    {
+        var result = await RecomputeScoreSnapshotsAsync(opts, ct);
         WriteLogs(result.Logs);
         return result.ExitCode;
     }
@@ -128,59 +158,13 @@ public sealed class OfficialResultsImporter
         operationLogs.Add(OperationLogEntry.Info($"Imported {resultsFile.Groups.Count} official result groups."));
 
         var officialResults = await LoadOfficialResultsAsync(supabase, competitionId, ct);
-        var submissions = await LoadSubmissionsAsync(supabase, competitionId, operationLogs, ct);
-        var competitionByVersionId = await LoadSubmissionCompetitionVersionsAsync(
+        var recompute = await RecomputeScoreSnapshotsAsync(
             supabase,
+            competitionId,
             published,
-            submissions,
+            officialResults,
             operationLogs,
             ct);
-
-        var calculatedAt = DateTimeOffset.UtcNow;
-        var snapshotBuilder = new ScoreSnapshotBuilder(scoringService);
-        var scoreRows = snapshotBuilder.Build(
-            submissions,
-            competitionByVersionId,
-            officialResults,
-            calculatedAt);
-
-        var summary = scoringService.Score(
-            published.Competition,
-            CreateEmptySubmittedPredictionSet(published.Competition),
-            officialResults);
-
-        if (summary.ScoredGroupsCount == 0 || scoreRows.Count == 0)
-        {
-            await supabase.DeleteAsync(
-                "public",
-                "score_snapshots",
-                $"competition_id=eq.{Uri.EscapeDataString(competitionId)}",
-                ct);
-        }
-        else
-        {
-            var snapshotRows = new JsonArray();
-            foreach (var row in scoreRows)
-            {
-                snapshotRows.Add(row.ToJsonObject());
-            }
-
-            await supabase.UpsertAsync(
-                "public",
-                "score_snapshots",
-                "competition_id,user_id",
-                snapshotRows,
-                ct);
-        }
-
-        var pendingGroupsCount = Math.Max(0, summary.TotalGroupsCount - summary.ScoredGroupsCount);
-        var leaderboardStatus = summary.Status.ToString().ToLowerInvariant();
-        var snapshotsDeleted = summary.ScoredGroupsCount == 0 || scoreRows.Count == 0;
-        operationLogs.Add(OperationLogEntry.Info($"final groups: {summary.ScoredGroupsCount}"));
-        operationLogs.Add(OperationLogEntry.Info($"pending groups: {pendingGroupsCount}"));
-        operationLogs.Add(OperationLogEntry.Info($"leaderboard status: {leaderboardStatus}"));
-        operationLogs.Add(OperationLogEntry.Info($"submitted rows scored: {scoreRows.Count}"));
-        operationLogs.Add(OperationLogEntry.Info($"last calculated at: {calculatedAt:O}"));
         operationLogs.Add(OperationLogEntry.Done("Imported official results and recalculated score snapshots."));
 
         return Finish(
@@ -191,12 +175,12 @@ public sealed class OfficialResultsImporter
             resultsFile,
             incomingHash,
             resultsFile.Groups.Count,
-            scoreRows.Count,
-            summary.ScoredGroupsCount,
-            pendingGroupsCount,
-            leaderboardStatus,
-            calculatedAt,
-            snapshotsDeleted);
+            recompute.SubmittedRowsScored,
+            recompute.FinalGroupsCount,
+            recompute.PendingGroupsCount,
+            recompute.LeaderboardStatus,
+            recompute.CalculatedAt,
+            recompute.ScoreSnapshotsDeleted);
     }
 
     // Read-only validation: runs the same prepare phase as ImportAsync (load,
@@ -248,6 +232,127 @@ public sealed class OfficialResultsImporter
             activeConfigVersion: prepared.Published.Competition.ConfigVersion,
             storedResultsHash: storedHash,
             matchesStoredResults: matchesStored);
+    }
+
+    public async Task<ScoreSnapshotRecomputeResult> RecomputeScoreSnapshotsAsync(
+        ScoreSnapshotRecomputeOptions opts,
+        CancellationToken ct)
+    {
+        var logs = new List<OperationLogEntry>();
+        if (string.IsNullOrWhiteSpace(opts.CompetitionId))
+        {
+            logs.Add(OperationLogEntry.Error("recompute: --competition-id is required."));
+            return RecomputeFinish(1, logs);
+        }
+
+        var competitionId = opts.CompetitionId.Trim();
+        logs.Add(OperationLogEntry.Info($"Recomputing score snapshots for '{competitionId}'."));
+
+        if (string.IsNullOrWhiteSpace(opts.SupabaseUrl) || string.IsNullOrWhiteSpace(opts.SupabaseSecretKey))
+        {
+            logs.Add(OperationLogEntry.Error("SUPABASE_URL and SUPABASE_SECRET_KEY must be set."));
+            return RecomputeFinish(2, logs, competitionId);
+        }
+
+        var supabase = new SupabaseRestClient(opts.SupabaseUrl, opts.SupabaseSecretKey);
+        var published = await LoadPublishedCompetitionAsync(supabase, competitionId, logs, ct);
+        if (published is null)
+        {
+            return RecomputeFinish(3, logs, competitionId);
+        }
+
+        var officialResults = await LoadOfficialResultsAsync(supabase, competitionId, ct);
+        if (officialResults.Groups.Count == 0)
+        {
+            logs.Add(OperationLogEntry.Error("No official result groups found. Import official results before recomputing scores."));
+            return RecomputeFinish(3, logs, competitionId);
+        }
+
+        var result = await RecomputeScoreSnapshotsAsync(
+            supabase,
+            competitionId,
+            published,
+            officialResults,
+            logs,
+            ct);
+        logs.Add(OperationLogEntry.Done("Recomputed score snapshots from stored official results."));
+        return result with { Logs = logs.ToArray() };
+    }
+
+    private async Task<ScoreSnapshotRecomputeResult> RecomputeScoreSnapshotsAsync(
+        SupabaseRestClient supabase,
+        string competitionId,
+        PublishedCompetition published,
+        OfficialCompetitionResults officialResults,
+        List<OperationLogEntry> logs,
+        CancellationToken ct)
+    {
+        var submissions = await LoadSubmissionsAsync(supabase, competitionId, logs, ct);
+        var competitionByVersionId = await LoadSubmissionCompetitionVersionsAsync(
+            supabase,
+            published,
+            submissions,
+            logs,
+            ct);
+
+        var calculatedAt = DateTimeOffset.UtcNow;
+        var snapshotBuilder = new ScoreSnapshotBuilder(scoringService);
+        var scoreRows = snapshotBuilder.Build(
+            submissions,
+            competitionByVersionId,
+            officialResults,
+            calculatedAt);
+
+        var summary = scoringService.Score(
+            published.Competition,
+            CreateEmptySubmittedPredictionSet(published.Competition),
+            officialResults);
+
+        if (summary.ScoredGroupsCount == 0 || scoreRows.Count == 0)
+        {
+            await supabase.DeleteAsync(
+                "public",
+                "score_snapshots",
+                $"competition_id=eq.{Uri.EscapeDataString(competitionId)}",
+                ct);
+        }
+        else
+        {
+            var snapshotRows = new JsonArray();
+            foreach (var row in scoreRows)
+            {
+                snapshotRows.Add(row.ToJsonObject());
+            }
+
+            await supabase.UpsertAsync(
+                "public",
+                "score_snapshots",
+                "competition_id,user_id",
+                snapshotRows,
+                ct);
+        }
+
+        var pendingGroupsCount = Math.Max(0, summary.TotalGroupsCount - summary.ScoredGroupsCount);
+        var leaderboardStatus = summary.Status.ToString().ToLowerInvariant();
+        var snapshotsDeleted = summary.ScoredGroupsCount == 0 || scoreRows.Count == 0;
+        logs.Add(OperationLogEntry.Info($"official result groups: {officialResults.Groups.Count}"));
+        logs.Add(OperationLogEntry.Info($"final groups: {summary.ScoredGroupsCount}"));
+        logs.Add(OperationLogEntry.Info($"pending groups: {pendingGroupsCount}"));
+        logs.Add(OperationLogEntry.Info($"leaderboard status: {leaderboardStatus}"));
+        logs.Add(OperationLogEntry.Info($"submitted rows scored: {scoreRows.Count}"));
+        logs.Add(OperationLogEntry.Info($"last calculated at: {calculatedAt:O}"));
+
+        return RecomputeFinish(
+            0,
+            logs,
+            competitionId,
+            officialResults.Groups.Count,
+            scoreRows.Count,
+            summary.ScoredGroupsCount,
+            pendingGroupsCount,
+            leaderboardStatus,
+            calculatedAt,
+            snapshotsDeleted);
     }
 
     // Shared load/parse/validate phase. Both ImportAsync and DryRunAsync run this
@@ -974,6 +1079,28 @@ public sealed class OfficialResultsImporter
             resultsHash,
             resultsFile?.Groups.Count ?? 0,
             groupsImported ?? 0,
+            submittedRowsScored,
+            finalGroupsCount,
+            pendingGroupsCount,
+            leaderboardStatus,
+            calculatedAt,
+            scoreSnapshotsDeleted,
+            logs.ToArray());
+
+    private static ScoreSnapshotRecomputeResult RecomputeFinish(
+        int exitCode,
+        List<OperationLogEntry> logs,
+        string? competitionId = null,
+        int officialResultGroupsCount = 0,
+        int submittedRowsScored = 0,
+        int finalGroupsCount = 0,
+        int pendingGroupsCount = 0,
+        string? leaderboardStatus = null,
+        DateTimeOffset? calculatedAt = null,
+        bool scoreSnapshotsDeleted = false) => new(
+            exitCode,
+            competitionId,
+            officialResultGroupsCount,
             submittedRowsScored,
             finalGroupsCount,
             pendingGroupsCount,

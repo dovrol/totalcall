@@ -5,7 +5,6 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 ## Project Shape
 
 - Main app: `src/TotalCall.Client`.
-- Local/server-side admin host: `src/TotalCall.Admin.Host`.
 - Tests: `tests/TotalCall.Tests`.
 - Supabase migrations/config: `supabase`.
 - Shared server/CLI-side operational workflows: `src/TotalCall.Operations`.
@@ -30,12 +29,10 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 ## Local Development
 
 - Local app URL is `http://localhost:5010`.
-- Local admin host URL is `http://localhost:5025`.
 - Local Supabase config is in `supabase/config.toml`.
 - Blazor development config is `src/TotalCall.Client/wwwroot/appsettings.Development.json`.
 - Frontend config may contain only public Supabase values: URL and publishable key.
 - Never commit Supabase secret/service-role keys.
-- Admin host secrets come from server-side environment variables only.
 - Local Supabase API is `http://127.0.0.1:54321`.
 - Supabase Studio is `http://127.0.0.1:54323`.
 - Local email/Magic Link inbox is `http://127.0.0.1:54324`.
@@ -56,7 +53,7 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 - The competition definition lives in Supabase (`competitions` + `competition_versions`);
   the JSON in `wwwroot/data/competitions` stays a dev/import source and runtime fallback.
 - Service-role keys must stay in CLI/server-side operations. Never pass them to
-  Blazor WebAssembly or browser-delivered admin UI code.
+  Blazor WebAssembly or other browser-delivered code.
 
 ## Verification
 

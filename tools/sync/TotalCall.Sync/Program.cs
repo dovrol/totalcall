@@ -198,6 +198,7 @@ static async Task<int> RunResultsAsync(string[] args, CancellationToken ct)
     string? competitionId = null;
     string? resultsJson = null;
     var dryRun = false;
+    var recomputeOnly = false;
     var triggeredBy = Environment.GetEnvironmentVariable("GITHUB_ACTIONS") == "true" ? "github-actions" : "manual";
 
     for (var i = 0; i < args.Length; i++)
@@ -210,6 +211,8 @@ static async Task<int> RunResultsAsync(string[] args, CancellationToken ct)
                 resultsJson = args[++i]; break;
             case "--dry-run":
                 dryRun = true; break;
+            case "--recompute-only":
+                recomputeOnly = true; break;
             case "--triggered-by":
                 triggeredBy = args[++i]; break;
             default:
@@ -223,6 +226,26 @@ static async Task<int> RunResultsAsync(string[] args, CancellationToken ct)
     {
         Console.Error.WriteLine("[error] results: --competition-id is required.");
         return 1;
+    }
+
+    var importer = new OfficialResultsImporter();
+    if (recomputeOnly)
+    {
+        if (dryRun)
+        {
+            Console.Error.WriteLine("[error] results: --dry-run cannot be combined with --recompute-only.");
+            return 1;
+        }
+
+        var recomputeOptions = new ScoreSnapshotRecomputeOptions
+        {
+            CompetitionId = competitionId!,
+            SupabaseUrl = Environment.GetEnvironmentVariable("SUPABASE_URL"),
+            SupabaseSecretKey = Environment.GetEnvironmentVariable("SUPABASE_SECRET_KEY"),
+            TriggeredBy = triggeredBy
+        };
+
+        return await importer.RunRecomputeAsync(recomputeOptions, ct);
     }
 
     if (string.IsNullOrWhiteSpace(resultsJson))
@@ -240,7 +263,6 @@ static async Task<int> RunResultsAsync(string[] args, CancellationToken ct)
         TriggeredBy = triggeredBy
     };
 
-    var importer = new OfficialResultsImporter();
     return dryRun
         ? await importer.RunDryRunAsync(options, ct)
         : await importer.RunAsync(options, ct);
@@ -272,6 +294,7 @@ static void PrintHelp()
             --competition-id <id>                Competition id, e.g. worlds-2026.
             --results-json <path>                Path to official results JSON.
             [--dry-run]                          Validate against the published config; no DB writes.
+            [--recompute-only]                   Rebuild score snapshots from results already stored in Supabase.
             [--triggered-by <text>]              Label written into import metadata source fallback.
 
           scenario      Prepare local-only development states. Requires --local.
@@ -290,7 +313,5 @@ static void PrintHelp()
           SUPABASE_SECRET_KEY   Supabase secret/service_role key. Required unless --dry-run (athletes only).
           SUPABASE_SERVICE_ROLE_KEY
                                 Alternative service_role key name for scenario Auth Admin calls.
-
-        Admin tables are protected by RLS + REVOKE — no Dashboard configuration needed.
         """);
 }
