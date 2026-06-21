@@ -11,7 +11,7 @@ The app is already used in production and is currently being documented for the 
 - Supabase Auth for Magic Link sign-in.
 - Supabase Postgres/PostgREST for competition config, private cloud saves, public standings, public boards, athlete history, and scoring snapshots.
 - GitHub Pages for the static frontend.
-- `tools/sync/TotalCall.Sync` for competition config sync, athlete-history import, official results import, scoring recomputation, and local dev scenarios.
+- `ops/cli/TotalCall.Cli` for competition config sync, athlete-history import, official results import, scoring recomputation, and local dev scenarios.
 
 ## Quick Start
 

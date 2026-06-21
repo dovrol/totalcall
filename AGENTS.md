@@ -8,7 +8,9 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 - Tests: `tests/TotalCall.Tests`.
 - Supabase migrations/config: `supabase`.
 - Shared server/CLI-side operational workflows: `src/TotalCall.Operations`.
-- Supabase sync tool (athlete history + competition definitions): `tools/sync/TotalCall.Sync`.
+- Operations live under `ops`: the domain CLI (`ops/cli/TotalCall.Cli`), the
+  agent-facing MCP server (`ops/mcp/TotalCall.Mcp`), the planned local dev-seed
+  path (`ops/dev-seed`), and operational data (`ops/data/results`).
 - Utility scripts live in `scripts`.
 
 ## Frontend
@@ -51,9 +53,10 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 - The wrapper imports both `openipf` and `openpowerlifting` by default.
 - For real syncs, set `SUPABASE_URL` and `SUPABASE_SECRET_KEY` manually first.
 - GitHub Actions uses `.github/workflows/sync-data.yml`, which calls the same wrapper.
-- `TotalCall.Sync` exposes `athletes`, `competition`, `results`, and `scenario`
-  subcommands; keep their responsibilities separate. The CLI should stay thin
-  when code belongs in `src/TotalCall.Operations`.
+- `ops/cli/TotalCall.Cli` exposes `athletes`, `competition`, `results`, and
+  `scenario` subcommands; keep their responsibilities separate. The CLI should
+  stay thin when code belongs in `src/TotalCall.Operations`. `scenario` is
+  transitional: local dev seeding is moving to `ops/dev-seed` (see its README).
 - The competition definition lives in Supabase (`competitions` + `competition_versions`);
   the JSON in `wwwroot/data/competitions` stays a dev/import source and runtime fallback.
 - Service-role keys must stay in CLI/server-side operations. Never pass them to
@@ -63,4 +66,4 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
 
 - Run `./scripts/build.sh` after app code changes.
 - Run `./scripts/test.sh` when changing shared logic, persistence, scoring, validation, or sync behavior.
-- For sync-tool-only changes, `dotnet build tools/sync/TotalCall.Sync/TotalCall.Sync.csproj --no-restore` is usually enough.
+- For CLI-only changes, `dotnet build ops/cli/TotalCall.Cli/TotalCall.Cli.csproj --no-restore` is usually enough.

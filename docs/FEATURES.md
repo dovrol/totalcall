@@ -134,7 +134,7 @@ Implemented behavior:
 
 Implemented behavior:
 
-- Official result files are imported by `TotalCall.Sync results`.
+- Official result files are imported by `TotalCall.Cli results`.
 - Final result groups are scored; pending groups are not counted as zero.
 - Own locked board can load `get_my_score` and render the user's score breakdown.
 - Public boards can load sanitized submitted picks plus score breakdown after lock and scoring.
@@ -219,7 +219,7 @@ Implemented behavior:
 
 Implemented behavior:
 
-- `TotalCall.Sync scenario` and `./scripts/dev-scenarios.sh` seed local product states.
+- `TotalCall.Cli scenario` (transitional) and `./scripts/dev-scenarios.sh` seed local product states.
 - Scenarios include open, open with submissions, locked without results, partial results, final results, empty, roster update, and locked roster update.
 - `all-states` seeds all scenarios.
 - The scenario runner requires `--local` and a loopback Supabase URL.

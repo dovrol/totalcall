@@ -107,8 +107,7 @@ public sealed class OfficialResultsImporterDryRunTests
     }
 
     private static string LatestWorldsResultsPath() => Path.Combine(
-        "tools",
-        "sync",
+        "ops",
         "data",
         "results",
         "worlds-2026-partial-2026-06-17.json");

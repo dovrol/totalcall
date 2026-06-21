@@ -1,4 +1,4 @@
-namespace TotalCall.Sync.Athletes;
+namespace TotalCall.Cli.Athletes;
 
 // ---- Internal athlete-import pipeline records ----
 

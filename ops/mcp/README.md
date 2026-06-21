@@ -5,7 +5,7 @@ Local MCP server for AI-first TotalCall operations.
 Run after building the solution:
 
 ```bash
-dotnet run --project tools/mcp/TotalCall.Mcp/TotalCall.Mcp.csproj --no-build
+dotnet run --project ops/mcp/TotalCall.Mcp/TotalCall.Mcp.csproj --no-build
 ```
 
 Current tools are read-only or dry-run only:

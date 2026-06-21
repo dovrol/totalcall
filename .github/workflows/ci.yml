@@ -38,8 +38,8 @@ jobs:
       - name: Build solution
         run: ./scripts/build.sh
 
-      - name: Build sync tool explicitly
-        run: dotnet build tools/sync/TotalCall.Sync/TotalCall.Sync.csproj --no-restore
+      - name: Build ops CLI explicitly
+        run: dotnet build ops/cli/TotalCall.Cli/TotalCall.Cli.csproj --no-restore
 
       - name: Test
         run: ./scripts/test.sh

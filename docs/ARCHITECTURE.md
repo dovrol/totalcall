@@ -35,7 +35,9 @@ GitHub Actions
 - `src/TotalCall.Core` contains shared domain models and scoring code used by the public app, tests, and the sync tool.
 - `src/TotalCall.Operations` contains server/CLI-side operational code that can use service-role credentials. It currently owns the Supabase REST wrapper, competition config hashing, competition config publish workflow, official results import, and score snapshot recomputation.
 - `tests/TotalCall.Tests` contains xUnit tests for domain logic, validation, storage, migrations, scoring, and sync helpers.
-- `tools/sync/TotalCall.Sync` is a .NET console wrapper for Supabase imports, scoring recomputation, and local scenarios.
+- `ops/cli/TotalCall.Cli` is a .NET console wrapper for Supabase imports, scoring recomputation, and local scenarios.
+- `ops/mcp/TotalCall.Mcp` is the agent-facing MCP server exposing read-only/dry-run operations.
+- `ops/data/results` holds the official results JSON files imported by the CLI.
 - `supabase/migrations` is the source of truth for database schema, RPCs, RLS, and grants.
 - `scripts` contains thin local wrappers.
 
@@ -113,16 +115,16 @@ Supabase provides:
 
 The frontend uses only `Supabase:Url` and `Supabase:PublishableKey`. Authenticated requests add the user's access token. Service-role keys are used only by CLI/server-side operations, scripts, GitHub Actions secrets, and local dev scenario tooling.
 
-## Sync And Import Tool
+## Operations CLI
 
-`tools/sync/TotalCall.Sync` exposes these subcommands and delegates shared operational code to `TotalCall.Operations`:
+`ops/cli/TotalCall.Cli` exposes these subcommands and delegates shared operational code to `TotalCall.Operations`:
 
 - `competition` syncs competition metadata and immutable versioned JSON config, then publishes the version.
 - `athletes` imports OpenIPF/OpenPowerlifting history for athletes referenced by the competition JSON.
 - `results` imports official result groups and recalculates `score_snapshots`.
-- `scenario` seeds local-only product states and users for UI testing.
+- `scenario` seeds local-only product states and users for UI testing. This is transitional; local dev seeding is moving to `ops/dev-seed`.
 
-`./scripts/sync-supabase.sh` is the production-oriented wrapper. It syncs the competition first, then athlete history for one or both sources, then imports matching official results files from `tools/sync/data/results` when results mode is `auto`.
+`./scripts/sync-supabase.sh` is the production-oriented wrapper. It syncs the competition first, then athlete history for one or both sources, then imports matching official results files from `ops/data/results` when results mode is `auto`.
 
 ## Scoring Ownership
 

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace TotalCall.Sync;
+namespace TotalCall.Cli;
 
 // ---- Competition JSON DTOs (subset — fields the sync tool needs) ----
 // Shared by the `athletes` and `competition` subcommands. The full competition

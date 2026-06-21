@@ -10,7 +10,7 @@ using TotalCall.Core.Domain.Predictions;
 using TotalCall.Operations.Supabase;
 using TotalCall.Operations.Results;
 
-namespace TotalCall.Sync.DevScenarios;
+namespace TotalCall.Cli.DevScenarios;
 
 public sealed class DevScenarioOptions
 {

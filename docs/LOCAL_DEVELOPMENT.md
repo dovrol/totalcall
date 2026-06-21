@@ -93,10 +93,10 @@ Current script behavior:
 
 Run restore/build before test after a clean checkout.
 
-For sync-tool-only changes:
+For CLI-only changes:
 
 ```bash
-dotnet build tools/sync/TotalCall.Sync/TotalCall.Sync.csproj --no-restore
+dotnet build ops/cli/TotalCall.Cli/TotalCall.Cli.csproj --no-restore
 ```
 
 ## Sync / Import
@@ -115,15 +115,15 @@ Arguments:
 - source: `both`, `openipf`, or `openpowerlifting`,
 - results: `auto`, `none`, or a results JSON path.
 
-`auto` imports matching files from `tools/sync/data/results`.
+`auto` imports matching files from `ops/data/results`.
 
-Direct tool commands:
+Direct CLI commands (or use `./scripts/ops.sh <command> ...`):
 
 ```bash
-dotnet run --project tools/sync/TotalCall.Sync/TotalCall.Sync.csproj -- competition --competition-json <path>
-dotnet run --project tools/sync/TotalCall.Sync/TotalCall.Sync.csproj -- athletes --competition-json <path> --source openipf
-dotnet run --project tools/sync/TotalCall.Sync/TotalCall.Sync.csproj -- results --competition-id worlds-2026 --results-json <path>
-dotnet run --project tools/sync/TotalCall.Sync/TotalCall.Sync.csproj -- scenario all-states --local
+dotnet run --project ops/cli/TotalCall.Cli/TotalCall.Cli.csproj -- competition --competition-json <path>
+dotnet run --project ops/cli/TotalCall.Cli/TotalCall.Cli.csproj -- athletes --competition-json <path> --source openipf
+dotnet run --project ops/cli/TotalCall.Cli/TotalCall.Cli.csproj -- results --competition-id worlds-2026 --results-json <path>
+dotnet run --project ops/cli/TotalCall.Cli/TotalCall.Cli.csproj -- scenario all-states --local
 ```
 
 Only run production syncs with intentional environment variables. Do not put service keys in appsettings files.

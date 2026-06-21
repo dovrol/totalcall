@@ -6,11 +6,11 @@ The database migration that introduced result tables is named `20260611130000_ad
 
 ## Ownership
 
-Official scoring is computed by `tools/sync/TotalCall.Sync`, not by the browser.
+Official scoring is computed by `ops/cli/TotalCall.Cli`, not by the browser.
 
 The flow is:
 
-1. A service-role import runs `TotalCall.Sync results`.
+1. A service-role import runs `TotalCall.Cli results`.
 2. The importer validates an official results JSON file against the published competition config.
 3. It upserts `official_results` and `official_result_groups`.
 4. It loads submitted `prediction_submissions`.

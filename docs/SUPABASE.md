@@ -150,7 +150,7 @@ Tables:
 - `official_results`
 - `official_result_groups`
 
-These are private service-role tables. They are written by `TotalCall.Sync results`.
+These are private service-role tables. They are written by `TotalCall.Cli results`.
 
 `official_result_groups` stores group/question/category result payloads. Groups can be `pending` or `final`; only final groups are scored.
 
@@ -283,7 +283,7 @@ Do not expose:
 
 ## Importer Responsibilities
 
-`TotalCall.Sync` with service-role credentials owns:
+`TotalCall.Cli` with service-role credentials owns:
 
 - syncing competition metadata and config versions,
 - importing athlete history,

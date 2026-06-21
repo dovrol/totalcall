@@ -6,7 +6,7 @@
       "args": [
         "run",
         "--project",
-        "tools/mcp/TotalCall.Mcp/TotalCall.Mcp.csproj",
+        "ops/mcp/TotalCall.Mcp/TotalCall.Mcp.csproj",
         "--no-build"
       ]
     },

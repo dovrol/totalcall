@@ -1,6 +1,6 @@
 using TotalCall.Operations.Competitions;
-using TotalCall.Sync.Athletes;
-using TotalCall.Sync.DevScenarios;
+using TotalCall.Cli.Athletes;
+using TotalCall.Cli.DevScenarios;
 using TotalCall.Operations.Results;
 
 if (args.Length == 0 || args[0] is "-h" or "--help")
@@ -271,10 +271,10 @@ static async Task<int> RunResultsAsync(string[] args, CancellationToken ct)
 static void PrintHelp()
 {
     Console.WriteLine("""
-        TotalCall Supabase sync.
+        TotalCall operations CLI (Supabase sync, imports, scoring, dev scenarios).
 
         Usage:
-          TotalCall.Sync <command> [options]
+          TotalCall.Cli <command> [options]
 
         Commands:
           athletes      Import OpenPowerlifting/OpenIPF athlete history.
@@ -297,7 +297,9 @@ static void PrintHelp()
             [--recompute-only]                   Rebuild score snapshots from results already stored in Supabase.
             [--triggered-by <text>]              Label written into import metadata source fallback.
 
-          scenario      Prepare local-only development states. Requires --local.
+          scenario      (transitional) Prepare local-only development states. Requires --local.
+                        Local dev seeding is moving out of this CLI into ops/dev-seed;
+                        this subcommand stays until that path lands.
             <name>                               all-states, open-with-submissions,
                                                  locked-no-results, partial-results,
                                                  final-results, empty, roster-update

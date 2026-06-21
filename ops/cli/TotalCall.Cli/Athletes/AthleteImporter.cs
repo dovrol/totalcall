@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using TotalCall.Operations.Supabase;
 
-namespace TotalCall.Sync.Athletes;
+namespace TotalCall.Cli.Athletes;
 
 public sealed class AthleteImportOptions
 {
@@ -231,7 +231,7 @@ public sealed class AthleteImporter
         Console.WriteLine($"[info] Downloading {url}");
         var tmpZip = Path.GetTempFileName();
         using var http = new HttpClient { Timeout = TimeSpan.FromMinutes(30) };
-        http.DefaultRequestHeaders.UserAgent.ParseAdd("TotalCall-Sync/1.0");
+        http.DefaultRequestHeaders.UserAgent.ParseAdd("TotalCall-Cli/1.0");
         await using (var src = await http.GetStreamAsync(url, ct))
         await using (var dst = File.Create(tmpZip))
         {

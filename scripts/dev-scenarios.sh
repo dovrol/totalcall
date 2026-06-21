@@ -45,7 +45,7 @@ echo "[info] Applying pending local migrations..."
 supabase migration up --local
 
 dotnet run \
-  --project tools/sync/TotalCall.Sync/TotalCall.Sync.csproj \
+  --project ops/cli/TotalCall.Cli/TotalCall.Cli.csproj \
   --no-restore \
   -- scenario "$SCENARIO" \
   --local \

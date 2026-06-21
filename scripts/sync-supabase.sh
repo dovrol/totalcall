@@ -2,7 +2,8 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SYNC_PROJECT="${ROOT_DIR}/tools/sync/TotalCall.Sync/TotalCall.Sync.csproj"
+CLI_PROJECT="${ROOT_DIR}/ops/cli/TotalCall.Cli/TotalCall.Cli.csproj"
+RESULTS_DIR="${ROOT_DIR}/ops/data/results"
 
 COMPETITION_JSON="${1:-src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json}"
 SOURCE="${2:-both}"
@@ -17,7 +18,7 @@ Usage:
 
 Syncs the competition definition (metadata + versioned config) and then the
 athlete history for the requested source(s) into Supabase.
-If matching official results JSON files exist under tools/sync/data/results,
+If matching official results JSON files exist under ops/data/results,
 they are imported after athlete history by default.
 
 Environment:
@@ -45,6 +46,11 @@ if [[ -z "${SUPABASE_URL:-}" || -z "${SUPABASE_SECRET_KEY:-}" ]]; then
   exit 1
 fi
 
+dotnet build "$CLI_PROJECT" \
+  --configuration "$DOTNET_CONFIGURATION" \
+  --no-restore \
+  >/dev/null
+
 case "$SOURCE" in
   both)
     SOURCES=(openipf openpowerlifting)
@@ -63,7 +69,8 @@ esac
 # any submission references it.
 dotnet run \
   --configuration "$DOTNET_CONFIGURATION" \
-  --project "$SYNC_PROJECT" \
+  --project "$CLI_PROJECT" \
+  --no-build \
   -- \
   competition \
   --competition-json "$COMPETITION_JSON" \
@@ -72,7 +79,8 @@ dotnet run \
 for DATA_SOURCE in "${SOURCES[@]}"; do
   dotnet run \
     --configuration "$DOTNET_CONFIGURATION" \
-    --project "$SYNC_PROJECT" \
+    --project "$CLI_PROJECT" \
+    --no-build \
     -- \
     athletes \
     --competition-json "$COMPETITION_JSON" \
@@ -85,7 +93,8 @@ import_results() {
 
   dotnet run \
     --configuration "$DOTNET_CONFIGURATION" \
-    --project "$SYNC_PROJECT" \
+    --project "$CLI_PROJECT" \
+    --no-build \
     -- \
     results \
     --competition-id "$COMPETITION_ID" \
@@ -98,7 +107,7 @@ case "$RESULTS" in
     ;;
   auto)
     mapfile -t RESULTS_FILES < <(
-      find "${ROOT_DIR}/tools/sync/data/results" \
+      find "${RESULTS_DIR}" \
         -maxdepth 1 \
         -type f \
         -name "${COMPETITION_ID}-*.json" \

@@ -48,8 +48,8 @@ jobs:
         with:
           dotnet-version: "10.x"
 
-      - name: Restore sync tool
-        run: dotnet restore tools/sync/TotalCall.Sync/TotalCall.Sync.csproj
+      - name: Restore ops CLI
+        run: dotnet restore ops/cli/TotalCall.Cli/TotalCall.Cli.csproj
 
       - name: Run sync
         env:

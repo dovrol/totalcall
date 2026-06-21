@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace TotalCall.Sync;
+namespace TotalCall.Cli;
 
 // Mirrors public.normalize_name() in supabase/migrations/20260527180000_create_athlete_data_backend.sql.
 // Steps: unaccent -> lower -> non-alphanumeric to single space -> collapse whitespace -> trim.

@@ -2,6 +2,8 @@
 
 Dev scenarios seed local Supabase with predictable competitions, users, submissions, roster updates, official results, and score snapshots. They are meant for UI and product-state testing only.
 
+> Transitional: scenario seeding currently runs through the `scenario` subcommand of `ops/cli/TotalCall.Cli` (via `./scripts/dev-scenarios.sh`). Local dev seeding is moving to a dedicated path outside the CLI under `ops/dev-seed`. See [../ops/dev-seed/README.md](../ops/dev-seed/README.md).
+
 ## Safety Guardrails
 
 The scenario runner refuses to run unless:

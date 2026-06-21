@@ -5,8 +5,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>TotalCall.Sync</RootNamespace>
-    <AssemblyName>TotalCall.Sync</AssemblyName>
+    <RootNamespace>TotalCall.Cli</RootNamespace>
+    <AssemblyName>TotalCall.Cli</AssemblyName>
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 

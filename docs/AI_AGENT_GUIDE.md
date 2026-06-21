@@ -17,7 +17,8 @@ Use this as the short checklist when working in TotalCall.
 - Shared domain/scoring is linked through `src/TotalCall.Core`.
 - Tests: `tests/TotalCall.Tests`.
 - Supabase migrations/config: `supabase`.
-- Sync/import tool: `tools/sync/TotalCall.Sync`.
+- Operations CLI: `ops/cli/TotalCall.Cli`.
+- Agent-facing MCP server: `ops/mcp/TotalCall.Mcp`.
 - Scripts: `scripts`.
 
 Frontend:
@@ -67,10 +68,10 @@ Build/test:
 ./scripts/test.sh
 ```
 
-For sync-tool-only changes:
+For CLI-only changes:
 
 ```bash
-dotnet build tools/sync/TotalCall.Sync/TotalCall.Sync.csproj --no-restore
+dotnet build ops/cli/TotalCall.Cli/TotalCall.Cli.csproj --no-restore
 ```
 
 ## Migrations And Fixtures

@@ -6,7 +6,7 @@ OpenIPF / OpenPowerlifting into Supabase.
 It complements:
 - `supabase/migrations/20260527180000_create_athlete_data_backend.sql` — the database schema.
 - `supabase/migrations/20260528110000_add_public_import_status_rpc.sql` — public import-status RPC for the frontend.
-- `tools/sync/TotalCall.Sync` — the sync console app (`athletes` subcommand imports athlete history).
+- `ops/cli/TotalCall.Cli` — the operations CLI (`athletes` subcommand imports athlete history).
 - `.github/workflows/sync-data.yml` — the GitHub Actions workflow.
 
 ---
