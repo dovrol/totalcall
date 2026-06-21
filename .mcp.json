@@ -1,5 +1,15 @@
 {
   "mcpServers": {
+    "totalcall-ops": {
+      "type": "stdio",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "tools/mcp/TotalCall.Mcp/TotalCall.Mcp.csproj",
+        "--no-build"
+      ]
+    },
     "supabase-local": {
       "type": "http",
       "url": "http://127.0.0.1:54321/mcp"
