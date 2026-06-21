@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using TotalCall.Operations;
 using TotalCall.Operations.Competitions;
 using TotalCall.Operations.Results;
 
@@ -129,7 +130,7 @@ internal sealed class TotalCallMcpServer(TextReader input, TextWriter output)
             ["title"] = "TotalCall Operations",
             ["version"] = "0.1.0"
         },
-        ["instructions"] = "Use these tools for local TotalCall operations. Current tools are read-only or dry-run only; they do not mutate Supabase."
+        ["instructions"] = "Use these tools for local TotalCall operations. Most tools are read-only or dry-run only. Write tools require explicit confirmation."
     };
 
     private async Task<JsonObject> CallToolAsync(JsonObject? parameters, CancellationToken ct)
@@ -152,6 +153,7 @@ internal sealed class TotalCallMcpServer(TextReader input, TextWriter output)
             "totalcall_list_competition_files" => await ListCompetitionFilesAsync(ct),
             "totalcall_validate_competition_config" => await ValidateCompetitionConfigAsync(arguments, ct),
             "totalcall_dry_run_results_import" => await DryRunResultsImportAsync(arguments, ct),
+            "totalcall_import_results" => await ImportResultsAsync(arguments, ct),
             _ => ToolResult.Error($"Unknown tool: {name}")
         };
     }
@@ -248,22 +250,37 @@ internal sealed class TotalCallMcpServer(TextReader input, TextWriter output)
         return ToolResult.Success(ResultsDryRunToJson(result), isError: !result.IsValid);
     }
 
+    private async Task<JsonObject> ImportResultsAsync(JsonObject arguments, CancellationToken ct)
+    {
+        var competitionId = RequiredString(arguments, "competitionId");
+        var resultsJsonPath = RequireRepositoryPath(arguments, "resultsJsonPath");
+        var confirmation = RequiredString(arguments, "confirmation");
+        var expectedConfirmation = $"import {competitionId}";
+        if (!string.Equals(confirmation, expectedConfirmation, StringComparison.Ordinal))
+        {
+            throw new ToolArgumentException($"'confirmation' must be '{expectedConfirmation}'.");
+        }
+
+        var result = await resultsImporter.ImportAsync(
+            new ResultsImportOptions
+            {
+                CompetitionId = competitionId,
+                ResultsJsonPath = resultsJsonPath,
+                SupabaseUrl = Environment.GetEnvironmentVariable("SUPABASE_URL"),
+                SupabaseSecretKey = Environment.GetEnvironmentVariable("SUPABASE_SECRET_KEY"),
+                TriggeredBy = "mcp"
+            },
+            ct);
+
+        return ToolResult.Success(ResultsImportToJson(result), isError: !result.Succeeded);
+    }
+
     private JsonObject ResultsDryRunToJson(ResultsImportDryRunResult result)
     {
         var validationErrors = new JsonArray();
         foreach (var error in result.ValidationErrors)
         {
             validationErrors.Add(error);
-        }
-
-        var logs = new JsonArray();
-        foreach (var log in result.Logs)
-        {
-            logs.Add(new JsonObject
-            {
-                ["level"] = log.Level,
-                ["message"] = log.Message
-            });
         }
 
         return new JsonObject
@@ -286,8 +303,48 @@ internal sealed class TotalCallMcpServer(TextReader input, TextWriter output)
             ["storedResultsHash"] = result.StoredResultsHash,
             ["matchesStoredResults"] = result.MatchesStoredResults,
             ["validationErrors"] = validationErrors,
-            ["logs"] = logs
+            ["logs"] = LogsToJson(result.Logs)
         };
+    }
+
+    private JsonObject ResultsImportToJson(ResultsImportResult result)
+    {
+        return new JsonObject
+        {
+            ["exitCode"] = result.ExitCode,
+            ["succeeded"] = result.Succeeded,
+            ["competitionId"] = result.CompetitionId,
+            ["resultsJsonPath"] = result.ResultsJsonPath is null
+                ? null
+                : RepositoryPaths.ToRepositoryRelativePath(repositoryRoot, result.ResultsJsonPath),
+            ["status"] = result.Status,
+            ["source"] = result.Source,
+            ["resultsHash"] = result.ResultsHash,
+            ["groupsInFile"] = result.GroupsInFile,
+            ["groupsImported"] = result.GroupsImported,
+            ["submittedRowsScored"] = result.SubmittedRowsScored,
+            ["finalGroupsCount"] = result.FinalGroupsCount,
+            ["pendingGroupsCount"] = result.PendingGroupsCount,
+            ["leaderboardStatus"] = result.LeaderboardStatus,
+            ["calculatedAt"] = result.CalculatedAt is null ? null : result.CalculatedAt.Value.ToString("O"),
+            ["scoreSnapshotsDeleted"] = result.ScoreSnapshotsDeleted,
+            ["logs"] = LogsToJson(result.Logs)
+        };
+    }
+
+    private static JsonArray LogsToJson(IEnumerable<OperationLogEntry> logs)
+    {
+        var json = new JsonArray();
+        foreach (var log in logs)
+        {
+            json.Add(new JsonObject
+            {
+                ["level"] = log.Level,
+                ["message"] = log.Message
+            });
+        }
+
+        return json;
     }
 
     private string RequireRepositoryPath(JsonObject arguments, string key)
@@ -446,10 +503,48 @@ internal static class ToolDefinitions
                 },
                 ["required"] = new JsonArray("competitionId", "resultsJsonPath"),
                 ["additionalProperties"] = false
-            })
+            }),
+        Tool(
+            "totalcall_import_results",
+            "Import official results",
+            "Imports a repository-local official results JSON file into Supabase and recalculates score snapshots. Requires explicit confirmation.",
+            new JsonObject
+            {
+                ["type"] = "object",
+                ["properties"] = new JsonObject
+                {
+                    ["competitionId"] = new JsonObject
+                    {
+                        ["type"] = "string",
+                        ["description"] = "Competition id, for example worlds-2026."
+                    },
+                    ["resultsJsonPath"] = new JsonObject
+                    {
+                        ["type"] = "string",
+                        ["description"] = "Repository-relative path to an official results JSON file."
+                    },
+                    ["confirmation"] = new JsonObject
+                    {
+                        ["type"] = "string",
+                        ["description"] = "Must equal: import <competitionId>."
+                    }
+                },
+                ["required"] = new JsonArray("competitionId", "resultsJsonPath", "confirmation"),
+                ["additionalProperties"] = false
+            },
+            readOnly: false,
+            destructive: true,
+            idempotent: false)
     ];
 
-    private static JsonObject Tool(string name, string title, string description, JsonObject inputSchema) => new()
+    private static JsonObject Tool(
+        string name,
+        string title,
+        string description,
+        JsonObject inputSchema,
+        bool readOnly = true,
+        bool destructive = false,
+        bool? idempotent = null) => new()
     {
         ["name"] = name,
         ["title"] = title,
@@ -457,7 +552,9 @@ internal static class ToolDefinitions
         ["inputSchema"] = inputSchema,
         ["annotations"] = new JsonObject
         {
-            ["readOnlyHint"] = true
+            ["readOnlyHint"] = readOnly,
+            ["destructiveHint"] = destructive,
+            ["idempotentHint"] = idempotent ?? readOnly
         }
     };
 }
