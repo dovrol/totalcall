@@ -1,0 +1,6148 @@
+{
+  "id": "worlds-subjuniors-2026",
+  "slug": "worlds-subjuniors-2026",
+  "name": "World Sub-Juniors 2026",
+  "description": "IPF World Sub-Juniors Classic Championships — Sun City, South Africa, 18-29 August 2026.",
+  "federation": "IPF",
+  "discipline": "raw",
+  "cardBackgroundImageUrl": null,
+  "cardBackgroundPosition": "center",
+  "city": "Sun City",
+  "countryCode": "ZA",
+  "tier": "a",
+  "modulesCount": 1,
+  "startDate": "2026-08-18T07:00:00Z",
+  "endDate": "2026-08-29T18:00:00Z",
+  "predictionOpenAt": "2026-07-01T09:00:00Z",
+  "predictionLockAt": "2026-08-18T06:00:00Z",
+  "status": "upcoming",
+  "configVersion": "2026.2",
+  "updates": [],
+  "athleteData": {
+    "defaultSource": "openipf",
+    "availableSources": [
+      "openipf",
+      "openpowerlifting"
+    ]
+  },
+  "athletes": [
+    {
+      "id": "al-fatli-ahmed",
+      "displayName": "Al Fatli Ahmed",
+      "sex": "male",
+      "countryName": "USA",
+      "weightCategoryId": "men-53",
+      "seedTotalKg": 476.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Al Fatli Ahmed"
+        },
+        {
+          "source": "openipf",
+          "name": "Ahmed Al Fatli"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Al Fatli Ahmed"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ahmed Al Fatli"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "chong-luke",
+      "displayName": "Chong Luke",
+      "sex": "male",
+      "countryName": "Singapore",
+      "weightCategoryId": "men-53",
+      "seedTotalKg": 439.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Chong Luke"
+        },
+        {
+          "source": "openipf",
+          "name": "Luke Chong"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Chong Luke"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Luke Chong"
+        }
+      ],
+      "countryCode": "SG"
+    },
+    {
+      "id": "rana-shubham",
+      "displayName": "Rana Shubham",
+      "sex": "male",
+      "countryName": "India",
+      "weightCategoryId": "men-53",
+      "seedTotalKg": 430.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Rana Shubham"
+        },
+        {
+          "source": "openipf",
+          "name": "Shubham Rana"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Rana Shubham"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Shubham Rana"
+        }
+      ],
+      "countryCode": "IN"
+    },
+    {
+      "id": "meschini-touko",
+      "displayName": "Meschini Touko",
+      "sex": "male",
+      "countryName": "Finland",
+      "weightCategoryId": "men-53",
+      "seedTotalKg": 429.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Meschini Touko"
+        },
+        {
+          "source": "openipf",
+          "name": "Touko Meschini"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Meschini Touko"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Touko Meschini"
+        }
+      ],
+      "countryCode": "FI"
+    },
+    {
+      "id": "chinbat-khuleegen",
+      "displayName": "Chinbat Khuleegen",
+      "sex": "male",
+      "countryName": "Mongolia",
+      "weightCategoryId": "men-53",
+      "seedTotalKg": 425.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Chinbat Khuleegen"
+        },
+        {
+          "source": "openipf",
+          "name": "Khuleegen Chinbat"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Chinbat Khuleegen"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Khuleegen Chinbat"
+        }
+      ],
+      "countryCode": "MN"
+    },
+    {
+      "id": "matsuda-keigo",
+      "displayName": "Matsuda Keigo",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-53",
+      "seedTotalKg": 405.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Matsuda Keigo"
+        },
+        {
+          "source": "openipf",
+          "name": "Keigo Matsuda"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Matsuda Keigo"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Keigo Matsuda"
+        }
+      ],
+      "countryCode": "JP"
+    },
+    {
+      "id": "chiremba-gabriel",
+      "displayName": "Chiremba Gabriel",
+      "sex": "male",
+      "countryName": "Zimbabwe",
+      "weightCategoryId": "men-53",
+      "seedTotalKg": 392.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Chiremba Gabriel"
+        },
+        {
+          "source": "openipf",
+          "name": "Gabriel Chiremba"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Chiremba Gabriel"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gabriel Chiremba"
+        }
+      ],
+      "countryCode": "ZW"
+    },
+    {
+      "id": "mohammed",
+      "displayName": "Mohammed",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-53",
+      "seedTotalKg": 377.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mohammed"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mohammed"
+        }
+      ],
+      "countryCode": "LY"
+    },
+    {
+      "id": "hafeeth-anas",
+      "displayName": "Hafeeth Anas",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-53",
+      "seedTotalKg": 362.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Hafeeth Anas"
+        },
+        {
+          "source": "openipf",
+          "name": "Anas Hafeeth"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Hafeeth Anas"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Anas Hafeeth"
+        }
+      ],
+      "countryCode": "LY"
+    },
+    {
+      "id": "tanaka-mihiro",
+      "displayName": "Tanaka Mihiro",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-53",
+      "seedTotalKg": 357.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Tanaka Mihiro"
+        },
+        {
+          "source": "openipf",
+          "name": "Mihiro Tanaka"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Tanaka Mihiro"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mihiro Tanaka"
+        }
+      ],
+      "countryCode": "JP"
+    },
+    {
+      "id": "melikidze-sandro",
+      "displayName": "Melikidze Sandro",
+      "sex": "male",
+      "countryName": "Georgia",
+      "weightCategoryId": "men-53",
+      "seedTotalKg": 320.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Melikidze Sandro"
+        },
+        {
+          "source": "openipf",
+          "name": "Sandro Melikidze"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Melikidze Sandro"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Sandro Melikidze"
+        }
+      ],
+      "countryCode": "GE"
+    },
+    {
+      "id": "nguyen-justin",
+      "displayName": "Nguyen Justin",
+      "sex": "male",
+      "countryName": "USA",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 670.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Nguyen Justin"
+        },
+        {
+          "source": "openipf",
+          "name": "Justin Nguyen"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Nguyen Justin"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Justin Nguyen"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "tsuneishi-itto",
+      "displayName": "Tsuneishi Itto",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 537.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Tsuneishi Itto"
+        },
+        {
+          "source": "openipf",
+          "name": "Itto Tsuneishi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Tsuneishi Itto"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Itto Tsuneishi"
+        }
+      ],
+      "countryCode": "JP"
+    },
+    {
+      "id": "gentle-masato",
+      "displayName": "Gentle Masato",
+      "sex": "male",
+      "countryName": "USA",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 532.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Gentle Masato"
+        },
+        {
+          "source": "openipf",
+          "name": "Masato Gentle"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gentle Masato"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Masato Gentle"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "mancosu-samuel",
+      "displayName": "Mancosu Samuel",
+      "sex": "male",
+      "countryName": "Italy",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 508.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mancosu Samuel"
+        },
+        {
+          "source": "openipf",
+          "name": "Samuel Mancosu"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mancosu Samuel"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Samuel Mancosu"
+        }
+      ],
+      "countryCode": "IT"
+    },
+    {
+      "id": "lin-cheng-hsi",
+      "displayName": "Lin Cheng-Hsi",
+      "sex": "male",
+      "countryName": "Chinese Taipei",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 495.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lin Cheng-Hsi"
+        },
+        {
+          "source": "openipf",
+          "name": "Cheng-Hsi Lin"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lin Cheng-Hsi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Cheng-Hsi Lin"
+        }
+      ],
+      "countryCode": "TW"
+    },
+    {
+      "id": "ali-arnab",
+      "displayName": "Ali Arnab",
+      "sex": "male",
+      "countryName": "India",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 492.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ali Arnab"
+        },
+        {
+          "source": "openipf",
+          "name": "Arnab Ali"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ali Arnab"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Arnab Ali"
+        }
+      ],
+      "countryCode": "IN"
+    },
+    {
+      "id": "lim-xuan-aidan",
+      "displayName": "Lim Xuan Aidan",
+      "sex": "male",
+      "countryName": "Singapore",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 475.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lim Xuan Aidan"
+        },
+        {
+          "source": "openipf",
+          "name": "Aidan Lim Xuan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lim Xuan Aidan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Aidan Lim Xuan"
+        }
+      ],
+      "countryCode": "SG"
+    },
+    {
+      "id": "saad-abdulbaset-ali-muammer",
+      "displayName": "Saad Abdulbaset Ali Muammer",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 455.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Saad Abdulbaset Ali Muammer"
+        },
+        {
+          "source": "openipf",
+          "name": "Muammer Saad Abdulbaset Ali"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Saad Abdulbaset Ali Muammer"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Muammer Saad Abdulbaset Ali"
+        }
+      ],
+      "countryCode": "LY"
+    },
+    {
+      "id": "muhammad-rayhan",
+      "displayName": "Muhammad Rayhan",
+      "sex": "male",
+      "countryName": "Singapore",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 450.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Muhammad Rayhan"
+        },
+        {
+          "source": "openipf",
+          "name": "Rayhan Muhammad"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Muhammad Rayhan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Rayhan Muhammad"
+        }
+      ],
+      "countryCode": "SG"
+    },
+    {
+      "id": "lavikainen-valtteri",
+      "displayName": "Lavikainen Valtteri",
+      "sex": "male",
+      "countryName": "Finland",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 422.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lavikainen Valtteri"
+        },
+        {
+          "source": "openipf",
+          "name": "Valtteri Lavikainen"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lavikainen Valtteri"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Valtteri Lavikainen"
+        }
+      ],
+      "countryCode": "FI"
+    },
+    {
+      "id": "tsiklauri-giorgi",
+      "displayName": "Tsiklauri Giorgi",
+      "sex": "male",
+      "countryName": "Georgia",
+      "weightCategoryId": "men-59",
+      "seedTotalKg": 390.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Tsiklauri Giorgi"
+        },
+        {
+          "source": "openipf",
+          "name": "Giorgi Tsiklauri"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Tsiklauri Giorgi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Giorgi Tsiklauri"
+        }
+      ],
+      "countryCode": "GE"
+    },
+    {
+      "id": "michaels-jayden",
+      "displayName": "Michaels Jayden",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 596.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Michaels Jayden"
+        },
+        {
+          "source": "openipf",
+          "name": "Jayden Michaels"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Michaels Jayden"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jayden Michaels"
+        }
+      ],
+      "countryCode": "AU"
+    },
+    {
+      "id": "muhammad-hazrul",
+      "displayName": "Muhammad Hazrul",
+      "sex": "male",
+      "countryName": "Singapore",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 590.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Muhammad Hazrul"
+        },
+        {
+          "source": "openipf",
+          "name": "Hazrul Muhammad"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Muhammad Hazrul"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Hazrul Muhammad"
+        }
+      ],
+      "countryCode": "SG"
+    },
+    {
+      "id": "smith-denzil",
+      "displayName": "Smith Denzil",
+      "sex": "male",
+      "countryName": "USA",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 587.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Smith Denzil"
+        },
+        {
+          "source": "openipf",
+          "name": "Denzil Smith"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Smith Denzil"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Denzil Smith"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "bessent-dakota",
+      "displayName": "Bessent Dakota",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 585.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bessent Dakota"
+        },
+        {
+          "source": "openipf",
+          "name": "Dakota Bessent"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bessent Dakota"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dakota Bessent"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "scott-jake",
+      "displayName": "Scott Jake",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 568.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Scott Jake"
+        },
+        {
+          "source": "openipf",
+          "name": "Jake Scott"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Scott Jake"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jake Scott"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "hines-izaak",
+      "displayName": "Hines Izaak",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 567.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Hines Izaak"
+        },
+        {
+          "source": "openipf",
+          "name": "Izaak Hines"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Hines Izaak"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Izaak Hines"
+        }
+      ],
+      "countryCode": "AU"
+    },
+    {
+      "id": "olasz-szabolcs",
+      "displayName": "Olasz Szabolcs",
+      "sex": "male",
+      "countryName": "Hungary",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 567.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Olasz Szabolcs"
+        },
+        {
+          "source": "openipf",
+          "name": "Szabolcs Olasz"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Olasz Szabolcs"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Szabolcs Olasz"
+        }
+      ],
+      "countryCode": "HU"
+    },
+    {
+      "id": "bisht-shreyam",
+      "displayName": "Bisht Shreyam",
+      "sex": "male",
+      "countryName": "India",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 542.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bisht Shreyam"
+        },
+        {
+          "source": "openipf",
+          "name": "Shreyam Bisht"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bisht Shreyam"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Shreyam Bisht"
+        }
+      ],
+      "countryCode": "IN"
+    },
+    {
+      "id": "futera-dmytro",
+      "displayName": "Futera Dmytro",
+      "sex": "male",
+      "countryName": "Ukraine",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 540.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Futera Dmytro"
+        },
+        {
+          "source": "openipf",
+          "name": "Dmytro Futera"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Futera Dmytro"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dmytro Futera"
+        }
+      ],
+      "countryCode": "UA"
+    },
+    {
+      "id": "rodriguez-conejo-sebastian",
+      "displayName": "Rodriguez Conejo Sebastian",
+      "sex": "male",
+      "countryName": "Costa Rica",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 525.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Rodriguez Conejo Sebastian"
+        },
+        {
+          "source": "openipf",
+          "name": "Sebastian Rodriguez Conejo"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Rodriguez Conejo Sebastian"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Sebastian Rodriguez Conejo"
+        }
+      ],
+      "countryCode": "CR"
+    },
+    {
+      "id": "gogichaishvili-saba",
+      "displayName": "Gogichaishvili Saba",
+      "sex": "male",
+      "countryName": "Georgia",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 520.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Gogichaishvili Saba"
+        },
+        {
+          "source": "openipf",
+          "name": "Saba Gogichaishvili"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gogichaishvili Saba"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Saba Gogichaishvili"
+        }
+      ],
+      "countryCode": "GE"
+    },
+    {
+      "id": "choromanski-przemyslaw",
+      "displayName": "Choromanski Przemyslaw",
+      "sex": "male",
+      "countryName": "Ireland",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 510.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Choromanski Przemyslaw"
+        },
+        {
+          "source": "openipf",
+          "name": "Przemyslaw Choromanski"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Choromanski Przemyslaw"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Przemyslaw Choromanski"
+        }
+      ],
+      "countryCode": "IE"
+    },
+    {
+      "id": "orus-andreu-enric",
+      "displayName": "Orus Andreu Enric",
+      "sex": "male",
+      "countryName": "Spain",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 505.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Orus Andreu Enric"
+        },
+        {
+          "source": "openipf",
+          "name": "Enric Orus Andreu"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Orus Andreu Enric"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Enric Orus Andreu"
+        }
+      ],
+      "countryCode": "ES"
+    },
+    {
+      "id": "alsagheer-mohammed",
+      "displayName": "Alsagheer Mohammed",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 505.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Alsagheer Mohammed"
+        },
+        {
+          "source": "openipf",
+          "name": "Mohammed Alsagheer"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Alsagheer Mohammed"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mohammed Alsagheer"
+        }
+      ],
+      "countryCode": "LY"
+    },
+    {
+      "id": "uchida-minato",
+      "displayName": "Uchida Minato",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 477.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Uchida Minato"
+        },
+        {
+          "source": "openipf",
+          "name": "Minato Uchida"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Uchida Minato"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Minato Uchida"
+        }
+      ],
+      "countryCode": "JP"
+    },
+    {
+      "id": "reunanen-tyrsky",
+      "displayName": "Reunanen Tyrsky",
+      "sex": "male",
+      "countryName": "Finland",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 472.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Reunanen Tyrsky"
+        },
+        {
+          "source": "openipf",
+          "name": "Tyrsky Reunanen"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Reunanen Tyrsky"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Tyrsky Reunanen"
+        }
+      ],
+      "countryCode": "FI"
+    },
+    {
+      "id": "lecheminant-orson",
+      "displayName": "Lecheminant Orson",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 452.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lecheminant Orson"
+        },
+        {
+          "source": "openipf",
+          "name": "Orson Lecheminant"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lecheminant Orson"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Orson Lecheminant"
+        }
+      ],
+      "countryCode": "CA"
+    },
+    {
+      "id": "kruger-ruben",
+      "displayName": "Kruger Ruben",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 387.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kruger Ruben"
+        },
+        {
+          "source": "openipf",
+          "name": "Ruben Kruger"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kruger Ruben"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ruben Kruger"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "mutanda-tino",
+      "displayName": "Mutanda Tino",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 345.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mutanda Tino"
+        },
+        {
+          "source": "openipf",
+          "name": "Tino Mutanda"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mutanda Tino"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Tino Mutanda"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "bakalis-aggelos",
+      "displayName": "Bakalis Aggelos",
+      "sex": "male",
+      "countryName": "Greece",
+      "weightCategoryId": "men-66",
+      "seedTotalKg": 75.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bakalis Aggelos"
+        },
+        {
+          "source": "openipf",
+          "name": "Aggelos Bakalis"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bakalis Aggelos"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Aggelos Bakalis"
+        }
+      ],
+      "countryCode": "GR"
+    },
+    {
+      "id": "bakliak-artem",
+      "displayName": "Bakliak Artem",
+      "sex": "male",
+      "countryName": "Ukraine",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 690.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bakliak Artem"
+        },
+        {
+          "source": "openipf",
+          "name": "Artem Bakliak"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bakliak Artem"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Artem Bakliak"
+        }
+      ],
+      "countryCode": "UA"
+    },
+    {
+      "id": "miller-zhaine",
+      "displayName": "Miller Zhaine",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 683.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Miller Zhaine"
+        },
+        {
+          "source": "openipf",
+          "name": "Zhaine Miller"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Miller Zhaine"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Zhaine Miller"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "tran-ben",
+      "displayName": "Tran Ben",
+      "sex": "male",
+      "countryName": "USA",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 675.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Tran Ben"
+        },
+        {
+          "source": "openipf",
+          "name": "Ben Tran"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Tran Ben"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ben Tran"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "xia-alejandro",
+      "displayName": "Xia Alejandro",
+      "sex": "male",
+      "countryName": "China",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 673.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Xia Alejandro"
+        },
+        {
+          "source": "openipf",
+          "name": "Alejandro Xia"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Xia Alejandro"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Alejandro Xia"
+        }
+      ],
+      "countryCode": "CN"
+    },
+    {
+      "id": "pan-arenaz-daniel",
+      "displayName": "Pan Arenaz Daniel",
+      "sex": "male",
+      "countryName": "Sweden",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 658.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Pan Arenaz Daniel"
+        },
+        {
+          "source": "openipf",
+          "name": "Daniel Pan Arenaz"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Pan Arenaz Daniel"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Daniel Pan Arenaz"
+        }
+      ],
+      "countryCode": "SE"
+    },
+    {
+      "id": "pachtitis-giorgos",
+      "displayName": "Pachtitis Giorgos",
+      "sex": "male",
+      "countryName": "Greece",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 649.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Pachtitis Giorgos"
+        },
+        {
+          "source": "openipf",
+          "name": "Giorgos Pachtitis"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Pachtitis Giorgos"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Giorgos Pachtitis"
+        }
+      ],
+      "countryCode": "GR"
+    },
+    {
+      "id": "steel-graham",
+      "displayName": "Steel Graham",
+      "sex": "male",
+      "countryName": "USA",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 642.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Steel Graham"
+        },
+        {
+          "source": "openipf",
+          "name": "Graham Steel"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Steel Graham"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Graham Steel"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "panayotov-kaloyan",
+      "displayName": "Panayotov Kaloyan",
+      "sex": "male",
+      "countryName": "Bulgaria",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 617.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Panayotov Kaloyan"
+        },
+        {
+          "source": "openipf",
+          "name": "Kaloyan Panayotov"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Panayotov Kaloyan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kaloyan Panayotov"
+        }
+      ],
+      "countryCode": "BG"
+    },
+    {
+      "id": "welling-isaac",
+      "displayName": "Welling Isaac",
+      "sex": "male",
+      "countryName": "New Zealand",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 612.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Welling Isaac"
+        },
+        {
+          "source": "openipf",
+          "name": "Isaac Welling"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Welling Isaac"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Isaac Welling"
+        }
+      ],
+      "countryCode": "NZ"
+    },
+    {
+      "id": "phelps-jax",
+      "displayName": "Phelps Jax",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 612.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Phelps Jax"
+        },
+        {
+          "source": "openipf",
+          "name": "Jax Phelps"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Phelps Jax"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jax Phelps"
+        }
+      ],
+      "countryCode": "AU"
+    },
+    {
+      "id": "stephen-eouta",
+      "displayName": "Stephen Eouta",
+      "sex": "male",
+      "countryName": "Nauru",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 610.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Stephen Eouta"
+        },
+        {
+          "source": "openipf",
+          "name": "Eouta Stephen"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Stephen Eouta"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Eouta Stephen"
+        }
+      ],
+      "countryCode": "NR"
+    },
+    {
+      "id": "riches-maverick",
+      "displayName": "Riches Maverick",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 600.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Riches Maverick"
+        },
+        {
+          "source": "openipf",
+          "name": "Maverick Riches"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Riches Maverick"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Maverick Riches"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "bochorishvili-saba",
+      "displayName": "Bochorishvili Saba",
+      "sex": "male",
+      "countryName": "Georgia",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 600.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bochorishvili Saba"
+        },
+        {
+          "source": "openipf",
+          "name": "Saba Bochorishvili"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bochorishvili Saba"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Saba Bochorishvili"
+        }
+      ],
+      "countryCode": "GE"
+    },
+    {
+      "id": "ragnarsson-ragnar-ingi",
+      "displayName": "Ragnarsson Ragnar Ingi",
+      "sex": "male",
+      "countryName": "Iceland",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 600.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ragnarsson Ragnar Ingi"
+        },
+        {
+          "source": "openipf",
+          "name": "Ingi Ragnarsson Ragnar"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ragnarsson Ragnar Ingi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ingi Ragnarsson Ragnar"
+        }
+      ],
+      "countryCode": "IS"
+    },
+    {
+      "id": "wheeler-james",
+      "displayName": "Wheeler James",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 597.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Wheeler James"
+        },
+        {
+          "source": "openipf",
+          "name": "James Wheeler"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Wheeler James"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "James Wheeler"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "samuel-ryan",
+      "displayName": "Samuel Ryan",
+      "sex": "male",
+      "countryName": "Ireland",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 596.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Samuel Ryan"
+        },
+        {
+          "source": "openipf",
+          "name": "Ryan Samuel"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Samuel Ryan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ryan Samuel"
+        }
+      ],
+      "countryCode": "IE"
+    },
+    {
+      "id": "khieu-le-thai",
+      "displayName": "Khieu Le-Thai",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 595.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Khieu Le-Thai"
+        },
+        {
+          "source": "openipf",
+          "name": "Le-Thai Khieu"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Khieu Le-Thai"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Le-Thai Khieu"
+        }
+      ],
+      "countryCode": "CA"
+    },
+    {
+      "id": "ruiz-lopez-carlos-maria",
+      "displayName": "Ruiz Lopez Carlos Maria",
+      "sex": "male",
+      "countryName": "Spain",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 593.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ruiz Lopez Carlos Maria"
+        },
+        {
+          "source": "openipf",
+          "name": "Maria Ruiz Lopez Carlos"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ruiz Lopez Carlos Maria"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Maria Ruiz Lopez Carlos"
+        }
+      ],
+      "countryCode": "ES"
+    },
+    {
+      "id": "soe-thu-rain",
+      "displayName": "Soe Thu Rain",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 592.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Soe Thu Rain"
+        },
+        {
+          "source": "openipf",
+          "name": "Rain Soe Thu"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Soe Thu Rain"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Rain Soe Thu"
+        }
+      ],
+      "countryCode": "AU"
+    },
+    {
+      "id": "mason-piers",
+      "displayName": "Mason Piers",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 563.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mason Piers"
+        },
+        {
+          "source": "openipf",
+          "name": "Piers Mason"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mason Piers"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Piers Mason"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "chow-timmy",
+      "displayName": "Chow Timmy",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 547.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Chow Timmy"
+        },
+        {
+          "source": "openipf",
+          "name": "Timmy Chow"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Chow Timmy"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Timmy Chow"
+        }
+      ],
+      "countryCode": "CA"
+    },
+    {
+      "id": "moro-tomofumi",
+      "displayName": "Moro Tomofumi",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 535.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Moro Tomofumi"
+        },
+        {
+          "source": "openipf",
+          "name": "Tomofumi Moro"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Moro Tomofumi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Tomofumi Moro"
+        }
+      ],
+      "countryCode": "JP"
+    },
+    {
+      "id": "alzeer-khaled",
+      "displayName": "Alzeer Khaled",
+      "sex": "male",
+      "countryName": "Kuwait",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 525.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Alzeer Khaled"
+        },
+        {
+          "source": "openipf",
+          "name": "Khaled Alzeer"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Alzeer Khaled"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Khaled Alzeer"
+        }
+      ],
+      "countryCode": "KW"
+    },
+    {
+      "id": "suzuki-kaishu",
+      "displayName": "Suzuki Kaishu",
+      "sex": "male",
+      "countryName": "Japan",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 510.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Suzuki Kaishu"
+        },
+        {
+          "source": "openipf",
+          "name": "Kaishu Suzuki"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Suzuki Kaishu"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kaishu Suzuki"
+        }
+      ],
+      "countryCode": "JP"
+    },
+    {
+      "id": "lindberg-lauri",
+      "displayName": "Lindberg Lauri",
+      "sex": "male",
+      "countryName": "Finland",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 500.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lindberg Lauri"
+        },
+        {
+          "source": "openipf",
+          "name": "Lauri Lindberg"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lindberg Lauri"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lauri Lindberg"
+        }
+      ],
+      "countryCode": "FI"
+    },
+    {
+      "id": "gotthardt-ethan",
+      "displayName": "Gotthardt Ethan",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 460.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Gotthardt Ethan"
+        },
+        {
+          "source": "openipf",
+          "name": "Ethan Gotthardt"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gotthardt Ethan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ethan Gotthardt"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "ridgard-jonathan",
+      "displayName": "Ridgard Jonathan",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-74",
+      "seedTotalKg": 407.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ridgard Jonathan"
+        },
+        {
+          "source": "openipf",
+          "name": "Jonathan Ridgard"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ridgard Jonathan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jonathan Ridgard"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "naamaoui-ahmed-samy",
+      "displayName": "Naamaoui Ahmed Samy",
+      "sex": "male",
+      "countryName": "Algeria",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 781.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Naamaoui Ahmed Samy"
+        },
+        {
+          "source": "openipf",
+          "name": "Samy Naamaoui Ahmed"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Naamaoui Ahmed Samy"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Samy Naamaoui Ahmed"
+        }
+      ],
+      "countryCode": "DZ"
+    },
+    {
+      "id": "lim-matthew",
+      "displayName": "Lim Matthew",
+      "sex": "male",
+      "countryName": "USA",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 735.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lim Matthew"
+        },
+        {
+          "source": "openipf",
+          "name": "Matthew Lim"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lim Matthew"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Matthew Lim"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "kamphuis-jayden",
+      "displayName": "Kamphuis Jayden",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 718.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kamphuis Jayden"
+        },
+        {
+          "source": "openipf",
+          "name": "Jayden Kamphuis"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kamphuis Jayden"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jayden Kamphuis"
+        }
+      ],
+      "countryCode": "CA"
+    },
+    {
+      "id": "jugeli-dimitri",
+      "displayName": "Jugeli Dimitri",
+      "sex": "male",
+      "countryName": "Georgia",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 690.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Jugeli Dimitri"
+        },
+        {
+          "source": "openipf",
+          "name": "Dimitri Jugeli"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jugeli Dimitri"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dimitri Jugeli"
+        }
+      ],
+      "countryCode": "GE"
+    },
+    {
+      "id": "espin-jean-carlo",
+      "displayName": "Espin Jean Carlo",
+      "sex": "male",
+      "countryName": "Mexico",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 673.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Espin Jean Carlo"
+        },
+        {
+          "source": "openipf",
+          "name": "Carlo Espin Jean"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Espin Jean Carlo"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Carlo Espin Jean"
+        }
+      ],
+      "countryCode": "MX"
+    },
+    {
+      "id": "lin-jeremy",
+      "displayName": "Lin Jeremy",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 665.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lin Jeremy"
+        },
+        {
+          "source": "openipf",
+          "name": "Jeremy Lin"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lin Jeremy"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jeremy Lin"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "hollander-emilian",
+      "displayName": "Hollander Emilian",
+      "sex": "male",
+      "countryName": "Finland",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 662.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Hollander Emilian"
+        },
+        {
+          "source": "openipf",
+          "name": "Emilian Hollander"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Hollander Emilian"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Emilian Hollander"
+        }
+      ],
+      "countryCode": "FI"
+    },
+    {
+      "id": "edim-emmanuel-wisdom",
+      "displayName": "Edim Emmanuel Wisdom",
+      "sex": "male",
+      "countryName": "Nigeria",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 650.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Edim Emmanuel Wisdom"
+        },
+        {
+          "source": "openipf",
+          "name": "Wisdom Edim Emmanuel"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Edim Emmanuel Wisdom"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Wisdom Edim Emmanuel"
+        }
+      ],
+      "countryCode": "NG"
+    },
+    {
+      "id": "cockburn-evan",
+      "displayName": "Cockburn Evan",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 637.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Cockburn Evan"
+        },
+        {
+          "source": "openipf",
+          "name": "Evan Cockburn"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Cockburn Evan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Evan Cockburn"
+        }
+      ],
+      "countryCode": "AU"
+    },
+    {
+      "id": "muller-filip",
+      "displayName": "Muller Filip",
+      "sex": "male",
+      "countryName": "Czechia",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 635.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Muller Filip"
+        },
+        {
+          "source": "openipf",
+          "name": "Filip Muller"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Muller Filip"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Filip Muller"
+        }
+      ],
+      "countryCode": "CZ"
+    },
+    {
+      "id": "ploucha-konstanty",
+      "displayName": "Ploucha Konstanty",
+      "sex": "male",
+      "countryName": "Poland",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 635.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ploucha Konstanty"
+        },
+        {
+          "source": "openipf",
+          "name": "Konstanty Ploucha"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ploucha Konstanty"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Konstanty Ploucha"
+        }
+      ],
+      "countryCode": "PL"
+    },
+    {
+      "id": "ng-andrew",
+      "displayName": "Ng Andrew",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 627.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ng Andrew"
+        },
+        {
+          "source": "openipf",
+          "name": "Andrew Ng"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ng Andrew"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Andrew Ng"
+        }
+      ],
+      "countryCode": "CA"
+    },
+    {
+      "id": "mccormick-cody",
+      "displayName": "McCormick Cody",
+      "sex": "male",
+      "countryName": "New Zealand",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 600.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "McCormick Cody"
+        },
+        {
+          "source": "openipf",
+          "name": "Cody McCormick"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "McCormick Cody"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Cody McCormick"
+        }
+      ],
+      "countryCode": "NZ"
+    },
+    {
+      "id": "khalvashi-nikoloz",
+      "displayName": "Khalvashi Nikoloz",
+      "sex": "male",
+      "countryName": "Georgia",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 590.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Khalvashi Nikoloz"
+        },
+        {
+          "source": "openipf",
+          "name": "Nikoloz Khalvashi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Khalvashi Nikoloz"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Nikoloz Khalvashi"
+        }
+      ],
+      "countryCode": "GE"
+    },
+    {
+      "id": "peterson-steven",
+      "displayName": "Peterson Steven",
+      "sex": "male",
+      "countryName": "Panama",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 575.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Peterson Steven"
+        },
+        {
+          "source": "openipf",
+          "name": "Steven Peterson"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Peterson Steven"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Steven Peterson"
+        }
+      ],
+      "countryCode": "PA"
+    },
+    {
+      "id": "becker-alrich",
+      "displayName": "Becker Alrich",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 552.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Becker Alrich"
+        },
+        {
+          "source": "openipf",
+          "name": "Alrich Becker"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Becker Alrich"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Alrich Becker"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "bijl-thijs",
+      "displayName": "Bijl Thijs",
+      "sex": "male",
+      "countryName": "Thailand",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 535.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bijl Thijs"
+        },
+        {
+          "source": "openipf",
+          "name": "Thijs Bijl"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bijl Thijs"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Thijs Bijl"
+        }
+      ],
+      "countryCode": "TH"
+    },
+    {
+      "id": "botha-chris",
+      "displayName": "Botha Chris",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 535.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Botha Chris"
+        },
+        {
+          "source": "openipf",
+          "name": "Chris Botha"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Botha Chris"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Chris Botha"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "eastman-gindila-stefan",
+      "displayName": "Eastman Gindila Stefan",
+      "sex": "male",
+      "countryName": "Romania",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 530.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Eastman Gindila Stefan"
+        },
+        {
+          "source": "openipf",
+          "name": "Stefan Eastman Gindila"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Eastman Gindila Stefan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Stefan Eastman Gindila"
+        }
+      ],
+      "countryCode": "RO"
+    },
+    {
+      "id": "yang-elijah",
+      "displayName": "Yang Elijah",
+      "sex": "male",
+      "countryName": "New Zealand",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 515.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Yang Elijah"
+        },
+        {
+          "source": "openipf",
+          "name": "Elijah Yang"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Yang Elijah"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Elijah Yang"
+        }
+      ],
+      "countryCode": "NZ"
+    },
+    {
+      "id": "baqer-hassan",
+      "displayName": "Baqer Hassan",
+      "sex": "male",
+      "countryName": "Kuwait",
+      "weightCategoryId": "men-83",
+      "seedTotalKg": 225.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Baqer Hassan"
+        },
+        {
+          "source": "openipf",
+          "name": "Hassan Baqer"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Baqer Hassan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Hassan Baqer"
+        }
+      ],
+      "countryCode": "KW"
+    },
+    {
+      "id": "cohen-ethan",
+      "displayName": "Cohen Ethan",
+      "sex": "male",
+      "countryName": "USA",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 762.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Cohen Ethan"
+        },
+        {
+          "source": "openipf",
+          "name": "Ethan Cohen"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Cohen Ethan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ethan Cohen"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "lameen-mohammed",
+      "displayName": "Lameen Mohammed",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 725.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lameen Mohammed"
+        },
+        {
+          "source": "openipf",
+          "name": "Mohammed Lameen"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lameen Mohammed"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mohammed Lameen"
+        }
+      ],
+      "countryCode": "LY"
+    },
+    {
+      "id": "gault-adam",
+      "displayName": "Gault Adam",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 715.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Gault Adam"
+        },
+        {
+          "source": "openipf",
+          "name": "Adam Gault"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gault Adam"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Adam Gault"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "winstanley-angus",
+      "displayName": "Winstanley Angus",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 694.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Winstanley Angus"
+        },
+        {
+          "source": "openipf",
+          "name": "Angus Winstanley"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Winstanley Angus"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Angus Winstanley"
+        }
+      ],
+      "countryCode": "AU"
+    },
+    {
+      "id": "cipriani-peterson",
+      "displayName": "Cipriani Peterson",
+      "sex": "male",
+      "countryName": "Brazil",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 675.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Cipriani Peterson"
+        },
+        {
+          "source": "openipf",
+          "name": "Peterson Cipriani"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Cipriani Peterson"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Peterson Cipriani"
+        }
+      ],
+      "countryCode": "BR"
+    },
+    {
+      "id": "quoroll-will",
+      "displayName": "Quoroll Will",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 672.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Quoroll Will"
+        },
+        {
+          "source": "openipf",
+          "name": "Will Quoroll"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Quoroll Will"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Will Quoroll"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "garcia-martinez-pablo",
+      "displayName": "Garcia Martinez Pablo",
+      "sex": "male",
+      "countryName": "Spain",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 667.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Garcia Martinez Pablo"
+        },
+        {
+          "source": "openipf",
+          "name": "Pablo Garcia Martinez"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Garcia Martinez Pablo"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Pablo Garcia Martinez"
+        }
+      ],
+      "countryCode": "ES"
+    },
+    {
+      "id": "figueroa-dippe-jose-david",
+      "displayName": "Figueroa Dippe Jose David",
+      "sex": "male",
+      "countryName": "Spain",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 660.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Figueroa Dippe Jose David"
+        },
+        {
+          "source": "openipf",
+          "name": "David Figueroa Dippe Jose"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Figueroa Dippe Jose David"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "David Figueroa Dippe Jose"
+        }
+      ],
+      "countryCode": "ES"
+    },
+    {
+      "id": "christiaan-wiese",
+      "displayName": "Christiaan Wiese",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 645.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Christiaan Wiese"
+        },
+        {
+          "source": "openipf",
+          "name": "Wiese Christiaan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Christiaan Wiese"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Wiese Christiaan"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "bangoura-naby",
+      "displayName": "Bangoura Naby",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 635.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bangoura Naby"
+        },
+        {
+          "source": "openipf",
+          "name": "Naby Bangoura"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bangoura Naby"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Naby Bangoura"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "ortiz-moroni",
+      "displayName": "Ortiz Moroni",
+      "sex": "male",
+      "countryName": "Mexico",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 633.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ortiz Moroni"
+        },
+        {
+          "source": "openipf",
+          "name": "Moroni Ortiz"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ortiz Moroni"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Moroni Ortiz"
+        }
+      ],
+      "countryCode": "MX"
+    },
+    {
+      "id": "clarke-jayan-dashiel",
+      "displayName": "Clarke-Jayan Dashiel",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 632.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Clarke-Jayan Dashiel"
+        },
+        {
+          "source": "openipf",
+          "name": "Dashiel Clarke-Jayan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Clarke-Jayan Dashiel"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dashiel Clarke-Jayan"
+        }
+      ],
+      "countryCode": "AU"
+    },
+    {
+      "id": "de-clercq-thuur",
+      "displayName": "de Clercq Thuur",
+      "sex": "male",
+      "countryName": "Belgium",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 630.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "de Clercq Thuur"
+        },
+        {
+          "source": "openipf",
+          "name": "Thuur de Clercq"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "de Clercq Thuur"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Thuur de Clercq"
+        }
+      ],
+      "countryCode": "BE"
+    },
+    {
+      "id": "shevel-azriel",
+      "displayName": "Shevel Azriel",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 587.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Shevel Azriel"
+        },
+        {
+          "source": "openipf",
+          "name": "Azriel Shevel"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Shevel Azriel"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Azriel Shevel"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "sidhu-dilpreet",
+      "displayName": "Sidhu Dilpreet",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-93",
+      "seedTotalKg": 555.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Sidhu Dilpreet"
+        },
+        {
+          "source": "openipf",
+          "name": "Dilpreet Sidhu"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Sidhu Dilpreet"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dilpreet Sidhu"
+        }
+      ],
+      "countryCode": "CA"
+    },
+    {
+      "id": "wilson-austin",
+      "displayName": "Wilson Austin",
+      "sex": "male",
+      "countryName": "USA",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 820.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Wilson Austin"
+        },
+        {
+          "source": "openipf",
+          "name": "Austin Wilson"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Wilson Austin"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Austin Wilson"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "cruz-michael",
+      "displayName": "Cruz Michael",
+      "sex": "male",
+      "countryName": "USA",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 780.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Cruz Michael"
+        },
+        {
+          "source": "openipf",
+          "name": "Michael Cruz"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Cruz Michael"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Michael Cruz"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "gruszka-szymon",
+      "displayName": "Gruszka Szymon",
+      "sex": "male",
+      "countryName": "Poland",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 762.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Gruszka Szymon"
+        },
+        {
+          "source": "openipf",
+          "name": "Szymon Gruszka"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gruszka Szymon"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Szymon Gruszka"
+        }
+      ],
+      "countryCode": "PL"
+    },
+    {
+      "id": "urquiza-dante",
+      "displayName": "Urquiza Dante",
+      "sex": "male",
+      "countryName": "Mexico",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 730.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Urquiza Dante"
+        },
+        {
+          "source": "openipf",
+          "name": "Dante Urquiza"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Urquiza Dante"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dante Urquiza"
+        }
+      ],
+      "countryCode": "MX"
+    },
+    {
+      "id": "skladon-adam",
+      "displayName": "Skladon Adam",
+      "sex": "male",
+      "countryName": "Poland",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 725.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Skladon Adam"
+        },
+        {
+          "source": "openipf",
+          "name": "Adam Skladon"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Skladon Adam"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Adam Skladon"
+        }
+      ],
+      "countryCode": "PL"
+    },
+    {
+      "id": "mantyniemi-lassi",
+      "displayName": "Mantyniemi Lassi",
+      "sex": "male",
+      "countryName": "Finland",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 709.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mantyniemi Lassi"
+        },
+        {
+          "source": "openipf",
+          "name": "Lassi Mantyniemi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mantyniemi Lassi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lassi Mantyniemi"
+        }
+      ],
+      "countryCode": "FI"
+    },
+    {
+      "id": "galvao-antonio",
+      "displayName": "Galvao Antonio",
+      "sex": "male",
+      "countryName": "Brazil",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 700.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Galvao Antonio"
+        },
+        {
+          "source": "openipf",
+          "name": "Antonio Galvao"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Galvao Antonio"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Antonio Galvao"
+        }
+      ],
+      "countryCode": "BR"
+    },
+    {
+      "id": "hopkinson-joseph",
+      "displayName": "Hopkinson Joseph",
+      "sex": "male",
+      "countryName": "New Zealand",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 688.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Hopkinson Joseph"
+        },
+        {
+          "source": "openipf",
+          "name": "Joseph Hopkinson"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Hopkinson Joseph"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Joseph Hopkinson"
+        }
+      ],
+      "countryCode": "NZ"
+    },
+    {
+      "id": "neiland-luis",
+      "displayName": "Neiland Luis",
+      "sex": "male",
+      "countryName": "Brazil",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 686.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Neiland Luis"
+        },
+        {
+          "source": "openipf",
+          "name": "Luis Neiland"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Neiland Luis"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Luis Neiland"
+        }
+      ],
+      "countryCode": "BR"
+    },
+    {
+      "id": "derebag-william",
+      "displayName": "Derebag William",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 650.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Derebag William"
+        },
+        {
+          "source": "openipf",
+          "name": "William Derebag"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Derebag William"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "William Derebag"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "mbangsi-charles",
+      "displayName": "Mbangsi Charles",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 635.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mbangsi Charles"
+        },
+        {
+          "source": "openipf",
+          "name": "Charles Mbangsi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mbangsi Charles"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Charles Mbangsi"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "bruwer-wilhelm",
+      "displayName": "Bruwer Wilhelm",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 632.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bruwer Wilhelm"
+        },
+        {
+          "source": "openipf",
+          "name": "Wilhelm Bruwer"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bruwer Wilhelm"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Wilhelm Bruwer"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "koepfgen-alexander",
+      "displayName": "Koepfgen Alexander",
+      "sex": "male",
+      "countryName": "Canada",
+      "weightCategoryId": "men-105",
+      "seedTotalKg": 532.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Koepfgen Alexander"
+        },
+        {
+          "source": "openipf",
+          "name": "Alexander Koepfgen"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Koepfgen Alexander"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Alexander Koepfgen"
+        }
+      ],
+      "countryCode": "CA"
+    },
+    {
+      "id": "bertoldi-mirko",
+      "displayName": "Bertoldi Mirko",
+      "sex": "male",
+      "countryName": "Italy",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 814.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bertoldi Mirko"
+        },
+        {
+          "source": "openipf",
+          "name": "Mirko Bertoldi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bertoldi Mirko"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mirko Bertoldi"
+        }
+      ],
+      "countryCode": "IT"
+    },
+    {
+      "id": "oakley-austin",
+      "displayName": "Oakley Austin",
+      "sex": "male",
+      "countryName": "USA",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 792.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Oakley Austin"
+        },
+        {
+          "source": "openipf",
+          "name": "Austin Oakley"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Oakley Austin"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Austin Oakley"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "walladge-lucas",
+      "displayName": "Walladge Lucas",
+      "sex": "male",
+      "countryName": "Australia",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 721.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Walladge Lucas"
+        },
+        {
+          "source": "openipf",
+          "name": "Lucas Walladge"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Walladge Lucas"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lucas Walladge"
+        }
+      ],
+      "countryCode": "AU"
+    },
+    {
+      "id": "cremona-conor",
+      "displayName": "Cremona Conor",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 707.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Cremona Conor"
+        },
+        {
+          "source": "openipf",
+          "name": "Conor Cremona"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Cremona Conor"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Conor Cremona"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "dowling-jonathan",
+      "displayName": "Dowling Jonathan",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 695.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Dowling Jonathan"
+        },
+        {
+          "source": "openipf",
+          "name": "Jonathan Dowling"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dowling Jonathan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jonathan Dowling"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "ahmed-hasan",
+      "displayName": "Ahmed Hasan",
+      "sex": "male",
+      "countryName": "Libya",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 640.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ahmed Hasan"
+        },
+        {
+          "source": "openipf",
+          "name": "Hasan Ahmed"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ahmed Hasan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Hasan Ahmed"
+        }
+      ],
+      "countryCode": "LY"
+    },
+    {
+      "id": "bhagya-kuldeep-raj-dhawan",
+      "displayName": "Bhagya Kuldeep Raj Dhawan",
+      "sex": "male",
+      "countryName": "India",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 615.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Bhagya Kuldeep Raj Dhawan"
+        },
+        {
+          "source": "openipf",
+          "name": "Dhawan Bhagya Kuldeep Raj"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bhagya Kuldeep Raj Dhawan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dhawan Bhagya Kuldeep Raj"
+        }
+      ],
+      "countryCode": "IN"
+    },
+    {
+      "id": "britz-ernst",
+      "displayName": "Britz Ernst",
+      "sex": "male",
+      "countryName": "South Africa",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 535.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Britz Ernst"
+        },
+        {
+          "source": "openipf",
+          "name": "Ernst Britz"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Britz Ernst"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ernst Britz"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "wu-shangfeng",
+      "displayName": "Wu Shangfeng",
+      "sex": "male",
+      "countryName": "China",
+      "weightCategoryId": "men-120",
+      "seedTotalKg": 455.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Wu Shangfeng"
+        },
+        {
+          "source": "openipf",
+          "name": "Shangfeng Wu"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Wu Shangfeng"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Shangfeng Wu"
+        }
+      ],
+      "countryCode": "CN"
+    },
+    {
+      "id": "samkharadze-merabi",
+      "displayName": "Samkharadze Merabi",
+      "sex": "male",
+      "countryName": "Georgia",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 810.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Samkharadze Merabi"
+        },
+        {
+          "source": "openipf",
+          "name": "Merabi Samkharadze"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Samkharadze Merabi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Merabi Samkharadze"
+        }
+      ],
+      "countryCode": "GE"
+    },
+    {
+      "id": "kalo-omar",
+      "displayName": "Kalo Omar",
+      "sex": "male",
+      "countryName": "USA",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 705.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kalo Omar"
+        },
+        {
+          "source": "openipf",
+          "name": "Omar Kalo"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kalo Omar"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Omar Kalo"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "dean-alfie",
+      "displayName": "Dean Alﬁe",
+      "sex": "male",
+      "countryName": "Great Britain",
+      "weightCategoryId": "men-120plus",
+      "seedTotalKg": 622.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Dean Alﬁe"
+        },
+        {
+          "source": "openipf",
+          "name": "Alﬁe Dean"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dean Alﬁe"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Alﬁe Dean"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "silvano-lyra-shaine",
+      "displayName": "Silvano Lyra Shaine",
+      "sex": "female",
+      "countryName": "Philippines",
+      "weightCategoryId": "women-43",
+      "seedTotalKg": 250.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Silvano Lyra Shaine"
+        },
+        {
+          "source": "openipf",
+          "name": "Shaine Silvano Lyra"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Silvano Lyra Shaine"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Shaine Silvano Lyra"
+        }
+      ],
+      "countryCode": "PH"
+    },
+    {
+      "id": "alausa-olajumoke-khadijat",
+      "displayName": "Alausa Olajumoke Khadijat",
+      "sex": "female",
+      "countryName": "Nigeria",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 260.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Alausa Olajumoke Khadijat"
+        },
+        {
+          "source": "openipf",
+          "name": "Khadijat Alausa Olajumoke"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Alausa Olajumoke Khadijat"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Khadijat Alausa Olajumoke"
+        }
+      ],
+      "countryCode": "NG"
+    },
+    {
+      "id": "stephen-jlo",
+      "displayName": "Stephen Jlo",
+      "sex": "female",
+      "countryName": "Nauru",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 250.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Stephen Jlo"
+        },
+        {
+          "source": "openipf",
+          "name": "Jlo Stephen"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Stephen Jlo"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Jlo Stephen"
+        }
+      ],
+      "countryCode": "NR"
+    },
+    {
+      "id": "klime-emma",
+      "displayName": "Klime Emma",
+      "sex": "female",
+      "countryName": "USA",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 247.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Klime Emma"
+        },
+        {
+          "source": "openipf",
+          "name": "Emma Klime"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Klime Emma"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Emma Klime"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "chodera-martyna",
+      "displayName": "Chodera Martyna",
+      "sex": "female",
+      "countryName": "Poland",
+      "weightCategoryId": "women-47",
+      "seedTotalKg": 210.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Chodera Martyna"
+        },
+        {
+          "source": "openipf",
+          "name": "Martyna Chodera"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Chodera Martyna"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Martyna Chodera"
+        }
+      ],
+      "countryCode": "PL"
+    },
+    {
+      "id": "kar-madhura",
+      "displayName": "Kar Madhura",
+      "sex": "female",
+      "countryName": "India",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 315.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kar Madhura"
+        },
+        {
+          "source": "openipf",
+          "name": "Madhura Kar"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kar Madhura"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Madhura Kar"
+        }
+      ],
+      "countryCode": "IN"
+    },
+    {
+      "id": "maruashvili-nini",
+      "displayName": "Maruashvili Nini",
+      "sex": "female",
+      "countryName": "Georgia",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 310.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Maruashvili Nini"
+        },
+        {
+          "source": "openipf",
+          "name": "Nini Maruashvili"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Maruashvili Nini"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Nini Maruashvili"
+        }
+      ],
+      "countryCode": "GE"
+    },
+    {
+      "id": "owoyele-fathia-toluwalase",
+      "displayName": "Owoyele Fathia Toluwalase",
+      "sex": "female",
+      "countryName": "Nigeria",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 300.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Owoyele Fathia Toluwalase"
+        },
+        {
+          "source": "openipf",
+          "name": "Toluwalase Owoyele Fathia"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Owoyele Fathia Toluwalase"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Toluwalase Owoyele Fathia"
+        }
+      ],
+      "countryCode": "NG"
+    },
+    {
+      "id": "znojek-zuzanna",
+      "displayName": "Znojek Zuzanna",
+      "sex": "female",
+      "countryName": "Poland",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 265.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Znojek Zuzanna"
+        },
+        {
+          "source": "openipf",
+          "name": "Zuzanna Znojek"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Znojek Zuzanna"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Zuzanna Znojek"
+        }
+      ],
+      "countryCode": "PL"
+    },
+    {
+      "id": "koshimori-megumi",
+      "displayName": "Koshimori Megumi",
+      "sex": "female",
+      "countryName": "Japan",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 250.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Koshimori Megumi"
+        },
+        {
+          "source": "openipf",
+          "name": "Megumi Koshimori"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Koshimori Megumi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Megumi Koshimori"
+        }
+      ],
+      "countryCode": "JP"
+    },
+    {
+      "id": "otsuka-mio",
+      "displayName": "Otsuka Mio",
+      "sex": "female",
+      "countryName": "Japan",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 227.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Otsuka Mio"
+        },
+        {
+          "source": "openipf",
+          "name": "Mio Otsuka"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Otsuka Mio"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mio Otsuka"
+        }
+      ],
+      "countryCode": "JP"
+    },
+    {
+      "id": "buote-mya",
+      "displayName": "Buote Mya",
+      "sex": "female",
+      "countryName": "Canada",
+      "weightCategoryId": "women-52",
+      "seedTotalKg": 177.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Buote Mya"
+        },
+        {
+          "source": "openipf",
+          "name": "Mya Buote"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Buote Mya"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mya Buote"
+        }
+      ],
+      "countryCode": "CA"
+    },
+    {
+      "id": "gaillard-lilou",
+      "displayName": "Gaillard Lilou",
+      "sex": "female",
+      "countryName": "France",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 440.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Gaillard Lilou"
+        },
+        {
+          "source": "openipf",
+          "name": "Lilou Gaillard"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gaillard Lilou"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lilou Gaillard"
+        }
+      ],
+      "countryCode": "FR"
+    },
+    {
+      "id": "messek-maram",
+      "displayName": "Messek Maram",
+      "sex": "female",
+      "countryName": "Tunisia",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 405.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Messek Maram"
+        },
+        {
+          "source": "openipf",
+          "name": "Maram Messek"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Messek Maram"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Maram Messek"
+        }
+      ],
+      "countryCode": "TN"
+    },
+    {
+      "id": "haji-mergana",
+      "displayName": "Haji Mergana",
+      "sex": "female",
+      "countryName": "Syria",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 370.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Haji Mergana"
+        },
+        {
+          "source": "openipf",
+          "name": "Mergana Haji"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Haji Mergana"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mergana Haji"
+        }
+      ],
+      "countryCode": "SY"
+    },
+    {
+      "id": "plourde-katelyn",
+      "displayName": "Plourde Katelyn",
+      "sex": "female",
+      "countryName": "USA",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 350.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Plourde Katelyn"
+        },
+        {
+          "source": "openipf",
+          "name": "Katelyn Plourde"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Plourde Katelyn"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Katelyn Plourde"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "weston-lhamo",
+      "displayName": "Weston Lhamo",
+      "sex": "female",
+      "countryName": "Great Britain",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 327.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Weston Lhamo"
+        },
+        {
+          "source": "openipf",
+          "name": "Lhamo Weston"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Weston Lhamo"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lhamo Weston"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "vandenburg-micah",
+      "displayName": "Vandenburg Micah",
+      "sex": "female",
+      "countryName": "Canada",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 305.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Vandenburg Micah"
+        },
+        {
+          "source": "openipf",
+          "name": "Micah Vandenburg"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Vandenburg Micah"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Micah Vandenburg"
+        }
+      ],
+      "countryCode": "CA"
+    },
+    {
+      "id": "leroy-bailey",
+      "displayName": "Leroy Bailey",
+      "sex": "female",
+      "countryName": "USA",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 300.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Leroy Bailey"
+        },
+        {
+          "source": "openipf",
+          "name": "Bailey Leroy"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Leroy Bailey"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Bailey Leroy"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "vaida-vera",
+      "displayName": "Vaida Vera",
+      "sex": "female",
+      "countryName": "Great Britain",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 272.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Vaida Vera"
+        },
+        {
+          "source": "openipf",
+          "name": "Vera Vaida"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Vaida Vera"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Vera Vaida"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "murakami-nanami",
+      "displayName": "Murakami Nanami",
+      "sex": "female",
+      "countryName": "Japan",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 237.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Murakami Nanami"
+        },
+        {
+          "source": "openipf",
+          "name": "Nanami Murakami"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Murakami Nanami"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Nanami Murakami"
+        }
+      ],
+      "countryCode": "JP"
+    },
+    {
+      "id": "naicker-karamyn",
+      "displayName": "Naicker Karamyn",
+      "sex": "female",
+      "countryName": "South Africa",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 222.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Naicker Karamyn"
+        },
+        {
+          "source": "openipf",
+          "name": "Karamyn Naicker"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Naicker Karamyn"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Karamyn Naicker"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "de-lange-drew",
+      "displayName": "de Lange Drew",
+      "sex": "female",
+      "countryName": "South Africa",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 215.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "de Lange Drew"
+        },
+        {
+          "source": "openipf",
+          "name": "Drew de Lange"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "de Lange Drew"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Drew de Lange"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "suzuki-anna",
+      "displayName": "Suzuki Anna",
+      "sex": "female",
+      "countryName": "Japan",
+      "weightCategoryId": "women-57",
+      "seedTotalKg": 212.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Suzuki Anna"
+        },
+        {
+          "source": "openipf",
+          "name": "Anna Suzuki"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Suzuki Anna"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Anna Suzuki"
+        }
+      ],
+      "countryCode": "JP"
+    },
+    {
+      "id": "spadaro-giada",
+      "displayName": "Spadaro Giada",
+      "sex": "female",
+      "countryName": "Italy",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 454.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Spadaro Giada"
+        },
+        {
+          "source": "openipf",
+          "name": "Giada Spadaro"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Spadaro Giada"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Giada Spadaro"
+        }
+      ],
+      "countryCode": "IT"
+    },
+    {
+      "id": "hyatt-arden",
+      "displayName": "Hyatt Arden",
+      "sex": "female",
+      "countryName": "USA",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 443.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Hyatt Arden"
+        },
+        {
+          "source": "openipf",
+          "name": "Arden Hyatt"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Hyatt Arden"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Arden Hyatt"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "white-nwankpa-ayana",
+      "displayName": "White Nwankpa Ayana",
+      "sex": "female",
+      "countryName": "Great Britain",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 441.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "White Nwankpa Ayana"
+        },
+        {
+          "source": "openipf",
+          "name": "Ayana White Nwankpa"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "White Nwankpa Ayana"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ayana White Nwankpa"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "vincke-louise",
+      "displayName": "Vincke Louise",
+      "sex": "female",
+      "countryName": "Belgium",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 385.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Vincke Louise"
+        },
+        {
+          "source": "openipf",
+          "name": "Louise Vincke"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Vincke Louise"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Louise Vincke"
+        }
+      ],
+      "countryCode": "BE"
+    },
+    {
+      "id": "fripp-indya",
+      "displayName": "Fripp Indya",
+      "sex": "female",
+      "countryName": "Canada",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 357.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Fripp Indya"
+        },
+        {
+          "source": "openipf",
+          "name": "Indya Fripp"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Fripp Indya"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Indya Fripp"
+        }
+      ],
+      "countryCode": "CA"
+    },
+    {
+      "id": "navas-garcia-irene",
+      "displayName": "Navas Garcia Irene",
+      "sex": "female",
+      "countryName": "Spain",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 335.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Navas Garcia Irene"
+        },
+        {
+          "source": "openipf",
+          "name": "Irene Navas Garcia"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Navas Garcia Irene"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Irene Navas Garcia"
+        }
+      ],
+      "countryCode": "ES"
+    },
+    {
+      "id": "kontogianni-stamatina",
+      "displayName": "Kontogianni Stamatina",
+      "sex": "female",
+      "countryName": "Greece",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 328.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Kontogianni Stamatina"
+        },
+        {
+          "source": "openipf",
+          "name": "Stamatina Kontogianni"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kontogianni Stamatina"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Stamatina Kontogianni"
+        }
+      ],
+      "countryCode": "GR"
+    },
+    {
+      "id": "davie-abigail",
+      "displayName": "Davie Abigail",
+      "sex": "female",
+      "countryName": "Great Britain",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 305.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Davie Abigail"
+        },
+        {
+          "source": "openipf",
+          "name": "Abigail Davie"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Davie Abigail"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Abigail Davie"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "alianova-lida",
+      "displayName": "Alianova Lida",
+      "sex": "female",
+      "countryName": "Great Britain",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 300.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Alianova Lida"
+        },
+        {
+          "source": "openipf",
+          "name": "Lida Alianova"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Alianova Lida"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lida Alianova"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "breytenbach-mia",
+      "displayName": "Breytenbach Mia",
+      "sex": "female",
+      "countryName": "South Africa",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 295.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Breytenbach Mia"
+        },
+        {
+          "source": "openipf",
+          "name": "Mia Breytenbach"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Breytenbach Mia"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mia Breytenbach"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "rakoczy-maria",
+      "displayName": "Rakoczy Maria",
+      "sex": "female",
+      "countryName": "Poland",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 287.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Rakoczy Maria"
+        },
+        {
+          "source": "openipf",
+          "name": "Maria Rakoczy"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Rakoczy Maria"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Maria Rakoczy"
+        }
+      ],
+      "countryCode": "PL"
+    },
+    {
+      "id": "muchena-tapiwanashe",
+      "displayName": "Muchena Tapiwanashe",
+      "sex": "female",
+      "countryName": "Zimbabwe",
+      "weightCategoryId": "women-63",
+      "seedTotalKg": 237.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Muchena Tapiwanashe"
+        },
+        {
+          "source": "openipf",
+          "name": "Tapiwanashe Muchena"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Muchena Tapiwanashe"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Tapiwanashe Muchena"
+        }
+      ],
+      "countryCode": "ZW"
+    },
+    {
+      "id": "ancona-gianna",
+      "displayName": "Ancona Gianna",
+      "sex": "female",
+      "countryName": "USA",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 443.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Ancona Gianna"
+        },
+        {
+          "source": "openipf",
+          "name": "Gianna Ancona"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ancona Gianna"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gianna Ancona"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "buchtova-ester",
+      "displayName": "Buchtova Ester",
+      "sex": "female",
+      "countryName": "Czechia",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 442.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Buchtova Ester"
+        },
+        {
+          "source": "openipf",
+          "name": "Ester Buchtova"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Buchtova Ester"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ester Buchtova"
+        }
+      ],
+      "countryCode": "CZ"
+    },
+    {
+      "id": "morales-vanessa",
+      "displayName": "Morales Vanessa",
+      "sex": "female",
+      "countryName": "Mexico",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 419.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Morales Vanessa"
+        },
+        {
+          "source": "openipf",
+          "name": "Vanessa Morales"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Morales Vanessa"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Vanessa Morales"
+        }
+      ],
+      "countryCode": "MX"
+    },
+    {
+      "id": "csepella-hayley",
+      "displayName": "Csepella Hayley",
+      "sex": "female",
+      "countryName": "USA",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 402.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Csepella Hayley"
+        },
+        {
+          "source": "openipf",
+          "name": "Hayley Csepella"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Csepella Hayley"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Hayley Csepella"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "mamisashvili-salome",
+      "displayName": "Mamisashvili Salome",
+      "sex": "female",
+      "countryName": "Georgia",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 400.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mamisashvili Salome"
+        },
+        {
+          "source": "openipf",
+          "name": "Salome Mamisashvili"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mamisashvili Salome"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Salome Mamisashvili"
+        }
+      ],
+      "countryCode": "GE"
+    },
+    {
+      "id": "narva-essi",
+      "displayName": "Narva Essi",
+      "sex": "female",
+      "countryName": "Finland",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 395.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Narva Essi"
+        },
+        {
+          "source": "openipf",
+          "name": "Essi Narva"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Narva Essi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Essi Narva"
+        }
+      ],
+      "countryCode": "FI"
+    },
+    {
+      "id": "smith-gila",
+      "displayName": "Smith Gila",
+      "sex": "female",
+      "countryName": "South Africa",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 375.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Smith Gila"
+        },
+        {
+          "source": "openipf",
+          "name": "Gila Smith"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Smith Gila"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gila Smith"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "asgeirsdottir-gudrun",
+      "displayName": "Asgeirsdottir Gudrun",
+      "sex": "female",
+      "countryName": "Iceland",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 346.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Asgeirsdottir Gudrun"
+        },
+        {
+          "source": "openipf",
+          "name": "Gudrun Asgeirsdottir"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Asgeirsdottir Gudrun"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gudrun Asgeirsdottir"
+        }
+      ],
+      "countryCode": "IS"
+    },
+    {
+      "id": "lombaard-dene",
+      "displayName": "Lombaard Dene",
+      "sex": "female",
+      "countryName": "Great Britain",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 327.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Lombaard Dene"
+        },
+        {
+          "source": "openipf",
+          "name": "Dene Lombaard"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lombaard Dene"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dene Lombaard"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "hampton-lily-jo",
+      "displayName": "Hampton Lily-Jo",
+      "sex": "female",
+      "countryName": "Great Britain",
+      "weightCategoryId": "women-69",
+      "seedTotalKg": 300.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Hampton Lily-Jo"
+        },
+        {
+          "source": "openipf",
+          "name": "Lily-Jo Hampton"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Hampton Lily-Jo"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lily-Jo Hampton"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "courtright-dakota",
+      "displayName": "Courtright Dakota",
+      "sex": "female",
+      "countryName": "USA",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 447.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Courtright Dakota"
+        },
+        {
+          "source": "openipf",
+          "name": "Dakota Courtright"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Courtright Dakota"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Dakota Courtright"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "munoz-inzunza-barbara",
+      "displayName": "Munoz Inzunza Barbara",
+      "sex": "female",
+      "countryName": "Chile",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 435.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Munoz Inzunza Barbara"
+        },
+        {
+          "source": "openipf",
+          "name": "Barbara Munoz Inzunza"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Munoz Inzunza Barbara"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Barbara Munoz Inzunza"
+        }
+      ],
+      "countryCode": "CL"
+    },
+    {
+      "id": "silva-samantha",
+      "displayName": "Silva Samantha",
+      "sex": "female",
+      "countryName": "Mexico",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 410.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Silva Samantha"
+        },
+        {
+          "source": "openipf",
+          "name": "Samantha Silva"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Silva Samantha"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Samantha Silva"
+        }
+      ],
+      "countryCode": "MX"
+    },
+    {
+      "id": "espitia-sonia",
+      "displayName": "Espitia Sonia",
+      "sex": "female",
+      "countryName": "USA",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 405.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Espitia Sonia"
+        },
+        {
+          "source": "openipf",
+          "name": "Sonia Espitia"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Espitia Sonia"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Sonia Espitia"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "hernandez-maria",
+      "displayName": "Hernandez Maria",
+      "sex": "female",
+      "countryName": "Mexico",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 401.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Hernandez Maria"
+        },
+        {
+          "source": "openipf",
+          "name": "Maria Hernandez"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Hernandez Maria"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Maria Hernandez"
+        }
+      ],
+      "countryCode": "MX"
+    },
+    {
+      "id": "maclean-morven",
+      "displayName": "MacLean Morven",
+      "sex": "female",
+      "countryName": "Great Britain",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 385.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "MacLean Morven"
+        },
+        {
+          "source": "openipf",
+          "name": "Morven MacLean"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "MacLean Morven"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Morven MacLean"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "moreira-melissa",
+      "displayName": "Moreira Melissa",
+      "sex": "female",
+      "countryName": "Brazil",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 342.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Moreira Melissa"
+        },
+        {
+          "source": "openipf",
+          "name": "Melissa Moreira"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Moreira Melissa"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Melissa Moreira"
+        }
+      ],
+      "countryCode": "BR"
+    },
+    {
+      "id": "daushvili-ketevan",
+      "displayName": "Daushvili Ketevan",
+      "sex": "female",
+      "countryName": "Georgia",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 330.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Daushvili Ketevan"
+        },
+        {
+          "source": "openipf",
+          "name": "Ketevan Daushvili"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Daushvili Ketevan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ketevan Daushvili"
+        }
+      ],
+      "countryCode": "GE"
+    },
+    {
+      "id": "konishi-mao",
+      "displayName": "Konishi Mao",
+      "sex": "female",
+      "countryName": "Japan",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 313.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Konishi Mao"
+        },
+        {
+          "source": "openipf",
+          "name": "Mao Konishi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Konishi Mao"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mao Konishi"
+        }
+      ],
+      "countryCode": "JP"
+    },
+    {
+      "id": "wachi-ayaka",
+      "displayName": "Wachi Ayaka",
+      "sex": "female",
+      "countryName": "Japan",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 280.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Wachi Ayaka"
+        },
+        {
+          "source": "openipf",
+          "name": "Ayaka Wachi"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Wachi Ayaka"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Ayaka Wachi"
+        }
+      ],
+      "countryCode": "JP"
+    },
+    {
+      "id": "mellet-kobie",
+      "displayName": "Mellet Kobie",
+      "sex": "female",
+      "countryName": "South Africa",
+      "weightCategoryId": "women-76",
+      "seedTotalKg": 265.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Mellet Kobie"
+        },
+        {
+          "source": "openipf",
+          "name": "Kobie Mellet"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Mellet Kobie"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Kobie Mellet"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "vassiliou-eva",
+      "displayName": "Vassiliou Eva",
+      "sex": "female",
+      "countryName": "New Zealand",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 406.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Vassiliou Eva"
+        },
+        {
+          "source": "openipf",
+          "name": "Eva Vassiliou"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Vassiliou Eva"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Eva Vassiliou"
+        }
+      ],
+      "countryCode": "NZ"
+    },
+    {
+      "id": "edge-lily",
+      "displayName": "Edge Lily",
+      "sex": "female",
+      "countryName": "Great Britain",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 305.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Edge Lily"
+        },
+        {
+          "source": "openipf",
+          "name": "Lily Edge"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Edge Lily"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lily Edge"
+        }
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "gallant-clarissa",
+      "displayName": "Gallant Clarissa",
+      "sex": "female",
+      "countryName": "South Africa",
+      "weightCategoryId": "women-84",
+      "seedTotalKg": 287.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Gallant Clarissa"
+        },
+        {
+          "source": "openipf",
+          "name": "Clarissa Gallant"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gallant Clarissa"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Clarissa Gallant"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "stuart-rylan",
+      "displayName": "Stuart Rylan",
+      "sex": "female",
+      "countryName": "Canada",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 492.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Stuart Rylan"
+        },
+        {
+          "source": "openipf",
+          "name": "Rylan Stuart"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Stuart Rylan"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Rylan Stuart"
+        }
+      ],
+      "countryCode": "CA"
+    },
+    {
+      "id": "leskinen-lyydia",
+      "displayName": "Leskinen Lyydia",
+      "sex": "female",
+      "countryName": "Finland",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 462.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Leskinen Lyydia"
+        },
+        {
+          "source": "openipf",
+          "name": "Lyydia Leskinen"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Leskinen Lyydia"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Lyydia Leskinen"
+        }
+      ],
+      "countryCode": "FI"
+    },
+    {
+      "id": "olson-anika",
+      "displayName": "Olson Anika",
+      "sex": "female",
+      "countryName": "USA",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 460.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Olson Anika"
+        },
+        {
+          "source": "openipf",
+          "name": "Anika Olson"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Olson Anika"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Anika Olson"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "klawikowski-anika",
+      "displayName": "Klawikowski Anika",
+      "sex": "female",
+      "countryName": "USA",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 440.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Klawikowski Anika"
+        },
+        {
+          "source": "openipf",
+          "name": "Anika Klawikowski"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Klawikowski Anika"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Anika Klawikowski"
+        }
+      ],
+      "countryCode": "US"
+    },
+    {
+      "id": "vazquez-drobrachinsky-gisela",
+      "displayName": "Vazquez Drobrachinsky Gisela",
+      "sex": "female",
+      "countryName": "Spain",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 415.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Vazquez Drobrachinsky Gisela"
+        },
+        {
+          "source": "openipf",
+          "name": "Gisela Vazquez Drobrachinsky"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Vazquez Drobrachinsky Gisela"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Gisela Vazquez Drobrachinsky"
+        }
+      ],
+      "countryCode": "ES"
+    },
+    {
+      "id": "doyle-abigaill",
+      "displayName": "Doyle Abigaill",
+      "sex": "female",
+      "countryName": "South Africa",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 332.5,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Doyle Abigaill"
+        },
+        {
+          "source": "openipf",
+          "name": "Abigaill Doyle"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Doyle Abigaill"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Abigaill Doyle"
+        }
+      ],
+      "countryCode": "ZA"
+    },
+    {
+      "id": "zabuawala-asma-taherali",
+      "displayName": "Zabuawala Asma Taherali",
+      "sex": "female",
+      "countryName": "India",
+      "weightCategoryId": "women-84plus",
+      "seedTotalKg": 310.0,
+      "externalAthleteRefs": [
+        {
+          "source": "openipf",
+          "name": "Zabuawala Asma Taherali"
+        },
+        {
+          "source": "openipf",
+          "name": "Taherali Zabuawala Asma"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Zabuawala Asma Taherali"
+        },
+        {
+          "source": "openpowerlifting",
+          "name": "Taherali Zabuawala Asma"
+        }
+      ],
+      "countryCode": "IN"
+    }
+  ],
+  "categories": [
+    {
+      "id": "men-53",
+      "name": "Men 53 kg",
+      "sex": "male",
+      "weightLimitKg": 53,
+      "athleteIds": [
+        "al-fatli-ahmed",
+        "chong-luke",
+        "rana-shubham",
+        "meschini-touko",
+        "chinbat-khuleegen",
+        "matsuda-keigo",
+        "chiremba-gabriel",
+        "mohammed",
+        "hafeeth-anas",
+        "tanaka-mihiro",
+        "melikidze-sandro"
+      ]
+    },
+    {
+      "id": "men-59",
+      "name": "Men 59 kg",
+      "sex": "male",
+      "weightLimitKg": 59,
+      "athleteIds": [
+        "nguyen-justin",
+        "tsuneishi-itto",
+        "gentle-masato",
+        "mancosu-samuel",
+        "lin-cheng-hsi",
+        "ali-arnab",
+        "lim-xuan-aidan",
+        "saad-abdulbaset-ali-muammer",
+        "muhammad-rayhan",
+        "lavikainen-valtteri",
+        "tsiklauri-giorgi"
+      ]
+    },
+    {
+      "id": "men-66",
+      "name": "Men 66 kg",
+      "sex": "male",
+      "weightLimitKg": 66,
+      "athleteIds": [
+        "michaels-jayden",
+        "muhammad-hazrul",
+        "smith-denzil",
+        "bessent-dakota",
+        "scott-jake",
+        "hines-izaak",
+        "olasz-szabolcs",
+        "bisht-shreyam",
+        "futera-dmytro",
+        "rodriguez-conejo-sebastian",
+        "gogichaishvili-saba",
+        "choromanski-przemyslaw",
+        "orus-andreu-enric",
+        "alsagheer-mohammed",
+        "uchida-minato",
+        "reunanen-tyrsky",
+        "lecheminant-orson",
+        "kruger-ruben",
+        "mutanda-tino",
+        "bakalis-aggelos"
+      ]
+    },
+    {
+      "id": "men-74",
+      "name": "Men 74 kg",
+      "sex": "male",
+      "weightLimitKg": 74,
+      "athleteIds": [
+        "bakliak-artem",
+        "miller-zhaine",
+        "tran-ben",
+        "xia-alejandro",
+        "pan-arenaz-daniel",
+        "pachtitis-giorgos",
+        "steel-graham",
+        "panayotov-kaloyan",
+        "welling-isaac",
+        "phelps-jax",
+        "stephen-eouta",
+        "riches-maverick",
+        "bochorishvili-saba",
+        "ragnarsson-ragnar-ingi",
+        "wheeler-james",
+        "samuel-ryan",
+        "khieu-le-thai",
+        "ruiz-lopez-carlos-maria",
+        "soe-thu-rain",
+        "mason-piers",
+        "chow-timmy",
+        "moro-tomofumi",
+        "alzeer-khaled",
+        "suzuki-kaishu",
+        "lindberg-lauri",
+        "gotthardt-ethan",
+        "ridgard-jonathan"
+      ]
+    },
+    {
+      "id": "men-83",
+      "name": "Men 83 kg",
+      "sex": "male",
+      "weightLimitKg": 83,
+      "athleteIds": [
+        "naamaoui-ahmed-samy",
+        "lim-matthew",
+        "kamphuis-jayden",
+        "jugeli-dimitri",
+        "espin-jean-carlo",
+        "lin-jeremy",
+        "hollander-emilian",
+        "edim-emmanuel-wisdom",
+        "cockburn-evan",
+        "muller-filip",
+        "ploucha-konstanty",
+        "ng-andrew",
+        "mccormick-cody",
+        "khalvashi-nikoloz",
+        "peterson-steven",
+        "becker-alrich",
+        "bijl-thijs",
+        "botha-chris",
+        "eastman-gindila-stefan",
+        "yang-elijah",
+        "baqer-hassan"
+      ]
+    },
+    {
+      "id": "men-93",
+      "name": "Men 93 kg",
+      "sex": "male",
+      "weightLimitKg": 93,
+      "athleteIds": [
+        "cohen-ethan",
+        "lameen-mohammed",
+        "gault-adam",
+        "winstanley-angus",
+        "cipriani-peterson",
+        "quoroll-will",
+        "garcia-martinez-pablo",
+        "figueroa-dippe-jose-david",
+        "christiaan-wiese",
+        "bangoura-naby",
+        "ortiz-moroni",
+        "clarke-jayan-dashiel",
+        "de-clercq-thuur",
+        "shevel-azriel",
+        "sidhu-dilpreet"
+      ]
+    },
+    {
+      "id": "men-105",
+      "name": "Men 105 kg",
+      "sex": "male",
+      "weightLimitKg": 105,
+      "athleteIds": [
+        "wilson-austin",
+        "cruz-michael",
+        "gruszka-szymon",
+        "urquiza-dante",
+        "skladon-adam",
+        "mantyniemi-lassi",
+        "galvao-antonio",
+        "hopkinson-joseph",
+        "neiland-luis",
+        "derebag-william",
+        "mbangsi-charles",
+        "bruwer-wilhelm",
+        "koepfgen-alexander"
+      ]
+    },
+    {
+      "id": "men-120",
+      "name": "Men 120 kg",
+      "sex": "male",
+      "weightLimitKg": 120,
+      "athleteIds": [
+        "bertoldi-mirko",
+        "oakley-austin",
+        "walladge-lucas",
+        "cremona-conor",
+        "dowling-jonathan",
+        "ahmed-hasan",
+        "bhagya-kuldeep-raj-dhawan",
+        "britz-ernst",
+        "wu-shangfeng"
+      ]
+    },
+    {
+      "id": "men-120plus",
+      "name": "Men 120+ kg",
+      "sex": "male",
+      "weightLimitKg": null,
+      "athleteIds": [
+        "samkharadze-merabi",
+        "kalo-omar",
+        "dean-alfie"
+      ]
+    },
+    {
+      "id": "women-43",
+      "name": "Women 43 kg",
+      "sex": "female",
+      "weightLimitKg": 43,
+      "athleteIds": [
+        "silvano-lyra-shaine"
+      ]
+    },
+    {
+      "id": "women-47",
+      "name": "Women 47 kg",
+      "sex": "female",
+      "weightLimitKg": 47,
+      "athleteIds": [
+        "alausa-olajumoke-khadijat",
+        "stephen-jlo",
+        "klime-emma",
+        "chodera-martyna"
+      ]
+    },
+    {
+      "id": "women-52",
+      "name": "Women 52 kg",
+      "sex": "female",
+      "weightLimitKg": 52,
+      "athleteIds": [
+        "kar-madhura",
+        "maruashvili-nini",
+        "owoyele-fathia-toluwalase",
+        "znojek-zuzanna",
+        "koshimori-megumi",
+        "otsuka-mio",
+        "buote-mya"
+      ]
+    },
+    {
+      "id": "women-57",
+      "name": "Women 57 kg",
+      "sex": "female",
+      "weightLimitKg": 57,
+      "athleteIds": [
+        "gaillard-lilou",
+        "messek-maram",
+        "haji-mergana",
+        "plourde-katelyn",
+        "weston-lhamo",
+        "vandenburg-micah",
+        "leroy-bailey",
+        "vaida-vera",
+        "murakami-nanami",
+        "naicker-karamyn",
+        "de-lange-drew",
+        "suzuki-anna"
+      ]
+    },
+    {
+      "id": "women-63",
+      "name": "Women 63 kg",
+      "sex": "female",
+      "weightLimitKg": 63,
+      "athleteIds": [
+        "spadaro-giada",
+        "hyatt-arden",
+        "white-nwankpa-ayana",
+        "vincke-louise",
+        "fripp-indya",
+        "navas-garcia-irene",
+        "kontogianni-stamatina",
+        "davie-abigail",
+        "alianova-lida",
+        "breytenbach-mia",
+        "rakoczy-maria",
+        "muchena-tapiwanashe"
+      ]
+    },
+    {
+      "id": "women-69",
+      "name": "Women 69 kg",
+      "sex": "female",
+      "weightLimitKg": 69,
+      "athleteIds": [
+        "ancona-gianna",
+        "buchtova-ester",
+        "morales-vanessa",
+        "csepella-hayley",
+        "mamisashvili-salome",
+        "narva-essi",
+        "smith-gila",
+        "asgeirsdottir-gudrun",
+        "lombaard-dene",
+        "hampton-lily-jo"
+      ]
+    },
+    {
+      "id": "women-76",
+      "name": "Women 76 kg",
+      "sex": "female",
+      "weightLimitKg": 76,
+      "athleteIds": [
+        "courtright-dakota",
+        "munoz-inzunza-barbara",
+        "silva-samantha",
+        "espitia-sonia",
+        "hernandez-maria",
+        "maclean-morven",
+        "moreira-melissa",
+        "daushvili-ketevan",
+        "konishi-mao",
+        "wachi-ayaka",
+        "mellet-kobie"
+      ]
+    },
+    {
+      "id": "women-84",
+      "name": "Women 84 kg",
+      "sex": "female",
+      "weightLimitKg": 84,
+      "athleteIds": [
+        "vassiliou-eva",
+        "edge-lily",
+        "gallant-clarissa"
+      ]
+    },
+    {
+      "id": "women-84plus",
+      "name": "Women 84+ kg",
+      "sex": "female",
+      "weightLimitKg": null,
+      "athleteIds": [
+        "stuart-rylan",
+        "leskinen-lyydia",
+        "olson-anika",
+        "klawikowski-anika",
+        "vazquez-drobrachinsky-gisela",
+        "doyle-abigaill",
+        "zabuawala-asma-taherali"
+      ]
+    }
+  ],
+  "predictionGroups": [
+    {
+      "id": "category-top3",
+      "type": "top-n-by-category",
+      "title": "Top 3 by category",
+      "description": "Rank the full field and score the Top 3 in every weight class.",
+      "mode": "full",
+      "order": 10,
+      "required": true,
+      "questions": [
+        {
+          "id": "top3-men-53",
+          "type": "athlete-ranking",
+          "title": "Top 3 Men 53 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 53 kg.",
+          "order": 10,
+          "required": true,
+          "categoryId": "men-53",
+          "athleteIds": [
+            "al-fatli-ahmed",
+            "chong-luke",
+            "rana-shubham",
+            "meschini-touko",
+            "chinbat-khuleegen",
+            "matsuda-keigo",
+            "chiremba-gabriel",
+            "mohammed",
+            "hafeeth-anas",
+            "tanaka-mihiro",
+            "melikidze-sandro"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-men-59",
+          "type": "athlete-ranking",
+          "title": "Top 3 Men 59 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 59 kg.",
+          "order": 20,
+          "required": true,
+          "categoryId": "men-59",
+          "athleteIds": [
+            "nguyen-justin",
+            "tsuneishi-itto",
+            "gentle-masato",
+            "mancosu-samuel",
+            "lin-cheng-hsi",
+            "ali-arnab",
+            "lim-xuan-aidan",
+            "saad-abdulbaset-ali-muammer",
+            "muhammad-rayhan",
+            "lavikainen-valtteri",
+            "tsiklauri-giorgi"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-men-66",
+          "type": "athlete-ranking",
+          "title": "Top 3 Men 66 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 66 kg.",
+          "order": 30,
+          "required": true,
+          "categoryId": "men-66",
+          "athleteIds": [
+            "michaels-jayden",
+            "muhammad-hazrul",
+            "smith-denzil",
+            "bessent-dakota",
+            "scott-jake",
+            "hines-izaak",
+            "olasz-szabolcs",
+            "bisht-shreyam",
+            "futera-dmytro",
+            "rodriguez-conejo-sebastian",
+            "gogichaishvili-saba",
+            "choromanski-przemyslaw",
+            "orus-andreu-enric",
+            "alsagheer-mohammed",
+            "uchida-minato",
+            "reunanen-tyrsky",
+            "lecheminant-orson",
+            "kruger-ruben",
+            "mutanda-tino",
+            "bakalis-aggelos"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-men-74",
+          "type": "athlete-ranking",
+          "title": "Top 3 Men 74 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 74 kg.",
+          "order": 40,
+          "required": true,
+          "categoryId": "men-74",
+          "athleteIds": [
+            "bakliak-artem",
+            "miller-zhaine",
+            "tran-ben",
+            "xia-alejandro",
+            "pan-arenaz-daniel",
+            "pachtitis-giorgos",
+            "steel-graham",
+            "panayotov-kaloyan",
+            "welling-isaac",
+            "phelps-jax",
+            "stephen-eouta",
+            "riches-maverick",
+            "bochorishvili-saba",
+            "ragnarsson-ragnar-ingi",
+            "wheeler-james",
+            "samuel-ryan",
+            "khieu-le-thai",
+            "ruiz-lopez-carlos-maria",
+            "soe-thu-rain",
+            "mason-piers",
+            "chow-timmy",
+            "moro-tomofumi",
+            "alzeer-khaled",
+            "suzuki-kaishu",
+            "lindberg-lauri",
+            "gotthardt-ethan",
+            "ridgard-jonathan"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-men-83",
+          "type": "athlete-ranking",
+          "title": "Top 3 Men 83 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 83 kg.",
+          "order": 50,
+          "required": true,
+          "categoryId": "men-83",
+          "athleteIds": [
+            "naamaoui-ahmed-samy",
+            "lim-matthew",
+            "kamphuis-jayden",
+            "jugeli-dimitri",
+            "espin-jean-carlo",
+            "lin-jeremy",
+            "hollander-emilian",
+            "edim-emmanuel-wisdom",
+            "cockburn-evan",
+            "muller-filip",
+            "ploucha-konstanty",
+            "ng-andrew",
+            "mccormick-cody",
+            "khalvashi-nikoloz",
+            "peterson-steven",
+            "becker-alrich",
+            "bijl-thijs",
+            "botha-chris",
+            "eastman-gindila-stefan",
+            "yang-elijah",
+            "baqer-hassan"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-men-93",
+          "type": "athlete-ranking",
+          "title": "Top 3 Men 93 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 93 kg.",
+          "order": 60,
+          "required": true,
+          "categoryId": "men-93",
+          "athleteIds": [
+            "cohen-ethan",
+            "lameen-mohammed",
+            "gault-adam",
+            "winstanley-angus",
+            "cipriani-peterson",
+            "quoroll-will",
+            "garcia-martinez-pablo",
+            "figueroa-dippe-jose-david",
+            "christiaan-wiese",
+            "bangoura-naby",
+            "ortiz-moroni",
+            "clarke-jayan-dashiel",
+            "de-clercq-thuur",
+            "shevel-azriel",
+            "sidhu-dilpreet"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-men-105",
+          "type": "athlete-ranking",
+          "title": "Top 3 Men 105 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 105 kg.",
+          "order": 70,
+          "required": true,
+          "categoryId": "men-105",
+          "athleteIds": [
+            "wilson-austin",
+            "cruz-michael",
+            "gruszka-szymon",
+            "urquiza-dante",
+            "skladon-adam",
+            "mantyniemi-lassi",
+            "galvao-antonio",
+            "hopkinson-joseph",
+            "neiland-luis",
+            "derebag-william",
+            "mbangsi-charles",
+            "bruwer-wilhelm",
+            "koepfgen-alexander"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-men-120",
+          "type": "athlete-ranking",
+          "title": "Top 3 Men 120 kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 120 kg.",
+          "order": 80,
+          "required": true,
+          "categoryId": "men-120",
+          "athleteIds": [
+            "bertoldi-mirko",
+            "oakley-austin",
+            "walladge-lucas",
+            "cremona-conor",
+            "dowling-jonathan",
+            "ahmed-hasan",
+            "bhagya-kuldeep-raj-dhawan",
+            "britz-ernst",
+            "wu-shangfeng"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-men-120plus",
+          "type": "athlete-ranking",
+          "title": "Top 3 Men 120+ kg",
+          "description": "Rank the full field and score the top 3 lifters in Men 120+ kg.",
+          "order": 90,
+          "required": true,
+          "categoryId": "men-120plus",
+          "athleteIds": [
+            "samkharadze-merabi",
+            "kalo-omar",
+            "dean-alfie"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-women-47",
+          "type": "athlete-ranking",
+          "title": "Top 3 Women 47 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 47 kg.",
+          "order": 100,
+          "required": true,
+          "categoryId": "women-47",
+          "athleteIds": [
+            "alausa-olajumoke-khadijat",
+            "stephen-jlo",
+            "klime-emma",
+            "chodera-martyna"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-women-52",
+          "type": "athlete-ranking",
+          "title": "Top 3 Women 52 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 52 kg.",
+          "order": 110,
+          "required": true,
+          "categoryId": "women-52",
+          "athleteIds": [
+            "kar-madhura",
+            "maruashvili-nini",
+            "owoyele-fathia-toluwalase",
+            "znojek-zuzanna",
+            "koshimori-megumi",
+            "otsuka-mio",
+            "buote-mya"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-women-57",
+          "type": "athlete-ranking",
+          "title": "Top 3 Women 57 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 57 kg.",
+          "order": 120,
+          "required": true,
+          "categoryId": "women-57",
+          "athleteIds": [
+            "gaillard-lilou",
+            "messek-maram",
+            "haji-mergana",
+            "plourde-katelyn",
+            "weston-lhamo",
+            "vandenburg-micah",
+            "leroy-bailey",
+            "vaida-vera",
+            "murakami-nanami",
+            "naicker-karamyn",
+            "de-lange-drew",
+            "suzuki-anna"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-women-63",
+          "type": "athlete-ranking",
+          "title": "Top 3 Women 63 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 63 kg.",
+          "order": 130,
+          "required": true,
+          "categoryId": "women-63",
+          "athleteIds": [
+            "spadaro-giada",
+            "hyatt-arden",
+            "white-nwankpa-ayana",
+            "vincke-louise",
+            "fripp-indya",
+            "navas-garcia-irene",
+            "kontogianni-stamatina",
+            "davie-abigail",
+            "alianova-lida",
+            "breytenbach-mia",
+            "rakoczy-maria",
+            "muchena-tapiwanashe"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-women-69",
+          "type": "athlete-ranking",
+          "title": "Top 3 Women 69 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 69 kg.",
+          "order": 140,
+          "required": true,
+          "categoryId": "women-69",
+          "athleteIds": [
+            "ancona-gianna",
+            "buchtova-ester",
+            "morales-vanessa",
+            "csepella-hayley",
+            "mamisashvili-salome",
+            "narva-essi",
+            "smith-gila",
+            "asgeirsdottir-gudrun",
+            "lombaard-dene",
+            "hampton-lily-jo"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-women-76",
+          "type": "athlete-ranking",
+          "title": "Top 3 Women 76 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 76 kg.",
+          "order": 150,
+          "required": true,
+          "categoryId": "women-76",
+          "athleteIds": [
+            "courtright-dakota",
+            "munoz-inzunza-barbara",
+            "silva-samantha",
+            "espitia-sonia",
+            "hernandez-maria",
+            "maclean-morven",
+            "moreira-melissa",
+            "daushvili-ketevan",
+            "konishi-mao",
+            "wachi-ayaka",
+            "mellet-kobie"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-women-84",
+          "type": "athlete-ranking",
+          "title": "Top 3 Women 84 kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 84 kg.",
+          "order": 160,
+          "required": true,
+          "categoryId": "women-84",
+          "athleteIds": [
+            "vassiliou-eva",
+            "edge-lily",
+            "gallant-clarissa"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        },
+        {
+          "id": "top3-women-84plus",
+          "type": "athlete-ranking",
+          "title": "Top 3 Women 84+ kg",
+          "description": "Rank the full field and score the top 3 lifters in Women 84+ kg.",
+          "order": 170,
+          "required": true,
+          "categoryId": "women-84plus",
+          "athleteIds": [
+            "stuart-rylan",
+            "leskinen-lyydia",
+            "olson-anika",
+            "klawikowski-anika",
+            "vazquez-drobrachinsky-gisela",
+            "doyle-abigaill",
+            "zabuawala-asma-taherali"
+          ],
+          "constraints": {
+            "exactSelections": 3,
+            "disallowDuplicateAthletes": true
+          }
+        }
+      ]
+    }
+  ]
+}
