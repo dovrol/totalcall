@@ -19,7 +19,7 @@ public sealed class CompetitionDefinitionImporterTests
         Assert.Equal(2, result.ExitCode);
         Assert.False(result.Succeeded);
         Assert.Equal("worlds-2026", result.CompetitionId);
-        Assert.Equal("2026.4", result.ConfigVersion);
+        Assert.Equal("2026.5", result.ConfigVersion);
         Assert.False(string.IsNullOrWhiteSpace(result.ConfigHash));
         Assert.Contains(result.Logs, log => log.Level == "error" && log.Message.Contains("SUPABASE_SECRET_KEY"));
     }

@@ -7,12 +7,16 @@
   "discipline": "raw",
   "cardBackgroundImageUrl": "/assets/competitions/worlds-2026-card-bg.webp",
   "cardBackgroundPosition": "center",
+  "city": "Druskininkai",
+  "countryCode": "LT",
+  "tier": "s",
+  "modulesCount": 3,
   "startDate": "2026-06-13T07:00:00Z",
   "endDate": "2026-06-21T14:00:00Z",
   "predictionOpenAt": "2026-05-01T09:00:00Z",
   "predictionLockAt": "2026-06-13T06:00:00Z",
   "status": "upcoming",
-  "configVersion": "2026.4",
+  "configVersion": "2026.5",
   "updates": [
     {
       "id": "worlds-2026-roster-update-2026-06-13-goodlift-nominations",

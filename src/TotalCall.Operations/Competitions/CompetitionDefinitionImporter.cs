@@ -179,7 +179,7 @@ public sealed class CompetitionDefinitionImporter
                 ["end_date"] = GetString(root, "endDate"),
                 ["prediction_open_at"] = GetString(root, "predictionOpenAt"),
                 ["prediction_lock_at"] = GetString(root, "predictionLockAt"),
-                ["summary"] = BuildSummary(opts.CompetitionJsonPath, id!, slug!, logs)
+                ["summary"] = BuildSummary(root)
             };
             await supabase.UpsertAsync("public", "competitions", "id", new JsonArray { competitionRow }, ct);
             logs.Add(OperationLogEntry.Info($"Upserted competition '{id}' (status={status})."));
@@ -216,52 +216,36 @@ public sealed class CompetitionDefinitionImporter
         }
     }
 
-    // The competition list reads a small summary snapshot. Prefer the sibling
-    // index.json entry (richer: city/country/tier/modulesCount); otherwise leave
-    // it null and let the list fall back to detail fields.
-    private static JsonNode? BuildSummary(
-        string competitionJsonPath,
-        string id,
-        string slug,
-        ICollection<OperationLogEntry> logs)
+    // The competition list reads a small summary snapshot. It is built directly
+    // from the competition JSON, including the list-only display fields
+    // (city/countryCode/tier/modulesCount) that the runtime config does not need.
+    private static JsonNode BuildSummary(JsonElement root) => new JsonObject
     {
-        var dir = Path.GetDirectoryName(Path.GetFullPath(competitionJsonPath));
-        if (dir is null)
-        {
-            return null;
-        }
+        ["id"] = GetString(root, "id"),
+        ["slug"] = GetString(root, "slug") ?? GetString(root, "id"),
+        ["name"] = GetString(root, "name"),
+        ["description"] = GetString(root, "description"),
+        ["cardBackgroundImageUrl"] = GetString(root, "cardBackgroundImageUrl"),
+        ["cardBackgroundPosition"] = GetString(root, "cardBackgroundPosition"),
+        ["cardLogoImageUrl"] = GetString(root, "cardLogoImageUrl"),
+        ["cardLogoAlt"] = GetString(root, "cardLogoAlt"),
+        ["startDate"] = GetString(root, "startDate"),
+        ["endDate"] = GetString(root, "endDate"),
+        ["predictionLockAt"] = GetString(root, "predictionLockAt"),
+        ["status"] = GetString(root, "status") ?? "upcoming",
+        ["configVersion"] = GetString(root, "configVersion"),
+        ["city"] = GetString(root, "city"),
+        ["countryCode"] = GetString(root, "countryCode"),
+        ["tier"] = GetString(root, "tier"),
+        ["modulesCount"] = GetInt(root, "modulesCount")
+    };
 
-        var indexPath = Path.Combine(dir, "index.json");
-        if (!File.Exists(indexPath))
-        {
-            return null;
-        }
-
-        try
-        {
-            if (JsonNode.Parse(File.ReadAllText(indexPath)) is JsonArray entries)
-            {
-                foreach (var entry in entries)
-                {
-                    if (entry is JsonObject obj && (Matches(obj, "id", id) || Matches(obj, "slug", slug)))
-                    {
-                        return obj.DeepClone();
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            logs.Add(OperationLogEntry.Warn($"Could not read sibling index.json: {ex.Message}"));
-        }
-
-        return null;
-    }
-
-    private static bool Matches(JsonObject obj, string key, string value) =>
-        obj.TryGetPropertyValue(key, out var node)
-        && node is not null
-        && string.Equals(node.ToString(), value, StringComparison.OrdinalIgnoreCase);
+    private static int? GetInt(JsonElement root, string name) =>
+        root.TryGetProperty(name, out var value)
+        && value.ValueKind == JsonValueKind.Number
+        && value.TryGetInt32(out var number)
+            ? number
+            : null;
 
     private static string? GetString(JsonElement root, string name) =>
         root.TryGetProperty(name, out var value) && value.ValueKind == JsonValueKind.String
