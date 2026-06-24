@@ -2,6 +2,30 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "version": "0.13.0-beta.1",
+      "releasedAt": "2026-06-25",
+      "title": {
+        "pl": "Zawody juniorów i subjuniorów — Mistrzostwa Świata 2026",
+        "en": "Juniors and Sub-Juniors — 2026 World Championships"
+      },
+      "items": [
+        {
+          "type": "feat",
+          "text": {
+            "pl": "Dwa nowe zawody do typowania: World Juniors 2026 i World Sub-Juniors 2026 (Sun City, 18–29 sierpnia), z pełnym rosterem i historią startów zawodników.",
+            "en": "Two new competitions to predict: World Juniors 2026 and World Sub-Juniors 2026 (Sun City, 18–29 August), with full rosters and athlete competition history."
+          }
+        },
+        {
+          "type": "fix",
+          "text": {
+            "pl": "Zakończone zawody pokazują się teraz na liście jako zakończone zamiast utykać na „Czeka na wynik”.",
+            "en": "Finished competitions now show as completed in the list instead of getting stuck on “Awaiting results”."
+          }
+        }
+      ]
+    },
+    {
       "version": "0.12.1-beta.1",
       "releasedAt": "2026-06-18",
       "title": {
