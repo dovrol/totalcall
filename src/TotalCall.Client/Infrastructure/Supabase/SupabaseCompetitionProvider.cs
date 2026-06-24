@@ -114,6 +114,7 @@ public sealed class SupabaseCompetitionProvider(
             Name = row.Name,
             Status = row.Status,
             StartDate = row.StartDate ?? summary.StartDate,
+            EndDate = row.EndDate ?? summary.EndDate,
             PredictionLockAt = row.PredictionLockAt ?? summary.PredictionLockAt,
             ConfigVersion = string.IsNullOrWhiteSpace(row.Version) ? summary.ConfigVersion : row.Version!
         };

@@ -36,7 +36,7 @@ public sealed class CompetitionService(ICompetitionProvider competitionProvider)
     {
         return competition with
         {
-            Status = ResolveStatus(competition.Status, competition.PredictionLockAt, null)
+            Status = ResolveStatus(competition.Status, competition.PredictionLockAt, competition.EndDate)
         };
     }
 

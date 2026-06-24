@@ -12,6 +12,8 @@ public sealed record CompetitionSummary
 
     public DateTimeOffset? StartDate { get; init; }
 
+    public DateTimeOffset? EndDate { get; init; }
+
     public DateTimeOffset? PredictionLockAt { get; init; }
 
     public string? CardBackgroundImageUrl { get; init; }
