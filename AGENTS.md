@@ -60,7 +60,8 @@ TotalCall is a Blazor WebAssembly fantasy/prediction game for powerlifting fans.
   stay thin when code belongs in `src/TotalCall.Operations`. `scenario` is
   transitional: local dev seeding is moving to `ops/dev-seed` (see its README).
 - The competition definition lives in Supabase (`competitions` + `competition_versions`);
-  the JSON in `wwwroot/data/competitions` stays a dev/import source and runtime fallback.
+  the JSON in `ops/data/competitions` stays an operations/import source only.
+  Do not add browser-delivered competition JSON fallbacks.
 - Service-role keys must stay in CLI/server-side operations. Never pass them to
   Blazor WebAssembly or other browser-delivered code.
 

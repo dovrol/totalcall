@@ -14,7 +14,7 @@ It complements:
 ## 1. Why we do not use a separate `athlete-map.json`
 
 The competition JSON (e.g.
-`src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json`)
+`ops/data/competitions/worlds-2026.json`)
 already lists every athlete that competes in a TotalCall predictive event.
 That list is the **single source of truth** for who the app cares about.
 
@@ -184,7 +184,7 @@ GitHub Secrets and is only read inside the workflow runner.
 
 # Or sync a single source.
 ./scripts/sync-supabase.sh \
-  src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json \
+  ops/data/competitions/worlds-2026.json \
   openipf
 ```
 

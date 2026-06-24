@@ -82,9 +82,7 @@ public sealed class CompetitionDefinitionImporterTests
 
     private static string WorldsConfigPath() => Path.Combine(
         FindRepositoryRoot(),
-        "src",
-        "TotalCall.Client",
-        "wwwroot",
+        "ops",
         "data",
         "competitions",
         "worlds-2026.json");

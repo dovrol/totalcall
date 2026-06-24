@@ -1,6 +1,6 @@
 -- Competition definitions in Supabase: metadata + lifecycle + versioned config (JSONB).
 -- The frontend loads the published config from here; the JSON in the repo stays a
--- dev/import source and runtime fallback. The backend enforces the prediction window
+-- dev/import source. The backend enforces the prediction window
 -- (deadline/status) via a trigger on prediction_submissions, so neither the deadline
 -- nor the config version is trusted from the client.
 

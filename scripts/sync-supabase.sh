@@ -7,7 +7,7 @@ CLI_PROJECT="${ROOT_DIR}/ops/cli/TotalCall.Cli/TotalCall.Cli.csproj"
 RESULTS_DIR="${ROOT_DIR}/ops/data/results"
 KEYCHAIN_ACCOUNT="${TOTALCALL_SUPABASE_KEYCHAIN_ACCOUNT:-production}"
 
-COMPETITION_JSON="${1:-src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json}"
+COMPETITION_JSON="${1:-ops/data/competitions/worlds-2026.json}"
 SOURCE="${2:-both}"
 RESULTS="${3:-auto}"
 TRIGGERED_BY="${TRIGGERED_BY:-local-script}"

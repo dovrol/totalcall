@@ -6,7 +6,6 @@ TotalCall's public app is a static Blazor WebAssembly app backed by Supabase. Th
 
 ```text
 Browser (Blazor WASM)
-  -> bundled JSON fallback in wwwroot/data
   -> Supabase Auth REST API for Magic Link + PKCE
   -> Supabase PostgREST/RPC with publishable key and user access tokens
 
@@ -37,7 +36,8 @@ GitHub Actions
 - `tests/TotalCall.Tests` contains xUnit tests for domain logic, validation, storage, migrations, scoring, and sync helpers.
 - `ops/cli/TotalCall.Cli` is a .NET console wrapper for Supabase imports, scoring recomputation, and local scenarios.
 - `ops/mcp/TotalCall.Mcp` is the agent-facing MCP server exposing read-only/dry-run operations.
-- `ops/data/results` holds the official results JSON files imported by the CLI.
+- `ops/data/competitions` holds source competition definition JSON files used by operations/import tooling.
+- `ops/data/results` holds official results JSON files imported by operations/import tooling.
 - `supabase/migrations` is the source of truth for database schema, RPCs, RLS, and grants.
 - `scripts` contains thin local wrappers.
 
@@ -64,10 +64,11 @@ Pages should stay thin. Domain components may reference domain models, but scori
 Competition loading is config-driven through `ICompetitionProvider`.
 
 - `SupabaseCompetitionProvider` reads `published_competitions` and `get_published_competition`.
-- `JsonCompetitionProvider` reads bundled files from `wwwroot/data/competitions`.
-- `CompositeCompetitionProvider` tries Supabase first and falls back to bundled JSON when the remote source is unavailable or has no published row.
 
-The published competition config is stored in Supabase as JSONB in `competition_versions.config`. The JSON files under `src/TotalCall.Client/wwwroot/data/competitions` remain a development/import source and runtime fallback.
+The published competition config is stored in Supabase as JSONB in
+`competition_versions.config`. The JSON files under `ops/data/competitions` are
+operations/import sources only; they are not bundled as a frontend runtime
+fallback.
 
 Supabase lifecycle fields override the JSON snapshot when loaded:
 
@@ -124,7 +125,10 @@ The frontend uses only `Supabase:Url` and `Supabase:PublishableKey`. Authenticat
 - `results` imports official result groups and recalculates `score_snapshots`.
 - `scenario` seeds local-only product states and users for UI testing. This is transitional; local dev seeding is moving to `ops/dev-seed`.
 
-`./scripts/sync-supabase.sh` is the production-oriented wrapper. It syncs the competition first, then athlete history for one or both sources, then imports matching official results files from `ops/data/results` when results mode is `auto`.
+`./scripts/sync-supabase.sh` is the production-oriented wrapper. It syncs the
+competition from `ops/data/competitions`, then athlete history for one or both
+sources, then imports matching official results files from `ops/data/results`
+when results mode is `auto`.
 
 ## Scoring Ownership
 

@@ -279,7 +279,7 @@ static void PrintHelp()
         Commands:
           athletes      Import OpenPowerlifting/OpenIPF athlete history.
             --competition-json <path>            Path to the TotalCall competition JSON
-                                                 (e.g. src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json)
+                                                 (e.g. ops/data/competitions/worlds-2026.json)
             --source <openipf|openpowerlifting>  Data source code (must exist in data_sources). Default: openipf.
             [--csv-url <url>]                    Override CSV/ZIP download URL.
             [--local-csv <path>]                 Skip download; read CSV from a local file.
@@ -307,7 +307,7 @@ static void PrintHelp()
             --local                              Required guard; scenarios only run
                                                  against loopback Supabase URLs.
             [--base-competition-json <path>]     Source config to clone. Default:
-                                                 src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json
+                                                 ops/data/competitions/worlds-2026.json
             [--triggered-by <text>]              Label written into result import metadata.
 
         Environment variables:

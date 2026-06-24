@@ -70,7 +70,7 @@ jobs:
 
           case "$COMPETITION" in
             worlds-2026)
-              COMPETITION_JSON="src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json"
+              COMPETITION_JSON="ops/data/competitions/worlds-2026.json"
               ;;
             *)
               echo "[error] Unknown competition: $COMPETITION" >&2

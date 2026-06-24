@@ -113,7 +113,7 @@ After deploy:
 
 - App loads on the production URL.
 - Home page loads competitions from Supabase.
-- Bundled JSON fallback is not unexpectedly used.
+- No browser-delivered competition JSON fallback is present or used.
 - Magic Link can be requested.
 - Auth callback works.
 - Profile page loads and display name is correct.
@@ -177,7 +177,7 @@ Draft only. Do not publish without owner review.
 TotalCall v1.0.0 documents and stabilizes the production prediction flow for powerlifting competitions:
 
 - Supabase Magic Link sign-in and private Cloud Save.
-- Runtime competition config from Supabase with bundled JSON fallback.
+- Runtime competition config from Supabase.
 - Submit and backend-enforced prediction lock.
 - Participants and standings.
 - `placement-v2` scoring for Top-N/category placement boards.

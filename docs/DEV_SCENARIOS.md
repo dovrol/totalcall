@@ -56,7 +56,7 @@ Direct competition ids such as `dev-final-results` also work as scenario argumen
 Pass sync-tool options after the scenario name:
 
 ```bash
-./scripts/dev-scenarios.sh roster-update --base-competition-json src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json
+./scripts/dev-scenarios.sh roster-update --base-competition-json ops/data/competitions/worlds-2026.json
 ```
 
 ## Local Supabase Reset

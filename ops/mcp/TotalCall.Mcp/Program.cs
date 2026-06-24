@@ -169,7 +169,7 @@ internal sealed class TotalCallMcpServer(TextReader input, TextWriter output)
 
     private async Task<JsonObject> ListCompetitionFilesAsync(CancellationToken ct)
     {
-        var directory = Path.Combine(repositoryRoot, "src", "TotalCall.Client", "wwwroot", "data", "competitions");
+        var directory = Path.Combine(repositoryRoot, "ops", "data", "competitions");
         var files = Directory.Exists(directory)
             ? Directory.GetFiles(directory, "*.json").OrderBy(path => path, StringComparer.OrdinalIgnoreCase).ToArray()
             : [];

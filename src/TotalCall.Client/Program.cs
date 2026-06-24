@@ -23,7 +23,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-builder.Services.AddScoped<JsonCompetitionProvider>();
 builder.Services.AddScoped(sp =>
 {
     var config = sp.GetRequiredService<IConfiguration>();
@@ -38,9 +37,7 @@ builder.Services.AddScoped(sp =>
 
     return new SupabaseCompetitionProvider(http, key ?? string.Empty);
 });
-builder.Services.AddScoped<ICompetitionProvider>(sp => new CompositeCompetitionProvider(
-    sp.GetRequiredService<SupabaseCompetitionProvider>(),
-    sp.GetRequiredService<JsonCompetitionProvider>()));
+builder.Services.AddScoped<ICompetitionProvider>(sp => sp.GetRequiredService<SupabaseCompetitionProvider>());
 builder.Services.AddScoped<CompetitionService>();
 builder.Services.AddScoped<BrowserLocalStorage>();
 builder.Services.AddScoped<BrowserFileActions>();

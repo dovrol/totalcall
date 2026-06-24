@@ -29,7 +29,7 @@ public sealed class DevScenarioRunner
     private const string DevConfigVersion = "dev-scenarios-v1";
     private const string DevAppVersion = "dev-scenarios-v1";
     private const string DefaultBaseCompetitionJsonPath =
-        "src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json";
+        "ops/data/competitions/worlds-2026.json";
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web)
     {
         PropertyNameCaseInsensitive = true

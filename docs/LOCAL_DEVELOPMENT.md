@@ -112,7 +112,7 @@ Production-oriented wrapper:
 
 ```bash
 ./scripts/setup-supabase-keychain.sh --account production
-./scripts/sync-supabase.sh src/TotalCall.Client/wwwroot/data/competitions/worlds-2026.json both auto
+./scripts/sync-supabase.sh ops/data/competitions/worlds-2026.json both auto
 ```
 
 Arguments:

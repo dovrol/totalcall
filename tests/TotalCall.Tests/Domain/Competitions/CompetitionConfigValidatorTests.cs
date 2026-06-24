@@ -20,9 +20,7 @@ public sealed class CompetitionConfigValidatorTests
     {
         var path = Path.Combine(
             FindRepositoryRoot(),
-            "src",
-            "TotalCall.Client",
-            "wwwroot",
+            "ops",
             "data",
             "competitions",
             "worlds-2026.json");
